@@ -41,7 +41,7 @@ jobs:
         uses: JamesIves/github-pages-deploy-action@v4
         with: 
           repository-name: open-pioneer/demo
-          token: ${{ secrets.PAT }}
+          token: ${{ secrets.DEPLOY_TOKEN }}
           git-config-name: github-actions
           git-config-email: github-actions@github.com
           folder: dist
