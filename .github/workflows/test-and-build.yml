@@ -13,25 +13,20 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
 
+      - name: Install pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: 7
+          run_install: false
+
       - name: Install Node.js
         uses: actions/setup-node@v3
         with:
           node-version: 16
-
-      - name: Install pnpm
-        uses: pnpm/action-setup@v2
-        with:
-          version: '14'
           cache: 'pnpm'
 
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
-      
-      - name: Setup git
-        shell: bash
-        run: |
-          git config user.name github-actions
-          git config user.email github-actions@github.com
       
       - name: Check lint
         run: pnpm lint
@@ -46,7 +41,9 @@ jobs:
         uses: JamesIves/github-pages-deploy-action@v4
         with: 
           repository-name: open-pioneer/demo
-          token: ${{ secrets.DEPLOY_TOKEN }}
+          token: ${{ secrets.PAT }}
+          git-config-name: github-actions
+          git-config-email: github-actions@github.com
           folder: dist
 
       - run: echo "This job's status is ${{ job.status }}."
