@@ -9,7 +9,7 @@
         "build": "tsc && vite build",
         "preview": "vite preview",
         "lint": "eslint ./src",
-        "prettier": "prettier ./src -w",
+        "prettier": "prettier ./src ./docs -w",
         "test": "vitest"
     },
     "devDependencies": {
