@@ -69,7 +69,7 @@ Further links:
 
 ### Web Components
 
-An app build by this project will primarily be deployed as a [Web Component](https://developer.mozilla.org/en-US/docs/Web/Web_Components).
+An app built by this project will primarily be deployed as a [Web Component](https://developer.mozilla.org/en-US/docs/Web/Web_Components).
 
 Web Components by themselves enable easy integration into a host site (the developer creates a custom HTML tag).
 Together with the [Shadow DOM API](https://developer.mozilla.org/en-US/docs/Web/Web_Components/Using_shadow_DOM), web components can be
@@ -92,8 +92,40 @@ Vite supports pnpm workspace layouts by following the links and detecting that t
 During the initial development phase, all code will exist within a single repository.
 In the future, it will be possible to develop and compile application building blocks separately - possibly using different licenses - and share them via npmjs.com or a compatible registry.
 
-## Implementation
+## Implementation strategy
 
-TDB
+### Overview
 
-##
+Tooling will be provided to simplify working with many building blocks and dependency injection.
+During development (and during build time), building blocks referenced by an app will be automatically detected and integrated into the application.
+The process works as follows:
+
+1. Detect building blocks used by the application.
+   This is done by parsing the appropriate `package.json` file, detecting its `dependencies` and checking which of those dependencies
+   are actual building blocks (and not just plain node packages).
+   These building blocks are added to a set and are then recursively scanned until no more new dependencies can be found or until all remaining dependencies are plain node modules.
+
+2. Generate code and data structures based on metadata within the building blocks.
+   Every building block contains a configuration file that informs the system about its contents.
+   This includes:
+
+    - Services implemented by the building block
+    - Services required by the building block
+    - Supported languages and translation files
+    - CSS files
+    - Misc. assets, i.e. static files
+
+    These configurations will be combined by the build step into a data structure that represents the contents of all building blocks detected in step 1.
+
+3. Automatically setup all building blocks when the application starts.
+   The runtime environment will receive the data structure generated in step 2.
+   It will then automatically launch all required services and inject appropriate dependencies, inject i18n data, load styling etc based on that data structure.
+
+4. After that, the UI is rendered into the web component root node.
+
+Steps 1 and 2 must be implemented in the build system as a vite plugin.
+Steps 3 and 4 will be provided by runtime code exported from a node package that will be invoked by an app.
+
+### Build system
+
+### Runtime environment
