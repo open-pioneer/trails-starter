@@ -20,13 +20,18 @@ jobs:
 
       - name: Install pnpm
         uses: pnpm/action-setup@v2
-        id: pnpm-install
         with:
-          version: 7
-          run_install: false
+          version: '14'
+          cache: 'pnpm'
 
       - name: Install dependencies
-        run: pnpm i
+        run: pnpm install --frozen-lockfile
+      
+      - name: Setup git
+        shell: bash
+        run: |
+          git config user.name github-actions
+          git config user.email github-actions@github.com
       
       - name: Check lint
         run: pnpm lint
