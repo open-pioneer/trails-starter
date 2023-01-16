@@ -92,6 +92,12 @@ Vite supports pnpm workspace layouts by following the links and detecting that t
 During the initial development phase, all code will exist within a single repository.
 In the future, it will be possible to develop and compile application building blocks separately - possibly using different licenses - and share them via npmjs.com or a compatible registry.
 
+### TypeScript
+
+TypeScript supports the creation of clean (and clear) interfaces through type checking.
+Usage of TypeScript is _recommended_ for all implementation files (and often _required_).
+Plain JavaScript is also supported.
+
 ## Implementation strategy
 
 ### Overview
@@ -128,4 +134,131 @@ Steps 3 and 4 will be provided by runtime code exported from a node package that
 
 ### Build system
 
+Steps 1 and 2 require analysis of the source code and subsequent code generation.
+This functionality is best implemented as a vite plugin.
+
+_User facing interface (pseudocode)_
+
+```js
+// Virtual module supported in app.{js,ts} files, implemented via plugin.
+// The imports contain the generated data structures (and references to code) mentioned in step 2.
+// The vite plugin is responsible for generating data structures in the appropriate format understood by the runtime.
+import { bundles, styles } from "pioneer:app";
+import { createCustomElement } from "@open-pioneer/runtime";
+
+// Configuration object accepted by the runtime environment; `bundles` and `styles` are simply passed through.
+// This would also be the appropriate place to implement additional features (such as custom configuration options, or
+// the web component's public API).
+const app = {
+    name: "sample-app",
+    bundles: bundles,
+    styles: styles
+};
+
+// Creates and registers the web component <sample-app /> from the `app` object.
+globalThis.customElements.define("sample-app", createCustomElement(app));
+```
+
+#### Details
+
+The vite plugin implements at least one virtual module (called `pioneer:app` in the sample code above).
+To achieve that, the `resolveId` and `load` (and/or `transform`) rollup hooks must be provided (see https://rollupjs.org/guide/en/#build-hooks).
+
+The `resolveId` hook handles the virtual module id and takes note of its importer.
+The module id will be resolved to an absolute virtual module id (e.g. `"\0pioneer:app?imported-from=..."`) which must in turn be implemented by the `load` hook.
+
+During `load`, the resolved module id is parsed and the app's `package.json` is located.
+For every `node_modules/*` dependency, check the _real_ path of the package on disk and if it is located inside the source folder, analyze it like described in step 1 above.
+To enable reloads during development, all `package.json` files (and other config files) read along the way must be tracked via rollup's `this.addWatchFile(...)`.
+Finally, the `load` hook generates a JavaScript module containing the building block's metadata found in the analysis (i.e. the exports `bundles` and `styles` in the code sample above).
+
+> Out-of-source building blocks (i.e. building blocks installed via npm) are currently not supported.
+> Support will be added in a future revision.
+
+#### Building block configuration
+
+Every building block should contain a configuration file (e.g. `build.config.js`) that contains the necessary metadata required by the system.
+
+Example (pseudocode):
+
+```js
+// build.config.js
+import { defineBuildConfig } from "@open-pioneer/build-support";
+
+// The function does nothing at runtime but provides auto completion to the user.
+export default defineBuildConfig({
+    type: "bundle",
+
+    // References the main [s]css file (which can contain other css imports)
+    styles: "styles.css",
+    ui: {
+        // TODO
+    },
+    services: {
+        // Name of the service must match an export from the bundle's main entry point (i.e. `index.{js,ts}`)
+        MyComponent: {
+            requires: {
+                _foo: "someOtherBundle.someService"
+            },
+            provides: "myBundle.myService"
+        }
+    }
+});
+
+// index.js
+export class MyComponent {
+    // TODO
+}
+```
+
 ### Runtime environment
+
+The runtime environment receives the configuration object (via the `app` parameter), including the generated data structures from the previous step and creates a web component class.
+
+The responsibilities are:
+
+1. Return a web component class from `createCustomElement` that launches the configured app when loaded into the DOM.
+2. Load all required styles into the web component's shadow DOM
+3. Load translation files and pick the correct language
+4. Launch all requires services and inject required references (required components launch before their dependents, cycles are an error)
+5. Setup the UI Framework (Framework specific options, e.g. root nodes for menus).
+6. Render the application's UI
+
+TODO:
+
+-   Implement properties on the HTML Tag, e.g. `<sample-app foo="bar" />`, perhaps including global options
+-   Implement API on the web component instance (methods and events)
+
+### Test support
+
+In addition to the "normal" runtime implementation, a small test utility must be created to support tests for service classes and UI Components.
+The utility should perform dependency injection in the same way as the runtime, but with very simple configuration:
+
+```js
+// DRAFT API
+import { createService } from "@open-pioneer/runtime-test-utils";
+
+// Requires `some.Service` as `foo`.
+import { MyService } from "./MyService";
+
+it("should run", function () {
+    const service = createService(MyService, {
+        // Mock of the `some.Service` interface will be made available to the new `MyService` instance
+        foo: {
+            doTheThing() {
+                console.log("Called from service");
+            }
+        }
+    });
+
+    // Calls `foo.doTheThing()`
+    service.run();
+}):
+```
+
+TODO: UI Tests (integrate with react test utils)
+
+### Multi-page application
+
+A single repository should be able to produce multiple web components and html files.
+The vite plugin will be extended to allow for simple configuration of multiple entry points for production builds (`rollupOptions`).
