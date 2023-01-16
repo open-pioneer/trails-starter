@@ -34,5 +34,12 @@ jobs:
 
       - name: Run tests
         run: pnpm vitest run
+        
+      - name: Deploy
+        uses: JamesIves/github-pages-deploy-action@v4
+        with: 
+          repository-name: open-pioneer/demo
+          token: ${{ secrets.DEPLOY_TOKEN }}
+          folder: dist
 
       - run: echo "This job's status is ${{ job.status }}."
