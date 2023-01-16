@@ -7,6 +7,10 @@ import eslint from "vite-plugin-eslint";
 // https://vitejs.dev/config/
 export default defineConfig({
     root: resolve(__dirname, "src"),
+
+    // Generates relative urls in html etc.
+    base: "./",
+
     build: {
         outDir: resolve(__dirname, "dist"),
         emptyOutDir: true,
