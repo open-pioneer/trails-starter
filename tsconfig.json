@@ -1,8 +1,8 @@
 {
     "compilerOptions": {
         "target": "ESNext",
-        "lib": ["DOM", "DOM.Iterable", "ESNext"],
-        "module": "ESNext",
+        "lib": ["DOM", "DOM.Iterable", "ES2020"],
+        "module": "ES2020",
         "moduleResolution": "Node",
         "noEmit": true,
         "allowJs": false,
