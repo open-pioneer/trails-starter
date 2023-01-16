@@ -10,6 +10,7 @@
 
         "strict": true,
         "resolveJsonModule": true,
+        "noUncheckedIndexedAccess": true,
         "useDefineForClassFields": true,
         "allowSyntheticDefaultImports": true,
         "forceConsistentCasingInFileNames": true,

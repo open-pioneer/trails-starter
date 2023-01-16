@@ -2,6 +2,7 @@
     "name": "sample",
     "private": true,
     "dependencies": {
-        "hello-world": "workspace:^"
+        "hello-world": "workspace:^",
+        "react": "^18.2.0"
     }
 }
