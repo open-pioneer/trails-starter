@@ -36,6 +36,15 @@ importers:
       vite: 4.0.4_@types+node@16.18.11
       vitest: 0.27.1
 
+  src/apps/sample:
+    specifiers:
+      hello-world: workspace:^
+    dependencies:
+      hello-world: link:../../packages/hello-world
+
+  src/packages/hello-world:
+    specifiers: {}
+
 packages:
 
   /@ampproject/remapping/2.2.0:
