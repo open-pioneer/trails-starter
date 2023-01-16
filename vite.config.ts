@@ -1,6 +1,7 @@
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 import { resolve } from "node:path";
+import eslint from "vite-plugin-eslint";
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -9,5 +10,5 @@ export default defineConfig({
         outDir: resolve(__dirname, "dist"),
         emptyOutDir: true,
     },
-    plugins: [react()],
+    plugins: [react(), eslint()],
 });
