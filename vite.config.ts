@@ -12,7 +12,7 @@ export default defineConfig({
         emptyOutDir: true,
     },
     plugins: [react(), eslint()],
-    
+
     // https://vitest.dev/config/
     test: {}
 });

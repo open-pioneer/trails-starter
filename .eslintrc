@@ -1,14 +1,25 @@
 {
-    "extends": ["eslint:recommended", "plugin:@typescript-eslint/recommended", "prettier"],
+    "extends": [
+        "eslint:recommended",
+        "plugin:@typescript-eslint/recommended",
+        "plugin:react/recommended",
+        "plugin:react/jsx-runtime",
+        "plugin:react-hooks/recommended",
+        "prettier"
+    ],
     "parser": "@typescript-eslint/parser",
-    "plugins": ["@typescript-eslint"],
+    "plugins": ["@typescript-eslint", "react", "react-hooks"],
     "env": {
         "node": true,
         "browser": true
     },
     "root": true,
+    "settings": {
+        "react": {
+            "version": "detect"
+        }
+    },
     "rules": {
-        // TODO: Use preset
         "indent": [
             "error",
             4,
