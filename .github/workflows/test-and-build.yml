@@ -37,6 +37,33 @@ jobs:
       - name: Run tests
         run: pnpm vitest run
         
+      - name: upload artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: build
+          path: dist/
+          
+  deploy:
+    runs-on: ubuntu-latest
+    needs: test-and-build
+    if: github.ref == 'refs/heads/main'
+    steps:
+    
+      - name: Checkout
+        uses: actions/checkout@v3
+        
+      - name: load artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: build
+          path: dist/
+      
+      - name: Setup git
+        shell: bash
+        run: |
+          git config user.name github-actions
+          git config user.email github-actions@github.com
+        
       - name: Deploy
         uses: JamesIves/github-pages-deploy-action@v4
         with: 
@@ -45,5 +72,3 @@ jobs:
           git-config-name: github-actions
           git-config-email: github-actions@github.com
           folder: dist
-
-      - run: echo "This job's status is ${{ job.status }}."
