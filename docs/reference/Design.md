@@ -109,6 +109,7 @@ The process works as follows:
 1. Detect building blocks used by the application.
    This is done by parsing the appropriate `package.json` file, detecting its `dependencies` and checking which of those dependencies
    are actual building blocks (and not just plain node packages).
+   Plain node packages and building blocks can be differentiated by detecting the presence (and the contents) of a special configuration file (see "Building block configuration" further below).
    These building blocks are added to a set and are then recursively scanned until no more new dependencies can be found or until all remaining dependencies are plain node modules.
 
 2. Generate code and data structures based on metadata within the building blocks.
