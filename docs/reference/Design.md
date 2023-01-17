@@ -82,11 +82,11 @@ Styles will have to be injected within the shadow dom instead.
 ### PNPM / Monorepo
 
 A monorepo approach appears to be a good solution to facilitate separate development of application building blocks: a repository
-will be consist of one or more bundles, packages and apps that may depend on each other.
+will consist of one or more bundles, packages and apps that may depend on each other.
 Well defined interfaces can be enforced on the package level.
 
 With its support for workspaces, advanced dependency management and generally good performance, [PNPM](https://pnpm.io/) has been chosen as the package manager.
-PNPM can automatically links packages within the same workspace when they depend on each other (still enforcing 'clean' dependency declarations).
+PNPM can automatically link packages within the same workspace when they depend on each other (still enforcing 'clean' dependency declarations).
 Vite supports pnpm workspace layouts by following the links and detecting that they point into the project itself, automatically applying rules and plugins like "usual".
 
 During the initial development phase, all code will exist within a single repository.
@@ -126,7 +126,7 @@ The process works as follows:
 
 3. Automatically setup all building blocks when the application starts.
    The runtime environment will receive the data structure generated in step 2.
-   It will then automatically launch all required services and inject appropriate dependencies, inject i18n data, load styling etc based on that data structure.
+   It will then automatically launch all required services and inject appropriate dependencies, inject i18n data, load styling etc. based on that data structure.
 
 4. After that, the UI is rendered into the web component root node.
 
@@ -225,7 +225,7 @@ The responsibilities are:
 2. Load all required styles into the web component's shadow DOM
 3. Load translation files and pick the correct language
 4. Launch all requires services and inject required references (required components launch before their dependents, cycles are an error)
-5. Setup the UI Framework (Framework specific options, e.g. root nodes for menus).
+5. Set up the UI Framework (Framework specific options, e.g. root nodes for menus).
 6. Render the application's UI
 
 TODO:
