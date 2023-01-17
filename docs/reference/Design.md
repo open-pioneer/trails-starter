@@ -131,20 +131,23 @@ The process works as follows:
 4. After that, the UI is rendered into the web component root node.
 
 Steps 1 and 2 must be implemented in the build system as a vite plugin.
-Steps 3 and 4 will be provided by runtime code exported from a node package that will be invoked by an app.
+Steps 3 and 4 will be implemented as a JavaScript API that runs in the browser.
 
 ### Build system
 
 Steps 1 and 2 require analysis of the source code and subsequent code generation.
 This functionality is best implemented as a vite plugin.
 
-_User facing interface (pseudocode)_
+The following example shows an `app.ts` file that demonstrates the integration of build system and runtime code.
+The only 'magic' behavior is provided as an import of a virtual module `pioneer:app`.
 
 ```js
 // Virtual module supported in app.{js,ts} files, implemented via plugin.
 // The imports contain the generated data structures (and references to code) mentioned in step 2.
 // The vite plugin is responsible for generating data structures in the appropriate format understood by the runtime.
 import { bundles, styles } from "pioneer:app";
+
+// Web component factory function imported from the runtime package.
 import { createCustomElement } from "@open-pioneer/runtime";
 
 // Configuration object accepted by the runtime environment; `bundles` and `styles` are simply passed through.
