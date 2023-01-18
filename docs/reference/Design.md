@@ -22,7 +22,7 @@ The purpose of this project is building web applications from a set of composabl
 
 -   For the developers of web applications, the system should offer
 
-    -   Support for modern technologies such as TypeScript, SCSS and UI-Libraries such as React and Vue
+    -   Support for modern technologies such as TypeScript, SCSS and UI-Libraries such as React and/or Vue
     -   Dependency injection for class instances that depend on services provided by other classes
     -   Enforcement of/support for clear interfaces between application components
     -   Support for extension / configuration of existing application components
@@ -30,6 +30,8 @@ The purpose of this project is building web applications from a set of composabl
     -   Automatic loading of styles
     -   Automatic inclusion of misc. assets (such as images)
     -   A productive development experience (including hot module reloading and good debugger support)
+
+-   The user interface framework(s) must support accessability
 
 -   The system should use well known open source standard technology wherever possible to reduce friction, onboarding time
 
@@ -98,12 +100,38 @@ TypeScript supports the creation of clean (and clear) interfaces through type ch
 Usage of TypeScript is _recommended_ for all implementation files (and often _required_).
 Plain JavaScript is also supported.
 
+### React
+
+Both React and Vue have been considered as the UI layer for this project.
+React has been chosen instead of Vue for a few reasons:
+
+1. React's open source community is significantly larger and maintains a richer ecosystem.
+   This should make it easier to find appropriate open source solutions (e.g. for a11y, i18n).
+2. React's long term stability has historically been very good.
+3. It integrates slightly better with TypeScript:
+   TypeScript natively supports React's syntax, whereas Vue requires special IDE-addons and compiler plugins to implement its custom languages.
+
+Ultimately, we expect the integration with the UI layer to be relatively simple, so changing the UI framework during development is possible and should not be a large concern.
+
 ## Implementation strategy
+
+Some of the requirements above can already be resolved by the choices in technology.
+For example, Vite is already able to build a static web application, already supports modern frontend technologies and provides a good developer experience.
+PNPM's workspaces make it easy to develop an application as a collection of interconnected packages.
+
+Some additions must be developed on top of these technologies to support the remaining requirements:
+
+-   The service layer, including dependency injection and configuration
+-   Automatic discovery and loading of application building blocks (including services, i18n files, styles, etc.)
+-   Integration as a web component
+-   Deployment as a multi page application
+
+The following sections describe the process by which apps are built and started.
 
 ### Overview
 
 Tooling will be provided to simplify working with many building blocks and dependency injection.
-During development (and during build time), building blocks referenced by an app will be automatically detected and integrated into the application.
+During development and during build time, building blocks referenced by an app will be automatically detected and integrated into the application.
 The process works as follows:
 
 1. Detect building blocks used by the application.
