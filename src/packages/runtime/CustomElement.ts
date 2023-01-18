@@ -10,7 +10,7 @@ export interface CustomElementOptions {
     /**
      * Styles for UI component.
      */
-    styles: string;
+    styles?: string;
 
     /**
      * Whether the shadow root element is accessible from the outside.
@@ -47,7 +47,7 @@ export function createCustomElement(options: CustomElementOptions): CustomElemen
             const node = (this.#rootNode = document.createElement("div"));
             
             const style = document.createElement("style");
-            style.appendChild(document.createTextNode(options.styles));
+            style.appendChild(document.createTextNode(options.styles ?? ""));
             
             this.#shadowRoot.replaceChildren(node, style);
             
