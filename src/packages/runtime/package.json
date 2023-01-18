@@ -1,9 +1,8 @@
 {
-    "name": "sample",
+    "name": "@open-pioneer/runtime",
+    "version": "0.0.1",
     "private": true,
     "dependencies": {
-        "hello-world": "workspace:^",
-        "@open-pioneer/runtime": "workspace:^",
         "react": "^18.2.0",
         "react-dom": "^18.2.0"
     }
