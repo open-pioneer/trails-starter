@@ -73,7 +73,15 @@ Installed node tools can be invoked by running `pnpm exec <TOOL_AND_OPTIONS>` (o
 
 ## Common workflows
 
-TODO
+### Adding a dependency
+
+Do install a shared build dependency (a vite plugin for example), run `pnpm add -D -w <PACKAGE_NAME>`.
+`-D` will include the package as a devDependency, and `-w` will add it to the workspace root's `package.json`.
+
+To add a dependency to a workspace package or app, execute `pnpm add PACKAGE_NAME` from the package or app directory.
+
+You can also add the dependency manually by editing the `package.json` file directory.
+Keep in mind to execute `pnpm install` to update the lockfile after you're done with editing.
 
 ## Concepts
 
