@@ -285,7 +285,7 @@ it("should run", function () {
 
     // Calls `foo.doTheThing()`
     service.run();
-}):
+});
 ```
 
 TODO: UI Tests (integrate with react test utils)

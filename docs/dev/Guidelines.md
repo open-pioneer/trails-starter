@@ -2,13 +2,12 @@
 
 ## Definitions of Done
 
--   Generell ist es okay in den master/main direkt zu committen
--   Code in der main branch ist "grün", d.h. automatisierte Checks sind erfolgreich
--   Gerne Branches/Pull Requests zu nutzen, wenn sinnvoll
--   Neue Features sind dokumentiert (je nach Domäne entweder in der internen Entwicklerdoku oder in den API-Docs)
--   Neue Features sollen in der Demo angewendet werden bzw. veranschaulicht werden
--   Wir nehmen uns den Code mittels Reviews gegenseitig ab
--   Code wird wo immer möglich bzw. sinnvoll automatisiert getestet
+-   It is okay to commit to the main branch directly (can pull requests or branches can of course be used when appropriate)
+-   The code in main branch is supposed to build correctly and pass all quality checks (linting, typescript, etc.)
+-   New features are always documented (internally and/or externally)
+-   New features should be demonstrated via the demo deployment
+-   We review each other's code before closing an issue
+-   Automated tests are written wherever possible (and sensible)
 
 ## Code style
 
