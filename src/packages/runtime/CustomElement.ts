@@ -27,8 +27,12 @@ export function createCustomElement(options: CustomElementOptions): CustomElemen
 
         connectedCallback() {
             const node = (this.#rootNode = globalThis.document.createElement("div"));
-            this.#shadowRoot.replaceChildren(node);
-
+            
+            const style = document.createElement("style");
+            style.appendChild(document.createTextNode(options.styles));
+            
+            this.#shadowRoot.replaceChildren(node, style);
+            
             const reactRoot = (this.#reactRoot = createReactRoot(node));
             reactRoot.render(options.component);
             console.log("CONNECTED");

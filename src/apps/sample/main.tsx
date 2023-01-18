@@ -14,8 +14,8 @@ import { createCustomElement } from "@open-pioneer/runtime";
 // );
 
 const CustomElementClazz = createCustomElement({
-    component: <div>Hello World!</div>,
-    styles: "",
+    component: <div >Hello World!</div>,
+    styles: "div {background-color: red;}",
     openShadowRoot: true
 });
 globalThis.customElements.define("sample-element", CustomElementClazz);
