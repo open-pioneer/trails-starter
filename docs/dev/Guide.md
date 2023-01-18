@@ -42,6 +42,11 @@ The main configuration file for vite is `vite.config.ts`.
 Starts the [TypeScript compiler](https://www.typescriptlang.org/) in watch mode to detect problems during development.
 It is recommended to run this script alongside the `dev` server.
 
+### `pnpm run test`
+
+Starts [Vitest](https://vitest.dev/) to run all automated tests.
+Vitest will automatically watch all source code files and will rerun tests during development whenever it detects changes.
+
 ### `pnpm run build`
 
 Builds the project as a static site.
@@ -87,37 +92,50 @@ Keep in mind to execute `pnpm install` to update the lockfile after you're done 
 
 ### Monorepo
 
+We use [PNPM's workspace support](https://pnpm.io/workspaces) to lay out our repository.
+All node packages matching the patterns configured in the `pnpm-workspace.yaml` file are included in the workspace.
+Workspace packages may reference each other.
+
+For example, the following `package-a` will be able to use `package-b`:
+
+```json
+// package.json
+{
+    "name": "package-a",
+    "dependencies": {
+        "package-b": "workspace:^"
+    }
+}
+```
+
+`pnpm install` will resolve dependencies such as these by linking the packages to each other.
+For example, `package-a/node_modules/package-b` will be a link to `package-b`'s actual location in the workspace.
+
 ### TypeScript
+
+As a general rule, most code should be written in TypeScript.
+This protects against bugs, improves the developer experience (autocompletion, early detection of problems, etc.) and
+also ensures that type definitions and documentation for reusable libraries or bundles can be generated with little effort.
+
+However, usage of JavaScript _is_ supported.
+
+### Testing
+
+[Vitest](https://vitest.dev/) is used to write automated tests.
+To create new tests for a source code file, simply add a `*.test.ts` (or `.tsx`, `.js`, etc.) file next to it.
+It will then be automatically picked up by vitest.
+
+Use `pnpm run test` to run the test suite.
+
+Please refer to the [official documentation](https://vitest.dev/guide/) for more information.
 
 ### Linting and formatting
 
-<!--
+We use [Prettier](https://prettier.io/) to handle automatic source code formatting.
+This keeps code readable with reasonable defaults and also ensures that we don't waste time with unproductive style discussions.
+Prettier is configured by the `.prettierrc` file and it also respects parts of the `.editorconfig` file.
+It can be integrated into most modern IDEs to keep automatically keep edited files formatted properly.
 
-Notizen Antonia:
-ESM Syntax muss genutzt werden und es werden auch nur Browser unterstützt, die das entsprechend können.
-Es sollte/muss? TS genutzt werden.
-
--> Erläutern, was die einzelnen pnpm Befehle/Skripte machen und wann welche ausgeführt werden sollten
-clean Befehl zum Löschen des Dist ordners? -> pnpm clean (erläutern, dass das bei einem Build automatisch gemacht wird)
-
-Was sind Monorepos und wie funktioniert das ganze (bei uns im Projekt)?
-
-Wofür ist welche Config Datei gut?
-
-Grundlagen ES Lint
-
-Grundlagen Prettier
-
-Grundlagen Vite
-vite.config.ts Konfigurationsdatei
-Plugin-API
-Welche Plugins werden genutzt und wofür?
-index.html
-
-Grundlagen Vitest
-
-Typescript Compiler im Watch-Modus laufen lassen?
-
-
-
--->
+[ESLint](https://eslint.org/) runs within the dev server (as a vite plugin) and when pushing to the github repository (within the github actions workflow).
+It checks the code against configured rules (see `.eslintrc`) and fails the build when it detects a code style violation.
+ESLint helps detecting minor style issues (e.g. missing semicolons) and outright programming errors (e.g. wrong usage of react hooks).
