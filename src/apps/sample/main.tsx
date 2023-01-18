@@ -1,14 +1,14 @@
-import { createCustomElement } from "@open-pioneer/runtime";
 import React from "react";
+import { createCustomElement } from "@open-pioneer/runtime";
 import { App } from "./App";
 
-const CustomElementClazz = createCustomElement({
+const Element = createCustomElement({
     component: (
         <React.StrictMode>
             <App />
         </React.StrictMode>
     ),
-    styles: "div {background-color: red;}",
-    openShadowRoot: true
+    styles: "div {background-color: red;}"
 });
-customElements.define("sample-element", CustomElementClazz);
+
+customElements.define("sample-element", Element);
