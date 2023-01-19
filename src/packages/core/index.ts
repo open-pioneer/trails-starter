@@ -1,1 +1,1 @@
-export { Error } from "./error";
+export { Error, getErrorChain } from "./error";

@@ -1,77 +1,62 @@
 import { expect, it } from "vitest";
-import { BundleMetadata } from "../Metadata";
+import { Service, ServiceOptions } from "../Service";
+import { BundleRepr } from "./BundleRepr";
 import { ServiceLayer } from "./ServiceLayer";
+import { ServiceRepr } from "./ServiceRepr";
 
-class ClazzA {}
+it("starts and stops services in the expected order", function () {
+    const events: string[] = [];
 
-class ClazzB {}
-
-it("parses bundle metadata into internal bundle representations", function () {
-    const metadata: Record<string, BundleMetadata> = {
-        b: {
-            name: "b",
-            services: {
-                B: {
-                    name: "B",
-                    clazz: ClazzB,
-                    provides: [
-                        {
-                            interface: "b.ServiceB1"
-                        },
-                        {
-                            interface: "b.ServiceB2"
-                        }
-                    ],
-                    references: {}
-                }
+    class ServiceA implements Service {
+        constructor(
+            options: ServiceOptions<{
+                b: unknown;
+            }>
+        ) {
+            if (!(options.references.b instanceof ServiceB)) {
+                throw new Error("unexpected value for service b");
             }
-        },
-        a: {
-            name: "a",
-            services: {
-                A: {
-                    name: "A",
-                    clazz: ClazzA,
-                    provides: [],
-                    references: {
-                        "foo": {
-                            interface: "b.ServiceB1"
-                        }
-                    }
-                }
-            }
+
+            events.push("construct-a");
         }
-    };
-    
-    const serviceLayer = new ServiceLayer(metadata);
-    const bundles = serviceLayer.bundles;
-    expect(bundles).toHaveLength(2);
 
-    const bundleA = bundles.find(b => b.name === "a")!;
-    expect(bundleA).toBeDefined();
+        destroy(): void {
+            events.push("destroy-a");
+        }
+    }
 
-    const serviceA = bundleA.services.find(s => s.name === "A")!;
-    expect(serviceA).toBeDefined();
-    expect(serviceA.id).toStrictEqual("a::A");
-    expect(serviceA.state).toStrictEqual("not-constructed");
-    expect(serviceA.instance).toBeUndefined();
-    expect(serviceA.dependencies).toEqual([{
-        name: "foo",
-        interface: { interface: "b.ServiceB1" }
-    }]);
-    expect(serviceA.interfaces).toEqual([]);
+    class ServiceB implements Service {
+        constructor() {
+            events.push("construct-b");
+        }
 
-    const bundleB = bundles.find(b => b.name === "b")!;
-    expect(bundleB).toBeDefined();
-    
-    const serviceB = bundleB.services.find(s => s.name === "B")!;
-    expect(serviceB).toBeDefined();
-    expect(serviceB.interfaces).toEqual([
-        "b.ServiceB1",
-        "b.ServiceB2"
+        destroy() {
+            events.push("destroy-b");
+        }
+    }
+
+    const serviceLayer = new ServiceLayer([
+        new BundleRepr("a", [
+            new ServiceRepr(
+                "A",
+                "a",
+                ServiceA,
+                [
+                    {
+                        name: "b",
+                        interface: "b.serviceB"
+                    }
+                ],
+                []
+            )
+        ]),
+        new BundleRepr("b", [new ServiceRepr("B", "b", ServiceB, [], ["b.serviceB"])])
     ]);
 
-    expect(serviceLayer.serviceIndex.size).toBe(2);
-    expect(serviceLayer.serviceIndex.get("b.ServiceB1")).toBe(serviceB);
-    expect(serviceLayer.serviceIndex.get("b.ServiceB2")).toBe(serviceB);
+    serviceLayer.start();
+    expect(events).toEqual(["construct-b", "construct-a"]); // dep before usage
+    events.splice(0, events.length);
+
+    serviceLayer.destroy();
+    expect(events).toEqual(["destroy-a", "destroy-b"]); // reverse order
 });

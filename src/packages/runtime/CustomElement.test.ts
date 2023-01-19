@@ -1,5 +1,8 @@
+/**
+ * @vitest-environment jsdom
+ */
+import { createElement } from "react";
 import { beforeAll, expect, it } from "vitest";
-
 import { createCustomElement } from "./CustomElement";
 
 let elem: CustomElementConstructor;
@@ -8,7 +11,7 @@ const style = ".test { color: red }";
 
 beforeAll(() => {
     elem = createCustomElement({
-        component: <div className="test">hello world</div>,
+        component: createElement("div", { className: "test" }, "hello world"),
         styles: style,
         openShadowRoot: true
     });

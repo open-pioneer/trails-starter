@@ -8,8 +8,8 @@ export interface BundleMetadata {
     name: string;
 
     /**
-     * Collection of services defined in the bundle. 
-     * 
+     * Collection of services defined in the bundle.
+     *
      * Key: unique service name (in the bundle).
      * Value: service metadata.
      */
@@ -31,7 +31,7 @@ export interface ServiceMetadata {
      * Collection of references to other services.
      * The runtime will inject the required services when possible
      * or provide a diagnostic if not.
-     * 
+     *
      * Key: reference name.
      * Value: reference metadata.
      */

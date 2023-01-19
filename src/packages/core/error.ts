@@ -12,6 +12,19 @@ declare global {
     }
 }
 
+/**
+ * A custom error class that enforces the use of error ids.
+ *
+ * An error must be constructed from a (computer-readable) id and a human readable informational text.
+ * An optional `cause` option can be passed to indicate the nested reason for an error.
+ *
+ * # Conventions
+ *
+ * Error ids should be scoped to a package to avoid conflicts.
+ * Each package should pick a sensible namespace prefix.
+ *
+ * An example for a good error id is `runtime:dependency-cycle`.
+ */
 export class Error extends GlobalError {
     public readonly id: string;
     public readonly text: string;
@@ -24,24 +37,22 @@ export class Error extends GlobalError {
     }
 }
 
-/** 
+/**
  * Returns the error chain for the given `err`, starting with this error.
  * The error chain contains the error itself and all its causes.
  * The first entry is `err` itself.
  */
 export function getErrorChain(err: globalThis.Error): globalThis.Error[] {
     const chain: globalThis.Error[] = [];
-    // eslint-disable-next-line no-constant-condition
-    while (true) {
+    do {
         chain.push(err);
-        
+
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        const cause = (err as any).cause;
-        if (cause instanceof GlobalError) {
-            err = cause;
-        } else {
+        const cause = (err as any).cause as unknown;
+        if (!(cause instanceof GlobalError)) {
             break;
         }
-    }
+        err = cause;
+    } while (1); // eslint-disable-line no-constant-condition
     return chain;
 }

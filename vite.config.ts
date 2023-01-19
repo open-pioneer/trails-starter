@@ -18,7 +18,5 @@ export default defineConfig({
     plugins: [react(), eslint()],
 
     // https://vitest.dev/config/
-    test: {
-        environment: "jsdom"
-    }
+    test: {}
 });

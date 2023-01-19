@@ -1,102 +1,88 @@
-import { BundleMetadata } from "../Metadata";
 import { ServiceRepr } from "./ServiceRepr";
 import { Error } from "@open-pioneer/core";
 import { ErrorId } from "../errors";
 import { verifyDependencies } from "./verifyDependencies";
-export class ServiceLayer {
-    readonly bundles: readonly BundleRepr[];
-    readonly allServices: ServiceRepr[] = [];
-    readonly serviceIndex: ReadonlyMap<string, ServiceRepr>;
+import { BundleRepr } from "./BundleRepr";
 
-    constructor(bundles: Record<string, BundleMetadata>) {
-        this.bundles = Object.entries(bundles).map<BundleRepr>(([name, bundleMetadata]) => {
-            if (name !== bundleMetadata.name) {
-                throw new Error(ErrorId.INVALID_METADATA, "Invalid metadata: bundle name mismatch.");
-            }
-            const bundles = BundleRepr.parse(bundleMetadata);
-            this.allServices.push(...bundles.services);
-            return bundles;
+export class ServiceLayer {
+    readonly serviceIndex: ReadonlyMap<string, ServiceRepr>;
+    private allServices: readonly ServiceRepr[];
+    private state: "not-started" | "started" | "destroyed" = "not-started";
+
+    constructor(bundles: readonly BundleRepr[]) {
+        this.allServices = bundles.map((bundle) => bundle.services).flat();
+        this.serviceIndex = verifyDependencies(this.allServices);
+    }
+
+    destroy() {
+        this.allServices.forEach((value) => {
+            this.destroyService(value);
         });
-        this.serviceIndex = indexServices(this.bundles);
-        verifyDependencies(this.allServices);
+        this.state = "destroyed";
     }
 
     start() {
+        if (this.state !== "not-started") {
+            throw new Error(ErrorId.INTERNAL, "Service layer was already started.");
+        }
+
         this.allServices.forEach((value) => {
             this.initService(value);
         });
+        this.state = "started";
     }
 
-    initService(service: ServiceRepr) {
-        if (service.state === "constructing") {
-            throw new Error(ErrorId.INTERNAL, "Cycle during service construction");
+    /**
+     * Initializes the given service and its dependencies.
+     * Dependencies are initialized before the service that requires them.
+     */
+    private initService(service: ServiceRepr) {
+        if (service.state === "constructed") {
+            return service.instance;
         }
-
+        if (service.state === "constructing") {
+            throw new Error(ErrorId.INTERNAL, "Cycle during service construction.");
+        }
         if (service.state !== "not-constructed") {
-            if (service.state === "constructed") {
-                return service.instance;
-            }
-            throw new Error(ErrorId.INTERNAL, "Unknown construction state");
+            throw new Error(ErrorId.INTERNAL, "Invalid service state.");
         }
 
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        const instances : Record<string, any> = {};
+        const instances: Record<string, any> = {};
+
+        // Sets state to 'constructing' to detect cycles
         service.beforeCreate();
-        service.dependencies.forEach(d => {
-            const serviceRef = this.serviceIndex.get(d.interface.interface);
+
+        // Initialize dependencies recursively before creating the current service.
+        service.dependencies.forEach((d) => {
+            const serviceRef = this.serviceIndex.get(d.interface);
             if (serviceRef) {
                 const instance = this.initService(serviceRef);
                 instances[d.name] = instance;
             } else {
-                throw new Error(ErrorId.INTERNAL, "Service not defined");
+                throw new Error(ErrorId.INTERNAL, "Service not defined.");
             }
         });
-        return service.create({references: instances});
+        return service.create({ references: instances });
     }
 
-    // stop() {
-
-    // }
-}
-
-// TODO: Needed? Can transport index from verify
-function indexServices(bundles: readonly BundleRepr[]): Map<string, ServiceRepr> {
-    const index = new Map<string, ServiceRepr>();
-    for (const bundle of bundles) {
-        for (const service of bundle.services) {
-            for (const interfaceName of service.interfaces) {
-                const existing = index.get(interfaceName);
-                if (existing) {
-                    throw new Error(
-                        ErrorId.DUPLICATE_INTERFACE, 
-                        `Cannot register '${service.id}' as interface '${interfaceName}'. '${interfaceName}' is already provided by service '${existing.id}'.`
-                    );
-                }
-                index.set(interfaceName, service);
-            }
+    /**
+     * Destroys the given service and its dependencies.
+     * The dependencies are destroyed after the service.
+     */
+    private destroyService(service: ServiceRepr) {
+        if (service.state === "destroyed") {
+            return;
         }
-    }
-    return index;
-}
 
-
-class BundleRepr {
-    static parse(data: BundleMetadata): BundleRepr {
-        const name = data.name;
-        const services = Object.entries(data.services).map<ServiceRepr>(([name, serviceData]) => {
-            if (name !== serviceData.name) {
-                throw new Error(ErrorId.INVALID_METADATA, "Invalid metadata: service name mismatch");
+        // Destroy the service before its dependencies (reverse order
+        // compared to construction).
+        service.destroy();
+        service.dependencies.forEach((d) => {
+            const serviceRef = this.serviceIndex.get(d.interface);
+            if (serviceRef) {
+                this.destroyService(serviceRef);
             }
-            return ServiceRepr.parse(data.name, serviceData);
         });
-        return new BundleRepr(name, services);
-    }
-
-    readonly name: string;
-    readonly services: readonly ServiceRepr[];
-
-    constructor(name: string, services: ServiceRepr[]) {
-        this.name = name;
-        this.services = services;
     }
 }

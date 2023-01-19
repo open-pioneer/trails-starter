@@ -17,7 +17,10 @@ it("does not return an error on acyclic graphs", function () {
             requires: ["services.Map"]
         }
     ]);
-    verifyDependencies(components);
+
+    const index = verifyDependencies(components);
+    assert.strictEqual(index.size, 1);
+    assert.deepEqual(index.get("services.Map")!.id, "map::Map");
 });
 
 it("throws when a service is not implemented", function () {
@@ -99,9 +102,7 @@ function mockComponents(data: ServiceData[]): ServiceRepr[] {
         const dependencies = service.requires.map<Dependency>((interfaceName, index) => {
             return {
                 name: `dep_${index}`,
-                interface: {
-                    interface: interfaceName
-                }
+                interface: interfaceName
             };
         });
         return new ServiceRepr(name, bundleName, clazz, dependencies, service.provides);

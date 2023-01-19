@@ -6,9 +6,13 @@ import { ServiceRepr } from "./ServiceRepr";
  * Visits all services and ensures that their dependencies can be satisfied by each other without a cycle.
  *
  * Throws an error if a cycle is detected or if a required service is never implemented.
+ *
+ * @returns the verified index from interface name to service class.
  */
-export function verifyDependencies(services: ServiceRepr[]) {
-    new Verifier(services).verify();
+export function verifyDependencies(services: readonly ServiceRepr[]) {
+    const verifier = new Verifier(services);
+    verifier.verify();
+    return verifier.getServiceIndex();
 }
 
 interface GraphItem {
@@ -35,7 +39,7 @@ class Verifier {
     // Stack of visited nodes
     private stack: [item: GraphItem, reason: Reason][] = [];
 
-    constructor(services: ServiceRepr[]) {
+    constructor(services: readonly ServiceRepr[]) {
         const items = (this.items = services.map<GraphItem>((service) => {
             return {
                 service: service,
@@ -56,6 +60,14 @@ class Verifier {
         }
     }
 
+    getServiceIndex() {
+        const index = new Map<string, ServiceRepr>();
+        for (const [k, v] of this.services) {
+            index.set(k, v.service);
+        }
+        return index;
+    }
+
     private visitItem(item: GraphItem, reason: Reason) {
         const stack = this.stack;
         const services = this.services;
@@ -69,10 +81,9 @@ class Verifier {
 
         stack.push([item, reason]);
         item.state = "pending";
-        for (const { name: dependencyName, interface: interfaceMetadata } of item.service
+        for (const { name: dependencyName, interface: interfaceName } of item.service
             .dependencies) {
-            const interfaceName = interfaceMetadata.interface;
-            const childItem = services.get(interfaceMetadata.interface);
+            const childItem = services.get(interfaceName);
             if (!childItem) {
                 throw new Error(
                     ErrorId.INTERFACE_NOT_FOUND,
@@ -91,9 +102,7 @@ class Verifier {
         const stack = this.stack;
         const ownIndex = stack.findIndex((entry) => entry[0] === item);
         if (ownIndex === -1) {
-            throw new Error(
-                ErrorId.INTERNAL, "Failed to find cycle participant on the stack."
-            );
+            throw new Error(ErrorId.INTERNAL, "Failed to find cycle participant on the stack.");
         }
 
         const cycleInfo = stack
@@ -121,11 +130,10 @@ class Verifier {
         if (existing) {
             // TODO: Duplicate error handling, see ServiceLayer.ts
             throw new Error(
-                ErrorId.DUPLICATE_INTERFACE, 
+                ErrorId.DUPLICATE_INTERFACE,
                 `Cannot register '${item.service.id}' as interface '${interfaceName}'. '${interfaceName}' is already provided by service '${existing.service.id}'.`
             );
         }
         services.set(interfaceName, item);
     }
 }
- 

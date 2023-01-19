@@ -1,6 +1,5 @@
 import { Service, createCustomElement, ServiceOptions } from "@open-pioneer/runtime";
 import { BundleMetadata } from "@open-pioneer/runtime/Metadata";
-import { ServiceLayer } from "@open-pioneer/runtime/services/ServiceLayer";
 
 interface UserReferences {
     provider: ProviderInterface;
@@ -58,7 +57,5 @@ const Element = createCustomElement({
     component: "test",
     bundles
 });
-
-new ServiceLayer(bundles).start();
 
 customElements.define("services-sample", Element);
