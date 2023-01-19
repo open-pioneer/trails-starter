@@ -60,14 +60,25 @@ importers:
       hello-world: link:../../packages/hello-world
       react: 18.2.0
 
+  src/apps/services-sample:
+    specifiers:
+      '@open-pioneer/runtime': workspace:^
+    dependencies:
+      '@open-pioneer/runtime': link:../../packages/runtime
+
+  src/packages/core:
+    specifiers: {}
+
   src/packages/hello-world:
     specifiers: {}
 
   src/packages/runtime:
     specifiers:
+      '@open-pioneer/core': workspace:^
       react: ^18.2.0
       react-dom: ^18.2.0
     dependencies:
+      '@open-pioneer/core': link:../core
       react: 18.2.0
       react-dom: 18.2.0_react@18.2.0
 

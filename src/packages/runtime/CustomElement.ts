@@ -1,11 +1,25 @@
 import { createElement, ReactNode, StrictMode } from "react";
 import { createRoot as createReactRoot, Root as ReactRoot } from "react-dom/client";
+import { BundleMetadata } from "./Metadata";
 
+/**
+ * Options for the {@link createCustomElement} function.
+ */
 export interface CustomElementOptions {
     /**
      * Rendered UI component.
      */
     component: ReactNode;
+
+    /**
+     * Bundle metadata.
+     * Metadata structures contain information about services 
+     * that are needed during runtime.
+     * 
+     * Services provided by bundles in this attribute will be started
+     * as necessary and can be referenced during runtime.
+     */
+    bundles?: Record<string, BundleMetadata>;
 
     /**
      * Styles for UI component.
@@ -51,7 +65,7 @@ export function createCustomElement(options: CustomElementOptions): CustomElemen
             style.appendChild(document.createTextNode(options.styles ?? ""));
             
             this.#shadowRoot.replaceChildren(node, style);
-            
+           
             const reactRoot = (this.#reactRoot = createReactRoot(node));
             reactRoot.render(
                 createElement(StrictMode, undefined, options.component)
