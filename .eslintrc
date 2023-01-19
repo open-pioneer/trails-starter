@@ -35,7 +35,6 @@
         "linebreak-style": ["error", "unix"],
         "quotes": ["error", "double"],
         "semi": ["error", "always"],
-        "@typescript-eslint/no-non-null-assertion": "off",
 
         // Disallow relative import into another package, e.g. `../other-package/foo`
         "import/no-relative-packages": "error",
@@ -55,5 +54,14 @@
                 "argsIgnorePattern": "^_"
             }
         ]
-    }
+    },
+    "overrides": [
+        {
+            "files": ["*.test.*"],
+            "rules": {
+                // Allow non-null assertions in test files
+                "@typescript-eslint/no-non-null-assertion": "off"
+            }
+        }
+    ]
 }
