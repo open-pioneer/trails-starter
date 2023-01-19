@@ -1,4 +1,4 @@
-import { ReactNode } from "react";
+import { createElement, ReactNode, StrictMode } from "react";
 import { createRoot as createReactRoot, Root as ReactRoot } from "react-dom/client";
 
 export interface CustomElementOptions {
@@ -21,6 +21,7 @@ export interface CustomElementOptions {
 
 /**
  * Creates a new custom element class (web component) that can be registered within a DOM.
+ * 
  * @example 
  * ```ts
  * const CustomElementClazz = createCustomElement({
@@ -52,7 +53,9 @@ export function createCustomElement(options: CustomElementOptions): CustomElemen
             this.#shadowRoot.replaceChildren(node, style);
             
             const reactRoot = (this.#reactRoot = createReactRoot(node));
-            reactRoot.render(options.component);
+            reactRoot.render(
+                createElement(StrictMode, undefined, options.component)
+            );
         }
 
         disconnectedCallback() {
