@@ -22,11 +22,7 @@ it("parses bundle metadata into internal bundle representations", function () {
                             interface: "b.ServiceB2"
                         }
                     ],
-                    references: {
-                        "member": {
-                            interface: "c.ServiceC"
-                        }
-                    }
+                    references: {}
                 }
             }
         },
