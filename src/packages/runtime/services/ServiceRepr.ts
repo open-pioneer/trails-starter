@@ -1,5 +1,7 @@
+import { ErrorId } from "./../errors";
 import { InterfaceReferenceMetadata, ServiceMetadata } from "../Metadata";
-import { Service, ServiceConstructor } from "../Service";
+import { Service, ServiceConstructor, ServiceOptions } from "../Service";
+import { Error } from "@open-pioneer/core";
 
 // TODO: Improve readonly-ness
 export interface Dependency {
@@ -10,13 +12,15 @@ export interface Dependency {
     interface: InterfaceReferenceMetadata;
 }
 
+type ServiceState = "not-constructed" | "constructing" | "constructed" | "destroyed";
+
 export class ServiceRepr {
     static parse(bundleName: string, data: ServiceMetadata): ServiceRepr {
         const clazz = data.clazz;
         const name = data.name;
         const dependencies = Object.entries(data.references ?? {}).map<Dependency>(([name, referenceMetadata]) => {
             return {
-                name, 
+                name,
                 interface: referenceMetadata
             };
         });
@@ -32,7 +36,7 @@ export class ServiceRepr {
 
     /** Name of the parent bundle. */
     readonly bundleName: string;
-    
+
     /** Dependencies required by the service constructor. */
     readonly dependencies: readonly Dependency[];
 
@@ -43,10 +47,10 @@ export class ServiceRepr {
     private clazz: ServiceConstructor;
 
     /** Current state of this service. "constructed" -> instance is available. */
-    readonly state: "not-constructed" | "constructed" | "destroyed" = "not-constructed";
+    private _state: ServiceState = "not-constructed";
 
     /** Service instance, once constructed. */
-    readonly instance: Service | undefined = undefined;
+    private _instance: Service | undefined = undefined;
 
     constructor(name: string, bundleName: string, clazz: ServiceConstructor, dependencies: Dependency[], interfaces: string[]) {
         this.id = `${bundleName}::${name}`;
@@ -56,4 +60,30 @@ export class ServiceRepr {
         this.dependencies = dependencies;
         this.interfaces = interfaces;
     }
+
+    create(options: ServiceOptions) {
+        if (this._state !== "constructing" || this.instance !== undefined) {
+            throw new Error(ErrorId.INTERNAL, "Inconsistent state");
+        }
+        this._instance = new (this.clazz)(options);
+        this._state = "constructed";
+        return this._instance;
+    }
+
+    public get instance(): Service | undefined {
+        return this._instance;
+    }
+
+    public beforeCreate() {
+        if (this._state === "not-constructed") {
+            this._state = "constructing";
+        } else {
+            throw new Error(ErrorId.INTERNAL, "Inconsistent state");
+        }
+    }
+
+    public get state() {
+        return this._state;
+    }
+    
 }

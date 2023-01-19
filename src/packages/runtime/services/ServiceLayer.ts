@@ -2,9 +2,10 @@ import { BundleMetadata } from "../Metadata";
 import { ServiceRepr } from "./ServiceRepr";
 import { Error } from "@open-pioneer/core";
 import { ErrorId } from "../errors";
-
+import { verifyDependencies } from "./verifyDependencies";
 export class ServiceLayer {
     readonly bundles: readonly BundleRepr[];
+    readonly allServices: ServiceRepr[] = [];
     readonly serviceIndex: ReadonlyMap<string, ServiceRepr>;
 
     constructor(bundles: Record<string, BundleMetadata>) {
@@ -12,14 +13,46 @@ export class ServiceLayer {
             if (name !== bundleMetadata.name) {
                 throw new Error(ErrorId.INVALID_METADATA, "Invalid metadata: bundle name mismatch.");
             }
-            return BundleRepr.parse(bundleMetadata);
+            const bundles = BundleRepr.parse(bundleMetadata);
+            this.allServices.push(...bundles.services);
+            return bundles;
         });
         this.serviceIndex = indexServices(this.bundles);
+        verifyDependencies(this.allServices);
     }
 
-    // start() {
+    start() {
+        this.allServices.forEach((value) => {
+            this.initService(value);
+        });
+    }
 
-    // }
+    initService(service: ServiceRepr) {
+        if (service.state === "constructing") {
+            throw new Error(ErrorId.INTERNAL, "Cycle during service construction");
+        }
+
+        if (service.state !== "not-constructed") {
+            if (service.state === "constructed") {
+                return service.instance;
+            }
+            throw new Error(ErrorId.INTERNAL, "Unknown construction state");
+        }
+
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        const instances : Record<string, any> = {};
+        service.beforeCreate();
+        service.dependencies.forEach(d => {
+            const serviceRef = this.serviceIndex.get(d.interface.interface);
+            if (serviceRef) {
+                const instance = this.initService(serviceRef);
+                instances[d.name] = instance;
+            } else {
+                throw new Error(ErrorId.INTERNAL, "Service not defined");
+            }
+        });
+        return service.create({references: instances});
+    }
 
     // stop() {
 
