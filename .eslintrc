@@ -9,7 +9,7 @@
         "prettier"
     ],
     "parser": "@typescript-eslint/parser",
-    "plugins": ["@typescript-eslint", "import", "react", "react-hooks"],
+    "plugins": ["@typescript-eslint", "import", "unused-imports", "react", "react-hooks"],
     "env": {
         "node": true,
         "browser": true
@@ -38,6 +38,22 @@
         "@typescript-eslint/no-non-null-assertion": "off",
 
         // Disallow relative import into another package, e.g. `../other-package/foo`
-        "import/no-relative-packages": "error"
+        "import/no-relative-packages": "error",
+
+        // Warn/error for unused imports and variables.
+        // Variables can be prefixed with _ to disable the warning when necessary.
+        "no-unused-vars": "off",
+        "@typescript-eslint/no-unused-vars": "off",
+        "react/jsx-uses-vars": "error",
+        "unused-imports/no-unused-imports": "error",
+        "unused-imports/no-unused-vars": [
+            "warn",
+            {
+                "vars": "all",
+                "varsIgnorePattern": "^_",
+                "args": "after-used",
+                "argsIgnorePattern": "^_"
+            }
+        ]
     }
 }

@@ -16,6 +16,7 @@ importers:
       eslint-plugin-import: ^2.27.5
       eslint-plugin-react: ^7.32.0
       eslint-plugin-react-hooks: ^4.6.0
+      eslint-plugin-unused-imports: ^2.0.0
       jsdom: ^21.0.0
       prettier: ^2.8.1
       react: ^18.2.0
@@ -38,6 +39,7 @@ importers:
       eslint-plugin-import: 2.27.5_26i2w5mui4ucix7iyirx6fcd3i
       eslint-plugin-react: 7.32.0_eslint@8.32.0
       eslint-plugin-react-hooks: 4.6.0_eslint@8.32.0
+      eslint-plugin-unused-imports: 2.0.0_rtxmtarm6rlrmwvbk6jvtkpvgi
       jsdom: 21.0.0
       prettier: 2.8.3
       react: 18.2.0
@@ -53,12 +55,10 @@ importers:
       '@open-pioneer/runtime': workspace:^
       hello-world: workspace:^
       react: ^18.2.0
-      react-dom: ^18.2.0
     dependencies:
       '@open-pioneer/runtime': link:../../packages/runtime
       hello-world: link:../../packages/hello-world
       react: 18.2.0
-      react-dom: 18.2.0_react@18.2.0
 
   src/packages/hello-world:
     specifiers: {}
@@ -1469,6 +1469,26 @@ packages:
       resolve: 2.0.0-next.4
       semver: 6.3.0
       string.prototype.matchall: 4.0.8
+    dev: true
+
+  /eslint-plugin-unused-imports/2.0.0_rtxmtarm6rlrmwvbk6jvtkpvgi:
+    resolution: {integrity: sha512-3APeS/tQlTrFa167ThtP0Zm0vctjr4M44HMpeg1P4bK6wItarumq0Ma82xorMKdFsWpphQBlRPzw/pxiVELX1A==}
+    engines: {node: ^12.22.0 || ^14.17.0 || >=16.0.0}
+    peerDependencies:
+      '@typescript-eslint/eslint-plugin': ^5.0.0
+      eslint: ^8.0.0
+    peerDependenciesMeta:
+      '@typescript-eslint/eslint-plugin':
+        optional: true
+    dependencies:
+      '@typescript-eslint/eslint-plugin': 5.48.1_oomjohfipuyaxs2zyomcx4f5by
+      eslint: 8.32.0
+      eslint-rule-composer: 0.3.0
+    dev: true
+
+  /eslint-rule-composer/0.3.0:
+    resolution: {integrity: sha512-bt+Sh8CtDmn2OajxvNO+BX7Wn4CIWMpTRm3MaiKPCQcnnlm0CS2mhui6QaoeQugs+3Kj2ESKEEGJUdVafwhiCg==}
+    engines: {node: '>=4.0.0'}
     dev: true
 
   /eslint-scope/5.1.1:
