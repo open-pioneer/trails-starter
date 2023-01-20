@@ -290,6 +290,44 @@ it("should run", function () {
 
 TODO: UI Tests (integrate with react test utils)
 
+### App Configuration
+
+There are multiple kinds of configuration properties that should all be supported:
+
+1.  Default configuration options in a service that can be customized
+2.  Static application-wide configuration in an app, either in code or in a configuration file.
+    These properties should be shared by all instances of the same app.
+3.  Dynamic application-wide configuration, for example by fetching a resource from a server.
+    These properties should be shared by all instances of the same app.
+4.  Dynamic per-application configuration, for example HTML attributes on the custom element.
+
+Default configuration properties can be declared with other service metadata in the `build.config.js` file of a bundle.
+These values will serve as fallback values in case no other value is provided.
+
+To implement the remaining cases, the most general solution would be to provide a callback in the `app` object responsible for
+loading configuration properties:
+
+```js
+const app = {
+    // Called on app start
+    async loadProperties(context) {
+        // Context also contains html attributes etc.
+        const dynamicProperties = await fetch("https://example.com/property-source");
+
+        // App is initialized with these properties
+        return {
+            "some.property": dynamicProperties.property
+        };
+    }
+};
+
+// Creates and registers the web component <sample-app /> from the `app` object.
+globalThis.customElements.define("sample-app", createCustomElement(app));
+```
+
+More specific ways of configuration can be built on top of this generic API.
+For example, a hardcoded value can be returned, or a `.json` file can be imported and returned.
+
 ### Multi-page application
 
 A single repository should be able to produce multiple web components and html files.
