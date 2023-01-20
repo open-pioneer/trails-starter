@@ -65,6 +65,8 @@ export class ServiceLayer {
                 throw new Error(ErrorId.INTERNAL, "Service not defined.");
             }
         });
+
+        // Sets state to 'constructed' to finish the state transition, useCount is 1.
         return service.create({ references: instances, properties: service.properties });
     }
 

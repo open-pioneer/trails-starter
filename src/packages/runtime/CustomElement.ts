@@ -51,13 +51,6 @@ export interface CustomElementOptions {
  * ```
  */
 export function createCustomElement(options: CustomElementOptions): CustomElementConstructor {
-    let bundles: BundleRepr[];
-    try {
-        bundles = parseBundles(options.bundles ?? {});
-    } catch (e) {
-        throw new Error(ErrorId.INVALID_METADATA, "Failed to parse bundle metadata.");
-    }
-
     class PioneerApplication extends HTMLElement {
         #shadowRoot: ShadowRoot;
         #rootNode: HTMLDivElement | undefined;
@@ -73,8 +66,14 @@ export function createCustomElement(options: CustomElementOptions): CustomElemen
 
         connectedCallback() {
             const node = (this.#rootNode = document.createElement("div"));
-
             try {
+                let bundles: BundleRepr[];
+                try {
+                    bundles = parseBundles(options.bundles ?? {});
+                } catch (e) {
+                    throw new Error(ErrorId.INVALID_METADATA, "Failed to parse bundle metadata.");
+                }
+            
                 const serviceLayer = (this.#serviceLayer = new ServiceLayer(bundles));
                 serviceLayer.start();
 
