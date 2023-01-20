@@ -1,7 +1,7 @@
 /**
  * @vitest-environment jsdom
  */
-import { createElement } from "react";
+import { Component, createElement } from "react";
 import { beforeAll, expect, it } from "vitest";
 import { createCustomElement } from "./CustomElement";
 
@@ -9,9 +9,15 @@ let elem: CustomElementConstructor;
 const tag = "sample-element";
 const style = ".test { color: red }";
 
+class TestComponent extends Component<Record<string, string>> {
+    render() {
+        return createElement("span", this.props, `Hello ${this.props.name}`);
+    }
+}
+
 beforeAll(() => {
     elem = createCustomElement({
-        component: createElement("div", { className: "test" }, "hello world"),
+        component: () => createElement("div", { className: "test" }, "hello world"),
         styles: style,
         openShadowRoot: true
     });
@@ -43,6 +49,20 @@ it("should clean up its content when removed from the dom", async () => {
     // Wait until divs are gone
     await TestUtils.waitForRemoval("div");
     expect(node.shadowRoot?.innerHTML).toBe("");
+});
+
+it("should render test component with attribute 'name'", async () => {
+    const attributeValue = "test";
+    elem = createCustomElement({
+        component: (props) => createElement("div", { id: "wrapper" }, createElement(TestComponent, props)),
+        attributes: ["name"],
+        openShadowRoot: true
+    });
+    customElements.define("test-elem", elem);
+    const customElement = await TestUtils.render("test-elem");
+    customElement.setAttribute("name", attributeValue);
+    const selectedElem = await TestUtils.waitForSelector("#wrapper", customElement.shadowRoot!);
+    expect(selectedElem.querySelector("span")!.innerHTML).toBe(`Hello ${attributeValue}`);
 });
 
 class TestUtils {

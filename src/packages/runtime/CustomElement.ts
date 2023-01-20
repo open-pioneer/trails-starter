@@ -1,4 +1,4 @@
-import { createElement, ReactNode, StrictMode } from "react";
+import { ComponentType, createElement, StrictMode } from "react";
 import { createRoot as createReactRoot, Root as ReactRoot } from "react-dom/client";
 import { Error } from "@open-pioneer/core";
 import { ErrorId } from "./errors";
@@ -14,7 +14,7 @@ export interface CustomElementOptions {
     /**
      * Rendered UI component.
      */
-    component: ReactNode;
+    component: ComponentType<Record<string, string>>;
 
     /**
      * Package metadata.
@@ -25,6 +25,12 @@ export interface CustomElementOptions {
      * as necessary and can be referenced during runtime.
      */
     packages?: Record<string, PackageMetadata>;
+
+    /**
+     * Attribute names for component inputs. Changes on this attributes 
+     * triggers the component rendering.
+     */
+    attributes?: string[];
 
     /**
      * Styles for UI component.
@@ -56,6 +62,11 @@ export function createCustomElement(options: CustomElementOptions): CustomElemen
         #rootNode: HTMLDivElement | undefined;
         #serviceLayer: ServiceLayer | undefined;
         #reactRoot: ReactRoot | undefined;
+        #props: Record<string, string> = {};
+
+        static get observedAttributes() {
+            return options.attributes ?? [];
+        }
 
         constructor() {
             super();
@@ -81,10 +92,16 @@ export function createCustomElement(options: CustomElementOptions): CustomElemen
                 style.appendChild(document.createTextNode(options.styles ?? ""));
                 this.#shadowRoot.replaceChildren(node, style);
 
-                const reactRoot = (this.#reactRoot = createReactRoot(node));
-                reactRoot.render(createElement(StrictMode, undefined, options.component));
+                this.#reactRoot = createReactRoot(node);
+                this.render();
             } catch (e) {
                 logError(e);
+            }
+        }
+
+        private render() {
+            if (this.#reactRoot) {
+                this.#reactRoot.render(createElement(StrictMode, undefined, createElement(options.component, this.#props)));
             }
         }
 
@@ -95,6 +112,13 @@ export function createCustomElement(options: CustomElementOptions): CustomElemen
             this.#rootNode = undefined;
             this.#serviceLayer?.destroy();
             this.#serviceLayer = undefined;
+        }
+
+        attributeChangedCallback(name: string, oldValue: string | null, newValue: string | null) {
+            if (newValue) {
+                this.#props[name] = newValue ?? undefined;
+            }
+            this.render();
         }
     }
     return PioneerApplication;

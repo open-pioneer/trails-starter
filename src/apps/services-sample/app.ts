@@ -1,5 +1,6 @@
-import { Service, createCustomElement, ServiceOptions } from "@open-pioneer/runtime";
+import { createCustomElement, Service, ServiceOptions } from "@open-pioneer/runtime";
 import { PackageMetadata as PackageMetadata } from "@open-pioneer/runtime/Metadata";
+import { createElement } from "react";
 
 interface UserReferences {
     provider: ProviderInterface;
@@ -54,7 +55,7 @@ const packages: Record<string, PackageMetadata> = {
 };
 
 const Element = createCustomElement({
-    component: "test",
+    component: () => createElement("span", undefined, "test"),
     packages: packages
 });
 

@@ -7,11 +7,16 @@
     </head>
     <body>
         <sample-element></sample-element>
+        <div style="display: flex; gap: 10px;">
+            <button onclick="document.querySelector('#test').setAttribute('date', new Date().toString())">click for attribute update</button>
+            <date-sample id="test"></date-sample>
+        </div>
         <services-sample></services-sample>
         <div>
             <a href="./sites/example-site/">Link to nested site</a>
         </div>
         <script type="module" src="./apps/sample/app.ts"></script>
+        <script type="module" src="./apps/sample/date-sample.tsx"></script>
         <script type="module" src="./apps/services-sample/app.ts"></script>
     </body>
 </html>
