@@ -2,8 +2,8 @@ import { createElement, ReactNode, StrictMode } from "react";
 import { createRoot as createReactRoot, Root as ReactRoot } from "react-dom/client";
 import { Error } from "@open-pioneer/core";
 import { ErrorId } from "./errors";
-import { BundleMetadata } from "./Metadata";
-import { BundleRepr, parseBundles } from "./services/BundleRepr";
+import { PackageMetadata } from "./Metadata";
+import { PackageRepr, parsePackages } from "./services/PackageRepr";
 import { ServiceLayer } from "./services/ServiceLayer";
 import { getErrorChain } from "@open-pioneer/core";
 
@@ -17,14 +17,14 @@ export interface CustomElementOptions {
     component: ReactNode;
 
     /**
-     * Bundle metadata.
+     * Package metadata.
      * Metadata structures contain information about services
      * that are needed during runtime.
      *
-     * Services provided by bundles in this attribute will be started
+     * Services provided by packages in this attribute will be started
      * as necessary and can be referenced during runtime.
      */
-    bundles?: Record<string, BundleMetadata>;
+    packages?: Record<string, PackageMetadata>;
 
     /**
      * Styles for UI component.
@@ -67,14 +67,14 @@ export function createCustomElement(options: CustomElementOptions): CustomElemen
         connectedCallback() {
             const node = (this.#rootNode = document.createElement("div"));
             try {
-                let bundles: BundleRepr[];
+                let packages: PackageRepr[];
                 try {
-                    bundles = parseBundles(options.bundles ?? {});
+                    packages = parsePackages(options.packages ?? {});
                 } catch (e) {
-                    throw new Error(ErrorId.INVALID_METADATA, "Failed to parse bundle metadata.");
+                    throw new Error(ErrorId.INVALID_METADATA, "Failed to parse package metadata.");
                 }
 
-                const serviceLayer = (this.#serviceLayer = new ServiceLayer(bundles));
+                const serviceLayer = (this.#serviceLayer = new ServiceLayer(packages));
                 serviceLayer.start();
 
                 const style = document.createElement("style");

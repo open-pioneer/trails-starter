@@ -6,13 +6,13 @@ it("does not return an error on acyclic graphs", function () {
     const components = mockComponents([
         {
             name: "Map",
-            bundle: "map",
+            package: "map",
             provides: ["services.Map"],
             requires: []
         },
         {
             name: "ExampleTool",
-            bundle: "tools",
+            package: "tools",
             provides: [],
             requires: ["services.Map"]
         }
@@ -27,7 +27,7 @@ it("throws when a service is not implemented", function () {
     const components = mockComponents([
         {
             name: "ExampleTool",
-            bundle: "tools",
+            package: "tools",
             provides: [],
             requires: ["services.Map"]
         }
@@ -42,7 +42,7 @@ it("throws when a component directly depends on itself", function () {
     const components = mockComponents([
         {
             name: "Map",
-            bundle: "map",
+            package: "map",
             provides: ["services.Map"],
             requires: ["services.Map"]
         }
@@ -57,25 +57,25 @@ it("throws when a component depends on itself via a larger cycle", function () {
     const components = mockComponents([
         {
             name: "a",
-            bundle: "A",
+            package: "A",
             provides: ["A"],
             requires: ["B"]
         },
         {
             name: "b",
-            bundle: "B",
+            package: "B",
             provides: ["B"],
             requires: ["D", "C"]
         },
         {
             name: "c",
-            bundle: "C",
+            package: "C",
             provides: ["C"],
             requires: ["D", "D", "A"]
         },
         {
             name: "d",
-            bundle: "D",
+            package: "D",
             provides: ["D"],
             requires: []
         }
@@ -88,7 +88,7 @@ it("throws when a component depends on itself via a larger cycle", function () {
 });
 
 interface ServiceData {
-    bundle: string;
+    package: string;
     name: string;
     requires: string[];
     provides: string[];
@@ -97,7 +97,7 @@ interface ServiceData {
 function mockComponents(data: ServiceData[]): ServiceRepr[] {
     return data.map<ServiceRepr>((service) => {
         const name = service.name;
-        const bundleName = service.bundle;
+        const packageName = service.package;
         const clazz = class MockService {};
         const dependencies = service.requires.map<Dependency>((interfaceName, index) => {
             return {
@@ -107,7 +107,7 @@ function mockComponents(data: ServiceData[]): ServiceRepr[] {
         });
         return new ServiceRepr({
             name,
-            bundleName,
+            packageName,
             clazz,
             dependencies,
             interfaces: service.provides

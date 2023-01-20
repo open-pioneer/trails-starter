@@ -12,7 +12,7 @@ export type ServiceState = "not-constructed" | "constructing" | "constructed" | 
  * `this.instance` is the actual service instance (when constructed).
  */
 export class ServiceRepr {
-    static parse(bundleName: string, data: ServiceMetadata): ServiceRepr {
+    static parse(packageName: string, data: ServiceMetadata): ServiceRepr {
         const clazz = data.clazz;
         const name = data.name;
         const dependencies = Object.entries(data.references ?? {}).map<Dependency>(
@@ -25,17 +25,17 @@ export class ServiceRepr {
         );
         // TODO: Properties in metadata?
         const interfaces = (data.provides ?? []).map((p) => p.interface);
-        return new ServiceRepr({ name, bundleName, clazz, dependencies, interfaces });
+        return new ServiceRepr({ name, packageName, clazz, dependencies, interfaces });
     }
 
-    /** Unique id of this service. Contains the bundle name and the service name. */
+    /** Unique id of this service. Contains the package name and the service name. */
     readonly id: string;
 
-    /** Name of this service in it's bundle. */
+    /** Name of this service in it's package. */
     readonly name: string;
 
-    /** Name of the parent bundle. */
-    readonly bundleName: string;
+    /** Name of the parent package. */
+    readonly packageName: string;
 
     /** Service properties made available via the service's constructor. */
     readonly properties: Readonly<Record<string, unknown>>;
@@ -61,7 +61,7 @@ export class ServiceRepr {
 
     constructor(options: {
         name: string;
-        bundleName: string;
+        packageName: string;
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         clazz: ServiceConstructor<any>;
         dependencies?: Dependency[];
@@ -70,15 +70,15 @@ export class ServiceRepr {
     }) {
         const {
             name,
-            bundleName,
+            packageName,
             clazz,
             dependencies = [],
             interfaces = [],
             properties = {}
         } = options;
-        this.id = `${bundleName}::${name}`;
+        this.id = `${packageName}::${name}`;
         this.name = name;
-        this.bundleName = bundleName;
+        this.packageName = packageName;
         this.clazz = clazz;
         this.dependencies = dependencies;
         this.interfaces = interfaces;

@@ -1,6 +1,6 @@
 import { expect, it } from "vitest";
 import { Service, ServiceOptions } from "../Service";
-import { BundleRepr } from "./BundleRepr";
+import { PackageRepr } from "./PackageRepr";
 import { ServiceLayer } from "./ServiceLayer";
 import { ServiceRepr } from "./ServiceRepr";
 
@@ -36,10 +36,10 @@ it("starts and stops services in the expected order", function () {
     }
 
     const serviceLayer = new ServiceLayer([
-        new BundleRepr("a", [
+        new PackageRepr("a", [
             new ServiceRepr({
                 name: "A",
-                bundleName: "a",
+                packageName: "a",
                 clazz: ServiceA,
                 dependencies: [
                     {
@@ -49,10 +49,10 @@ it("starts and stops services in the expected order", function () {
                 ]
             })
         ]),
-        new BundleRepr("b", [
+        new PackageRepr("b", [
             new ServiceRepr({
                 name: "B",
-                bundleName: "b",
+                packageName: "b",
                 clazz: ServiceB,
                 interfaces: ["b.serviceB"]
             })
@@ -116,10 +116,10 @@ it("destroys services once they are no longer referenced (but not before)", func
     }
 
     const serviceLayer = new ServiceLayer([
-        new BundleRepr("UserBundle", [
+        new PackageRepr("UserPackage", [
             new ServiceRepr({
                 name: "A",
-                bundleName: "UserBundle",
+                packageName: "UserPackage",
                 clazz: ServiceUser,
                 dependencies: [
                     {
@@ -133,7 +133,7 @@ it("destroys services once they are no longer referenced (but not before)", func
             }),
             new ServiceRepr({
                 name: "B",
-                bundleName: "UserBundle",
+                packageName: "UserPackage",
                 clazz: ServiceUser,
                 dependencies: [
                     {
@@ -146,10 +146,10 @@ it("destroys services once they are no longer referenced (but not before)", func
                 }
             })
         ]),
-        new BundleRepr("ProviderBundle", [
+        new PackageRepr("ProviderPackage", [
             new ServiceRepr({
                 name: "Provider",
-                bundleName: "ProviderBundle",
+                packageName: "ProviderPackage",
                 clazz: ServiceProvider,
                 interfaces: ["provider.Service"]
             })

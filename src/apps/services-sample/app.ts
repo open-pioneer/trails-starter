@@ -1,5 +1,5 @@
 import { Service, createCustomElement, ServiceOptions } from "@open-pioneer/runtime";
-import { BundleMetadata } from "@open-pioneer/runtime/Metadata";
+import { PackageMetadata as PackageMetadata } from "@open-pioneer/runtime/Metadata";
 
 interface UserReferences {
     provider: ProviderInterface;
@@ -9,9 +9,9 @@ interface ProviderInterface {
     sayHello(): void;
 }
 
-const bundles: Record<string, BundleMetadata> = {
-    "test-bundle1": {
-        name: "test-bundle1",
+const packages: Record<string, PackageMetadata> = {
+    "test-package1": {
+        name: "test-package1",
         services: {
             User: {
                 name: "User",
@@ -27,25 +27,25 @@ const bundles: Record<string, BundleMetadata> = {
                 },
                 references: {
                     provider: {
-                        interface: "test-bundle2.SomeService"
+                        interface: "test-package2.SomeService"
                     }
                 }
             }
         }
     },
-    "test-bundle2": {
-        name: "test-bundle2",
+    "test-package2": {
+        name: "test-package2",
         services: {
             Provider: {
                 name: "Provider",
                 clazz: class Provider implements Service<ProviderInterface> {
                     sayHello() {
-                        console.log("Hello from service of test-bundle2!");
+                        console.log("Hello from service of test-package2!");
                     }
                 },
                 provides: [
                     {
-                        interface: "test-bundle2.SomeService"
+                        interface: "test-package2.SomeService"
                     }
                 ]
             }
@@ -55,7 +55,7 @@ const bundles: Record<string, BundleMetadata> = {
 
 const Element = createCustomElement({
     component: "test",
-    bundles
+    packages: packages
 });
 
 customElements.define("services-sample", Element);

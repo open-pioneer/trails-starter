@@ -1,13 +1,13 @@
 import { expect, it } from "vitest";
-import { BundleMetadata } from "../Metadata";
-import { parseBundles } from "./BundleRepr";
+import { PackageMetadata } from "../Metadata";
+import { parsePackages } from "./PackageRepr";
 
 class ClazzA {}
 
 class ClazzB {}
 
-it("parses bundle metadata into internal bundle representations", function () {
-    const metadata: Record<string, BundleMetadata> = {
+it("parses package metadata into internal package representations", function () {
+    const metadata: Record<string, PackageMetadata> = {
         b: {
             name: "b",
             services: {
@@ -43,13 +43,13 @@ it("parses bundle metadata into internal bundle representations", function () {
         }
     };
 
-    const bundles = parseBundles(metadata);
-    expect(bundles).toHaveLength(2);
+    const packages = parsePackages(metadata);
+    expect(packages).toHaveLength(2);
 
-    const bundleA = bundles.find((b) => b.name === "a")!;
-    expect(bundleA).toBeDefined();
+    const packageA = packages.find((b) => b.name === "a")!;
+    expect(packageA).toBeDefined();
 
-    const serviceA = bundleA.services.find((s) => s.name === "A")!;
+    const serviceA = packageA.services.find((s) => s.name === "A")!;
     expect(serviceA).toBeDefined();
     expect(serviceA.id).toStrictEqual("a::A");
     expect(serviceA.state).toStrictEqual("not-constructed");
@@ -62,10 +62,10 @@ it("parses bundle metadata into internal bundle representations", function () {
     ]);
     expect(serviceA.interfaces).toEqual([]);
 
-    const bundleB = bundles.find((b) => b.name === "b")!;
-    expect(bundleB).toBeDefined();
+    const packageB = packages.find((b) => b.name === "b")!;
+    expect(packageB).toBeDefined();
 
-    const serviceB = bundleB.services.find((s) => s.name === "B")!;
+    const serviceB = packageB.services.find((s) => s.name === "B")!;
     expect(serviceB).toBeDefined();
     expect(serviceB.interfaces).toEqual(["b.ServiceB1", "b.ServiceB2"]);
 });

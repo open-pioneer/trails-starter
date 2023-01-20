@@ -1,16 +1,16 @@
 import { ServiceConstructor } from "./Service";
 
 /**
- * Describes a bundle to the runtime.
+ * Describes a package to the runtime.
  */
-export interface BundleMetadata {
-    /** The globally unique name of the bundle. */
+export interface PackageMetadata {
+    /** The globally unique name of the package. */
     name: string;
 
     /**
-     * Collection of services defined in the bundle.
+     * Collection of services defined in the package.
      *
-     * Key: unique service name (in the bundle).
+     * Key: unique service name within the package.
      * Value: service metadata.
      */
     services: Record<string, ServiceMetadata>;
@@ -20,7 +20,7 @@ export interface BundleMetadata {
  * Describes a service to the runtime.
  */
 export interface ServiceMetadata {
-    /** The unique name of the service in its bundle. */
+    /** The unique name of the service in its package. */
     name: string;
 
     /** Service constructor responsible for creating a new instance. */

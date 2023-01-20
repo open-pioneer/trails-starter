@@ -1,10 +1,10 @@
 import { Error } from "@open-pioneer/core";
 import { ErrorId } from "../errors";
-import { BundleMetadata } from "../Metadata";
+import { PackageMetadata } from "../Metadata";
 import { ServiceRepr } from "./ServiceRepr";
 
-export class BundleRepr {
-    static parse(data: BundleMetadata): BundleRepr {
+export class PackageRepr {
+    static parse(data: PackageMetadata): PackageRepr {
         const name = data.name;
         const services = Object.entries(data.services).map<ServiceRepr>(([name, serviceData]) => {
             if (name !== serviceData.name) {
@@ -15,7 +15,7 @@ export class BundleRepr {
             }
             return ServiceRepr.parse(data.name, serviceData);
         });
-        return new BundleRepr(name, services);
+        return new PackageRepr(name, services);
     }
 
     readonly name: string;
@@ -27,12 +27,12 @@ export class BundleRepr {
     }
 }
 
-export function parseBundles(bundles: Record<string, BundleMetadata>) {
-    return Object.entries(bundles).map<BundleRepr>(([name, bundleMetadata]) => {
-        if (name !== bundleMetadata.name) {
-            throw new Error(ErrorId.INVALID_METADATA, "Invalid metadata: bundle name mismatch.");
+export function parsePackages(packages: Record<string, PackageMetadata>) {
+    return Object.entries(packages).map<PackageRepr>(([name, packageMetadata]) => {
+        if (name !== packageMetadata.name) {
+            throw new Error(ErrorId.INVALID_METADATA, "Invalid metadata: package name mismatch.");
         }
 
-        return BundleRepr.parse(bundleMetadata);
+        return PackageRepr.parse(packageMetadata);
     });
 }

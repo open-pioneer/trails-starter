@@ -2,15 +2,15 @@ import { ServiceRepr } from "./ServiceRepr";
 import { Error } from "@open-pioneer/core";
 import { ErrorId } from "../errors";
 import { verifyDependencies } from "./verifyDependencies";
-import { BundleRepr } from "./BundleRepr";
+import { PackageRepr } from "./PackageRepr";
 
 export class ServiceLayer {
     readonly serviceIndex: ReadonlyMap<string, ServiceRepr>;
     private allServices: readonly ServiceRepr[];
     private state: "not-started" | "started" | "destroyed" = "not-started";
 
-    constructor(bundles: readonly BundleRepr[]) {
-        this.allServices = bundles.map((bundle) => bundle.services).flat();
+    constructor(packages: readonly PackageRepr[]) {
+        this.allServices = packages.map((pkg) => pkg.services).flat();
         this.serviceIndex = verifyDependencies(this.allServices);
     }
 
