@@ -1,3 +1,3 @@
-export function App() {
+export function AppUI() {
     return <div>Hello World!</div>;
 }

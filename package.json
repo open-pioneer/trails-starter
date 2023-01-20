@@ -9,8 +9,8 @@
         "watch-types": "tsc -w --noEmit",
         "build": "tsc && vite build",
         "preview": "vite preview",
-        "lint": "eslint ./src",
-        "prettier": "prettier ./src ./docs -w",
+        "lint": "eslint ./src ./vite-plugin",
+        "prettier": "prettier ./src ./docs ./vite-plugin -w",
         "test": "vitest"
     },
     "devDependencies": {

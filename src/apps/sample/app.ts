@@ -1,8 +1,9 @@
 import { createCustomElement } from "@open-pioneer/runtime";
-import { App } from "./App";
+import { createElement } from "react";
+import { AppUI } from "./AppUI";
 
 const Element = createCustomElement({
-    component: <App />,
+    component: createElement(AppUI),
     styles: "div {background-color: red;}"
 });
 
