@@ -7,10 +7,10 @@ import { existsSync } from "node:fs";
 /** Options for the open-pioneer vite plugin. */
 export interface PioneerPluginOptions {
     /**
-     * Whether to include the root `index.html` (by default at `src/index.html`) site in the build.
+     * Whether to include the root `index.html` site (by default at `src/index.html`) in the build.
      *
      * The file is always available when using the development server, but may be excluded when
-     * when deploying the project.
+     * when deploying the project as it often contains content for testing.
      *
      * @default false
      */
@@ -18,6 +18,7 @@ export interface PioneerPluginOptions {
 
     /**
      * List of sites to include in the build.
+     *
      * Sites are located at `src/sites/<SITE_NAME>/index.html` by default.
      *
      * @default []
@@ -104,7 +105,6 @@ function analyzeEntryPoints(options: {
             path: path
         };
     });
-
     if (options.rootSite) {
         const path = resolve(options.sourceRoot, "index.html");
         if (!existsSync(path)) {

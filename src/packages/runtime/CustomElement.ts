@@ -73,7 +73,7 @@ export function createCustomElement(options: CustomElementOptions): CustomElemen
                 } catch (e) {
                     throw new Error(ErrorId.INVALID_METADATA, "Failed to parse bundle metadata.");
                 }
-            
+
                 const serviceLayer = (this.#serviceLayer = new ServiceLayer(bundles));
                 serviceLayer.start();
 
