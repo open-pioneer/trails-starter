@@ -8,11 +8,11 @@ They define a [Web Component](https://developer.mozilla.org/en-US/docs/Web/Web_C
 Multiple apps can be developed in the same repository.
 When they are built, they share common code and assets for efficiency.
 
-## Bundle (Term T.B.D.) <!-- TODO -->
+## Pioneer package
 
-Bundles are special packages that serve as the building blocks of an app.
-Bundles may define and use services and UI components.
-The bundles used by an app are automatically linked into the application.
+A special package type that serve as the building blocks of an app.
+Pioneer packages may define and use services and UI components.
+The packages used by an app are automatically linked into the application.
 The build system ensures that the code (and assets) required are automatically loaded.
 
 ## Package
