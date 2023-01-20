@@ -17,7 +17,18 @@ export interface ServiceLifecycleHooks {
 export type Service<Interface extends {} = {}> = ServiceLifecycleHooks & Interface;
 
 export type ServiceOptions<References extends {} = {}> = {
+    /**
+     * References to other services.
+     * These are injected by the runtime and match the declared references of the service.
+     */
     references: References;
+    
+    /** 
+     * Configuration properties.
+     * 
+     * TODO: These are not specified yet
+     */
+    properties: Record<string, unknown>;
 };
 
 export type ServiceConstructor<References extends {} = {}, Interface extends {} = {}> = {

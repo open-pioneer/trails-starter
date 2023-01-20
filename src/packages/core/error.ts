@@ -29,7 +29,6 @@ export class Error extends GlobalError {
     public readonly id: string;
     public readonly text: string;
 
-    // TODO: Document error ids & conventions
     constructor(id: string, text: string, options?: { cause?: unknown }) {
         super(`${id}: ${text}`, options);
         this.id = id;

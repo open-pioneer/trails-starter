@@ -38,7 +38,9 @@ export class ServiceLayer {
      */
     private initService(service: ServiceRepr) {
         if (service.state === "constructed") {
-            return service.instance;
+            const instance = service.getInstanceOrThrow();
+            service.addRef();
+            return instance;
         }
         if (service.state === "constructing") {
             throw new Error(ErrorId.INTERNAL, "Cycle during service construction.");
@@ -63,7 +65,7 @@ export class ServiceLayer {
                 throw new Error(ErrorId.INTERNAL, "Service not defined.");
             }
         });
-        return service.create({ references: instances });
+        return service.create({ references: instances, properties: service.properties });
     }
 
     /**
@@ -77,7 +79,10 @@ export class ServiceLayer {
 
         // Destroy the service before its dependencies (reverse order
         // compared to construction).
-        service.destroy();
+        if (service.removeRef() <= 0) {
+            service.destroy();
+        }
+
         service.dependencies.forEach((d) => {
             const serviceRef = this.serviceIndex.get(d.interface);
             if (serviceRef) {

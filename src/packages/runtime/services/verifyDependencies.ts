@@ -128,7 +128,6 @@ class Verifier {
         const services = this.services;
         const existing = services.get(interfaceName);
         if (existing) {
-            // TODO: Duplicate error handling, see ServiceLayer.ts
             throw new Error(
                 ErrorId.DUPLICATE_INTERFACE,
                 `Cannot register '${item.service.id}' as interface '${interfaceName}'. '${interfaceName}' is already provided by service '${existing.service.id}'.`

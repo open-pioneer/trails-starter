@@ -5,7 +5,7 @@ import { ServiceLayer } from "./ServiceLayer";
 import { ServiceRepr } from "./ServiceRepr";
 
 it("starts and stops services in the expected order", function () {
-    const events: string[] = [];
+    let events: string[] = [];
 
     class ServiceA implements Service {
         constructor(
@@ -47,16 +47,120 @@ it("starts and stops services in the expected order", function () {
                         interface: "b.serviceB"
                     }
                 ],
-                []
+                [],
+                {}
             )
         ]),
-        new BundleRepr("b", [new ServiceRepr("B", "b", ServiceB, [], ["b.serviceB"])])
+        new BundleRepr("b", [new ServiceRepr("B", "b", ServiceB, [], ["b.serviceB"], {})])
     ]);
 
     serviceLayer.start();
     expect(events).toEqual(["construct-b", "construct-a"]); // dep before usage
-    events.splice(0, events.length);
+    events = [];
 
     serviceLayer.destroy();
     expect(events).toEqual(["destroy-a", "destroy-b"]); // reverse order
+});
+
+it("destroys services once they are no longer referenced (but not before)", function () {
+    let events: string[] = [];
+
+    class ServiceUser implements Service {
+        private provider: ServiceProvider;
+        private id: string;
+
+        constructor(
+            options: ServiceOptions<{
+                provider: ServiceProvider;
+            }>
+        ) {
+            this.provider = options.references.provider;
+            if (this.provider.destroyed) {
+                throw new Error("Illegal state: provider destroyed while still being referenced.");
+            }
+
+            const id = options.properties.id;
+            if (typeof id !== "string") {
+                throw new Error("Expected the `id` property to be a string.");
+            }
+            this.id = id;
+
+            events.push(`construct-${id}`);
+        }
+
+        destroy(): void {
+            if (this.provider.destroyed) {
+                throw new Error("Illegal state: provider destroyed while still being referenced.");
+            }
+
+            events.push(`destroy-${this.id}`);
+        }
+    }
+
+    class ServiceProvider implements Service {
+        destroyed = false;
+
+        constructor() {
+            events.push("construct-provider");
+        }
+
+        destroy() {
+            this.destroyed = true;
+            events.push("destroy-provider");
+        }
+    }
+
+    const serviceLayer = new ServiceLayer([
+        new BundleRepr("UserBundle", [
+            new ServiceRepr(
+                "A",
+                "UserBundle",
+                ServiceUser,
+                [
+                    {
+                        name: "provider",
+                        interface: "provider.Service"
+                    }
+                ],
+                [],
+                {
+                    id: "A"
+                }
+            ),
+            new ServiceRepr(
+                "B",
+                "UserBundle",
+                ServiceUser,
+                [
+                    {
+                        name: "provider",
+                        interface: "provider.Service"
+                    }
+                ],
+                [],
+                {
+                    id: "B"
+                }
+            )
+        ]),
+        new BundleRepr("ProviderBundle", [
+            new ServiceRepr(
+                "Provider",
+                "ProviderBundle",
+                ServiceProvider,
+                [],
+                ["provider.Service"],
+                {}
+            )
+        ])
+    ]);
+
+    serviceLayer.start();
+    expect(events[0]).toBe("construct-provider"); // before users
+    expect(new Set(events.slice(1))).toEqual(new Set(["construct-B", "construct-A"])); // ignore order
+    
+    events = [];
+    serviceLayer.destroy();
+    expect(events[2]).toBe("destroy-provider"); // after users
+    expect(new Set(events.slice(0, 2))).toEqual(new Set(["destroy-B", "destroy-A"])); // ignore order
 });

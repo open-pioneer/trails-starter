@@ -103,9 +103,7 @@ export function createCustomElement(options: CustomElementOptions): CustomElemen
 
 function logError(e: unknown) {
     if (e instanceof Error) {
-        // TODO: Show lowest error or highest error first?
         const chain = getErrorChain(e).reverse();
-
         if (chain.length === 1) {
             console.error(e);
             return;
