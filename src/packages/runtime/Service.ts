@@ -22,10 +22,10 @@ export type ServiceOptions<References extends {} = {}> = {
      * These are injected by the runtime and match the declared references of the service.
      */
     references: References;
-    
-    /** 
+
+    /**
      * Configuration properties.
-     * 
+     *
      * TODO: These are not specified yet
      */
     properties: Record<string, unknown>;

@@ -105,6 +105,12 @@ function mockComponents(data: ServiceData[]): ServiceRepr[] {
                 interface: interfaceName
             };
         });
-        return new ServiceRepr(name, bundleName, clazz, dependencies, service.provides, {});
+        return new ServiceRepr({
+            name,
+            bundleName,
+            clazz,
+            dependencies,
+            interfaces: service.provides
+        });
     });
 }

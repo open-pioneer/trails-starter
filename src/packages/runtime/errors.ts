@@ -5,6 +5,5 @@ export enum ErrorId {
     SERVICE_DESTRUCTION_FAILED = "runtime:service-destruction-failed",
     DUPLICATE_INTERFACE = "runtime:duplicate-interface",
     DEPENDENCY_CYCLE = "runtime:dependency-cycle",
-
     INTERNAL = "runtime:internal-error"
 }

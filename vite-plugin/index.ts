@@ -19,7 +19,7 @@ export interface PioneerPluginOptions {
     /**
      * List of sites to include in the build.
      * Sites are located at `src/sites/<SITE_NAME>/index.html` by default.
-     * 
+     *
      * @default []
      */
     sites?: string[];
@@ -27,13 +27,13 @@ export interface PioneerPluginOptions {
     /**
      * List of apps to include in the build.
      * Apps typically register a custom web component.
-     * 
+     *
      * Apps are located at `src/apps/<APP_NAME>/app.<EXT>` by default.
      * When an app is included in the build, the `dist` directory will
      * contain a `app.js` that can be directly imported from the browser.
-     * 
+     *
      * Multiple extensions are supported for the app's main entry point: .ts, .tsx, .js and .jsx.
-     * 
+     *
      * @default []
      */
     apps?: string[];

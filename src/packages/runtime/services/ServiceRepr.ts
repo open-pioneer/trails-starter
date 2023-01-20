@@ -25,7 +25,7 @@ export class ServiceRepr {
         );
         // TODO: Properties in metadata?
         const interfaces = (data.provides ?? []).map((p) => p.interface);
-        return new ServiceRepr(name, bundleName, clazz, dependencies, interfaces, {});
+        return new ServiceRepr({ name, bundleName, clazz, dependencies, interfaces });
     }
 
     /** Unique id of this service. Contains the bundle name and the service name. */
@@ -59,15 +59,23 @@ export class ServiceRepr {
     /** Service instance, once constructed. */
     private _instance: Service | undefined = undefined;
 
-    constructor(
-        name: string,
-        bundleName: string,
+    constructor(options: {
+        name: string;
+        bundleName: string;
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        clazz: ServiceConstructor<any>,
-        dependencies: Dependency[],
-        interfaces: string[],
-        properties: Record<string, unknown>
-    ) {
+        clazz: ServiceConstructor<any>;
+        dependencies?: Dependency[];
+        interfaces?: string[];
+        properties?: Record<string, unknown>;
+    }) {
+        const {
+            name,
+            bundleName,
+            clazz,
+            dependencies = [],
+            interfaces = [],
+            properties = {}
+        } = options;
         this.id = `${bundleName}::${name}`;
         this.name = name;
         this.bundleName = bundleName;
@@ -110,13 +118,13 @@ export class ServiceRepr {
     }
 
     /**
-     * Instantiates the service by invoking the service constructor 
+     * Instantiates the service by invoking the service constructor
      * with the given `options`.
-     * 
+     *
      * The service's use count is initialized to `1`, so every `create()`
      * should be paired with a `removeRef()`.
-     * 
-     * `destroy()` can be invoked once the final `removeRef()` has returned zero. 
+     *
+     * `destroy()` can be invoked once the final `removeRef()` has returned zero.
      */
     create(options: ServiceOptions) {
         if (this._state !== "constructing" || this.instance !== undefined) {
@@ -160,7 +168,7 @@ export class ServiceRepr {
      * References to a service are tracked: it should only be destroyed when it is no longer being used.
      */
     addRef() {
-        return this.useCount += 1;
+        return (this.useCount += 1);
     }
 
     /**
@@ -168,6 +176,6 @@ export class ServiceRepr {
      * Returns the new use count.
      */
     removeRef() {
-        return this.useCount -= 1;
+        return (this.useCount -= 1);
     }
 }

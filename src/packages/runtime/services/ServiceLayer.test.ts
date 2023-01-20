@@ -37,21 +37,26 @@ it("starts and stops services in the expected order", function () {
 
     const serviceLayer = new ServiceLayer([
         new BundleRepr("a", [
-            new ServiceRepr(
-                "A",
-                "a",
-                ServiceA,
-                [
+            new ServiceRepr({
+                name: "A",
+                bundleName: "a",
+                clazz: ServiceA,
+                dependencies: [
                     {
                         name: "b",
                         interface: "b.serviceB"
                     }
-                ],
-                [],
-                {}
-            )
+                ]
+            })
         ]),
-        new BundleRepr("b", [new ServiceRepr("B", "b", ServiceB, [], ["b.serviceB"], {})])
+        new BundleRepr("b", [
+            new ServiceRepr({
+                name: "B",
+                bundleName: "b",
+                clazz: ServiceB,
+                interfaces: ["b.serviceB"]
+            })
+        ])
     ]);
 
     serviceLayer.start();
@@ -112,53 +117,49 @@ it("destroys services once they are no longer referenced (but not before)", func
 
     const serviceLayer = new ServiceLayer([
         new BundleRepr("UserBundle", [
-            new ServiceRepr(
-                "A",
-                "UserBundle",
-                ServiceUser,
-                [
+            new ServiceRepr({
+                name: "A",
+                bundleName: "UserBundle",
+                clazz: ServiceUser,
+                dependencies: [
                     {
                         name: "provider",
                         interface: "provider.Service"
                     }
                 ],
-                [],
-                {
+                properties: {
                     id: "A"
                 }
-            ),
-            new ServiceRepr(
-                "B",
-                "UserBundle",
-                ServiceUser,
-                [
+            }),
+            new ServiceRepr({
+                name: "B",
+                bundleName: "UserBundle",
+                clazz: ServiceUser,
+                dependencies: [
                     {
                         name: "provider",
                         interface: "provider.Service"
                     }
                 ],
-                [],
-                {
+                properties: {
                     id: "B"
                 }
-            )
+            })
         ]),
         new BundleRepr("ProviderBundle", [
-            new ServiceRepr(
-                "Provider",
-                "ProviderBundle",
-                ServiceProvider,
-                [],
-                ["provider.Service"],
-                {}
-            )
+            new ServiceRepr({
+                name: "Provider",
+                bundleName: "ProviderBundle",
+                clazz: ServiceProvider,
+                interfaces: ["provider.Service"]
+            })
         ])
     ]);
 
     serviceLayer.start();
     expect(events[0]).toBe("construct-provider"); // before users
     expect(new Set(events.slice(1))).toEqual(new Set(["construct-B", "construct-A"])); // ignore order
-    
+
     events = [];
     serviceLayer.destroy();
     expect(events[2]).toBe("destroy-provider"); // after users
