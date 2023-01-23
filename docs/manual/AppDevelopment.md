@@ -1,5 +1,12 @@
 # App Development
 
+<!--
+
+TODO:
+    - Konzept App <-> WebComponent <-> HTML Site
+    - Deployment Konfiguration / Workflow
+-->
+
 > NOTE: This document is a work in progress.
 > It will be continuously updated during development.
 
