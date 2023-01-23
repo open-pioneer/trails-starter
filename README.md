@@ -13,6 +13,7 @@ Then execute the following commands to get started:
 ```bash
 $ git clone https://github.com/open-pioneer/starter.git # Clone the repository
 $ pnpm install                                          # Install dependencies
+$ pnpm run build-plugin                                 # Build vite plugin (NOTE: temporary)
 $ pnpm run dev                                          # Launch development server
 ```
 

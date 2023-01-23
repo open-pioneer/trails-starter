@@ -23,7 +23,7 @@ export interface PioneerPluginOptions {
      *
      * @default []
      */
-    sites?: string[];
+    sites?: string[] | undefined | false;
 
     /**
      * List of apps to include in the build.
@@ -37,14 +37,15 @@ export interface PioneerPluginOptions {
      *
      * @default []
      */
-    apps?: string[];
+    apps?: string[] | undefined | false;
 }
 
 export function pioneer(options?: PioneerPluginOptions): Plugin {
-    const { apps = [], sites = [], rootSite = false } = options ?? {};
+    const rootSite = options?.rootSite ?? false;
+    const apps = options?.apps || [];
+    const sites = options?.sites || [];
 
     let resolvedConfig: ResolvedConfig;
-
     return {
         name: "pioneer",
 

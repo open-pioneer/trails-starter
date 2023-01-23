@@ -44,7 +44,7 @@ export interface PioneerPluginOptions {
      *
      * @default []
      */
-    sites?: string[];
+    sites?: string[] | undefined | false;
 
     /**
      * List of apps to include in the build.
@@ -58,7 +58,7 @@ export interface PioneerPluginOptions {
      *
      * @default []
      */
-    apps?: string[];
+    apps?: string[] | undefined | false;
 }
 ```
 

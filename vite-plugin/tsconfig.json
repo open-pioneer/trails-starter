@@ -1,12 +1,13 @@
 {
     "compilerOptions": {
+        "composite": true,
+        "outDir": "dist",
+
         "target": "ESNext",
-        "lib": ["DOM", "DOM.Iterable", "ES2020"],
-        "module": "ES2020",
+        "lib": ["ES2020"],
+        "module": "CommonJS",
         "moduleResolution": "Node",
-        "noEmit": true,
         "allowJs": false,
-        "jsx": "react-jsx",
 
         "strict": true,
         "resolveJsonModule": true,
@@ -19,6 +20,5 @@
         "esModuleInterop": false,
         "skipLibCheck": true
     },
-    "include": ["src"],
-    "references": [{ "path": "./tsconfig.node.json" }, { "path": "./vite-plugin/tsconfig.json" }]
+    "include": ["src", "tests"]
 }

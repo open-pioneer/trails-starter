@@ -4,5 +4,13 @@
     "trailingComma": "none",
     "singleQuote": false,
     "quoteProps": "consistent",
-    "printWidth": 100
+    "printWidth": 100,
+    "overrides": [
+        {
+            "files": "**/*.yml",
+            "options": {
+                "tabWidth": 2
+            }
+        }
+    ]
 }

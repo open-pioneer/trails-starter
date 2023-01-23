@@ -1,0 +1,23 @@
+{
+    "name": "vite-plugin-pioneer",
+    "private": true,
+    "main": "dist/index.js",
+    "types": "dist/index.d.ts",
+    "type": "commonjs",
+    "scripts": {
+        "build": "run-p build-js build-types",
+        "build-js": "esbuild src/index.ts --bundle --sourcemap --platform=node --format=cjs --target=node16 --outdir=./dist --packages=external",
+        "build-types": "tsc -p tsconfig.build.json",
+        "dev": "pnpm run build --watch",
+        "test": "ts-mocha -p tsconfig.json tests/**/*.test.ts"
+    },
+    "devDependencies": {
+        "@types/chai": "^4.3.4",
+        "@types/mocha": "^10.0.1",
+        "chai": "^4.3.7",
+        "esbuild": "^0.17.4",
+        "mocha": "^10.2.0",
+        "npm-run-all": "^4.1.5",
+        "ts-mocha": "^10.0.0"
+    }
+}
