@@ -1,12 +1,5 @@
 # App Development
 
-<!--
-
-TODO:
-    - Konzept App <-> WebComponent <-> HTML Site
-    - Deployment Konfiguration / Workflow
--->
-
 > NOTE: This document is a work in progress.
 > It will be continuously updated during development.
 
@@ -74,3 +67,37 @@ VITE v4.0.4  ready in 518 ms
 ```
 
 ![my-app rendered in a Browser](./AppDevelopment_HelloWorldBrowser.png)
+
+## Concepts: Apps and Sites
+
+An _app_ is a package that exposes a web component.
+The web component can be published on its own (for consumption from a host site) or it can be embedded into a _site_.
+
+_Sites_ are plain old `.html` pages (with associated assets) that can also be developed within this project,
+for example to implement a full screen application or to test apps in different configurations.
+By convention, sites are located under `src/sites/<SITE_NAME>/index.html`.
+
+You can chose which sites or apps should be part of your deployment by editing pioneer plugin configuration in the `vite.config.ts` file:
+
+```js
+pioneer({
+    // Include src/index.html
+    rootSite: true,
+
+    // Include apps
+    apps: ["sample1", "sample2"],
+
+    // Only include example-site if building for test deployment
+    sites: testing && ["example-site"]
+}),
+```
+
+See the documentation of the package `vite-plugin-pioneer` for more details.
+
+## Deployment
+
+Running `pnpm run build` will package the project into the `dist` directory as a static website according to the configuration in `vite.config.ts`.
+The contents of the `dist` directory can be deployed to an arbitrary web server.
+
+As an example for a fully automated deployment, open the `test-and-build.yml` Github Actions Workflow file.
+The workflow automatically builds the project and deploys the result to Github Pages.
