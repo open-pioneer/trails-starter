@@ -59,7 +59,7 @@ export function pioneer(options?: PioneerPluginOptions): Plugin {
                         input: entryPoints,
                         output: {
                             entryFileNames(chunk) {
-                                if (entryPoints[chunk.name]) {
+                                if (apps.includes(chunk.name)) {
                                     return "[name].js";
                                 }
                                 // Vite default, see https://github.com/vitejs/vite/blob/2401253b9aa487c50edb5ec571d5ba7adc949e27/packages/vite/src/node/build.ts#L552
