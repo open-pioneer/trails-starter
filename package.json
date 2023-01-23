@@ -11,7 +11,7 @@
         "build-plugin": "cd vite-plugin && pnpm run build",
         "preview": "vite preview",
         "lint": "eslint ./src ./vite-plugin",
-        "prettier": "prettier ./src ./docs ./vite-plugin -w",
+        "prettier": "prettier ./src ./docs ./vite-plugin -w --ignore-path .eslintignore",
         "test": "vitest"
     },
     "devDependencies": {

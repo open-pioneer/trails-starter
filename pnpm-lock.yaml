@@ -93,6 +93,7 @@ importers:
       mocha: ^10.2.0
       npm-run-all: ^4.1.5
       ts-mocha: ^10.0.0
+      vite: ^4.0.0
     devDependencies:
       '@types/chai': 4.3.4
       '@types/mocha': 10.0.1
@@ -101,6 +102,7 @@ importers:
       mocha: 10.2.0
       npm-run-all: 4.1.5
       ts-mocha: 10.0.0_mocha@10.2.0
+      vite: 4.0.4
 
 packages:
 
@@ -3752,6 +3754,39 @@ packages:
       eslint: 8.32.0
       rollup: 2.79.1
       vite: 4.0.4_@types+node@16.18.11
+    dev: true
+
+  /vite/4.0.4:
+    resolution: {integrity: sha512-xevPU7M8FU0i/80DMR+YhgrzR5KS2ORy1B4xcX/cXLsvnUWvfHuqMmVU6N0YiJ4JWGRJJsLCgjEzKjG9/GKoSw==}
+    engines: {node: ^14.18.0 || >=16.0.0}
+    hasBin: true
+    peerDependencies:
+      '@types/node': '>= 14'
+      less: '*'
+      sass: '*'
+      stylus: '*'
+      sugarss: '*'
+      terser: ^5.4.0
+    peerDependenciesMeta:
+      '@types/node':
+        optional: true
+      less:
+        optional: true
+      sass:
+        optional: true
+      stylus:
+        optional: true
+      sugarss:
+        optional: true
+      terser:
+        optional: true
+    dependencies:
+      esbuild: 0.16.17
+      postcss: 8.4.21
+      resolve: 1.22.1
+      rollup: 3.10.0
+    optionalDependencies:
+      fsevents: 2.3.2
     dev: true
 
   /vite/4.0.4_@types+node@16.18.11:

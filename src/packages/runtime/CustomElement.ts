@@ -27,7 +27,7 @@ export interface CustomElementOptions {
     packages?: Record<string, PackageMetadata>;
 
     /**
-     * Attribute names for component inputs. Changes on this attributes 
+     * Attribute names for component inputs. Changes on this attributes
      * triggers the component rendering.
      */
     attributes?: string[];
@@ -101,7 +101,13 @@ export function createCustomElement(options: CustomElementOptions): CustomElemen
 
         private render() {
             if (this.#reactRoot) {
-                this.#reactRoot.render(createElement(StrictMode, undefined, createElement(options.component, this.#props)));
+                this.#reactRoot.render(
+                    createElement(
+                        StrictMode,
+                        undefined,
+                        createElement(options.component, this.#props)
+                    )
+                );
             }
         }
 

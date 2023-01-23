@@ -7,8 +7,12 @@
     </head>
     <body>
         <sample-element></sample-element>
-        <div style="display: flex; gap: 10px;">
-            <button onclick="document.querySelector('#test').setAttribute('date', new Date().toString())">click for attribute update</button>
+        <div style="display: flex; gap: 10px">
+            <button
+                onclick="document.querySelector('#test').setAttribute('date', new Date().toString())"
+            >
+                click for attribute update
+            </button>
             <date-sample id="test"></date-sample>
         </div>
         <services-sample></services-sample>

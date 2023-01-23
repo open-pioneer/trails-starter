@@ -54,7 +54,8 @@ it("should clean up its content when removed from the dom", async () => {
 it("should render test component with attribute 'name'", async () => {
     const attributeValue = "test";
     elem = createCustomElement({
-        component: (props) => createElement("div", { id: "wrapper" }, createElement(TestComponent, props)),
+        component: (props) =>
+            createElement("div", { id: "wrapper" }, createElement(TestComponent, props)),
         attributes: ["name"],
         openShadowRoot: true
     });
