@@ -1,8 +1,8 @@
 # Open Pioneer Starter
 
-![example workflow](https://github.com/open-pioneer/starter/actions/workflows/test-and-build.yml/badge.svg)
+![Build status](https://github.com/open-pioneer/starter/actions/workflows/test-and-build.yml/badge.svg)
 
-![example workflow](https://github.com/open-pioneer/starter/actions/workflows/audit-dependencies.yml/badge.svg)
+![Dependency audit](https://github.com/open-pioneer/starter/actions/workflows/audit-dependencies.yml/badge.svg)
 
 ## Current demonstration instance
 
