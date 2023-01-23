@@ -1,5 +1,5 @@
 import { createCustomElement, Service, ServiceOptions } from "@open-pioneer/runtime";
-import { PackageMetadata as PackageMetadata } from "@open-pioneer/runtime/Metadata";
+import { PackageMetadata } from "@open-pioneer/runtime/metadata";
 import { createElement } from "react";
 
 interface UserReferences {

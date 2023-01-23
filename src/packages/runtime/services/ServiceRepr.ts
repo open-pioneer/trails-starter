@@ -1,5 +1,5 @@
 import { ErrorId } from "./../errors";
-import { InterfaceReferenceMetadata, ServiceMetadata } from "../Metadata";
+import { InterfaceReferenceMetadata, ServiceMetadata } from "../metadata";
 import { Service, ServiceConstructor, ServiceOptions } from "../Service";
 import { Error } from "@open-pioneer/core";
 

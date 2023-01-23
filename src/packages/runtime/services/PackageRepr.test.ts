@@ -1,5 +1,5 @@
 import { expect, it } from "vitest";
-import { PackageMetadata } from "../Metadata";
+import { PackageMetadata } from "../metadata";
 import { parsePackages } from "./PackageRepr";
 
 class ClazzA {}

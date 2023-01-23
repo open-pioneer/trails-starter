@@ -2,7 +2,7 @@ import { ComponentType, createElement, StrictMode } from "react";
 import { createRoot as createReactRoot, Root as ReactRoot } from "react-dom/client";
 import { Error } from "@open-pioneer/core";
 import { ErrorId } from "./errors";
-import { PackageMetadata } from "./Metadata";
+import { PackageMetadata } from "./metadata";
 import { PackageRepr, parsePackages } from "./services/PackageRepr";
 import { ServiceLayer } from "./services/ServiceLayer";
 import { getErrorChain } from "@open-pioneer/core";

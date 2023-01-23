@@ -1,6 +1,6 @@
 import { Error } from "@open-pioneer/core";
 import { ErrorId } from "../errors";
-import { PackageMetadata } from "../Metadata";
+import { PackageMetadata } from "../metadata";
 import { ServiceRepr } from "./ServiceRepr";
 
 export class PackageRepr {

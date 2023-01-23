@@ -1,11 +1,23 @@
 import { dirname } from "node:path";
 import { Plugin } from "vite";
+import { createDebugger } from "./debug";
 import { generatePackagesMetadata } from "./metadataGeneration";
 import { detectPackagesInApp } from "./packageDetection";
+
+const isDebug = !!process.env.DEBUG;
+const debug = createDebugger("open-pioneer:codegen-plugin");
 
 export function codegenPlugin(): Plugin {
     return {
         name: "pioneer:codegen",
+
+        // handleHotUpdate(ctx) {
+        //     isDebug && debug("hot update: %O", ctx.file);
+        // },
+
+        // watchChange(id) {
+        //     isDebug && debug("watch change: %O", id);
+        // },
 
         async resolveId(moduleId, importer) {
             if (moduleId === "open-pioneer:app") {

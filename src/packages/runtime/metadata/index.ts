@@ -1,4 +1,4 @@
-import { ServiceConstructor } from "./Service";
+import { ServiceConstructor } from "../Service";
 
 /**
  * Describes a package to the runtime.

@@ -1,7 +1,7 @@
 import generate from "@babel/generator";
 import template from "@babel/template";
 import * as nodes from "@babel/types";
-import { metadata } from "@open-pioneer/runtime";
+import * as metadata from "@open-pioneer/runtime/metadata";
 
 const SERVICE_IMPORT = template.statement(`
     import { %%SERVICE_NAME%% as %%IMPORT_NAME%% } from %%IMPORT_SOURCE%%;
