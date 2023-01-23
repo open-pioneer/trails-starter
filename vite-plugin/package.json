@@ -8,8 +8,11 @@
         "build": "run-p build-js build-types",
         "build-js": "esbuild src/index.ts --bundle --sourcemap --platform=node --format=cjs --target=node16 --outdir=./dist --packages=external",
         "build-types": "tsc -p tsconfig.build.json",
-        "dev": "pnpm run build --watch",
+        "dev": "pnpm run build-js --watch",
         "test": "ts-mocha -p tsconfig.json tests/**/*.test.ts"
+    },
+    "peerDependencies": {
+        "vite": "^4.0.0"
     },
     "devDependencies": {
         "@types/chai": "^4.3.4",

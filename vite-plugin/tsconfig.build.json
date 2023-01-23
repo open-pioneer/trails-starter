@@ -7,7 +7,7 @@
         "noEmit": false,
         "emitDeclarationOnly": true,
         "declaration": true,
-        "declarationMap": true,
+        "inlineSourceMap": true,
         "tsBuildInfoFile": "temp/.tsbuildinfo"
     }
 }
