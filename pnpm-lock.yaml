@@ -52,6 +52,14 @@ importers:
       vite-plugin-pioneer: link:vite-plugin
       vitest: 0.27.1_jsdom@21.0.0
 
+  src/apps/date-app:
+    specifiers:
+      '@open-pioneer/runtime': workspace:^
+      react: ^18.2.0
+    dependencies:
+      '@open-pioneer/runtime': link:../../packages/runtime
+      react: 18.2.0
+
   src/apps/logging-app:
     specifiers:
       '@open-pioneer/runtime': workspace:^
@@ -64,17 +72,7 @@ importers:
       logging: link:../../packages/logging
       react: 18.2.0
 
-  src/apps/sample:
-    specifiers:
-      '@open-pioneer/runtime': workspace:^
-      hello-world: workspace:^
-      react: ^18.2.0
-    dependencies:
-      '@open-pioneer/runtime': link:../../packages/runtime
-      hello-world: link:../../packages/hello-world
-      react: 18.2.0
-
-  src/apps/services-sample:
+  src/apps/services-app:
     specifiers:
       '@open-pioneer/runtime': workspace:^
     dependencies:
@@ -88,9 +86,6 @@ importers:
       logging: workspace:^
     dependencies:
       logging: link:../logging
-
-  src/packages/hello-world:
-    specifiers: {}
 
   src/packages/logging:
     specifiers: {}
