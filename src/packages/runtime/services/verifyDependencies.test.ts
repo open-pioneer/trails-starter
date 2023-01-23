@@ -1,4 +1,4 @@
-import { assert, it } from "vitest";
+import { assert, expect, it } from "vitest";
 import { Dependency, ServiceRepr } from "./ServiceRepr";
 import { verifyDependencies } from "./verifyDependencies";
 
@@ -32,10 +32,9 @@ it("throws when a service is not implemented", function () {
             requires: ["services.Map"]
         }
     ]);
-    assert.throws(
-        () => verifyDependencies(components),
-        "runtime:interface-not-found: Service 'tools::ExampleTool' requires an unimplemented interface 'services.Map' (as dependency 'dep_0')."
-    );
+
+    const message = expectError(() => verifyDependencies(components)).message;
+    expect(message).toMatchSnapshot();
 });
 
 it("throws when a component directly depends on itself", function () {
@@ -47,10 +46,8 @@ it("throws when a component directly depends on itself", function () {
             requires: ["services.Map"]
         }
     ]);
-    assert.throws(
-        () => verifyDependencies(components),
-        "runtime:dependency-cycle: Detected dependency cycle: 'map::Map' => 'map::Map' ('dep_0' providing 'services.Map')."
-    );
+    const message = expectError(() => verifyDependencies(components)).message;
+    expect(message).toMatchSnapshot();
 });
 
 it("throws when a component depends on itself via a larger cycle", function () {
@@ -81,10 +78,8 @@ it("throws when a component depends on itself via a larger cycle", function () {
         }
     ]);
 
-    assert.throws(
-        () => verifyDependencies(components),
-        "runtime:dependency-cycle: Detected dependency cycle: 'A::a' => 'B::b' ('dep_0' providing 'B') => 'C::c' ('dep_1' providing 'C') => 'A::a' ('dep_2' providing 'A')."
-    );
+    const message = expectError(() => verifyDependencies(components)).message;
+    expect(message).toMatchSnapshot();
 });
 
 interface ServiceData {
@@ -113,4 +108,16 @@ function mockComponents(data: ServiceData[]): ServiceRepr[] {
             interfaces: service.provides
         });
     });
+}
+
+function expectError(impl: () => void) {
+    try {
+        impl();
+        throw new Error("expected error!");
+    } catch (e) {
+        if (e instanceof Error) {
+            return e;
+        }
+        throw new Error("unexpected error value, not an instance of Error");
+    }
 }
