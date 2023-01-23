@@ -73,6 +73,7 @@ export async function detectPackagesInApp(
                 foundPackages.set(packageName, {
                     name: packageName,
                     location: resolvedDir,
+                    entryPoint: join(resolvedDir, "index.ts"), // TODO hardcoded
                     metadata
                 });
             }
