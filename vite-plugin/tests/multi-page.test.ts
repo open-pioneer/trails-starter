@@ -42,7 +42,7 @@ describe("multi page support", function () {
         await runViteBuild({
             outDir,
             pluginOptions: {
-                sites: ["site1", "site2"],
+                sites: ["site1", "site2"]
             }
         });
 

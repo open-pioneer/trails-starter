@@ -59,4 +59,4 @@ const Element = createCustomElement({
     packages: packages
 });
 
-customElements.define("services-sample", Element);
+customElements.define("services-app", Element);

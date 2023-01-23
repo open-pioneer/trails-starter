@@ -20,8 +20,8 @@ export default defineConfig({
     plugins: [
         pioneer({
             rootSite: true,
-            apps: ["sample", "services-sample"],
-            sites: ["example-site"]
+            apps: ["date-app"],
+            sites: ["date-sample", "logging-sample", "services-sample"]
         }),
         react(),
         eslint()

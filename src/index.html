@@ -6,21 +6,18 @@
         <title>Demo</title>
     </head>
     <body>
-        <sample-element></sample-element>
-        <div style="display: flex; gap: 10px">
-            <button
-                onclick="document.querySelector('#test').setAttribute('date', new Date().toString())"
-            >
-                click for attribute update
-            </button>
-            <date-sample id="test"></date-sample>
-        </div>
-        <services-sample></services-sample>
-        <div>
-            <a href="./sites/example-site/">Link to nested site</a>
-        </div>
-        <script type="module" src="./apps/sample/app.ts"></script>
-        <script type="module" src="./apps/sample/date-sample.tsx"></script>
-        <script type="module" src="./apps/services-sample/app.ts"></script>
+        <h1>Open Pioneer Test Site</h1>
+        <p>Follow one of the links to see some samples:</p>
+        <ul>
+            <li>
+                <a href="./sites/date-sample/">Date Sample (dynamic attributes)</a>
+            </li>
+            <li>
+                <a href="./sites/services-sample/">Services Sample (runtime launch)</a>
+            </li>
+            <li>
+                <a href="./sites/logging-sample/">Logging Sample (Code generation)</a>
+            </li>
+        </ul>
     </body>
 </html>

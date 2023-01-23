@@ -1,0 +1,10 @@
+{
+    "name": "logging-app",
+    "private": true,
+    "dependencies": {
+        "@open-pioneer/runtime": "workspace:^",
+        "logging": "workspace:^",
+        "foo": "workspace:^",
+        "react": "^18.2.0"
+    }
+}

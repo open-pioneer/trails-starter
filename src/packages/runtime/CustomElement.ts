@@ -82,7 +82,9 @@ export function createCustomElement(options: CustomElementOptions): CustomElemen
                 try {
                     packages = parsePackages(options.packages ?? {});
                 } catch (e) {
-                    throw new Error(ErrorId.INVALID_METADATA, "Failed to parse package metadata.");
+                    throw new Error(ErrorId.INVALID_METADATA, "Failed to parse package metadata.", {
+                        cause: e
+                    });
                 }
 
                 const serviceLayer = (this.#serviceLayer = new ServiceLayer(packages));

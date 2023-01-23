@@ -13,4 +13,4 @@ const Element = createCustomElement({
     attributes: ["date"]
 });
 
-customElements.define("date-sample", Element);
+customElements.define("date-app", Element);
