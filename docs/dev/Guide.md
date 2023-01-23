@@ -67,6 +67,10 @@ Runs [ESLint](https://eslint.org/) on all source code files to detect problems.
 Simple errors can be fixed automatically by running `pnpm run lint --fix`.
 ESLint is configured via the `.eslintrc` file.
 
+### `pnpm audit`
+
+Checks for known security issues with the installed packages. (Will also be checked with a nightly github action job)
+
 ### `pnpm run prettier`
 
 Runs [Prettier](https://prettier.io/) on all source code files for automated (re-) formatting.
