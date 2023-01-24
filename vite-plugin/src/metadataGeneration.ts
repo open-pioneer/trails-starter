@@ -1,7 +1,7 @@
 import generate from "@babel/generator";
 import template from "@babel/template";
 import * as nodes from "@babel/types";
-import * as metadata from "@open-pioneer/runtime/metadata";
+import { PackageInfo } from "./parseAppInfo";
 
 const SERVICE_IMPORT = template.statement(`
     import { %%SERVICE_NAME%% as %%IMPORT_NAME%% } from %%IMPORT_SOURCE%%;
@@ -23,13 +23,6 @@ const SERVICE_OBJECT = template.expression(`
     }
 `);
 
-export interface PackageInfo {
-    name: string;
-    location: string;
-    entryPoint: string;
-    metadata: metadata.PackageMetadata;
-}
-
 export function generatePackagesMetadata(packages: PackageInfo[]): string {
     const program = nodes.program([]);
     const importLookup = new Map<unknown, string>(); // key: service object instance, value: import variable name
@@ -44,7 +37,7 @@ export function generatePackagesMetadata(packages: PackageInfo[]): string {
             const renderedImporter = SERVICE_IMPORT({
                 SERVICE_NAME: nodes.identifier(name),
                 IMPORT_NAME: nodes.identifier(importName),
-                IMPORT_SOURCE: nodes.stringLiteral(pkg.entryPoint)
+                IMPORT_SOURCE: nodes.stringLiteral(pkg.entryPointPath)
             });
             program.body.push(renderedImporter);
         }

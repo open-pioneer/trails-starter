@@ -28,7 +28,6 @@ export function mpaPlugin(options: PioneerPluginOptions | undefined): Plugin {
                                     return "[name].js";
                                 }
 
-
                                 // This will rename the .js files that belong to a .html site, they don't need a public name.
                                 return posix.join(
                                     resolvedConfig.build.assetsDir,

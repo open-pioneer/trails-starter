@@ -39,9 +39,5 @@ export interface PioneerPluginOptions {
 }
 
 export function pioneer(options?: PioneerPluginOptions): Plugin[] {
-    return [
-        mpaPlugin(options),
-        codegenPlugin(),
-    ];    
+    return [mpaPlugin(options), codegenPlugin()];
 }
-
