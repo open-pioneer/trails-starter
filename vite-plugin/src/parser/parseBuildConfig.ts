@@ -23,7 +23,7 @@ export interface ServiceConfig {
      *
      * The interface name can be specified directly (as a string) for convenience.
      */
-    provides?: (string | ProvidesConfig)[];
+    provides?: string | (string | ProvidesConfig)[];
 
     /**
      * Declares references to other services.
@@ -79,22 +79,43 @@ function normalizeConfig(rawConfig: PackageConfig): NormalizedPackageConfig {
 
 function normalizeServiceConfig(rawConfig: ServiceConfig): NormalizedServiceConfig {
     return {
-        provides:
-            rawConfig.provides?.map((providesConfig) => {
-                const normalized: ProvidesConfig =
-                    typeof providesConfig === "string"
-                        ? { name: providesConfig }
-                        : providesConfig;
-                return normalized;
-            }) ?? [],
-        references: Object.fromEntries(
-            Object.entries(rawConfig.references ?? {}).map(([referenceName, referenceConfig]) => {
-                const normalized: ReferenceConfig =
-                    typeof referenceConfig === "string"
-                        ? { name: referenceConfig }
-                        : referenceConfig;
-                return [referenceName, normalized];
-            })
-        )
+        provides: normalizeProvidesConfig(rawConfig.provides),
+        references: normalizeReferencesConfig(rawConfig.references)
     };
+}
+
+function normalizeProvidesConfig(rawConfig: ServiceConfig["provides"]): ProvidesConfig[] {
+    if (!rawConfig) {
+        return [];
+    }
+
+    if (typeof rawConfig === "string") {
+        return [
+            {
+                name: rawConfig
+            }
+        ];
+    }
+
+    return rawConfig.map((providesConfig) => {
+        const normalized: ProvidesConfig =
+            typeof providesConfig === "string" ? { name: providesConfig } : providesConfig;
+        return normalized;
+    });
+}
+
+function normalizeReferencesConfig(
+    rawConfig: ServiceConfig["references"]
+): Record<string, ReferenceConfig> {
+    if (!rawConfig) {
+        return {};
+    }
+
+    return Object.fromEntries(
+        Object.entries(rawConfig).map(([referenceName, referenceConfig]) => {
+            const normalized: ReferenceConfig =
+                typeof referenceConfig === "string" ? { name: referenceConfig } : referenceConfig;
+            return [referenceName, normalized];
+        })
+    );
 }
