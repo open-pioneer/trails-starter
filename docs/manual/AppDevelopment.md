@@ -11,7 +11,7 @@ It can also be distributed on its own to be embedded into different host sites.
 
 To create a new app, first create a new empty directory in `src/apps`, for example `src/apps/my-app`.
 Pioneer apps are node packages to benefit from npm's dependency management.
-Thus, every app needs a `package.json` file:
+Thus, every app needs a [`package.json`](https://docs.npmjs.com/cli/v9/configuring-npm/package-json) file such as this:
 
 ```json
 // src/apps/my-app/package.json
@@ -24,10 +24,13 @@ Thus, every app needs a `package.json` file:
 }
 ```
 
+A `package.json` file should always contain at least a `name`, some `dependencies` and either `private: true` or a valid license (in case you intend to publish it).
+After creating a new package or modifying the dependencies of an existing package, you should run `pnpm install`.
+
 To create a web component with a simple UI, call the `createCustomElement` function from the `@open-pioneer/runtime` package:
 
 ```tsx
-// src/apps/my-app/main.tsx
+// src/apps/my-app/app.tsx
 import { createCustomElement } from "@open-pioneer/runtime";
 
 const Element = createCustomElement({
@@ -36,7 +39,8 @@ const Element = createCustomElement({
 customElements.define("my-app-element", Element);
 ```
 
-The `main.tsx` above defines a custom component called `my-app-element` that can now be used in an `.html` file:
+The main entry point of an app should always be called `app.<EXT>`, where `EXT` can be one of `js`, `ts`, `jsx` or `tsx`.
+The file above defines a custom component called `my-app-element` that can now be used in an `.html` file:
 
 ```html
 <!-- src/index.html -->
@@ -49,7 +53,7 @@ The `main.tsx` above defines a custom component called `my-app-element` that can
     </head>
     <body>
         <my-app-element></my-app-element>
-        <script type="module" src="apps/my-app/main.tsx"></script>
+        <script type="module" src="apps/my-app/app.tsx"></script>
     </body>
 </html>
 ```
@@ -77,7 +81,7 @@ _Sites_ are plain old `.html` pages (with associated assets) that can also be de
 for example to implement a full screen application or to test apps in different configurations.
 By convention, sites are located under `src/sites/<SITE_NAME>/index.html`.
 
-You can chose which sites or apps should be part of your deployment by editing pioneer plugin configuration in the `vite.config.ts` file:
+You can choose which sites or apps should be part of your deployment by editing pioneer plugin configuration in the `vite.config.ts` file:
 
 ```js
 pioneer({
