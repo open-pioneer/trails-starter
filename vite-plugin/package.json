@@ -10,7 +10,7 @@
         "build-js": "esbuild src/index.ts --bundle --sourcemap --platform=node --format=cjs --target=node16 --outdir=./dist --packages=external",
         "check-types": "tsc --noEmit",
         "dev": "pnpm run build-js --watch",
-        "test": "ts-mocha -p tsconfig.json tests/**/*.test.ts"
+        "test": "esbuild tests/index.ts --bundle --sourcemap --platform=node --format=cjs --target=node16 --outdir=./temp/tests --packages=external && mocha temp/tests/**/*.js"
     },
     "peerDependencies": {
         "vite": "^4.0.0",

@@ -35,7 +35,7 @@ const REFERENCE_OBJECT = template.expression(`
     }
 `);
 
-export function generatePackagesMetadata(packages: PackageInfo[]): string {
+export function generatePackagesMetadata(packages: Pick<PackageInfo, "name" | "config" | "entryPointPath">[]): string {
     const program = nodes.program([]);
     const importLookup = new Map<unknown, string>(); // key: service object instance, value: import variable name
 

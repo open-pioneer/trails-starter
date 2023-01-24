@@ -1,0 +1,7 @@
+{
+    "name": "test-app",
+    "private": true,
+    "dependencies": {
+        "logging": "x.x"
+    }
+}
