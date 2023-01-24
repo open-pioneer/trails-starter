@@ -96,7 +96,7 @@ pioneer({
 }),
 ```
 
-See the documentation of the package `vite-plugin-pioneer` for more details.
+See the documentation of the package `@open-pioneer/vite-plugin-pioneer` for more details.
 
 ## Deployment
 
