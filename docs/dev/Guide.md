@@ -92,6 +92,12 @@ To add a dependency to a workspace package or app, execute `pnpm add PACKAGE_NAM
 You can also add the dependency manually by editing the `package.json` file directory.
 Keep in mind to execute `pnpm install` to update the lockfile after you're done with editing.
 
+### Updating a dependency
+
+TBD
+
+### Keeping dependency versions in sync
+
 ## Concepts
 
 ### Monorepo
