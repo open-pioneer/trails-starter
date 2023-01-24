@@ -1,5 +1,5 @@
 {
-    "name": "vite-plugin-pioneer",
+    "name": "@open-pioneer/vite-plugin-pioneer",
     "private": true,
     "main": "dist/index.js",
     "types": "dist/index.d.ts",
@@ -13,7 +13,8 @@
         "test": "ts-mocha -p tsconfig.json tests/**/*.test.ts"
     },
     "peerDependencies": {
-        "vite": "^4.0.0"
+        "vite": "^4.0.0",
+        "@open-pioneer/runtime": "workspace:^0.0.1"
     },
     "dependencies": {
         "@babel/generator": "^7.20.7",
