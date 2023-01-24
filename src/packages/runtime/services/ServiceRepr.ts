@@ -47,7 +47,7 @@ export class ServiceRepr {
     readonly interfaces: readonly string[];
 
     /** Number of references to this service. */
-    private useCount = 0;
+    private _useCount = 0;
 
     /** Service constructor. */
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -94,6 +94,10 @@ export class ServiceRepr {
     get state() {
         return this._state;
     }
+    
+    get useCount(){
+        return this._useCount;
+    }
 
     /**
      * Same as `instance`, but throws when the instance has not been constructed.
@@ -136,7 +140,7 @@ export class ServiceRepr {
         try {
             this._instance = new this.clazz(options);
             this._state = "constructed";
-            this.useCount = 1;
+            this._useCount = 1;
             return this._instance;
         } catch (e) {
             throw new Error(
@@ -168,7 +172,7 @@ export class ServiceRepr {
      * References to a service are tracked: it should only be destroyed when it is no longer being used.
      */
     addRef() {
-        return (this.useCount += 1);
+        return (this._useCount += 1);
     }
 
     /**
@@ -176,6 +180,6 @@ export class ServiceRepr {
      * Returns the new use count.
      */
     removeRef() {
-        return (this.useCount -= 1);
+        return (this._useCount -= 1);
     }
 }

@@ -114,6 +114,13 @@ it("destroys services once they are no longer referenced (but not before)", func
             events.push("destroy-provider");
         }
     }
+    
+    const providerService = new ServiceRepr({
+        name: "Provider",
+        packageName: "ProviderPackage",
+        clazz: ServiceProvider,
+        interfaces: ["provider.Service"]
+    });
 
     const serviceLayer = new ServiceLayer([
         new PackageRepr("UserPackage", [
@@ -146,22 +153,22 @@ it("destroys services once they are no longer referenced (but not before)", func
                 }
             })
         ]),
+        
         new PackageRepr("ProviderPackage", [
-            new ServiceRepr({
-                name: "Provider",
-                packageName: "ProviderPackage",
-                clazz: ServiceProvider,
-                interfaces: ["provider.Service"]
-            })
+            providerService
         ])
     ]);
 
     serviceLayer.start();
     expect(events[0]).toBe("construct-provider"); // before users
     expect(new Set(events.slice(1))).toEqual(new Set(["construct-B", "construct-A"])); // ignore order
+    expect(providerService.useCount).toBe(3);
+    expect(providerService.state).toBe("constructed");
 
     events = [];
     serviceLayer.destroy();
     expect(events[2]).toBe("destroy-provider"); // after users
     expect(new Set(events.slice(0, 2))).toEqual(new Set(["destroy-B", "destroy-A"])); // ignore order
+    expect(providerService.useCount).toBe(0);
+    expect(providerService.state).toBe("destroyed");
 });
