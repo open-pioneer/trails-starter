@@ -28,11 +28,11 @@ export function mpaPlugin(options: PioneerPluginOptions | undefined): Plugin {
                                     return "[name].js";
                                 }
 
-                                // Vite default, see https://github.com/vitejs/vite/blob/2401253b9aa487c50edb5ec571d5ba7adc949e27/packages/vite/src/node/build.ts#L552
-                                // This will rename the .js files that belong to a .html site.
+
+                                // This will rename the .js files that belong to a .html site, they don't need a public name.
                                 return posix.join(
                                     resolvedConfig.build.assetsDir,
-                                    "[name].[hash].js"
+                                    "[name]-[hash].js"
                                 );
                             }
                         }
