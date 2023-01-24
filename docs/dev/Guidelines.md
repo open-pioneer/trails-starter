@@ -2,7 +2,7 @@
 
 ## Definitions of Done
 
--   It is okay to commit to the main branch directly (can pull requests or branches can of course be used when appropriate)
+-   It is okay to commit to the main branch directly (pull requests or branches can of course be used when appropriate)
 -   The code in main branch is supposed to build correctly and pass all quality checks (linting, typescript, etc.)
 -   New features are always documented (internally and/or externally)
 -   New features should be demonstrated via the demo deployment
