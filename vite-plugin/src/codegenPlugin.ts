@@ -2,8 +2,8 @@ import { existsSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { PluginContext } from "rollup";
 import { normalizePath, Plugin, ResolvedConfig } from "vite";
-import { createDebugger } from "./debug";
-import { generatePackagesMetadata } from "./metadataGeneration";
+import { createDebugger } from "./utils/debug";
+import { generatePackagesMetadata } from "./codegen/metadataGeneration";
 import { AppInfo, parseAppInfo } from "./parseAppInfo";
 
 const isDebug = !!process.env.DEBUG;

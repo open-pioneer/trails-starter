@@ -3,8 +3,8 @@ import { readFile, realpath } from "fs/promises";
 import { dirname, join } from "path";
 import { PluginContext } from "rollup";
 import { normalizePath } from "vite";
-import { createDebugger } from "./debug";
-import { fileExists } from "./fileUtils";
+import { createDebugger } from "./utils/debug";
+import { fileExists } from "./utils/fileUtils";
 const isDebug = !!process.env.DEBUG;
 const debug = createDebugger("open-pioneer:package-detection");
 

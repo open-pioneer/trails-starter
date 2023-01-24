@@ -1,7 +1,7 @@
 import generate from "@babel/generator";
 import template from "@babel/template";
 import * as nodes from "@babel/types";
-import { PackageInfo } from "./parseAppInfo";
+import { PackageInfo } from "../parseAppInfo";
 
 const SERVICE_IMPORT = template.statement(`
     import { %%SERVICE_NAME%% as %%IMPORT_NAME%% } from %%IMPORT_SOURCE%%;
