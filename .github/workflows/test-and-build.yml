@@ -1,4 +1,4 @@
-name: Open Pioneer Actions
+name: Build and deploy
 on:
   workflow_dispatch:
   push:
