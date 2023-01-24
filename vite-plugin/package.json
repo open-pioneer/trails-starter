@@ -2,13 +2,13 @@
     "name": "@open-pioneer/vite-plugin-pioneer",
     "private": true,
     "main": "dist/index.js",
-    "types": "dist/index.d.ts",
+    "types": "types.d.ts",
     "type": "commonjs",
     "scripts": {
         "clean": "rimraf dist temp",
-        "build": "run-p build-js build-types",
+        "build": "run-p build-js check-types",
         "build-js": "esbuild src/index.ts --bundle --sourcemap --platform=node --format=cjs --target=node16 --outdir=./dist --packages=external",
-        "build-types": "tsc -p tsconfig.build.json",
+        "check-types": "tsc --noEmit",
         "dev": "pnpm run build-js --watch",
         "test": "ts-mocha -p tsconfig.json tests/**/*.test.ts"
     },

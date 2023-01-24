@@ -5,14 +5,14 @@
     "type": "module",
     "scripts": {
         "clean": "rimraf dist",
-        "dev": "vite",
+        "dev": "pnpm run build-plugin && vite",
         "watch-types": "tsc -w --noEmit",
-        "build": "tsc && vite build",
-        "build-plugin": "cd vite-plugin && pnpm run build",
+        "build": "pnpm run build-plugin && tsc && vite build",
+        "build-plugin": "cd vite-plugin && pnpm run build-js",
         "preview": "vite preview",
         "lint": "eslint ./src ./vite-plugin",
         "prettier": "prettier ./src ./docs ./vite-plugin -w --ignore-path .eslintignore",
-        "test": "vitest"
+        "test": "pnpm run build-plugin && vitest"
     },
     "devDependencies": {
         "@open-pioneer/vite-plugin-pioneer": "workspace:*",

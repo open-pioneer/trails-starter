@@ -42,7 +42,7 @@ export function codegenPlugin(): Plugin {
                     return;
                 }
 
-                logger.info(`${path} changed, reloading`, { clear: true, timestamp: true });
+                logger.info(`${path} changed, reloading`, { clear: false, timestamp: true });
 
                 for (const moduleId of moduleIds) {
                     const mod = server.moduleGraph.getModuleById(moduleId);

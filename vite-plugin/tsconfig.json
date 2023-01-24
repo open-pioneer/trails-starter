@@ -1,7 +1,8 @@
 {
     "compilerOptions": {
-        "composite": true,
         "outDir": "dist",
+        "composite": true,
+        "tsBuildInfoFile": "temp/.tsbuildinfo",
 
         "target": "ESNext",
         "lib": ["ES2020"],
