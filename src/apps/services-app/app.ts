@@ -28,7 +28,7 @@ const packages: Record<string, PackageMetadata> = {
                 },
                 references: {
                     provider: {
-                        interface: "test-package2.SomeService"
+                        name: "test-package2.SomeService"
                     }
                 }
             }
@@ -46,7 +46,7 @@ const packages: Record<string, PackageMetadata> = {
                 },
                 provides: [
                     {
-                        interface: "test-package2.SomeService"
+                        name: "test-package2.SomeService"
                     }
                 ]
             }

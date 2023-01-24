@@ -57,10 +57,10 @@ export class ServiceLayer {
 
         // Initialize dependencies recursively before creating the current service.
         service.dependencies.forEach((d) => {
-            const serviceRef = this.serviceIndex.get(d.interface);
+            const serviceRef = this.serviceIndex.get(d.interfaceName);
             if (serviceRef) {
                 const instance = this.initService(serviceRef);
-                instances[d.name] = instance;
+                instances[d.referenceName] = instance;
             } else {
                 throw new Error(ErrorId.INTERNAL, "Service not defined.");
             }
@@ -86,7 +86,7 @@ export class ServiceLayer {
         }
 
         service.dependencies.forEach((d) => {
-            const serviceRef = this.serviceIndex.get(d.interface);
+            const serviceRef = this.serviceIndex.get(d.interfaceName);
             if (serviceRef) {
                 this.destroyService(serviceRef);
             }

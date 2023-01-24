@@ -96,8 +96,8 @@ function mockComponents(data: ServiceData[]): ServiceRepr[] {
         const clazz = class MockService {};
         const dependencies = service.requires.map<Dependency>((interfaceName, index) => {
             return {
-                name: `dep_${index}`,
-                interface: interfaceName
+                referenceName: `dep_${index}`,
+                interfaceName: interfaceName
             };
         });
         return new ServiceRepr({

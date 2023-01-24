@@ -1,0 +1,10 @@
+{
+    "name": "log-user",
+    "private": true,
+    "dependencies": {
+        "logging": "workspace:^"
+    },
+    "devDependencies": {
+        "@open-pioneer/runtime": "workspace:^"
+    }
+}

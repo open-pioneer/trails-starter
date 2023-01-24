@@ -43,8 +43,8 @@ it("starts and stops services in the expected order", function () {
                 clazz: ServiceA,
                 dependencies: [
                     {
-                        name: "b",
-                        interface: "b.serviceB"
+                        referenceName: "b",
+                        interfaceName: "b.serviceB"
                     }
                 ]
             })
@@ -130,8 +130,8 @@ it("destroys services once they are no longer referenced (but not before)", func
                 clazz: ServiceUser,
                 dependencies: [
                     {
-                        name: "provider",
-                        interface: "provider.Service"
+                        referenceName: "provider",
+                        interfaceName: "provider.Service"
                     }
                 ],
                 properties: {
@@ -144,8 +144,8 @@ it("destroys services once they are no longer referenced (but not before)", func
                 clazz: ServiceUser,
                 dependencies: [
                     {
-                        name: "provider",
-                        interface: "provider.Service"
+                        referenceName: "provider",
+                        interfaceName: "provider.Service"
                     }
                 ],
                 properties: {

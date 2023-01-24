@@ -4,7 +4,7 @@ import { PluginContext } from "rollup";
 import { normalizePath, Plugin, ResolvedConfig } from "vite";
 import { createDebugger } from "./utils/debug";
 import { generatePackagesMetadata } from "./codegen/metadataGeneration";
-import { AppInfo, parseAppInfo } from "./parseAppInfo";
+import { AppInfo, parseAppInfo } from "./parser/parseAppInfo";
 
 const isDebug = !!process.env.DEBUG;
 const debug = createDebugger("open-pioneer:codegen");

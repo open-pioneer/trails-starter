@@ -16,10 +16,10 @@ it("parses package metadata into internal package representations", function () 
                     clazz: ClazzB,
                     provides: [
                         {
-                            interface: "b.ServiceB1"
+                            name: "b.ServiceB1"
                         },
                         {
-                            interface: "b.ServiceB2"
+                            name: "b.ServiceB2"
                         }
                     ],
                     references: {}
@@ -35,7 +35,7 @@ it("parses package metadata into internal package representations", function () 
                     provides: [],
                     references: {
                         foo: {
-                            interface: "b.ServiceB1"
+                            name: "b.ServiceB1"
                         }
                     }
                 }
@@ -56,8 +56,8 @@ it("parses package metadata into internal package representations", function () 
     expect(serviceA.instance).toBeUndefined();
     expect(serviceA.dependencies).toEqual([
         {
-            name: "foo",
-            interface: "b.ServiceB1"
+            referenceName: "foo",
+            interfaceName: "b.ServiceB1"
         }
     ]);
     expect(serviceA.interfaces).toEqual([]);

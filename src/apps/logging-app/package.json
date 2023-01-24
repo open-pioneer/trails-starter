@@ -4,7 +4,7 @@
     "dependencies": {
         "@open-pioneer/runtime": "workspace:^",
         "logging": "workspace:^",
-        "foo": "workspace:^",
+        "log-user": "workspace:^",
         "react": "^18.2.0"
     }
 }

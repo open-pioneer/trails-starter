@@ -1,7 +1,0 @@
-{
-    "name": "foo",
-    "private": true,
-    "dependencies": {
-        "logging": "workspace:^"
-    }
-}

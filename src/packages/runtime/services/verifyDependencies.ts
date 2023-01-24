@@ -81,17 +81,17 @@ class Verifier {
 
         stack.push([item, reason]);
         item.state = "pending";
-        for (const { name: dependencyName, interface: interfaceName } of item.service
+        for (const { referenceName, interfaceName } of item.service
             .dependencies) {
             const childItem = services.get(interfaceName);
             if (!childItem) {
                 throw new Error(
                     ErrorId.INTERFACE_NOT_FOUND,
-                    `Service '${item.service.id}' requires an unimplemented interface '${interfaceName}' (as dependency '${dependencyName}').`
+                    `Service '${item.service.id}' requires an unimplemented interface '${interfaceName}' (as dependency '${referenceName}').`
                 );
             }
 
-            this.visitItem(childItem, { name: dependencyName, interfaceName });
+            this.visitItem(childItem, { name: referenceName, interfaceName });
         }
         item.state = "done";
         stack.pop();

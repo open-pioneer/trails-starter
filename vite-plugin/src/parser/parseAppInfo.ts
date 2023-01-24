@@ -1,14 +1,12 @@
-import * as metadata from "@open-pioneer/runtime/metadata";
 import { readFile, realpath } from "fs/promises";
 import { dirname, join } from "path";
 import { PluginContext } from "rollup";
 import { normalizePath } from "vite";
-import { createDebugger } from "./utils/debug";
-import { fileExists } from "./utils/fileUtils";
+import { createDebugger } from "../utils/debug";
+import { fileExists } from "../utils/fileUtils";
+import { BUILD_CONFIG_NAME, loadBuildConfig, NormalizedPackageConfig } from "./parseBuildConfig";
 const isDebug = !!process.env.DEBUG;
 const debug = createDebugger("open-pioneer:package-detection");
-
-let requestId = 0;
 
 /**
  * Contains build-time information about an app.
@@ -47,7 +45,7 @@ export interface PackageInfo {
     dependencies: string[];
 
     /** Parsed metadata (from build config file). */
-    metadata: metadata.PackageMetadata;
+    config: NormalizedPackageConfig;
 }
 
 export type AppInfoContext = Pick<PluginContext, "addWatchFile" | "resolve" | "error">;
@@ -96,7 +94,7 @@ export async function parseAppInfo(ctx: AppInfoContext, appDir: string): Promise
         } = await parsePackageJson(ctx, packageDir);
         ctx.addWatchFile(packageJsonPath);
 
-        const buildConfigPath = join(packageDir, "build.config.mjs");
+        const buildConfigPath = join(packageDir, BUILD_CONFIG_NAME);
 
         // TODO: Only consider packages in source root?
         // TODO: Better detection (e.g. type in config file)
@@ -107,8 +105,15 @@ export async function parseAppInfo(ctx: AppInfoContext, appDir: string): Promise
         }
 
         // TODO: Parse metadata correctly
-        const metadata = (await import(`${buildConfigPath}?id=${++requestId}`)).default;
-        isDebug && debug(`Metadata of ${buildConfigPath}: %O`, metadata);
+        let buildConfig: NormalizedPackageConfig;
+        try {
+            buildConfig = await loadBuildConfig(buildConfigPath);
+        } catch (e) {
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            ctx.error((e as any).message || "Failed to load build config");
+        }
+
+        isDebug && debug(`Metadata of ${buildConfigPath}: %O`, buildConfig);
 
         const existingPackage = seenPackages.get(packageName);
         if (existingPackage) {
@@ -127,7 +132,7 @@ export async function parseAppInfo(ctx: AppInfoContext, appDir: string): Promise
                 packageJsonPath: packageJsonPath,
                 entryPointPath: join(packageDir, "index.ts"), // TODO hardcoded
                 dependencies,
-                metadata
+                config: buildConfig
             },
             ...depsInfo
         ];

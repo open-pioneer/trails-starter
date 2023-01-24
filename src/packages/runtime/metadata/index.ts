@@ -48,7 +48,7 @@ export interface ServiceMetadata {
  */
 export interface InterfaceReferenceMetadata {
     /** The name of the referenced interface. */
-    interface: string;
+    name: string;
 }
 
 /**
@@ -56,5 +56,5 @@ export interface InterfaceReferenceMetadata {
  */
 export interface ProvidedInterfaceMetadata {
     /** The name of the provided interface. */
-    interface: string;
+    name: string;
 }

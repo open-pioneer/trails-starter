@@ -1,9 +1,9 @@
 import { ErrorId } from "./../errors";
-import { InterfaceReferenceMetadata, ServiceMetadata } from "../metadata";
+import { ServiceMetadata } from "../metadata";
 import { Service, ServiceConstructor, ServiceOptions } from "../Service";
 import { Error } from "@open-pioneer/core";
 
-export type Dependency = { name: string } & InterfaceReferenceMetadata;
+export type Dependency = { referenceName: string; interfaceName: string };
 
 export type ServiceState = "not-constructed" | "constructing" | "constructed" | "destroyed";
 
@@ -18,13 +18,13 @@ export class ServiceRepr {
         const dependencies = Object.entries(data.references ?? {}).map<Dependency>(
             ([name, referenceMetadata]) => {
                 return {
-                    name,
-                    ...referenceMetadata
+                    referenceName: name,
+                    interfaceName: referenceMetadata.name,                    
                 };
             }
         );
         // TODO: Properties in metadata?
-        const interfaces = (data.provides ?? []).map((p) => p.interface);
+        const interfaces = (data.provides ?? []).map((p) => p.name);
         return new ServiceRepr({ name, packageName, clazz, dependencies, interfaces });
     }
 
