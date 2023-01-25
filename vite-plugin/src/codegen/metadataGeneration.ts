@@ -64,10 +64,7 @@ export function generatePackagesMetadata(packages: PackageInfoInput[]): string {
         );
     }
 
-    const program = nodes.program([
-        ...imports,
-        nodes.exportDefaultDeclaration(packagesMetadata)
-    ]);
+    const program = nodes.program([...imports, nodes.exportDefaultDeclaration(packagesMetadata)]);
     return generate(program).code;
 }
 
