@@ -55,7 +55,8 @@ export function generatePackagesMetadata(packages: Pick<PackageInfo, "name" | "c
         }
     }
 
-    // Generate a large metadata structure, essentially a Record<string, metadata.PackageMetadata>
+    // Generate a combined metadata structure that is essentially a Record<string, metadata.PackageMetadata>.
+    // The object contents must match the shape required by the runtime (declared in runtime/metadata/index.ts).
     const pkgsObject = nodes.objectExpression([]);
     for (const pkg of packages) {
         const servicesObject = nodes.objectExpression([]);
