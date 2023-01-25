@@ -19,35 +19,38 @@ describe("codegen support", function () {
 
         const tastAppJs = readFileSync(join(outDir, "test-app.js"), "utf-8");
         assert.include(tastAppJs, "LogService");
-        assert.include(tastAppJs, "console.log(\"Hello from LogService!!\");");
+        // eslint-disable-next-line quotes
+        assert.include(tastAppJs, 'console.log("Hello from LogService!!");');
     });
-
-
 
     it("should generate package metadata", function () {
         const dir = resolve(__dirname, "../../test-data/codegen");
-        const pkgMetadata = generatePackagesMetadata([{
-            name: "test",
-            config: {
-                services: {
-                    "ServiceA": {
-                        provides: [],
-                        references: {}
-                    },
-                    "ServiceB": {
-                        provides: [{
-                            name: "ServiceC"
-                        }],
-                        references: {
-                            asd: {
-                                name: "ServiceD"
+        const pkgMetadata = generatePackagesMetadata([
+            {
+                name: "test",
+                config: {
+                    services: {
+                        ServiceA: {
+                            provides: [],
+                            references: {}
+                        },
+                        ServiceB: {
+                            provides: [
+                                {
+                                    name: "ServiceC"
+                                }
+                            ],
+                            references: {
+                                asd: {
+                                    name: "ServiceD"
+                                }
                             }
                         }
                     }
-                }
-            },
-            entryPointPath: "entryPoint"
-        }]);
+                },
+                entryPointPath: "entryPoint"
+            }
+        ]);
 
         const expected = readFileSync(join(dir, "expectedCodegen.js"), "utf-8");
         assert.equal(pkgMetadata, expected);

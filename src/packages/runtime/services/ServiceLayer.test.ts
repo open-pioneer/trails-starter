@@ -114,7 +114,7 @@ it("destroys services once they are no longer referenced (but not before)", func
             events.push("destroy-provider");
         }
     }
-    
+
     const providerService = new ServiceRepr({
         name: "Provider",
         packageName: "ProviderPackage",
@@ -153,10 +153,8 @@ it("destroys services once they are no longer referenced (but not before)", func
                 }
             })
         ]),
-        
-        new PackageRepr("ProviderPackage", [
-            providerService
-        ])
+
+        new PackageRepr("ProviderPackage", [providerService])
     ]);
 
     serviceLayer.start();

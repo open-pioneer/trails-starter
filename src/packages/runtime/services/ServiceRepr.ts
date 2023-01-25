@@ -19,7 +19,7 @@ export class ServiceRepr {
             ([name, referenceMetadata]) => {
                 return {
                     referenceName: name,
-                    interfaceName: referenceMetadata.name,                    
+                    interfaceName: referenceMetadata.name
                 };
             }
         );
@@ -94,8 +94,8 @@ export class ServiceRepr {
     get state() {
         return this._state;
     }
-    
-    get useCount(){
+
+    get useCount() {
         return this._useCount;
     }
 

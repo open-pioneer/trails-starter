@@ -1,7 +1,11 @@
 import { build } from "vite";
 import { pioneer, PioneerPluginOptions } from "../src/index";
 
-export async function runViteBuild(options: { outDir: string; rootDir: string, pluginOptions: PioneerPluginOptions }) {
+export async function runViteBuild(options: {
+    outDir: string;
+    rootDir: string;
+    pluginOptions: PioneerPluginOptions;
+}) {
     await build({
         root: options.rootDir,
 

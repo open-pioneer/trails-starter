@@ -81,8 +81,7 @@ class Verifier {
 
         stack.push([item, reason]);
         item.state = "pending";
-        for (const { referenceName, interfaceName } of item.service
-            .dependencies) {
+        for (const { referenceName, interfaceName } of item.service.dependencies) {
             const childItem = services.get(interfaceName);
             if (!childItem) {
                 throw new Error(

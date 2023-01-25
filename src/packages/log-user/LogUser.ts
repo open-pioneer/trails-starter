@@ -2,7 +2,7 @@ import { type LogService } from "logging/LogService";
 import { Service, ServiceOptions } from "@open-pioneer/runtime";
 
 interface References {
-    logger: LogService
+    logger: LogService;
 }
 
 export class LogUser implements Service {
