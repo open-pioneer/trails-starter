@@ -7,6 +7,6 @@ interface References {
 
 export class LogUser implements Service {
     constructor(options: ServiceOptions<References>) {
-        options.references.logger.log("Hello from log user!");
+        options.references.logger.log("Hello other service!");
     }
 }
