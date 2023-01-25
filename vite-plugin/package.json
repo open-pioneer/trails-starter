@@ -7,7 +7,7 @@
     "scripts": {
         "clean": "rimraf dist temp",
         "build": "run-p build-js check-types",
-        "build-js": "node esbuild.config.js build",
+        "build-js": "node esbuild.config.js buildDev",
         "check-types": "tsc --noEmit",
         "dev": "node esbuild.config.js watch",
         "test": "mocha dist/all.test.js"
