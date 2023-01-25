@@ -1,14 +1,14 @@
 #!/usr/bin/env sh
 . "$(dirname -- "$0")/_/husky.sh"
 
+echo '--- run pretty ---'
+pnpm prettier-check
+
 echo '--- run linting --- '
 pnpm lint
 
 echo '--- run typescript check ---'
 pnpm check-types
-
-echo '--- run pretty ---'
-pnpm prettier-check
 
 echo '--- run tests ---'
 pnpm test-plugin
