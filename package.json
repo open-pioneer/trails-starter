@@ -9,9 +9,12 @@
         "watch-types": "tsc -w --noEmit",
         "build": "pnpm run build-plugin && tsc && vite build",
         "build-plugin": "cd vite-plugin && pnpm run build-js",
+        "test-plugin": "cd vite-plugin && pnpm run build-js && pnpm run test",
         "preview": "vite preview",
         "lint": "eslint ./src ./vite-plugin",
+        "prettier-check": "prettier ./src ./docs ./vite-plugin -c --ignore-path .eslintignore",
         "prettier": "prettier ./src ./docs ./vite-plugin -w --ignore-path .eslintignore",
+        "pre-commit": "pnpm lint && tsc",
         "test": "pnpm run build-plugin && vitest"
     },
     "devDependencies": {
@@ -37,7 +40,8 @@
         "typescript": "^4.9.3",
         "vite-plugin-eslint": "^1.8.1",
         "vite": "^4.0.4",
-        "vitest": "^0.28.1"
+        "vitest": "^0.28.1",
+        "husky": "^8.0.0"
     },
     "engines": {
         "node": ">= 16",

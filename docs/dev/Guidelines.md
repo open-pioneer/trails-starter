@@ -12,8 +12,7 @@
 ## Code style
 
 -   Use eslint & prettier rules (reconfigure if necessary)
--   Make sure that your code passes the linter, the typescript compiler and the test suite
-    before committing to the main branch.
+-   Before a commit is successfully done, there are running some pre commit hooks running (lint, prettier, typescript compiler and tests). You can commit without these pre commit hook with the commit postfix `--no-verify`
 -   Prefer const over let by default
 -   Max line length is 100 columns (with some leeway)
 
@@ -24,4 +23,4 @@
 -   Always use UTF-8 text encoding
 -   Use Unix style newlines.
     When developing on windows, configure git to replace accidentally introduced Windows-style newlines on commit:
-    `git config --global core.autocrlf input` (see https://git-scm.com/book/en/v2/Customizing-Git-Git-Configuration)
+    `git config --global core.autocrlf input` (see <https://git-scm.com/book/en/v2/Customizing-Git-Git-Configuration>)

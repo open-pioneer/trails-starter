@@ -1,0 +1,15 @@
+#!/usr/bin/env sh
+. "$(dirname -- "$0")/_/husky.sh"
+
+echo '--- run linting --- '
+pnpm lint
+
+echo '--- run typescript check ---'
+pnpm -- tsc --noEmit
+
+echo '--- run pretty ---'
+pnpm prettier-check
+
+echo '--- run tests ---'
+pnpm -- test-plugin 
+pnpm -- vitest run
