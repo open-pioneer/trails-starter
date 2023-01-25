@@ -6,16 +6,18 @@
     "scripts": {
         "clean": "rimraf dist",
         "dev": "pnpm run build-plugin && vite",
-        "watch-types": "tsc -w --noEmit",
+        "check-types": "tsc --noEmit",
+        "watch-types": "pnpm check-types -w",
         "build": "pnpm run build-plugin && tsc && vite build",
         "build-plugin": "cd vite-plugin && pnpm run build-js",
         "test-plugin": "cd vite-plugin && pnpm run build-js && pnpm run test",
         "preview": "vite preview",
         "lint": "eslint ./src ./vite-plugin",
-        "prettier-check": "prettier ./src ./docs ./vite-plugin -c --ignore-path .eslintignore",
-        "prettier": "prettier ./src ./docs ./vite-plugin -w --ignore-path .eslintignore",
-        "pre-commit": "pnpm lint && tsc",
-        "test": "pnpm run build-plugin && vitest"
+        "prettier-check": "pnpm prettier:common -c",
+        "prettier": "pnpm prettier:common -w",
+        "prettier:common": "prettier ./src ./docs ./vite-plugin --ignore-path .eslintignore",
+        "test": "pnpm run build-plugin && vitest",
+        "prepare": "husky install"
     },
     "devDependencies": {
         "@open-pioneer/vite-plugin-pioneer": "workspace:*",

@@ -37,6 +37,10 @@ They should be invoked via pnpm: `pnpm run <SCRIPT_NAME>` (`run` is optional if 
 Launches [Vite's](https://vitejs.dev/) local development server.
 The main configuration file for vite is `vite.config.ts`.
 
+### `pnpm run check-types`
+
+Runs the [TypeScript compiler](https://www.typescriptlang.org/) to detect problems during development.
+
 ### `pnpm run watch-types`
 
 Starts the [TypeScript compiler](https://www.typescriptlang.org/) in watch mode to detect problems during development.
@@ -67,14 +71,14 @@ Runs [ESLint](https://eslint.org/) on all source code files to detect problems.
 Simple errors can be fixed automatically by running `pnpm run lint --fix`.
 ESLint is configured via the `.eslintrc` file.
 
-### `pnpm audit`
-
-Checks for known security issues with the installed packages. (Will also be checked with a nightly github action job)
-
 ### `pnpm run prettier`
 
 Runs [Prettier](https://prettier.io/) on all source code files for automated (re-) formatting.
 Prettier and ESLint are integrated (see `.eslintrc`), so prettier rules are also respected when linting.
+
+### `pnpm audit`
+
+Checks for known security issues with the installed packages. (Will also be checked with a nightly github action job)
 
 ### Miscellaneous tools
 

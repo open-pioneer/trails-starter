@@ -5,11 +5,11 @@ echo '--- run linting --- '
 pnpm lint
 
 echo '--- run typescript check ---'
-pnpm -- tsc --noEmit
+pnpm check-types
 
 echo '--- run pretty ---'
 pnpm prettier-check
 
 echo '--- run tests ---'
-pnpm test-plugin 
+pnpm test-plugin
 pnpm -- vitest run
