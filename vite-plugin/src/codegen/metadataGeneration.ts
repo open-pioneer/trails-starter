@@ -2,6 +2,7 @@ import generate from "@babel/generator";
 import template from "@babel/template";
 import * as nodes from "@babel/types";
 import { PackageInfo } from "../parser/parseAppInfo";
+import { IdGenerator } from "./IdGenerator";
 
 const SERVICE_IMPORT = template.statement(`
     import { %%SERVICE_NAME%% as %%IMPORT_NAME%% } from %%IMPORT_SOURCE%%;
@@ -35,74 +36,88 @@ const REFERENCE_OBJECT = template.expression(`
     }
 `);
 
-export function generatePackagesMetadata(
-    packages: Pick<PackageInfo, "name" | "config" | "entryPointPath">[]
-): string {
-    const program = nodes.program([]);
-    const importLookup = new Map<unknown, string>(); // key: service object instance, value: import variable name
+export type PackageInfoInput = Pick<PackageInfo, "name" | "config" | "entryPointPath">;
 
-    // Generate one import per service usage.
-    let importCount = 0;
+/**
+ * Generates a combined metadata structure that is essentially a Record<string, metadata.PackageMetadata>.
+ * The object contents must match the shape required by the runtime (declared in runtime/metadata/index.ts).
+ */
+export function generatePackagesMetadata(packages: PackageInfoInput[]): string {
+    const idGenerator = new IdGenerator();
+    const packagesMetadata = nodes.objectExpression([]);
+    const imports: nodes.Statement[] = [];
     for (const pkg of packages) {
-        for (const [name, service] of Object.entries(pkg.config.services)) {
-            const importName = "import_" + String(++importCount);
-            importLookup.set(service, importName);
-
-            const renderedImporter = SERVICE_IMPORT({
-                SERVICE_NAME: nodes.identifier(name),
-                IMPORT_NAME: nodes.identifier(importName),
-                IMPORT_SOURCE: nodes.stringLiteral(pkg.entryPointPath)
-            });
-            program.body.push(renderedImporter);
-        }
+        const packageMetadata = generatePackageMetadata(pkg, {
+            importServiceClass(variableName, className, entryPoint) {
+                const id = idGenerator.generate(variableName);
+                const renderedImporter = SERVICE_IMPORT({
+                    SERVICE_NAME: nodes.identifier(className),
+                    IMPORT_NAME: nodes.identifier(id),
+                    IMPORT_SOURCE: nodes.stringLiteral(entryPoint)
+                });
+                imports.push(renderedImporter);
+                return id;
+            }
+        });
+        packagesMetadata.properties.push(
+            nodes.objectProperty(nodes.stringLiteral(pkg.name), packageMetadata)
+        );
     }
 
-    // Generate a combined metadata structure that is essentially a Record<string, metadata.PackageMetadata>.
-    // The object contents must match the shape required by the runtime (declared in runtime/metadata/index.ts).
-    const pkgsObject = nodes.objectExpression([]);
-    for (const pkg of packages) {
-        const servicesObject = nodes.objectExpression([]);
-        for (const [name, service] of Object.entries(pkg.config.services)) {
-            const importName = importLookup.get(service);
-            if (!importName) {
-                throw new Error("internal error: no import name for the given service.");
-            }
+    const program = nodes.program([
+        ...imports,
+        nodes.exportDefaultDeclaration(packagesMetadata)
+    ]);
+    return generate(program).code;
+}
 
-            const serviceObject = SERVICE_OBJECT({
-                SERVICE_NAME: nodes.stringLiteral(name),
-                SERVICE_IMPORT: nodes.identifier(importName),
-                SERVICE_INTERFACES: nodes.arrayExpression(
-                    service.provides.map((p) =>
-                        INTERFACE_OBJECT({
-                            INTERFACE_NAME: nodes.stringLiteral(p.name)
+function generatePackageMetadata(
+    pkg: PackageInfoInput,
+    options: {
+        /**
+         * Adds an import to the containing module.
+         * Returns the actual variable name associated with the service.
+         */
+        importServiceClass(variableName: string, className: string, entryPoint: string): string;
+    }
+): nodes.Expression {
+    const servicesObject = nodes.objectExpression([]);
+    for (const [name, service] of Object.entries(pkg.config.services)) {
+        const importName = options.importServiceClass(
+            pkg.name + "_" + name,
+            name,
+            pkg.entryPointPath
+        );
+        const serviceObject = SERVICE_OBJECT({
+            SERVICE_NAME: nodes.stringLiteral(name),
+            SERVICE_IMPORT: nodes.identifier(importName),
+            SERVICE_INTERFACES: nodes.arrayExpression(
+                service.provides.map((p) =>
+                    INTERFACE_OBJECT({
+                        INTERFACE_NAME: nodes.stringLiteral(p.name)
+                    })
+                )
+            ),
+            SERVICE_REFERENCES: nodes.objectExpression(
+                Object.entries(service.references).map(([referenceName, referenceConfig]) =>
+                    nodes.objectProperty(
+                        nodes.stringLiteral(referenceName),
+                        REFERENCE_OBJECT({
+                            INTERFACE_NAME: nodes.stringLiteral(referenceConfig.name)
                         })
                     )
-                ),
-                SERVICE_REFERENCES: nodes.objectExpression(
-                    Object.entries(service.references).map(([referenceName, referenceConfig]) =>
-                        nodes.objectProperty(
-                            nodes.stringLiteral(referenceName),
-                            REFERENCE_OBJECT({
-                                INTERFACE_NAME: nodes.stringLiteral(referenceConfig.name)
-                            })
-                        )
-                    )
                 )
-            });
-
-            servicesObject.properties.push(
-                nodes.objectProperty(nodes.stringLiteral(name), serviceObject)
-            );
-        }
-
-        const pkgObject = PKG_OBJECT({
-            PACKAGE_NAME: nodes.stringLiteral(pkg.name),
-            PACKAGE_SERVICES: servicesObject
+            )
         });
-        pkgsObject.properties.push(nodes.objectProperty(nodes.stringLiteral(pkg.name), pkgObject));
+
+        servicesObject.properties.push(
+            nodes.objectProperty(nodes.stringLiteral(name), serviceObject)
+        );
     }
 
-    // Export the structure
-    program.body.push(nodes.exportDefaultDeclaration(pkgsObject));
-    return generate(program).code;
+    const pkgObject = PKG_OBJECT({
+        PACKAGE_NAME: nodes.stringLiteral(pkg.name),
+        PACKAGE_SERVICES: servicesObject
+    });
+    return pkgObject;
 }

@@ -1,18 +1,18 @@
-import { ServiceA as import_1 } from "entryPoint";
-import { ServiceB as import_2 } from "entryPoint";
+import { ServiceA as test_ServiceA } from "entryPoint";
+import { ServiceB as test_ServiceB } from "entryPoint";
 export default {
   "test": {
     name: "test",
     services: {
       "ServiceA": {
         name: "ServiceA",
-        clazz: import_1,
+        clazz: test_ServiceA,
         provides: [],
         references: {}
       },
       "ServiceB": {
         name: "ServiceB",
-        clazz: import_2,
+        clazz: test_ServiceB,
         provides: [{
           name: "ServiceC"
         }],
