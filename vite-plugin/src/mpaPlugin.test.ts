@@ -18,6 +18,12 @@ describe("multi page support", function () {
 
         const indexHtml = readFileSync(join(outDir, "index.html"), "utf-8");
         assert.include(indexHtml, "<title>Root Site</title>");
+
+        const appExists = existsSync(join(outDir, "app1.js"));
+        assert.isFalse(appExists);
+
+        const siteExists = existsSync(join(outDir, "sites/site1/index.html"));
+        assert.isFalse(siteExists);
     });
 
     it("should include app entry points if configured", async function () {
@@ -37,6 +43,12 @@ describe("multi page support", function () {
 
         const app2 = readFileSync(join(outDir, "app2.js"), "utf-8");
         assert.include(app2, "Hello from app2");
+
+        const rootSiteExists = existsSync(join(outDir, "index.html"));
+        assert.isFalse(rootSiteExists);
+
+        const siteExists = existsSync(join(outDir, "sites/site1/index.html"));
+        assert.isFalse(siteExists);
     });
 
     it("should include additional sites if configured", async function () {
@@ -53,6 +65,9 @@ describe("multi page support", function () {
 
         const rootSiteExists = existsSync(join(outDir, "index.html"));
         assert.isFalse(rootSiteExists, "root site must not exist");
+
+        const appExists = existsSync(join(outDir, "app1.js"));
+        assert.isFalse(appExists);
 
         const site1 = readFileSync(join(outDir, "sites/site1/index.html"), "utf-8");
         assert.include(site1, "<title>Site1</title>");

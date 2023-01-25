@@ -4,6 +4,7 @@ import { resolve } from "node:path";
 import { posix } from "node:path";
 import { cwd } from "node:process";
 import { type PioneerPluginOptions } from ".";
+import { RollupOptions } from "rollup";
 
 export function mpaPlugin(options: PioneerPluginOptions | undefined): Plugin {
     const rootSite = options?.rootSite ?? false;
@@ -16,26 +17,27 @@ export function mpaPlugin(options: PioneerPluginOptions | undefined): Plugin {
 
         config(config) {
             const sourceRoot = config.root ?? cwd();
-            const entryPoints = analyzeEntryPoints({ apps, sites, rootSite, sourceRoot });
+            const entryPoints = gatherEntryPoints({ apps, sites, rootSite, sourceRoot });
+            const rollupOptions: RollupOptions = {
+                input: entryPoints,
+                output: {
+                    entryFileNames(chunk) {
+                        if (apps.includes(chunk.name)) {
+                            return "[name].js";
+                        }
+
+                        // This will rename the .js files that belong to a .html site, they don't need a public name.
+                        return posix.join(
+                            resolvedConfig.build.assetsDir,
+                            "[name]-[hash].js"
+                        );
+                    }
+                }
+            };
 
             return {
                 build: {
-                    rollupOptions: {
-                        input: entryPoints,
-                        output: {
-                            entryFileNames(chunk) {
-                                if (apps.includes(chunk.name)) {
-                                    return "[name].js";
-                                }
-
-                                // This will rename the .js files that belong to a .html site, they don't need a public name.
-                                return posix.join(
-                                    resolvedConfig.build.assetsDir,
-                                    "[name]-[hash].js"
-                                );
-                            }
-                        }
-                    }
+                    rollupOptions
                 }
             };
         },
@@ -46,7 +48,7 @@ export function mpaPlugin(options: PioneerPluginOptions | undefined): Plugin {
     };
 }
 
-function analyzeEntryPoints(options: {
+function gatherEntryPoints(options: {
     apps: string[];
     sites: string[];
     rootSite: boolean;
@@ -60,6 +62,15 @@ function analyzeEntryPoints(options: {
             path: path
         };
     });
+
+    /*
+     * Vite does not respect the entry point name for html files, it
+     * put each html site at a location mirroring the source directory structure (e.g. site/<SITE>/index.html
+     * instead of SITE.html).
+     * 
+     * There are multiple vite mpa plugins that handle custom html paths which can either be used
+     * directly or as inspiration.
+     */
     const sites = options.sites.map((siteName) => {
         const path = resolve(options.sourceRoot, "sites", siteName, "index.html");
         if (!existsSync(path)) {

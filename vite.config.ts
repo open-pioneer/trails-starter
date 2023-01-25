@@ -14,14 +14,14 @@ export default defineConfig({
 
     build: {
         outDir: resolve(__dirname, "dist"),
-        emptyOutDir: true
+        emptyOutDir: true,
     },
 
     plugins: [
         pioneer({
             rootSite: true,
             apps: ["date-app"],
-            sites: ["date-sample", "logging-sample", "services-sample"]
+            sites: ["services-sample"]
         }),
         react(),
         eslint()
