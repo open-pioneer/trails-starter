@@ -1,15 +1,16 @@
 import { assert } from "chai";
 import { existsSync, readFileSync } from "node:fs";
 import { join, resolve } from "node:path";
-import { runViteBuild } from "./helper";
+import { runViteBuild, TEMP_DATA, TEST_DATA } from "./utils/testUtils";
 
 describe("multi page support", function () {
     it("should include the root site if configured", async function () {
-        const outDir = resolve(__dirname, "../../temp/multi-page-root-site");
+        const outDir = resolve(TEMP_DATA, "multi-page-root-site");
+        const rootDir = resolve(TEST_DATA, "multi-page");
 
         await runViteBuild({
             outDir,
-            rootDir: resolve(__dirname, "../../test-data/multi-page"),
+            rootDir: rootDir,
             pluginOptions: {
                 rootSite: true
             }
@@ -20,11 +21,12 @@ describe("multi page support", function () {
     });
 
     it("should include app entry points if configured", async function () {
-        const outDir = resolve(__dirname, "../../temp/multi-page-apps");
+        const outDir = resolve(TEMP_DATA, "multi-page-apps");
+        const rootDir = resolve(TEST_DATA, "multi-page");
 
         await runViteBuild({
             outDir,
-            rootDir: resolve(__dirname, "../../test-data/multi-page"),
+            rootDir: rootDir,
             pluginOptions: {
                 apps: ["app1", "app2"]
             }
@@ -38,11 +40,12 @@ describe("multi page support", function () {
     });
 
     it("should include additional sites if configured", async function () {
-        const outDir = resolve(__dirname, "../../temp/multi-page-sites");
+        const outDir = resolve(TEMP_DATA, "multi-page-sites");
+        const rootDir = resolve(TEST_DATA, "multi-page");
 
         await runViteBuild({
             outDir,
-            rootDir: resolve(__dirname, "../../test-data/multi-page"),
+            rootDir: rootDir,
             pluginOptions: {
                 sites: ["site1", "site2"]
             }
@@ -59,13 +62,13 @@ describe("multi page support", function () {
     });
 
     it("should throw an error if no entry points are configured", async function () {
-        const outDir = resolve(__dirname, "../../temp/multi-page-no-entry-points");
-
+        const outDir = resolve(TEMP_DATA, "multi-page-no-entry-points");
+        const rootDir = resolve(TEST_DATA, "multi-page");
         let message = "";
         try {
             await runViteBuild({
                 outDir,
-                rootDir: resolve(__dirname, "../../test-data/multi-page"),
+                rootDir: rootDir,
                 pluginOptions: {}
             });
             throw new Error("expected error");

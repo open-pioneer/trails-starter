@@ -102,3 +102,14 @@ The pioneer repository supports multiple deployment modes that can each be achie
 
 This plugin internally configures the rollup options inside vite's config to achieve above goals.
 `build.rollupOptions.input` and `.output` should not be altered manually when using this plugin.
+
+## Development
+
+To manually build the plugin, run `pnpm run build`.
+This build does _not_ include tests.
+
+`pnpm run watch` will continuously rebuild the code (including tests files).
+
+`pnpm run test` will execute all tests using mocha.
+If you create a new test file, make sure to list it in `src/all.test.ts`.
+It will not run otherwise.
