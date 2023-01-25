@@ -31,7 +31,7 @@ The purpose of this project is building web applications from a set of composabl
     -   Automatic inclusion of misc. assets (such as images)
     -   A productive development experience (including hot module reloading and good debugger support)
 
--   The user interface framework(s) must support accessability
+-   The user interface framework(s) must support accessibility
 
 -   The system should use well known open source standard technology wherever possible to reduce friction, onboarding time
 
