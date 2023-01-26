@@ -57,14 +57,6 @@ export function codegenPlugin(): Plugin {
             });
         },
 
-        handleHotUpdate(ctx) {
-            isDebug && debug("hot update: %O", ctx.file);
-        },
-
-        watchChange(id) {
-            isDebug && debug("watch change: %O", id);
-        },
-
         async resolveId(moduleId, importer) {
             if (moduleId === "open-pioneer:app") {
                 if (!importer) {
