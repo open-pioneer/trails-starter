@@ -29,14 +29,22 @@ After creating a new package or modifying the dependencies of an existing packag
 
 To create a web component with a simple UI, call the `createCustomElement` function from the `@open-pioneer/runtime` package:
 
-```tsx
-// src/apps/my-app/app.tsx
+```ts
+// src/apps/my-app/app.ts
 import { createCustomElement } from "@open-pioneer/runtime";
+import { AppUI } from "./AppUI";
 
 const Element = createCustomElement({
-    component: <div>Hello World!</div>
+    component: AppUI
 });
 customElements.define("my-app-element", Element);
+```
+
+```tsx
+// src/apps/my-app/AppUI.tsx
+export function AppUI() {
+    return <div>Hello World!</div>;
+}
 ```
 
 The main entry point of an app should always be called `app.<EXT>`, where `EXT` can be one of `js`, `ts`, `jsx` or `tsx`.

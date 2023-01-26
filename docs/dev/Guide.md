@@ -102,6 +102,8 @@ TBD
 
 ### Keeping dependency versions in sync
 
+TBD
+
 ## Concepts
 
 ### Monorepo
@@ -153,3 +155,21 @@ It can be integrated into most modern IDEs to keep automatically keep edited fil
 [ESLint](https://eslint.org/) runs within the dev server (as a vite plugin) and when pushing to the github repository (within the github actions workflow).
 It checks the code against configured rules (see `.eslintrc`) and fails the build when it detects a code style violation.
 ESLint helps detecting minor style issues (e.g. missing semicolons) and outright programming errors (e.g. wrong usage of react hooks).
+
+## Known Issues
+
+### Hot reloading with \[jt\]sx-Files and side effects
+
+Vite will automatically hot reload `.jsx` and `.tsx` files when they are being edited.
+Most changes to react components can then be applied without reloading the page.
+
+However, during hot reload, the containing module will be executed again.
+It should therefore be free of side effects on module level.
+
+This might be a problem if a `.[jt]sx` defines a Web Component (via `customElements.define(...)`) because redefining a Web Component is an error.
+
+There are two recommendations to avoid problems:
+
+1. As a general rule, try to keep your `.jsx` and `.tsx` modules free of side effects.
+2. Don't use `app.tsx` or `app.jsx` during development.
+   Instead, use a plain `app.ts` or `app.js` and put the React UI in a different file.

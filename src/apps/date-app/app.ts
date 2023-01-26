@@ -1,13 +1,6 @@
 import { createCustomElement } from "@open-pioneer/runtime";
 import packages from "open-pioneer:app";
-
-export interface AppInputs {
-    date?: string;
-}
-
-export function DateUI({ date = "empty" }: AppInputs) {
-    return <div>{date}</div>;
-}
+import { DateUI } from "./DateUI";
 
 const Element = createCustomElement({
     component: DateUI,
