@@ -1,5 +1,6 @@
 {
     "name": "@open-pioneer/core",
     "private": true,
+    "main": "index",
     "dependencies": {}
 }

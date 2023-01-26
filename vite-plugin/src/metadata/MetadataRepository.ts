@@ -45,7 +45,7 @@ export interface PackageMetadata {
     packageJsonPath: string;
 
     /** Path to entry point (contains service exports). */
-    entryPointPath: string;
+    entryPointPath: string | undefined;
 
     /** Runtime dependencies (from package.json). */
     dependencies: string[];
@@ -54,7 +54,7 @@ export interface PackageMetadata {
     config: NormalizedPackageConfig;
 }
 
-export type MetadataContext = Pick<PluginContext, "addWatchFile" | "resolve" | "error">;
+export type MetadataContext = Pick<PluginContext, "addWatchFile" | "resolve" | "error" | "warn">;
 
 export interface ResolvedPackageLocation {
     type: "absolute";
@@ -296,7 +296,6 @@ export async function parsePackageMetadata(
     ctx.addWatchFile(packageJsonPath);
     const { name: packageName, dependencies } = await parsePackageJson(ctx, packageJsonPath);
 
-    // TODO: Better detection (e.g. type in config file)
     const buildConfigPath = join(packageDir, BUILD_CONFIG_NAME);
     let buildConfig: NormalizedPackageConfig | undefined;
     ctx.addWatchFile(normalizePath(buildConfigPath));
@@ -314,11 +313,17 @@ export async function parsePackageMetadata(
         buildConfig = { services: {} };
     }
 
+    let entryPoint: string | undefined;
+    try {
+        entryPoint = (await ctx.resolve(packageDir))?.id;
+    } catch (e) {
+        ctx.warn(`Failed to resolve entry point for package ${packageDir}: ${e}`);
+    }
     return {
         name: packageName,
         directory: packageDir,
         packageJsonPath: packageJsonPath,
-        entryPointPath: join(packageDir, "index.ts"), // TODO hardcoded
+        entryPointPath: entryPoint,
         dependencies,
         config: buildConfig
     };

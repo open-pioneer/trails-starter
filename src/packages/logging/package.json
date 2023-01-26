@@ -1,4 +1,5 @@
 {
     "name": "logging",
-    "private": true
+    "private": true,
+    "main": "index"
 }

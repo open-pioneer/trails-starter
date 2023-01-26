@@ -1,6 +1,7 @@
 {
     "name": "logging-app",
     "private": true,
+    "main": "app",
     "dependencies": {
         "@open-pioneer/runtime": "workspace:^",
         "logging": "workspace:^",

@@ -88,6 +88,13 @@ function generatePackageMetadata(
 ): nodes.Expression {
     const servicesObject = nodes.objectExpression([]);
     for (const [name, service] of Object.entries(pkg.config.services)) {
+        if (!pkg.entryPointPath) {
+            throw new Error(
+                `Package '${pkg.name}' must have a valid entry point (typically index.ts or index.js).\n` +
+                    "The entry point can be configured by setting the 'main' property in the package.json file."
+            );
+        }
+
         const importName = options.importServiceClass(
             pkg.name + "_" + name,
             name,

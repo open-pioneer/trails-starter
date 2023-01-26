@@ -18,6 +18,7 @@ Thus, every app needs a [`package.json`](https://docs.npmjs.com/cli/v9/configuri
 {
     "name": "my-app",
     "private": true,
+    "main": "app",
     "dependencies": {
         "@open-pioneer/runtime": "workspace:^"
     }

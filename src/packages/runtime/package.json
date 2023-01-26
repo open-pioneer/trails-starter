@@ -2,6 +2,7 @@
     "name": "@open-pioneer/runtime",
     "version": "0.0.1",
     "private": true,
+    "main": "index",
     "dependencies": {
         "@open-pioneer/core": "workspace:^",
         "react": "^18.2.0",

@@ -19,5 +19,5 @@
         "esModuleInterop": false,
         "skipLibCheck": true
     },
-    "include": ["vite.config.ts", "vite-plugin"]
+    "include": ["vite.config.ts"]
 }

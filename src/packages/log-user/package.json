@@ -1,6 +1,7 @@
 {
     "name": "log-user",
     "private": true,
+    "main": "index",
     "dependencies": {
         "logging": "workspace:^"
     },

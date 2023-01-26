@@ -84,6 +84,7 @@ export function codegenPlugin(): Plugin {
                 }
 
                 const context: MetadataContext = {
+                    warn: this.warn,
                     error: this.error,
                     resolve: this.resolve,
                     addWatchFile: (id) => {
