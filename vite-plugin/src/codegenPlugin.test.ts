@@ -5,7 +5,7 @@ import { join, resolve } from "node:path";
 import { runViteBuild, TEMP_DATA, TEST_DATA } from "./utils/testUtils";
 
 describe("codegen support", function () {
-    it.only("should generate app content", async function () {
+    it("should generate app content", async function () {
         const rootDir = resolve(TEST_DATA, "codegen");
         const outDir = resolve(TEMP_DATA, "codegen");
 
