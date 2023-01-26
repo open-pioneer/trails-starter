@@ -1,7 +1,7 @@
 import generate from "@babel/generator";
 import template from "@babel/template";
 import * as nodes from "@babel/types";
-import { PackageInfo } from "../parser/parseAppInfo";
+import { PackageMetadata } from "../metadata/MetadataRepository";
 import { IdGenerator } from "./IdGenerator";
 
 const SERVICE_IMPORT = template.statement(`
@@ -36,17 +36,21 @@ const REFERENCE_OBJECT = template.expression(`
     }
 `);
 
-export type PackageInfoInput = Pick<PackageInfo, "name" | "config" | "entryPointPath">;
+export type PackageMetadataInput = Pick<PackageMetadata, "name" | "config" | "entryPointPath">;
 
 /**
  * Generates a combined metadata structure that is essentially a Record<string, metadata.PackageMetadata>.
  * The object contents must match the shape required by the runtime (declared in runtime/metadata/index.ts).
  */
-export function generatePackagesMetadata(packages: PackageInfoInput[]): string {
+export function generatePackagesMetadata(packages: PackageMetadataInput[]): string {
     const idGenerator = new IdGenerator();
     const packagesMetadata = nodes.objectExpression([]);
     const imports: nodes.Statement[] = [];
     for (const pkg of packages) {
+        if (skipPackage(pkg)) {
+            continue;
+        }
+
         const packageMetadata = generatePackageMetadata(pkg, {
             importServiceClass(variableName, className, entryPoint) {
                 const id = idGenerator.generate(variableName);
@@ -68,8 +72,12 @@ export function generatePackagesMetadata(packages: PackageInfoInput[]): string {
     return generate(program).code;
 }
 
+/**
+ * Generates the metadata object for a single package.
+ * As a side effect, service imports for required service classes will be emitted through a callback.
+ */
 function generatePackageMetadata(
-    pkg: PackageInfoInput,
+    pkg: PackageMetadataInput,
     options: {
         /**
          * Adds an import to the containing module.
@@ -117,4 +125,27 @@ function generatePackageMetadata(
         PACKAGE_SERVICES: servicesObject
     });
     return pkgObject;
+}
+
+/**
+ * Returns true if the package does not contain any relevant metadata.
+ */
+function skipPackage(pkg: PackageMetadataInput) {
+    const config = pkg.config;
+    if (hasProperties(config.services)) {
+        return false;
+    }
+    // TODO: CSS, I18N ..
+    return true;
+}
+
+const hasOwnProperty = Object.prototype.hasOwnProperty;
+
+function hasProperties(obj: Record<string, unknown>) {
+    for (const key in obj) {
+        if (hasOwnProperty.call(obj, key)) {
+            return true;
+        }
+    }
+    return false;
 }

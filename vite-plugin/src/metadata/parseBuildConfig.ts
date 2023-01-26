@@ -67,6 +67,12 @@ export function parseBuildConfig(object: unknown): NormalizedPackageConfig {
     return normalizeConfig(rawConfig);
 }
 
+const BUILD_CONFIG_RE = /[\\/]build\.config\.mjs($|\?)/;
+
+export function isBuildConfig(file: string) {
+    return BUILD_CONFIG_RE.test(file);
+}
+
 function normalizeConfig(rawConfig: PackageConfig): NormalizedPackageConfig {
     return {
         services: Object.fromEntries(

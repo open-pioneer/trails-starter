@@ -1,4 +1,5 @@
 import { createCustomElement } from "@open-pioneer/runtime";
+import packages from "open-pioneer:app";
 
 export interface AppInputs {
     date?: string;
@@ -10,7 +11,8 @@ export function DateUI({ date = "empty" }: AppInputs) {
 
 const Element = createCustomElement({
     component: DateUI,
-    attributes: ["date"]
+    attributes: ["date"],
+    packages
 });
 
 customElements.define("date-app", Element);

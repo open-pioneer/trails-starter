@@ -1,53 +1,56 @@
 import { existsSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { PluginContext } from "rollup";
-import { normalizePath, Plugin, ResolvedConfig } from "vite";
+import { normalizePath, Plugin, ResolvedConfig, ViteDevServer } from "vite";
 import { createDebugger } from "./utils/debug";
 import { generatePackagesMetadata } from "./codegen/metadataGeneration";
-import { AppInfo, parseAppInfo } from "./parser/parseAppInfo";
+import { MetadataContext, MetadataRepository } from "./metadata/MetadataRepository";
 
 const isDebug = !!process.env.DEBUG;
 const debug = createDebugger("open-pioneer:codegen");
 
-const PIONEER_PACKAGES_RE = /[?&]pioneer-packages($|&)/;
+const APP_META_RE = /[?&]pioneer-packages($|&)/;
 const SOURCE_FILE_RE = /^(.*?)(\?|$)/;
 
 export function codegenPlugin(): Plugin {
     // key: normalized path to package json.
     // value: set of module ids that must be invalidated.
-    const packageJsonDeps = new Map<string, Set<string>>();
+    const manualDeps = new Map<string, Set<string>>();
 
     let config!: ResolvedConfig;
+    let metadata!: MetadataRepository;
+    let devServer: ViteDevServer | undefined;
     return {
         name: "pioneer:codegen",
 
         buildStart() {
-            packageJsonDeps.clear();
+            manualDeps.clear();
         },
 
         configResolved(resolvedConfig) {
             config = resolvedConfig;
+            metadata = new MetadataRepository(config.root);
         },
 
         configureServer(server) {
-            const config = server.config;
-            const logger = server.config.logger;
-            const watcher = server.watcher;
+            devServer = server;
 
             // Trigger manual module reload when a watched file changes.
-            watcher.add(`${config.root}/**/package.json`);
-            watcher.on("all", async (_, path) => {
-                const moduleIds = packageJsonDeps.get(normalizePath(path));
+            server.watcher.on("all", (_, path) => {
+                const moduleIds = manualDeps.get(normalizePath(path));
                 if (!moduleIds) {
                     return;
                 }
 
-                logger.info(`${path} changed, reloading`, { clear: false, timestamp: true });
-
+                isDebug && debug(`File changed: ${path}`);
+                metadata.onFileChanged(path);
                 for (const moduleId of moduleIds) {
                     const mod = server.moduleGraph.getModuleById(moduleId);
                     if (mod) {
-                        await server.reloadModule(mod);
+                        isDebug && debug(`Triggering hmr of ${moduleId}`);
+                        server.reloadModule(mod).catch((err) => {
+                            config.logger.error(`Failed to trigger hmr: ${err}`);
+                        });
                     }
                 }
             });
@@ -72,18 +75,29 @@ export function codegenPlugin(): Plugin {
         },
 
         async load(this: PluginContext, moduleId) {
-            if (moduleId.match(PIONEER_PACKAGES_RE)) {
+            if (moduleId.match(APP_META_RE)) {
                 const importer = getSourceFile(moduleId);
                 const pkgJsonPath = findPackageJson(dirname(importer), config.root);
                 if (!pkgJsonPath) {
                     this.error(`Failed to find package.json for app from '${importer}'.`);
                 }
 
-                isDebug && debug(`Generating metadata for app at ${pkgJsonPath}`);
-                const appInfo = await parseAppInfo(this, dirname(pkgJsonPath));
-                watchFiles(appInfo, packageJsonDeps, moduleId);
-
-                const generatedSourceCode = generatePackagesMetadata(appInfo.packages);
+                const context: MetadataContext = {
+                    error: this.error,
+                    resolve: this.resolve,
+                    addWatchFile: (id) => {
+                        if (devServer) {
+                            // TODO: Is there a better way? We want to trigger a hot reload when
+                            // one of the build.config files or package.json files change!
+                            isDebug && debug(`Adding manual watch for ${id}`);
+                            devServer.watcher.add(id);
+                            addManualDep(manualDeps, id, moduleId);
+                        }
+                        this.addWatchFile(id);
+                    }
+                };
+                const appMetadata = await metadata.getAppMetadata(context, dirname(pkgJsonPath));
+                const generatedSourceCode = generatePackagesMetadata(appMetadata.packages);
                 isDebug && debug("Generated source content: %O", generatedSourceCode);
                 return generatedSourceCode;
             }
@@ -91,28 +105,20 @@ export function codegenPlugin(): Plugin {
     };
 }
 
-function watchFiles(appInfo: AppInfo, packageJsonDeps: Map<string, Set<string>>, moduleId: string) {
-    const visitPath = (path: string) => {
-        const normalizedPath = normalizePath(path);
-        let moduleIds = packageJsonDeps.get(normalizedPath);
-        if (!moduleIds) {
-            moduleIds = new Set();
-            packageJsonDeps.set(normalizedPath, moduleIds);
-        }
-        moduleIds.add(moduleId);
-    };
-
-    for (const pkg of appInfo.packages) {
-        visitPath(pkg.packageJsonPath);
+function addManualDep(manualDeps: Map<string, Set<string>>, file: string, moduleId: string) {
+    const normalizedPath = normalizePath(file);
+    let moduleIds = manualDeps.get(normalizedPath);
+    if (!moduleIds) {
+        moduleIds = new Set();
+        manualDeps.set(normalizedPath, moduleIds);
     }
-    visitPath(appInfo.packageJsonPath);
+    moduleIds.add(moduleId);
 }
 
 function findPackageJson(startDir: string, rootDir: string) {
     let dir = startDir;
     while (dir) {
         const candidate = join(dir, "package.json");
-        debug("checking", candidate);
         if (existsSync(candidate)) {
             return candidate;
         }
