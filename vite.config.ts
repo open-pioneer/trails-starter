@@ -21,7 +21,7 @@ export default defineConfig({
         pioneer({
             rootSite: true,
             apps: ["date-app"],
-            sites: ["services-sample"]
+            sites: ["date-sample", "logging-sample", "services-sample"]
         }),
         react(),
         eslint()
