@@ -25,6 +25,7 @@ export function codegenPlugin(): Plugin {
 
         buildStart() {
             manualDeps.clear();
+            metadata?.reset();
         },
 
         configResolved(resolvedConfig) {

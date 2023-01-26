@@ -113,3 +113,26 @@ This build does _not_ include tests.
 `pnpm run test` will execute all tests using mocha.
 If you create a new test file, make sure to list it in `src/all.test.ts`.
 It will not run otherwise.
+
+### Debugging the vite plugin
+
+Run vite dev with the `DEBUG` environment variable set.
+This will enable debug logging:
+
+```bash
+$ DEBUG="open-pioneer:*" pnpm exec vite dev --clearScreen=false
+```
+
+will print something like
+
+```plain
+open-pioneer:metadata Request for app metadata of /home/michael/projects/starter/src/apps/date-app +0ms
+open-pioneer:metadata Request for package metadata of /home/michael/projects/starter/src/apps/date-app +1ms
+open-pioneer:metadata Analyzing package at /home/michael/projects/starter/src/apps/date-app +14ms
+open-pioneer:metadata Visiting package directory /home/michael/projects/starter/src/apps/date-app. +0ms
+open-pioneer:codegen Adding manual watch for /home/michael/projects/starter/src/apps/date-app/package.json +0ms
+open-pioneer:codegen Adding manual watch for /home/michael/projects/starter/src/apps/date-app/build.config.mjs +70ms
+...
+```
+
+You can also add a `--debug` flag to `vite` to show vite's internal log messages.
