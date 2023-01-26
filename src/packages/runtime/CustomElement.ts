@@ -77,6 +77,8 @@ export function createCustomElement(options: CustomElementOptions): CustomElemen
 
         connectedCallback() {
             const node = (this.#rootNode = document.createElement("div"));
+            node.style.height = "100%";
+            node.style.width = "100%";
             try {
                 let packages: PackageRepr[];
                 try {
