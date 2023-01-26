@@ -11,5 +11,5 @@ echo '--- run tests ---'
 pnpm test-plugin
 pnpm -- vitest run
 
-echo '--- run pretty ---'
+echo '--- run prettier ---'
 pnpm prettier-check
