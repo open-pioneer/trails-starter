@@ -2,6 +2,6 @@ export interface AppInputs {
     date?: string;
 }
 
-export function DateUI({ date = "empty" }: AppInputs) {
-    return <div>{date}</div>;
+export function DateUI({ date = "N/A" }: AppInputs) {
+    return <div>Current date: {date}</div>;
 }

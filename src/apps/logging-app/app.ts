@@ -3,7 +3,12 @@ import { createElement } from "react";
 import packages from "open-pioneer:app";
 
 const Element = createCustomElement({
-    component: () => createElement("span", undefined, "foo"),
+    component: () =>
+        createElement(
+            "span",
+            undefined,
+            "This app uses two simple services (see browser console output)."
+        ),
     packages
 });
 

@@ -55,7 +55,12 @@ const packages: Record<string, PackageMetadata> = {
 };
 
 const Element = createCustomElement({
-    component: () => createElement("span", undefined, "test"),
+    component: () =>
+        createElement(
+            "span",
+            undefined,
+            "This app has ad-hoc definitions for services and packages."
+        ),
     packages: packages
 });
 
