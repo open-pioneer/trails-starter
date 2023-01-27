@@ -13,6 +13,7 @@ starter
 │   ├── apps                -- Apps go here
 │   ├── packages            -- Bundles and plain node packages
 │   ├── types               -- TypeScript support files
+│   ├── sites               -- Additional .html sites
 │   └── index.html          -- Main HTML entry point
 ├── .editorconfig           -- Common text file settings (encoding, line length)
 ├── .eslintignore           -- Lists files ignored by ESLint
