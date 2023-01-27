@@ -16,6 +16,7 @@ Then execute the following commands to get started:
 
 ```bash
 $ git clone https://github.com/open-pioneer/starter.git # Clone the repository
+$ cd starter
 $ pnpm install                                          # Install dependencies
 $ pnpm run dev                                          # Launch development server
 ```
