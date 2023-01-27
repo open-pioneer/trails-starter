@@ -95,6 +95,7 @@ export class ServiceRepr {
         return this._state;
     }
 
+    /** Returns the current reference count. */
     get useCount() {
         return this._useCount;
     }

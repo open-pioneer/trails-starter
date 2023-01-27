@@ -27,7 +27,7 @@ export class ServiceLayer {
         }
 
         this.allServices.forEach((value) => {
-            this.initService(value);
+            this.createService(value);
         });
         this.state = "started";
     }
@@ -36,7 +36,7 @@ export class ServiceLayer {
      * Initializes the given service and its dependencies.
      * Dependencies are initialized before the service that requires them.
      */
-    private initService(service: ServiceRepr) {
+    private createService(service: ServiceRepr) {
         if (service.state === "constructed") {
             const instance = service.getInstanceOrThrow();
             service.addRef();
@@ -59,7 +59,7 @@ export class ServiceLayer {
         service.dependencies.forEach((d) => {
             const serviceRef = this.serviceIndex.get(d.interfaceName);
             if (serviceRef) {
-                const instance = this.initService(serviceRef);
+                const instance = this.createService(serviceRef);
                 instances[d.referenceName] = instance;
             } else {
                 throw new Error(ErrorId.INTERNAL, "Service not defined.");

@@ -82,16 +82,7 @@ export function createCustomElement(options: CustomElementOptions): CustomElemen
             node.style.height = "100%";
             node.style.width = "100%";
             try {
-                let packages: PackageRepr[];
-                try {
-                    packages = parsePackages(options.packages ?? {});
-                } catch (e) {
-                    throw new Error(ErrorId.INVALID_METADATA, "Failed to parse package metadata.", {
-                        cause: e
-                    });
-                }
-
-                const serviceLayer = (this.#serviceLayer = new ServiceLayer(packages));
+                const serviceLayer = (this.#serviceLayer = createServiceLayer(options?.packages));
                 serviceLayer.start();
                 this.#contextValues = {
                     getService: (serviceName: string) => {
@@ -146,6 +137,18 @@ export function createCustomElement(options: CustomElementOptions): CustomElemen
         }
     }
     return PioneerApplication;
+}
+
+function createServiceLayer(packageMetadata: Record<string, PackageMetadata> | undefined) {
+    let packages: PackageRepr[];
+    try {
+        packages = parsePackages(packageMetadata ?? {});
+    } catch (e) {
+        throw new Error(ErrorId.INVALID_METADATA, "Failed to parse package metadata.", {
+            cause: e
+        });
+    }
+    return new ServiceLayer(packages);
 }
 
 function logError(e: unknown) {
