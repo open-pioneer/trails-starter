@@ -15,21 +15,6 @@ const element = createCustomElement({
     styles,
     packages: {
         ...packages,
-        // currently needed to referenc the config service
-        helper: {
-            name: "helper",
-            services: {
-                Helper: {
-                    name: "Helper",
-                    clazz: class Helper {},
-                    references: {
-                        provider: {
-                            name: "config.MapConfig"
-                        }
-                    }
-                }
-            }
-        },
         config: {
             name: "config",
             services: {
