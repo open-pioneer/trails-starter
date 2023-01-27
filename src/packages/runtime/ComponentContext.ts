@@ -10,6 +10,11 @@ export interface ComponentContext {
 
 export const ServiceContext = createContext<ComponentContext | null>(null);
 
+/**
+ * Returns a service which is defined in the packages section as a reference in {@link CustomElementOptions}.
+ *
+ * A complete service name with package declaration is needed (e.g. "logging.LogService")
+ */
 export function useService<ServiceName extends keyof ServiceRegistry>(
     serviceName: ServiceName
 ): ServiceRegistry[ServiceName];
