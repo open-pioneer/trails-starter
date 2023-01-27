@@ -6,6 +6,7 @@ import { PackageMetadata } from "./metadata";
 import { PackageRepr, parsePackages } from "./services/PackageRepr";
 import { ServiceLayer } from "./services/ServiceLayer";
 import { getErrorChain } from "@open-pioneer/core";
+import { ComponentContext, ServiceContext } from "./ComponentContext";
 
 /**
  * Options for the {@link createCustomElement} function.
@@ -63,6 +64,7 @@ export function createCustomElement(options: CustomElementOptions): CustomElemen
         #serviceLayer: ServiceLayer | undefined;
         #reactRoot: ReactRoot | undefined;
         #props: Record<string, string> = {};
+        #contextValues: ComponentContext | undefined = undefined;
 
         static get observedAttributes() {
             return options.attributes ?? [];
@@ -91,6 +93,18 @@ export function createCustomElement(options: CustomElementOptions): CustomElemen
 
                 const serviceLayer = (this.#serviceLayer = new ServiceLayer(packages));
                 serviceLayer.start();
+                this.#contextValues = {
+                    getService: (serviceName: string) => {
+                        const service = this.#serviceLayer?.serviceIndex.get(serviceName)?.instance;
+                        if (!service) {
+                            throw new Error(
+                                ErrorId.INTERNAL,
+                                `service with name '${serviceName}' not defined for component`
+                            );
+                        }
+                        return service;
+                    }
+                };
 
                 const style = document.createElement("style");
                 style.appendChild(document.createTextNode(options.styles ?? ""));
@@ -104,14 +118,14 @@ export function createCustomElement(options: CustomElementOptions): CustomElemen
         }
 
         private render() {
-            if (this.#reactRoot) {
-                this.#reactRoot.render(
-                    createElement(
-                        StrictMode,
-                        undefined,
-                        createElement(options.component, this.#props)
-                    )
+            if (this.#reactRoot && this.#contextValues) {
+                const component = createElement(options.component, this.#props);
+                const contextWrapper = createElement(
+                    ServiceContext.Provider,
+                    { value: this.#contextValues },
+                    component
                 );
+                this.#reactRoot.render(createElement(StrictMode, undefined, contextWrapper));
             }
         }
 

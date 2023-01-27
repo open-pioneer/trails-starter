@@ -1,5 +1,8 @@
 {
     "name": "logging",
     "private": true,
-    "main": "index"
+    "main": "index",
+    "devDependencies": {
+        "@open-pioneer/runtime": "workspace:^"
+    }
 }

@@ -105,7 +105,10 @@ importers:
       '@open-pioneer/runtime': link:../runtime
 
   src/packages/logging:
-    specifiers: {}
+    specifiers:
+      '@open-pioneer/runtime': workspace:^
+    devDependencies:
+      '@open-pioneer/runtime': link:../runtime
 
   src/packages/runtime:
     specifiers:
