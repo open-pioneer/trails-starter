@@ -1,0 +1,9 @@
+{
+    "name": "styling-app",
+    "private": true,
+    "main": "app",
+    "dependencies": {
+        "@open-pioneer/runtime": "workspace:",
+        "test-ui-components": "workspace:"
+    }
+}

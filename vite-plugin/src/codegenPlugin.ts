@@ -3,14 +3,14 @@ import { dirname, join } from "node:path";
 import { PluginContext } from "rollup";
 import { normalizePath, Plugin, ResolvedConfig, ViteDevServer } from "vite";
 import { createDebugger } from "./utils/debug";
-import { generatePackagesMetadata } from "./codegen/metadataGeneration";
+import { generatePackagesMetadata } from "./codegen/generatePackagesMetadata";
 import { MetadataContext, MetadataRepository } from "./metadata/MetadataRepository";
+import { generateCombinedCss } from "./codegen/generateCombinedCss";
+import { generateAppMetadata } from "./codegen/generateAppMetadata";
+import { APP_META_QUERY, parseVirtualAppModuleId } from "./codegen/shared";
 
 const isDebug = !!process.env.DEBUG;
 const debug = createDebugger("open-pioneer:codegen");
-
-const APP_META_RE = /[?&]pioneer-packages($|&)/;
-const SOURCE_FILE_RE = /^(.*?)(\?|$)/;
 
 export function codegenPlugin(): Plugin {
     // key: normalized path to package json.
@@ -62,39 +62,66 @@ export function codegenPlugin(): Plugin {
                 if (!importer) {
                     this.error("Must be imported from a source file.");
                 }
-
-                return importer + "?pioneer-packages";
+                return importer + "?" + APP_META_QUERY;
             }
         },
 
         async load(this: PluginContext, moduleId) {
-            if (moduleId.match(APP_META_RE)) {
-                const importer = getSourceFile(moduleId);
-                const pkgJsonPath = findPackageJson(dirname(importer), config.root);
-                if (!pkgJsonPath) {
-                    this.error(`Failed to find package.json for app from '${importer}'.`);
-                }
-
-                const context: MetadataContext = {
-                    warn: this.warn,
-                    error: this.error,
-                    resolve: this.resolve,
-                    addWatchFile: (id) => {
-                        if (devServer) {
-                            // TODO: Is there a better way? We want to trigger a hot reload when
-                            // one of the build.config files or package.json files change!
-                            isDebug && debug(`Adding manual watch for ${id}`);
-                            devServer.watcher.add(id);
-                            addManualDep(manualDeps, id, moduleId);
-                        }
-                        this.addWatchFile(id);
-                    }
-                };
-                const appMetadata = await metadata.getAppMetadata(context, dirname(pkgJsonPath));
-                const generatedSourceCode = generatePackagesMetadata(appMetadata.packages);
-                isDebug && debug("Generated source content: %O", generatedSourceCode);
-                return generatedSourceCode;
+            const virtualModule = parseVirtualAppModuleId(moduleId);
+            if (!virtualModule) {
+                return undefined;
             }
+
+            const { type, importer } = virtualModule;
+            if (type === "app-meta") {
+                return generateAppMetadata(importer);
+            }
+
+            const pkgJsonPath = findPackageJson(dirname(importer), config.root);
+            if (!pkgJsonPath) {
+                this.error(`Failed to find package.json for app from '${importer}'.`);
+            }
+
+            const context = buildMetadataContext(this, moduleId, devServer, manualDeps);
+            const appDir = dirname(pkgJsonPath);
+            switch (type) {
+                case "app-packages": {
+                    const appMetadata = await metadata.getAppMetadata(context, appDir);
+                    const generatedSourceCode = generatePackagesMetadata(appMetadata.packages);
+                    isDebug && debug("Generated app metadata: %O", generatedSourceCode);
+                    return generatedSourceCode;
+                }
+                case "app-css": {
+                    const appMetadata = await metadata.getAppMetadata(context, appDir);
+                    const generatedSourceCode = generateCombinedCss(appMetadata.packages);
+                    isDebug && debug("Generated app css: %O", generatedSourceCode);
+                    return generatedSourceCode;
+                }
+            }
+        }
+    };
+}
+
+// Patches the addWatchFile function for manual watching
+function buildMetadataContext(
+    ctx: PluginContext,
+    moduleId: string,
+    devServer: ViteDevServer | undefined,
+    manualDeps: Map<string, Set<string>>
+): MetadataContext {
+    return {
+        warn: ctx.warn,
+        error: ctx.error,
+        resolve: ctx.resolve,
+        addWatchFile: (id) => {
+            if (devServer) {
+                // TODO: Is there a better way? We want to trigger a hot reload when
+                // one of the build.config files or package.json files change!
+                isDebug && debug(`Adding manual watch for ${id}`);
+                devServer.watcher.add(id);
+                addManualDep(manualDeps, id, moduleId);
+            }
+            ctx.addWatchFile(id);
         }
     };
 }
@@ -125,12 +152,4 @@ function findPackageJson(startDir: string, rootDir: string) {
         dir = parent === dir || parent === "." ? "" : parent;
     }
     return undefined;
-}
-
-function getSourceFile(moduleId: string) {
-    const sourceFile = moduleId.match(SOURCE_FILE_RE)?.[1];
-    if (!sourceFile || moduleId[0] == "\0") {
-        throw new Error(`Failed to get actual source file from '${moduleId}'.`);
-    }
-    return sourceFile;
 }

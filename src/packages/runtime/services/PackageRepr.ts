@@ -6,15 +6,17 @@ import { ServiceRepr } from "./ServiceRepr";
 export class PackageRepr {
     static parse(data: PackageMetadata): PackageRepr {
         const name = data.name;
-        const services = Object.entries(data.services).map<ServiceRepr>(([name, serviceData]) => {
-            if (name !== serviceData.name) {
-                throw new Error(
-                    ErrorId.INVALID_METADATA,
-                    "Invalid metadata: service name mismatch."
-                );
+        const services = Object.entries(data.services ?? {}).map<ServiceRepr>(
+            ([name, serviceData]) => {
+                if (name !== serviceData.name) {
+                    throw new Error(
+                        ErrorId.INVALID_METADATA,
+                        "Invalid metadata: service name mismatch."
+                    );
+                }
+                return ServiceRepr.parse(data.name, serviceData);
             }
-            return ServiceRepr.parse(data.name, serviceData);
-        });
+        );
         return new PackageRepr(name, services);
     }
 

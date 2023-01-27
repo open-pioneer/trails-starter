@@ -13,7 +13,7 @@ export interface PackageMetadata {
      * Key: unique service name within the package.
      * Value: service metadata.
      */
-    services: Record<string, ServiceMetadata>;
+    services?: Record<string, ServiceMetadata>;
 }
 
 /**

@@ -94,6 +94,14 @@ importers:
     dependencies:
       '@open-pioneer/runtime': link:../../packages/runtime
 
+  src/apps/styling-app:
+    specifiers:
+      '@open-pioneer/runtime': 'workspace:'
+      test-ui-components: 'workspace:'
+    dependencies:
+      '@open-pioneer/runtime': link:../../packages/runtime
+      test-ui-components: link:../../packages/test-ui-components
+
   src/packages/core:
     specifiers: {}
 
@@ -122,6 +130,9 @@ importers:
       react: 18.2.0
       react-dom: 18.2.0_react@18.2.0
 
+  src/packages/test-ui-components:
+    specifiers: {}
+
   vite-plugin:
     specifiers:
       '@babel/generator': ^7.20.7
@@ -141,7 +152,7 @@ importers:
       npm-run-all: ^4.1.5
       rimraf: ^4.1.1
       rollup: ^3.10.1
-      vite: ^4.0.0
+      vite: ^4.0.4
     dependencies:
       '@babel/generator': 7.20.7
       '@babel/template': 7.20.7

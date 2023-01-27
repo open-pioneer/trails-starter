@@ -1,6 +1,6 @@
 import { createCustomElement } from "@open-pioneer/runtime";
 import { createElement } from "react";
-import packages from "open-pioneer:app";
+import { packages } from "open-pioneer:app";
 
 const Element = createCustomElement({
     component: () =>

@@ -25,7 +25,8 @@ export default defineConfig({
                 "date-sample", 
                 "logging-sample", 
                 "services-sample", 
-                "map-sample"
+                "map-sample",
+                "styling-sample"
             ]
         }),
         react(),

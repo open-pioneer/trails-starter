@@ -2,15 +2,16 @@ import { assert } from "chai";
 import { readFileSync } from "node:fs";
 import { resolve } from "node:path";
 import { TEST_DATA } from "../utils/testUtils";
-import { generatePackagesMetadata } from "./metadataGeneration";
+import { generatePackagesMetadata } from "./generatePackagesMetadata";
 
-describe("metadata generation", function () {
+describe("generatePackagesMetadata", function () {
     it("should generate package metadata", function () {
         const testDataFile = resolve(TEST_DATA, "codegen-metadata.js");
         const pkgMetadata = generatePackagesMetadata([
             {
                 name: "test",
                 config: {
+                    styles: undefined,
                     services: {
                         ServiceA: {
                             provides: [],

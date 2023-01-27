@@ -47,6 +47,9 @@ export interface PackageMetadata {
     /** Path to entry point (contains service exports). */
     entryPointPath: string | undefined;
 
+    /** Path to the resolved css file (if any). */
+    cssFilePath: string | undefined;
+
     /** Runtime dependencies (from package.json). */
     dependencies: string[];
 
@@ -159,7 +162,6 @@ export class MetadataRepository {
             packageJsonPath: appPackageMetadata.packageJsonPath,
             packages: Array.from(packageMetadataByName.values())
         };
-        isDebug && debug(`App metadata of ${appDirectory}: %O`, appMetadata);
         return appMetadata;
     }
 
@@ -310,7 +312,7 @@ export async function parsePackageMetadata(
         if (options?.requireBuildConfig) {
             ctx.error(`Expected a ${BUILD_CONFIG_NAME} in ${packageDir}`);
         }
-        buildConfig = { services: {} };
+        buildConfig = { services: {}, styles: undefined };
     }
 
     let entryPoint: string | undefined;
@@ -319,11 +321,25 @@ export async function parsePackageMetadata(
     } catch (e) {
         ctx.warn(`Failed to resolve entry point for package ${packageDir}: ${e}`);
     }
+
+    let cssFile: string | undefined;
+    if (buildConfig.styles) {
+        try {
+            cssFile = await resolveLocalFile(ctx, packageDir, buildConfig.styles);
+        } catch (e) {
+            ctx.error(`Failed to resolve css file for package ${packageDir}: ${e}`);
+        }
+        if (!cssFile) {
+            ctx.error(`Failed to find css file '${buildConfig.styles}' in ${packageDir}`);
+        }
+    }
+
     return {
         name: packageName,
         directory: packageDir,
         packageJsonPath: packageJsonPath,
         entryPointPath: entryPoint,
+        cssFilePath: cssFile,
         dependencies,
         config: buildConfig
     };
@@ -356,6 +372,13 @@ async function parsePackageJson(ctx: MetadataContext, packageJsonPath: string) {
         name: packageName,
         dependencies: dependencyNames
     };
+}
+
+async function resolveLocalFile(ctx: MetadataContext, packageDir: string, localModuleId: string) {
+    const result = await ctx.resolve(`./${localModuleId}`, `${packageDir}/package.json`, {
+        skipSelf: true
+    });
+    return result?.id;
 }
 
 function formatPackageLocation(loc: PackageLocation) {

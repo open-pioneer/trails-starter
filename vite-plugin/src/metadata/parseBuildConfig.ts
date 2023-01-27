@@ -2,6 +2,7 @@ export const BUILD_CONFIG_NAME = "build.config.mjs";
 
 export interface NormalizedPackageConfig {
     services: Record<string, NormalizedServiceConfig>;
+    styles: string | undefined;
 }
 
 export interface NormalizedServiceConfig {
@@ -10,6 +11,13 @@ export interface NormalizedServiceConfig {
 }
 
 export interface PackageConfig {
+    /**
+     * Path to a file containing CSS.
+     * The CSS file will be automatically loaded when the package
+     * is part of an application.
+     */
+    styles?: string;
+
     /**
      * Services provided by this package.
      * The service name must match an exported class from the package's main entry point (usually `index.{js,ts}`).
@@ -75,6 +83,7 @@ export function isBuildConfig(file: string) {
 
 function normalizeConfig(rawConfig: PackageConfig): NormalizedPackageConfig {
     return {
+        styles: rawConfig.styles,
         services: Object.fromEntries(
             Object.entries(rawConfig.services ?? {}).map(([serviceName, serviceConfig]) => {
                 return [serviceName, normalizeServiceConfig(serviceConfig)];
