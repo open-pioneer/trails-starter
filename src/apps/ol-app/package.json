@@ -1,10 +1,12 @@
 {
     "name": "ol-map",
     "private": true,
+    "main": "app",
     "dependencies": {
         "@open-pioneer/runtime": "workspace:^",
         "@types/ol": "^6.5.3",
         "ol": "^6.4.3",
+        "logging": "workspace:^",
         "react": "^18.2.0"
     }
 }

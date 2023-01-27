@@ -78,11 +78,13 @@ importers:
     specifiers:
       '@open-pioneer/runtime': workspace:^
       '@types/ol': ^6.5.3
+      logging: workspace:^
       ol: ^6.4.3
       react: ^18.2.0
     dependencies:
       '@open-pioneer/runtime': link:../../packages/runtime
       '@types/ol': 6.5.3
+      logging: link:../../packages/logging
       ol: 6.15.1
       react: 18.2.0
 

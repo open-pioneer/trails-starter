@@ -1,10 +1,59 @@
-import { createCustomElement } from "@open-pioneer/runtime";
+import { createCustomElement, Service } from "@open-pioneer/runtime";
+import { MapOptions } from "ol/PluggableMap";
+import View from "ol/View";
+import packages from "open-pioneer:app";
+
 import styles from "./app.css?inline";
 import { MapApp } from "./MapApp";
 
+export interface MapConfigProvider {
+    mapOptions?: MapOptions;
+}
+
 const element = createCustomElement({
     component: MapApp,
-    styles
+    styles,
+    packages: {
+        ...packages,
+        // currently needed to referenc the config service
+        helper: {
+            name: "helper",
+            services: {
+                Helper: {
+                    name: "Helper",
+                    clazz: class Helper {},
+                    references: {
+                        provider: {
+                            name: "config.MapConfig"
+                        }
+                    }
+                }
+            }
+        },
+        config: {
+            name: "config",
+            services: {
+                Provider: {
+                    name: "Provider",
+                    clazz: class Provider implements Service<MapConfigProvider> {
+                        mapOptions: MapOptions = {
+                            view: new View({
+                                projection: "EPSG:3857",
+                                center: [-8255632.322029656, 4959699.061032101],
+                                zoom: 12
+                            })
+                            // controls: [ ]
+                        };
+                    },
+                    provides: [
+                        {
+                            name: "config.MapConfig"
+                        }
+                    ]
+                }
+            }
+        }
+    }
 });
 
 customElements.define("ol-map-app", element);
