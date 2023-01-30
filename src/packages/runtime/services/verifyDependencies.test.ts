@@ -3,7 +3,7 @@ import { Dependency, ServiceRepr } from "./ServiceRepr";
 import { verifyDependencies } from "./verifyDependencies";
 
 it("does not return an error on acyclic graphs", function () {
-    const components = mockComponents([
+    const services = mockServices([
         {
             name: "Map",
             package: "map",
@@ -18,13 +18,13 @@ it("does not return an error on acyclic graphs", function () {
         }
     ]);
 
-    const index = verifyDependencies(components);
+    const index = verifyDependencies({ services: services });
     assert.strictEqual(index.size, 1);
     assert.deepEqual(index.get("services.Map")!.id, "map::Map");
 });
 
 it("throws when a service is not implemented", function () {
-    const components = mockComponents([
+    const services = mockServices([
         {
             name: "ExampleTool",
             package: "tools",
@@ -33,12 +33,17 @@ it("throws when a service is not implemented", function () {
         }
     ]);
 
-    const message = expectError(() => verifyDependencies(components)).message;
+    const message = expectError(() =>
+        verifyDependencies({
+            services: services,
+            uiDependencies: []
+        })
+    ).message;
     expect(message).toMatchSnapshot();
 });
 
 it("throws when a component directly depends on itself", function () {
-    const components = mockComponents([
+    const services = mockServices([
         {
             name: "Map",
             package: "map",
@@ -46,12 +51,16 @@ it("throws when a component directly depends on itself", function () {
             requires: ["services.Map"]
         }
     ]);
-    const message = expectError(() => verifyDependencies(components)).message;
+    const message = expectError(() =>
+        verifyDependencies({
+            services: services
+        })
+    ).message;
     expect(message).toMatchSnapshot();
 });
 
 it("throws when a component depends on itself via a larger cycle", function () {
-    const components = mockComponents([
+    const services = mockServices([
         {
             name: "a",
             package: "A",
@@ -78,7 +87,58 @@ it("throws when a component depends on itself via a larger cycle", function () {
         }
     ]);
 
-    const message = expectError(() => verifyDependencies(components)).message;
+    const message = expectError(() =>
+        verifyDependencies({
+            services: services
+        })
+    ).message;
+    expect(message).toMatchSnapshot();
+});
+
+it("does not return an error when the UI requires an existing interface", function () {
+    const services = mockServices([
+        {
+            name: "Map",
+            package: "map",
+            provides: ["services.Map"],
+            requires: []
+        }
+    ]);
+
+    const index = verifyDependencies({
+        services: services,
+        uiDependencies: [
+            {
+                interfaceName: "services.Map",
+                packageName: "foo"
+            }
+        ]
+    });
+    assert.strictEqual(index.size, 1);
+    assert.deepEqual(index.get("services.Map")!.id, "map::Map");
+});
+
+it("throws when the ui requires an interface that is not implemented", function () {
+    const services = mockServices([
+        {
+            name: "Map",
+            package: "map",
+            provides: ["services.Map"],
+            requires: []
+        }
+    ]);
+
+    const message = expectError(() =>
+        verifyDependencies({
+            services,
+            uiDependencies: [
+                {
+                    packageName: "foo",
+                    interfaceName: "services.Map2"
+                }
+            ]
+        })
+    ).message;
     expect(message).toMatchSnapshot();
 });
 
@@ -89,7 +149,7 @@ interface ServiceData {
     provides: string[];
 }
 
-function mockComponents(data: ServiceData[]): ServiceRepr[] {
+function mockServices(data: ServiceData[]): ServiceRepr[] {
     return data.map<ServiceRepr>((service) => {
         const name = service.name;
         const packageName = service.package;

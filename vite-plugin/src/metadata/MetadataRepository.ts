@@ -8,7 +8,8 @@ import {
     BUILD_CONFIG_NAME,
     isBuildConfig,
     loadBuildConfig,
-    NormalizedPackageConfig
+    NormalizedPackageConfig,
+    parseBuildConfig
 } from "./parseBuildConfig";
 
 const isDebug = !!process.env.DEBUG;
@@ -316,7 +317,7 @@ export async function parsePackageMetadata(
         if (options?.requireBuildConfig) {
             ctx.error(`Expected a ${BUILD_CONFIG_NAME} in ${packageDir}`);
         }
-        buildConfig = { services: [], styles: undefined };
+        buildConfig = parseBuildConfig({});
     }
 
     let entryPoint: string | undefined;

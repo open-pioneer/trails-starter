@@ -14,6 +14,23 @@ export interface PackageMetadata {
      * Value: service metadata.
      */
     services?: Record<string, ServiceMetadata>;
+
+    /**
+     * Metadata about the UI Components contained in this package.
+     */
+    ui?: UiMetadata;
+}
+
+/**
+ * Describes the UI to the runtime.
+ */
+export interface UiMetadata {
+    /**
+     * List of interface names required by the UI.
+     * Interfaces in this list can be used by calling the `useService` hook
+     * from a react component.
+     */
+    references?: string[];
 }
 
 /**

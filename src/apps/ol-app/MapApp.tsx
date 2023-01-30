@@ -14,11 +14,8 @@ export function MapApp() {
     const [selectedCoord, setSelectedCoord] = useState<Coordinate>();
 
     const mapElement = useRef<HTMLDivElement>(null);
-
     const service = useService("logging.LogService");
-
     const mapConfig = useService("config.MapConfig") as MapConfigProvider;
-
     const map = useMap(mapElement, mapConfig);
 
     useEffect(() => {
@@ -34,7 +31,8 @@ export function MapApp() {
 
     useEffect(() => {
         service.log("Hello from component!");
-    });
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
     return (
         <div className="map-wrapper">

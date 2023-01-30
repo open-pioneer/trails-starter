@@ -30,7 +30,7 @@ export function codegenPlugin(): Plugin {
             manualDeps.clear();
             metadata?.reset();
 
-            const unresolvedRuntimeModuleId = "@open-pioneer/runtime";
+            const unresolvedRuntimeModuleId = "@open-pioneer/runtime/react-integration";
             // TODO: use require.resolve instead (requires built js).
             const runtimeResolveResult = await this.resolve(unresolvedRuntimeModuleId, __filename);
             if (!runtimeResolveResult) {

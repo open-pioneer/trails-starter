@@ -1,17 +1,47 @@
 import { ServiceRepr } from "./ServiceRepr";
 import { Error } from "@open-pioneer/core";
 import { ErrorId } from "../errors";
-import { verifyDependencies } from "./verifyDependencies";
+import { UIDependency, verifyDependencies } from "./verifyDependencies";
 import { PackageRepr } from "./PackageRepr";
+import { Service } from "../Service";
+
+export type ServiceLookupResult = FoundService | UndeclaredDependency;
+
+export interface FoundService {
+    type: "found";
+    instance: Service;
+}
+
+export interface UndeclaredDependency {
+    type: "undeclared";
+}
 
 export class ServiceLayer {
     readonly serviceIndex: ReadonlyMap<string, ServiceRepr>;
+
+    private declaredDependencies = new Map<string, Set<string>>();
     private allServices: readonly ServiceRepr[];
     private state: "not-started" | "started" | "destroyed" = "not-started";
 
     constructor(packages: readonly PackageRepr[]) {
         this.allServices = packages.map((pkg) => pkg.services).flat();
-        this.serviceIndex = verifyDependencies(this.allServices);
+        this.serviceIndex = verifyDependencies({
+            services: this.allServices,
+            uiDependencies: packages
+                .map((pkg) =>
+                    pkg.uiInterfaces.map<UIDependency>((interfaceName) => {
+                        return {
+                            packageName: pkg.name,
+                            interfaceName
+                        };
+                    })
+                )
+                .flat()
+        });
+
+        for (const pkg of packages) {
+            this.declaredDependencies.set(pkg.name, new Set(pkg.uiInterfaces));
+        }
     }
 
     destroy() {
@@ -30,6 +60,41 @@ export class ServiceLayer {
             this.createService(value);
         });
         this.state = "started";
+    }
+
+    /**
+     * Returns a service implementing the given interface.
+     * Checks that the given package actually declared a dependency on that interface
+     * to enforce coding guidelines.
+     *
+     * @param packageName the name of the package requesting the import
+     * @param interfaceName the required interface
+     *
+     * @throws if the service layer is not in 'started' state or if no service implements the interface.
+     */
+    getService(packageName: string, interfaceName: string): ServiceLookupResult {
+        if (this.state !== "started") {
+            throw new Error(ErrorId.INTERNAL, "Service layer is not started.");
+        }
+
+        const isDeclared = this.declaredDependencies.get(packageName)?.has(interfaceName) ?? false;
+        if (!isDeclared) {
+            return { type: "undeclared" };
+        }
+
+        const instance = this.serviceIndex.get(interfaceName)?.instance;
+        if (!instance) {
+            // Should be handled by verifyDependencies() already
+            throw new Error(
+                ErrorId.INTERNAL,
+                `Failed to find a service that implements '${interfaceName}.'`
+            );
+        }
+
+        return {
+            type: "found",
+            instance: instance
+        };
     }
 
     /**

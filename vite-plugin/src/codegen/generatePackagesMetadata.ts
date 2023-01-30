@@ -11,7 +11,8 @@ const SERVICE_IMPORT = template.statement(`
 const PKG_OBJECT = template.expression(`
     {
         name: %%PACKAGE_NAME%%,
-        services: %%PACKAGE_SERVICES%%
+        services: %%PACKAGE_SERVICES%%,
+        ui: %%PACKAGE_UI%%
     }
 `);
 
@@ -33,6 +34,12 @@ const INTERFACE_OBJECT = template.expression(`
 const REFERENCE_OBJECT = template.expression(`
     {
         name: %%INTERFACE_NAME%%
+    }
+`);
+
+const UI_OBJECT = template.expression(`
+    {
+        references: %%INTERFACE_NAMES%%
     }
 `);
 
@@ -127,9 +134,16 @@ function generatePackageMetadata(
         );
     }
 
+    const uiObject = UI_OBJECT({
+        INTERFACE_NAMES: nodes.arrayExpression(
+            pkg.config.ui.references.map((r) => nodes.stringLiteral(r))
+        )
+    });
+
     const pkgObject = PKG_OBJECT({
         PACKAGE_NAME: nodes.stringLiteral(pkg.name),
-        PACKAGE_SERVICES: servicesObject
+        PACKAGE_SERVICES: servicesObject,
+        PACKAGE_UI: uiObject
     });
     return pkgObject;
 }
@@ -142,6 +156,11 @@ function skipPackage(pkg: PackageMetadataInput) {
     if (config.services.length) {
         return false;
     }
-    // TODO: CSS, I18N ..
+    if (config.styles) {
+        return false;
+    }
+    if (config.ui.references.length) {
+        return false;
+    }
     return true;
 }

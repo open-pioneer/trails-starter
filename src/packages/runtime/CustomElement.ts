@@ -1,12 +1,11 @@
-import { ComponentType, createElement, StrictMode } from "react";
-import { createRoot as createReactRoot, Root as ReactRoot } from "react-dom/client";
+import { ComponentType } from "react";
 import { Error } from "@open-pioneer/core";
 import { ErrorId } from "./errors";
 import { PackageMetadata } from "./metadata";
 import { PackageRepr, parsePackages } from "./services/PackageRepr";
 import { ServiceLayer } from "./services/ServiceLayer";
 import { getErrorChain } from "@open-pioneer/core";
-import { ComponentContext, ServiceContext } from "./ComponentContext";
+import { ReactIntegration } from "./react-integration/ReactIntegration";
 
 /**
  * Options for the {@link createCustomElement} function.
@@ -62,9 +61,8 @@ export function createCustomElement(options: CustomElementOptions): CustomElemen
         #shadowRoot: ShadowRoot;
         #rootNode: HTMLDivElement | undefined;
         #serviceLayer: ServiceLayer | undefined;
-        #reactRoot: ReactRoot | undefined;
+        #reactIntegration: ReactIntegration | undefined;
         #props: Record<string, string> = {};
-        #contextValues: ComponentContext | undefined = undefined;
 
         static get observedAttributes() {
             return options.attributes ?? [];
@@ -84,45 +82,28 @@ export function createCustomElement(options: CustomElementOptions): CustomElemen
             try {
                 const serviceLayer = (this.#serviceLayer = createServiceLayer(options?.packages));
                 serviceLayer.start();
-                this.#contextValues = {
-                    getService: (serviceName: string) => {
-                        const service = this.#serviceLayer?.serviceIndex.get(serviceName)?.instance;
-                        if (!service) {
-                            throw new Error(
-                                ErrorId.INTERNAL,
-                                `service with name '${serviceName}' not defined for component`
-                            );
-                        }
-                        return service;
-                    }
-                };
 
                 const style = document.createElement("style");
                 style.appendChild(document.createTextNode(options.styles ?? ""));
                 this.#shadowRoot.replaceChildren(node, style);
 
-                this.#reactRoot = createReactRoot(node);
-                this.render();
+                this.#reactIntegration = new ReactIntegration({
+                    rootNode: node,
+                    serviceLayer
+                });
+                this.#render();
             } catch (e) {
                 logError(e);
             }
         }
 
-        private render() {
-            if (this.#reactRoot && this.#contextValues) {
-                const component = createElement(options.component, this.#props);
-                const contextWrapper = createElement(
-                    ServiceContext.Provider,
-                    { value: this.#contextValues },
-                    component
-                );
-                this.#reactRoot.render(createElement(StrictMode, undefined, contextWrapper));
-            }
+        #render() {
+            this.#reactIntegration?.render(options.component, this.#props);
         }
 
         disconnectedCallback() {
-            this.#reactRoot?.unmount();
-            this.#reactRoot = undefined;
+            this.#reactIntegration?.destroy();
+            this.#reactIntegration = undefined;
             this.#shadowRoot.replaceChildren();
             this.#rootNode = undefined;
             this.#serviceLayer?.destroy();
@@ -130,10 +111,8 @@ export function createCustomElement(options: CustomElementOptions): CustomElemen
         }
 
         attributeChangedCallback(name: string, oldValue: string | null, newValue: string | null) {
-            if (newValue) {
-                this.#props[name] = newValue ?? undefined;
-            }
-            this.render();
+            this.#props[name] = newValue ?? "";
+            this.#render();
         }
     }
     return PioneerApplication;

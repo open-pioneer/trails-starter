@@ -3,12 +3,17 @@ export const BUILD_CONFIG_NAME = "build.config.mjs";
 export interface NormalizedPackageConfig {
     services: NormalizedServiceConfig[];
     styles: string | undefined;
+    ui: NormalizedUiConfig;
 }
 
 export interface NormalizedServiceConfig {
     name: string;
     provides: ProvidesConfig[];
     references: Record<string, ReferenceConfig>;
+}
+
+export interface NormalizedUiConfig {
+    references: string[];
 }
 
 export interface PackageConfig {
@@ -24,6 +29,11 @@ export interface PackageConfig {
      * The service name must match an exported class from the package's main entry point (usually `index.{js,ts}`).
      */
     services?: Record<string, ServiceConfig>;
+
+    /**
+     * Ui configuration.
+     */
+    ui?: UiConfig;
 }
 
 export interface ServiceConfig {
@@ -41,6 +51,14 @@ export interface ServiceConfig {
      * The interface name can be specified directly (as a string) for convenience.
      */
     references?: Record<string, string | ReferenceConfig>;
+}
+
+export interface UiConfig {
+    /**
+     * Interfaces names of the services referenced by the UI.
+     * The UI can only use services that are declared as dependencies in this array.
+     */
+    references?: string[];
 }
 
 export interface ProvidesConfig {
@@ -87,7 +105,8 @@ function normalizeConfig(rawConfig: PackageConfig): NormalizedPackageConfig {
         styles: rawConfig.styles,
         services: Object.entries(rawConfig.services ?? {}).map(([serviceName, serviceConfig]) => {
             return normalizeServiceConfig(serviceName, serviceConfig);
-        })
+        }),
+        ui: normalizeUiConfig(rawConfig.ui)
     };
 }
 
@@ -133,4 +152,10 @@ function normalizeReferencesConfig(
             return [referenceName, normalized];
         })
     );
+}
+
+function normalizeUiConfig(rawConfig: PackageConfig["ui"]): NormalizedUiConfig {
+    return {
+        references: rawConfig?.references ?? []
+    };
 }

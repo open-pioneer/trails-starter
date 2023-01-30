@@ -31,13 +31,16 @@ describe("generatePackagesMetadata", function () {
                                 }
                             }
                         }
-                    ]
+                    ],
+                    ui: {
+                        references: ["foo.ServiceE"]
+                    }
                 },
                 entryPointPath: "entryPoint"
             }
         ]);
 
-        const expected = readFileSync(testDataFile, "utf-8");
+        const expected = readFileSync(testDataFile, "utf-8").trim();
         assert.equal(pkgMetadata, expected);
     });
 });

@@ -1,7 +1,7 @@
 import { expect, it } from "vitest";
 import { Service, ServiceOptions } from "../Service";
 import { PackageRepr } from "./PackageRepr";
-import { ServiceLayer } from "./ServiceLayer";
+import { FoundService, ServiceLayer } from "./ServiceLayer";
 import { ServiceRepr } from "./ServiceRepr";
 
 it("starts and stops services in the expected order", function () {
@@ -36,27 +36,35 @@ it("starts and stops services in the expected order", function () {
     }
 
     const serviceLayer = new ServiceLayer([
-        new PackageRepr("a", [
-            new ServiceRepr({
-                name: "A",
-                packageName: "a",
-                clazz: ServiceA,
-                dependencies: [
-                    {
-                        referenceName: "b",
-                        interfaceName: "b.serviceB"
-                    }
-                ]
-            })
-        ]),
-        new PackageRepr("b", [
-            new ServiceRepr({
-                name: "B",
-                packageName: "b",
-                clazz: ServiceB,
-                interfaces: ["b.serviceB"]
-            })
-        ])
+        new PackageRepr(
+            "a",
+            [
+                new ServiceRepr({
+                    name: "A",
+                    packageName: "a",
+                    clazz: ServiceA,
+                    dependencies: [
+                        {
+                            referenceName: "b",
+                            interfaceName: "b.serviceB"
+                        }
+                    ]
+                })
+            ],
+            []
+        ),
+        new PackageRepr(
+            "b",
+            [
+                new ServiceRepr({
+                    name: "B",
+                    packageName: "b",
+                    clazz: ServiceB,
+                    interfaces: ["b.serviceB"]
+                })
+            ],
+            []
+        )
     ]);
 
     serviceLayer.start();
@@ -123,38 +131,42 @@ it("destroys services once they are no longer referenced (but not before)", func
     });
 
     const serviceLayer = new ServiceLayer([
-        new PackageRepr("UserPackage", [
-            new ServiceRepr({
-                name: "A",
-                packageName: "UserPackage",
-                clazz: ServiceUser,
-                dependencies: [
-                    {
-                        referenceName: "provider",
-                        interfaceName: "provider.Service"
+        new PackageRepr(
+            "UserPackage",
+            [
+                new ServiceRepr({
+                    name: "A",
+                    packageName: "UserPackage",
+                    clazz: ServiceUser,
+                    dependencies: [
+                        {
+                            referenceName: "provider",
+                            interfaceName: "provider.Service"
+                        }
+                    ],
+                    properties: {
+                        id: "A"
                     }
-                ],
-                properties: {
-                    id: "A"
-                }
-            }),
-            new ServiceRepr({
-                name: "B",
-                packageName: "UserPackage",
-                clazz: ServiceUser,
-                dependencies: [
-                    {
-                        referenceName: "provider",
-                        interfaceName: "provider.Service"
+                }),
+                new ServiceRepr({
+                    name: "B",
+                    packageName: "UserPackage",
+                    clazz: ServiceUser,
+                    dependencies: [
+                        {
+                            referenceName: "provider",
+                            interfaceName: "provider.Service"
+                        }
+                    ],
+                    properties: {
+                        id: "B"
                     }
-                ],
-                properties: {
-                    id: "B"
-                }
-            })
-        ]),
+                })
+            ],
+            []
+        ),
 
-        new PackageRepr("ProviderPackage", [providerService])
+        new PackageRepr("ProviderPackage", [providerService], [])
     ]);
 
     serviceLayer.start();
@@ -169,4 +181,37 @@ it("destroys services once they are no longer referenced (but not before)", func
     expect(new Set(events.slice(0, 2))).toEqual(new Set(["destroy-B", "destroy-A"])); // ignore order
     expect(providerService.useCount).toBe(0);
     expect(providerService.state).toBe("destroyed");
+});
+
+it("allows access to service instances if the dependency was declared", function () {
+    class Dummy {}
+
+    const serviceLayer = new ServiceLayer([
+        new PackageRepr(
+            "TestPackage",
+            [
+                new ServiceRepr({
+                    name: "A",
+                    packageName: "TestPackage",
+                    clazz: Dummy,
+                    dependencies: [],
+                    interfaces: ["testpackage.Interface", "testpackage.OtherInterface"]
+                })
+            ],
+            ["testpackage.Interface"]
+        )
+    ]);
+    serviceLayer.start();
+
+    const resultDeclared = serviceLayer.getService("TestPackage", "testpackage.Interface");
+    expect(resultDeclared.type).toBe("found");
+    expect((resultDeclared as FoundService).instance).toBeDefined();
+
+    const resultUndeclared = serviceLayer.getService("TestPackage", "testpackage.OtherInterface");
+    expect(resultUndeclared.type).toBe("undeclared");
+
+    const resultUndeclared2 = serviceLayer.getService("whatever", "testpackage.Interface");
+    expect(resultUndeclared2.type, "undeclared");
+
+    serviceLayer.destroy();
 });

@@ -5,3 +5,5 @@ exports[`throws when a component depends on itself via a larger cycle 1`] = `"ru
 exports[`throws when a component directly depends on itself 1`] = `"runtime:dependency-cycle: Detected dependency cycle: 'map::Map' => 'map::Map' ('dep_0' providing 'services.Map')."`;
 
 exports[`throws when a service is not implemented 1`] = `"runtime:interface-not-found: Service 'tools::ExampleTool' requires an unimplemented interface 'services.Map' (as dependency 'dep_0')."`;
+
+exports[`throws when the ui requires an interface that is not implemented 1`] = `"runtime:interface-not-found: The UI of package 'foo' requires an unimplemented interface 'services.Map2'."`;

@@ -2,6 +2,16 @@ import { Error } from "@open-pioneer/core";
 import { ErrorId } from "../errors";
 import { ServiceRepr } from "./ServiceRepr";
 
+export interface DependencyOptions {
+    services?: readonly ServiceRepr[];
+    uiDependencies?: readonly UIDependency[];
+}
+
+export interface UIDependency {
+    readonly packageName: string;
+    readonly interfaceName: string;
+}
+
 /**
  * Visits all services and ensures that their dependencies can be satisfied by each other without a cycle.
  *
@@ -9,8 +19,8 @@ import { ServiceRepr } from "./ServiceRepr";
  *
  * @returns the verified index from interface name to service class.
  */
-export function verifyDependencies(services: readonly ServiceRepr[]) {
-    const verifier = new Verifier(services);
+export function verifyDependencies(options: DependencyOptions) {
+    const verifier = new Verifier(options);
     verifier.verify();
     return verifier.getServiceIndex();
 }
@@ -23,23 +33,43 @@ interface GraphItem {
 type ItemState = "not-visited" | "pending" | "done";
 
 /** The reason why a graph node is being visited. */
-type Reason =
+type ItemVisitReason =
     | "root"
     | {
-          name: string;
+          type: "ui-reference";
+          packageName: string;
+          interfaceName: string;
+      }
+    | {
+          type: "service-reference";
+          referenceName: string;
           interfaceName: string;
       };
 
+type InterfaceReference =
+    | {
+          type: "ui-reference";
+          packageName: string;
+      }
+    | {
+          type: "service-reference";
+          service: ServiceRepr;
+          referenceName: string;
+      };
+
 class Verifier {
+    private uiDependencies: readonly UIDependency[];
     private items: GraphItem[];
 
     // Service name -> implementing item
-    private services = new Map<string, GraphItem>();
+    private serviceLookup = new Map<string, GraphItem>();
 
     // Stack of visited nodes
-    private stack: [item: GraphItem, reason: Reason][] = [];
+    private stack: [item: GraphItem, reason: ItemVisitReason][] = [];
 
-    constructor(services: readonly ServiceRepr[]) {
+    constructor(options: DependencyOptions) {
+        this.uiDependencies = options.uiDependencies ?? [];
+        const services = options.services ?? [];
         const items = (this.items = services.map<GraphItem>((service) => {
             return {
                 service: service,
@@ -55,6 +85,12 @@ class Verifier {
     }
 
     verify() {
+        for (const uiDependency of this.uiDependencies) {
+            this.visitInterface(uiDependency.interfaceName, {
+                type: "ui-reference",
+                packageName: uiDependency.packageName
+            });
+        }
         for (const item of this.items) {
             this.visitItem(item, "root");
         }
@@ -62,15 +98,14 @@ class Verifier {
 
     getServiceIndex() {
         const index = new Map<string, ServiceRepr>();
-        for (const [k, v] of this.services) {
+        for (const [k, v] of this.serviceLookup) {
             index.set(k, v.service);
         }
         return index;
     }
 
-    private visitItem(item: GraphItem, reason: Reason) {
+    private visitItem(item: GraphItem, reason: ItemVisitReason) {
         const stack = this.stack;
-        const services = this.services;
         const state = item.state;
         if (state === "done") {
             return; // Item is initialized, cycle impossible
@@ -82,21 +117,49 @@ class Verifier {
         stack.push([item, reason]);
         item.state = "pending";
         for (const { referenceName, interfaceName } of item.service.dependencies) {
-            const childItem = services.get(interfaceName);
-            if (!childItem) {
-                throw new Error(
-                    ErrorId.INTERFACE_NOT_FOUND,
-                    `Service '${item.service.id}' requires an unimplemented interface '${interfaceName}' (as dependency '${referenceName}').`
-                );
-            }
-
-            this.visitItem(childItem, { name: referenceName, interfaceName });
+            this.visitInterface(interfaceName, {
+                type: "service-reference",
+                service: item.service,
+                referenceName
+            });
         }
         item.state = "done";
         stack.pop();
     }
 
-    private throwCycleError(item: GraphItem, reason: Reason) {
+    private visitInterface(interfaceName: string, user: InterfaceReference) {
+        const childItem = this.serviceLookup.get(interfaceName);
+        if (!childItem) {
+            const message =
+                user.type === "service-reference"
+                    ? `Service '${user.service.id}' requires an unimplemented interface '${interfaceName}' (as dependency '${user.referenceName}').`
+                    : `The UI of package '${user.packageName}' requires an unimplemented interface '${interfaceName}'.`;
+
+            throw new Error(ErrorId.INTERFACE_NOT_FOUND, message);
+        }
+
+        let reason: ItemVisitReason;
+        switch (user.type) {
+            case "service-reference":
+                reason = {
+                    type: "service-reference",
+                    interfaceName,
+                    referenceName: user.referenceName
+                };
+                break;
+            case "ui-reference":
+                reason = {
+                    type: "ui-reference",
+                    interfaceName,
+                    packageName: user.packageName
+                };
+                break;
+        }
+
+        this.visitItem(childItem, reason);
+    }
+
+    private throwCycleError(item: GraphItem, reason: ItemVisitReason) {
         // Find the item on the stack (it must be there because we detected a cycle).
         const stack = this.stack;
         const ownIndex = stack.findIndex((entry) => entry[0] === item);
@@ -112,8 +175,15 @@ class Verifier {
                 const reason = index === 0 ? "root" : entry[1]; // info before the cycle does not matter
 
                 let message = `'${item.service.id}'`;
-                if (reason !== "root") {
-                    message += ` ('${reason.name}' providing '${reason.interfaceName}')`;
+                if (typeof reason === "object") {
+                    switch (reason.type) {
+                        case "service-reference":
+                            message += ` ('${reason.referenceName}' providing '${reason.interfaceName}')`;
+                            break;
+                        case "ui-reference":
+                            message += ` (UI of package '${reason.packageName}' requiring '${reason.interfaceName}')`;
+                            break;
+                    }
                 }
                 return message;
             });
@@ -124,7 +194,7 @@ class Verifier {
     }
 
     private registerService(interfaceName: string, item: GraphItem) {
-        const services = this.services;
+        const services = this.serviceLookup;
         const existing = services.get(interfaceName);
         if (existing) {
             throw new Error(

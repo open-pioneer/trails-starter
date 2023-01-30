@@ -22,6 +22,9 @@ export default {
           }
         }
       }
+    },
+    ui: {
+      references: ["foo.ServiceE"]
     }
   }
 };

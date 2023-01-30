@@ -3,10 +3,10 @@
  */
 import { createElement } from "react";
 import { expect, it } from "vitest";
-import { useServiceInternal } from "./ComponentContext";
-import { createCustomElement } from "./CustomElement";
-import { Service } from "./Service";
-import { TestUtils } from "./test/TestUtils";
+import { useServiceInternal } from "./hooks";
+import { createCustomElement } from "../CustomElement";
+import { Service } from "../Service";
+import { TestUtils } from "../test/TestUtils";
 
 export interface TestProvider {
     value: string;
@@ -14,7 +14,7 @@ export interface TestProvider {
 
 it("should render component and using service which manipulates dom", async () => {
     function TestComponent() {
-        const service = useServiceInternal("TODO", "test.Provider") as TestProvider;
+        const service = useServiceInternal("test", "test.Provider") as TestProvider;
         return createElement("span", undefined, `Hello ${service.value}`);
     }
     const elem = createCustomElement({
@@ -36,6 +36,9 @@ it("should render component and using service which manipulates dom", async () =
                             }
                         ]
                     }
+                },
+                ui: {
+                    references: ["test.Provider"]
                 }
             }
         }
@@ -43,6 +46,5 @@ it("should render component and using service which manipulates dom", async () =
     customElements.define("test-elem", elem);
     const customElement = await TestUtils.render("test-elem");
     const selectedElem = await TestUtils.waitForSelector("#wrapper", customElement.shadowRoot!);
-    console.log(selectedElem.querySelector("span")!.innerHTML);
     expect(selectedElem.querySelector("span")!.innerHTML).toBe("Hello TEST");
 });

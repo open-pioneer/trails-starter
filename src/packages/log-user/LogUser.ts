@@ -1,5 +1,4 @@
-import { type LogService } from "logging/LogService";
-import { Service, ServiceOptions } from "@open-pioneer/runtime";
+import { Service, ServiceOptions, ServiceType } from "@open-pioneer/runtime";
 
 declare module "@open-pioneer/runtime" {
     interface ServiceRegistry {
@@ -8,7 +7,7 @@ declare module "@open-pioneer/runtime" {
 }
 
 interface References {
-    logger: LogService;
+    logger: ServiceType<"logging.LogService">;
 }
 
 export class LogUser implements Service {

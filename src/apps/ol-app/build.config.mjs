@@ -4,5 +4,8 @@ export default {
         Provider: {
             provides: ["config.MapConfig"]
         }
+    },
+    ui: {
+        references: ["config.MapConfig", "logging.LogService"]
     }
 };

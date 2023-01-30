@@ -1,3 +1,3 @@
 export * from "./CustomElement";
 export * from "./Service";
-export * from "./ComponentContext";
+export * from "./ServiceRegistry";

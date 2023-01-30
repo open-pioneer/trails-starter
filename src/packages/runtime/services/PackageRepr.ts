@@ -17,15 +17,22 @@ export class PackageRepr {
                 return ServiceRepr.parse(data.name, serviceData);
             }
         );
-        return new PackageRepr(name, services);
+        return new PackageRepr(name, services, data.ui?.references ?? []);
     }
 
+    /** Package name */
     readonly name: string;
+
+    /** Services defined by the package */
     readonly services: readonly ServiceRepr[];
 
-    constructor(name: string, services: ServiceRepr[]) {
+    /** Interfaces required by UI components. */
+    readonly uiInterfaces: readonly string[];
+
+    constructor(name: string, services: ServiceRepr[], uiInterfaces: string[]) {
         this.name = name;
         this.services = services;
+        this.uiInterfaces = uiInterfaces;
     }
 }
 
