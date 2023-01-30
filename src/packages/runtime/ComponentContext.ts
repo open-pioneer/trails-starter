@@ -1,4 +1,4 @@
-import { createContext, useContext, useRef } from "react";
+import { createContext, useContext, useMemo } from "react";
 import { ServiceLifecycleHooks } from "./Service";
 
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
@@ -21,10 +21,6 @@ export function useService<ServiceName extends keyof ServiceRegistry>(
 export function useService(serviceName: string): unknown;
 export function useService(serviceName: string) {
     const context = useContext(ServiceContext);
-    const service = useRef<unknown>(null);
-    if (!service.current) {
-        // Service instance currently never changes after successful lookup
-        service.current = context?.getService(serviceName);
-    }
-    return service.current;
+    const service = useMemo(() => context?.getService(serviceName), [context, serviceName]);
+    return service;
 }
