@@ -1,4 +1,3 @@
-import { useService } from "@open-pioneer/runtime/ComponentContext";
 import { Coordinate, toStringXY } from "ol/coordinate";
 import TileLayer from "ol/layer/Tile";
 import Map, { MapOptions } from "ol/Map";
@@ -8,6 +7,7 @@ import { transform } from "ol/proj";
 import XYZ from "ol/source/XYZ";
 import View from "ol/View";
 import { RefObject, useEffect, useRef, useState } from "react";
+import { useService } from "open-pioneer:react-hooks";
 
 import { MapConfigProvider } from "./app";
 
@@ -32,6 +32,10 @@ export function MapApp() {
         });
         return () => key && unByKey(key);
     }, [map, service]);
+
+    useEffect(() => {
+        service.log("Hello from component!");
+    });
 
     return (
         <div className="map-wrapper">

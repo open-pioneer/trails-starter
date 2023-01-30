@@ -18,7 +18,6 @@ describe("codegen support", function () {
 
         const testAppJs = readFileSync(join(outDir, "test-app.js"), "utf-8");
         assert.include(testAppJs, "LogService");
-        // eslint-disable-next-line quotes
         assert.include(testAppJs, 'console.log("Hello from LogService!!");');
     });
 
@@ -37,5 +36,27 @@ describe("codegen support", function () {
         const testAppJs = readFileSync(join(outDir, "test-app.js"), "utf-8");
         assert.include(testAppJs, ".class-from-style1");
         assert.include(testAppJs, ".class-from-style2");
+    });
+
+    it("should generate react hooks module for packages and apps", async function () {
+        const rootDir = resolve(TEST_DATA, "codegen-react-hooks");
+        const outDir = resolve(TEMP_DATA, "codegen-react-hooks");
+
+        await runViteBuild({
+            outDir,
+            rootDir,
+            pluginOptions: {
+                apps: ["test-app"]
+            }
+        });
+
+        const appJs = readFileSync(join(outDir, "test-app.js"), "utf-8");
+        assert.include(appJs, 'useServiceInternal.bind(void 0, "test-app")');
+        assert.include(appJs, 'useServiceInternal.bind(void 0, "package1")');
+        assert.include(appJs, 'useServiceInternal.bind(void 0, "package2")');
+
+        assert.include(appJs, '"import.from.app"');
+        assert.include(appJs, '"import.from.package1"');
+        assert.include(appJs, '"import.from.package2"');
     });
 });

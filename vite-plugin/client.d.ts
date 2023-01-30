@@ -17,3 +17,17 @@ declare module "open-pioneer:app" {
      */
     declare const styles: string;
 }
+
+declare module "open-pioneer:react-hooks" {
+    import { type ServiceRegistry } from "@open-pioneer/runtime";
+
+    /**
+     * Returns a service which is defined in the packages section as a reference in {@link CustomElementOptions}.
+     *
+     * A complete service name with package declaration is needed (e.g. "logging.LogService").
+     */
+    export function useService<ServiceName extends keyof ServiceRegistry>(
+        serviceName: ServiceName
+    ): ServiceRegistry[ServiceName];
+    export function useService(serviceName: string): unknown;
+}

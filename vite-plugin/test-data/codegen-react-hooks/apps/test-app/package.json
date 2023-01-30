@@ -1,0 +1,8 @@
+{
+    "name": "test-app",
+    "private": true,
+    "dependencies": {
+        "package1": "x.x",
+        "package2": "x.x"
+    }
+}

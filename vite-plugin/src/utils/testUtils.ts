@@ -22,6 +22,11 @@ export async function runViteBuild(options: {
                 // Don't log warnings during tests
                 onwarn() {
                     void 0;
+                },
+                external(id, importer, isResolved) {
+                    if (isResolved && /[/\\]node_modules[/\\]/.test(id)) {
+                        return true;
+                    }
                 }
             }
         },

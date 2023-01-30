@@ -3,7 +3,7 @@
  */
 import { createElement } from "react";
 import { expect, it } from "vitest";
-import { useService } from "./ComponentContext";
+import { useServiceInternal } from "./ComponentContext";
 import { createCustomElement } from "./CustomElement";
 import { Service } from "./Service";
 import { TestUtils } from "./test/TestUtils";
@@ -14,7 +14,7 @@ export interface TestProvider {
 
 it("should render component and using service which manipulates dom", async () => {
     function TestComponent() {
-        const service = useService("test.Provider") as TestProvider;
+        const service = useServiceInternal("TODO", "test.Provider") as TestProvider;
         return createElement("span", undefined, `Hello ${service.value}`);
     }
     const elem = createCustomElement({
