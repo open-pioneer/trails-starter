@@ -107,6 +107,20 @@ TBD
 
 ## Concepts
 
+### Package manager: PNPM
+
+Please use [`pnpm`](https://pnpm.io) instead of `npm` to manage dependencies in this repository.
+
+Here is a list of some common commands you are likely to need:
+
+-   `pnpm install`: Install local dependencies, for example after versions changed or a new local package has been created.
+-   In a package directory: `pnpm add <DEP>`.
+    Adds the dependency to the package and installs it. Use `-D` for devDependencies.
+    `pnpm remove` removes a dependency again.
+-   `pnpm -w <COMMAND>`: run the command in the workspace root instead of the local package.
+-   `pnpm run <SCRIPT>`: runs the script from the `package.json`. Use `-w` to run a script from the workspace root, e.g. `pnpm run -w lint`.
+-   `pnpm exec <COMMAND>`: runs the CLI command (should be installed in node_modules), e.g. `pnpm exec -w tsc --noEmit`.
+
 ### Monorepo
 
 We use [PNPM's workspace support](https://pnpm.io/workspaces) to lay out our repository.
@@ -135,6 +149,24 @@ This protects against bugs, improves the developer experience (autocompletion, e
 also ensures that type definitions and documentation for reusable libraries or bundles can be generated with little effort.
 
 However, usage of JavaScript _is_ supported.
+
+### Vite
+
+[Vite](https://vitejs.dev/) is our main build tool and development server.
+Custom functionality (such as our packages) are developed on top of Vite via plugins.
+
+Vite reads the `vite.config.ts` on start, which can be customized to your liking (see [docs](https://vitejs.dev/config/)).
+However, the pioneer plugin should not be removed.
+
+#### Supported Browsers
+
+The vite config is preconfigured to support a set of common browsers ("targets", see [docs](https://vitejs.dev/config/build-options.html#build-target)).
+This option influences the features used by the compiled JavaScript and CSS code.
+Note that this only changes the set of _language features_ used by the output (e.g. `async`, `class`)
+and not the set of Browser APIs used (that would require additional polyfills).
+
+By default, vite assumes modern browsers with support for modules.
+It is possible to support even older browsers using vite's [legacy plugin](https://github.com/vitejs/vite/tree/main/packages/plugin-legacy).
 
 ### Testing
 
