@@ -1,15 +1,25 @@
+import { Service } from "@open-pioneer/runtime";
+
+export interface Logger {
+    log(message: string): void;
+}
+
 declare module "@open-pioneer/runtime" {
     interface ServiceRegistry {
-        "logging.LogService": LogService;
+        "logging.LogService": Logger;
     }
 }
 
-export class LogService {
+export class LogService implements Service<Logger> {
     constructor() {
-        console.log("Log Service being constructed");
+        console.debug("Log Service created");
+    }
+
+    destroy() {
+        console.debug("Log Service destroyed");
     }
 
     log(msg: string) {
-        console.info("Log message: " + msg);
+        console.info("LOG: " + msg);
     }
 }

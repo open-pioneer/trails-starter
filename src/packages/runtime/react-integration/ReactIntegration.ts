@@ -21,10 +21,16 @@ export class ReactIntegration {
         this.contextValues = {
             getService: (packageName, interfaceName) => {
                 const result = this.serviceLayer.getService(packageName, interfaceName);
+                if (result.type === "unimplemented") {
+                    throw new Error(
+                        ErrorId.INTERFACE_NOT_FOUND,
+                        `The UI of package '${packageName}' requested the unimplemented interface '${interfaceName}'.`
+                    );
+                }
                 if (result.type === "undeclared") {
                     throw new Error(
                         ErrorId.UNDECLARED_DEPENDENCY,
-                        `Package '${packageName}' did not declare a dependency on interface '${interfaceName}'.` +
+                        `Package '${packageName}' did not declare an UI dependency on interface '${interfaceName}'.` +
                             ` Add the dependency to the package configuration or remove the usage.`
                     );
                 }

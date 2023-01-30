@@ -65,12 +65,10 @@ importers:
   src/apps/logging-app:
     specifiers:
       '@open-pioneer/runtime': workspace:^
-      log-user: workspace:^
       logging: workspace:^
       react: ^18.2.0
     dependencies:
       '@open-pioneer/runtime': link:../../packages/runtime
-      log-user: link:../../packages/log-user
       logging: link:../../packages/logging
       react: 18.2.0
 
@@ -104,15 +102,6 @@ importers:
 
   src/packages/core:
     specifiers: {}
-
-  src/packages/log-user:
-    specifiers:
-      '@open-pioneer/runtime': workspace:^
-      logging: workspace:^
-    dependencies:
-      logging: link:../logging
-    devDependencies:
-      '@open-pioneer/runtime': link:../runtime
 
   src/packages/logging:
     specifiers:

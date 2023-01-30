@@ -5,7 +5,7 @@ import { UIDependency, verifyDependencies } from "./verifyDependencies";
 import { PackageRepr } from "./PackageRepr";
 import { Service } from "../Service";
 
-export type ServiceLookupResult = FoundService | UndeclaredDependency;
+export type ServiceLookupResult = FoundService | UnimplementedService | UndeclaredDependency;
 
 export interface FoundService {
     type: "found";
@@ -14,6 +14,10 @@ export interface FoundService {
 
 export interface UndeclaredDependency {
     type: "undeclared";
+}
+
+export interface UnimplementedService {
+    type: "unimplemented";
 }
 
 export class ServiceLayer {
@@ -77,18 +81,14 @@ export class ServiceLayer {
             throw new Error(ErrorId.INTERNAL, "Service layer is not started.");
         }
 
+        const instance = this.serviceIndex.get(interfaceName)?.instance;
+        if (!instance) {
+            return { type: "unimplemented" };
+        }
+
         const isDeclared = this.declaredDependencies.get(packageName)?.has(interfaceName) ?? false;
         if (!isDeclared) {
             return { type: "undeclared" };
-        }
-
-        const instance = this.serviceIndex.get(interfaceName)?.instance;
-        if (!instance) {
-            // Should be handled by verifyDependencies() already
-            throw new Error(
-                ErrorId.INTERNAL,
-                `Failed to find a service that implements '${interfaceName}.'`
-            );
         }
 
         return {

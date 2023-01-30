@@ -1,15 +1,10 @@
 import { createCustomElement } from "@open-pioneer/runtime";
-import { createElement } from "react";
-import { packages } from "open-pioneer:app";
+import * as appData from "open-pioneer:app";
+import { LoggingUI } from "./LoggingUI";
 
 const Element = createCustomElement({
-    component: () =>
-        createElement(
-            "span",
-            undefined,
-            "This app uses two simple services (see browser console output)."
-        ),
-    packages
+    component: LoggingUI,
+    ...appData
 });
 
 customElements.define("logging-app", Element);
