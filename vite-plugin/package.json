@@ -10,7 +10,7 @@
         "build-js": "node esbuild.config.js buildDev",
         "check-types": "tsc --noEmit",
         "dev": "node esbuild.config.js watch",
-        "test": "mocha dist/all.test.js"
+        "test": "rimraf temp && mocha dist/all.test.js"
     },
     "peerDependencies": {
         "@open-pioneer/runtime": "workspace:^0.0.1",
