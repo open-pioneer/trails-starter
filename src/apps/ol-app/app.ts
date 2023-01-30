@@ -1,5 +1,5 @@
 import { createCustomElement, Service } from "@open-pioneer/runtime";
-import { MapOptions } from "ol/PluggableMap";
+import { MapOptions } from "ol/Map";
 import View from "ol/View";
 import { packages } from "open-pioneer:app";
 

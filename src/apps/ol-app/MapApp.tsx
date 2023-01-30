@@ -1,7 +1,7 @@
 import { useService } from "@open-pioneer/runtime/ComponentContext";
 import { Coordinate, toStringXY } from "ol/coordinate";
 import TileLayer from "ol/layer/Tile";
-import Map from "ol/Map";
+import Map, { MapOptions } from "ol/Map";
 import MapBrowserEvent from "ol/MapBrowserEvent";
 import { transform } from "ol/proj";
 import XYZ from "ol/source/XYZ";
@@ -52,7 +52,7 @@ function useMap(domNode: RefObject<HTMLDivElement>, mapConfig: MapConfigProvider
 
     useEffect(() => {
         if (!mapRef.current && domNode.current) {
-            const localConfig = {
+            const localConfig: MapOptions = {
                 target: domNode.current,
                 layers: [
                     new TileLayer({
