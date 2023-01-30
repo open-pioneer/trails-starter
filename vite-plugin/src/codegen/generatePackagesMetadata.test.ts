@@ -12,12 +12,14 @@ describe("generatePackagesMetadata", function () {
                 name: "test",
                 config: {
                     styles: undefined,
-                    services: {
-                        ServiceA: {
+                    services: [
+                        {
+                            name: "ServiceA",
                             provides: [],
                             references: {}
                         },
-                        ServiceB: {
+                        {
+                            name: "ServiceB",
                             provides: [
                                 {
                                     name: "ServiceC"
@@ -29,7 +31,7 @@ describe("generatePackagesMetadata", function () {
                                 }
                             }
                         }
-                    }
+                    ]
                 },
                 entryPointPath: "entryPoint"
             }

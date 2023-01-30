@@ -8,8 +8,7 @@ import XYZ from "ol/source/XYZ";
 import View from "ol/View";
 import { RefObject, useEffect, useRef, useState } from "react";
 import { useService } from "open-pioneer:react-hooks";
-
-import { MapConfigProvider } from "./app";
+import { type MapConfigProvider } from "./index";
 
 export function MapApp() {
     const [selectedCoord, setSelectedCoord] = useState<Coordinate>();

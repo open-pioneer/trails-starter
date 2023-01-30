@@ -1,7 +1,7 @@
 {
     "name": "ol-map",
     "private": true,
-    "main": "app",
+    "main": "index",
     "dependencies": {
         "@open-pioneer/runtime": "workspace:^",
         "@types/ol": "^6.5.3",

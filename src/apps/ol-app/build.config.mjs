@@ -1,5 +1,8 @@
 export default {
-    ui: {
-        services: ["logging.Service"]
+    styles: "./app.css",
+    services: {
+        Provider: {
+            provides: ["config.MapConfig"]
+        }
     }
 };

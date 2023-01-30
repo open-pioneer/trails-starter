@@ -1,7 +1,6 @@
 {
     "name": "services-sample",
     "private": true,
-    "main": "app",
     "dependencies": {
         "@open-pioneer/runtime": "workspace:^"
     }

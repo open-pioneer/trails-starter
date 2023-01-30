@@ -27,7 +27,10 @@ export interface AppMetadata {
     /** Path to package.json file. */
     packageJsonPath: string;
 
-    /** Packages used by the app. */
+    /**
+     * Packages used by the app.
+     * Includes the app package itself!
+     */
     packages: PackageMetadata[];
 }
 
@@ -123,6 +126,7 @@ export class MetadataRepository {
 
         // Map to ensure that we don't return duplicates. Key: package name
         const packageMetadataByName = new Map<string, PackageMetadata>();
+        packageMetadataByName.set(appPackageMetadata.name, appPackageMetadata);
 
         // Recursively visit all dependencies.
         // Detected metadata is placed into `packageMetadata`.
@@ -312,14 +316,16 @@ export async function parsePackageMetadata(
         if (options?.requireBuildConfig) {
             ctx.error(`Expected a ${BUILD_CONFIG_NAME} in ${packageDir}`);
         }
-        buildConfig = { services: {}, styles: undefined };
+        buildConfig = { services: [], styles: undefined };
     }
 
     let entryPoint: string | undefined;
-    try {
-        entryPoint = (await ctx.resolve(packageDir))?.id;
-    } catch (e) {
-        ctx.warn(`Failed to resolve entry point for package ${packageDir}: ${e}`);
+    if (buildConfig.services.length) {
+        try {
+            entryPoint = (await ctx.resolve(packageDir))?.id;
+        } catch (e) {
+            ctx.warn(`Failed to resolve entry point for package ${packageDir}: ${e}`);
+        }
     }
 
     let cssFile: string | undefined;

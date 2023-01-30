@@ -1,11 +1,12 @@
 export const BUILD_CONFIG_NAME = "build.config.mjs";
 
 export interface NormalizedPackageConfig {
-    services: Record<string, NormalizedServiceConfig>;
+    services: NormalizedServiceConfig[];
     styles: string | undefined;
 }
 
 export interface NormalizedServiceConfig {
+    name: string;
     provides: ProvidesConfig[];
     references: Record<string, ReferenceConfig>;
 }
@@ -84,16 +85,15 @@ export function isBuildConfig(file: string) {
 function normalizeConfig(rawConfig: PackageConfig): NormalizedPackageConfig {
     return {
         styles: rawConfig.styles,
-        services: Object.fromEntries(
-            Object.entries(rawConfig.services ?? {}).map(([serviceName, serviceConfig]) => {
-                return [serviceName, normalizeServiceConfig(serviceConfig)];
-            })
-        )
+        services: Object.entries(rawConfig.services ?? {}).map(([serviceName, serviceConfig]) => {
+            return normalizeServiceConfig(serviceName, serviceConfig);
+        })
     };
 }
 
-function normalizeServiceConfig(rawConfig: ServiceConfig): NormalizedServiceConfig {
+function normalizeServiceConfig(name: string, rawConfig: ServiceConfig): NormalizedServiceConfig {
     return {
+        name: name,
         provides: normalizeProvidesConfig(rawConfig.provides),
         references: normalizeReferencesConfig(rawConfig.references)
     };

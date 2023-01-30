@@ -87,7 +87,7 @@ function generatePackageMetadata(
     }
 ): nodes.Expression {
     const servicesObject = nodes.objectExpression([]);
-    for (const [name, service] of Object.entries(pkg.config.services)) {
+    for (const service of pkg.config.services) {
         if (!pkg.entryPointPath) {
             throw new Error(
                 `Package '${pkg.name}' must have a valid entry point (typically index.ts or index.js).\n` +
@@ -96,12 +96,12 @@ function generatePackageMetadata(
         }
 
         const importName = options.importServiceClass(
-            pkg.name + "_" + name,
-            name,
+            pkg.name + "_" + service.name,
+            service.name,
             pkg.entryPointPath
         );
         const serviceObject = SERVICE_OBJECT({
-            SERVICE_NAME: nodes.stringLiteral(name),
+            SERVICE_NAME: nodes.stringLiteral(service.name),
             SERVICE_IMPORT: nodes.identifier(importName),
             SERVICE_INTERFACES: nodes.arrayExpression(
                 service.provides.map((p) =>
@@ -123,7 +123,7 @@ function generatePackageMetadata(
         });
 
         servicesObject.properties.push(
-            nodes.objectProperty(nodes.stringLiteral(name), serviceObject)
+            nodes.objectProperty(nodes.stringLiteral(service.name), serviceObject)
         );
     }
 
@@ -139,20 +139,9 @@ function generatePackageMetadata(
  */
 function skipPackage(pkg: PackageMetadataInput) {
     const config = pkg.config;
-    if (hasProperties(config.services)) {
+    if (config.services.length) {
         return false;
     }
     // TODO: CSS, I18N ..
     return true;
-}
-
-const hasOwnProperty = Object.prototype.hasOwnProperty;
-
-function hasProperties(obj: Record<string, unknown>) {
-    for (const key in obj) {
-        if (hasOwnProperty.call(obj, key)) {
-            return true;
-        }
-    }
-    return false;
 }

@@ -17,6 +17,8 @@ describe("codegen support", function () {
         });
 
         const testAppJs = readFileSync(join(outDir, "test-app.js"), "utf-8");
+        assert.include(testAppJs, "AppService");
+        assert.include(testAppJs, 'console.debug("App Service constructed");');
         assert.include(testAppJs, "LogService");
         assert.include(testAppJs, 'console.log("Hello from LogService!!");');
     });
@@ -34,6 +36,7 @@ describe("codegen support", function () {
         });
 
         const testAppJs = readFileSync(join(outDir, "test-app.js"), "utf-8");
+        assert.include(testAppJs, ".class-from-app");
         assert.include(testAppJs, ".class-from-style1");
         assert.include(testAppJs, ".class-from-style2");
     });
