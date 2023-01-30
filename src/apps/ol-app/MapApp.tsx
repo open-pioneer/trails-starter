@@ -1,12 +1,15 @@
 import { useService } from "@open-pioneer/runtime/ComponentContext";
 import { Coordinate, toStringXY } from "ol/coordinate";
+import { EventsKey } from "ol/events";
 import TileLayer from "ol/layer/Tile";
 import Map, { MapOptions } from "ol/Map";
 import MapBrowserEvent from "ol/MapBrowserEvent";
+import { unByKey } from "ol/Observable";
 import { transform } from "ol/proj";
 import XYZ from "ol/source/XYZ";
 import View from "ol/View";
 import { RefObject, useEffect, useRef, useState } from "react";
+
 import { MapConfigProvider } from "./app";
 
 export function MapApp() {
@@ -20,19 +23,17 @@ export function MapApp() {
 
     const map = useMap(mapElement, mapConfig);
 
+    const clickEvent = useRef<EventsKey>();
+
     useEffect(() => {
-        if (map) {
-            map.on("click", (event: MapBrowserEvent<UIEvent>) => {
-                const coords = map.getCoordinateFromPixel(event.pixel);
-                if (coords) {
-                    const transformedCoord = transform(coords, "EPSG:3857", "EPSG:4326");
-                    service.log(
-                        `Coordinate ${coords} clicked and transformed to ${transformedCoord}`
-                    );
-                    setSelectedCoord(transformedCoord);
-                }
-            });
-        }
+        clickEvent.current = map?.on("click", (event: MapBrowserEvent<UIEvent>) => {
+            const coords = map.getCoordinateFromPixel(event.pixel);
+            if (coords) {
+                const transformedCoord = transform(coords, "EPSG:3857", "EPSG:4326");
+                setSelectedCoord(transformedCoord);
+            }
+        });
+        return () => clickEvent.current && unByKey(clickEvent.current);
     }, [map, service]);
 
     return (
