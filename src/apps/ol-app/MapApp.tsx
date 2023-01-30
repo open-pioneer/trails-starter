@@ -1,6 +1,5 @@
 import { useService } from "@open-pioneer/runtime/ComponentContext";
 import { Coordinate, toStringXY } from "ol/coordinate";
-import { EventsKey } from "ol/events";
 import TileLayer from "ol/layer/Tile";
 import Map, { MapOptions } from "ol/Map";
 import MapBrowserEvent from "ol/MapBrowserEvent";
@@ -23,17 +22,15 @@ export function MapApp() {
 
     const map = useMap(mapElement, mapConfig);
 
-    const clickEvent = useRef<EventsKey>();
-
     useEffect(() => {
-        clickEvent.current = map?.on("click", (event: MapBrowserEvent<UIEvent>) => {
+        const key = map?.on("click", (event: MapBrowserEvent<UIEvent>) => {
             const coords = map.getCoordinateFromPixel(event.pixel);
             if (coords) {
                 const transformedCoord = transform(coords, "EPSG:3857", "EPSG:4326");
                 setSelectedCoord(transformedCoord);
             }
         });
-        return () => clickEvent.current && unByKey(clickEvent.current);
+        return () => key && unByKey(key);
     }, [map, service]);
 
     return (
