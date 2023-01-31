@@ -48,7 +48,7 @@ export async function loadBuildConfig(path: string): Promise<NormalizedPackageCo
  * Parses a build configuration object and validates it.
  */
 export function parseBuildConfig(object: unknown): NormalizedPackageConfig {
-    const rawConfig = verifyBuildConfigSchema(object); 
+    const rawConfig = verifyBuildConfigSchema(object);
     return normalizeConfig(rawConfig);
 }
 

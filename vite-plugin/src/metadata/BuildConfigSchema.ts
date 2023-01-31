@@ -1,5 +1,8 @@
-import {z} from "zod";
+import { z } from "zod";
 
+/**
+ * Schema for `build.config.mjs` files.
+ */
 export interface BuildConfig {
     /**
      * Path to a file containing CSS.
@@ -20,6 +23,9 @@ export interface BuildConfig {
     ui?: UiConfig;
 }
 
+/**
+ * Describes a single service.
+ */
 export interface ServiceConfig {
     /**
      * Declarations of interfaces provided by this service.
@@ -37,6 +43,9 @@ export interface ServiceConfig {
     references?: Record<string, string | ReferenceConfig>;
 }
 
+/**
+ * Describes a package's UI.
+ */
 export interface UiConfig {
     /**
      * Interfaces names of the services referenced by the UI.
@@ -45,35 +54,52 @@ export interface UiConfig {
     references?: string[];
 }
 
+/**
+ * Describes an interface provided by a service.
+ */
 export interface ProvidesConfig {
     /** Name of the interface that is provided by this service. */
     name: string;
 }
 
-
+/**
+ * Describes a reference to an interface required by a service.
+ */
 export interface ReferenceConfig {
     /** Name of the interface that is referenced by this service. */
     name: string;
 }
 
-const referenceConfigSchema = z.object({name: z.string()});
+const REFERENCE_CONFIG_SCHEMA = z.object({ name: z.string() }).strict();
 
-const providesConfigSchema = z.object({name: z.string()});
+const PROVIDES_CONFIG_SCHEMA = z.object({ name: z.string() }).strict();
 
-const uiConfigSchema = z.object({references: z.array(z.string()).optional()});
+const UI_CONFIG_SCHEMA = z.object({ references: z.array(z.string()).optional() }).strict();
 
-const servicesConfigSchema = z.object({
-    provides: z.string().or(z.array(z.string().or(providesConfigSchema))).optional(), 
-    references: z.record(z.string(), z.string().or(referenceConfigSchema)).optional()
-});
+const SERVICES_CONFIG_SCHEMA = z
+    .object({
+        provides: z
+            .string()
+            .or(z.array(z.string().or(PROVIDES_CONFIG_SCHEMA)))
+            .optional(),
+        references: z.record(z.string(), z.string().or(REFERENCE_CONFIG_SCHEMA)).optional()
+    })
+    .strict();
 
-const buildConfigSchema = z.object({
-    styles: z.string().optional(),
-    services: z.record(z.string(), servicesConfigSchema).optional(),
-    ui: uiConfigSchema.optional()
-});
+const BUILD_CONFIG_SCHEMA = z
+    .object({
+        styles: z.string().optional(),
+        services: z.record(z.string(), SERVICES_CONFIG_SCHEMA).optional(),
+        ui: UI_CONFIG_SCHEMA.optional()
+    })
+    .strict();
 
-export function verifyBuildConfigSchema(value: unknown) : BuildConfig {
-    return buildConfigSchema.parse(value);
+/**
+ * Ensures that `value` conforms to the {@link BuildConfig} interface.
+ * Throws an error if that is not the case.
+ *
+ * @returns `value` but casted to the appropriate type.
+ */
+export function verifyBuildConfigSchema(value: unknown): BuildConfig {
+    return BUILD_CONFIG_SCHEMA.parse(value);
 }
-
