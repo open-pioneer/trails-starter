@@ -1,10 +1,10 @@
 import { dirname } from "node:path";
 
-const APP_META = /[?&]open-pioneer-app($|&)/;
-const APP_PACKAGES = /[?&]open-pioneer-packages($|&)/;
-const APP_CSS_RE = /[?&]open-pioneer-styles($|&)/;
+const APP_META_RE = /[?&]open-pioneer-app(?:$|&)/;
+const APP_PACKAGES_RE = /[?&]open-pioneer-packages(?:$|&)/;
+const APP_CSS_RE = /[?&]open-pioneer-styles(?:$|&)/;
 const APP_HOOKS_RE = /[/\\]@@open-pioneer-react-hooks(?:\?|$)/;
-const SOURCE_FILE_RE = /^(.*?)(\?|$)/;
+const SOURCE_FILE_RE = /^(.*?)(?:\?|$)/;
 
 export const APP_META_QUERY = "open-pioneer-app";
 export const APP_PACKAGES_QUERY = "open-pioneer-packages";
@@ -32,9 +32,9 @@ export function parseVirtualAppModuleId(
     }
 
     let type: VirtualAppModule["type"];
-    if (moduleId.match(APP_META)) {
+    if (moduleId.match(APP_META_RE)) {
         type = "app-meta";
-    } else if (moduleId.match(APP_PACKAGES)) {
+    } else if (moduleId.match(APP_PACKAGES_RE)) {
         type = "app-packages";
     } else if (moduleId.match(APP_CSS_RE)) {
         type = "app-css";
