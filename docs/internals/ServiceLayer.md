@@ -92,7 +92,7 @@ When the metadata format is altered, the build tooling will (most likely) have t
     2. Remove a reference from `s`.
        It is no longer used and can be safely destroyed if the count reaches zero.
     3. Call `destroyService(d)` for every dependency of `s`.
-       It is imported to destroy the dependencies _after_ the service has been destroyed,
+       It is important to destroy the dependencies _after_ the service has been destroyed,
        because the service's destructor may still reference its dependencies.
 
 ## Limitations
@@ -122,15 +122,15 @@ Such a thing would be impossible to implement (reasonably) because a dependency 
 before it is being used.
 
 We currently verify that there are no cycles through static analysis.
-This should remain the default case: most reference to other services should be static.
+This should remain the default case: most references to other services should be static.
 Tooling such as the `verifyDependencies` function can then provide useful analysis to prevent (or diagnose) common errors.
 
 The restriction can still be relaxed when a service depends on itself statically but is only dynamically used once fully constructed;
 in other words, if the cycle is "resolved" once the first service method is actually being called.
 
 The way this could be implemented is by declaring a dependency as _lazy_.
-A reference would still be injected into the service's constructor, but it will only be proxy object that _must not_ be used in a cycle.
-Such a reference cannot be verified statically and should therefore only used at carefully chosen locations to break cycles.
+A reference would still be injected into the service's constructor, but it will only be a proxy object that _must not_ be used in a cycle.
+Such a reference cannot be verified statically and should therefore only be used at carefully chosen locations to break cycles.
 
 Example:
 
