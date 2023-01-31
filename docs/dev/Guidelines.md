@@ -24,3 +24,11 @@
 -   Use Unix style newlines.
     When developing on windows, configure git to replace accidentally introduced Windows-style newlines on commit:
     `git config --global core.autocrlf input` (see <https://git-scm.com/book/en/v2/Customizing-Git-Git-Configuration>)
+-   On windows: enable symbolic links.
+    Symbolic links are needed during development of vite-plugin-pioneer.
+    If symbolic links are not supported, tests will fail.
+    To enable symbolic links on windows you need to enable windows developer mode
+    (German Windows 11: Einstellungen > Datenschutz und Sicherheit > Für Entwickler > Entwicklermodus).
+    Additionally, you need to set the following git config: `git config --global core.symlinks true`.
+    If this setting was not enabled from the beginning, it might be necessary to set up the project
+    again from scratch to avoid problems with link creation.
