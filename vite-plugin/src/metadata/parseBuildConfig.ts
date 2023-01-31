@@ -1,4 +1,11 @@
 import { pathToFileURL } from "node:url";
+import {
+    BuildConfig,
+    ProvidesConfig,
+    ReferenceConfig,
+    ServiceConfig,
+    verifyBuildConfigSchema
+} from "./BuildConfigSchema";
 
 export const BUILD_CONFIG_NAME = "build.config.mjs";
 
@@ -16,61 +23,6 @@ export interface NormalizedServiceConfig {
 
 export interface NormalizedUiConfig {
     references: string[];
-}
-
-export interface PackageConfig {
-    /**
-     * Path to a file containing CSS.
-     * The CSS file will be automatically loaded when the package
-     * is part of an application.
-     */
-    styles?: string;
-
-    /**
-     * Services provided by this package.
-     * The service name must match an exported class from the package's main entry point (usually `index.{js,ts}`).
-     */
-    services?: Record<string, ServiceConfig>;
-
-    /**
-     * Ui configuration.
-     */
-    ui?: UiConfig;
-}
-
-export interface ServiceConfig {
-    /**
-     * Declarations of interfaces provided by this service.
-     *
-     * The interface name can be specified directly (as a string) for convenience.
-     */
-    provides?: string | (string | ProvidesConfig)[];
-
-    /**
-     * Declares references to other services.
-     * References will be injected into the service's constructor.
-     *
-     * The interface name can be specified directly (as a string) for convenience.
-     */
-    references?: Record<string, string | ReferenceConfig>;
-}
-
-export interface UiConfig {
-    /**
-     * Interfaces names of the services referenced by the UI.
-     * The UI can only use services that are declared as dependencies in this array.
-     */
-    references?: string[];
-}
-
-export interface ProvidesConfig {
-    /** Name of the interface that is provided by this service. */
-    name: string;
-}
-
-export interface ReferenceConfig {
-    /** Name of the interface that is referenced by this service. */
-    name: string;
 }
 
 let requestId = 0;
@@ -96,7 +48,7 @@ export async function loadBuildConfig(path: string): Promise<NormalizedPackageCo
  * Parses a build configuration object and validates it.
  */
 export function parseBuildConfig(object: unknown): NormalizedPackageConfig {
-    const rawConfig = object as PackageConfig; // TODO validate schema
+    const rawConfig = verifyBuildConfigSchema(object); 
     return normalizeConfig(rawConfig);
 }
 
@@ -106,7 +58,7 @@ export function isBuildConfig(file: string) {
     return BUILD_CONFIG_RE.test(file);
 }
 
-function normalizeConfig(rawConfig: PackageConfig): NormalizedPackageConfig {
+function normalizeConfig(rawConfig: BuildConfig): NormalizedPackageConfig {
     return {
         styles: rawConfig.styles,
         services: Object.entries(rawConfig.services ?? {}).map(([serviceName, serviceConfig]) => {
@@ -160,7 +112,7 @@ function normalizeReferencesConfig(
     );
 }
 
-function normalizeUiConfig(rawConfig: PackageConfig["ui"]): NormalizedUiConfig {
+function normalizeUiConfig(rawConfig: BuildConfig["ui"]): NormalizedUiConfig {
     return {
         references: rawConfig?.references ?? []
     };
