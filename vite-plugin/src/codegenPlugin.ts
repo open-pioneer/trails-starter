@@ -96,7 +96,8 @@ export function codegenPlugin(): Plugin {
 
             if (virtualModule.type === "package-hooks") {
                 const directory = virtualModule.packageDirectory;
-                const packageJsonPath = (await this.resolve(join(directory, "package.json")))?.id;
+                // use forward slashes instead of platform separator
+                const packageJsonPath = (await this.resolve(directory + "/package.json"))?.id;
                 if (!packageJsonPath) {
                     this.error(`Failed to resolve package.json in ${directory}`);
                 }
