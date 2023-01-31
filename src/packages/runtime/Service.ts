@@ -1,6 +1,6 @@
 export interface ServiceLifecycleHooks {
     /**
-     * Destroy the component.
+     * Destroys the component.
      * Should clean up all resources used by the component.
      */
     destroy?(): void;

@@ -13,12 +13,12 @@ export interface ReactIntegrationOptions {
 export class ReactIntegration {
     private serviceLayer: ServiceLayer;
     private root: Root;
-    private contextValues: ServiceContextData;
+    private services: ServiceContextData;
 
     constructor(options: ReactIntegrationOptions) {
         this.serviceLayer = options.serviceLayer;
         this.root = createRoot(options.rootNode);
-        this.contextValues = {
+        this.services = {
             getService: (packageName, interfaceName) => {
                 const result = this.serviceLayer.getService(packageName, interfaceName);
                 if (result.type === "unimplemented") {
@@ -43,7 +43,7 @@ export class ReactIntegration {
         const element = createElement(component, props);
         const contextWrapper = createElement(
             ServiceContext.Provider,
-            { value: this.contextValues },
+            { value: this.services },
             element
         );
         this.root.render(createElement(StrictMode, undefined, contextWrapper));
