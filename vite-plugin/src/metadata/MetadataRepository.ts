@@ -270,9 +270,13 @@ export class MetadataRepository {
 
         // Try to locate the package via rollup resolve.
         const unresolvedPackageJson = `${loc.packageName}/package.json`;
-        const packageJsonLocation = await ctx.resolve(unresolvedPackageJson, loc.importedFrom, {
-            skipSelf: true
-        });
+        const packageJsonLocation = await ctx.resolve(
+            unresolvedPackageJson,
+            normalizePath(loc.importedFrom),
+            {
+                skipSelf: true
+            }
+        );
         if (!packageJsonLocation || packageJsonLocation.external) {
             ctx.error(
                 `Request for '${unresolvedPackageJson}' did not result in a local file (required by '${loc.importedFrom}').`
@@ -311,7 +315,8 @@ export async function parsePackageMetadata(
             buildConfig = await loadBuildConfig(buildConfigPath);
         } catch (e) {
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
-            ctx.error((e as any).message || "Failed to load build config");
+            const msg = (e as any).message || "Unknown error";
+            ctx.error(`Failed to load build config ${buildConfigPath}: ${msg}`);
         }
     } else {
         if (options?.requireBuildConfig) {

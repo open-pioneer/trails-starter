@@ -1,3 +1,5 @@
+import { pathToFileURL } from "node:url";
+
 export const BUILD_CONFIG_NAME = "build.config.mjs";
 
 export interface NormalizedPackageConfig {
@@ -77,7 +79,11 @@ let requestId = 0;
  * Loads and parses a build configuration file from the given path on disk.
  */
 export async function loadBuildConfig(path: string): Promise<NormalizedPackageConfig> {
-    const importedModule = (await import(`${path}?id=${++requestId}`)) as Record<string, unknown>;
+    const fileURL = pathToFileURL(path);
+    const importedModule = (await import(`${fileURL}?id=${++requestId}`)) as Record<
+        string,
+        unknown
+    >;
     if (!importedModule || !importedModule.default) {
         throw new Error(`${path} must contain a default export.`);
     }
