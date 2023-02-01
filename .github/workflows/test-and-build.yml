@@ -33,7 +33,7 @@ jobs:
       - name: Build vite plugin
         run: |
           pnpm build-plugin
-          cd vite-plugin && pnpm test
+          cd build-tools/vite-plugin && pnpm test
 
       - name: Build app
         run: pnpm build

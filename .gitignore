@@ -13,7 +13,7 @@ temp
 node_modules
 
 # allow node_modules in vite-plugin/test-data to simulate dependencies
-!vite-plugin/test-data/**/node_modules
+!build-tools/vite-plugin/test-data/**/node_modules
 
 # Editor directories and files
 .vscode/*
