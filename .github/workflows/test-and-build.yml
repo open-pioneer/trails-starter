@@ -35,13 +35,13 @@ jobs:
           pnpm build-plugin
           cd build-tools/vite-plugin && pnpm test
 
-      - name: Build app
-        run: pnpm build
-
       - name: Run tests
         run: pnpm vitest run
 
-      - name: upload artifact
+      - name: Build app
+        run: pnpm build
+
+      - name: Upload artifact
         uses: actions/upload-artifact@v3
         with:
           name: build
