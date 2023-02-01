@@ -4,6 +4,7 @@ importers:
 
   .:
     specifiers:
+      '@open-pioneer/build-support': workspace:*
       '@open-pioneer/vite-plugin-pioneer': workspace:*
       '@types/node': ^16.18.11
       '@types/react': ^18.0.27
@@ -29,6 +30,7 @@ importers:
       vite-plugin-eslint: ^1.8.1
       vitest: ^0.28.1
     devDependencies:
+      '@open-pioneer/build-support': link:build-tools/build-support
       '@open-pioneer/vite-plugin-pioneer': link:build-tools/vite-plugin
       '@types/node': 16.18.11
       '@types/react': 18.0.27
@@ -62,6 +64,7 @@ importers:
       '@babel/generator': ^7.20.7
       '@babel/template': ^7.20.7
       '@babel/types': ^7.20.7
+      '@open-pioneer/build-support': workspace:^0.0.1
       '@open-pioneer/runtime': workspace:^0.0.1
       '@rollup/pluginutils': ^5.0.2
       '@types/babel__generator': ^7.6.4
@@ -86,6 +89,7 @@ importers:
       debug: 4.3.4
       zod: 3.20.2
     devDependencies:
+      '@open-pioneer/build-support': link:../build-support
       '@open-pioneer/runtime': link:../../src/packages/runtime
       '@types/babel__generator': 7.6.4
       '@types/babel__template': 7.4.1

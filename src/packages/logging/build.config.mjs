@@ -1,5 +1,6 @@
-// TODO: defineBuildConfig (see other task for configuration format)
-export default {
+import { defineBuildConfig } from "@open-pioneer/build-support";
+
+export default defineBuildConfig({
     services: {
         LogService: {
             provides: [
@@ -9,4 +10,4 @@ export default {
             ]
         }
     }
-};
+});

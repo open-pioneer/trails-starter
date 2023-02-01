@@ -3,9 +3,9 @@ import {
     BuildConfig,
     ProvidesConfig,
     ReferenceConfig,
-    ServiceConfig,
-    verifyBuildConfigSchema
-} from "./BuildConfigSchema";
+    ServiceConfig
+} from "@open-pioneer/build-support";
+import { verifyBuildConfigSchema } from "./BuildConfigSchema";
 
 export const BUILD_CONFIG_NAME = "build.config.mjs";
 

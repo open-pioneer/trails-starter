@@ -1,4 +1,6 @@
-export default {
+import { defineBuildConfig } from "@open-pioneer/build-support";
+
+export default defineBuildConfig({
     styles: "./app.css",
     services: {
         Provider: {
@@ -8,4 +10,4 @@ export default {
     ui: {
         references: ["config.MapConfig", "logging.LogService"]
     }
-};
+});
