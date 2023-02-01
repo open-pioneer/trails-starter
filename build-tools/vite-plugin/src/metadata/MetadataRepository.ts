@@ -8,8 +8,7 @@ import {
     BUILD_CONFIG_NAME,
     isBuildConfig,
     loadBuildConfig,
-    NormalizedPackageConfig,
-    parseBuildConfig
+    NormalizedPackageConfig
 } from "./parseBuildConfig";
 
 const isDebug = !!process.env.DEBUG;
@@ -133,17 +132,11 @@ export class MetadataRepository {
         // Detected metadata is placed into `packageMetadata`.
         const visitDependencies = async (dependencies: string[], importedFrom: string) => {
             const jobs = dependencies.map(async (packageName) => {
-                const packageMetadata = await this.getPackageMetadata(
-                    ctx,
-                    {
-                        type: "unresolved",
-                        packageName,
-                        importedFrom
-                    },
-                    {
-                        requireBuildConfig: false
-                    }
-                );
+                const packageMetadata = await this.getPackageMetadata(ctx, {
+                    type: "unresolved",
+                    packageName,
+                    importedFrom
+                });
                 if (packageMetadata) {
                     if (!packageMetadataByName.has(packageMetadata.name)) {
                         packageMetadataByName.set(packageMetadata.name, packageMetadata);
@@ -172,10 +165,7 @@ export class MetadataRepository {
 
     async getPackageMetadata(
         ctx: MetadataContext,
-        loc: PackageLocation,
-        options?: {
-            requireBuildConfig?: boolean;
-        }
+        loc: PackageLocation
     ): Promise<PackageMetadata | undefined> {
         isDebug && debug(`Request for package metadata of ${formatPackageLocation(loc)}`);
 
@@ -193,22 +183,16 @@ export class MetadataRepository {
             isDebug && debug(`Returning cached metadata for '${cachedMetadata.name}'`);
             return cachedMetadata;
         }
-        return await this.schedulePackageMetadataJob(ctx, packageDir, options);
+        return await this.schedulePackageMetadataJob(ctx, packageDir);
     }
 
-    private async schedulePackageMetadataJob(
-        ctx: MetadataContext,
-        packageDir: string,
-        options?: {
-            requireBuildConfig?: boolean;
-        }
-    ) {
+    private async schedulePackageMetadataJob(ctx: MetadataContext, packageDir: string) {
         // Deduplicate concurrent jobs for the same directory.
         const jobs = this.packageMetadataJobs;
         let job = jobs.get(packageDir);
         if (!job) {
             isDebug && debug(`Analyzing package at ${packageDir}`);
-            job = parsePackageMetadata(ctx, packageDir, options)
+            job = parsePackageMetadata(ctx, packageDir)
                 .then((packageMetadata) => {
                     isDebug && debug(`Metadata for '${packageMetadata.name}': %O`, packageMetadata);
                     if (jobs.get(packageDir) === job) {
@@ -295,10 +279,7 @@ function packageCacheKey(packageDir: string) {
 
 export async function parsePackageMetadata(
     ctx: MetadataContext,
-    packageDir: string,
-    options?: {
-        requireBuildConfig?: boolean;
-    }
+    packageDir: string
 ): Promise<PackageMetadata> {
     isDebug && debug(`Visiting package directory ${packageDir}.`);
 
@@ -319,10 +300,7 @@ export async function parsePackageMetadata(
             ctx.error(`Failed to load build config ${buildConfigPath}: ${msg}`);
         }
     } else {
-        if (options?.requireBuildConfig) {
-            ctx.error(`Expected a ${BUILD_CONFIG_NAME} in ${packageDir}`);
-        }
-        buildConfig = parseBuildConfig({});
+        ctx.error(`Expected a ${BUILD_CONFIG_NAME} in ${packageDir}`);
     }
 
     let entryPoint: string | undefined;

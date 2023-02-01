@@ -62,4 +62,42 @@ describe("codegen support", function () {
         assert.include(appJs, '"import.from.package1"');
         assert.include(appJs, '"import.from.package2"');
     });
+
+    it("should fail if build config is missing", async function () {
+        const rootDir = resolve(TEST_DATA, "codegen-build-config-required");
+        const outDir = resolve(TEMP_DATA, "codegen-build-config-required");
+
+        const error = await expectError(() =>
+            runViteBuild({
+                outDir,
+                rootDir,
+                pluginOptions: {
+                    apps: ["test-app"]
+                }
+            })
+        );
+        assert.include(error.message, "Expected a build.config.mjs", "test-app");
+        assert.include(error.message, "test-package", "test-app");
+
+        const error2 = await expectError(() =>
+            runViteBuild({
+                outDir,
+                rootDir,
+                pluginOptions: {
+                    apps: ["test-app2"]
+                }
+            })
+        );
+        assert.include(error2.message, "Expected a build.config.mjs", "test-app2");
+        assert.include(error2.message, "test-app2", "test-app2");
+    });
 });
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+function expectError(fn: () => Promise<void>): Promise<any> {
+    return new Promise((resolve, reject) => {
+        fn().then(() => {
+            reject(new Error("unexpected success"));
+        }, resolve);
+    });
+}
