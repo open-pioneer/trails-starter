@@ -12,7 +12,7 @@ import { ServiceContext } from "./ServiceContext";
  * @private
  */
 export function useServiceInternal<Interface extends InterfaceName>(
-    packageName: string, // TODO
+    packageName: string,
     interfaceName: Interface
 ): ServiceType<Interface>;
 export function useServiceInternal(packageName: string, interfaceName: string): unknown;
