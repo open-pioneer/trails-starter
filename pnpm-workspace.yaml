@@ -1,4 +1,4 @@
 packages:
     - src/apps/*
     - src/packages/*
-    - vite-plugin
+    - build-tools/*
