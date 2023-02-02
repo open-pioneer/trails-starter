@@ -4,12 +4,12 @@
 echo '--- run linting --- '
 pnpm lint
 
+echo '--- run prettier ---'
+pnpm prettier-check
+
 echo '--- run typescript check ---'
 pnpm check-types
 
 echo '--- run tests ---'
 pnpm test-plugin
 pnpm -- vitest run
-
-echo '--- run prettier ---'
-pnpm prettier-check
