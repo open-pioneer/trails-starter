@@ -217,10 +217,7 @@ export class MetadataRepository {
         return this.packageMetadataCache.get(packageCacheKey(packageDir));
     }
 
-    private putPackageMetadataInCache(
-        packageDir: string,
-        metadata: PackageMetadata
-    ) {
+    private putPackageMetadataInCache(packageDir: string, metadata: PackageMetadata) {
         const name = metadata.name;
         const key = packageCacheKey(packageDir);
 
@@ -318,7 +315,9 @@ export async function parsePackageMetadata(
             throw new ReportableError(`Failed to resolve css file for package ${packageDir}: ${e}`);
         }
         if (!cssFile) {
-            throw new ReportableError(`Failed to find css file '${buildConfig.styles}' in ${packageDir}`);
+            throw new ReportableError(
+                `Failed to find css file '${buildConfig.styles}' in ${packageDir}`
+            );
         }
     }
 

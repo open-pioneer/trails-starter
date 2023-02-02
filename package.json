@@ -12,10 +12,10 @@
         "build-plugin": "cd build-tools/vite-plugin && pnpm run build-js",
         "test-plugin": "cd build-tools/vite-plugin && pnpm run build-js && pnpm run test",
         "preview": "vite preview",
-        "lint": "eslint ./src ./build-tools",
+        "lint": "eslint ./src ./build-tools --cache",
         "prettier-check": "pnpm prettier:common -c",
         "prettier": "pnpm prettier:common -w",
-        "prettier:common": "prettier ./src ./docs ./build-tools --ignore-path .eslintignore",
+        "prettier:common": "prettier ./src ./docs ./build-tools --ignore-path .eslintignore --cache",
         "test": "pnpm run build-plugin && vitest",
         "prepare": "husky install"
     },

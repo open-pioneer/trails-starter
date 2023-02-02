@@ -84,7 +84,9 @@ export function codegenPlugin(): Plugin {
 
                     const packageJsonPath = findPackageJson(dirname(importer), config.root);
                     if (!packageJsonPath) {
-                        throw new ReportableError(`Failed to find package.json for package from '${importer}'.`);
+                        throw new ReportableError(
+                            `Failed to find package.json for package from '${importer}'.`
+                        );
                     }
                     return `${dirname(packageJsonPath)}/${PACKAGE_HOOKS}`;
                 }
@@ -121,7 +123,9 @@ export function codegenPlugin(): Plugin {
 
                 const pkgJsonPath = findPackageJson(dirname(importer), config.root);
                 if (!pkgJsonPath) {
-                    throw new ReportableError(`Failed to find package.json for app from '${importer}'.`);
+                    throw new ReportableError(
+                        `Failed to find package.json for app from '${importer}'.`
+                    );
                 }
 
                 const context = buildMetadataContext(this, moduleId, devServer, manualDeps);
