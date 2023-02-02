@@ -10,6 +10,7 @@ import { generateAppMetadata } from "./codegen/generateAppMetadata";
 import { APP_META_QUERY, PACKAGE_HOOKS, parseVirtualAppModuleId } from "./codegen/shared";
 import { readFile } from "node:fs/promises";
 import { generateReactHooks } from "./codegen/generateReactHooks";
+import { ReportableError } from "./ReportableError";
 
 const isDebug = !!process.env.DEBUG;
 const debug = createDebugger("open-pioneer:codegen");
@@ -69,70 +70,78 @@ export function codegenPlugin(): Plugin {
         },
 
         async resolveId(this: PluginContext, moduleId, importer) {
-            if (moduleId === "open-pioneer:app") {
-                if (!importer) {
-                    this.error("Must be imported from a source file.");
+            try {
+                if (moduleId === "open-pioneer:app") {
+                    if (!importer) {
+                        throw new ReportableError("Must be imported from a source file.");
+                    }
+                    return importer + "?" + APP_META_QUERY;
                 }
-                return importer + "?" + APP_META_QUERY;
-            }
-            if (moduleId === "open-pioneer:react-hooks") {
-                if (!importer) {
-                    this.error("Must be imported from a source file.");
-                }
+                if (moduleId === "open-pioneer:react-hooks") {
+                    if (!importer) {
+                        throw new ReportableError("Must be imported from a source file.");
+                    }
 
-                const packageJsonPath = findPackageJson(dirname(importer), config.root);
-                if (!packageJsonPath) {
-                    this.error(`Failed to find package.json for package from '${importer}'.`);
+                    const packageJsonPath = findPackageJson(dirname(importer), config.root);
+                    if (!packageJsonPath) {
+                        throw new ReportableError(`Failed to find package.json for package from '${importer}'.`);
+                    }
+                    return `${dirname(packageJsonPath)}/${PACKAGE_HOOKS}`;
                 }
-                return `${dirname(packageJsonPath)}/${PACKAGE_HOOKS}`;
+            } catch (e) {
+                reportError(this, e);
             }
         },
 
         async load(this: PluginContext, moduleId) {
-            const virtualModule = parseVirtualAppModuleId(moduleId);
-            if (!virtualModule) {
-                return undefined;
-            }
-
-            if (virtualModule.type === "package-hooks") {
-                const directory = virtualModule.packageDirectory;
-                // use forward slashes instead of platform separator
-                const packageJsonPath = (await this.resolve(directory + "/package.json"))?.id;
-                if (!packageJsonPath) {
-                    this.error(`Failed to resolve package.json in ${directory}`);
+            try {
+                const virtualModule = parseVirtualAppModuleId(moduleId);
+                if (!virtualModule) {
+                    return undefined;
                 }
 
-                const packageName = await getPackageName(this, packageJsonPath);
-                const generatedSourceCode = generateReactHooks(packageName, runtimeModuleId);
-                isDebug && debug("Generated hooks code: %O", generatedSourceCode);
-                return generatedSourceCode;
-            }
+                if (virtualModule.type === "package-hooks") {
+                    const directory = virtualModule.packageDirectory;
+                    // use forward slashes instead of platform separator
+                    const packageJsonPath = (await this.resolve(directory + "/package.json"))?.id;
+                    if (!packageJsonPath) {
+                        throw new ReportableError(`Failed to resolve package.json in ${directory}`);
+                    }
 
-            const { type, importer } = virtualModule;
-            if (type === "app-meta") {
-                return generateAppMetadata(importer);
-            }
-
-            const pkgJsonPath = findPackageJson(dirname(importer), config.root);
-            if (!pkgJsonPath) {
-                this.error(`Failed to find package.json for app from '${importer}'.`);
-            }
-
-            const context = buildMetadataContext(this, moduleId, devServer, manualDeps);
-            const appDir = dirname(pkgJsonPath);
-            switch (type) {
-                case "app-packages": {
-                    const appMetadata = await metadata.getAppMetadata(context, appDir);
-                    const generatedSourceCode = generatePackagesMetadata(appMetadata.packages);
-                    isDebug && debug("Generated app metadata: %O", generatedSourceCode);
+                    const packageName = await getPackageName(this, packageJsonPath);
+                    const generatedSourceCode = generateReactHooks(packageName, runtimeModuleId);
+                    isDebug && debug("Generated hooks code: %O", generatedSourceCode);
                     return generatedSourceCode;
                 }
-                case "app-css": {
-                    const appMetadata = await metadata.getAppMetadata(context, appDir);
-                    const generatedSourceCode = generateCombinedCss(appMetadata.packages);
-                    isDebug && debug("Generated app css: %O", generatedSourceCode);
-                    return generatedSourceCode;
+
+                const { type, importer } = virtualModule;
+                if (type === "app-meta") {
+                    return generateAppMetadata(importer);
                 }
+
+                const pkgJsonPath = findPackageJson(dirname(importer), config.root);
+                if (!pkgJsonPath) {
+                    throw new ReportableError(`Failed to find package.json for app from '${importer}'.`);
+                }
+
+                const context = buildMetadataContext(this, moduleId, devServer, manualDeps);
+                const appDir = dirname(pkgJsonPath);
+                switch (type) {
+                    case "app-packages": {
+                        const appMetadata = await metadata.getAppMetadata(context, appDir);
+                        const generatedSourceCode = generatePackagesMetadata(appMetadata.packages);
+                        isDebug && debug("Generated app metadata: %O", generatedSourceCode);
+                        return generatedSourceCode;
+                    }
+                    case "app-css": {
+                        const appMetadata = await metadata.getAppMetadata(context, appDir);
+                        const generatedSourceCode = generateCombinedCss(appMetadata.packages);
+                        isDebug && debug("Generated app css: %O", generatedSourceCode);
+                        return generatedSourceCode;
+                    }
+                }
+            } catch (e) {
+                reportError(this, e);
             }
         }
     };
@@ -147,7 +156,6 @@ function buildMetadataContext(
 ): MetadataContext {
     return {
         warn: ctx.warn,
-        error: ctx.error,
         resolve: ctx.resolve,
         addWatchFile: (id) => {
             if (devServer) {
@@ -160,6 +168,15 @@ function buildMetadataContext(
             ctx.addWatchFile(id);
         }
     };
+}
+
+function reportError(ctx: PluginContext, error: unknown) {
+    if (error instanceof ReportableError) {
+        ctx.error(error);
+    }
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const message = String((error as any).message) || "Unknown error";
+    ctx.error("Internal error: " + message);
 }
 
 function addManualDep(manualDeps: Map<string, Set<string>>, file: string, moduleId: string) {
@@ -196,10 +213,10 @@ async function getPackageName(ctx: PluginContext, packageJsonPath: string) {
         const content = await readFile(packageJsonPath, "utf-8");
         name = JSON.parse(content).name;
     } catch (e) {
-        ctx.error(`Failed to read package.json file: ${e}`);
+        throw new ReportableError(`Failed to read package.json file: ${e}`);
     }
     if (!name) {
-        ctx.error(`Failed to read package name from '${packageJsonPath}'.`);
+        throw new ReportableError(`Failed to read package name from '${packageJsonPath}'.`);
     }
     return name;
 }

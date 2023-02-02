@@ -2,6 +2,7 @@ import { readFile, realpath } from "fs/promises";
 import { dirname, join } from "path";
 import { PluginContext } from "rollup";
 import { normalizePath } from "vite";
+import { ReportableError } from "../ReportableError";
 import { createDebugger } from "../utils/debug";
 import { fileExists, isInDirectory } from "../utils/fileUtils";
 import {
@@ -60,7 +61,7 @@ export interface PackageMetadata {
     config: NormalizedPackageConfig;
 }
 
-export type MetadataContext = Pick<PluginContext, "addWatchFile" | "resolve" | "error" | "warn">;
+export type MetadataContext = Pick<PluginContext, "addWatchFile" | "resolve" | "warn">;
 
 export interface ResolvedPackageLocation {
     type: "absolute";
@@ -119,7 +120,7 @@ export class MetadataRepository {
             directory: appDirectory
         });
         if (!appPackageMetadata) {
-            ctx.error(
+            throw new ReportableError(
                 `Failed to parse app metadata in ${appDirectory}. Ensure that the app is a valid local package.`
             );
         }
@@ -196,9 +197,7 @@ export class MetadataRepository {
                 .then((packageMetadata) => {
                     isDebug && debug(`Metadata for '${packageMetadata.name}': %O`, packageMetadata);
                     if (jobs.get(packageDir) === job) {
-                        this.putPackageMetadataInCache(packageDir, packageMetadata, (message) => {
-                            ctx.error(message);
-                        });
+                        this.putPackageMetadataInCache(packageDir, packageMetadata);
                     }
                     return packageMetadata;
                 })
@@ -220,8 +219,7 @@ export class MetadataRepository {
 
     private putPackageMetadataInCache(
         packageDir: string,
-        metadata: PackageMetadata,
-        onError: (message: string) => never
+        metadata: PackageMetadata
     ) {
         const name = metadata.name;
         const key = packageCacheKey(packageDir);
@@ -229,7 +227,7 @@ export class MetadataRepository {
         // Ensure only one version of a package exists in the app
         const existingMetadata = this.packageMetadataByName.get(name);
         if (existingMetadata && existingMetadata.directory !== metadata.directory) {
-            onError(
+            throw new ReportableError(
                 `Found package '${name}' at two different locations ${existingMetadata.directory} and ${metadata.directory}`
             );
         }
@@ -262,7 +260,7 @@ export class MetadataRepository {
             }
         );
         if (!packageJsonLocation || packageJsonLocation.external) {
-            ctx.error(
+            throw new ReportableError(
                 `Request for '${unresolvedPackageJson}' did not result in a local file (required by '${loc.importedFrom}').`
             );
         }
@@ -297,10 +295,10 @@ export async function parsePackageMetadata(
         } catch (e) {
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
             const msg = (e as any).message || "Unknown error";
-            ctx.error(`Failed to load build config ${buildConfigPath}: ${msg}`);
+            throw new ReportableError(`Failed to load build config ${buildConfigPath}: ${msg}`);
         }
     } else {
-        ctx.error(`Expected a ${BUILD_CONFIG_NAME} in ${packageDir}`);
+        throw new ReportableError(`Expected a ${BUILD_CONFIG_NAME} in ${packageDir}`);
     }
 
     let entryPoint: string | undefined;
@@ -317,10 +315,10 @@ export async function parsePackageMetadata(
         try {
             cssFile = await resolveLocalFile(ctx, packageDir, buildConfig.styles);
         } catch (e) {
-            ctx.error(`Failed to resolve css file for package ${packageDir}: ${e}`);
+            throw new ReportableError(`Failed to resolve css file for package ${packageDir}: ${e}`);
         }
         if (!cssFile) {
-            ctx.error(`Failed to find css file '${buildConfig.styles}' in ${packageDir}`);
+            throw new ReportableError(`Failed to find css file '${buildConfig.styles}' in ${packageDir}`);
         }
     }
 
@@ -337,24 +335,24 @@ export async function parsePackageMetadata(
 
 async function parsePackageJson(ctx: MetadataContext, packageJsonPath: string) {
     if (!(await fileExists(packageJsonPath))) {
-        ctx.error(`Expected a 'package.json' file at ${packageJsonPath}`);
+        throw new ReportableError(`Expected a 'package.json' file at ${packageJsonPath}`);
     }
 
     let packageJsonContent;
     try {
         packageJsonContent = JSON.parse(await readFile(packageJsonPath, "utf-8"));
     } catch (e) {
-        ctx.error(`Failed to read ${packageJsonPath}: ${e}`);
+        throw new ReportableError(`Failed to read ${packageJsonPath}: ${e}`);
     }
 
     const packageName = packageJsonContent.name;
     if (typeof packageName !== "string") {
-        ctx.error(`Expected 'name' to be a string in ${packageJsonPath}`);
+        throw new ReportableError(`Expected 'name' to be a string in ${packageJsonPath}`);
     }
 
     const dependencies = packageJsonContent.dependencies ?? {};
     if (typeof dependencies !== "object") {
-        ctx.error(`Expected a valid 'dependencies' object in ${packageJsonPath}`);
+        throw new ReportableError(`Expected a valid 'dependencies' object in ${packageJsonPath}`);
     }
 
     const dependencyNames = Object.keys(dependencies);
