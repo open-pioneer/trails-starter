@@ -15,4 +15,4 @@
 
 -   [Design](./internals/Design.md)
 -   [Service layer](./internals/ServiceLayer.md)
--   [Build toos](./internals/BuildTools.md)
+-   [Build Tools](./internals/BuildTools.md)
