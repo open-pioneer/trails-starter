@@ -16,7 +16,7 @@ export interface BuildConfig {
     services?: Record<string, ServiceConfig>;
 
     /**
-     * Ui configuration.
+     * UI configuration.
      */
     ui?: UiConfig;
 }
