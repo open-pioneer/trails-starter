@@ -81,6 +81,7 @@ importers:
       rollup: ^3.10.1
       vite: ^4.0.4
       zod: ^3.20.2
+      zod-validation-error: ^0.3.1
     dependencies:
       '@babel/generator': 7.20.7
       '@babel/template': 7.20.7
@@ -88,6 +89,7 @@ importers:
       '@rollup/pluginutils': 5.0.2_rollup@3.10.1
       debug: 4.3.4
       zod: 3.20.2
+      zod-validation-error: 0.3.1_zod@3.20.2
     devDependencies:
       '@open-pioneer/build-support': link:../build-support
       '@open-pioneer/runtime': link:../../src/packages/runtime
@@ -4398,6 +4400,15 @@ packages:
     resolution: {integrity: sha512-9bnSc/HEW2uRy67wc+T8UwauLuPJVn28jb+GtJY16iiKWyvmYJRXVT4UamsAEGQfPohgr2q4Tq0sQbQlxTfi1g==}
     engines: {node: '>=12.20'}
     dev: true
+
+  /zod-validation-error/0.3.1_zod@3.20.2:
+    resolution: {integrity: sha512-3m7VcE4YT3ZdGJoYBZnLt8E1S/r8zPFNDWMc2njaeC7Vxe5FQbgIiwHoerSkli5PgsUyxWQhpFxEAJXkBJvoDg==}
+    engines: {node: ^14.17 || >=16.0.0}
+    peerDependencies:
+      zod: ^3.18.0
+    dependencies:
+      zod: 3.20.2
+    dev: false
 
   /zod/3.20.2:
     resolution: {integrity: sha512-1MzNQdAvO+54H+EaK5YpyEy0T+Ejo/7YLHS93G3RnYWh5gaotGHwGeN/ZO687qEDU2y4CdStQYXVHIgrUl5UVQ==}

@@ -23,11 +23,12 @@
         "@babel/types": "^7.20.7",
         "@rollup/pluginutils": "^5.0.2",
         "debug": "^4.3.4",
-        "zod": "^3.20.2"
+        "zod": "^3.20.2",
+        "zod-validation-error": "^0.3.1"
     },
     "devDependencies": {
-        "@open-pioneer/runtime": "workspace:^0.0.1",
         "@open-pioneer/build-support": "workspace:^0.0.1",
+        "@open-pioneer/runtime": "workspace:^0.0.1",
         "@types/babel__generator": "^7.6.4",
         "@types/babel__template": "^7.4.1",
         "@types/chai": "^4.3.4",

@@ -1,5 +1,7 @@
 import { z } from "zod";
 import { BuildConfig } from "@open-pioneer/build-support";
+import { fromZodError } from "zod-validation-error";
+import { ReportableError } from "../ReportableError";
 
 const REFERENCE_CONFIG_SCHEMA = z.object({ name: z.string() }).strict();
 
@@ -32,5 +34,10 @@ const BUILD_CONFIG_SCHEMA = z
  * @returns `value` but casted to the appropriate type.
  */
 export function verifyBuildConfigSchema(value: unknown): BuildConfig {
-    return BUILD_CONFIG_SCHEMA.parse(value);
+    const result = BUILD_CONFIG_SCHEMA.safeParse(value);
+    if (result.success) {
+        return result.data;
+    }
+    const message = fromZodError(result.error).message;
+    throw new ReportableError(message);
 }

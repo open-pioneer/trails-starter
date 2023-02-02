@@ -9,14 +9,14 @@ describe("BuildConfigSchema", () => {
     it("throws for invalid values", () => {
         assert.throws(
             () => verifyBuildConfigSchema({ styles: 2 }),
-            /"Expected string, received number"/
+            /Expected string, received number/
         );
     });
 
     it("throws for invalid parameter names", () => {
         assert.throws(
             () => verifyBuildConfigSchema({ notValidParameterName: 2 }),
-            /"Unrecognized key\(s\) in object: 'notValidParameterName'"/
+            /Unrecognized key\(s\) in object: 'notValidParameterName'/
         );
     });
 });
