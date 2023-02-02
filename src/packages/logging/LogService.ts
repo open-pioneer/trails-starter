@@ -1,4 +1,4 @@
-import { Service } from "@open-pioneer/runtime";
+import { Service, ServiceOptions } from "@open-pioneer/runtime";
 
 export interface Logger {
     log(message: string): void;
@@ -11,8 +11,9 @@ declare module "@open-pioneer/runtime" {
 }
 
 export class LogService implements Service<Logger> {
-    constructor() {
-        console.debug("Log Service created");
+    constructor({ properties }: ServiceOptions) {
+        const logLevel = properties.logLevel as string;
+        console.debug("Log Service created with log level", logLevel);
     }
 
     destroy() {

@@ -25,6 +25,12 @@ export default {
     },
     ui: {
       references: ["foo.ServiceE"]
+    },
+    properties: {
+      "some_property": {
+        value: "default_value",
+        required: true
+      }
     }
   }
 };

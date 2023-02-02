@@ -19,6 +19,20 @@ export interface BuildConfig {
      * UI configuration.
      */
     ui?: UiConfig;
+
+    /**
+     * Default values for properties that are supported by this package.
+     * Properties may be overwritten by the application.
+     *
+     * Only plain old JSON data is allowed for values.
+     */
+    properties?: Record<string, unknown>;
+
+    /**
+     * Metadata about properties defined by this package.
+     * Names in this record should match the property name in {@link properties}.
+     */
+    propertiesMeta?: Record<string, PropertyMetaConfig>;
 }
 
 /**
@@ -66,6 +80,17 @@ export interface ProvidesConfig {
 export interface ReferenceConfig {
     /** Name of the interface that is referenced by this service. */
     name: string;
+}
+
+/**
+ * Describes additional configuration for a package property.
+ */
+export interface PropertyMetaConfig {
+    /**
+     * Required properties *must* be specified by an application
+     * to a valid (non null or undefined) value.
+     */
+    required?: boolean;
 }
 
 /**

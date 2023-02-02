@@ -36,9 +36,9 @@ it("starts and stops services in the expected order", function () {
     }
 
     const serviceLayer = new ServiceLayer([
-        new PackageRepr(
-            "a",
-            [
+        new PackageRepr({
+            name: "a",
+            services: [
                 new ServiceRepr({
                     name: "A",
                     packageName: "a",
@@ -50,21 +50,19 @@ it("starts and stops services in the expected order", function () {
                         }
                     ]
                 })
-            ],
-            []
-        ),
-        new PackageRepr(
-            "b",
-            [
+            ]
+        }),
+        new PackageRepr({
+            name: "b",
+            services: [
                 new ServiceRepr({
                     name: "B",
                     packageName: "b",
                     clazz: ServiceB,
                     interfaces: ["b.serviceB"]
                 })
-            ],
-            []
-        )
+            ]
+        })
     ]);
 
     serviceLayer.start();
@@ -131,9 +129,9 @@ it("destroys services once they are no longer referenced (but not before)", func
     });
 
     const serviceLayer = new ServiceLayer([
-        new PackageRepr(
-            "UserPackage",
-            [
+        new PackageRepr({
+            name: "UserPackage",
+            services: [
                 new ServiceRepr({
                     name: "A",
                     packageName: "UserPackage",
@@ -162,11 +160,13 @@ it("destroys services once they are no longer referenced (but not before)", func
                         id: "B"
                     }
                 })
-            ],
-            []
-        ),
+            ]
+        }),
 
-        new PackageRepr("ProviderPackage", [providerService], [])
+        new PackageRepr({
+            name: "ProviderPackage",
+            services: [providerService]
+        })
     ]);
 
     serviceLayer.start();
@@ -187,9 +187,9 @@ it("allows access to service instances if the dependency was declared", function
     class Dummy {}
 
     const serviceLayer = new ServiceLayer([
-        new PackageRepr(
-            "TestPackage",
-            [
+        new PackageRepr({
+            name: "TestPackage",
+            services: [
                 new ServiceRepr({
                     name: "A",
                     packageName: "TestPackage",
@@ -198,8 +198,8 @@ it("allows access to service instances if the dependency was declared", function
                     interfaces: ["testpackage.Interface", "testpackage.OtherInterface"]
                 })
             ],
-            ["testpackage.Interface"]
-        )
+            uiInterfaces: ["testpackage.Interface"]
+        })
     ]);
     serviceLayer.start();
 

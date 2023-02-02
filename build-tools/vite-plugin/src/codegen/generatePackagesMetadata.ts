@@ -12,7 +12,8 @@ const PKG_OBJECT = template.expression(`
     {
         name: %%PACKAGE_NAME%%,
         services: %%PACKAGE_SERVICES%%,
-        ui: %%PACKAGE_UI%%
+        ui: %%PACKAGE_UI%%,
+        properties: %%PROPERTIES%%
     }
 `);
 
@@ -40,6 +41,13 @@ const REFERENCE_OBJECT = template.expression(`
 const UI_OBJECT = template.expression(`
     {
         references: %%INTERFACE_NAMES%%
+    }
+`);
+
+const PROPERTY_OBJECT = template.expression(`
+    {
+        value: %%VALUE%%,
+        required: %%REQUIRED%%
     }
 `);
 
@@ -140,10 +148,23 @@ function generatePackageMetadata(
         )
     });
 
+    const propertiesObject = nodes.objectExpression(
+        pkg.config.properties.map((prop) =>
+            nodes.objectProperty(
+                nodes.stringLiteral(prop.name),
+                PROPERTY_OBJECT({
+                    VALUE: jsonToExpression(prop.defaultValue),
+                    REQUIRED: nodes.booleanLiteral(prop.required)
+                })
+            )
+        )
+    );
+
     const pkgObject = PKG_OBJECT({
         PACKAGE_NAME: nodes.stringLiteral(pkg.name),
         PACKAGE_SERVICES: servicesObject,
-        PACKAGE_UI: uiObject
+        PACKAGE_UI: uiObject,
+        PROPERTIES: propertiesObject
     });
     return pkgObject;
 }
@@ -162,5 +183,34 @@ function skipPackage(pkg: PackageMetadataInput) {
     if (config.ui.references.length) {
         return false;
     }
+    if (config.properties.length) {
+        return false;
+    }
     return true;
+}
+
+function jsonToExpression(json: unknown): nodes.Expression {
+    if (json == null) {
+        return nodes.nullLiteral();
+    }
+    if (typeof json === "string") {
+        return nodes.stringLiteral(json);
+    }
+    if (typeof json === "number") {
+        return nodes.numericLiteral(json);
+    }
+    if (typeof json === "boolean") {
+        return nodes.booleanLiteral(json);
+    }
+    if (Array.isArray(json)) {
+        return nodes.arrayExpression(json.map((item) => jsonToExpression(item)));
+    }
+    if (typeof json === "object") {
+        return nodes.objectExpression(
+            Object.entries(json).map(([name, value]) =>
+                nodes.objectProperty(nodes.stringLiteral(name), jsonToExpression(value))
+            )
+        );
+    }
+    throw new Error(`Unexpected value while serializing JSON: ${json}.`);
 }

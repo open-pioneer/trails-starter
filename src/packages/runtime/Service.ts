@@ -25,8 +25,6 @@ export type ServiceOptions<References extends {} = {}> = {
 
     /**
      * Configuration properties.
-     *
-     * TODO: These are not specified yet
      */
     properties: Record<string, unknown>;
 };

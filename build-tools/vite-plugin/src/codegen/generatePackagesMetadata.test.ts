@@ -34,11 +34,20 @@ describe("generatePackagesMetadata", function () {
                     ],
                     ui: {
                         references: ["foo.ServiceE"]
-                    }
+                    },
+                    properties: [
+                        {
+                            name: "some_property",
+                            defaultValue: "default_value",
+                            required: true
+                        }
+                    ]
                 },
                 entryPointPath: "entryPoint"
             }
         ]);
+
+        //writeFileSync(testDataFile, pkgMetadata, "utf-8");
 
         const expected = readFileSync(testDataFile, "utf-8").trim();
         assert.equal(pkgMetadata, expected);

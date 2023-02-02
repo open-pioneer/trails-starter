@@ -1,6 +1,7 @@
 import { pathToFileURL } from "node:url";
 import {
     BuildConfig,
+    PropertyMetaConfig,
     ProvidesConfig,
     ReferenceConfig,
     ServiceConfig
@@ -13,6 +14,7 @@ export interface NormalizedPackageConfig {
     services: NormalizedServiceConfig[];
     styles: string | undefined;
     ui: NormalizedUiConfig;
+    properties: NormalizedProperty[];
 }
 
 export interface NormalizedServiceConfig {
@@ -23,6 +25,12 @@ export interface NormalizedServiceConfig {
 
 export interface NormalizedUiConfig {
     references: string[];
+}
+
+export interface NormalizedProperty {
+    name: string;
+    defaultValue: unknown;
+    required: boolean;
 }
 
 let requestId = 0;
@@ -37,7 +45,7 @@ export async function loadBuildConfig(path: string): Promise<NormalizedPackageCo
         unknown
     >;
     if (!importedModule || !importedModule.default) {
-        throw new Error(`${path} must contain a default export.`);
+        throw new Error(`The module must contain a default export.`);
     }
 
     const config = importedModule.default;
@@ -64,7 +72,8 @@ function normalizeConfig(rawConfig: BuildConfig): NormalizedPackageConfig {
         services: Object.entries(rawConfig.services ?? {}).map(([serviceName, serviceConfig]) => {
             return normalizeServiceConfig(serviceName, serviceConfig);
         }),
-        ui: normalizeUiConfig(rawConfig.ui)
+        ui: normalizeUiConfig(rawConfig.ui),
+        properties: normalizeProperties(rawConfig.properties, rawConfig.propertiesMeta)
     };
 }
 
@@ -116,4 +125,20 @@ function normalizeUiConfig(rawConfig: BuildConfig["ui"]): NormalizedUiConfig {
     return {
         references: rawConfig?.references ?? []
     };
+}
+
+function normalizeProperties(
+    properties: Record<string, unknown> | undefined,
+    propertiesMeta: Record<string, PropertyMetaConfig> | undefined
+): NormalizedProperty[] {
+    const result: NormalizedProperty[] = [];
+    for (const [name, defaultValue] of Object.entries(properties ?? {})) {
+        const required = propertiesMeta?.[name]?.required ?? false;
+        result.push({
+            name,
+            defaultValue,
+            required
+        });
+    }
+    return result;
 }

@@ -9,5 +9,8 @@ export default defineBuildConfig({
                 }
             ]
         }
+    },
+    properties: {
+        logLevel: "INFO"
     }
 });

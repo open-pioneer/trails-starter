@@ -1,31 +1,47 @@
 import { z } from "zod";
-import { BuildConfig } from "@open-pioneer/build-support";
+import {
+    BuildConfig,
+    PropertyMetaConfig,
+    ProvidesConfig,
+    ReferenceConfig
+} from "@open-pioneer/build-support";
 import { fromZodError } from "zod-validation-error";
-import { ReportableError } from "../ReportableError";
 
-const REFERENCE_CONFIG_SCHEMA = z.object({ name: z.string() }).strict();
+const LITERAL_SCHEMA = z.union([z.string(), z.number(), z.boolean(), z.null()]);
 
-const PROVIDES_CONFIG_SCHEMA = z.object({ name: z.string() }).strict();
+type Literal = z.infer<typeof LITERAL_SCHEMA>;
 
-const UI_CONFIG_SCHEMA = z.object({ references: z.array(z.string()).optional() }).strict();
+type Json = Literal | { [key: string]: Json } | Json[];
 
-const SERVICES_CONFIG_SCHEMA = z
-    .object({
-        provides: z
-            .string()
-            .or(z.array(z.string().or(PROVIDES_CONFIG_SCHEMA)))
-            .optional(),
-        references: z.record(z.string(), z.string().or(REFERENCE_CONFIG_SCHEMA)).optional()
-    })
-    .strict();
+const JSON_SCHEMA: z.ZodType<Json> = z.lazy(() =>
+    z.union([LITERAL_SCHEMA, z.array(JSON_SCHEMA), z.record(JSON_SCHEMA)])
+);
 
-const BUILD_CONFIG_SCHEMA = z
-    .object({
-        styles: z.string().optional(),
-        services: z.record(z.string(), SERVICES_CONFIG_SCHEMA).optional(),
-        ui: UI_CONFIG_SCHEMA.optional()
-    })
-    .strict();
+const PROPERTY_META_SCHEMA: z.ZodType<PropertyMetaConfig> = z.strictObject({
+    required: z.boolean().optional()
+});
+
+const REFERENCE_CONFIG_SCHEMA: z.ZodType<ReferenceConfig> = z.strictObject({ name: z.string() });
+
+const PROVIDES_CONFIG_SCHEMA: z.ZodType<ProvidesConfig> = z.strictObject({ name: z.string() });
+
+const UI_CONFIG_SCHEMA = z.strictObject({ references: z.array(z.string()).optional() });
+
+const SERVICES_CONFIG_SCHEMA = z.strictObject({
+    provides: z
+        .string()
+        .or(z.array(z.string().or(PROVIDES_CONFIG_SCHEMA)))
+        .optional(),
+    references: z.record(z.string(), z.string().or(REFERENCE_CONFIG_SCHEMA)).optional()
+});
+
+const BUILD_CONFIG_SCHEMA: z.ZodType<BuildConfig> = z.strictObject({
+    styles: z.string().optional(),
+    services: z.record(z.string(), SERVICES_CONFIG_SCHEMA).optional(),
+    ui: UI_CONFIG_SCHEMA.optional(),
+    properties: z.record(z.string(), JSON_SCHEMA).optional(),
+    propertiesMeta: z.record(z.string(), PROPERTY_META_SCHEMA).optional()
+});
 
 /**
  * Ensures that `value` conforms to the {@link BuildConfig} interface.
@@ -39,5 +55,5 @@ export function verifyBuildConfigSchema(value: unknown): BuildConfig {
         return result.data;
     }
     const message = fromZodError(result.error).message;
-    throw new ReportableError(message);
+    throw new Error(message);
 }

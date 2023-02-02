@@ -6,6 +6,15 @@ import { ServiceRepr } from "./ServiceRepr";
 export class PackageRepr {
     static parse(data: PackageMetadata): PackageRepr {
         const name = data.name;
+        const properties = data.properties ?? {};
+
+        // TODO: Allow overriding properties from app
+        const resolvedProperties = Object.fromEntries(
+            Object.entries(properties).map(([key, value]) => {
+                return [key, value.value];
+            })
+        );
+
         const services = Object.entries(data.services ?? {}).map<ServiceRepr>(
             ([name, serviceData]) => {
                 if (name !== serviceData.name) {
@@ -14,10 +23,10 @@ export class PackageRepr {
                         "Invalid metadata: service name mismatch."
                     );
                 }
-                return ServiceRepr.parse(data.name, serviceData);
+                return ServiceRepr.parse(data.name, serviceData, resolvedProperties);
             }
         );
-        return new PackageRepr(name, services, data.ui?.references ?? []);
+        return new PackageRepr({ name, services, uiInterfaces: data.ui?.references });
     }
 
     /** Package name */
@@ -29,10 +38,10 @@ export class PackageRepr {
     /** Interfaces required by UI components. */
     readonly uiInterfaces: readonly string[];
 
-    constructor(name: string, services: ServiceRepr[], uiInterfaces: string[]) {
-        this.name = name;
-        this.services = services;
-        this.uiInterfaces = uiInterfaces;
+    constructor(options: { name: string; services?: ServiceRepr[]; uiInterfaces?: string[] }) {
+        this.name = options.name;
+        this.services = options.services ?? [];
+        this.uiInterfaces = options.uiInterfaces ?? [];
     }
 }
 

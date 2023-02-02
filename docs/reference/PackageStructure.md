@@ -53,6 +53,8 @@ interface BuildConfig {
     styles?: string;
     services?: Record<string, ServiceConfig>;
     ui?: UiConfig;
+    properties?: Record<string, unknown>;
+    propertiesMeta?: Record<string, PropertiesMeta>;
 }
 ```
 
@@ -171,6 +173,59 @@ export default defineBuildConfig({
 });
 ```
 
+#### `properties`
+
+A record of (propertyName, value) pairs.
+All valid JSON values are allowed as property values.
+
+Properties are accessible for all services and UI components in the package.
+
+Default property values defined here may be overwritten by the application.
+
+Example:
+
+```js
+export default defineBuildConfig({
+    properties: {
+        foo: "bar",
+        nested: {
+            value: "baz"
+        }
+    }
+});
+```
+
+#### `propertiesMeta`
+
+Contains additional metadata about properties for advanced use cases.
+
+```ts
+interface PropertyMetaConfig {
+    required?: boolean;
+}
+```
+
+#### `propertiesMeta.required`
+
+Set this value to true to force the application to override this property to a non-null value.
+
+Example:
+
+```js
+export default defineBuildConfig({
+    properties: {
+        foo: null
+    },
+    propertiesMeta: {
+        foo: {
+            // Application will not start if the developer forgets
+            // to initialize `foo`
+            required: true
+        }
+    }
+});
+```
+
 ## Service definition
 
 TODO: Document class
@@ -190,3 +245,5 @@ function ExampleComponent() {
     return <div>{service.sayHello()}</div>;
 }
 ```
+
+### TODO: useProperties

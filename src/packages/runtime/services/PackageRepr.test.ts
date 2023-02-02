@@ -8,6 +8,21 @@ class ClazzB {}
 
 it("parses package metadata into internal package representations", function () {
     const metadata: Record<string, PackageMetadata> = {
+        a: {
+            name: "a",
+            services: {
+                A: {
+                    name: "A",
+                    clazz: ClazzA,
+                    provides: [],
+                    references: {
+                        foo: {
+                            name: "b.ServiceB1"
+                        }
+                    }
+                }
+            }
+        },
         b: {
             name: "b",
             services: {
@@ -24,20 +39,11 @@ it("parses package metadata into internal package representations", function () 
                     ],
                     references: {}
                 }
-            }
-        },
-        a: {
-            name: "a",
-            services: {
-                A: {
-                    name: "A",
-                    clazz: ClazzA,
-                    provides: [],
-                    references: {
-                        foo: {
-                            name: "b.ServiceB1"
-                        }
-                    }
+            },
+            properties: {
+                foo: {
+                    value: 123,
+                    required: false
                 }
             }
         }
@@ -68,4 +74,5 @@ it("parses package metadata into internal package representations", function () 
     const serviceB = packageB.services.find((s) => s.name === "B")!;
     expect(serviceB).toBeDefined();
     expect(serviceB.interfaces).toEqual(["b.ServiceB1", "b.ServiceB2"]);
+    expect(serviceB.properties.foo).toBe(123);
 });

@@ -12,7 +12,11 @@ export type ServiceState = "not-constructed" | "constructing" | "constructed" | 
  * `this.instance` is the actual service instance (when constructed).
  */
 export class ServiceRepr {
-    static parse(packageName: string, data: ServiceMetadata): ServiceRepr {
+    static parse(
+        packageName: string,
+        data: ServiceMetadata,
+        properties?: Record<string, unknown>
+    ): ServiceRepr {
         const clazz = data.clazz;
         const name = data.name;
         const dependencies = Object.entries(data.references ?? {}).map<Dependency>(
@@ -23,9 +27,8 @@ export class ServiceRepr {
                 };
             }
         );
-        // TODO: Properties in metadata?
         const interfaces = (data.provides ?? []).map((p) => p.name);
-        return new ServiceRepr({ name, packageName, clazz, dependencies, interfaces });
+        return new ServiceRepr({ name, packageName, clazz, dependencies, interfaces, properties });
     }
 
     /** Unique id of this service. Contains the package name and the service name. */
@@ -111,6 +114,10 @@ export class ServiceRepr {
         return instance;
     }
 
+    /**
+     * Called before `create()` to place the service into the `constructing` state,
+     * which is currently used to detect cycles.
+     */
     beforeCreate() {
         if (this._state === "not-constructed") {
             this._state = "constructing";

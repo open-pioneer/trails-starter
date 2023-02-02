@@ -19,18 +19,11 @@ export interface PackageMetadata {
      * Metadata about the UI Components contained in this package.
      */
     ui?: UiMetadata;
-}
 
-/**
- * Describes the UI to the runtime.
- */
-export interface UiMetadata {
     /**
-     * List of interface names required by the UI.
-     * Interfaces in this list can be used by calling the `useService` hook
-     * from a react component.
+     * Metadata about properties of this package.
      */
-    references?: string[];
+    properties?: Record<string, PropertyMetadata>;
 }
 
 /**
@@ -74,4 +67,27 @@ export interface InterfaceReferenceMetadata {
 export interface ProvidedInterfaceMetadata {
     /** The name of the provided interface. */
     name: string;
+}
+
+/**
+ * Describes the UI to the runtime.
+ */
+export interface UiMetadata {
+    /**
+     * List of interface names required by the UI.
+     * Interfaces in this list can be used by calling the `useService` hook
+     * from a react component.
+     */
+    references?: string[];
+}
+
+/**
+ * Metadata about a single property in a package.
+ */
+export interface PropertyMetadata {
+    /** Default json value defined by the package. */
+    value: unknown;
+
+    /** Whether the property must be specified by the application. */
+    required?: boolean;
 }
