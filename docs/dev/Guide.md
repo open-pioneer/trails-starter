@@ -129,7 +129,7 @@ Workspace packages may reference each other.
 
 For example, the following `package-a` will be able to use `package-b`:
 
-```json
+```jsonc
 // package.json
 {
     "name": "package-a",

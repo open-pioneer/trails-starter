@@ -8,7 +8,8 @@
 ## Reference documentation
 
 -   [Glossary](./reference/Glossary.md)
--   TODO: Spec app, package
+-   [Package Structure](./reference/PackageStructure.md)
+-   TODO: Spec app
 
 ## Internals
 

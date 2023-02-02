@@ -13,7 +13,7 @@ To create a new app, first create a new empty directory in `src/apps`, for examp
 Pioneer apps are node packages to benefit from npm's dependency management.
 Thus, every app needs a [`package.json`](https://docs.npmjs.com/cli/v9/configuring-npm/package-json) file such as this:
 
-```json
+```jsonc
 // src/apps/my-app/package.json
 {
     "name": "my-app",
