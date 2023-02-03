@@ -1,0 +1,5 @@
+// Vitest Snapshot v1
+
+exports[`should get error when requesting properties from an unknown package 1`] = `"runtime:internal-error: Package 'test' was not found in application."`;
+
+exports[`should get error while use undefined service 1`] = `"runtime:interface-not-found: The UI of package 'test' requested the unimplemented interface 'test.Provider'."`;
