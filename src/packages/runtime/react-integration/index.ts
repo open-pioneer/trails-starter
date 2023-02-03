@@ -1,1 +1,1 @@
-export { useServiceInternal } from "./hooks";
+export { useServiceInternal, usePropertiesInternal } from "./hooks";

@@ -40,4 +40,9 @@ declare module "open-pioneer:react-hooks" {
         serviceName: InterfaceName
     ): ServiceRegistry[InterfaceName];
     export function useService(serviceName: string): unknown;
+
+    /**
+     * Returns the properties of the calling component's package.
+     */
+    export function useProperties(): Readonly<Record<string, unknown>>;
 }

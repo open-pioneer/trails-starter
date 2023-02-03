@@ -3,22 +3,26 @@ import { createRoot, Root } from "react-dom/client";
 import { Error } from "@open-pioneer/core";
 import { ErrorId } from "../errors";
 import { ServiceLayer } from "../services/ServiceLayer";
-import { ServiceContext, ServiceContextData } from "./ServiceContext";
+import { PackageContext, PackageContextData } from "./PackageContext";
+import { PackageRepr } from "../services/PackageRepr";
 
 export interface ReactIntegrationOptions {
+    packages: Map<string, PackageRepr>;
     serviceLayer: ServiceLayer;
     rootNode: HTMLDivElement;
 }
 
 export class ReactIntegration {
+    private packages: Map<string, PackageRepr>;
     private serviceLayer: ServiceLayer;
     private root: Root;
-    private services: ServiceContextData;
+    private packageContext: PackageContextData;
 
     constructor(options: ReactIntegrationOptions) {
+        this.packages = options.packages;
         this.serviceLayer = options.serviceLayer;
         this.root = createRoot(options.rootNode);
-        this.services = {
+        this.packageContext = {
             getService: (packageName, interfaceName) => {
                 const result = this.serviceLayer.getService(packageName, interfaceName);
                 if (result.type === "unimplemented") {
@@ -35,6 +39,16 @@ export class ReactIntegration {
                     );
                 }
                 return result.instance;
+            },
+            getProperties: (packageName) => {
+                const pkg = this.packages.get(packageName);
+                if (!pkg) {
+                    throw new Error(
+                        ErrorId.INTERNAL,
+                        `Package '${packageName}' was not found in application.`
+                    );
+                }
+                return pkg.properties;
             }
         };
     }
@@ -42,8 +56,8 @@ export class ReactIntegration {
     render(component: ComponentType, props: Record<string, unknown>) {
         const element = createElement(component, props);
         const contextWrapper = createElement(
-            ServiceContext.Provider,
-            { value: this.services },
+            PackageContext.Provider,
+            { value: this.packageContext },
             element
         );
         this.root.render(createElement(StrictMode, undefined, contextWrapper));

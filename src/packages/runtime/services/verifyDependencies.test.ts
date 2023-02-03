@@ -1,4 +1,5 @@
 import { assert, expect, it } from "vitest";
+import { expectError } from "../test/expectError";
 import { Dependency, ServiceRepr } from "./ServiceRepr";
 import { verifyDependencies } from "./verifyDependencies";
 
@@ -168,16 +169,4 @@ function mockServices(data: ServiceData[]): ServiceRepr[] {
             interfaces: service.provides
         });
     });
-}
-
-function expectError(impl: () => void) {
-    try {
-        impl();
-        throw new Error("expected error!");
-    } catch (e) {
-        if (e instanceof Error) {
-            return e;
-        }
-        throw new Error("unexpected error value, not an instance of Error");
-    }
 }

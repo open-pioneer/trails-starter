@@ -1,9 +1,14 @@
-import { useRef } from "react";
-import { useService } from "open-pioneer:react-hooks";
+import { useEffect, useRef } from "react";
+import { useProperties, useService } from "open-pioneer:react-hooks";
 
 export function LoggingUI() {
+    const properties = useProperties();
     const service = useService("logging.LogService");
     const clickCount = useRef(0);
+
+    useEffect(() => {
+        service.log(properties.initialMessage as string);
+    });
 
     return (
         <div>

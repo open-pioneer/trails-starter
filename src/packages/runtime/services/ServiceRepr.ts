@@ -12,7 +12,7 @@ export type ServiceState = "not-constructed" | "constructing" | "constructed" | 
  * `this.instance` is the actual service instance (when constructed).
  */
 export class ServiceRepr {
-    static parse(
+    static create(
         packageName: string,
         data: ServiceMetadata,
         properties?: Record<string, unknown>

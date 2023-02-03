@@ -53,14 +53,16 @@ describe("codegen support", function () {
             }
         });
 
+        const expectedFile = join(TEST_DATA, "codegen-hooks.js");
         const appJs = readFileSync(join(outDir, "test-app.js"), "utf-8");
-        assert.include(appJs, 'useServiceInternal.bind(void 0, "test-app")');
-        assert.include(appJs, 'useServiceInternal.bind(void 0, "package1")');
-        assert.include(appJs, 'useServiceInternal.bind(void 0, "package2")');
+
+        // writeFileSync(expectedFile, appJs, "utf-8");
+        const expectedCode = readFileSync(expectedFile, "utf-8");
 
         assert.include(appJs, '"import.from.app"');
         assert.include(appJs, '"import.from.package1"');
         assert.include(appJs, '"import.from.package2"');
+        assert.strictEqual(appJs.trim(), expectedCode.trim());
     });
 
     it("should fail if build config is missing", async function () {

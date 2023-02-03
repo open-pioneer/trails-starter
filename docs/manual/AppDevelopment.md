@@ -28,6 +28,17 @@ Thus, every app needs a [`package.json`](https://docs.npmjs.com/cli/v9/configuri
 A `package.json` file should always contain at least a `name`, some `dependencies` and either `private: true` or a valid license (in case you intend to publish it).
 After creating a new package or modifying the dependencies of an existing package, you should run `pnpm install`.
 
+Next, your app needs a `build.config.mjs` configuration file.
+This file contains metadata about your app that influences how the system will build it.
+The minimal configuration is an empty object:
+
+```js
+// build.config.mjs
+import { defineBuildConfig } from "@open-pioneer/build-support";
+
+export default defineBuildConfig({});
+```
+
 To create a web component with a simple UI, call the `createCustomElement` function from the `@open-pioneer/runtime` package:
 
 ```ts

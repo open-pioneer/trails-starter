@@ -215,3 +215,36 @@ it("allows access to service instances if the dependency was declared", function
 
     serviceLayer.destroy();
 });
+
+it("injects properties into service instances", function () {
+    let properties: Record<string, unknown> | undefined;
+
+    const service = new ServiceRepr({
+        name: "Service",
+        packageName: "pkg",
+        interfaces: ["testpackage.Interface"],
+        properties: {
+            foo: "bar"
+        },
+        clazz: class Service {
+            constructor(options: ServiceOptions) {
+                properties = options.properties;
+            }
+        }
+    });
+    const serviceLayer = new ServiceLayer([
+        new PackageRepr({
+            name: "TestPackage",
+            services: [service],
+            uiInterfaces: ["testpackage.Interface"]
+        })
+    ]);
+    serviceLayer.start();
+
+    expect(service.instance).toBeDefined();
+    expect(properties).toStrictEqual({
+        foo: "bar"
+    });
+
+    serviceLayer.destroy();
+});

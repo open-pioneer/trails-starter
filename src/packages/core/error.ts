@@ -55,3 +55,19 @@ export function getErrorChain(err: globalThis.Error): globalThis.Error[] {
     } while (1); // eslint-disable-line no-constant-condition
     return chain;
 }
+
+/**
+ * Returns true if the error represents an abort error.
+ */
+export function isAbortError(err: unknown) {
+    return err && typeof err === "object" && "name" in err && err.name === "AbortError";
+}
+
+/**
+ * Throws an abort error (`.name` === `"AbortError"`).
+ */
+export function throwAbortError(): never {
+    const err = new globalThis.Error("Aborted");
+    err.name = "AbortError";
+    throw err;
+}

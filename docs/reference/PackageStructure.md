@@ -246,4 +246,26 @@ function ExampleComponent() {
 }
 ```
 
-### TODO: useProperties
+### `useProperties` Hook
+
+Returns the properties of the calling component's package.
+Note that properties can be customized by the application, so values
+may not be equal to their definition in the `build.config.mjs`.
+
+```js
+import { useProperties } from "open-pioneer:react-hooks";
+
+function ExampleComponent() {
+    const properties = useProperties();
+    return <div>{properties.greeting}</div>;
+}
+```
+
+```js
+// build.config.mjs
+export default defineBuildConfig({
+    properties: {
+        greeting: "Hello World"
+    }
+});
+```
