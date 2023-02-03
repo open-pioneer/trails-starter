@@ -1,3 +1,0 @@
-// Vitest Snapshot v1
-
-exports[`should get error while use undefined service 1`] = `"runtime:interface-not-found: The UI of package 'test' requested the unimplemented interface 'test.Provider'."`;
