@@ -1,3 +1,6 @@
+/**
+ * @vitest-environment jsdom
+ */
 import { isAbortError, throwAbortError } from "./error";
 import { it, expect, describe } from "vitest";
 
