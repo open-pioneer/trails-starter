@@ -5,6 +5,7 @@
     "main": "index",
     "dependencies": {
         "@open-pioneer/core": "workspace:^",
+        "@open-pioneer/chakra-integration": "workspace:^",
         "react": "^18.2.0",
         "react-dom": "^18.2.0"
     }

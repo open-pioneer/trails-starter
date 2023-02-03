@@ -38,7 +38,8 @@ export default defineConfig({
                 "logging-sample", 
                 "services-sample", 
                 "map-sample",
-                "styling-sample"
+                "styling-sample",
+                "chakra-sample"
             ]
         }),
         react(),

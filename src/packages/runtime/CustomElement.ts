@@ -209,6 +209,7 @@ class ElementState {
         // Launch react
         this.reactIntegration = new ReactIntegration({
             rootNode: rootNode,
+            container: shadowRoot,
             serviceLayer,
             packages
         });

@@ -75,6 +75,7 @@ it("should get error while use undefined service", async () => {
     const serviceLayer = new ServiceLayer([]);
     const reactIntegration = new ReactIntegration({
         rootNode: wrapper,
+        container: document,
         serviceLayer,
         packages: new Map()
     });
@@ -133,6 +134,7 @@ it("should get error when requesting properties from an unknown package", async 
     const serviceLayer = new ServiceLayer([]);
     const reactIntegration = new ReactIntegration({
         rootNode: wrapper,
+        container: document,
         serviceLayer,
         packages: new Map()
     });

@@ -1,24 +1,28 @@
-import { ComponentType, createElement, StrictMode } from "react";
+import { ComponentType, createElement } from "react";
 import { createRoot, Root } from "react-dom/client";
 import { Error } from "@open-pioneer/core";
 import { ErrorId } from "../errors";
 import { ServiceLayer } from "../services/ServiceLayer";
-import { PackageContext, PackageContextData } from "./PackageContext";
+import { PackageContextData } from "./PackageContext";
 import { PackageRepr } from "../services/PackageRepr";
+import { ReactRootComponent } from "./ReactRootComponent";
 
 export interface ReactIntegrationOptions {
     packages: Map<string, PackageRepr>;
     serviceLayer: ServiceLayer;
     rootNode: HTMLDivElement;
+    container: Node;
 }
 
 export class ReactIntegration {
+    private containerNode: Node;
     private packages: Map<string, PackageRepr>;
     private serviceLayer: ServiceLayer;
     private root: Root;
     private packageContext: PackageContextData;
 
     constructor(options: ReactIntegrationOptions) {
+        this.containerNode = options.container;
         this.packages = options.packages;
         this.serviceLayer = options.serviceLayer;
         this.root = createRoot(options.rootNode);
@@ -54,13 +58,14 @@ export class ReactIntegration {
     }
 
     render(component: ComponentType, props: Record<string, unknown>) {
-        const element = createElement(component, props);
-        const contextWrapper = createElement(
-            PackageContext.Provider,
-            { value: this.packageContext },
-            element
+        this.root.render(
+            createElement(ReactRootComponent, {
+                Component: component,
+                componentProps: props,
+                container: this.containerNode,
+                packageContext: this.packageContext
+            })
         );
-        this.root.render(createElement(StrictMode, undefined, contextWrapper));
     }
 
     destroy() {
