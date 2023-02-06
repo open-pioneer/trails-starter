@@ -1,6 +1,3 @@
-/**
- * @vitest-environment jsdom
- */
 import { Component, createElement } from "react";
 import { beforeAll, expect, it, describe } from "vitest";
 import { createCustomElement } from "./CustomElement";
