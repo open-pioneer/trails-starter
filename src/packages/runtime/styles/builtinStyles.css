@@ -1,0 +1,13 @@
+.pioneer-root {
+    line-height: 1.5;
+    -webkit-text-size-adjust: 100%;
+    font-family: system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    -moz-osx-font-smoothing: grayscale;
+    touch-action: manipulation;
+
+    position: relative;
+    min-height: 100%;
+    font-feature-settings: "kern";
+}

@@ -9,7 +9,7 @@ export interface ReactRootComponentProps {
     /** Props passed to the component. */
     componentProps: Record<string, unknown>;
 
-    /** Container for styles and modals. Changes are not supported. */
+    /** Container for styles and modals (usually shadow root). Changes are not supported. */
     container: Node;
 
     /** Package context that allows lookup of services, properties, etc. */
@@ -25,7 +25,7 @@ export const ReactRootComponent: FC<ReactRootComponentProps> = ({
     return (
         <StrictMode>
             <PackageContext.Provider value={packageContext}>
-                <CustomChakraProvider container={container}>
+                <CustomChakraProvider container={container} colorMode="light">
                     <Component {...componentProps} />
                 </CustomChakraProvider>
             </PackageContext.Provider>
