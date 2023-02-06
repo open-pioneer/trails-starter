@@ -13,7 +13,7 @@ import {
 } from "@chakra-ui/react";
 import createCache, { EmotionCache } from "@emotion/cache";
 import { CacheProvider } from "@emotion/react";
-import { FC, PropsWithChildren, useLayoutEffect, useRef } from "react";
+import { FC, PropsWithChildren, useEffect, useRef } from "react";
 
 export type CustomChakraProviderProps = PropsWithChildren<{
     /**
@@ -93,7 +93,7 @@ export const CustomChakraProvider: FC<CustomChakraProviderProps> = ({
     };
 
     const mode = colorMode ?? "light";
-    useLayoutEffect(() => {
+    useEffect(() => {
         const host = chakraHost.current;
         if (!host) {
             return;
