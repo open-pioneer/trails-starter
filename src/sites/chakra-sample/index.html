@@ -4,10 +4,32 @@
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Date App Demo</title>
+        <style>
+            html,
+            body,
+            .container {
+                margin: 0;
+                padding: 0;
+                width: 100%;
+                height: 100%;
+            }
+
+            .container {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+
+            .app {
+                flex: 0 0 auto;
+                width: 80%;
+                height: 80%;
+            }
+        </style>
     </head>
     <body>
-        <div style="display: flex; gap: 10px">
-            <chakra-app></chakra-app>
+        <div class="container">
+            <chakra-app class="app"></chakra-app>
         </div>
         <script type="module" src="../../apps/chakra-app/app.ts"></script>
     </body>

@@ -6,7 +6,6 @@ import { PackageRepr, createPackages } from "./services/PackageRepr";
 import { ServiceLayer } from "./services/ServiceLayer";
 import { getErrorChain } from "@open-pioneer/core";
 import { ReactIntegration } from "./react-integration/ReactIntegration";
-import builtinStyles from "./styles/builtinStyles.css?inline";
 
 /**
  * Options for the {@link createCustomElement} function.
@@ -206,7 +205,6 @@ class ElementState {
         rootNode.style.width = "100%";
 
         const style = document.createElement("style");
-        style.appendChild(document.createTextNode(builtinStyles));
         style.appendChild(document.createTextNode(options.styles ?? ""));
         shadowRoot.replaceChildren(rootNode, style);
 

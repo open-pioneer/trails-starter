@@ -24,11 +24,11 @@ export const ReactRootComponent: FC<ReactRootComponentProps> = ({
 }) => {
     return (
         <StrictMode>
-            <PackageContext.Provider value={packageContext}>
-                <CustomChakraProvider container={container} colorMode="light">
+            <CustomChakraProvider container={container} colorMode="light">
+                <PackageContext.Provider value={packageContext}>
                     <Component {...componentProps} />
-                </CustomChakraProvider>
-            </PackageContext.Provider>
+                </PackageContext.Provider>
+            </CustomChakraProvider>
         </StrictMode>
     );
 };

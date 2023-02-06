@@ -33,9 +33,23 @@ export type CustomChakraProviderProps = PropsWithChildren<{
 const theme = extendTheme({
     styles: {
         global: {
-            // Apply the same styles to the application root node that chakra would usually apply to the body.
-            // eslint-disable-next-line @typescript-eslint/no-explicit-any
-            ".chakra-host": (baseTheme.styles.global as Record<string, any>).body
+            // Apply the same styles to the application root node that chakra would usually apply to the html and body.
+            ".chakra-host": {
+                "line-height": "1.5",
+                "-webkit-text-size-adjust": "100%",
+                "font-family": "system-ui, sans-serif",
+                "-webkit-font-smoothing": "antialiased",
+                "text-rendering": "optimizeLegibility",
+                "-moz-osx-font-smoothing": "grayscale",
+                "touch-action": "manipulation",
+
+                "position": "relative",
+                "min-height": "100%",
+                "font-feature-settings": "kern",
+
+                // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                ...(baseTheme.styles.global as Record<string, any>).body
+            }
         }
     }
 });
@@ -47,7 +61,6 @@ const colorModeClassnames = {
 };
 
 // https://github.com/chakra-ui/chakra-ui/issues/2439
-// https://github.com/chakra-ui/chakra-ui/issues/2802
 export const CustomChakraProvider: FC<CustomChakraProviderProps> = ({
     container,
     colorMode,
