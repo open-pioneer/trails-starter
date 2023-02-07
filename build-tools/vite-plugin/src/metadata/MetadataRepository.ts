@@ -77,6 +77,16 @@ export interface UnresolvedPackageLocation {
 export type PackageLocation = ResolvedPackageLocation | UnresolvedPackageLocation;
 
 /**
+ * Tracks metadata and the files that were used to parse that metadata.
+ * watchFiles should be propagated when a caller receives a cached result,
+ * otherwise hot reloading may not be triggered correctly on file changes.
+ */
+interface MetadataCacheEntry {
+    metadata: PackageMetadata;
+    watchFiles: ReadonlySet<string>;
+}
+
+/**
  * Provides metadata about apps and packages.
  * Metadata is read from disk on demand and will then be cached
  * until one of the file dependencies has changed.
@@ -85,14 +95,14 @@ export class MetadataRepository {
     private sourceRoot: string;
 
     // Key: package directory on disk, value: existing metadata
-    private packageMetadataCache = new Map<string, PackageMetadata>();
+    private packageMetadataCache = new Map<string, MetadataCacheEntry>();
 
     // Key: package name (known to cache), value: metadata
     private packageMetadataByName = new Map<string, PackageMetadata>();
 
     // Deduplicated jobs (only visit a directory once).
     // Key: package directory on disk
-    private packageMetadataJobs = new Map<string, Promise<PackageMetadata>>();
+    private packageMetadataJobs = new Map<string, Promise<MetadataCacheEntry>>();
 
     /**
      * @param sourceRoot Source folder on disk, needed to detect 'local' packages
@@ -179,10 +189,11 @@ export class MetadataRepository {
         }
 
         // Check the cache
-        const cachedMetadata = this.getPackageMetadataFromCache(packageDir);
-        if (cachedMetadata) {
-            isDebug && debug(`Returning cached metadata for '${cachedMetadata.name}'`);
-            return cachedMetadata;
+        const cacheEntry = this.getPackageMetadataFromCache(packageDir);
+        if (cacheEntry) {
+            isDebug && debug(`Returning cached metadata for '${cacheEntry.metadata.name}'`);
+            propagateWatchFiles(cacheEntry.watchFiles, ctx);
+            return cacheEntry.metadata;
         }
         return await this.schedulePackageMetadataJob(ctx, packageDir);
     }
@@ -191,33 +202,48 @@ export class MetadataRepository {
         // Deduplicate concurrent jobs for the same directory.
         const jobs = this.packageMetadataJobs;
         let job = jobs.get(packageDir);
-        if (!job) {
-            isDebug && debug(`Analyzing package at ${packageDir}`);
-            job = parsePackageMetadata(ctx, packageDir)
-                .then((packageMetadata) => {
-                    isDebug && debug(`Metadata for '${packageMetadata.name}': %O`, packageMetadata);
-                    if (jobs.get(packageDir) === job) {
-                        this.putPackageMetadataInCache(packageDir, packageMetadata);
-                    }
-                    return packageMetadata;
-                })
-                .finally(() => {
-                    if (jobs.get(packageDir) === job) {
-                        jobs.delete(packageDir);
-                    }
-                });
-            this.packageMetadataJobs.set(packageDir, job);
-        } else {
+        if (job) {
             isDebug && debug(`Waiting for existing analysis of ${packageDir}`);
+            const entry = await job;
+            propagateWatchFiles(entry.watchFiles, ctx);
+            return entry.metadata;
         }
-        return await job;
+
+        const watchFiles = new Set<string>();
+        const trackingCtx: MetadataContext = {
+            ...ctx,
+            addWatchFile(id) {
+                ctx.addWatchFile(id);
+                watchFiles.add(id);
+            }
+        };
+        job = parsePackageMetadata(trackingCtx, packageDir)
+            .then((metadata) => {
+                isDebug && debug(`Metadata for '${metadata.name}': %O`, metadata);
+                const entry: MetadataCacheEntry = {
+                    metadata,
+                    watchFiles
+                };
+                if (jobs.get(packageDir) === job) {
+                    this.putPackageMetadataInCache(packageDir, entry);
+                }
+                return entry;
+            })
+            .finally(() => {
+                if (jobs.get(packageDir) === job) {
+                    jobs.delete(packageDir);
+                }
+            });
+        this.packageMetadataJobs.set(packageDir, job);
+        return (await job).metadata;
     }
 
-    private getPackageMetadataFromCache(packageDir: string): PackageMetadata | undefined {
+    private getPackageMetadataFromCache(packageDir: string): MetadataCacheEntry | undefined {
         return this.packageMetadataCache.get(packageCacheKey(packageDir));
     }
 
-    private putPackageMetadataInCache(packageDir: string, metadata: PackageMetadata) {
+    private putPackageMetadataInCache(packageDir: string, entry: MetadataCacheEntry) {
+        const metadata = entry.metadata;
         const name = metadata.name;
         const key = packageCacheKey(packageDir);
 
@@ -229,15 +255,15 @@ export class MetadataRepository {
             );
         }
 
-        this.packageMetadataCache.set(key, metadata);
+        this.packageMetadataCache.set(key, entry);
         this.packageMetadataByName.set(name, metadata);
     }
 
     private invalidatePackageMetadata(packageDir: string) {
         const key = packageCacheKey(packageDir);
-        const metadata = this.packageMetadataCache.get(key);
-        if (metadata) {
-            this.packageMetadataByName.delete(metadata.name);
+        const entry = this.packageMetadataCache.get(key);
+        if (entry) {
+            this.packageMetadataByName.delete(entry.metadata.name);
             this.packageMetadataCache.delete(key);
         }
     }
@@ -265,6 +291,12 @@ export class MetadataRepository {
         const packageDir = await realpath(dirname(packageJsonLocation.id));
         isDebug && debug(`Found package '${loc.packageName}' at ${packageDir}`);
         return packageDir;
+    }
+}
+
+function propagateWatchFiles(watchFiles: Iterable<string>, ctx: MetadataContext) {
+    for (const file of watchFiles) {
+        ctx.addWatchFile(file);
     }
 }
 
