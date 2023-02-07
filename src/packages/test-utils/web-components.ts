@@ -5,10 +5,13 @@ let counter = 1;
 /**
  * Renders the given component into the DOM and returns the new node.
  */
-export async function renderComponent(component: CustomElementConstructor | string, options?: {
-    container?: HTMLElement
-    attributes?: Record<string, string>,
-}) {
+export async function renderComponent(
+    component: CustomElementConstructor | string,
+    options?: {
+        container?: HTMLElement;
+        attributes?: Record<string, string>;
+    }
+) {
     const tag = typeof component === "string" ? component : defineComponent(component);
     const container = options?.container ?? document.body;
     const node = container.ownerDocument.createElement(tag);
@@ -25,18 +28,21 @@ export async function renderComponent(component: CustomElementConstructor | stri
 /**
  * Renders the given component into the DOM (via {@link renderComponent}) and works on its shadow root.
  * In order to use this function, the shadow root should be attached as `open` from inside the component class.
- * 
+ *
  * After the shadow root has been accessed, the function searches (and waits) for an inner root container (by default `.pioneer-root`)
  * where all other searches should be executed.
- * 
+ *
  * Returns the shadow root, the inner container, and a bound queries object that automatically searches in the inner container
  * instead of the whole document.
  */
-export async function renderComponentShadowDOM(component: CustomElementConstructor | string, options?: {
-    container?: HTMLElement,
-    attributes?: Record<string, string>,
-    innerContainerSelector?: string
-}) {
+export async function renderComponentShadowDOM(
+    component: CustomElementConstructor | string,
+    options?: {
+        container?: HTMLElement;
+        attributes?: Record<string, string>;
+        innerContainerSelector?: string;
+    }
+) {
     const { node } = await renderComponent(component, options);
     const selector = options?.innerContainerSelector ?? ".pioneer-root";
     const { shadowRoot, innerContainer } = await waitFor(() => {
@@ -61,16 +67,17 @@ export async function renderComponentShadowDOM(component: CustomElementConstruct
 
 /**
  * Defines the given component and returns the unique tag name.
- * This helper is necessary because tag names must not collide in the global elements registry (and 
+ * This helper is necessary because tag names must not collide in the global elements registry (and
  * un-registration is not possible).
  */
-export function defineComponent(component: CustomElementConstructor, options?: {
-    nameHint?: string
-}) {
+export function defineComponent(
+    component: CustomElementConstructor,
+    options?: {
+        nameHint?: string;
+    }
+) {
     const nameHint = options?.nameHint ?? "test-component";
     const tag = `${nameHint}-${counter++}`;
     customElements.define(tag, component);
     return tag;
 }
-
-

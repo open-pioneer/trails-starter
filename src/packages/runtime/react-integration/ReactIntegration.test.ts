@@ -101,7 +101,6 @@ it("should be able to read properties from react component", async function () {
         }
     });
 
-
     const { queries } = await renderComponentShadowDOM(elem, {
         innerContainerSelector: "#wrapper"
     });
@@ -118,7 +117,7 @@ it("should get error when requesting properties from an unknown package2", async
         serviceLayer,
         packages: new Map()
     });
-   
+
     function TestComponent() {
         const properties = usePropertiesInternal("test");
         return createElement("span", undefined, `Hello ${properties.name}`);
