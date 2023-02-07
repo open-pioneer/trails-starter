@@ -113,6 +113,19 @@ React has been chosen instead of Vue for a few reasons:
 
 Ultimately, we expect the integration with the UI layer to be relatively simple, so changing the UI framework during development is possible and should not be a large concern.
 
+### Component Framework
+
+[Chakra UI](https://chakra-ui.com/) was chosen as the main React component framework after a in-depth evaluation of alternatives (including MUI, Fluent UI and Mantine).
+Reasons for that choice include:
+
+-   Very good support for a11y
+-   Good support for customization / themes
+-   Large set of builtin components (although no rich table by default)
+-   Well maintained
+-   Can integrate (with some complexity) into the shadow dom technology
+
+[Material UI](https://mui.com/core/) was the second contender.
+
 ## Implementation strategy
 
 Some of the requirements above can already be resolved by the choices in technology.
