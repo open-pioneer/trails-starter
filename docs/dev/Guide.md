@@ -150,6 +150,22 @@ also ensures that type definitions and documentation for reusable libraries or b
 
 However, usage of JavaScript _is_ supported.
 
+### UI Component Framework
+
+We are using [Chakra UI](https://chakra-ui.com/) as our base framework to develop user interfaces.
+Please import all chakra components from the `@open-pioneer/chakra-integration` package (instead of `@chakra-ui/*`).
+This gives us the opportunity to set sensible defaults for some advanced use cases (such as shadow dom support).
+
+Example:
+
+```jsx
+import { Button } from "@open-pioneer/chakra-integration";
+
+function MyComponent() {
+    return <Button>Hello World</Button>;
+}
+```
+
 ### Vite
 
 [Vite](https://vitejs.dev/) is our main build tool and development server.
