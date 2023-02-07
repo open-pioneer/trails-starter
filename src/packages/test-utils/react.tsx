@@ -6,7 +6,7 @@ import {
 import { FC, ReactNode, useMemo } from "react";
 
 export interface PackageContextProviderProps {
-    services?: Record<string, Service>;
+    services?: Record<string, Service<Record<string, unknown>>>;
     properties?: {
         [packageName: string]: Record<string, unknown>;
     };

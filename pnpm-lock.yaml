@@ -219,10 +219,12 @@ importers:
     specifiers:
       '@open-pioneer/runtime': workspace:^
       '@testing-library/dom': ^8.20.0
+      '@testing-library/react': ^13.4.0
     dependencies:
       '@testing-library/dom': 8.20.0
     devDependencies:
       '@open-pioneer/runtime': link:../runtime
+      '@testing-library/react': 13.4.0
 
 packages:
 
@@ -2308,6 +2310,18 @@ packages:
       dom-accessibility-api: 0.5.16
       lodash: 4.17.21
       redent: 3.0.0
+    dev: true
+
+  /@testing-library/react/13.4.0:
+    resolution: {integrity: sha512-sXOGON+WNTh3MLE9rve97ftaZukN3oNf2KjDy7YTx6hcTO2uuLHuCGynMDhFwGw/jYf4OJ2Qk0i4i79qMNNkyw==}
+    engines: {node: '>=12'}
+    peerDependencies:
+      react: ^18.0.0
+      react-dom: ^18.0.0
+    dependencies:
+      '@babel/runtime': 7.20.13
+      '@testing-library/dom': 8.20.0
+      '@types/react-dom': 18.0.10
     dev: true
 
   /@testing-library/react/13.4.0_biqbaboplfbrettd7655fr4n2y:
