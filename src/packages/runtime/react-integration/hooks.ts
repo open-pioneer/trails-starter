@@ -1,7 +1,7 @@
 import { useContext, useMemo } from "react";
 import { Error } from "@open-pioneer/core";
 import { InterfaceName, ServiceType } from "../ServiceRegistry";
-import { PackageContext as PackageContext, PackageContextData } from "./PackageContext";
+import { PackageContext as PackageContext, PackageContextMethods } from "./PackageContext";
 import { ErrorId } from "../errors";
 
 /**
@@ -42,8 +42,8 @@ export function usePropertiesInternal(packageName: string): Readonly<Record<stri
 
 function checkContext(
     hookName: string,
-    contextData: PackageContextData | null
-): PackageContextData {
+    contextData: PackageContextMethods | null
+): PackageContextMethods {
     if (!contextData) {
         throw new Error(
             ErrorId.INTERNAL,

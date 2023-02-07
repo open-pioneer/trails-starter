@@ -1,23 +1,24 @@
-import { within, waitFor } from "@testing-library/react";
 import { ReactIntegration } from "./ReactIntegration";
 import { ServiceLayer } from "../services/ServiceLayer";
-/**
- * @vitest-environment jsdom
- */
 import { createElement } from "react";
-import { expect, it } from "vitest";
+import { beforeEach, expect, it } from "vitest";
 import { usePropertiesInternal, useServiceInternal } from "./hooks";
 import { createCustomElement } from "../CustomElement";
 import { Service } from "../Service";
-import { TestUtils } from "../test/TestUtils";
 // eslint-disable-next-line import/no-relative-packages
 import { UI as TestUI } from "./test-data/test-package/UI";
+import { renderComponentShadowDOM } from "@open-pioneer/test-utils/web-components";
+import { act } from "@testing-library/react";
 
 export interface TestProvider {
     value: string;
 }
 
-it("should render component and using service which manipulates dom", async () => {
+beforeEach(() => {
+    document.body.innerHTML = "";
+});
+
+it("should allow access to service via react hook", async () => {
     function TestComponent() {
         const service = useServiceInternal("test", "test.Provider") as TestProvider;
         return createElement("span", undefined, `Hello ${service.value}`);
@@ -48,29 +49,18 @@ it("should render component and using service which manipulates dom", async () =
             }
         }
     });
-    customElements.define("test-elem-1", elem);
-    const customElement = await TestUtils.render("test-elem-1");
-    const selectedElem = await TestUtils.waitForSelector("#wrapper", customElement.shadowRoot!);
-    expect(selectedElem.querySelector("span")!.innerHTML).toBe("Hello TEST");
+
+    const { queries } = await renderComponentShadowDOM(elem, {
+        innerContainerSelector: "#wrapper"
+    });
+    const node = await queries.findByText("Hello TEST");
+    expect(node).toMatchSnapshot();
 });
 
 it("should get error while use undefined service", async () => {
-    // TODO: better test for React UI integration
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    let resolveCallback: any;
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const errorMessage = new Promise<any>((resolve) => {
-        resolveCallback = resolve;
-    });
-
     function TestComponent() {
-        try {
-            const service = useServiceInternal("test", "test.Provider") as TestProvider;
-            return createElement("span", undefined, `Hello ${service.value}`);
-        } catch (error) {
-            resolveCallback(error);
-        }
-        return null;
+        const service = useServiceInternal("test", "test.Provider") as TestProvider;
+        return createElement("span", undefined, `Hello ${service.value}`);
     }
     const wrapper = document.createElement("div");
     const serviceLayer = new ServiceLayer([]);
@@ -81,9 +71,12 @@ it("should get error while use undefined service", async () => {
         packages: new Map()
     });
     serviceLayer.start();
-    reactIntegration.render(TestComponent, {});
-    const error = await errorMessage;
-    expect(error.message).toMatchSnapshot();
+
+    expect(() => {
+        act(() => {
+            reactIntegration.render(TestComponent, {});
+        });
+    }).toThrowErrorMatchingSnapshot();
 });
 
 it("should be able to read properties from react component", async function () {
@@ -107,30 +100,16 @@ it("should be able to read properties from react component", async function () {
             }
         }
     });
-    customElements.define("test-elem-2", elem);
-    const customElement = await TestUtils.render("test-elem-2");
-    const selectedElem = await TestUtils.waitForSelector("#wrapper", customElement.shadowRoot!);
-    expect(selectedElem.querySelector("span")!.innerHTML).toBe("Hello USER");
+
+
+    const { queries } = await renderComponentShadowDOM(elem, {
+        innerContainerSelector: "#wrapper"
+    });
+    const node = await queries.findByText("Hello USER");
+    expect(node).toMatchSnapshot();
 });
 
-it("should get error when requesting properties from an unknown package", async () => {
-    // TODO: better test for React UI integration
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    let resolveCallback: any;
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const errorMessage = new Promise<any>((resolve) => {
-        resolveCallback = resolve;
-    });
-
-    function TestComponent() {
-        try {
-            const properties = usePropertiesInternal("test");
-            return createElement("span", undefined, `Hello ${properties.name}`);
-        } catch (error) {
-            resolveCallback(error);
-        }
-        return null;
-    }
+it("should get error when requesting properties from an unknown package2", async () => {
     const wrapper = document.createElement("div");
     const serviceLayer = new ServiceLayer([]);
     const reactIntegration = new ReactIntegration({
@@ -139,10 +118,19 @@ it("should get error when requesting properties from an unknown package", async 
         serviceLayer,
         packages: new Map()
     });
+   
+    function TestComponent() {
+        const properties = usePropertiesInternal("test");
+        return createElement("span", undefined, `Hello ${properties.name}`);
+    }
+
     serviceLayer.start();
-    reactIntegration.render(TestComponent, {});
-    const error = await errorMessage;
-    expect(error.message).toMatchSnapshot();
+
+    expect(() => {
+        act(() => {
+            reactIntegration.render(TestComponent, {});
+        });
+    }).toThrowErrorMatchingSnapshot();
 });
 
 it("should provide the autogenerated useProperties hook", async () => {
@@ -161,40 +149,10 @@ it("should provide the autogenerated useProperties hook", async () => {
             }
         }
     });
-    customElements.define("test-elem-3", elem);
-    const customElement = await TestUtils.render("test-elem-3");
-    const selectedElem = await TestUtils.waitForSelector(".ui", customElement.shadowRoot!);
-    expect(selectedElem!.innerHTML).toBe("Hello World!");
-});
 
-it("should render component and using service which manipulates dom", async () => {
-    function TestComponent() {
-        return createElement("div", { className: "div-test" }, `Hallo Test`);
-    }
-    const elem = createCustomElement({
-        component: (props) => {
-            return createElement("div", { id: "wrapper" }, createElement(TestComponent, props));
-        },
-        openShadowRoot: true
+    const { queries } = await renderComponentShadowDOM(elem, {
+        innerContainerSelector: ".ui"
     });
-    customElements.define("test-elem", elem);
-    const testElem = document.createElement("test-elem");
-    console.log(testElem);
-    document.body.appendChild(testElem);
-
-    const div = await waitFor(() => {
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        const wait = testElem!.shadowRoot!.querySelector(".pioneer-root") as any;
-        if (!wait) {
-            throw new Error("not rendered");
-        }
-        return wait;
-    });
-
-    const { queryByText } = within(div);
-
-    const temp = await waitFor(() => {
-        return queryByText("Hallo Test");
-    });
-    expect(temp).toMatchSnapshot();
+    const node = await queries.findByText("Hello World!");
+    expect(node).toMatchSnapshot();
 });

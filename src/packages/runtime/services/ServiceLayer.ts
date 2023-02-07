@@ -3,22 +3,7 @@ import { Error } from "@open-pioneer/core";
 import { ErrorId } from "../errors";
 import { UIDependency, verifyDependencies } from "./verifyDependencies";
 import { PackageRepr } from "./PackageRepr";
-import { Service } from "../Service";
-
-export type ServiceLookupResult = FoundService | UnimplementedService | UndeclaredDependency;
-
-export interface FoundService {
-    type: "found";
-    instance: Service;
-}
-
-export interface UndeclaredDependency {
-    type: "undeclared";
-}
-
-export interface UnimplementedService {
-    type: "unimplemented";
-}
+import { ServiceLookupResult } from "../Service";
 
 export class ServiceLayer {
     readonly serviceIndex: ReadonlyMap<string, ServiceRepr>;

@@ -1,6 +1,6 @@
 import { ComponentType, FC, StrictMode } from "react";
 import { CustomChakraProvider } from "@open-pioneer/chakra-integration";
-import { PackageContext, PackageContextData } from "./PackageContext";
+import { PackageContext, PackageContextMethods } from "./PackageContext";
 
 export interface ReactRootComponentProps {
     /** The actual component that contains the application. */
@@ -13,7 +13,7 @@ export interface ReactRootComponentProps {
     container: Node;
 
     /** Package context that allows lookup of services, properties, etc. */
-    packageContext: PackageContextData;
+    packageContext: PackageContextMethods;
 }
 
 export const ReactRootComponent: FC<ReactRootComponentProps> = ({

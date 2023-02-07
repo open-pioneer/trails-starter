@@ -3,7 +3,7 @@ import { createRoot, Root } from "react-dom/client";
 import { Error } from "@open-pioneer/core";
 import { ErrorId } from "../errors";
 import { ServiceLayer } from "../services/ServiceLayer";
-import { PackageContextData } from "./PackageContext";
+import { PackageContextMethods } from "./PackageContext";
 import { PackageRepr } from "../services/PackageRepr";
 import { ReactRootComponent } from "./ReactRootComponent";
 
@@ -19,7 +19,7 @@ export class ReactIntegration {
     private packages: Map<string, PackageRepr>;
     private serviceLayer: ServiceLayer;
     private root: Root;
-    private packageContext: PackageContextData;
+    private packageContext: PackageContextMethods;
 
     constructor(options: ReactIntegrationOptions) {
         this.containerNode = options.container;
