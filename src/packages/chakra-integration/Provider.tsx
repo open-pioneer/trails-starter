@@ -80,9 +80,10 @@ export const CustomChakraProvider: FC<CustomChakraProviderProps> = ({
 
            NOTE: Color mode is not initialized from the system automatically right now, this can be added in the future.
 
-        3. Changing the location for toasts to render inside the shadow root instead of the host document.
+        3. Changing the location for toasts to render inside the shadow root instead of the host document (via ToastProvider etc).
 
         4. Changing the default container for <Portal /> and components using <Portal /> (e.g. Modal, Drawer) to render inside the shadow dom.
+           This happens in the PortalFix.ts module (all components receive the chakraHost div via PortalRootProvider).
 
         NOTE:
             For reference:
@@ -113,7 +114,6 @@ export const CustomChakraProvider: FC<CustomChakraProviderProps> = ({
 
     const chakraHost = useRef<HTMLDivElement>(null);
     const toastOptions: ToastProviderProps = {
-        /** TODO: Verify where dialogs and toasts open in the DOM */
         portalProps: {
             containerRef: chakraHost
         }
