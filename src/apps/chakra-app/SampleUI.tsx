@@ -10,16 +10,42 @@ import {
     DrawerOverlay,
     Input,
     useDisclosure,
-    useToast
+    useToast,
+    Heading,
+    Link,
+    Stack,
+    StackDivider,
+    Box,
+    RadioGroup,
+    Radio
 } from "@open-pioneer/chakra-integration";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 
 export function SampleUI() {
     return (
         <Container>
-            <ToastExample />
-            <DrawerExample />
+            <Heading>chakra technical demo</Heading>
+            <Link href="https://chakra-ui.com" isExternal m={5} className="foo">
+                Chakra Design system Link
+            </Link>
+            <ComponentStack></ComponentStack>
         </Container>
+    );
+}
+
+function ComponentStack() {
+    return (
+        <Stack divider={<StackDivider borderColor="gray.200" />} spacing="24px" align="stretch">
+            <Box>
+                <ToastExample />
+            </Box>
+            <Box>
+                <DrawerExample />
+            </Box>
+            <Box bg="pink.300">
+                <RadioGroupExample />
+            </Box>
+        </Stack>
     );
 }
 
@@ -75,6 +101,28 @@ function DrawerExample() {
                     </DrawerFooter>
                 </DrawerContent>
             </Drawer>
+        </>
+    );
+}
+
+function RadioGroupExample() {
+    const [value, setValue] = useState("2");
+    return (
+        <>
+            <RadioGroup onChange={setValue} value={value}>
+                <Stack spacing={4} direction="row">
+                    <Radio size="sm" value="1" isDisabled>
+                        Radio 1 (Disabled)
+                    </Radio>
+                    <Radio size="md" value="2">
+                        Radio 2
+                    </Radio>
+                    <Radio size="lg" value="3">
+                        Radio 3
+                    </Radio>
+                </Stack>
+            </RadioGroup>
+            <p>{"Checked radio: " + value}</p>
         </>
     );
 }
