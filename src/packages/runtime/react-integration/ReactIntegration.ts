@@ -57,10 +57,10 @@ export class ReactIntegration {
         };
     }
 
-    render(component: ComponentType, props: Record<string, unknown>) {
+    render(Component: ComponentType, props: Record<string, unknown>) {
         this.root.render(
             createElement(ReactRootComponent, {
-                Component: component,
+                Component: Component,
                 componentProps: props,
                 container: this.containerNode,
                 packageContext: this.packageContext

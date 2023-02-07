@@ -50,7 +50,7 @@ export async function renderComponentShadowDOM(
         if (!shadowRoot) {
             throw new Error("Shadow root not attached.");
         }
-        const innerContainer = shadowRoot.querySelector(selector) as HTMLElement | null;
+        const innerContainer = shadowRoot.querySelector<HTMLElement>(selector);
         if (!innerContainer) {
             throw new Error("Inner container not ready.");
         }
@@ -59,6 +59,7 @@ export async function renderComponentShadowDOM(
 
     const queries = within(innerContainer);
     return {
+        node,
         shadowRoot,
         innerContainer,
         queries

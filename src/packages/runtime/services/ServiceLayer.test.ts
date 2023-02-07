@@ -1,7 +1,7 @@
 import { expect, it } from "vitest";
-import { Service, ServiceOptions } from "../Service";
+import { FoundService, Service, ServiceOptions } from "../Service";
 import { PackageRepr } from "./PackageRepr";
-import { FoundService, ServiceLayer } from "./ServiceLayer";
+import { ServiceLayer } from "./ServiceLayer";
 import { ServiceRepr } from "./ServiceRepr";
 
 it("starts and stops services in the expected order", function () {

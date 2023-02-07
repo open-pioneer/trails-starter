@@ -1,71 +1,72 @@
+/**
+ * @vitest-environment jsdom
+ */
+import { renderComponentShadowDOM } from "@open-pioneer/test-utils/web-components";
+import { waitFor } from "@testing-library/dom";
 import { Component, createElement } from "react";
-import { beforeAll, expect, it, describe } from "vitest";
+import { expect, it, describe } from "vitest";
 import { createCustomElement } from "./CustomElement";
 import { usePropertiesInternal } from "./react-integration";
-import { TestUtils } from "./test/TestUtils";
-
-class TestComponent extends Component<Record<string, string>> {
-    render() {
-        return createElement("span", this.props, `Hello ${this.props.name}`);
-    }
-}
 
 describe("simple rendering", function () {
-    let elem: CustomElementConstructor;
-    const TAG = "sample-element";
-    const STYLE = ".test { color: red }";
-
-    beforeAll(() => {
-        elem = createCustomElement({
-            component: () => createElement("div", { className: "test" }, "hello world"),
-            styles: STYLE,
-            openShadowRoot: true
-        });
-        customElements.define(TAG, elem);
+    const SIMPLE_STYLE = ".test { color: red }";
+    const SIMPLE_ELEM = createCustomElement({
+        component: () => createElement("div", { className: "test" }, "hello world"),
+        styles: SIMPLE_STYLE,
+        openShadowRoot: true
     });
+    customElements.define("simple-elem", SIMPLE_ELEM);
 
     it("should return html element", () => {
-        expect(new elem()).toBeInstanceOf(HTMLElement);
+        expect(new SIMPLE_ELEM()).toBeInstanceOf(HTMLElement);
     });
 
     it("should render html", async () => {
-        const node = await TestUtils.render(TAG);
-        const div = await TestUtils.waitForSelector(".test", node.shadowRoot!);
-        expect(div.innerHTML).toBe("hello world");
+        const { queries } = await renderComponentShadowDOM("simple-elem");
+        const div = await queries.findByText("hello world");
+        expect(div.className).toBe("test");
     });
 
     it("should render use styles", async () => {
-        const node = await TestUtils.render(TAG);
-        const style = await TestUtils.waitForSelector("style", node.shadowRoot!);
-        expect(style.innerHTML).toBe(STYLE);
+        const { shadowRoot } = await renderComponentShadowDOM("simple-elem");
+        const style = shadowRoot.querySelector("style")!;
+        expect(style.innerHTML).toBe(SIMPLE_STYLE);
     });
 
     it("should clean up its content when removed from the dom", async () => {
-        const node = await TestUtils.render(TAG);
-        await TestUtils.waitForSelector(".test", node.shadowRoot!);
-
-        // Unlinks from document
+        const { node, shadowRoot, innerContainer } = await renderComponentShadowDOM("simple-elem");
         node.remove();
 
         // Wait until divs are gone
-        await TestUtils.waitForRemoval("div");
-        expect(node.shadowRoot?.innerHTML).toBe("");
+        await waitFor(() => {
+            const div = innerContainer.querySelector("div");
+            if (div) {
+                throw new Error("content still not destroyed");
+            }
+        });
+
+        expect(shadowRoot.innerHTML).toBe("");
     });
 });
 
 it("should render test component with attribute 'name'", async () => {
+    class TestComponent extends Component<Record<string, string>> {
+        render() {
+            return createElement("span", this.props, `Hello ${this.props.name}`);
+        }
+    }
+
     const attributeValue = "test";
     const elem = createCustomElement({
-        component: (props) =>
-            createElement("div", { id: "wrapper" }, createElement(TestComponent, props)),
+        component: TestComponent,
         attributes: ["name"],
         openShadowRoot: true
     });
-    customElements.define("test-elem", elem);
-    const customElement = await TestUtils.render("test-elem");
-    customElement.setAttribute("name", attributeValue);
-    const selectedElem = await TestUtils.waitForSelector("#wrapper", customElement.shadowRoot!);
-    expect(selectedElem.querySelector("span")!.innerHTML).toBe(`Hello ${attributeValue}`);
+    const { node, queries } = await renderComponentShadowDOM(elem);
+    node.setAttribute("name", attributeValue);
+
+    const span = await queries.findByText(`Hello ${attributeValue}`);
+    expect(span.tagName).toBe("SPAN");
 });
 
 it("should allow customization of package properties", async () => {
@@ -91,10 +92,10 @@ it("should allow customization of package properties", async () => {
             }
         }
     });
-    customElements.define("test-elem-2", elem);
-    const customElement = await TestUtils.render("test-elem-2");
-    const selectedElem = await TestUtils.waitForSelector("span", customElement.shadowRoot!);
-    expect(selectedElem!.innerHTML).toBe(`Hello User`);
+
+    const { queries } = await renderComponentShadowDOM(elem);
+    const span = await queries.findByText("Hello User");
+    expect(span.tagName).toBe("SPAN");
 });
 
 it("should allow customization of package properties through a callback", async () => {
@@ -128,8 +129,8 @@ it("should allow customization of package properties through a callback", async 
             };
         }
     });
-    customElements.define("test-elem-3", elem);
-    const customElement = await TestUtils.render("test-elem-3");
-    const selectedElem = await TestUtils.waitForSelector("span", customElement.shadowRoot!);
-    expect(selectedElem!.innerHTML).toBe("Bye User");
+
+    const { queries } = await renderComponentShadowDOM(elem);
+    const span = await queries.findByText("Bye User");
+    expect(span.tagName).toBe("SPAN");
 });

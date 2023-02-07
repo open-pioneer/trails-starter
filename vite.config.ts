@@ -48,8 +48,6 @@ export default defineConfig({
 
     // https://vitest.dev/config/
     test: {
-        globals: true,
-        environment: "jsdom",
-        setupFiles: "./tests/setup.js",
+        globals: true
     }
 });
