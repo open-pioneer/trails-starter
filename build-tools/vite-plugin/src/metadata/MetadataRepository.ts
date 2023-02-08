@@ -122,6 +122,13 @@ export class MetadataRepository {
         }
     }
 
+    /**
+     * Returns the combined application metadata of the app in `appDirectory`.
+     * Starting from the app's package.json, dependencies will be visited recursively.
+     *
+     * For packages that use our package extensions (services etc.), metadata will be gathered and
+     * will be returned here.
+     */
     async getAppMetadata(ctx: MetadataContext, appDirectory: string): Promise<AppMetadata> {
         isDebug && debug(`Request for app metadata of ${appDirectory}`);
 
@@ -203,7 +210,7 @@ export class MetadataRepository {
         const jobs = this.packageMetadataJobs;
         let job = jobs.get(packageDir);
         if (job) {
-            isDebug && debug(`Waiting for existing analysis of ${packageDir}`);
+            isDebug && debug(`Waiting for already running analysis of ${packageDir}`);
             const entry = await job;
             propagateWatchFiles(entry.watchFiles, ctx);
             return entry.metadata;
