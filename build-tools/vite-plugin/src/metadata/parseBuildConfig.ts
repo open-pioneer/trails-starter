@@ -24,7 +24,7 @@ export interface NormalizedServiceConfig {
 }
 
 export interface NormalizedUiConfig {
-    references: string[];
+    references: ReferenceConfig[];
 }
 
 export interface NormalizedProperty {
@@ -114,16 +114,21 @@ function normalizeReferencesConfig(
 
     return Object.fromEntries(
         Object.entries(rawConfig).map(([referenceName, referenceConfig]) => {
-            const normalized: ReferenceConfig =
-                typeof referenceConfig === "string" ? { name: referenceConfig } : referenceConfig;
-            return [referenceName, normalized];
+            return [referenceName, normalizeReferenceConfig(referenceConfig)];
         })
     );
 }
 
+function normalizeReferenceConfig(rawConfig: string | ReferenceConfig): ReferenceConfig {
+    if (typeof rawConfig === "string") {
+        return { name: rawConfig };
+    }
+    return rawConfig;
+}
+
 function normalizeUiConfig(rawConfig: BuildConfig["ui"]): NormalizedUiConfig {
     return {
-        references: rawConfig?.references ?? []
+        references: rawConfig?.references?.map(normalizeReferenceConfig) ?? []
     };
 }
 

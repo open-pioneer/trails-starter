@@ -6,6 +6,7 @@ export enum ErrorId {
 
     // Service layer
     INTERFACE_NOT_FOUND = "runtime:interface-not-found",
+    AMBIGUOUS_DEPENDENCY = "runtime:ambiguous-dependency",
     UNDECLARED_DEPENDENCY = "runtime:undeclared-dependency",
     SERVICE_CONSTRUCTION_FAILED = "runtime:service-construction-failed",
     SERVICE_DESTRUCTION_FAILED = "runtime:service-destruction-failed",

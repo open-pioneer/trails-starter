@@ -24,6 +24,7 @@ export const PackageContextProvider: FC<PackageContextProviderProps> = (props) =
         const services = inputServices ?? {};
         const properties = inputProperties ?? {};
         return {
+            // TODO: Support for classifiers
             getService(packageName, interfaceName) {
                 void packageName; // ignored
                 const service = services[interfaceName];

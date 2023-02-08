@@ -2,10 +2,13 @@ import { ErrorId } from "./../errors";
 import { ServiceMetadata } from "../metadata";
 import { Service, ServiceConstructor, ServiceOptions } from "../Service";
 import { Error } from "@open-pioneer/core";
-
-export type Dependency = { referenceName: string; interfaceName: string };
+import { InterfaceSpec } from "./InterfaceSpec";
 
 export type ServiceState = "not-constructed" | "constructing" | "constructed" | "destroyed";
+
+export interface ServiceDependency extends InterfaceSpec {
+    referenceName: string;
+}
 
 /**
  * Represents metadata and state of a service in the runtime.
@@ -19,15 +22,21 @@ export class ServiceRepr {
     ): ServiceRepr {
         const clazz = data.clazz;
         const name = data.name;
-        const dependencies = Object.entries(data.references ?? {}).map<Dependency>(
+        const dependencies = Object.entries(data.references ?? {}).map<ServiceDependency>(
             ([name, referenceMetadata]) => {
                 return {
                     referenceName: name,
-                    interfaceName: referenceMetadata.name
+                    interfaceName: referenceMetadata.name,
+                    qualifier: referenceMetadata.qualifier
                 };
             }
         );
-        const interfaces = (data.provides ?? []).map((p) => p.name);
+        const interfaces = data.provides?.map<InterfaceSpec>((i) => {
+            return {
+                interfaceName: i.name,
+                qualifier: i.qualifier
+            };
+        });
         return new ServiceRepr({ name, packageName, clazz, dependencies, interfaces, properties });
     }
 
@@ -44,10 +53,10 @@ export class ServiceRepr {
     readonly properties: Readonly<Record<string, unknown>>;
 
     /** Dependencies required by the service constructor. */
-    readonly dependencies: readonly Dependency[];
+    readonly dependencies: readonly ServiceDependency[];
 
     /** Interfaces provided by the service. */
-    readonly interfaces: readonly string[];
+    readonly interfaces: readonly Readonly<InterfaceSpec>[];
 
     /** Number of references to this service. */
     private _useCount = 0;
@@ -67,8 +76,8 @@ export class ServiceRepr {
         packageName: string;
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         clazz: ServiceConstructor<any>;
-        dependencies?: Dependency[];
-        interfaces?: string[];
+        dependencies?: ServiceDependency[];
+        interfaces?: InterfaceSpec[];
         properties?: Record<string, unknown>;
     }) {
         const {
@@ -190,4 +199,24 @@ export class ServiceRepr {
     removeRef() {
         return (this._useCount -= 1);
     }
+}
+
+export function renderAmbiguousServiceChoices(services: ServiceRepr[], max = 2): string {
+    let message = "";
+    let count = 0;
+    for (const service of services) {
+        if (count) {
+            message += ", ";
+        }
+        message += service.id;
+        if (++count >= max) {
+            break;
+        }
+    }
+
+    const remaining = services.length - count;
+    if (remaining > 0) {
+        message += ` and ${remaining} more`;
+    }
+    return message;
 }

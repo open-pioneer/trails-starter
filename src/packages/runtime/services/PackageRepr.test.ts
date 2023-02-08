@@ -1,6 +1,6 @@
 import { expect, it } from "vitest";
 import { PackageMetadata } from "../metadata";
-import { expectError } from "../test/expectError";
+import { expectError } from "../test-utils/expectError";
 import { createPackages, PackageRepr } from "./PackageRepr";
 
 class ClazzA {}
@@ -64,7 +64,8 @@ it("parses package metadata into internal package representations", function () 
     expect(serviceA.dependencies).toStrictEqual([
         {
             referenceName: "foo",
-            interfaceName: "b.ServiceB1"
+            interfaceName: "b.ServiceB1",
+            qualifier: undefined
         }
     ]);
     expect(serviceA.interfaces).toStrictEqual([]);
@@ -74,7 +75,10 @@ it("parses package metadata into internal package representations", function () 
 
     const serviceB = packageB.services.find((s) => s.name === "B")!;
     expect(serviceB).toBeDefined();
-    expect(serviceB.interfaces).toStrictEqual(["b.ServiceB1", "b.ServiceB2"]);
+    expect(serviceB.interfaces).toStrictEqual([
+        { interfaceName: "b.ServiceB1", qualifier: undefined },
+        { interfaceName: "b.ServiceB2", qualifier: undefined }
+    ]);
     expect(serviceB.properties.foo).toBe(123);
 });
 

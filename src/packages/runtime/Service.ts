@@ -32,18 +32,3 @@ export type ServiceOptions<References extends {} = {}> = {
 export type ServiceConstructor<References extends {} = {}, Interface extends {} = {}> = {
     new (options: ServiceOptions<References>): Service<Interface>;
 };
-
-export type ServiceLookupResult = FoundService | UnimplementedService | UndeclaredDependency;
-
-export interface FoundService {
-    type: "found";
-    instance: Service;
-}
-
-export interface UndeclaredDependency {
-    type: "undeclared";
-}
-
-export interface UnimplementedService {
-    type: "unimplemented";
-}

@@ -59,6 +59,9 @@ export interface ServiceMetadata {
 export interface InterfaceReferenceMetadata {
     /** The name of the referenced interface. */
     name: string;
+
+    /** Additional qualifier to disambiguate interface requirements. */
+    qualifier?: string | undefined;
 }
 
 /**
@@ -67,6 +70,9 @@ export interface InterfaceReferenceMetadata {
 export interface ProvidedInterfaceMetadata {
     /** The name of the provided interface. */
     name: string;
+
+    /** Additional qualifier for disambiguation of multiple interface implementations. */
+    qualifier?: string | undefined;
 }
 
 /**
@@ -78,7 +84,7 @@ export interface UiMetadata {
      * Interfaces in this list can be used by calling the `useService` hook
      * from a react component.
      */
-    references?: string[];
+    references?: InterfaceReferenceMetadata[];
 }
 
 /**

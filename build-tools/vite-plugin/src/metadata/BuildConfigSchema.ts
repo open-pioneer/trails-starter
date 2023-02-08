@@ -3,7 +3,9 @@ import {
     BuildConfig,
     PropertyMetaConfig,
     ProvidesConfig,
-    ReferenceConfig
+    ReferenceConfig,
+    ServiceConfig,
+    UiConfig
 } from "@open-pioneer/build-support";
 import { fromZodError } from "zod-validation-error";
 
@@ -23,11 +25,16 @@ const PROPERTY_META_SCHEMA: z.ZodType<PropertyMetaConfig> = z.strictObject({
 
 const REFERENCE_CONFIG_SCHEMA: z.ZodType<ReferenceConfig> = z.strictObject({ name: z.string() });
 
-const PROVIDES_CONFIG_SCHEMA: z.ZodType<ProvidesConfig> = z.strictObject({ name: z.string() });
+const PROVIDES_CONFIG_SCHEMA: z.ZodType<ProvidesConfig> = z.strictObject({
+    name: z.string(),
+    qualifier: z.string().optional()
+});
 
-const UI_CONFIG_SCHEMA = z.strictObject({ references: z.array(z.string()).optional() });
+const UI_CONFIG_SCHEMA: z.ZodType<UiConfig> = z.strictObject({
+    references: z.array(z.string().or(REFERENCE_CONFIG_SCHEMA)).optional()
+});
 
-const SERVICES_CONFIG_SCHEMA = z.strictObject({
+const SERVICE_CONFIG_SCHEMA: z.ZodType<ServiceConfig> = z.strictObject({
     provides: z
         .string()
         .or(z.array(z.string().or(PROVIDES_CONFIG_SCHEMA)))
@@ -37,7 +44,7 @@ const SERVICES_CONFIG_SCHEMA = z.strictObject({
 
 const BUILD_CONFIG_SCHEMA: z.ZodType<BuildConfig> = z.strictObject({
     styles: z.string().optional(),
-    services: z.record(z.string(), SERVICES_CONFIG_SCHEMA).optional(),
+    services: z.record(z.string(), SERVICE_CONFIG_SCHEMA).optional(),
     ui: UI_CONFIG_SCHEMA.optional(),
     properties: z.record(z.string(), JSON_SCHEMA).optional(),
     propertiesMeta: z.record(z.string(), PROPERTY_META_SCHEMA).optional()

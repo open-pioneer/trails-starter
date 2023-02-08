@@ -63,7 +63,7 @@ export interface UiConfig {
      * Interfaces names of the services referenced by the UI.
      * The UI can only use services that are declared as dependencies in this array.
      */
-    references?: string[];
+    references?: (string | ReferenceConfig)[];
 }
 
 /**
@@ -72,6 +72,12 @@ export interface UiConfig {
 export interface ProvidesConfig {
     /** Name of the interface that is provided by this service. */
     name: string;
+
+    /**
+     * An additional qualifier to disambiguate multiple implementations of the same interface.
+     * This property should be set to a unique value if the interface is designed to support multiple implementations.
+     */
+    qualifier?: string;
 }
 
 /**
@@ -80,6 +86,11 @@ export interface ProvidesConfig {
 export interface ReferenceConfig {
     /** Name of the interface that is referenced by this service. */
     name: string;
+
+    /**
+     * An additional qualifier to disambiguate an interface reference when there are multiple implementations.
+     */
+    qualifier?: string;
 }
 
 /**

@@ -1,7 +1,8 @@
 import { expect, it } from "vitest";
-import { FoundService, Service, ServiceOptions } from "../Service";
+import { Service, ServiceOptions } from "../Service";
 import { PackageRepr } from "./PackageRepr";
 import { ServiceLayer } from "./ServiceLayer";
+import { Found } from "./ServiceLookup";
 import { ServiceRepr } from "./ServiceRepr";
 
 it("starts and stops services in the expected order", function () {
@@ -59,7 +60,7 @@ it("starts and stops services in the expected order", function () {
                     name: "B",
                     packageName: "b",
                     clazz: ServiceB,
-                    interfaces: ["b.serviceB"]
+                    interfaces: [{ interfaceName: "b.serviceB" }]
                 })
             ]
         })
@@ -125,7 +126,7 @@ it("destroys services once they are no longer referenced (but not before)", func
         name: "Provider",
         packageName: "ProviderPackage",
         clazz: ServiceProvider,
-        interfaces: ["provider.Service"]
+        interfaces: [{ interfaceName: "provider.Service" }]
     });
 
     const serviceLayer = new ServiceLayer([
@@ -195,22 +196,31 @@ it("allows access to service instances if the dependency was declared", function
                     packageName: "TestPackage",
                     clazz: Dummy,
                     dependencies: [],
-                    interfaces: ["testpackage.Interface", "testpackage.OtherInterface"]
+                    interfaces: [
+                        { interfaceName: "testpackage.Interface" },
+                        { interfaceName: "testpackage.OtherInterface" }
+                    ]
                 })
             ],
-            uiInterfaces: ["testpackage.Interface"]
+            uiReferences: [{ interfaceName: "testpackage.Interface" }]
         })
     ]);
     serviceLayer.start();
 
-    const resultDeclared = serviceLayer.getService("TestPackage", "testpackage.Interface");
+    const resultDeclared = serviceLayer.getService("TestPackage", {
+        interfaceName: "testpackage.Interface"
+    });
     expect(resultDeclared.type).toBe("found");
-    expect((resultDeclared as FoundService).instance).toBeDefined();
+    expect((resultDeclared as Found).service).toBeDefined();
 
-    const resultUndeclared = serviceLayer.getService("TestPackage", "testpackage.OtherInterface");
+    const resultUndeclared = serviceLayer.getService("TestPackage", {
+        interfaceName: "testpackage.OtherInterface"
+    });
     expect(resultUndeclared.type).toBe("undeclared");
 
-    const resultUndeclared2 = serviceLayer.getService("whatever", "testpackage.Interface");
+    const resultUndeclared2 = serviceLayer.getService("whatever", {
+        interfaceName: "testpackage.Interface"
+    });
     expect(resultUndeclared2.type, "undeclared");
 
     serviceLayer.destroy();
@@ -222,7 +232,7 @@ it("injects properties into service instances", function () {
     const service = new ServiceRepr({
         name: "Service",
         packageName: "pkg",
-        interfaces: ["testpackage.Interface"],
+        interfaces: [{ interfaceName: "testpackage.Interface" }],
         properties: {
             foo: "bar"
         },
@@ -236,7 +246,7 @@ it("injects properties into service instances", function () {
         new PackageRepr({
             name: "TestPackage",
             services: [service],
-            uiInterfaces: ["testpackage.Interface"]
+            uiReferences: [{ interfaceName: "testpackage.Interface" }]
         })
     ]);
     serviceLayer.start();

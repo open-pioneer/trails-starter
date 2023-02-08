@@ -1,6 +1,7 @@
 import generate from "@babel/generator";
 import template from "@babel/template";
 import * as nodes from "@babel/types";
+import { ReferenceConfig } from "@open-pioneer/build-support";
 import { PackageMetadata } from "../metadata/MetadataRepository";
 import { IdGenerator } from "./IdGenerator";
 
@@ -28,19 +29,21 @@ const SERVICE_OBJECT = template.expression(`
 
 const INTERFACE_OBJECT = template.expression(`
     {
-        name: %%INTERFACE_NAME%%
+        name: %%INTERFACE_NAME%%,
+        qualifier: %%QUALIFIER%%
     }
 `);
 
 const REFERENCE_OBJECT = template.expression(`
     {
-        name: %%INTERFACE_NAME%%
+        name: %%INTERFACE_NAME%%,
+        qualifier: %%QUALIFIER%%
     }
 `);
 
 const UI_OBJECT = template.expression(`
     {
-        references: %%INTERFACE_NAMES%%
+        references: %%UI_REFERENCES%%
     }
 `);
 
@@ -121,7 +124,9 @@ function generatePackageMetadata(
             SERVICE_INTERFACES: nodes.arrayExpression(
                 service.provides.map((p) =>
                     INTERFACE_OBJECT({
-                        INTERFACE_NAME: nodes.stringLiteral(p.name)
+                        INTERFACE_NAME: nodes.stringLiteral(p.name),
+                        QUALIFIER:
+                            p.qualifier == null ? undefinedNode() : nodes.stringLiteral(p.qualifier)
                     })
                 )
             ),
@@ -129,9 +134,7 @@ function generatePackageMetadata(
                 Object.entries(service.references).map(([referenceName, referenceConfig]) =>
                     nodes.objectProperty(
                         nodes.stringLiteral(referenceName),
-                        REFERENCE_OBJECT({
-                            INTERFACE_NAME: nodes.stringLiteral(referenceConfig.name)
-                        })
+                        referenceObject(referenceConfig)
                     )
                 )
             )
@@ -143,8 +146,8 @@ function generatePackageMetadata(
     }
 
     const uiObject = UI_OBJECT({
-        INTERFACE_NAMES: nodes.arrayExpression(
-            pkg.config.ui.references.map((r) => nodes.stringLiteral(r))
+        UI_REFERENCES: nodes.arrayExpression(
+            pkg.config.ui.references.map((r) => referenceObject(r))
         )
     });
 
@@ -213,4 +216,17 @@ function jsonToExpression(json: unknown): nodes.Expression {
         );
     }
     throw new Error(`Unexpected value while serializing JSON: ${json}.`);
+}
+
+function referenceObject(referenceConfig: ReferenceConfig): nodes.Expression {
+    return REFERENCE_OBJECT({
+        INTERFACE_NAME: nodes.stringLiteral(referenceConfig.name),
+        QUALIFIER: referenceConfig.qualifier
+            ? nodes.stringLiteral(referenceConfig.qualifier)
+            : undefinedNode()
+    });
+}
+
+function undefinedNode() {
+    return nodes.unaryExpression("void", nodes.numericLiteral(0));
 }

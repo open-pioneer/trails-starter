@@ -35,11 +35,51 @@ it("should allow access to service via react hook", async () => {
         clazz: class Provider implements Service<TestProvider> {
             value = "TEST";
         },
-        interfaces: ["test.Provider"]
+        interfaces: [{ interfaceName: "test.Provider" }]
     });
     const testPackage = new PackageRepr({
         name: "test",
-        uiInterfaces: ["test.Provider"],
+        uiReferences: [{ interfaceName: "test.Provider" }],
+        services: [testService]
+    });
+    const serviceLayer = new ServiceLayer([testPackage]);
+    serviceLayer.start();
+
+    const reactIntegration = new ReactIntegration({
+        rootNode: wrapper,
+        container: wrapper,
+        serviceLayer,
+        packages: new Map([[testPackage.name, testPackage]])
+    });
+
+    act(() => {
+        reactIntegration.render(TestComponent, {});
+    });
+
+    const node = await findByText(wrapper, "Hello TEST");
+    expect(node).toMatchSnapshot();
+});
+
+it("should allow access to service with qualifier via react hook", async () => {
+    function TestComponent() {
+        const service = useServiceInternal("test", "test.Provider", {
+            qualifier: "foo"
+        }) as TestProvider;
+        return createElement("span", undefined, `Hello ${service.value}`);
+    }
+
+    const wrapper = document.createElement("div");
+    const testService = new ServiceRepr({
+        name: "Provider",
+        packageName: "test",
+        clazz: class Provider implements Service<TestProvider> {
+            value = "TEST";
+        },
+        interfaces: [{ interfaceName: "test.Provider", qualifier: "foo" }]
+    });
+    const testPackage = new PackageRepr({
+        name: "test",
+        uiReferences: [{ interfaceName: "test.Provider", qualifier: "foo" }],
         services: [testService]
     });
     const serviceLayer = new ServiceLayer([testPackage]);

@@ -28,6 +28,8 @@ declare module "open-pioneer:app" {
 declare module "open-pioneer:react-hooks" {
     // eslint-disable-next-line unused-imports/no-unused-imports
     import { type ServiceRegistry, type CustomElementOptions } from "@open-pioneer/runtime";
+    import { type UseServiceOptions } from "@open-pioneer/react-integration";
+    export { type UseServiceOptions };
 
     /**
      * Returns an implementation of the given service.
@@ -37,7 +39,8 @@ declare module "open-pioneer:react-hooks" {
      * In order to use to use a service, it must be declared as a UI-dependency in the package's configuration file.
      */
     export function useService<InterfaceName extends keyof ServiceRegistry>(
-        serviceName: InterfaceName
+        serviceName: InterfaceName,
+        options?: UseServiceOptions
     ): ServiceRegistry[InterfaceName];
     export function useService(serviceName: string): unknown;
 

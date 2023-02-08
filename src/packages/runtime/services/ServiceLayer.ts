@@ -3,34 +3,44 @@ import { Error } from "@open-pioneer/core";
 import { ErrorId } from "../errors";
 import { UIDependency, verifyDependencies } from "./verifyDependencies";
 import { PackageRepr } from "./PackageRepr";
-import { ServiceLookupResult } from "../Service";
+import { ReadonlyServiceLookup, ServiceLookupResult } from "./ServiceLookup";
+import { InterfaceSpec, renderInterfaceSpec } from "./InterfaceSpec";
+
+export type DynamicLookupResult = ServiceLookupResult | UndeclaredDependency;
+
+export interface UndeclaredDependency {
+    type: "undeclared";
+}
+
+interface DependencyDeclarations {
+    unqualified: boolean;
+    qualifiers: Set<string>;
+}
 
 export class ServiceLayer {
-    readonly serviceIndex: ReadonlyMap<string, ServiceRepr>;
+    readonly serviceLookup: ReadonlyServiceLookup;
 
-    private declaredDependencies = new Map<string, Set<string>>();
+    // Package name --> Interface name --> Declarations
+    private declaredDependencies;
     private allServices: readonly ServiceRepr[];
     private state: "not-started" | "started" | "destroyed" = "not-started";
 
     constructor(packages: readonly PackageRepr[]) {
         this.allServices = packages.map((pkg) => pkg.services).flat();
-        this.serviceIndex = verifyDependencies({
+        this.serviceLookup = verifyDependencies({
             services: this.allServices,
             uiDependencies: packages
                 .map((pkg) =>
-                    pkg.uiInterfaces.map<UIDependency>((interfaceName) => {
+                    pkg.uiReferences.map<UIDependency>((dep) => {
                         return {
                             packageName: pkg.name,
-                            interfaceName
+                            ...dep
                         };
                     })
                 )
                 .flat()
         });
-
-        for (const pkg of packages) {
-            this.declaredDependencies.set(pkg.name, new Set(pkg.uiInterfaces));
-        }
+        this.declaredDependencies = buildDependencyIndex(packages);
     }
 
     destroy() {
@@ -57,29 +67,20 @@ export class ServiceLayer {
      * to enforce coding guidelines.
      *
      * @param packageName the name of the package requesting the import
-     * @param interfaceName the required interface
+     * @param spec the interface specifier
      *
      * @throws if the service layer is not in 'started' state or if no service implements the interface.
      */
-    getService(packageName: string, interfaceName: string): ServiceLookupResult {
+    getService(packageName: string, spec: InterfaceSpec): DynamicLookupResult {
         if (this.state !== "started") {
             throw new Error(ErrorId.INTERNAL, "Service layer is not started.");
         }
 
-        const instance = this.serviceIndex.get(interfaceName)?.instance;
-        if (!instance) {
-            return { type: "unimplemented" };
-        }
-
-        const isDeclared = this.declaredDependencies.get(packageName)?.has(interfaceName) ?? false;
-        if (!isDeclared) {
+        if (!this.isDeclaredDependency(packageName, spec)) {
             return { type: "undeclared" };
         }
 
-        return {
-            type: "found",
-            instance: instance
-        };
+        return this.serviceLookup.lookup(spec);
     }
 
     /**
@@ -107,13 +108,9 @@ export class ServiceLayer {
 
         // Initialize dependencies recursively before creating the current service.
         service.dependencies.forEach((d) => {
-            const serviceRef = this.serviceIndex.get(d.interfaceName);
-            if (serviceRef) {
-                const instance = this.createService(serviceRef);
-                instances[d.referenceName] = instance;
-            } else {
-                throw new Error(ErrorId.INTERNAL, "Service not defined.");
-            }
+            const serviceRef = this.mustGet(d);
+            const instance = this.createService(serviceRef);
+            instances[d.referenceName] = instance;
         });
 
         // Sets state to 'constructed' to finish the state transition, useCount is 1.
@@ -136,10 +133,70 @@ export class ServiceLayer {
         }
 
         service.dependencies.forEach((d) => {
-            const serviceRef = this.serviceIndex.get(d.interfaceName);
-            if (serviceRef) {
-                this.destroyService(serviceRef);
+            const lookupResult = this.serviceLookup.lookup(d);
+            if (lookupResult.type === "found") {
+                this.destroyService(lookupResult.service);
             }
         });
     }
+
+    private isDeclaredDependency(packageName: string, spec: InterfaceSpec) {
+        const packageEntry = this.declaredDependencies.get(packageName);
+        if (!packageEntry) {
+            return false;
+        }
+        const interfaceEntry = packageEntry.get(spec.interfaceName);
+        if (!interfaceEntry) {
+            return false;
+        }
+        if (spec.qualifier == null) {
+            return interfaceEntry.unqualified;
+        }
+        return interfaceEntry.qualifiers.has(spec.qualifier);
+    }
+
+    /**
+     * Called to retrieve a service implementation for which we know that it exists (due to prior validation).
+     */
+    private mustGet(spec: InterfaceSpec) {
+        const result = this.serviceLookup.lookup(spec);
+        if (result.type !== "found") {
+            throw new Error(
+                ErrorId.INTERNAL,
+                `Failed to find service implementing interface ${renderInterfaceSpec(
+                    spec
+                )}: result type '${result.type}'.`
+            );
+        }
+        return result.service;
+    }
+}
+
+function buildDependencyIndex(packages: readonly PackageRepr[]) {
+    // Register declared UI dependencies.
+    // This is needed as a lookup structure to that dynamic service lookups
+    // can be validated at runtime.
+    const index = new Map<string, Map<string, DependencyDeclarations>>();
+    for (const pkg of packages) {
+        const packageName = pkg.name;
+        const packageEntry = new Map<string, DependencyDeclarations>();
+        for (const uiReference of pkg.uiReferences) {
+            let interfaceEntry = packageEntry.get(uiReference.interfaceName);
+            if (!interfaceEntry) {
+                interfaceEntry = {
+                    unqualified: false,
+                    qualifiers: new Set<string>()
+                };
+                packageEntry.set(uiReference.interfaceName, interfaceEntry);
+            }
+
+            if (uiReference.qualifier == null) {
+                interfaceEntry.unqualified = true;
+            } else {
+                interfaceEntry.qualifiers.add(uiReference.qualifier);
+            }
+        }
+        index.set(packageName, packageEntry);
+    }
+    return index;
 }

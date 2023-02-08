@@ -4,6 +4,11 @@ import { InterfaceName, ServiceType } from "../ServiceRegistry";
 import { PackageContext as PackageContext, PackageContextMethods } from "./PackageContext";
 import { ErrorId } from "../errors";
 
+export interface UseServiceOptions {
+    /** An additional qualifier to disambiguate service instances that implement the same interface. */
+    qualifier?: string;
+}
+
 /**
  * Returns a service that implements the given interface.
  * Receives the package name of the importing package as a string.
@@ -15,14 +20,28 @@ import { ErrorId } from "../errors";
  */
 export function useServiceInternal<Interface extends InterfaceName>(
     packageName: string,
-    interfaceName: Interface
+    interfaceName: Interface,
+    options?: UseServiceOptions
 ): ServiceType<Interface>;
-export function useServiceInternal(packageName: string, interfaceName: string): unknown;
-export function useServiceInternal(packageName: string, interfaceName: string) {
+export function useServiceInternal(
+    packageName: string,
+    interfaceName: string,
+    options?: UseServiceOptions
+): unknown;
+export function useServiceInternal(
+    packageName: string,
+    interfaceName: string,
+    options?: UseServiceOptions
+): unknown {
     const context = useContext(PackageContext);
     const service = useMemo(
-        () => checkContext("useService", context).getService(packageName, interfaceName),
-        [context, packageName, interfaceName]
+        () =>
+            checkContext("useService", context).getService(
+                packageName,
+                interfaceName,
+                options ?? {}
+            ),
+        [context, packageName, interfaceName, options]
     );
     return service;
 }

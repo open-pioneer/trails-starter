@@ -1,6 +1,8 @@
 import { assert, expect, it } from "vitest";
-import { expectError } from "../test/expectError";
-import { Dependency, ServiceRepr } from "./ServiceRepr";
+import { expectError } from "../test-utils/expectError";
+import { InterfaceSpec } from "./InterfaceSpec";
+import { ReadonlyServiceLookup } from "./ServiceLookup";
+import { ServiceDependency, ServiceRepr } from "./ServiceRepr";
 import { verifyDependencies } from "./verifyDependencies";
 
 it("does not return an error on acyclic graphs", function () {
@@ -19,9 +21,11 @@ it("does not return an error on acyclic graphs", function () {
         }
     ]);
 
-    const index = verifyDependencies({ services: services });
-    assert.strictEqual(index.size, 1);
-    assert.deepEqual(index.get("services.Map")!.id, "map::Map");
+    const lookup = verifyDependencies({ services: services });
+    assert.strictEqual(lookup.serviceCount, 1);
+
+    const service = getService(lookup, "services.Map");
+    assert.strictEqual(service.id, "map::Map");
 });
 
 it("throws when a service is not implemented", function () {
@@ -41,6 +45,150 @@ it("throws when a service is not implemented", function () {
         })
     ).message;
     expect(message).toMatchSnapshot();
+});
+
+it("throws when an interface is implemented multiple times", function () {
+    const services = mockServices([
+        {
+            name: "Map1",
+            package: "map",
+            provides: ["services.Map"],
+            requires: []
+        },
+        {
+            name: "Map2",
+            package: "map",
+            provides: ["services.Map"],
+            requires: []
+        }
+    ]);
+
+    const message = expectError(() =>
+        verifyDependencies({
+            services: services,
+            uiDependencies: []
+        })
+    ).message;
+    expect(message).toMatchSnapshot();
+});
+
+it("allows multiple implementations if the services use a 'qualifier' for disambiguation", function () {
+    const services = mockServices([
+        {
+            name: "Map1",
+            package: "map",
+            provides: [
+                {
+                    interfaceName: "services.Map",
+                    qualifier: "map1"
+                }
+            ]
+        },
+        {
+            name: "Map2",
+            package: "map",
+            provides: [
+                {
+                    interfaceName: "services.Map",
+                    qualifier: "map2"
+                }
+            ]
+        }
+    ]);
+
+    const lookup = verifyDependencies({
+        services: services,
+        uiDependencies: []
+    });
+    assert.strictEqual(lookup.serviceCount, 2);
+
+    const map1 = getService(lookup, "services.Map", "map1");
+    assert.strictEqual(map1.id, "map::Map1");
+
+    const map2 = getService(lookup, "services.Map", "map2");
+    assert.strictEqual(map2.id, "map::Map2");
+});
+
+it("throws for ambiguous service reference", function () {
+    const services = mockServices([
+        {
+            name: "Map1",
+            package: "map",
+            provides: [
+                {
+                    interfaceName: "services.Map",
+                    qualifier: "map1"
+                }
+            ]
+        },
+        {
+            name: "Map2",
+            package: "map",
+            provides: [
+                {
+                    interfaceName: "services.Map",
+                    qualifier: "map2"
+                }
+            ]
+        },
+        {
+            name: "MapUser",
+            package: "map-user",
+            requires: [
+                {
+                    interfaceName: "services.Map"
+                }
+            ]
+        }
+    ]);
+
+    const message = expectError(() =>
+        verifyDependencies({
+            services: services,
+            uiDependencies: []
+        })
+    ).message;
+    expect(message).toMatchSnapshot();
+});
+
+it("allows to pick an unambiguous implementation via classifier", function () {
+    const services = mockServices([
+        {
+            name: "Map1",
+            package: "map",
+            provides: [
+                {
+                    interfaceName: "services.Map",
+                    qualifier: "map1"
+                }
+            ]
+        },
+        {
+            name: "Map2",
+            package: "map",
+            provides: [
+                {
+                    interfaceName: "services.Map",
+                    qualifier: "map2"
+                }
+            ]
+        },
+        {
+            name: "MapUser",
+            package: "map-user",
+            requires: [
+                {
+                    interfaceName: "services.Map",
+                    qualifier: "map2"
+                }
+            ]
+        }
+    ]);
+
+    verifyDependencies({
+        services: services,
+        uiDependencies: []
+    });
 });
 
 it("throws when a component directly depends on itself", function () {
@@ -83,8 +231,7 @@ it("throws when a component depends on itself via a larger cycle", function () {
         {
             name: "d",
             package: "D",
-            provides: ["D"],
-            requires: []
+            provides: ["D"]
         }
     ]);
 
@@ -101,12 +248,11 @@ it("does not return an error when the UI requires an existing interface", functi
         {
             name: "Map",
             package: "map",
-            provides: ["services.Map"],
-            requires: []
+            provides: ["services.Map"]
         }
     ]);
 
-    const index = verifyDependencies({
+    const lookup = verifyDependencies({
         services: services,
         uiDependencies: [
             {
@@ -115,8 +261,10 @@ it("does not return an error when the UI requires an existing interface", functi
             }
         ]
     });
-    assert.strictEqual(index.size, 1);
-    assert.deepEqual(index.get("services.Map")!.id, "map::Map");
+    assert.strictEqual(lookup.serviceCount, 1);
+
+    const service = getService(lookup, "services.Map");
+    assert.strictEqual(service.id, "map::Map");
 });
 
 it("throws when the ui requires an interface that is not implemented", function () {
@@ -146,8 +294,8 @@ it("throws when the ui requires an interface that is not implemented", function 
 interface ServiceData {
     package: string;
     name: string;
-    requires: string[];
-    provides: string[];
+    requires?: (string | InterfaceSpec)[];
+    provides?: (string | InterfaceSpec)[];
 }
 
 function mockServices(data: ServiceData[]): ServiceRepr[] {
@@ -155,18 +303,38 @@ function mockServices(data: ServiceData[]): ServiceRepr[] {
         const name = service.name;
         const packageName = service.package;
         const clazz = class MockService {};
-        const dependencies = service.requires.map<Dependency>((interfaceName, index) => {
+        const dependencies = service.requires?.map<ServiceDependency>((spec, index) => {
             return {
                 referenceName: `dep_${index}`,
-                interfaceName: interfaceName
+                ...toInterfaceSpec(spec)
             };
         });
+        const interfaces = service.provides?.map(toInterfaceSpec);
         return new ServiceRepr({
             name,
             packageName,
             clazz,
             dependencies,
-            interfaces: service.provides
+            interfaces
         });
     });
+}
+
+function toInterfaceSpec(spec: string | InterfaceSpec): InterfaceSpec {
+    if (typeof spec === "string") {
+        return { interfaceName: spec };
+    }
+    return spec;
+}
+
+function getService(
+    serviceLookup: ReadonlyServiceLookup,
+    interfaceName: string,
+    qualifier?: string | undefined
+) {
+    const result = serviceLookup.lookup({ interfaceName, qualifier });
+    if (result.type !== "found") {
+        throw new Error(`Failed to find interface ${interfaceName} (qualifier: ${qualifier}).`);
+    }
+    return result.service;
 }

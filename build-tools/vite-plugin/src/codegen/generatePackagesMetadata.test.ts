@@ -22,18 +22,23 @@ describe("generatePackagesMetadata", function () {
                             name: "ServiceB",
                             provides: [
                                 {
-                                    name: "ServiceC"
+                                    name: "ServiceC",
+                                    qualifier: "C"
                                 }
                             ],
                             references: {
                                 asd: {
-                                    name: "ServiceD"
+                                    name: "ServiceD",
+                                    qualifier: "D"
                                 }
                             }
                         }
                     ],
                     ui: {
-                        references: ["foo.ServiceE"]
+                        references: [
+                            { name: "foo.ServiceE" },
+                            { name: "foo.ServiceF", qualifier: "F" }
+                        ]
                     },
                     properties: [
                         {

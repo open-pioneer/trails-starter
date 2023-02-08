@@ -14,17 +14,25 @@ export default {
         name: "ServiceB",
         clazz: test_ServiceB,
         provides: [{
-          name: "ServiceC"
+          name: "ServiceC",
+          qualifier: "C"
         }],
         references: {
           "asd": {
-            name: "ServiceD"
+            name: "ServiceD",
+            qualifier: "D"
           }
         }
       }
     },
     ui: {
-      references: ["foo.ServiceE"]
+      references: [{
+        name: "foo.ServiceE",
+        qualifier: void 0
+      }, {
+        name: "foo.ServiceF",
+        qualifier: "F"
+      }]
     },
     properties: {
       "some_property": {

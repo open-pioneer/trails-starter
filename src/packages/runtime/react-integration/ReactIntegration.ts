@@ -6,6 +6,8 @@ import { ServiceLayer } from "../services/ServiceLayer";
 import { PackageContextMethods } from "./PackageContext";
 import { PackageRepr } from "../services/PackageRepr";
 import { ReactRootComponent } from "./ReactRootComponent";
+import { InterfaceSpec, renderInterfaceSpec } from "../services/InterfaceSpec";
+import { renderAmbiguousServiceChoices } from "../services/ServiceRepr";
 
 export interface ReactIntegrationOptions {
     packages: Map<string, PackageRepr>;
@@ -27,22 +29,35 @@ export class ReactIntegration {
         this.serviceLayer = options.serviceLayer;
         this.root = createRoot(options.rootNode);
         this.packageContext = {
-            getService: (packageName, interfaceName) => {
-                const result = this.serviceLayer.getService(packageName, interfaceName);
-                if (result.type === "unimplemented") {
-                    throw new Error(
-                        ErrorId.INTERFACE_NOT_FOUND,
-                        `The UI of package '${packageName}' requested the unimplemented interface '${interfaceName}'.`
-                    );
+            getService: (packageName, interfaceName, options) => {
+                const spec: InterfaceSpec = { interfaceName, ...options };
+                const result = this.serviceLayer.getService(packageName, spec);
+                if (result.type === "found") {
+                    return result.service.getInstanceOrThrow();
                 }
-                if (result.type === "undeclared") {
-                    throw new Error(
-                        ErrorId.UNDECLARED_DEPENDENCY,
-                        `Package '${packageName}' did not declare an UI dependency on interface '${interfaceName}'.` +
-                            ` Add the dependency to the package configuration or remove the usage.`
-                    );
+
+                const renderedSpec = renderInterfaceSpec(spec);
+                switch (result.type) {
+                    case "unimplemented":
+                        throw new Error(
+                            ErrorId.INTERFACE_NOT_FOUND,
+                            `The UI of package '${packageName}' requested the unimplemented interface ${renderedSpec}.`
+                        );
+                    case "undeclared":
+                        throw new Error(
+                            ErrorId.UNDECLARED_DEPENDENCY,
+                            `Package '${packageName}' did not declare an UI dependency on interface ${renderedSpec}.` +
+                                ` Add the dependency to the package configuration or remove the usage.`
+                        );
+                    case "ambiguous": {
+                        const renderedChoices = renderAmbiguousServiceChoices(result.choices);
+                        throw new Error(
+                            ErrorId.AMBIGUOUS_DEPENDENCY,
+                            `The UI of package '${packageName}' requires the ambiguous interface ${renderedSpec}.` +
+                                ` Possible choices are: ${renderedChoices}.`
+                        );
+                    }
                 }
-                return result.instance;
             },
             getProperties: (packageName) => {
                 const pkg = this.packages.get(packageName);

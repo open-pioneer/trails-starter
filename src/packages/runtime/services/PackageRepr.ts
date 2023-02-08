@@ -2,6 +2,7 @@ import { Error } from "@open-pioneer/core";
 import { ApplicationProperties } from "../CustomElement";
 import { ErrorId } from "../errors";
 import { PackageMetadata, PropertyMetadata } from "../metadata";
+import { InterfaceSpec } from "./InterfaceSpec";
 import { ServiceRepr } from "./ServiceRepr";
 
 export class PackageRepr {
@@ -20,10 +21,16 @@ export class PackageRepr {
                 return ServiceRepr.create(data.name, serviceData, finalProperties);
             }
         );
+        const uiReferences =
+            data.ui?.references?.map<InterfaceSpec>((ref) => ({
+                interfaceName: ref.name,
+                qualifier: ref.qualifier
+            })) ?? [];
+
         return new PackageRepr({
             name,
             services,
-            uiInterfaces: data.ui?.references,
+            uiReferences,
             properties: finalProperties
         });
     }
@@ -35,7 +42,7 @@ export class PackageRepr {
     readonly services: readonly ServiceRepr[];
 
     /** Interfaces required by UI components. */
-    readonly uiInterfaces: readonly string[];
+    readonly uiReferences: readonly Readonly<InterfaceSpec>[];
 
     /** Resolved (perhaps customized) package properties. */
     readonly properties: Readonly<Record<string, unknown>>;
@@ -43,12 +50,12 @@ export class PackageRepr {
     constructor(options: {
         name: string;
         services?: ServiceRepr[];
-        uiInterfaces?: string[];
+        uiReferences?: InterfaceSpec[];
         properties?: Record<string, unknown>;
     }) {
         this.name = options.name;
         this.services = options.services ?? [];
-        this.uiInterfaces = options.uiInterfaces ?? [];
+        this.uiReferences = options.uiReferences ?? [];
         this.properties = options?.properties ?? {};
     }
 }
