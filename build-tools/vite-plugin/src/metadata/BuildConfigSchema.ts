@@ -61,6 +61,5 @@ export function verifyBuildConfigSchema(value: unknown): BuildConfig {
     if (result.success) {
         return result.data;
     }
-    const message = fromZodError(result.error).message;
-    throw new Error(message);
+    throw fromZodError(result.error);
 }
