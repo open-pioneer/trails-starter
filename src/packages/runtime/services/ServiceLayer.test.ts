@@ -124,18 +124,18 @@ it("destroys services once they are no longer referenced (but not before)", func
 
     const providerService = new ServiceRepr({
         name: "Provider",
-        packageName: "ProviderPackage",
+        packageName: "provider-package",
         clazz: ServiceProvider,
         interfaces: [{ interfaceName: "provider.Service" }]
     });
 
     const serviceLayer = new ServiceLayer([
         new PackageRepr({
-            name: "UserPackage",
+            name: "user-package",
             services: [
                 new ServiceRepr({
                     name: "A",
-                    packageName: "UserPackage",
+                    packageName: "user-package",
                     clazz: ServiceUser,
                     dependencies: [
                         {
@@ -149,7 +149,7 @@ it("destroys services once they are no longer referenced (but not before)", func
                 }),
                 new ServiceRepr({
                     name: "B",
-                    packageName: "UserPackage",
+                    packageName: "user-package",
                     clazz: ServiceUser,
                     dependencies: [
                         {
@@ -165,7 +165,7 @@ it("destroys services once they are no longer referenced (but not before)", func
         }),
 
         new PackageRepr({
-            name: "ProviderPackage",
+            name: "provider-package",
             services: [providerService]
         })
     ]);
@@ -184,16 +184,89 @@ it("destroys services once they are no longer referenced (but not before)", func
     expect(providerService.state).toBe("destroyed");
 });
 
+it("injects all implementations of an interface when requested", function () {
+    interface Extension {
+        readonly id: string;
+    }
+
+    const extensions: string[] = [];
+
+    class ExtensibleService {
+        constructor(
+            options: ServiceOptions<{
+                extensions: Extension[];
+            }>
+        ) {
+            options.references.extensions.forEach((ext) => extensions.push(ext.id));
+        }
+    }
+
+    class Ext1 implements Service<Extension> {
+        id = "ext1";
+    }
+
+    class Ext2 implements Service<Extension> {
+        id = "ext2";
+    }
+
+    const serviceLayer = new ServiceLayer([
+        new PackageRepr({
+            name: "test",
+            services: [
+                new ServiceRepr({
+                    name: "ExtensibleService",
+                    packageName: "test",
+                    clazz: ExtensibleService,
+                    dependencies: [
+                        {
+                            referenceName: "extensions",
+                            interfaceName: "test.Extension",
+                            all: true
+                        }
+                    ]
+                }),
+                new ServiceRepr({
+                    name: "Ext1",
+                    packageName: "test",
+                    clazz: Ext1,
+                    interfaces: [
+                        {
+                            interfaceName: "test.Extension",
+                            qualifier: "qualifier-ext1"
+                        }
+                    ]
+                }),
+                new ServiceRepr({
+                    name: "Ext2",
+                    packageName: "test",
+                    clazz: Ext2,
+                    interfaces: [
+                        {
+                            interfaceName: "test.Extension",
+                            qualifier: "qualifier-ext2"
+                        }
+                    ]
+                })
+            ]
+        })
+    ]);
+
+    serviceLayer.start();
+    extensions.sort();
+    expect(extensions).toEqual(["ext1", "ext2"]);
+    serviceLayer.destroy();
+});
+
 it("allows access to service instances if the dependency was declared", function () {
     class Dummy {}
 
     const serviceLayer = new ServiceLayer([
         new PackageRepr({
-            name: "TestPackage",
+            name: "test-package",
             services: [
                 new ServiceRepr({
                     name: "A",
-                    packageName: "TestPackage",
+                    packageName: "test-package",
                     clazz: Dummy,
                     dependencies: [],
                     interfaces: [
@@ -207,13 +280,13 @@ it("allows access to service instances if the dependency was declared", function
     ]);
     serviceLayer.start();
 
-    const resultDeclared = serviceLayer.getService("TestPackage", {
+    const resultDeclared = serviceLayer.getService("test-package", {
         interfaceName: "testpackage.Interface"
     });
     expect(resultDeclared.type).toBe("found");
     expect((resultDeclared as Found).service).toBeDefined();
 
-    const resultUndeclared = serviceLayer.getService("TestPackage", {
+    const resultUndeclared = serviceLayer.getService("test-package", {
         interfaceName: "testpackage.OtherInterface"
     });
     expect(resultUndeclared.type).toBe("undeclared");
@@ -244,7 +317,7 @@ it("injects properties into service instances", function () {
     });
     const serviceLayer = new ServiceLayer([
         new PackageRepr({
-            name: "TestPackage",
+            name: "test-package",
             services: [service],
             uiReferences: [{ interfaceName: "testpackage.Interface" }]
         })

@@ -91,6 +91,14 @@ export interface ReferenceConfig {
      * An additional qualifier to disambiguate an interface reference when there are multiple implementations.
      */
     qualifier?: string;
+
+    /**
+     * Set this to true to inject *all* implementations of the specified interface instead of a specific one.
+     * When used from a service, this will inject the implementations as an array.
+     *
+     * Note that this option is mutually exclusive with {@link qualifier}.
+     */
+    all?: boolean;
 }
 
 /**

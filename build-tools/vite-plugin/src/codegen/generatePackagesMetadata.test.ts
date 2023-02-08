@@ -1,5 +1,5 @@
 import { assert } from "chai";
-import { readFileSync } from "node:fs";
+import { readFileSync, writeFileSync } from "node:fs";
 import { resolve } from "node:path";
 import { TEST_DATA } from "../utils/testUtils";
 import { generatePackagesMetadata } from "./generatePackagesMetadata";
@@ -52,7 +52,10 @@ describe("generatePackagesMetadata", function () {
             }
         ]);
 
-        //writeFileSync(testDataFile, pkgMetadata, "utf-8");
+        // eslint-disable-next-line no-constant-condition
+        if (false) {
+            writeFileSync(testDataFile, pkgMetadata, "utf-8");
+        }
 
         const expected = readFileSync(testDataFile, "utf-8").trim();
         assert.equal(pkgMetadata, expected);

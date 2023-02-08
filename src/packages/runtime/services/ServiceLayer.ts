@@ -1,10 +1,14 @@
 import { ServiceRepr } from "./ServiceRepr";
 import { Error } from "@open-pioneer/core";
 import { ErrorId } from "../errors";
-import { UIDependency, verifyDependencies } from "./verifyDependencies";
+import {
+    ComputedServiceDependencies,
+    UIDependency,
+    verifyDependencies
+} from "./verifyDependencies";
 import { PackageRepr } from "./PackageRepr";
 import { ReadonlyServiceLookup, ServiceLookupResult } from "./ServiceLookup";
-import { InterfaceSpec, renderInterfaceSpec } from "./InterfaceSpec";
+import { InterfaceSpec, isAllImplementationsSpec, renderInterfaceSpec } from "./InterfaceSpec";
 
 export type DynamicLookupResult = ServiceLookupResult | UndeclaredDependency;
 
@@ -13,12 +17,16 @@ export interface UndeclaredDependency {
 }
 
 interface DependencyDeclarations {
+    all: boolean;
     unqualified: boolean;
     qualifiers: Set<string>;
 }
 
 export class ServiceLayer {
-    readonly serviceLookup: ReadonlyServiceLookup;
+    private serviceLookup: ReadonlyServiceLookup;
+
+    // Service id --> Service dependencies
+    private serviceDependencies: Map<string, ComputedServiceDependencies>;
 
     // Package name --> Interface name --> Declarations
     private declaredDependencies;
@@ -27,7 +35,7 @@ export class ServiceLayer {
 
     constructor(packages: readonly PackageRepr[]) {
         this.allServices = packages.map((pkg) => pkg.services).flat();
-        this.serviceLookup = verifyDependencies({
+        const { serviceLookup, serviceDependencies } = verifyDependencies({
             services: this.allServices,
             uiDependencies: packages
                 .map((pkg) =>
@@ -40,6 +48,8 @@ export class ServiceLayer {
                 )
                 .flat()
         });
+        this.serviceLookup = serviceLookup;
+        this.serviceDependencies = serviceDependencies;
         this.declaredDependencies = buildDependencyIndex(packages);
     }
 
@@ -107,11 +117,12 @@ export class ServiceLayer {
         service.beforeCreate();
 
         // Initialize dependencies recursively before creating the current service.
-        service.dependencies.forEach((d) => {
-            const serviceRef = this.mustGet(d);
-            const instance = this.createService(serviceRef);
-            instances[d.referenceName] = instance;
-        });
+        for (const [referenceName, serviceDeps] of Object.entries(this.getServiceDeps(service))) {
+            const referenceValue = Array.isArray(serviceDeps)
+                ? serviceDeps.map((dep) => this.createService(dep))
+                : this.createService(serviceDeps);
+            instances[referenceName] = referenceValue;
+        }
 
         // Sets state to 'constructed' to finish the state transition, useCount is 1.
         return service.create({ references: instances, properties: service.properties });
@@ -132,12 +143,15 @@ export class ServiceLayer {
             service.destroy();
         }
 
-        service.dependencies.forEach((d) => {
-            const lookupResult = this.serviceLookup.lookup(d);
-            if (lookupResult.type === "found") {
-                this.destroyService(lookupResult.service);
+        for (const serviceDeps of Object.values(this.getServiceDeps(service))) {
+            if (Array.isArray(serviceDeps)) {
+                for (const dep of serviceDeps) {
+                    this.destroyService(dep);
+                }
+            } else {
+                this.destroyService(serviceDeps);
             }
-        });
+        }
     }
 
     private isDeclaredDependency(packageName: string, spec: InterfaceSpec) {
@@ -153,6 +167,17 @@ export class ServiceLayer {
             return interfaceEntry.unqualified;
         }
         return interfaceEntry.qualifiers.has(spec.qualifier);
+    }
+
+    private getServiceDeps(service: ServiceRepr) {
+        const dependencies = this.serviceDependencies.get(service.id);
+        if (!dependencies) {
+            throw new Error(
+                ErrorId.INTERNAL,
+                `Failed to find precomputed service dependencies for '${service.id}'.`
+            );
+        }
+        return dependencies;
     }
 
     /**
@@ -184,13 +209,16 @@ function buildDependencyIndex(packages: readonly PackageRepr[]) {
             let interfaceEntry = packageEntry.get(uiReference.interfaceName);
             if (!interfaceEntry) {
                 interfaceEntry = {
+                    all: false,
                     unqualified: false,
                     qualifiers: new Set<string>()
                 };
                 packageEntry.set(uiReference.interfaceName, interfaceEntry);
             }
 
-            if (uiReference.qualifier == null) {
+            if (isAllImplementationsSpec(uiReference)) {
+                interfaceEntry.all = true;
+            } else if (uiReference.qualifier == null) {
                 interfaceEntry.unqualified = true;
             } else {
                 interfaceEntry.qualifiers.add(uiReference.qualifier);

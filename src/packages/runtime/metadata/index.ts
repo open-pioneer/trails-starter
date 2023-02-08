@@ -62,6 +62,9 @@ export interface InterfaceReferenceMetadata {
 
     /** Additional qualifier to disambiguate interface requirements. */
     qualifier?: string | undefined;
+
+    /** Inject all implementations as an array instead of a specific one. */
+    all?: boolean;
 }
 
 /**

@@ -20,7 +20,8 @@ export default {
         references: {
           "asd": {
             name: "ServiceD",
-            qualifier: "D"
+            qualifier: "D",
+            all: false
           }
         }
       }
@@ -28,10 +29,12 @@ export default {
     ui: {
       references: [{
         name: "foo.ServiceE",
-        qualifier: void 0
+        qualifier: void 0,
+        all: false
       }, {
         name: "foo.ServiceF",
-        qualifier: "F"
+        qualifier: "F",
+        all: false
       }]
     },
     properties: {

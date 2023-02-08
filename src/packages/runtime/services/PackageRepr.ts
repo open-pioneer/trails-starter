@@ -2,7 +2,7 @@ import { Error } from "@open-pioneer/core";
 import { ApplicationProperties } from "../CustomElement";
 import { ErrorId } from "../errors";
 import { PackageMetadata, PropertyMetadata } from "../metadata";
-import { InterfaceSpec } from "./InterfaceSpec";
+import { parseReferenceSpec, ReferenceSpec } from "./InterfaceSpec";
 import { ServiceRepr } from "./ServiceRepr";
 
 export class PackageRepr {
@@ -21,12 +21,7 @@ export class PackageRepr {
                 return ServiceRepr.create(data.name, serviceData, finalProperties);
             }
         );
-        const uiReferences =
-            data.ui?.references?.map<InterfaceSpec>((ref) => ({
-                interfaceName: ref.name,
-                qualifier: ref.qualifier
-            })) ?? [];
-
+        const uiReferences = data.ui?.references?.map((ref) => parseReferenceSpec(ref)) ?? [];
         return new PackageRepr({
             name,
             services,
@@ -42,7 +37,7 @@ export class PackageRepr {
     readonly services: readonly ServiceRepr[];
 
     /** Interfaces required by UI components. */
-    readonly uiReferences: readonly Readonly<InterfaceSpec>[];
+    readonly uiReferences: readonly Readonly<ReferenceSpec>[];
 
     /** Resolved (perhaps customized) package properties. */
     readonly properties: Readonly<Record<string, unknown>>;
@@ -50,10 +45,15 @@ export class PackageRepr {
     constructor(options: {
         name: string;
         services?: ServiceRepr[];
-        uiReferences?: InterfaceSpec[];
+        uiReferences?: ReferenceSpec[];
         properties?: Record<string, unknown>;
     }) {
-        this.name = options.name;
+        const name = options.name;
+        if (!isValidPackageName(name)) {
+            throw new Error(ErrorId.INTERNAL, `Invalid package name: '${name}'.`);
+        }
+
+        this.name = name;
         this.services = options.services ?? [];
         this.uiReferences = options.uiReferences ?? [];
         this.properties = options?.properties ?? {};
@@ -118,4 +118,11 @@ const HAS_PROP = Object.prototype.hasOwnProperty;
 
 function hasProperty(object: unknown, key: string) {
     return HAS_PROP.call(object, key);
+}
+
+// http://json.schemastore.org/package
+const NAME_REGEX = /^(?:@[a-z0-9-*~][a-z0-9-*._~]*\/)?[a-z0-9-~][a-z0-9-._~]*$/;
+
+function isValidPackageName(name: string): boolean {
+    return NAME_REGEX.test(name);
 }

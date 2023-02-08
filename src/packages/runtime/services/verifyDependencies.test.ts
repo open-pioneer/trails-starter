@@ -1,6 +1,6 @@
 import { assert, expect, it } from "vitest";
 import { expectError } from "../test-utils/expectError";
-import { InterfaceSpec } from "./InterfaceSpec";
+import { InterfaceSpec, ReferenceSpec } from "./InterfaceSpec";
 import { ReadonlyServiceLookup } from "./ServiceLookup";
 import { ServiceDependency, ServiceRepr } from "./ServiceRepr";
 import { verifyDependencies } from "./verifyDependencies";
@@ -21,11 +21,21 @@ it("does not return an error on acyclic graphs", function () {
         }
     ]);
 
-    const lookup = verifyDependencies({ services: services });
-    assert.strictEqual(lookup.serviceCount, 1);
+    const { serviceLookup, serviceDependencies: computedDependencies } = verifyDependencies({
+        services: services
+    });
+    assert.strictEqual(serviceLookup.serviceCount, 1);
 
-    const service = getService(lookup, "services.Map");
+    const service = getService(serviceLookup, "services.Map");
     assert.strictEqual(service.id, "map::Map");
+
+    const mapDependencies = computedDependencies.get("map::Map");
+    assert.deepEqual(mapDependencies, {});
+
+    const exampleToolDependencies = computedDependencies.get("tools::ExampleTool")!;
+    assert.deepEqual(exampleToolDependencies, {
+        dep_0: service
+    });
 });
 
 it("throws when a service is not implemented", function () {
@@ -96,16 +106,16 @@ it("allows multiple implementations if the services use a 'qualifier' for disamb
         }
     ]);
 
-    const lookup = verifyDependencies({
+    const { serviceLookup } = verifyDependencies({
         services: services,
         uiDependencies: []
     });
-    assert.strictEqual(lookup.serviceCount, 2);
+    assert.strictEqual(serviceLookup.serviceCount, 2);
 
-    const map1 = getService(lookup, "services.Map", "map1");
+    const map1 = getService(serviceLookup, "services.Map", "map1");
     assert.strictEqual(map1.id, "map::Map1");
 
-    const map2 = getService(lookup, "services.Map", "map2");
+    const map2 = getService(serviceLookup, "services.Map", "map2");
     assert.strictEqual(map2.id, "map::Map2");
 });
 
@@ -185,10 +195,67 @@ it("allows to pick an unambiguous implementation via classifier", function () {
         }
     ]);
 
-    verifyDependencies({
+    const { serviceLookup, serviceDependencies: computedDependencies } = verifyDependencies({
         services: services,
         uiDependencies: []
     });
+
+    const map2 = getService(serviceLookup, "services.Map", "map2");
+
+    const mapUserDependencies = computedDependencies.get("map-user::MapUser");
+    assert.deepEqual(mapUserDependencies, {
+        dep_0: map2
+    });
+});
+
+it("allows to pick all implementations", function () {
+    const services = mockServices([
+        {
+            name: "Map1",
+            package: "map",
+            provides: [
+                {
+                    interfaceName: "services.Map",
+                    qualifier: "map1"
+                }
+            ]
+        },
+        {
+            name: "Map2",
+            package: "map",
+            provides: [
+                {
+                    interfaceName: "services.Map",
+                    qualifier: "map2"
+                }
+            ]
+        },
+        {
+            name: "MapUser",
+            package: "map-user",
+            requires: [
+                {
+                    interfaceName: "services.Map",
+                    all: true
+                }
+            ]
+        }
+    ]);
+
+    const { serviceDependencies, serviceLookup } = verifyDependencies({
+        services: services,
+        uiDependencies: []
+    });
+
+    const all = serviceLookup.lookupAll("services.Map");
+    assert.sameMembers(
+        all.map((s) => s.id),
+        ["map::Map1", "map::Map2"]
+    );
+
+    const mapUserDeps = serviceDependencies.get("map-user::MapUser")!.dep_0!;
+    assert.isArray(mapUserDeps);
+    assert.sameMembers(mapUserDeps as unknown[], all);
 });
 
 it("throws when a component directly depends on itself", function () {
@@ -252,7 +319,7 @@ it("does not return an error when the UI requires an existing interface", functi
         }
     ]);
 
-    const lookup = verifyDependencies({
+    const { serviceLookup } = verifyDependencies({
         services: services,
         uiDependencies: [
             {
@@ -261,9 +328,9 @@ it("does not return an error when the UI requires an existing interface", functi
             }
         ]
     });
-    assert.strictEqual(lookup.serviceCount, 1);
+    assert.strictEqual(serviceLookup.serviceCount, 1);
 
-    const service = getService(lookup, "services.Map");
+    const service = getService(serviceLookup, "services.Map");
     assert.strictEqual(service.id, "map::Map");
 });
 
@@ -294,7 +361,7 @@ it("throws when the ui requires an interface that is not implemented", function 
 interface ServiceData {
     package: string;
     name: string;
-    requires?: (string | InterfaceSpec)[];
+    requires?: (string | ReferenceSpec)[];
     provides?: (string | InterfaceSpec)[];
 }
 

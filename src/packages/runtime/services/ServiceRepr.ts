@@ -2,13 +2,11 @@ import { ErrorId } from "./../errors";
 import { ServiceMetadata } from "../metadata";
 import { Service, ServiceConstructor, ServiceOptions } from "../Service";
 import { Error } from "@open-pioneer/core";
-import { InterfaceSpec } from "./InterfaceSpec";
+import { InterfaceSpec, parseReferenceSpec, ReferenceSpec } from "./InterfaceSpec";
 
 export type ServiceState = "not-constructed" | "constructing" | "constructed" | "destroyed";
 
-export interface ServiceDependency extends InterfaceSpec {
-    referenceName: string;
-}
+export type ServiceDependency = ReferenceSpec & { referenceName: string };
 
 /**
  * Represents metadata and state of a service in the runtime.
@@ -22,12 +20,11 @@ export class ServiceRepr {
     ): ServiceRepr {
         const clazz = data.clazz;
         const name = data.name;
-        const dependencies = Object.entries(data.references ?? {}).map<ServiceDependency>(
+        const dependencies = Object.entries(data.references ?? {}).map(
             ([name, referenceMetadata]) => {
                 return {
                     referenceName: name,
-                    interfaceName: referenceMetadata.name,
-                    qualifier: referenceMetadata.qualifier
+                    ...parseReferenceSpec(referenceMetadata)
                 };
             }
         );
@@ -88,6 +85,10 @@ export class ServiceRepr {
             interfaces = [],
             properties = {}
         } = options;
+        if (!isValidServiceName(name)) {
+            throw new Error(ErrorId.INTERNAL, `Invalid service name: '${name}'.`);
+        }
+
         this.id = `${packageName}::${name}`;
         this.name = name;
         this.packageName = packageName;
@@ -162,7 +163,7 @@ export class ServiceRepr {
         } catch (e) {
             throw new Error(
                 ErrorId.SERVICE_CONSTRUCTION_FAILED,
-                `Failed to create service '${this.id}'.`,
+                `Failed to create service instance '${this.id}'.`,
                 { cause: e }
             );
         }
@@ -175,7 +176,7 @@ export class ServiceRepr {
             } catch (e) {
                 throw new Error(
                     ErrorId.SERVICE_DESTRUCTION_FAILED,
-                    `Failed to destroy service '${this.id}'.`,
+                    `Failed to destroy service instance '${this.id}'.`,
                     { cause: e }
                 );
             }
@@ -219,4 +220,10 @@ export function renderAmbiguousServiceChoices(services: ServiceRepr[], max = 2):
         message += ` and ${remaining} more`;
     }
     return message;
+}
+
+const SERVICE_NAME_REGEX = /^[a-z0-9_-]+$/i;
+
+function isValidServiceName(name: string) {
+    return SERVICE_NAME_REGEX.test(name);
 }

@@ -11,7 +11,7 @@ interface Services {
     byQualifier: Map<string, ServiceRepr>;
 }
 
-export type ReadonlyServiceLookup = Pick<ServiceLookup, "lookup" | "serviceCount">;
+export type ReadonlyServiceLookup = Pick<ServiceLookup, "lookup" | "lookupAll" | "serviceCount">;
 
 export interface Unimplemented {
     type: "unimplemented";
@@ -137,6 +137,30 @@ export class ServiceLookup {
             return { type: "unimplemented" };
         }
         return { type: "found", service: service };
+    }
+
+    /**
+     * Returns all services implementing the given interface.
+     */
+    lookupAll(interfaceName: string): ServiceRepr[] {
+        if (!interfaceName) {
+            throw new Error(
+                ErrorId.INVALID_METADATA,
+                `Invalid interface name during service lookup: '${interfaceName}'.`
+            );
+        }
+
+        const services = this.services.get(interfaceName);
+        if (!services) {
+            return [];
+        }
+
+        const all: ServiceRepr[] = [];
+        if (services.unqualified) {
+            all.push(services.unqualified);
+        }
+        all.push(...services.byQualifier.values());
+        return all;
     }
 
     private ensureInterfaceEntry(interfaceName: string): Services {

@@ -23,7 +23,11 @@ const PROPERTY_META_SCHEMA: z.ZodType<PropertyMetaConfig> = z.strictObject({
     required: z.boolean().optional()
 });
 
-const REFERENCE_CONFIG_SCHEMA: z.ZodType<ReferenceConfig> = z.strictObject({ name: z.string() });
+const REFERENCE_CONFIG_SCHEMA: z.ZodType<ReferenceConfig> = z.strictObject({
+    name: z.string(),
+    qualifier: z.string().optional(),
+    all: z.boolean().optional()
+});
 
 const PROVIDES_CONFIG_SCHEMA: z.ZodType<ProvidesConfig> = z.strictObject({
     name: z.string(),

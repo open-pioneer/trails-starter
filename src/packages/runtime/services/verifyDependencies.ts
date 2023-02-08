@@ -1,6 +1,11 @@
 import { Error } from "@open-pioneer/core";
 import { ErrorId } from "../errors";
-import { InterfaceSpec, renderInterfaceSpec } from "./InterfaceSpec";
+import {
+    InterfaceSpec,
+    isSingleImplementationSpec,
+    ReferenceSpec,
+    renderInterfaceSpec
+} from "./InterfaceSpec";
 import { ReadonlyServiceLookup, ServiceLookup } from "./ServiceLookup";
 import { renderAmbiguousServiceChoices, ServiceRepr } from "./ServiceRepr";
 
@@ -9,8 +14,22 @@ export interface DependencyOptions {
     uiDependencies?: readonly UIDependency[];
 }
 
-export interface UIDependency extends InterfaceSpec {
-    readonly packageName: string;
+export type UIDependency = { packageName: string } & ReferenceSpec;
+
+export type ComputedServiceDependencies = Record<string, ServiceRepr | ServiceRepr[]>;
+
+export interface VerifyDependenciesResult {
+    /**
+     * Precomputed dependencies for every service.
+     *
+     * Key: service id.
+     */
+    serviceDependencies: Map<string, ComputedServiceDependencies>;
+
+    /**
+     * Index structure mapping interface names to service instances.
+     */
+    serviceLookup: ReadonlyServiceLookup;
 }
 
 /**
@@ -18,43 +37,38 @@ export interface UIDependency extends InterfaceSpec {
  *
  * Throws an error if a cycle is detected or if a required service is never implemented.
  *
- * @returns the verified index from interface name to service class.
+ * @returns an object containing the service index and precomputed dependency information
  */
-export function verifyDependencies(options: DependencyOptions): ReadonlyServiceLookup {
+export function verifyDependencies(options: DependencyOptions): VerifyDependenciesResult {
     const verifier = new Verifier(options);
     verifier.verify();
-    return verifier.getServiceIndex();
+    return {
+        serviceLookup: verifier.getServiceLookup(),
+        serviceDependencies: verifier.getComputedDependencies()
+    };
 }
 
 interface GraphItem {
-    service: ServiceRepr;
     state: ItemState;
+    service: ServiceRepr;
+    dependencies: ComputedServiceDependencies;
 }
 
 type ItemState = "not-visited" | "pending" | "done";
 
 /** The reason why a graph node is being visited. */
-type ItemVisitReason =
-    | "root"
-    | ({
-          type: "ui-reference";
-          packageName: string;
-      } & InterfaceSpec)
-    | ({
-          type: "service-reference";
-          referenceName: string;
-      } & InterfaceSpec);
+type ItemVisitReason = "root" | InterfaceReference;
 
 type InterfaceReference =
     | ({
           type: "ui-reference";
           packageName: string;
-      } & InterfaceSpec)
+      } & ReferenceSpec)
     | ({
           type: "service-reference";
           service: ServiceRepr;
           referenceName: string;
-      } & InterfaceSpec);
+      } & ReferenceSpec);
 
 class Verifier {
     private uiDependencies: readonly UIDependency[];
@@ -71,7 +85,8 @@ class Verifier {
         const items = (this.items = services.map<GraphItem>((service) => {
             return {
                 service: service,
-                state: "not-visited"
+                state: "not-visited",
+                dependencies: {}
             };
         }));
 
@@ -84,7 +99,7 @@ class Verifier {
 
     verify() {
         for (const uiDependency of this.uiDependencies) {
-            this.visitInterface({
+            this.visitReference({
                 type: "ui-reference",
                 ...uiDependency
             });
@@ -94,8 +109,16 @@ class Verifier {
         }
     }
 
-    getServiceIndex() {
+    getServiceLookup() {
         return this.serviceLookup;
+    }
+
+    getComputedDependencies() {
+        return new Map(
+            this.items.map<[string, ComputedServiceDependencies]>((item) => {
+                return [item.service.id, item.dependencies];
+            })
+        );
     }
 
     private visitItem(item: GraphItem, reason: ItemVisitReason) {
@@ -111,7 +134,7 @@ class Verifier {
         stack.push([item, reason]);
         item.state = "pending";
         for (const dep of item.service.dependencies) {
-            this.visitInterface({
+            item.dependencies[dep.referenceName] = this.visitReference({
                 type: "service-reference",
                 service: item.service,
                 ...dep
@@ -121,28 +144,17 @@ class Verifier {
         stack.pop();
     }
 
-    private visitInterface(ref: InterfaceReference) {
-        const childItem = this.findService(ref);
-
-        let reason: ItemVisitReason;
-        switch (ref.type) {
-            case "service-reference":
-                reason = {
-                    type: "service-reference",
-                    interfaceName: ref.interfaceName,
-                    referenceName: ref.referenceName
-                };
-                break;
-            case "ui-reference":
-                reason = {
-                    type: "ui-reference",
-                    interfaceName: ref.interfaceName,
-                    packageName: ref.packageName
-                };
-                break;
+    private visitReference(ref: InterfaceReference) {
+        const itemOrItems = this.findServices(ref);
+        if (Array.isArray(itemOrItems)) {
+            for (const child of itemOrItems) {
+                this.visitItem(child, ref);
+            }
+            return itemOrItems.map((item) => item.service);
+        } else {
+            this.visitItem(itemOrItems, ref);
+            return itemOrItems.service;
         }
-
-        this.visitItem(childItem, reason);
     }
 
     private throwCycleError(item: GraphItem, reason: ItemVisitReason) {
@@ -184,34 +196,43 @@ class Verifier {
         this.serviceToGraphItem.set(item.service, item);
     }
 
-    private findService(ref: InterfaceReference) {
-        const lookupResult = this.serviceLookup.lookup(ref);
-        switch (lookupResult.type) {
-            case "unimplemented": {
-                const interfaceText = renderInterfaceSpec(ref);
-                const message =
-                    ref.type === "service-reference"
-                        ? `Service '${ref.service.id}' requires an unimplemented interface ${interfaceText} as dependency '${ref.referenceName}'.`
-                        : `The UI of package '${ref.packageName}' requires an unimplemented interface ${interfaceText}.`;
-                throw new Error(ErrorId.INTERFACE_NOT_FOUND, message);
+    private findServices(ref: InterfaceReference): GraphItem | GraphItem[] {
+        if (isSingleImplementationSpec(ref)) {
+            const lookupResult = this.serviceLookup.lookup(ref);
+            switch (lookupResult.type) {
+                case "unimplemented": {
+                    const interfaceText = renderInterfaceSpec(ref);
+                    const message =
+                        ref.type === "service-reference"
+                            ? `Service '${ref.service.id}' requires an unimplemented interface ${interfaceText} as dependency '${ref.referenceName}'.`
+                            : `The UI of package '${ref.packageName}' requires an unimplemented interface ${interfaceText}.`;
+                    throw new Error(ErrorId.INTERFACE_NOT_FOUND, message);
+                }
+                case "ambiguous": {
+                    const interfaceText = renderInterfaceSpec(ref);
+                    const serviceChoices = renderAmbiguousServiceChoices(lookupResult.choices);
+                    let message =
+                        ref.type === "service-reference"
+                            ? `Service '${ref.service.id}' requires the ambiguous interface ${interfaceText} as dependency '${ref.referenceName}'.`
+                            : `The UI of package '${ref.packageName}' requires the ambiguous interface ${interfaceText}.`;
+                    message += ` Possible choices are ${serviceChoices}.`;
+                    throw new Error(ErrorId.AMBIGUOUS_DEPENDENCY, message);
+                }
             }
-            case "ambiguous": {
-                const interfaceText = renderInterfaceSpec(ref);
-                const serviceChoices = renderAmbiguousServiceChoices(lookupResult.choices);
-                let message =
-                    ref.type === "service-reference"
-                        ? `Service '${ref.service.id}' requires the ambiguous interface ${interfaceText} as dependency '${ref.referenceName}'.`
-                        : `The UI of package '${ref.packageName}' requires the ambiguous interface ${interfaceText}.`;
-                message += ` Possible choices are ${serviceChoices}.`;
-                throw new Error(ErrorId.AMBIGUOUS_DEPENDENCY, message);
-            }
+            return this.getGraphItem(lookupResult.service);
+        } else {
+            return this.serviceLookup
+                .lookupAll(ref.interfaceName)
+                .map((service) => this.getGraphItem(service));
         }
-        const foundService = lookupResult.service;
-        const graphItem = this.serviceToGraphItem.get(foundService);
-        if (!graphItem || graphItem.service !== foundService) {
+    }
+
+    private getGraphItem(service: ServiceRepr): GraphItem {
+        const graphItem = this.serviceToGraphItem.get(service);
+        if (!graphItem || graphItem.service !== service) {
             throw new Error(
                 ErrorId.INTERNAL,
-                `Failed to find matching graph item for service '${foundService.id}'.`
+                `Failed to find matching graph item for service '${service.id}'.`
             );
         }
         return graphItem;

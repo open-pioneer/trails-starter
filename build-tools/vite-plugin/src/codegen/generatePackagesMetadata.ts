@@ -37,7 +37,8 @@ const INTERFACE_OBJECT = template.expression(`
 const REFERENCE_OBJECT = template.expression(`
     {
         name: %%INTERFACE_NAME%%,
-        qualifier: %%QUALIFIER%%
+        qualifier: %%QUALIFIER%%,
+        all: %%ALL%%
     }
 `);
 
@@ -223,7 +224,8 @@ function referenceObject(referenceConfig: ReferenceConfig): nodes.Expression {
         INTERFACE_NAME: nodes.stringLiteral(referenceConfig.name),
         QUALIFIER: referenceConfig.qualifier
             ? nodes.stringLiteral(referenceConfig.qualifier)
-            : undefinedNode()
+            : undefinedNode(),
+        ALL: nodes.booleanLiteral(referenceConfig.all ?? false)
     });
 }
 
