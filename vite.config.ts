@@ -34,11 +34,11 @@ export default defineConfig({
             rootSite: true,
             apps: ["date-app"],
             sites: [
+                "chakra-sample",
                 "date-sample",
-                "services-sample",
+                "extension-sample",
                 "map-sample",
                 "styling-sample",
-                "chakra-sample"
             ]
         }),
         react(),
