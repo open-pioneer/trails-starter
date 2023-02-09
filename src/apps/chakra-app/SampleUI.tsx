@@ -43,9 +43,12 @@ import {
     PopoverHeader,
     PopoverBody,
     PopoverArrow,
-    PopoverCloseButton
+    PopoverCloseButton,
+    PopoverFooter,
+    Select
 } from "@open-pioneer/chakra-integration";
 import { useRef, useState } from "react";
+import { TableExampleComponent } from "./TableExample";
 
 export function SampleUI() {
     return (
@@ -54,6 +57,8 @@ export function SampleUI() {
                 <Heading mb={5}>chakra technical demo</Heading>
                 <LinkComponent></LinkComponent>
                 <ComponentStack></ComponentStack>
+                <TableExampleComponent />
+                <SelectComponent />
             </Container>
         </div>
     );
@@ -260,17 +265,38 @@ function DrawerExample() {
 
 function PopoverExample() {
     return (
-        <Popover>
-            <PopoverTrigger>
-                <Button colorScheme="teal">Show Popover</Button>
-            </PopoverTrigger>
-            <PopoverContent>
-                <PopoverArrow />
-                <PopoverCloseButton />
-                <PopoverHeader>Popover!</PopoverHeader>
-                <PopoverBody>This is a very important Popover</PopoverBody>
-            </PopoverContent>
-        </Popover>
+        <>
+            <Popover>
+                <PopoverTrigger>
+                    <Button colorScheme="teal">Show Popover</Button>
+                </PopoverTrigger>
+                <PopoverContent>
+                    <PopoverArrow />
+                    <PopoverCloseButton />
+                    <PopoverHeader>Popover!</PopoverHeader>
+                    <PopoverBody>This is a very important Popover</PopoverBody>
+                </PopoverContent>
+            </Popover>
+
+            <Popover>
+                <PopoverTrigger>
+                    <Button ml={5} colorScheme="teal">
+                        Show Popover rendered in an portal
+                    </Button>
+                </PopoverTrigger>
+                <Portal>
+                    <PopoverContent>
+                        <PopoverArrow />
+                        <PopoverHeader>Header</PopoverHeader>
+                        <PopoverCloseButton />
+                        <PopoverBody>
+                            <PopoverBody>This is a very important Popover</PopoverBody>
+                        </PopoverBody>
+                        <PopoverFooter>This is the footer</PopoverFooter>
+                    </PopoverContent>
+                </Portal>
+            </Popover>
+        </>
     );
 }
 
@@ -293,5 +319,15 @@ function RadioGroupExample() {
             </RadioGroup>
             <p>{"Checked radio: " + value}</p>
         </>
+    );
+}
+
+function SelectComponent() {
+    return (
+        <Select m={5} placeholder="Select an item">
+            <option value="item1">Item 1</option>
+            <option value="item2">Item 2</option>
+            <option value="item3">Item 3</option>
+        </Select>
     );
 }
