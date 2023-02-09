@@ -36,7 +36,7 @@ declare module "open-pioneer:react-hooks" {
      *
      * A complete interface name is required (e.g. "logging.LogService").
      *
-     * In order to use to use a service, it must be declared as an UI-dependency in the package's configuration file.
+     * In order to use a service, it must be declared as an UI-dependency in the package's configuration file.
      */
     export function useService<InterfaceName extends keyof ServiceRegistry>(
         serviceName: InterfaceName,
@@ -49,7 +49,7 @@ declare module "open-pioneer:react-hooks" {
      *
      * A complete interface name is required (e.g. "logging.LogService").
      *
-     * In order to use to use all services, it must be declared as an UI-dependency (`all: true`) in the package's configuration file.
+     * In order to use all services, it must be declared as an UI-dependency (`all: true`) in the package's configuration file.
      */
     export function useServices<InterfaceName extends keyof ServiceRegistry>(
         serviceName: InterfaceName
