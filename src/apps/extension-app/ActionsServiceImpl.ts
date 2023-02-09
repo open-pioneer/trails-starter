@@ -1,8 +1,8 @@
-import { Service, ServiceOptions } from "@open-pioneer/runtime";
-import { Action, ActionProvider, ActionService } from "./api";
+import { Service, ServiceOptions, ServiceType } from "@open-pioneer/runtime";
+import { Action, ActionService } from "./api";
 
 interface References {
-    providers: ActionProvider[];
+    providers: ServiceType<"extension-app.ActionProvider">[];
 }
 
 export class ActionServiceImpl implements Service<ActionService> {
