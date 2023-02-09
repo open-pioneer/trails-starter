@@ -57,7 +57,7 @@ it("throws when a service is not implemented", function () {
     expect(message).toMatchSnapshot();
 });
 
-it("throws when an interface is implemented multiple times", function () {
+it("does not throw when an interface is implemented multiple times", function () {
     const services = mockServices([
         {
             name: "Map1",
@@ -73,13 +73,15 @@ it("throws when an interface is implemented multiple times", function () {
         }
     ]);
 
-    const message = expectError(() =>
-        verifyDependencies({
-            services: services,
-            uiDependencies: []
-        })
-    ).message;
-    expect(message).toMatchSnapshot();
+    const { serviceLookup } = verifyDependencies({
+        services: services,
+        uiDependencies: []
+    });
+    expect(serviceLookup.serviceCount).toEqual(2);
+
+    const mapServices = serviceLookup.lookupAll("services.Map").value.map((s) => s.id);
+    mapServices.sort();
+    expect(mapServices).toEqual(["map::Map1", "map::Map2"]);
 });
 
 it("allows multiple implementations if the services use a 'qualifier' for disambiguation", function () {
@@ -138,6 +140,15 @@ it("throws for ambiguous service reference", function () {
                 {
                     interfaceName: "services.Map",
                     qualifier: "map2"
+                }
+            ]
+        },
+        {
+            name: "Map3",
+            package: "map",
+            provides: [
+                {
+                    interfaceName: "services.Map"
                 }
             ]
         },
@@ -247,7 +258,7 @@ it("allows to pick all implementations", function () {
         uiDependencies: []
     });
 
-    const all = serviceLookup.lookupAll("services.Map");
+    const all = serviceLookup.lookupAll("services.Map").value;
     assert.sameMembers(
         all.map((s) => s.id),
         ["map::Map1", "map::Map2"]
@@ -403,5 +414,5 @@ function getService(
     if (result.type !== "found") {
         throw new Error(`Failed to find interface ${interfaceName} (qualifier: ${qualifier}).`);
     }
-    return result.service;
+    return result.value;
 }

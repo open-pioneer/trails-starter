@@ -47,6 +47,29 @@ export function useServiceInternal(
 }
 
 /**
+ * Returns all services that implement the given interface.
+ * Receives the package name of the importing package as a string.
+ *
+ * This is an internal hook that is typically called indirectly via the hook
+ * provided from `"open-pioneer:react-hooks"`.
+ *
+ * @private
+ */
+export function useServicesInternal<Interface extends InterfaceName>(
+    packageName: string,
+    interfaceName: Interface
+): ServiceType<Interface>[];
+export function useServicesInternal(packageName: string, interfaceName: string): unknown[];
+export function useServicesInternal(packageName: string, interfaceName: string): unknown[] {
+    const context = useContext(PackageContext);
+    const services = useMemo(
+        () => checkContext("useServices", context).getServices(packageName, interfaceName),
+        [context, packageName, interfaceName]
+    );
+    return services;
+}
+
+/**
  * Returns the properties for the given package.
  *
  * This is an internal hook that is typically called indirectly via the hook

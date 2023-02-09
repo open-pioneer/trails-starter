@@ -284,7 +284,7 @@ it("allows access to service instances if the dependency was declared", function
         interfaceName: "testpackage.Interface"
     });
     expect(resultDeclared.type).toBe("found");
-    expect((resultDeclared as Found).service).toBeDefined();
+    expect((resultDeclared as Found<Service>).value).toBeDefined();
 
     const resultUndeclared = serviceLayer.getService("test-package", {
         interfaceName: "testpackage.OtherInterface"

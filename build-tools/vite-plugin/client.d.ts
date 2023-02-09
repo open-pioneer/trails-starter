@@ -32,17 +32,29 @@ declare module "open-pioneer:react-hooks" {
     export { type UseServiceOptions };
 
     /**
-     * Returns an implementation of the given service.
+     * Returns an implementation of the given interface.
      *
      * A complete interface name is required (e.g. "logging.LogService").
      *
-     * In order to use to use a service, it must be declared as a UI-dependency in the package's configuration file.
+     * In order to use to use a service, it must be declared as an UI-dependency in the package's configuration file.
      */
     export function useService<InterfaceName extends keyof ServiceRegistry>(
         serviceName: InterfaceName,
         options?: UseServiceOptions
     ): ServiceRegistry[InterfaceName];
     export function useService(serviceName: string): unknown;
+
+    /**
+     * Returns all implementations of the given interface.
+     *
+     * A complete interface name is required (e.g. "logging.LogService").
+     *
+     * In order to use to use all services, it must be declared as an UI-dependency (`all: true`) in the package's configuration file.
+     */
+    export function useServices<InterfaceName extends keyof ServiceRegistry>(
+        serviceName: InterfaceName
+    ): ServiceRegistry[InterfaceName][];
+    export function useServices(serviceName: string): unknown[];
 
     /**
      * Returns the properties of the calling component's package.

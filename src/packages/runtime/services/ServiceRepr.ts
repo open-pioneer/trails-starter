@@ -202,26 +202,6 @@ export class ServiceRepr {
     }
 }
 
-export function renderAmbiguousServiceChoices(services: ServiceRepr[], max = 2): string {
-    let message = "";
-    let count = 0;
-    for (const service of services) {
-        if (count) {
-            message += ", ";
-        }
-        message += service.id;
-        if (++count >= max) {
-            break;
-        }
-    }
-
-    const remaining = services.length - count;
-    if (remaining > 0) {
-        message += ` and ${remaining} more`;
-    }
-    return message;
-}
-
 const SERVICE_NAME_REGEX = /^[a-z0-9_-]+$/i;
 
 function isValidServiceName(name: string) {

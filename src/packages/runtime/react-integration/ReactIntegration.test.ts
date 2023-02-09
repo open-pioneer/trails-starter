@@ -3,18 +3,19 @@
  */
 import { createElement } from "react";
 import { beforeEach, expect, it } from "vitest";
-import { usePropertiesInternal, useServiceInternal } from "./hooks";
+import { usePropertiesInternal, useServiceInternal, useServicesInternal } from "./hooks";
 import { findByText } from "@testing-library/dom";
-import { Service } from "../Service";
+import { Service, ServiceConstructor } from "../Service";
 // eslint-disable-next-line import/no-relative-packages
-import { UI as TestUIFromPackage } from "./test-data/test-package/UI";
+import { UIWithProperties, UIWithService, UIWithServices } from "./test-data/test-package/UI";
 import { ServiceLayer } from "../services/ServiceLayer";
 import { ReactIntegration } from "./ReactIntegration";
 import { act } from "react-dom/test-utils";
 import { PackageRepr } from "../services/PackageRepr";
 import { ServiceRepr } from "../services/ServiceRepr";
+import { InterfaceSpec, ReferenceSpec } from "../services/InterfaceSpec";
 
-export interface TestProvider {
+interface TestProvider {
     value: string;
 }
 
@@ -28,36 +29,42 @@ it("should allow access to service via react hook", async () => {
         return createElement("span", undefined, `Hello ${service.value}`);
     }
 
-    const wrapper = document.createElement("div");
-    const testService = new ServiceRepr({
-        name: "Provider",
-        packageName: "test",
-        clazz: class Provider implements Service<TestProvider> {
-            value = "TEST";
-        },
-        interfaces: [{ interfaceName: "test.Provider" }]
-    });
-    const testPackage = new PackageRepr({
-        name: "test",
-        uiReferences: [{ interfaceName: "test.Provider" }],
-        services: [testService]
-    });
-    const serviceLayer = new ServiceLayer([testPackage]);
-    serviceLayer.start();
-
-    const reactIntegration = new ReactIntegration({
-        rootNode: wrapper,
-        container: wrapper,
-        serviceLayer,
-        packages: new Map([[testPackage.name, testPackage]])
+    const { wrapper, integration } = createIntegration({
+        packageUiReferences: [{ interfaceName: "test.Provider" }],
+        services: [
+            {
+                name: "Provider",
+                interfaces: [{ interfaceName: "test.Provider" }],
+                clazz: class Provider implements Service<TestProvider> {
+                    value = "TEST";
+                }
+            }
+        ]
     });
 
     act(() => {
-        reactIntegration.render(TestComponent, {});
+        integration.render(TestComponent, {});
     });
 
     const node = await findByText(wrapper, "Hello TEST");
     expect(node).toMatchSnapshot();
+});
+
+it("should get error when using undefined service", async () => {
+    function TestComponent() {
+        const service = useServiceInternal("test", "test.Provider") as TestProvider;
+        return createElement("span", undefined, `Hello ${service.value}`);
+    }
+
+    const { integration } = createIntegration({
+        disablePackage: true
+    });
+
+    expect(() => {
+        act(() => {
+            integration.render(TestComponent, {});
+        });
+    }).toThrowErrorMatchingSnapshot();
 });
 
 it("should allow access to service with qualifier via react hook", async () => {
@@ -68,36 +75,119 @@ it("should allow access to service with qualifier via react hook", async () => {
         return createElement("span", undefined, `Hello ${service.value}`);
     }
 
-    const wrapper = document.createElement("div");
-    const testService = new ServiceRepr({
-        name: "Provider",
-        packageName: "test",
-        clazz: class Provider implements Service<TestProvider> {
-            value = "TEST";
-        },
-        interfaces: [{ interfaceName: "test.Provider", qualifier: "foo" }]
-    });
-    const testPackage = new PackageRepr({
-        name: "test",
-        uiReferences: [{ interfaceName: "test.Provider", qualifier: "foo" }],
-        services: [testService]
-    });
-    const serviceLayer = new ServiceLayer([testPackage]);
-    serviceLayer.start();
-
-    const reactIntegration = new ReactIntegration({
-        rootNode: wrapper,
-        container: wrapper,
-        serviceLayer,
-        packages: new Map([[testPackage.name, testPackage]])
+    const { wrapper, integration } = createIntegration({
+        services: [
+            {
+                name: "Provider",
+                interfaces: [{ interfaceName: "test.Provider", qualifier: "foo" }],
+                clazz: class Provider implements Service<TestProvider> {
+                    value = "TEST";
+                }
+            }
+        ],
+        packageUiReferences: [{ interfaceName: "test.Provider", qualifier: "foo" }]
     });
 
     act(() => {
-        reactIntegration.render(TestComponent, {});
+        integration.render(TestComponent, {});
     });
 
     const node = await findByText(wrapper, "Hello TEST");
     expect(node).toMatchSnapshot();
+});
+
+it("should deny access to service when the qualifier does not match", async () => {
+    function TestComponent() {
+        const service = useServiceInternal("test", "test.Provider", {
+            qualifier: "bar"
+        }) as TestProvider;
+        return createElement("span", undefined, `Hello ${service.value}`);
+    }
+
+    const { integration } = createIntegration({
+        services: [
+            {
+                name: "Provider",
+                interfaces: [{ interfaceName: "test.Provider", qualifier: "foo" }],
+                clazz: class Provider implements Service<TestProvider> {
+                    value = "TEST";
+                }
+            }
+        ],
+        packageUiReferences: [{ interfaceName: "test.Provider", qualifier: "foo" }]
+    });
+
+    expect(() => {
+        act(() => {
+            integration.render(TestComponent, {});
+        });
+    }).toThrowErrorMatchingSnapshot();
+});
+
+it("should allow access to all services via react hook", async () => {
+    function TestComponent() {
+        const services = useServicesInternal("test", "test.Provider") as TestProvider[];
+        return createElement(
+            "span",
+            undefined,
+            `Joined Values: ${services.map((s) => s.value).join()}`
+        );
+    }
+
+    const { wrapper, integration } = createIntegration({
+        services: [
+            {
+                name: "Provider1",
+                interfaces: [{ interfaceName: "test.Provider", qualifier: "foo" }],
+                clazz: class Provider implements Service<TestProvider> {
+                    value = "TEST1";
+                }
+            },
+            {
+                name: "Provider2",
+                interfaces: [{ interfaceName: "test.Provider", qualifier: "bar" }],
+                clazz: class Provider implements Service<TestProvider> {
+                    value = "TEST2";
+                }
+            },
+            {
+                name: "Provider3",
+                interfaces: [{ interfaceName: "test.Provider", qualifier: "baz" }],
+                clazz: class Provider implements Service<TestProvider> {
+                    value = "TEST3";
+                }
+            }
+        ],
+        packageUiReferences: [{ interfaceName: "test.Provider", all: true }]
+    });
+
+    act(() => {
+        integration.render(TestComponent, {});
+    });
+
+    const node = await findByText(wrapper, /^Joined Values:/);
+    expect(node).toMatchSnapshot();
+});
+
+it("should deny access to all services if declaration is missing", async () => {
+    function TestComponent() {
+        const services = useServicesInternal("test", "test.Provider") as TestProvider[];
+        return createElement(
+            "span",
+            undefined,
+            `Joined Values: ${services.map((s) => s.value).join()}`
+        );
+    }
+
+    const { integration } = createIntegration({
+        services: []
+    });
+
+    expect(() => {
+        act(() => {
+            integration.render(TestComponent, {});
+        });
+    }).toThrowErrorMatchingSnapshot();
 });
 
 it("should be able to read properties from react component", async () => {
@@ -106,89 +196,95 @@ it("should be able to read properties from react component", async () => {
         return createElement("span", undefined, `Hello ${properties.name}`);
     }
 
-    const wrapper = document.createElement("div");
-    const serviceLayer = new ServiceLayer([]);
-    serviceLayer.start();
-
-    const testPackage = new PackageRepr({
-        name: "test",
-        properties: {
+    const { wrapper, integration } = createIntegration({
+        packageProperties: {
             name: "USER"
         }
     });
-    const reactIntegration = new ReactIntegration({
-        rootNode: wrapper,
-        container: wrapper,
-        serviceLayer,
-        packages: new Map([[testPackage.name, testPackage]])
-    });
 
     act(() => {
-        reactIntegration.render(TestComponent, {});
+        integration.render(TestComponent, {});
     });
 
     const node = await findByText(wrapper, "Hello USER");
     expect(node).toMatchSnapshot();
 });
 
-it("should provide the autogenerated useProperties hook", async () => {
+it("should provide the autogenerated useService hook", async () => {
     const testPackageName = "@open-pioneer/runtime__react_test_package";
-    const wrapper = document.createElement("div");
-    const serviceLayer = new ServiceLayer([]);
-    serviceLayer.start();
-
-    const testPackage = new PackageRepr({
-        name: testPackageName,
-        properties: {
-            greeting: "Hello World!"
-        }
-    });
-    const reactIntegration = new ReactIntegration({
-        rootNode: wrapper,
-        container: wrapper,
-        serviceLayer,
-        packages: new Map([[testPackage.name, testPackage]])
+    const { wrapper, integration } = createIntegration({
+        packageName: testPackageName,
+        packageUiReferences: [{ interfaceName: "test.Provider" }],
+        services: [
+            {
+                name: "Provider",
+                interfaces: [{ interfaceName: "test.Provider" }],
+                clazz: class Provider implements Service<TestProvider> {
+                    value = "TEST";
+                }
+            }
+        ]
     });
 
     act(() => {
-        reactIntegration.render(TestUIFromPackage, {});
+        integration.render(UIWithService, {});
     });
 
-    const node = await findByText(wrapper, "Hello World!");
+    const node = await findByText(wrapper, /^Test-UI:/);
     expect(node).toMatchSnapshot();
 });
 
-it("should get error when using undefined service", async () => {
-    function TestComponent() {
-        const service = useServiceInternal("test", "test.Provider") as TestProvider;
-        return createElement("span", undefined, `Hello ${service.value}`);
-    }
-    const wrapper = document.createElement("div");
-    const serviceLayer = new ServiceLayer([]);
-    serviceLayer.start();
-
-    const reactIntegration = new ReactIntegration({
-        rootNode: wrapper,
-        container: wrapper,
-        serviceLayer,
-        packages: new Map()
+it("should provide the autogenerated useServices hook", async () => {
+    const testPackageName = "@open-pioneer/runtime__react_test_package";
+    const { wrapper, integration } = createIntegration({
+        packageName: testPackageName,
+        packageUiReferences: [{ interfaceName: "test.Provider", all: true }],
+        services: [
+            {
+                name: "Provider1",
+                interfaces: [{ interfaceName: "test.Provider" }],
+                clazz: class Provider implements Service<TestProvider> {
+                    value = "TEST1";
+                }
+            },
+            {
+                name: "Provider2",
+                interfaces: [{ interfaceName: "test.Provider" }],
+                clazz: class Provider implements Service<TestProvider> {
+                    value = "TEST2";
+                }
+            }
+        ]
     });
 
-    expect(() => {
-        act(() => {
-            reactIntegration.render(TestComponent, {});
-        });
-    }).toThrowErrorMatchingSnapshot();
+    act(() => {
+        integration.render(UIWithServices, {});
+    });
+
+    const node = await findByText(wrapper, /^Test-UI:/);
+    expect(node).toMatchSnapshot();
 });
 
-it("should get error when requesting properties from an unknown package", async () => {
-    const wrapper = document.createElement("div");
-    const serviceLayer = new ServiceLayer([]);
-    const reactIntegration = new ReactIntegration({
-        rootNode: wrapper,
-        container: wrapper,
-        serviceLayer,
-        packages: new Map()
+it("should provide the autogenerated useProperties hook", async () => {
+    const testPackageName = "@open-pioneer/runtime__react_test_package";
+    const { wrapper, integration } = createIntegration({
+        packageName: testPackageName,
+        packageProperties: {
+            greeting: "Hello World!"
+        }
+    });
+
+    act(() => {
+        integration.render(UIWithProperties, {});
+    });
+
+    const node = await findByText(wrapper, /^Test-UI:/);
+    expect(node).toMatchSnapshot();
+});
+
+it("should throw error when requesting properties from an unknown package", async () => {
+    const { integration } = createIntegration({
+        disablePackage: true
     });
 
     function TestComponent() {
@@ -196,11 +292,63 @@ it("should get error when requesting properties from an unknown package", async 
         return createElement("span", undefined, `Hello ${properties.name}`);
     }
 
-    serviceLayer.start();
-
     expect(() => {
         act(() => {
-            reactIntegration.render(TestComponent, {});
+            integration.render(TestComponent, {});
         });
     }).toThrowErrorMatchingSnapshot();
 });
+
+interface ServiceSpec {
+    name: string;
+    interfaces: InterfaceSpec[];
+    clazz: ServiceConstructor;
+}
+
+export interface TestIntegration {
+    wrapper: HTMLDivElement;
+    integration: ReactIntegration;
+}
+
+function createIntegration(options?: {
+    disablePackage?: boolean;
+    packageName?: string;
+    packageProperties?: Record<string, unknown>;
+    packageUiReferences?: ReferenceSpec[];
+    services?: ServiceSpec[];
+}): TestIntegration {
+    const wrapper = document.createElement("div");
+    const packages = new Map<string, PackageRepr>();
+    if (!options?.disablePackage) {
+        const packageName = options?.packageName ?? "test";
+        const services =
+            options?.services?.map((spec) => {
+                return new ServiceRepr({
+                    name: spec.name,
+                    packageName,
+                    interfaces: spec.interfaces,
+                    clazz: spec.clazz
+                });
+            }) ?? [];
+        packages.set(
+            packageName,
+            new PackageRepr({
+                name: packageName,
+                properties: options?.packageProperties,
+                uiReferences: options?.packageUiReferences,
+                services
+            })
+        );
+    }
+
+    const serviceLayer = new ServiceLayer(Array.from(packages.values()));
+    serviceLayer.start();
+
+    const integration = new ReactIntegration({
+        container: wrapper,
+        rootNode: wrapper,
+        packages,
+        serviceLayer
+    });
+    return { integration, wrapper };
+}

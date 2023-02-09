@@ -1,13 +1,13 @@
-import { ComponentType, createElement } from "react";
+import { ComponentType, StrictMode } from "react";
 import { createRoot, Root } from "react-dom/client";
 import { Error } from "@open-pioneer/core";
 import { ErrorId } from "../errors";
 import { ServiceLayer } from "../services/ServiceLayer";
-import { PackageContextMethods } from "./PackageContext";
+import { PackageContext, PackageContextMethods } from "./PackageContext";
 import { PackageRepr } from "../services/PackageRepr";
-import { ReactRootComponent } from "./ReactRootComponent";
 import { InterfaceSpec, renderInterfaceSpec } from "../services/InterfaceSpec";
-import { renderAmbiguousServiceChoices } from "../services/ServiceRepr";
+import { renderAmbiguousServiceChoices } from "../services/ServiceLookup";
+import { CustomChakraProvider } from "@open-pioneer/chakra-integration";
 
 export interface ReactIntegrationOptions {
     packages: Map<string, PackageRepr>;
@@ -33,7 +33,7 @@ export class ReactIntegration {
                 const spec: InterfaceSpec = { interfaceName, ...options };
                 const result = this.serviceLayer.getService(packageName, spec);
                 if (result.type === "found") {
-                    return result.service.getInstanceOrThrow();
+                    return result.value.getInstanceOrThrow();
                 }
 
                 const renderedSpec = renderInterfaceSpec(spec);
@@ -59,6 +59,21 @@ export class ReactIntegration {
                     }
                 }
             },
+            getServices: (packageName, interfaceName) => {
+                const result = this.serviceLayer.getServices(packageName, interfaceName);
+                if (result.type === "found") {
+                    return result.value.map((serviceRepr) => serviceRepr.getInstanceOrThrow());
+                }
+
+                switch (result.type) {
+                    case "undeclared":
+                        throw new Error(
+                            ErrorId.UNDECLARED_DEPENDENCY,
+                            `Package '${packageName}' did not declare an UI dependency on all services implementing interface '${interfaceName}'.` +
+                                ` Add the dependency ("all": true) to the package configuration or remove the usage.`
+                        );
+                }
+            },
             getProperties: (packageName) => {
                 const pkg = this.packages.get(packageName);
                 if (!pkg) {
@@ -74,12 +89,13 @@ export class ReactIntegration {
 
     render(Component: ComponentType, props: Record<string, unknown>) {
         this.root.render(
-            createElement(ReactRootComponent, {
-                Component: Component,
-                componentProps: props,
-                container: this.containerNode,
-                packageContext: this.packageContext
-            })
+            <StrictMode>
+                <CustomChakraProvider container={this.containerNode} colorMode="light">
+                    <PackageContext.Provider value={this.packageContext}>
+                        <Component {...props} />
+                    </PackageContext.Provider>
+                </CustomChakraProvider>
+            </StrictMode>
         );
     }
 

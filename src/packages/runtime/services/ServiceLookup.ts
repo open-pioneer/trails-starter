@@ -4,8 +4,8 @@ import { InterfaceSpec } from "./InterfaceSpec";
 import { ServiceRepr } from "./ServiceRepr";
 
 interface Services {
-    // The unqualified service implementation (if any).
-    unqualified: ServiceRepr | undefined;
+    // The unqualified service implementations (if any).
+    unqualified: ServiceRepr[];
 
     // Services indexed by their qualifier (if any).
     byQualifier: Map<string, ServiceRepr>;
@@ -19,15 +19,19 @@ export interface Unimplemented {
 
 export interface Ambiguous {
     type: "ambiguous";
-    choices: ServiceRepr[];
+    choices: AmbiguousChoice[];
 }
 
-export interface Found {
+export type AmbiguousChoice = [serviceId: string, qualifier: string | undefined];
+
+export interface Found<T> {
     type: "found";
-    service: ServiceRepr;
+    value: T;
 }
 
-export type ServiceLookupResult = Unimplemented | Ambiguous | Found;
+export type ServiceLookupResult = Unimplemented | Ambiguous | Found<ServiceRepr>;
+
+export type ServicesLookupResult = Found<ServiceRepr[]>;
 
 export class ServiceLookup {
     // Service implementations indexed by interface name.
@@ -65,15 +69,7 @@ export class ServiceLookup {
 
         const services = this.ensureInterfaceEntry(interfaceName);
         if (!qualifier) {
-            if (services.unqualified) {
-                throw new Error(
-                    ErrorId.DUPLICATE_INTERFACE,
-                    `Cannot register '${service.id}' as interface '${interfaceName}'.` +
-                        ` '${interfaceName}' is already provided by service '${services.unqualified.id}'.` +
-                        ` If you intend you have multiple implementations in your application, you must use the 'qualifier' attribute.`
-                );
-            }
-            services.unqualified = service;
+            services.unqualified.push(service);
             ++this._count;
             return;
         }
@@ -115,34 +111,42 @@ export class ServiceLookup {
 
         if (!qualifier) {
             // Just pick one, but the choice must be unambiguous.
-            const count = (services.unqualified ? 1 : 0) + services.byQualifier.size;
+            const count = services.unqualified.length + services.byQualifier.size;
             if (count > 1) {
+                // [serviceId, qualifier] tuples
+                const choices: AmbiguousChoice[] = [];
+                choices.push(
+                    ...Array.from(services.byQualifier.entries()).map<AmbiguousChoice>(
+                        ([qualifier, service]) => [service.id, qualifier]
+                    )
+                );
+                choices.push(
+                    ...services.unqualified.map<AmbiguousChoice>((s) => [s.id, undefined])
+                );
                 return {
                     type: "ambiguous",
-                    choices: (services.unqualified ? [services.unqualified] : []).concat(
-                        Array.from(services.byQualifier.values())
-                    )
+                    choices: choices
                 };
             }
 
-            const service = services.unqualified ?? first(services.byQualifier);
+            const service = services.unqualified[0] ?? first(services.byQualifier);
             if (!service) {
                 return { type: "unimplemented" };
             }
-            return { type: "found", service: service };
+            return { type: "found", value: service };
         }
 
         const service = services.byQualifier.get(qualifier);
         if (!service) {
             return { type: "unimplemented" };
         }
-        return { type: "found", service: service };
+        return { type: "found", value: service };
     }
 
     /**
      * Returns all services implementing the given interface.
      */
-    lookupAll(interfaceName: string): ServiceRepr[] {
+    lookupAll(interfaceName: string): ServicesLookupResult {
         if (!interfaceName) {
             throw new Error(
                 ErrorId.INVALID_METADATA,
@@ -152,15 +156,14 @@ export class ServiceLookup {
 
         const services = this.services.get(interfaceName);
         if (!services) {
-            return [];
+            return { type: "found", value: [] };
         }
 
-        const all: ServiceRepr[] = [];
-        if (services.unqualified) {
-            all.push(services.unqualified);
-        }
-        all.push(...services.byQualifier.values());
-        return all;
+        const deduped = new Set([...services.unqualified, ...services.byQualifier.values()]);
+        return {
+            type: "found",
+            value: Array.from(deduped)
+        };
     }
 
     private ensureInterfaceEntry(interfaceName: string): Services {
@@ -168,13 +171,38 @@ export class ServiceLookup {
         let entry = services.get(interfaceName);
         if (!entry) {
             entry = {
-                unqualified: undefined,
+                unqualified: [],
                 byQualifier: new Map()
             };
             services.set(interfaceName, entry);
         }
         return entry;
     }
+}
+
+export function renderAmbiguousServiceChoices(choices: AmbiguousChoice[], max = 2): string {
+    let message = "";
+    let count = 0;
+    for (const [serviceId, qualifier] of choices) {
+        if (count) {
+            message += ", ";
+        }
+
+        message += `'${serviceId}'`;
+        if (qualifier) {
+            message += ` (with qualifier '${qualifier}')`;
+        }
+
+        if (++count >= max) {
+            break;
+        }
+    }
+
+    const remaining = choices.length - count;
+    if (remaining > 0) {
+        message += ` and ${remaining} more`;
+    }
+    return message;
 }
 
 function first<K, V>(map: Map<K, V>): V | undefined {

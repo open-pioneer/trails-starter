@@ -6,8 +6,12 @@ import {
     ReferenceSpec,
     renderInterfaceSpec
 } from "./InterfaceSpec";
-import { ReadonlyServiceLookup, ServiceLookup } from "./ServiceLookup";
-import { renderAmbiguousServiceChoices, ServiceRepr } from "./ServiceRepr";
+import {
+    ReadonlyServiceLookup,
+    renderAmbiguousServiceChoices,
+    ServiceLookup
+} from "./ServiceLookup";
+import { ServiceRepr } from "./ServiceRepr";
 
 export interface DependencyOptions {
     services?: readonly ServiceRepr[];
@@ -219,11 +223,11 @@ class Verifier {
                     throw new Error(ErrorId.AMBIGUOUS_DEPENDENCY, message);
                 }
             }
-            return this.getGraphItem(lookupResult.service);
+            return this.getGraphItem(lookupResult.value);
         } else {
             return this.serviceLookup
                 .lookupAll(ref.interfaceName)
-                .map((service) => this.getGraphItem(service));
+                .value.map((service) => this.getGraphItem(service));
         }
     }
 

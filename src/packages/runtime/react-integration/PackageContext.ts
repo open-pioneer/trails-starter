@@ -4,6 +4,7 @@ import { UseServiceOptions } from "./hooks";
 
 export interface PackageContextMethods {
     getService: (packageName: string, interfaceName: string, options: UseServiceOptions) => Service;
+    getServices: (packageName: string, interfaceName: string) => Service[];
     getProperties: (packageName: string) => Readonly<Record<string, unknown>>;
 }
 

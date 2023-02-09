@@ -7,8 +7,13 @@ import {
     verifyDependencies
 } from "./verifyDependencies";
 import { PackageRepr } from "./PackageRepr";
-import { ReadonlyServiceLookup, ServiceLookupResult } from "./ServiceLookup";
-import { InterfaceSpec, isAllImplementationsSpec, renderInterfaceSpec } from "./InterfaceSpec";
+import { ReadonlyServiceLookup, ServiceLookupResult, ServicesLookupResult } from "./ServiceLookup";
+import {
+    InterfaceSpec,
+    isAllImplementationsSpec,
+    isSingleImplementationSpec,
+    ReferenceSpec
+} from "./InterfaceSpec";
 
 export type DynamicLookupResult = ServiceLookupResult | UndeclaredDependency;
 
@@ -81,7 +86,10 @@ export class ServiceLayer {
      *
      * @throws if the service layer is not in 'started' state or if no service implements the interface.
      */
-    getService(packageName: string, spec: InterfaceSpec): DynamicLookupResult {
+    getService(
+        packageName: string,
+        spec: InterfaceSpec
+    ): ServiceLookupResult | UndeclaredDependency {
         if (this.state !== "started") {
             throw new Error(ErrorId.INTERNAL, "Service layer is not started.");
         }
@@ -91,6 +99,30 @@ export class ServiceLayer {
         }
 
         return this.serviceLookup.lookup(spec);
+    }
+
+    /**
+     * Returns all services implementing the given interface.
+     * Requires that the dependency on all implementations has been declared in the package.
+     *
+     * @param packageName the name of the package requesting the import
+     * @param interfaceName the interface name
+     *
+     * @throws if the service layer is not in 'started'.
+     */
+    getServices(
+        packageName: string,
+        interfaceName: string
+    ): ServicesLookupResult | UndeclaredDependency {
+        if (this.state !== "started") {
+            throw new Error(ErrorId.INTERNAL, "Service layer is not started.");
+        }
+
+        if (!this.isDeclaredDependency(packageName, { interfaceName, all: true })) {
+            return { type: "undeclared" };
+        }
+
+        return this.serviceLookup.lookupAll(interfaceName);
     }
 
     /**
@@ -154,7 +186,7 @@ export class ServiceLayer {
         }
     }
 
-    private isDeclaredDependency(packageName: string, spec: InterfaceSpec) {
+    private isDeclaredDependency(packageName: string, spec: ReferenceSpec) {
         const packageEntry = this.declaredDependencies.get(packageName);
         if (!packageEntry) {
             return false;
@@ -163,10 +195,15 @@ export class ServiceLayer {
         if (!interfaceEntry) {
             return false;
         }
-        if (spec.qualifier == null) {
-            return interfaceEntry.unqualified;
+
+        if (isSingleImplementationSpec(spec)) {
+            if (spec.qualifier == null) {
+                return interfaceEntry.unqualified;
+            }
+            return interfaceEntry.qualifiers.has(spec.qualifier);
+        } else {
+            return interfaceEntry.all;
         }
-        return interfaceEntry.qualifiers.has(spec.qualifier);
     }
 
     private getServiceDeps(service: ServiceRepr) {
@@ -178,22 +215,6 @@ export class ServiceLayer {
             );
         }
         return dependencies;
-    }
-
-    /**
-     * Called to retrieve a service implementation for which we know that it exists (due to prior validation).
-     */
-    private mustGet(spec: InterfaceSpec) {
-        const result = this.serviceLookup.lookup(spec);
-        if (result.type !== "found") {
-            throw new Error(
-                ErrorId.INTERNAL,
-                `Failed to find service implementing interface ${renderInterfaceSpec(
-                    spec
-                )}: result type '${result.type}'.`
-            );
-        }
-        return result.service;
     }
 }
 

@@ -24,7 +24,7 @@ export const PackageContextProvider: FC<PackageContextProviderProps> = (props) =
         const services = inputServices ?? {};
         const properties = inputProperties ?? {};
         return {
-            // TODO: Support for classifiers
+            // TODO: Support for classifiers and multiple services
             getService(packageName, interfaceName) {
                 void packageName; // ignored
                 const service = services[interfaceName];
@@ -34,6 +34,9 @@ export const PackageContextProvider: FC<PackageContextProviderProps> = (props) =
                     );
                 }
                 return service;
+            },
+            getServices(packageName, interfaceName) {
+                return [this.getService(packageName, interfaceName, {})];
             },
             getProperties(packageName) {
                 const packageProperties = properties[packageName];
