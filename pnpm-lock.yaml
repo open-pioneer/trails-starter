@@ -140,16 +140,6 @@ importers:
       '@open-pioneer/chakra-integration': link:../../packages/chakra-integration
       '@open-pioneer/runtime': link:../../packages/runtime
 
-  src/apps/logging-app:
-    specifiers:
-      '@open-pioneer/runtime': workspace:^
-      logging: workspace:^
-      react: ^18.2.0
-    dependencies:
-      '@open-pioneer/runtime': link:../../packages/runtime
-      logging: link:../../packages/logging
-      react: 18.2.0
-
   src/apps/ol-app:
     specifiers:
       '@open-pioneer/runtime': workspace:^
@@ -161,12 +151,6 @@ importers:
       logging: link:../../packages/logging
       ol: 7.2.2
       react: 18.2.0
-
-  src/apps/services-app:
-    specifiers:
-      '@open-pioneer/runtime': workspace:^
-    dependencies:
-      '@open-pioneer/runtime': link:../../packages/runtime
 
   src/apps/styling-app:
     specifiers:
