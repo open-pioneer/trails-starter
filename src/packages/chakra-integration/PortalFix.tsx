@@ -45,7 +45,7 @@ function usePortalContainer() {
     const portalContainer = useContext(PortalRootContext);
     if (!portalContainer) {
         throw new Error(
-            `Failed to find portal container: chakra-ui integration was not setup correctly.`
+            `Failed to find portal container: chakra-ui integration was not set up correctly.`
         );
     }
     return portalContainer;
