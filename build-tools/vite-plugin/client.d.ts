@@ -42,7 +42,7 @@ declare module "open-pioneer:react-hooks" {
         serviceName: InterfaceName,
         options?: UseServiceOptions
     ): ServiceRegistry[InterfaceName];
-    export function useService(serviceName: string): unknown;
+    export function useService(serviceName: string, options?: UseServiceOptions): unknown;
 
     /**
      * Returns all implementations of the given interface.

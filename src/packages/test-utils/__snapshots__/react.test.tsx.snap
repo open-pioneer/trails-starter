@@ -1,0 +1,32 @@
+// Vitest Snapshot v1
+
+exports[`should allow injection of all service implementations from the test 1`] = `
+<div>
+  Messages:
+  <ul>
+    <li>
+      Hello from service with qualifier=foo!
+    </li>
+    <li>
+      Hello from service with qualifier=bar!
+    </li>
+    <li>
+      Hello World!
+    </li>
+  </ul>
+</div>
+`;
+
+exports[`should allow injection of service from the test 1`] = `
+<div>
+  Message: 
+  Hello World!
+</div>
+`;
+
+exports[`should allow injection of service with qualifier from the test 1`] = `
+<div>
+  Message: 
+  Hello from service with qualifier!
+</div>
+`;
