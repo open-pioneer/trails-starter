@@ -1,7 +1,7 @@
 /**
  * @vitest-environment jsdom
  */
-import { renderComponentShadowDOM } from "@open-pioneer/test-utils/web-components";
+import { renderComponent, renderComponentShadowDOM } from "@open-pioneer/test-utils/web-components";
 import { waitFor } from "@testing-library/dom";
 import { Component, createElement } from "react";
 import { expect, it, describe } from "vitest";
@@ -12,8 +12,7 @@ describe("simple rendering", function () {
     const SIMPLE_STYLE = ".test { color: red }";
     const SIMPLE_ELEM = createCustomElement({
         component: () => createElement("div", { className: "test" }, "hello world"),
-        styles: SIMPLE_STYLE,
-        openShadowRoot: true
+        styles: SIMPLE_STYLE
     });
     customElements.define("simple-elem", SIMPLE_ELEM);
 
@@ -49,6 +48,19 @@ describe("simple rendering", function () {
     });
 });
 
+it("explicitly setting the shadow dom mode hides the shadow root", async () => {
+    function TestComponent() {
+        return createElement("span", undefined, "Hello World");
+    }
+
+    const elem = createCustomElement({
+        component: TestComponent,
+        openShadowRoot: false
+    });
+    const { node } = await renderComponent(elem);
+    expect(node.shadowRoot).toBeNull();
+});
+
 it("should render test component with attribute 'name'", async () => {
     class TestComponent extends Component<Record<string, string>> {
         render() {
@@ -59,8 +71,7 @@ it("should render test component with attribute 'name'", async () => {
     const attributeValue = "test";
     const elem = createCustomElement({
         component: TestComponent,
-        attributes: ["name"],
-        openShadowRoot: true
+        attributes: ["name"]
     });
     const { node, queries } = await renderComponentShadowDOM(elem);
     node.setAttribute("name", attributeValue);
@@ -75,7 +86,6 @@ it("should allow customization of package properties", async () => {
             const properties = usePropertiesInternal("test");
             return createElement("span", undefined, properties.greeting as string);
         },
-        openShadowRoot: true,
         packages: {
             test: {
                 name: "test",
@@ -104,7 +114,6 @@ it("should allow customization of package properties through a callback", async 
             const properties = usePropertiesInternal("test");
             return createElement("span", undefined, properties.greeting as string);
         },
-        openShadowRoot: true,
         packages: {
             test: {
                 name: "test",

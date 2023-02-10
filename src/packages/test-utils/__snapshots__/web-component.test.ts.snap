@@ -1,0 +1,36 @@
+// Vitest Snapshot v1
+
+exports[`should render a web component with a shadow dom 1`] = `
+<span
+  class="hello"
+>
+  Hello World
+</span>
+`;
+
+exports[`should render the same component multiple times (needs shared tag name) 1`] = `
+<body>
+  <div>
+    <test-component-2
+      greeting="Hello"
+    >
+      <span
+        class="hello"
+      >
+        Hello
+      </span>
+    </test-component-2>
+  </div>
+  <div>
+    <test-component-2
+      greeting="Bye"
+    >
+      <span
+        class="hello"
+      >
+        Bye
+      </span>
+    </test-component-2>
+  </div>
+</body>
+`;

@@ -56,7 +56,7 @@ export interface CustomElementOptions {
 
     /**
      * Whether the shadow root element is accessible from the outside.
-     * @default false
+     * Defaults to `false` in production mode and `true` during development to make testing easier.
      */
     openShadowRoot?: boolean;
 }
@@ -107,8 +107,10 @@ export function createCustomElement(options: CustomElementOptions): CustomElemen
 
         constructor() {
             super();
+
+            const mode = options.openShadowRoot ?? import.meta.env.DEV ? "open" : "closed";
             this.#shadowRoot = this.attachShadow({
-                mode: options.openShadowRoot ? "open" : "closed"
+                mode: mode
             });
         }
 
