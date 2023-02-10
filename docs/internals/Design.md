@@ -301,7 +301,37 @@ it("should run", function () {
 });
 ```
 
-TODO: UI Tests (integrate with react test utils)
+React components that integrate into the service layer (via hooks `useSerivce`, `useProperties` etc.) also need some testing support to provide test dependencies.
+A custom provider can be used to supply service instances (and properties etc.) into the component tree.
+This is implemented in the `@open-pioneer/test-utils` package:
+
+```jsx
+it("should be able to use a test service", function () {
+    // A simple component that uses a service.
+    function Component() {
+        const service = useService("testService");
+        return <div>Message: {service.getMessage()}</div>;
+    }
+
+    // Setup test services.
+    const mocks = {
+        services: {
+            testService: {
+                getMessage() {
+                    return "Hello World!";
+                }
+            }
+        }
+    };
+
+    // The PackageContextProvider parent ensures that the useService() in our test component works.
+    render(
+        <PackageContextProvider {...mocks}>
+            <Component />
+        </PackageContextProvider>
+    );
+});
+```
 
 ### App Configuration
 
