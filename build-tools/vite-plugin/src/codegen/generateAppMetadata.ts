@@ -23,6 +23,7 @@ import stylesString from ${JSON.stringify(cssModule)};
 
 const styles = createBox(stylesString);
 if (import.meta.hot) {
+    import.meta.hot.data.styles ??= styles;
     import.meta.hot.accept((mod) => {
         if (packages !== mod.packages) {
             // Cannot handle changes in packages at the moment.
@@ -30,7 +31,7 @@ if (import.meta.hot) {
             return;
         }
 
-        styles.setValue(mod.styles.value);
+        import.meta.hot.data.styles.setValue(mod.styles.value);
     });
 }
 

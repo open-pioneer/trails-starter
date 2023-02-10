@@ -10,7 +10,11 @@ it("should support typed events", function () {
     const observed: Events["mouseClicked"][] = [];
     emitter.on("mouseClicked", (event) => observed.push(event));
     emitter.emit("mouseClicked", { x: 1, y: 2 });
-    expect(observed).toEqual([{ x: 1, y: 2 }]);
+    emitter.emit("mouseClicked", { x: 3, y: 4 });
+    expect(observed).toEqual([
+        { x: 1, y: 2 },
+        { x: 3, y: 4 }
+    ]);
 });
 
 it("should allow unsubscribing from events", function () {
