@@ -215,7 +215,7 @@ You can take a look at the UI Tests of the runtime package (`@open-pioneer/runti
 Recommended libraries:
 
 -   `@testing-library/react` (or `/dom`): <https://testing-library.com/>
--   `react.dom/test-utils`: <https://reactjs.org/docs/test-utils.html>
+-   `react-dom/test-utils`: <https://reactjs.org/docs/test-utils.html>
 -   Our own test utils in `@open-pioneer/test-utils`
 
 ### Linting and formatting
