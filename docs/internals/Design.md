@@ -108,6 +108,7 @@ React has been chosen instead of Vue for a few reasons:
 1. React's open source community is significantly larger and maintains a richer ecosystem.
    This should make it easier to find appropriate open source solutions (e.g. for a11y, i18n).
 2. React's long term stability has historically been very good.
+   See also react's stability commitment: https://reactjs.org/docs/faq-versioning.html#commitment-to-stability
 3. It integrates slightly better with TypeScript:
    TypeScript natively supports React's syntax, whereas Vue requires special IDE-addons and compiler plugins to implement its custom languages.
 
