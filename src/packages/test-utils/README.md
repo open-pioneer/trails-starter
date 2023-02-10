@@ -35,7 +35,7 @@ it("should render a custom component into the dom", async () => {
 });
 ```
 
-Take a look at the tests in this package for mor examples.
+Take a look at the tests in this package for more examples.
 
 ## React utilities
 
@@ -81,4 +81,4 @@ it("should allow injection of service from the test", async () => {
 });
 ```
 
-Take a look at the tests in this package for mor examples.
+Take a look at the tests in this package for more examples.
