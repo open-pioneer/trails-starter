@@ -6,13 +6,16 @@ import { waitFor } from "@testing-library/dom";
 import { Component, createElement } from "react";
 import { expect, it, describe } from "vitest";
 import { createCustomElement } from "./CustomElement";
+import { createBox } from "./metadata";
 import { usePropertiesInternal } from "./react-integration";
 
 describe("simple rendering", function () {
     const SIMPLE_STYLE = ".test { color: red }";
     const SIMPLE_ELEM = createCustomElement({
         component: () => createElement("div", { className: "test" }, "hello world"),
-        styles: SIMPLE_STYLE
+        appMetadata: {
+            styles: createBox(SIMPLE_STYLE)
+        }
     });
     customElements.define("simple-elem", SIMPLE_ELEM);
 
@@ -86,12 +89,14 @@ it("should allow customization of package properties", async () => {
             const properties = usePropertiesInternal("test");
             return createElement("span", undefined, properties.greeting as string);
         },
-        packages: {
-            test: {
-                name: "test",
-                properties: {
-                    greeting: {
-                        value: "Hello World"
+        appMetadata: {
+            packages: {
+                test: {
+                    name: "test",
+                    properties: {
+                        greeting: {
+                            value: "Hello World"
+                        }
                     }
                 }
             }
@@ -114,12 +119,14 @@ it("should allow customization of package properties through a callback", async 
             const properties = usePropertiesInternal("test");
             return createElement("span", undefined, properties.greeting as string);
         },
-        packages: {
-            test: {
-                name: "test",
-                properties: {
-                    greeting: {
-                        value: "Hello World"
+        appMetadata: {
+            packages: {
+                test: {
+                    name: "test",
+                    properties: {
+                        greeting: {
+                            value: "Hello World"
+                        }
                     }
                 }
             }

@@ -1,7 +1,13 @@
 import { ComponentType } from "react";
-import { Error, isAbortError, throwAbortError } from "@open-pioneer/core";
+import {
+    destroyResource,
+    Error,
+    isAbortError,
+    Resource,
+    throwAbortError
+} from "@open-pioneer/core";
 import { ErrorId } from "./errors";
-import { PackageMetadata } from "./metadata";
+import { ApplicationMetadata, ObservableBox, PackageMetadata } from "./metadata";
 import { PackageRepr, createPackages } from "./services/PackageRepr";
 import { ServiceLayer } from "./services/ServiceLayer";
 import { getErrorChain } from "@open-pioneer/core";
@@ -16,20 +22,8 @@ export interface CustomElementOptions {
      */
     component: ComponentType<Record<string, string>>;
 
-    /**
-     * Package metadata.
-     * Metadata structures contain information about services
-     * that are needed during runtime.
-     *
-     * Services provided by packages in this attribute will be started
-     * as necessary and can be referenced during runtime.
-     */
-    packages?: Record<string, PackageMetadata>;
-
-    /**
-     * Styles for UI component.
-     */
-    styles?: string;
+    /** Generated application metadata. */
+    appMetadata?: ApplicationMetadata;
 
     /**
      * Application defined properties.
@@ -145,6 +139,7 @@ class ElementState {
     private rootNode: HTMLDivElement | undefined;
     private serviceLayer: ServiceLayer | undefined;
     private reactIntegration: ReactIntegration | undefined;
+    private stylesWatch: Resource | undefined;
 
     constructor(
         outerHtmlElement: HTMLElement,
@@ -173,12 +168,11 @@ class ElementState {
 
     destroy() {
         this.state = "destroyed";
-        this.reactIntegration?.destroy();
-        this.reactIntegration = undefined;
+        this.reactIntegration = destroyResource(this.reactIntegration);
         this.shadowRoot.replaceChildren();
         this.rootNode = undefined;
-        this.serviceLayer?.destroy();
-        this.serviceLayer = undefined;
+        this.serviceLayer = destroyResource(this.serviceLayer);
+        this.stylesWatch = destroyResource(this.stylesWatch);
     }
 
     onAttributeChanged(name: string, value: string | undefined) {
@@ -196,7 +190,8 @@ class ElementState {
         }
 
         // Launch the service layer
-        const { serviceLayer, packages } = createServiceLayer(options.packages, properties);
+        const rawPackages = options?.appMetadata?.packages ?? {};
+        const { serviceLayer, packages } = createServiceLayer(rawPackages, properties);
         this.serviceLayer = serviceLayer;
         serviceLayer.start();
 
@@ -206,9 +201,14 @@ class ElementState {
         rootNode.style.height = "100%";
         rootNode.style.width = "100%";
 
-        const style = document.createElement("style");
-        style.appendChild(document.createTextNode(options.styles ?? ""));
-        shadowRoot.replaceChildren(rootNode, style);
+        const styles = options?.appMetadata?.styles;
+        const styleNode = document.createElement("style");
+        this.applyStyles(styleNode, styles);
+        if (import.meta.hot) {
+            this.stylesWatch = styles?.on?.("changed", () => this.applyStyles(styleNode, styles));
+        }
+
+        shadowRoot.replaceChildren(rootNode, styleNode);
 
         // Launch react
         this.reactIntegration = new ReactIntegration({
@@ -223,6 +223,12 @@ class ElementState {
 
     private render() {
         this.reactIntegration?.render(this.options.component, this.props);
+    }
+
+    private applyStyles(styleNode: HTMLStyleElement, styles: ObservableBox<string> | undefined) {
+        const cssValue = styles?.value ?? "";
+        const cssNode = document.createTextNode(cssValue);
+        styleNode.replaceChildren(cssNode);
     }
 }
 

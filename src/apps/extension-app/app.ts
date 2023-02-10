@@ -1,10 +1,10 @@
 import { createCustomElement } from "@open-pioneer/runtime";
-import * as appData from "open-pioneer:app";
+import * as appMetadata from "open-pioneer:app";
 import { ActionsUI } from "./ActionsUI";
 
 const Element = createCustomElement({
     component: ActionsUI,
-    ...appData
+    appMetadata
 });
 
 customElements.define("extension-app", Element);

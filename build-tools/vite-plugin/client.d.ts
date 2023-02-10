@@ -5,7 +5,7 @@
  * This special module can only be imported from an `app.{ts,js,...}` file.
  */
 declare module "open-pioneer:app" {
-    import { type PackageMetadata } from "@open-pioneer/runtime/metadata";
+    import { type PackageMetadata, type ObservableBox } from "@open-pioneer/runtime/metadata";
 
     /**
      * Metadata for packages contained in the app.
@@ -15,7 +15,7 @@ declare module "open-pioneer:app" {
     /**
      * Combined styles of all packages contained in the app.
      */
-    declare const styles: string;
+    declare const styles: ObservableBox<string>;
 }
 
 /**
@@ -27,12 +27,7 @@ declare module "open-pioneer:app" {
  */
 declare module "open-pioneer:react-hooks" {
     // eslint-disable-next-line unused-imports/no-unused-imports
-    import {
-        type ServiceRegistry,
-        type CustomElementOptions,
-        type ServiceType,
-        type InterfaceName
-    } from "@open-pioneer/runtime";
+    import { type ServiceType, type InterfaceName } from "@open-pioneer/runtime";
     import { type UseServiceOptions } from "@open-pioneer/react-integration";
     export { type UseServiceOptions };
 

@@ -23,7 +23,9 @@ export function codegenPlugin(): Plugin {
     let config!: ResolvedConfig;
     let metadata!: MetadataRepository;
     let devServer: ViteDevServer | undefined;
-    let runtimeModuleId!: string;
+
+    let reactIntegrationId!: string;
+    let metadataId!: string;
     return {
         name: "pioneer:codegen",
 
@@ -31,13 +33,17 @@ export function codegenPlugin(): Plugin {
             manualDeps.clear();
             metadata?.reset();
 
-            const unresolvedRuntimeModuleId = "@open-pioneer/runtime/react-integration";
-            // TODO: use require.resolve instead (requires built js).
-            const runtimeResolveResult = await this.resolve(unresolvedRuntimeModuleId, __filename);
-            if (!runtimeResolveResult) {
-                this.error(`Failed to find '${unresolvedRuntimeModuleId}'.`);
-            }
-            runtimeModuleId = runtimeResolveResult.id;
+            // TODO: use require.resolve instead (requires built js?).
+            const resolve = async (rawModuleId: string) => {
+                const resolvedResult = await this.resolve(rawModuleId, __filename);
+                if (!resolvedResult) {
+                    this.error(`Failed to find '${rawModuleId}'.`);
+                }
+                return resolvedResult.id;
+            };
+
+            reactIntegrationId = await resolve("@open-pioneer/runtime/react-integration");
+            metadataId = await resolve("@open-pioneer/runtime/metadata");
         },
 
         configResolved(resolvedConfig) {
@@ -111,14 +117,14 @@ export function codegenPlugin(): Plugin {
                     }
 
                     const packageName = await getPackageName(this, packageJsonPath);
-                    const generatedSourceCode = generateReactHooks(packageName, runtimeModuleId);
+                    const generatedSourceCode = generateReactHooks(packageName, reactIntegrationId);
                     isDebug && debug("Generated hooks code: %O", generatedSourceCode);
                     return generatedSourceCode;
                 }
 
                 const { type, importer } = virtualModule;
                 if (type === "app-meta") {
-                    return generateAppMetadata(importer);
+                    return generateAppMetadata(importer, metadataId);
                 }
 
                 const pkgJsonPath = findPackageJson(dirname(importer), config.root);

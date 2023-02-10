@@ -4,7 +4,7 @@ import { APP_CSS_QUERY, APP_PACKAGES_QUERY } from "./shared";
  * Generates the main app metadata module.
  * It delegates the actual metadata generation to auxiliary modules.
  */
-export function generateAppMetadata(importer: string) {
+export function generateAppMetadata(importer: string, metadataModuleId: string) {
     /*
         CSS loading: 
         - 'inline' loads the css as a string literal.
@@ -14,10 +14,27 @@ export function generateAppMetadata(importer: string) {
 
         - TODO: .scss support (will currently trigger the esbuild plugin and an error because the file contains both .ts and .scss)
     */
-
+    const packagesModule = `${importer}?${APP_PACKAGES_QUERY}`;
+    const cssModule = `${importer}?${APP_CSS_QUERY}&inline&lang.css`;
     return `
-import packages from ${JSON.stringify(`${importer}?${APP_PACKAGES_QUERY}`)};
-import styles from ${JSON.stringify(`${importer}?${APP_CSS_QUERY}&inline&lang.css`)};
+import { createBox } from ${JSON.stringify(metadataModuleId)};
+import packages from ${JSON.stringify(packagesModule)};
+import stylesString from ${JSON.stringify(cssModule)};
+
+const styles = createBox(stylesString);
+if (import.meta.hot) {
+    import.meta.hot.accept((mod) => {
+        console.debug("HMR", mod);
+        if (packages !== mod.packages) {
+            // Cannot handle changes in packages at the moment.
+            import.meta.hot.invalidate();
+            return;
+        }
+
+        styles.setValue(mod.styles.value);
+    });
+}
+
 export {
     packages,
     styles

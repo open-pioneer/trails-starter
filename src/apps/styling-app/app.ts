@@ -1,13 +1,12 @@
 import { createCustomElement } from "@open-pioneer/runtime";
 import { SampleComponentWithCss } from "test-ui-components";
-import { packages, styles } from "open-pioneer:app";
+import * as appMetadata from "open-pioneer:app";
 
 const Element = createCustomElement({
     component: SampleComponentWithCss,
-    packages,
-    styles
+    appMetadata
 });
 
-console.log(`CSS:\n\n${styles}`);
+console.log(`CSS:\n\n${appMetadata.styles.value}`);
 
 customElements.define("styling-app", Element);
