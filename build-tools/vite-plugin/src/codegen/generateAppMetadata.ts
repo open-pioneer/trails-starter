@@ -24,7 +24,6 @@ import stylesString from ${JSON.stringify(cssModule)};
 const styles = createBox(stylesString);
 if (import.meta.hot) {
     import.meta.hot.accept((mod) => {
-        console.debug("HMR", mod);
         if (packages !== mod.packages) {
             // Cannot handle changes in packages at the moment.
             import.meta.hot.invalidate();
