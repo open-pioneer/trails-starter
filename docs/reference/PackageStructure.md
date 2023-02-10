@@ -68,6 +68,7 @@ Note that the `.css` file may include `@import`s to other `.css` files.
 Example:
 
 ```js
+// build.config.mjs
 export default defineBuildConfig({
     styles: "./styles.css"
 });
@@ -90,6 +91,7 @@ export interface ServiceConfig {
 Example:
 
 ```js
+// build.config.mjs
 export default defineBuildConfig({
     services: {
         // The framework will `import { LogService } from "packagename";`,
@@ -110,6 +112,7 @@ Every array entry can specify a string (the interface name) or an object with ad
 Example:
 
 ```js
+// build.config.mjs
 export default defineBuildConfig({
     services: {
         ServiceA: {
@@ -136,6 +139,7 @@ The framework will generate an error if a reference cannot be provided.
 Example:
 
 ```js
+// build.config.mjs
 export default defineBuildConfig({
     services: {
         ServiceA: {
@@ -154,7 +158,7 @@ Contains metadata about UI Components provided by the package.
 
 ```ts
 export interface UiConfig {
-    references?: string[];
+    references?: (string | ReferenceConfig)[];
 }
 ```
 
@@ -166,6 +170,7 @@ UI Components can only use services that have previously been referenced in the 
 Example:
 
 ```js
+// build.config.mjs
 export default defineBuildConfig({
     ui: {
         references: ["example.interface.Name"]
@@ -185,6 +190,7 @@ Default property values defined here may be overwritten by the application.
 Example:
 
 ```js
+// build.config.mjs
 export default defineBuildConfig({
     properties: {
         foo: "bar",
@@ -212,6 +218,7 @@ Set this value to true to force the application to override this property to a n
 Example:
 
 ```js
+// build.config.mjs
 export default defineBuildConfig({
     properties: {
         foo: null
@@ -237,12 +244,29 @@ TODO: Document class
 Retrieves a service implementing the given interface.
 The dependency on that interface must have been declared in the `build.config.mjs` (see `ui.references`).
 
-```js
+```jsx
+// ExampleComponent.jsx
 import { useService } from "open-pioneer:react-hooks";
 
 function ExampleComponent() {
     const service = useService("example.interface.Name");
     return <div>{service.sayHello()}</div>;
+}
+```
+
+### `useServices` Hook
+
+Retrieves all services implementing the given interface as an array.
+The dependency must have been declared in the `build.config.mjs` (see `ui.references`).
+
+```jsx
+// ExampleComponent.jsx
+import { useServices } from "open-pioneer:react-hooks";
+
+function ExampleComponent() {
+    const services = useServices("example.interface.Name");
+    const messages = services.map((service) => service.sayHello()).join(" - ");
+    return <div>{messages}</div>;
 }
 ```
 
@@ -252,7 +276,8 @@ Returns the properties of the calling component's package.
 Note that properties can be customized by the application, so values
 may not be equal to their definition in the `build.config.mjs`.
 
-```js
+```jsx
+// ExampleComponent.jsx
 import { useProperties } from "open-pioneer:react-hooks";
 
 function ExampleComponent() {
@@ -268,4 +293,194 @@ export default defineBuildConfig({
         greeting: "Hello World"
     }
 });
+```
+
+## Advanced service references
+
+The `references` object in a service configuration block and the `references` array in the ui configuration block both accept a `ReferenceConfig` object for advanced use cases:
+
+```ts
+export interface ReferenceConfig {
+    name: string;
+    qualifier?: string;
+    all?: boolean;
+}
+```
+
+### `referenceConfig.name`
+
+The interface name required by the reference.
+This attribute is mandatory.
+
+### `referenceConfig.qualifier`
+
+The exact interface qualifier required by the reference.
+This attribute allows disambiguation when there are multiple services that implement the same interface.
+Note that ambiguous references (references that do not exactly match a single service) are always an error.
+
+### `referenceConfig.all`
+
+A boolean value that indicates that the reference requires _all_ implementations of an interface.
+The service (or the UI) can use the services as an array.
+This attribute cannot be used together with `qualifier`.
+
+### Examples
+
+#### Referencing single instance
+
+A service that requires a reference to a single other service.
+There can only be a single service implementing `"example.ExampleService"`, otherwise the system will throw an error because the reference needs additional disambiguation.
+
+```js
+// build.config.mjs
+export default defineBuildConfig({
+    services: {
+        ServiceA: {
+            references: {
+                example: "example.ExampleService"
+            }
+        }
+    }
+});
+```
+
+#### Referencing a single instance with qualifier
+
+When there are multiple implementations of an interface, the `qualifier` can be used to pick a specific one.
+The `qualifier` must match the value in the referenced service's `provides` section.
+
+```js
+// build.config.mjs
+export default defineBuildConfig({
+    services: {
+        // Reference with qualifier, guaranteed to obtain the `ServiceB` instance below
+        ServiceA: {
+            references: {
+                example: {
+                    name: "example.ExampleService",
+                    qualifier: "exampleQualifier"
+                }
+            }
+        },
+
+        // Provides with qualifier
+        ServiceB: {
+            provides: [
+                {
+                    name: "example.ExampleService",
+                    qualifier: "exampleQualifier"
+                }
+            ]
+        }
+    }
+});
+```
+
+#### Referencing all implementations
+
+All services implementing an interface can be referenced by specifying `all: true` in your `build.config.mjs`:
+
+```js
+// build.config.mjs
+export default defineBuildConfig({
+    services: {
+        ActionServiceImpl: {
+            provides: ["extension-app.ActionService"],
+            references: {
+                // Gathers all services that implement "extension-app.ActionProvider" as an array.
+                providers: {
+                    name: "extension-app.ActionProvider",
+                    all: true
+                }
+            }
+        },
+        LoggingActionProvider: {
+            provides: ["extension-app.ActionProvider"]
+        },
+        MultiActionProvider: {
+            provides: ["extension-app.ActionProvider"]
+        },
+        OpenWindowActionProvider: {
+            provides: ["extension-app.ActionProvider"]
+        }
+    }
+});
+```
+
+#### Referencing a service from the UI
+
+After declaring a reference in the `build.config.mjs`, the service can be used in a React component:
+
+```js
+// build.config.mjs
+export default defineBuildConfig({
+    ui: {
+        references: ["some.interface.Name"]
+    }
+});
+```
+
+```jsx
+// ExampleComponent.jsx
+import { useService } from "open-pioneer:react-hooks";
+
+function ExampleComponent() {
+    const service = useService("some.interface.Name");
+    return <div>{service.sayHello()}</div>;
+}
+```
+
+#### Referencing a service from the UI with qualifier
+
+Declare the `qualifier` attribute both in your `build.config.mjs` and the `useService` call:
+
+```js
+// build.config.mjs
+export default defineBuildConfig({
+    ui: {
+        references: [
+            {
+                name: "some.interface.Name",
+                qualifier: "foo"
+            }
+        ]
+    }
+});
+```
+
+```jsx
+// ExampleComponent.jsx
+import { useService } from "open-pioneer:react-hooks";
+
+function ExampleComponent() {
+    const service = useService("some.interface.Name", { qualifier: "foo" });
+    return <div>{service.sayHello()}</div>;
+}
+```
+
+#### Referencing all services that implement an interface from the UI
+
+```js
+// build.config.mjs
+export default defineBuildConfig({
+    ui: {
+        references: [
+            {
+                name: "some.interface.Name",
+                all: true
+            }
+        ]
+    }
+});
+```
+
+```jsx
+// ExampleComponent.jsx
+import { useServices } from "open-pioneer:react-hooks";
+
+function ExampleComponent() {
+    const services = useServices("some.interface.Name"); // an array
+    const messages = services.map((service) => service.sayHello()).join(" - ");
+    return <div>{messages}</div>;
+}
 ```
