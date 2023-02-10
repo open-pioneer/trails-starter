@@ -28,6 +28,12 @@ The most important classes and modules are:
 
     In its current form, the function essentially ensures that the dependency graph is an acyclic graph.
 
+    The return value of `verifyDependencies` is used by the service layer.
+    It contains the service index (mapping interface names, qualifiers etc. to services) and the
+    verified dependency information (mapping services to other referenced services).
+    The service layer will use the index to support dynamic service lookups (e.g. for the UI)
+    and the dependency information during service construction to setup service references.
+
 -   `class PackageRepr` / `ServiceRepr`
 
     Represents a package / service at runtime.
@@ -35,7 +41,7 @@ The most important classes and modules are:
     For example, a `ServiceRepr`'s `instance` attribute will hold the actual service instance once it has been created.
     As a consequence, they cannot be reused or shared between multiple application instances.
 
--   `function parsePackages`
+-   `function createPackages`
 
     Parses metadata into instances of `PackageRepr` and `ServiceRepr`.
     This transforms the well defined metadata format (input to the service layer) into the internal runtime representation.
@@ -95,25 +101,34 @@ When the metadata format is altered, the build tooling will (most likely) have t
        It is important to destroy the dependencies _after_ the service has been destroyed,
        because the service's destructor may still reference its dependencies.
 
+### Additional features
+
+#### Disambiguate reference using a qualifier
+
+The service layer implements 1-to-1 or 1-to-n dependencies.
+This also means that an interface can be implemented by multiple services at the same time.
+
+1-to-1 dependencies are the common case: a service references another single service that implements an interface.
+The service layer throws an error when the reference cannot be resolved to an exact service.
+The error conditions are:
+
+-   The interface is not implemented at all
+-   The interface is implemented multiple times but the reference is not qualified
+
+A "qualifier" (a simple string tag in its current form) can be used to disambiguate the reference.
+
+#### Referencing all services implementing an interface
+
+Services can reference _all_ services implementing a certain interface.
+This feature will most likely be used to implement extension points where a service may customize the implementation of another service.
+
+When 1-to-n references are resolved, all services implementing the requested interface are gathered into an array which is then
+injected into the service's constructor instead of the usual, single instance.
+
+Verification (e.g. cycle detection) has been extended to support this feature.
+Note that it is not an error if there are zero implementations of an interface: the array will simply be empty.
+
 ## Limitations
-
-### Unique implementations only
-
-An interface can currently only be implemented once.
-An error is thrown if multiple classes provide the same interfaces.
-
-This can be relaxed in the future:
-
--   When an interface is implemented multiple times, a tag could be used to discriminate the instances.
-    It is important to remain unambiguous: if no clear service can be chosen from a set, an error should be thrown (don't just pick an arbitrary one!).
-
-### 1-to-1 dependencies only
-
-There are no one to many dependencies at this time.
-This is trivially the case because an interface can only be implemented once (see above).
-
-It makes sense to relax this restriction in the future.
-Example use case: "get all tools".
 
 ### Cycles are forbidden
 
