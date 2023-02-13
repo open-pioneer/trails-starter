@@ -1,0 +1,11 @@
+{
+    "name": "properties-app",
+    "main": "index",
+    "private": true,
+    "dependencies": {
+        "@open-pioneer/chakra-integration": "workspace:^",
+        "@open-pioneer/core": "workspace:^",
+        "@open-pioneer/runtime": "workspace:^",
+        "react": "^18.2.0"
+    }
+}

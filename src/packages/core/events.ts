@@ -10,9 +10,16 @@ type ArgType<T> = [T] extends [void] ? [] : [event: T];
 
 type EventType<Events extends EventsBase, Name extends keyof Events> = ArgType<Events[Name]>;
 
+/**
+ * A support class that supports emitting and listening for events.
+ */
 export class EventEmitter<Events extends {}> {
     [state] = new EventEmitterState();
 
+    /**
+     * Registers the given listener function as an event handler for `eventName`.
+     * The listener function can be unregistered by destroying the returned {@link Resource}.
+     */
     on<Name extends EventNames<Events>>(
         eventName: Name,
         listener: (...args: EventType<Events, Name>) => void
@@ -22,6 +29,12 @@ export class EventEmitter<Events extends {}> {
         });
     }
 
+    /**
+     * Registers the given listener function to listen for `eventName` events _once_.
+     * The listener function will automatically be unregistered after it has been called.
+     *
+     * The listener function can be unregistered by destroying the returned {@link Resource}.
+     */
     once<Name extends EventNames<Events>>(
         eventName: Name,
         listener: (...args: EventType<Events, Name>) => void
@@ -32,10 +45,18 @@ export class EventEmitter<Events extends {}> {
         });
     }
 
+    /**
+     * Emits an event of the given name and calls the registered event handlers.
+     */
     emit<Name extends EventNames<Events>>(eventName: Name, ...args: EventType<Events, Name>): void {
         this[state].emit(eventName, args[0]);
     }
 }
+
+/**
+ * Read-only version of the {@link EventEmitter} interface that only allows listening for events.
+ */
+export type EventSource<Events extends {}> = Pick<EventEmitter<Events>, "on" | "once">;
 
 type InternalListener = (event: unknown) => void;
 

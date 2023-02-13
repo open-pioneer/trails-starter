@@ -40,7 +40,7 @@ export interface CustomElementOptions {
      *
      * Properties returned by this function take precedence over the ones defined by {@link properties}.
      */
-    resolveProperties?(ctx: PropertyContext): Promise<ApplicationProperties>;
+    resolveProperties?(ctx: PropertyContext): Promise<ApplicationProperties | undefined>;
 
     /**
      * Attribute names for component inputs. Changes on this attributes

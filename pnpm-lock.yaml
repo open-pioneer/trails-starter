@@ -152,6 +152,18 @@ importers:
       ol: 7.2.2
       react: 18.2.0
 
+  src/apps/properties-app:
+    specifiers:
+      '@open-pioneer/chakra-integration': workspace:^
+      '@open-pioneer/core': workspace:^
+      '@open-pioneer/runtime': workspace:^
+      react: ^18.2.0
+    dependencies:
+      '@open-pioneer/chakra-integration': link:../../packages/chakra-integration
+      '@open-pioneer/core': link:../../packages/core
+      '@open-pioneer/runtime': link:../../packages/runtime
+      react: 18.2.0
+
   src/apps/styling-app:
     specifiers:
       '@open-pioneer/runtime': 'workspace:'

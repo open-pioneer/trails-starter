@@ -39,6 +39,7 @@ export default defineConfig({
                 "extension-sample",
                 "map-sample",
                 "styling-sample",
+                "properties-sample"
             ]
         }),
         react(),
