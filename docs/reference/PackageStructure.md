@@ -233,6 +233,8 @@ export default defineBuildConfig({
 });
 ```
 
+> Note: You cannot configure `required: true` for nested object properties at the moment.
+
 ## Service definition
 
 TODO: Document class

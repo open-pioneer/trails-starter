@@ -41,6 +41,17 @@ export default {
       "some_property": {
         value: "default_value",
         required: true
+      },
+      "complex_property": {
+        value: {
+          "array": [1, 2, {
+            "a": 3
+          }, [[[[[1]]]]]],
+          "bool": false,
+          "n": 123132,
+          "str": "foo"
+        },
+        required: false
       }
     }
   }

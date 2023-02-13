@@ -30,7 +30,7 @@ if (import.meta.hot) {
             import.meta.hot.invalidate();
             return;
         }
-
+        
         import.meta.hot.data.styles.setValue(mod.styles.value);
     });
 }

@@ -18,7 +18,9 @@ export class EventEmitter<Events extends {}> {
 
     /**
      * Registers the given listener function as an event handler for `eventName`.
-     * The listener function can be unregistered by destroying the returned {@link Resource}.
+     *
+     * The listener function should be unregistered by destroying the returned {@link Resource}
+     * when it is no longer needed.
      */
     on<Name extends EventNames<Events>>(
         eventName: Name,
@@ -33,7 +35,7 @@ export class EventEmitter<Events extends {}> {
      * Registers the given listener function to listen for `eventName` events _once_.
      * The listener function will automatically be unregistered after it has been called.
      *
-     * The listener function can be unregistered by destroying the returned {@link Resource}.
+     * The listener function should be unregistered by destroying the returned {@link Resource}.
      */
     once<Name extends EventNames<Events>>(
         eventName: Name,

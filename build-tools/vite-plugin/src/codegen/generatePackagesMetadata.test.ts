@@ -45,6 +45,23 @@ describe("generatePackagesMetadata", function () {
                             name: "some_property",
                             defaultValue: "default_value",
                             required: true
+                        },
+                        {
+                            name: "complex_property",
+                            defaultValue: {
+                                array: [
+                                    1,
+                                    2,
+                                    {
+                                        a: 3
+                                    },
+                                    [[[[[1]]]]]
+                                ],
+                                bool: false,
+                                n: 123132,
+                                str: "foo"
+                            },
+                            required: false
                         }
                     ]
                 },
