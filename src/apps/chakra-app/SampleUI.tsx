@@ -177,9 +177,9 @@ function AlertDialogExample() {
 
             <AlertDialog isOpen={isOpen} leastDestructiveRef={cancelRef} onClose={onClose}>
                 <AlertDialogOverlay>
-                    <AlertDialogContent>
+                    <AlertDialogContent className="class-from-app">
                         <AlertDialogHeader fontSize="lg" fontWeight="bold">
-                            Altert Titel
+                            Alert Title
                         </AlertDialogHeader>
 
                         <AlertDialogBody>
