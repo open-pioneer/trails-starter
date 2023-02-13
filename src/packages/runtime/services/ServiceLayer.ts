@@ -83,18 +83,19 @@ export class ServiceLayer {
      *
      * @param packageName the name of the package requesting the import
      * @param spec the interface specifier
-     *
+     * @param options advanced options to customize lookup
      * @throws if the service layer is not in 'started' state or if no service implements the interface.
      */
     getService(
         packageName: string,
-        spec: InterfaceSpec
+        spec: InterfaceSpec,
+        options?: { ignoreDeclarationCheck?: boolean }
     ): ServiceLookupResult | UndeclaredDependency {
         if (this.state !== "started") {
             throw new Error(ErrorId.INTERNAL, "Service layer is not started.");
         }
 
-        if (!this.isDeclaredDependency(packageName, spec)) {
+        if (!options?.ignoreDeclarationCheck && !this.isDeclaredDependency(packageName, spec)) {
             return { type: "undeclared" };
         }
 

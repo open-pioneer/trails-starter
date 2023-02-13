@@ -13,6 +13,8 @@ export enum ErrorId {
     DUPLICATE_INTERFACE = "runtime:duplicate-interface",
     DEPENDENCY_CYCLE = "runtime:dependency-cycle",
 
+    NOT_MOUNTED = "runtime:element-not-mounted",
+
     // Internal
     INTERNAL = "runtime:internal-error"
 }

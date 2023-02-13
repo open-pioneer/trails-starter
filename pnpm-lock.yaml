@@ -116,6 +116,12 @@ importers:
       rollup: 3.14.0
       vite: 4.1.1
 
+  src/apps/api-app:
+    specifiers:
+      '@open-pioneer/runtime': workspace:^
+    dependencies:
+      '@open-pioneer/runtime': link:../../packages/runtime
+
   src/apps/chakra-app:
     specifiers:
       '@open-pioneer/chakra-integration': workspace:^

@@ -67,7 +67,14 @@ export function isAbortError(err: unknown) {
  * Throws an abort error (`.name` === `"AbortError"`).
  */
 export function throwAbortError(): never {
+    throw createAbortError();
+}
+
+/**
+ * Returns an abort error (`.name` === `"AbortError"`).
+ */
+export function createAbortError(): globalThis.Error {
     const err = new globalThis.Error("Aborted");
     err.name = "AbortError";
-    throw err;
+    return err;
 }

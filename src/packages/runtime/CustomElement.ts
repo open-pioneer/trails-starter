@@ -1,5 +1,6 @@
 import { ComponentType } from "react";
 import {
+    createAbortError,
     destroyResource,
     Error,
     isAbortError,
@@ -12,6 +13,7 @@ import { PackageRepr, createPackages } from "./services/PackageRepr";
 import { ServiceLayer } from "./services/ServiceLayer";
 import { getErrorChain } from "@open-pioneer/core";
 import { ReactIntegration } from "./react-integration/ReactIntegration";
+import { ApiMethod, ApiService } from "./api";
 
 /**
  * Options for the {@link createCustomElement} function.
@@ -125,11 +127,29 @@ export function createCustomElement(options: CustomElementOptions): CustomElemen
         attributeChangedCallback(name: string, oldValue: string | null, newValue: string | null) {
             this.#state?.onAttributeChanged(name, newValue ?? undefined);
         }
+
+        when() {
+            if (!this.#state) {
+                return Promise.reject(
+                    new Error(
+                        ErrorId.NOT_MOUNTED,
+                        "Cannot use the application's API because the HTML element has not yet been mounted into the DOM."
+                    )
+                );
+            }
+
+            return this.#state.apiPromise;
+        }
     }
     return PioneerApplication;
 }
 
 class ElementState {
+    // todo make this lazy (unhandled rejections)
+    readonly apiPromise: Promise<Record<string, ApiMethod>>;
+    private resolveApi!: (api: Record<string, ApiMethod>) => void;
+    private rejectApi!: (error: unknown) => void;
+
     private outerHtmlElement: HTMLElement;
     private shadowRoot: ShadowRoot;
     private options: CustomElementOptions;
@@ -149,6 +169,10 @@ class ElementState {
         this.outerHtmlElement = outerHtmlElement;
         this.shadowRoot = shadowRoot;
         this.options = options;
+        this.apiPromise = new Promise<Record<string, ApiMethod>>((resolve, reject) => {
+            this.resolveApi = resolve;
+            this.rejectApi = reject;
+        });
     }
 
     start() {
@@ -168,6 +192,7 @@ class ElementState {
 
     destroy() {
         this.state = "destroyed";
+        this.rejectApi(createAbortError());
         this.reactIntegration = destroyResource(this.reactIntegration);
         this.shadowRoot.replaceChildren();
         this.rootNode = undefined;
@@ -194,6 +219,21 @@ class ElementState {
         const { serviceLayer, packages } = createServiceLayer(rawPackages, properties);
         this.serviceLayer = serviceLayer;
         serviceLayer.start();
+
+        // todo clean-up
+        const service = serviceLayer.getService(
+            "@open-pioneer/runtime",
+            {
+                interfaceName: "runtime.ApiService"
+            },
+            { ignoreDeclarationCheck: true }
+        );
+        if (service.type !== "found") {
+            throw new Error(ErrorId.INTERNAL, "failed to find ApiService");
+        }
+        const apiService = service.value.getInstanceOrThrow() as ApiService;
+        const api = await apiService.getApi();
+        this.resolveApi(api);
 
         // Setup application root node in the shadow dom
         const rootNode = (this.rootNode = document.createElement("div"));
