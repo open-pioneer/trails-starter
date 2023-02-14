@@ -10,10 +10,11 @@ import {
 import { waitFor } from "@testing-library/dom";
 import { Component, createElement } from "react";
 import { expect, it, describe } from "vitest";
-import { ApiExtension, ApiMethods } from "./api";
+import { ApiExtension, ApiMethods, ApplicationContext } from "./api";
 import { ApplicationElement, createCustomElement } from "./CustomElement";
 import { createBox } from "./metadata";
 import { usePropertiesInternal } from "./react-integration";
+import { ServiceOptions } from "./Service";
 import { expectAsyncError } from "./test-utils/expectError";
 
 describe("simple rendering", function () {
@@ -156,6 +157,51 @@ it("should allow customization of package properties through a callback", async 
     const { queries } = await renderComponentShadowDOM(elem);
     const span = await queries.findByText("Bye User");
     expect(span.tagName).toBe("SPAN");
+});
+
+it("provides access to html containers through the application context", async () => {
+    let hostElement: HTMLElement | undefined;
+    let shadowRoot: ShadowRoot | undefined;
+    let container: HTMLElement | undefined;
+
+    class TestService {
+        constructor(options: ServiceOptions<{ ctx: ApplicationContext }>) {
+            const ctx = options.references.ctx;
+            hostElement = ctx.getHostElement();
+            shadowRoot = ctx.getShadowRoot();
+            container = ctx.getApplicationContainer();
+        }
+    }
+
+    const elem = createCustomElement({
+        appMetadata: {
+            packages: {
+                test: {
+                    name: "test",
+                    services: {
+                        testService: {
+                            name: "testService",
+                            clazz: TestService,
+                            references: {
+                                ctx: {
+                                    name: "runtime.ApplicationContext"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    });
+    const {
+        node: actualHostElement,
+        shadowRoot: actualShadowRoot,
+        innerContainer: actualContainer
+    } = await renderComponentShadowDOM(elem);
+
+    expect(hostElement).toBe(actualHostElement);
+    expect(shadowRoot).toBe(actualShadowRoot);
+    expect(container).toBe(actualContainer);
 });
 
 describe("element API", () => {

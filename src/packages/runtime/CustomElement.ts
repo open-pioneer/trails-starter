@@ -15,7 +15,7 @@ import { getErrorChain } from "@open-pioneer/core";
 import { ReactIntegration } from "./react-integration/ReactIntegration";
 import { ApiMethods, ApiService } from "./api";
 import { createManualPromise, ManualPromise } from "./utils";
-import { createBuiltinPackage, RUNTIME_PACKAGE_NAME } from "./builtin-services";
+import { createBuiltinPackage } from "./builtin-services";
 
 /**
  * Options for the {@link createCustomElement} function.
@@ -161,7 +161,7 @@ export function createCustomElement(options: CustomElementOptions): ApplicationE
 }
 
 class ElementState {
-    private outerHtmlElement: HTMLElement;
+    private hostElement: HTMLElement;
     private shadowRoot: ShadowRoot;
     private options: CustomElementOptions;
     private props: Record<string, string> = {};
@@ -169,17 +169,13 @@ class ElementState {
     private api: ApiMethods | undefined; // Present once started
 
     private state = "not-started" as "not-started" | "starting" | "started" | "destroyed";
-    private rootNode: HTMLDivElement | undefined;
+    private container: HTMLDivElement | undefined;
     private serviceLayer: ServiceLayer | undefined;
     private reactIntegration: ReactIntegration | undefined;
     private stylesWatch: Resource | undefined;
 
-    constructor(
-        outerHtmlElement: HTMLElement,
-        shadowRoot: ShadowRoot,
-        options: CustomElementOptions
-    ) {
-        this.outerHtmlElement = outerHtmlElement;
+    constructor(hostElement: HTMLElement, shadowRoot: ShadowRoot, options: CustomElementOptions) {
+        this.hostElement = hostElement;
         this.shadowRoot = shadowRoot;
         this.options = options;
     }
@@ -204,7 +200,7 @@ class ElementState {
         this.apiPromise?.reject(createAbortError());
         this.reactIntegration = destroyResource(this.reactIntegration);
         this.shadowRoot.replaceChildren();
-        this.rootNode = undefined;
+        this.container = undefined;
         this.serviceLayer = destroyResource(this.serviceLayer);
         this.stylesWatch = destroyResource(this.stylesWatch);
     }
@@ -224,7 +220,7 @@ class ElementState {
     }
 
     private async startImpl() {
-        const { options, shadowRoot, outerHtmlElement } = this;
+        const { options, shadowRoot, hostElement: outerHtmlElement } = this;
 
         // Resolve custom application properties
         const properties = await gatherProperties(outerHtmlElement, options);
@@ -232,17 +228,25 @@ class ElementState {
             throwAbortError();
         }
 
+        // Setup application root node in the shadow dom
+        const container = (this.container = document.createElement("div"));
+        container.classList.add("pioneer-root");
+        container.style.minHeight = "100%";
+
         // Launch the service layer
         const rawPackages = options?.appMetadata?.packages ?? {};
-        const { serviceLayer, packages } = createServiceLayer(rawPackages, properties);
+        const { serviceLayer, packages } = createServiceLayer(
+            rawPackages,
+            properties,
+            createBuiltinPackage({
+                host: this.hostElement,
+                shadowRoot: this.shadowRoot,
+                container: container
+            })
+        );
         this.serviceLayer = serviceLayer;
         serviceLayer.start();
         await this.initAPI(serviceLayer);
-
-        // Setup application root node in the shadow dom
-        const rootNode = (this.rootNode = document.createElement("div"));
-        rootNode.classList.add("pioneer-root");
-        rootNode.style.minHeight = "100%";
 
         const styles = options?.appMetadata?.styles;
         const styleNode = document.createElement("style");
@@ -251,11 +255,11 @@ class ElementState {
             this.stylesWatch = styles?.on?.("changed", () => applyStyles(styleNode, styles));
         }
 
-        shadowRoot.replaceChildren(rootNode, styleNode);
+        shadowRoot.replaceChildren(container, styleNode);
 
         // Launch react
         this.reactIntegration = new ReactIntegration({
-            rootNode: rootNode,
+            rootNode: container,
             container: shadowRoot,
             serviceLayer,
             packages
@@ -298,7 +302,8 @@ class ElementState {
 
 function createServiceLayer(
     packageMetadata: Record<string, PackageMetadata> | undefined,
-    properties: ApplicationProperties
+    properties: ApplicationProperties,
+    builtinPackage: PackageRepr
 ) {
     let packages: PackageRepr[];
     try {
@@ -310,13 +315,13 @@ function createServiceLayer(
     }
 
     // Add builtin services defined within this package.
-    if (packages.find((pkg) => pkg.name === RUNTIME_PACKAGE_NAME)) {
+    if (packages.find((pkg) => pkg.name === builtinPackage.name)) {
         throw new Error(
             ErrorId.INVALID_METADATA,
             "User defined packages must not contain metadata for the runtime package."
         );
     }
-    packages.push(createBuiltinPackage());
+    packages.push(builtinPackage);
 
     return {
         packages: new Map(packages.map((pkg) => [pkg.name, pkg])),

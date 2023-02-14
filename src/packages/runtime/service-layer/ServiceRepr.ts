@@ -8,6 +8,19 @@ export type ServiceState = "not-constructed" | "constructing" | "constructed" | 
 
 export type ServiceDependency = ReferenceSpec & { referenceName: string };
 
+export interface ConstructorFactory {
+    type: "class";
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    clazz: ServiceConstructor<any>;
+}
+
+export interface FunctionFactory {
+    type: "function";
+    create: (options: ServiceOptions) => Service;
+}
+
+export type ServiceFactory = ConstructorFactory | FunctionFactory;
+
 /**
  * Represents metadata and state of a service in the runtime.
  * `this.instance` is the actual service instance (when constructed).
@@ -34,7 +47,18 @@ export class ServiceRepr {
                 qualifier: i.qualifier
             };
         });
-        return new ServiceRepr({ name, packageName, clazz, dependencies, interfaces, properties });
+        const factory: ConstructorFactory = {
+            type: "class",
+            clazz
+        };
+        return new ServiceRepr({
+            name,
+            packageName,
+            factory,
+            dependencies,
+            interfaces,
+            properties
+        });
     }
 
     /** Unique id of this service. Contains the package name and the service name. */
@@ -58,9 +82,8 @@ export class ServiceRepr {
     /** Number of references to this service. */
     private _useCount = 0;
 
-    /** Service constructor. */
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    private clazz: ServiceConstructor<any>;
+    /** Service factory to construct an instance. */
+    private factory: ServiceFactory;
 
     /** Current state of this service. "constructed" -> instance is available. */
     private _state: ServiceState = "not-constructed";
@@ -71,8 +94,7 @@ export class ServiceRepr {
     constructor(options: {
         name: string;
         packageName: string;
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        clazz: ServiceConstructor<any>;
+        factory: ServiceFactory;
         dependencies?: ServiceDependency[];
         interfaces?: InterfaceSpec[];
         properties?: Record<string, unknown>;
@@ -80,7 +102,7 @@ export class ServiceRepr {
         const {
             name,
             packageName,
-            clazz,
+            factory,
             dependencies = [],
             interfaces = [],
             properties = {}
@@ -92,7 +114,7 @@ export class ServiceRepr {
         this.id = `${packageName}::${name}`;
         this.name = name;
         this.packageName = packageName;
-        this.clazz = clazz;
+        this.factory = factory;
         this.dependencies = dependencies;
         this.interfaces = interfaces;
         this.properties = properties;
@@ -156,7 +178,7 @@ export class ServiceRepr {
             );
         }
         try {
-            this._instance = new this.clazz(options);
+            this._instance = createService(this.factory, options);
             this._state = "constructed";
             this._useCount = 1;
             return this._instance;
@@ -202,8 +224,29 @@ export class ServiceRepr {
     }
 }
 
+export function createConstructorFactory<T extends {}>(
+    clazz: ServiceConstructor<T>
+): ConstructorFactory {
+    return { type: "class", clazz };
+}
+
+export function createFunctionFactory(
+    create: (options: ServiceOptions) => Service
+): FunctionFactory {
+    return { type: "function", create };
+}
+
 const SERVICE_NAME_REGEX = /^[a-z0-9_-]+$/i;
 
 function isValidServiceName(name: string) {
     return SERVICE_NAME_REGEX.test(name);
+}
+
+function createService(factory: ServiceFactory, options: ServiceOptions) {
+    switch (factory.type) {
+        case "class":
+            return new factory.clazz(options);
+        case "function":
+            return factory.create(options);
+    }
 }

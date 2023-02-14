@@ -2,7 +2,7 @@ import { assert, expect, it } from "vitest";
 import { expectError } from "../test-utils/expectError";
 import { InterfaceSpec, ReferenceSpec } from "./InterfaceSpec";
 import { ReadonlyServiceLookup } from "./ServiceLookup";
-import { ServiceDependency, ServiceRepr } from "./ServiceRepr";
+import { createConstructorFactory, ServiceDependency, ServiceRepr } from "./ServiceRepr";
 import { verifyDependencies } from "./verifyDependencies";
 
 it("does not return an error on acyclic graphs", function () {
@@ -391,7 +391,7 @@ function mockServices(data: ServiceData[]): ServiceRepr[] {
         return new ServiceRepr({
             name,
             packageName,
-            clazz,
+            factory: createConstructorFactory(clazz),
             dependencies,
             interfaces
         });

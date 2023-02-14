@@ -13,11 +13,36 @@ export interface ApiExtension {
     getApiMethods(): Promise<ApiMethods>;
 }
 
+/**
+ * A service provided by the system.
+ * Used by the runtime to assemble the public facing API.
+ */
 export interface ApiService {
     /**
      * Called by the runtime to gather methods that should be available from the web component's API.
      */
     getApi(): Promise<ApiMethods>;
+}
+
+/**
+ * A service provided by the system, useful for accessing values that are global to the application.
+ */
+export interface ApplicationContext {
+    /**
+     * The web component's host element.
+     * This dom node can be accessed by the host site.
+     */
+    getHostElement(): HTMLElement;
+
+    /**
+     * The current web component's shadow root.
+     */
+    getShadowRoot(): ShadowRoot;
+
+    /**
+     * The node containing the rest of the application _inside_ the current web component's shadow dom.
+     */
+    getApplicationContainer(): HTMLElement;
 }
 
 declare module "./ServiceRegistry" {

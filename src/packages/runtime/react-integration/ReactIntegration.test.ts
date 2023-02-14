@@ -12,7 +12,7 @@ import { ServiceLayer } from "../service-layer/ServiceLayer";
 import { ReactIntegration } from "./ReactIntegration";
 import { act } from "react-dom/test-utils";
 import { PackageRepr } from "../service-layer/PackageRepr";
-import { ServiceRepr } from "../service-layer/ServiceRepr";
+import { createConstructorFactory, ServiceRepr } from "../service-layer/ServiceRepr";
 import { InterfaceSpec, ReferenceSpec } from "../service-layer/InterfaceSpec";
 
 interface TestProvider {
@@ -327,7 +327,7 @@ function createIntegration(options?: {
                     name: spec.name,
                     packageName,
                     interfaces: spec.interfaces,
-                    clazz: spec.clazz
+                    factory: createConstructorFactory(spec.clazz)
                 });
             }) ?? [];
         packages.set(

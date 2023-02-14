@@ -3,7 +3,7 @@ import { Service, ServiceOptions } from "../Service";
 import { PackageRepr } from "./PackageRepr";
 import { ServiceLayer } from "./ServiceLayer";
 import { Found } from "./ServiceLookup";
-import { ServiceRepr } from "./ServiceRepr";
+import { createConstructorFactory, createFunctionFactory, ServiceRepr } from "./ServiceRepr";
 
 it("starts and stops services in the expected order", function () {
     let events: string[] = [];
@@ -43,7 +43,7 @@ it("starts and stops services in the expected order", function () {
                 new ServiceRepr({
                     name: "A",
                     packageName: "a",
-                    clazz: ServiceA,
+                    factory: createConstructorFactory(ServiceA),
                     dependencies: [
                         {
                             referenceName: "b",
@@ -59,7 +59,7 @@ it("starts and stops services in the expected order", function () {
                 new ServiceRepr({
                     name: "B",
                     packageName: "b",
-                    clazz: ServiceB,
+                    factory: createConstructorFactory(ServiceB),
                     interfaces: [{ interfaceName: "b.serviceB" }]
                 })
             ]
@@ -125,7 +125,7 @@ it("destroys services once they are no longer referenced (but not before)", func
     const providerService = new ServiceRepr({
         name: "Provider",
         packageName: "provider-package",
-        clazz: ServiceProvider,
+        factory: createConstructorFactory(ServiceProvider),
         interfaces: [{ interfaceName: "provider.Service" }]
     });
 
@@ -136,7 +136,7 @@ it("destroys services once they are no longer referenced (but not before)", func
                 new ServiceRepr({
                     name: "A",
                     packageName: "user-package",
-                    clazz: ServiceUser,
+                    factory: createConstructorFactory(ServiceUser),
                     dependencies: [
                         {
                             referenceName: "provider",
@@ -150,7 +150,7 @@ it("destroys services once they are no longer referenced (but not before)", func
                 new ServiceRepr({
                     name: "B",
                     packageName: "user-package",
-                    clazz: ServiceUser,
+                    factory: createConstructorFactory(ServiceUser),
                     dependencies: [
                         {
                             referenceName: "provider",
@@ -182,6 +182,43 @@ it("destroys services once they are no longer referenced (but not before)", func
     expect(new Set(events.slice(0, 2))).toEqual(new Set(["destroy-B", "destroy-A"])); // ignore order
     expect(providerService.useCount).toBe(0);
     expect(providerService.state).toBe("destroyed");
+});
+
+it("supports using a function to create service instances", function () {
+    let called = 0;
+
+    type HelloService = Service<{ hello(): string }>;
+
+    const factory = (options: ServiceOptions): HelloService => {
+        ++called;
+        return {
+            hello() {
+                return `Hello ${options.properties.target}!`;
+            }
+        };
+    };
+
+    const service = new ServiceRepr({
+        name: "A",
+        packageName: "a",
+        factory: createFunctionFactory(factory),
+        properties: {
+            target: "world"
+        }
+    });
+    const serviceLayer = new ServiceLayer([
+        new PackageRepr({
+            name: "a",
+            services: [service]
+        })
+    ]);
+
+    serviceLayer.start();
+    expect(called).toBe(1);
+
+    const instance = service.getInstanceOrThrow();
+    const message = (instance as HelloService).hello();
+    expect(message).toEqual("Hello world!");
 });
 
 it("injects all implementations of an interface when requested", function () {
@@ -216,7 +253,7 @@ it("injects all implementations of an interface when requested", function () {
                 new ServiceRepr({
                     name: "ExtensibleService",
                     packageName: "test",
-                    clazz: ExtensibleService,
+                    factory: createConstructorFactory(ExtensibleService),
                     dependencies: [
                         {
                             referenceName: "extensions",
@@ -228,7 +265,7 @@ it("injects all implementations of an interface when requested", function () {
                 new ServiceRepr({
                     name: "Ext1",
                     packageName: "test",
-                    clazz: Ext1,
+                    factory: createConstructorFactory(Ext1),
                     interfaces: [
                         {
                             interfaceName: "test.Extension",
@@ -239,7 +276,7 @@ it("injects all implementations of an interface when requested", function () {
                 new ServiceRepr({
                     name: "Ext2",
                     packageName: "test",
-                    clazz: Ext2,
+                    factory: createConstructorFactory(Ext2),
                     interfaces: [
                         {
                             interfaceName: "test.Extension",
@@ -267,7 +304,7 @@ it("allows access to service instances if the dependency was declared", function
                 new ServiceRepr({
                     name: "A",
                     packageName: "test-package",
-                    clazz: Dummy,
+                    factory: createConstructorFactory(Dummy),
                     dependencies: [],
                     interfaces: [
                         { interfaceName: "testpackage.Interface" },
@@ -309,11 +346,13 @@ it("injects properties into service instances", function () {
         properties: {
             foo: "bar"
         },
-        clazz: class Service {
-            constructor(options: ServiceOptions) {
-                properties = options.properties;
+        factory: createConstructorFactory(
+            class Service {
+                constructor(options: ServiceOptions) {
+                    properties = options.properties;
+                }
             }
-        }
+        )
     });
     const serviceLayer = new ServiceLayer([
         new PackageRepr({
