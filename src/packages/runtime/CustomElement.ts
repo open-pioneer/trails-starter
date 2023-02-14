@@ -99,9 +99,11 @@ export interface ApplicationElementConstructor {
  *
  * @example
  * ```ts
+ * import * as appMetadata from "open-pioneer:app";
+ *
  * const CustomElementClazz = createCustomElement({
  *   component: <div>Hello World!</div>,
- *   styles: "div {background-color: red;}",
+ *   appMetadata
  * });
  * customElements.define("sample-element", CustomElementClazz);
  * ```
