@@ -1,6 +1,7 @@
 /**
  * @vitest-environment jsdom
  */
+import { isAbortError } from "@open-pioneer/core";
 import {
     defineComponent,
     renderComponent,
@@ -157,67 +158,82 @@ it("should allow customization of package properties through a callback", async 
     expect(span.tagName).toBe("SPAN");
 });
 
-it("should throw an error when trying to use the element's API without mounting it first", async () => {
-    const elem = createCustomElement({});
-    const tag = defineComponent(elem);
-    const node = document.createElement(tag) as ApplicationElement;
-    const error = await expectAsyncError(() => node.when());
-    expect(error).toMatchSnapshot();
-});
+describe("element API", () => {
+    it("should throw an error when trying to use the element's API without mounting it first", async () => {
+        const elem = createCustomElement({});
+        const tag = defineComponent(elem);
+        const node = document.createElement(tag) as ApplicationElement;
+        const error = await expectAsyncError(() => node.when());
+        expect(error).toMatchSnapshot();
+    });
 
-it("should provide an empty API by default", async () => {
-    const elem = createCustomElement({});
-    const { node } = await renderComponent(elem);
-    const api = await (node as ApplicationElement).when();
-    expect(api).toEqual({});
-});
+    it("should provide an empty API by default", async () => {
+        const elem = createCustomElement({});
+        const { node } = await renderComponent(elem);
+        const api = await (node as ApplicationElement).when();
+        expect(api).toEqual({});
+    });
 
-it("should allow services to provide an API", async () => {
-    const events: string[] = [];
-    class Extension implements ApiExtension {
-        async getApiMethods(): Promise<ApiMethods> {
-            return {
-                add(x: number, y: number) {
-                    events.push("add");
-                    return x + y;
-                },
-                otherMethod() {
-                    events.push("otherMethod");
-                }
-            };
+    it("throws an error when the component is unmounted while waiting for the API", async function () {
+        const elem = createCustomElement({});
+        const tag = defineComponent(elem);
+        const node = document.createElement(tag) as ApplicationElement;
+        document.body.appendChild(node);
+
+        const err = expectAsyncError(() => node.when());
+        node.remove();
+
+        const error = await err;
+        expect(isAbortError(error)).toBe(true);
+    });
+
+    it("should allow services to provide an API", async () => {
+        const events: string[] = [];
+        class Extension implements ApiExtension {
+            async getApiMethods(): Promise<ApiMethods> {
+                return {
+                    add(x: number, y: number) {
+                        events.push("add");
+                        return x + y;
+                    },
+                    otherMethod() {
+                        events.push("otherMethod");
+                    }
+                };
+            }
         }
-    }
 
-    const elem = createCustomElement({
-        appMetadata: {
-            packages: {
-                test: {
-                    name: "test",
-                    services: {
-                        testService: {
-                            name: "testService",
-                            provides: [
-                                {
-                                    name: "runtime.ApiExtension"
-                                }
-                            ],
-                            clazz: Extension
+        const elem = createCustomElement({
+            appMetadata: {
+                packages: {
+                    test: {
+                        name: "test",
+                        services: {
+                            testService: {
+                                name: "testService",
+                                provides: [
+                                    {
+                                        name: "runtime.ApiExtension"
+                                    }
+                                ],
+                                clazz: Extension
+                            }
                         }
                     }
                 }
             }
-        }
+        });
+
+        const { node } = await renderComponent(elem);
+        const api = await (node as ApplicationElement).when();
+        expect(Object.keys(api).sort()).toEqual(["add", "otherMethod"]);
+        expect(events).toEqual([]);
+
+        const sum = api.add!(3, 4);
+        expect(sum).toEqual(7);
+        expect(events).toEqual(["add"]);
+
+        api.otherMethod!();
+        expect(events).toEqual(["add", "otherMethod"]);
     });
-
-    const { node } = await renderComponent(elem);
-    const api = await (node as ApplicationElement).when();
-    expect(Object.keys(api).sort()).toEqual(["add", "otherMethod"]);
-    expect(events).toEqual([]);
-
-    const sum = api.add!(3, 4);
-    expect(sum).toEqual(7);
-    expect(events).toEqual(["add"]);
-
-    api.otherMethod!();
-    expect(events).toEqual(["add", "otherMethod"]);
 });

@@ -1,3 +1,3 @@
 // Vitest Snapshot v1
 
-exports[`should throw an error when trying to use the element's API without mounting it first 1`] = `[Error: runtime:element-not-mounted: Cannot use the application's API because the HTML element has not yet been mounted into the DOM.]`;
+exports[`element API > should throw an error when trying to use the element's API without mounting it first 1`] = `[Error: runtime:element-not-mounted: Cannot use the application's API because the HTML element has not yet been mounted into the DOM.]`;
