@@ -34,12 +34,13 @@ export default defineConfig({
             rootSite: true,
             apps: ["date-app"],
             sites: [
+                "api-sample",
                 "chakra-sample",
                 "date-sample",
                 "extension-sample",
                 "map-sample",
+                "properties-sample",
                 "styling-sample",
-                "properties-sample"
             ]
         }),
         react(),

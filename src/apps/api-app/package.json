@@ -3,6 +3,8 @@
     "main": "index",
     "private": true,
     "dependencies": {
-        "@open-pioneer/runtime": "workspace:^"
+        "@open-pioneer/runtime": "workspace:^",
+        "@open-pioneer/application-events": "workspace:^",
+        "@open-pioneer/chakra-integration": "workspace:^"
     }
 }

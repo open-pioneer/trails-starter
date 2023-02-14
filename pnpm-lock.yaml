@@ -118,8 +118,12 @@ importers:
 
   src/apps/api-app:
     specifiers:
+      '@open-pioneer/application-events': workspace:^
+      '@open-pioneer/chakra-integration': workspace:^
       '@open-pioneer/runtime': workspace:^
     dependencies:
+      '@open-pioneer/application-events': link:../../packages/application-events
+      '@open-pioneer/chakra-integration': link:../../packages/chakra-integration
       '@open-pioneer/runtime': link:../../packages/runtime
 
   src/apps/chakra-app:
@@ -177,6 +181,12 @@ importers:
     dependencies:
       '@open-pioneer/runtime': link:../../packages/runtime
       test-ui-components: link:../../packages/test-ui-components
+
+  src/packages/application-events:
+    specifiers:
+      '@open-pioneer/runtime': workspace:^
+    devDependencies:
+      '@open-pioneer/runtime': link:../runtime
 
   src/packages/chakra-integration:
     specifiers:

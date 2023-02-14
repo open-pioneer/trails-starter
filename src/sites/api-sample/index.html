@@ -6,15 +6,18 @@
         <title>API Sample</title>
     </head>
     <body>
-        <api-app id="apiApp"></api-app>
+        <api-app id="app"></api-app>
         <script type="module" src="../../apps/api-app/app.ts"></script>
     </body>
     <script>
         customElements.whenDefined("api-app").then(() => {
-            const app = document.getElementById("apiApp");
+            const app = document.getElementById("app");
             app.when().then((api) => {
                 const test = api.foo(3);
                 console.log(test);
+            });
+            app.addEventListener("my-event-type", (event) => {
+                console.log("Got event:", event);
             });
         });
     </script>

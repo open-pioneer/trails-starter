@@ -5,5 +5,8 @@ export default defineBuildConfig({
         TestApiExtension: {
             provides: "runtime.ApiExtension"
         }
+    },
+    ui: {
+        references: ["application-events.EventService"]
     }
 });

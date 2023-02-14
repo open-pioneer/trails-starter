@@ -1,0 +1,8 @@
+{
+    "name": "@open-pioneer/application-events",
+    "private": true,
+    "main": "index",
+    "devDependencies": {
+        "@open-pioneer/runtime": "workspace:^"
+    }
+}
