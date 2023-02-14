@@ -8,12 +8,12 @@ import { findByText } from "@testing-library/dom";
 import { Service, ServiceConstructor } from "../Service";
 // eslint-disable-next-line import/no-relative-packages
 import { UIWithProperties, UIWithService, UIWithServices } from "./test-data/test-package/UI";
-import { ServiceLayer } from "../services/ServiceLayer";
+import { ServiceLayer } from "../service-layer/ServiceLayer";
 import { ReactIntegration } from "./ReactIntegration";
 import { act } from "react-dom/test-utils";
-import { PackageRepr } from "../services/PackageRepr";
-import { ServiceRepr } from "../services/ServiceRepr";
-import { InterfaceSpec, ReferenceSpec } from "../services/InterfaceSpec";
+import { PackageRepr } from "../service-layer/PackageRepr";
+import { ServiceRepr } from "../service-layer/ServiceRepr";
+import { InterfaceSpec, ReferenceSpec } from "../service-layer/InterfaceSpec";
 
 interface TestProvider {
     value: string;

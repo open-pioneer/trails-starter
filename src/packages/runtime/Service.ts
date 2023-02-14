@@ -1,3 +1,4 @@
+/** Lifecycle hooks supported by the service interface. */
 export interface ServiceLifecycleHooks {
     /**
      * Destroys the component.
@@ -16,6 +17,9 @@ export interface ServiceLifecycleHooks {
 
 export type Service<Interface extends {} = {}> = ServiceLifecycleHooks & Interface;
 
+/**
+ * Options passed to a service's constructor.
+ */
 export type ServiceOptions<References extends {} = {}> = {
     /**
      * References to other services.
@@ -29,6 +33,9 @@ export type ServiceOptions<References extends {} = {}> = {
     properties: Record<string, unknown>;
 };
 
+/**
+ * A service constructor returns a service instance when calling `new`.
+ */
 export type ServiceConstructor<References extends {} = {}, Interface extends {} = {}> = {
     new (options: ServiceOptions<References>): Service<Interface>;
 };

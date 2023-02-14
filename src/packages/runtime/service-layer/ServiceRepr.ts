@@ -1,4 +1,4 @@
-import { ErrorId } from "./../errors";
+import { ErrorId } from "../errors";
 import { ServiceMetadata } from "../metadata";
 import { Service, ServiceConstructor, ServiceOptions } from "../Service";
 import { Error } from "@open-pioneer/core";

@@ -9,8 +9,8 @@ import {
 } from "@open-pioneer/core";
 import { ErrorId } from "./errors";
 import { ApplicationMetadata, ObservableBox, PackageMetadata } from "./metadata";
-import { PackageRepr, createPackages } from "./services/PackageRepr";
-import { ServiceLayer } from "./services/ServiceLayer";
+import { PackageRepr, createPackages } from "./service-layer/PackageRepr";
+import { ServiceLayer } from "./service-layer/ServiceLayer";
 import { getErrorChain } from "@open-pioneer/core";
 import { ReactIntegration } from "./react-integration/ReactIntegration";
 import { ApiMethod, ApiService } from "./api";
