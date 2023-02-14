@@ -31,6 +31,7 @@ export type CustomChakraProviderProps = PropsWithChildren<{
     colorMode?: "light" | "dark";
 }>;
 
+// todo min-height vs height
 const defaultStyles = `
 .chakra-host {
     line-height: 1.5;
@@ -42,6 +43,7 @@ const defaultStyles = `
     touch-action: manipulation;
     position: relative;
     min-height: 100%;
+    height: 100%;
     font-feature-settings: 'kern';
 }`;
 

@@ -232,6 +232,7 @@ class ElementState {
         const container = (this.container = document.createElement("div"));
         container.classList.add("pioneer-root");
         container.style.minHeight = "100%";
+        container.style.height = "100%";
 
         // Launch the service layer
         const rawPackages = options?.appMetadata?.packages ?? {};
