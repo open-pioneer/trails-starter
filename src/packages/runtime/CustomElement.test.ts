@@ -1,13 +1,19 @@
 /**
  * @vitest-environment jsdom
  */
-import { renderComponent, renderComponentShadowDOM } from "@open-pioneer/test-utils/web-components";
+import {
+    defineComponent,
+    renderComponent,
+    renderComponentShadowDOM
+} from "@open-pioneer/test-utils/web-components";
 import { waitFor } from "@testing-library/dom";
 import { Component, createElement } from "react";
 import { expect, it, describe } from "vitest";
-import { createCustomElement } from "./CustomElement";
+import { ApiExtension, ApiMethods } from "./api";
+import { ApplicationElement, createCustomElement } from "./CustomElement";
 import { createBox } from "./metadata";
 import { usePropertiesInternal } from "./react-integration";
+import { expectAsyncError } from "./test-utils/expectError";
 
 describe("simple rendering", function () {
     const SIMPLE_STYLE = ".test { color: red }";
@@ -149,4 +155,69 @@ it("should allow customization of package properties through a callback", async 
     const { queries } = await renderComponentShadowDOM(elem);
     const span = await queries.findByText("Bye User");
     expect(span.tagName).toBe("SPAN");
+});
+
+it("should throw an error when trying to use the element's API without mounting it first", async () => {
+    const elem = createCustomElement({});
+    const tag = defineComponent(elem);
+    const node = document.createElement(tag) as ApplicationElement;
+    const error = await expectAsyncError(() => node.when());
+    expect(error).toMatchSnapshot();
+});
+
+it("should provide an empty API by default", async () => {
+    const elem = createCustomElement({});
+    const { node } = await renderComponent(elem);
+    const api = await (node as ApplicationElement).when();
+    expect(api).toEqual({});
+});
+
+it("should allow services to provide an API", async () => {
+    const events: string[] = [];
+    class Extension implements ApiExtension {
+        async getApiMethods(): Promise<ApiMethods> {
+            return {
+                add(x: number, y: number) {
+                    events.push("add");
+                    return x + y;
+                },
+                otherMethod() {
+                    events.push("otherMethod");
+                }
+            };
+        }
+    }
+
+    const elem = createCustomElement({
+        appMetadata: {
+            packages: {
+                test: {
+                    name: "test",
+                    services: {
+                        testService: {
+                            name: "testService",
+                            provides: [
+                                {
+                                    name: "runtime.ApiExtension"
+                                }
+                            ],
+                            clazz: Extension
+                        }
+                    }
+                }
+            }
+        }
+    });
+
+    const { node } = await renderComponent(elem);
+    const api = await (node as ApplicationElement).when();
+    expect(Object.keys(api).sort()).toEqual(["add", "otherMethod"]);
+    expect(events).toEqual([]);
+
+    const sum = api.add!(3, 4);
+    expect(sum).toEqual(7);
+    expect(events).toEqual(["add"]);
+
+    api.otherMethod!();
+    expect(events).toEqual(["add", "otherMethod"]);
 });

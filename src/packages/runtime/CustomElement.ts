@@ -13,7 +13,9 @@ import { PackageRepr, createPackages } from "./service-layer/PackageRepr";
 import { ServiceLayer } from "./service-layer/ServiceLayer";
 import { getErrorChain } from "@open-pioneer/core";
 import { ReactIntegration } from "./react-integration/ReactIntegration";
-import { ApiMethod, ApiService } from "./api";
+import { ApiMethods, ApiService } from "./api";
+import { createManualPromise, ManualPromise } from "./utils";
+import { createBuiltinPackage, RUNTIME_PACKAGE_NAME } from "./builtin-services";
 
 /**
  * Options for the {@link createCustomElement} function.
@@ -22,7 +24,7 @@ export interface CustomElementOptions {
     /**
      * Rendered UI component.
      */
-    component: ComponentType<Record<string, string>>;
+    component?: ComponentType<Record<string, string>>;
 
     /** Generated application metadata. */
     appMetadata?: ApplicationMetadata;
@@ -81,6 +83,18 @@ export interface ApplicationProperties {
 }
 
 /**
+ * The interface implemented by web components produced via {@link createCustomElement}.
+ */
+export interface ApplicationElement extends HTMLElement {
+    /** Resolves to the element's API when the application has started. */
+    when(): Promise<ApiMethods>;
+}
+
+export interface ApplicationElementConstructor {
+    new (): ApplicationElement;
+}
+
+/**
  * Creates a new custom element class (web component) that can be registered within a DOM.
  *
  * @example
@@ -92,8 +106,8 @@ export interface ApplicationProperties {
  * customElements.define("sample-element", CustomElementClazz);
  * ```
  */
-export function createCustomElement(options: CustomElementOptions): CustomElementConstructor {
-    class PioneerApplication extends HTMLElement {
+export function createCustomElement(options: CustomElementOptions): ApplicationElementConstructor {
+    class PioneerApplication extends HTMLElement implements ApplicationElement {
         #shadowRoot: ShadowRoot;
         #state: ElementState | undefined;
 
@@ -138,22 +152,19 @@ export function createCustomElement(options: CustomElementOptions): CustomElemen
                 );
             }
 
-            return this.#state.apiPromise;
+            return this.#state.whenAPI();
         }
     }
     return PioneerApplication;
 }
 
 class ElementState {
-    // todo make this lazy (unhandled rejections)
-    readonly apiPromise: Promise<Record<string, ApiMethod>>;
-    private resolveApi!: (api: Record<string, ApiMethod>) => void;
-    private rejectApi!: (error: unknown) => void;
-
     private outerHtmlElement: HTMLElement;
     private shadowRoot: ShadowRoot;
     private options: CustomElementOptions;
     private props: Record<string, string> = {};
+    private apiPromise: ManualPromise<ApiMethods> | undefined; // Present when callers are waiting for the API
+    private api: ApiMethods | undefined; // Present once started
 
     private state = "not-started" as "not-started" | "starting" | "started" | "destroyed";
     private rootNode: HTMLDivElement | undefined;
@@ -169,10 +180,6 @@ class ElementState {
         this.outerHtmlElement = outerHtmlElement;
         this.shadowRoot = shadowRoot;
         this.options = options;
-        this.apiPromise = new Promise<Record<string, ApiMethod>>((resolve, reject) => {
-            this.resolveApi = resolve;
-            this.rejectApi = reject;
-        });
     }
 
     start() {
@@ -192,12 +199,21 @@ class ElementState {
 
     destroy() {
         this.state = "destroyed";
-        this.rejectApi(createAbortError());
+        this.apiPromise?.reject(createAbortError());
         this.reactIntegration = destroyResource(this.reactIntegration);
         this.shadowRoot.replaceChildren();
         this.rootNode = undefined;
         this.serviceLayer = destroyResource(this.serviceLayer);
         this.stylesWatch = destroyResource(this.stylesWatch);
+    }
+
+    whenAPI(): Promise<ApiMethods> {
+        if (this.api) {
+            return Promise.resolve(this.api);
+        }
+
+        const apiPromise = (this.apiPromise ??= createManualPromise());
+        return apiPromise.promise;
     }
 
     onAttributeChanged(name: string, value: string | undefined) {
@@ -219,21 +235,7 @@ class ElementState {
         const { serviceLayer, packages } = createServiceLayer(rawPackages, properties);
         this.serviceLayer = serviceLayer;
         serviceLayer.start();
-
-        // todo clean-up
-        const service = serviceLayer.getService(
-            "@open-pioneer/runtime",
-            {
-                interfaceName: "runtime.ApiService"
-            },
-            { ignoreDeclarationCheck: true }
-        );
-        if (service.type !== "found") {
-            throw new Error(ErrorId.INTERNAL, "failed to find ApiService");
-        }
-        const apiService = service.value.getInstanceOrThrow() as ApiService;
-        const api = await apiService.getApi();
-        this.resolveApi(api);
+        await this.initAPI(serviceLayer);
 
         // Setup application root node in the shadow dom
         const rootNode = (this.rootNode = document.createElement("div"));
@@ -243,9 +245,9 @@ class ElementState {
 
         const styles = options?.appMetadata?.styles;
         const styleNode = document.createElement("style");
-        this.applyStyles(styleNode, styles);
+        applyStyles(styleNode, styles);
         if (import.meta.hot) {
-            this.stylesWatch = styles?.on?.("changed", () => this.applyStyles(styleNode, styles));
+            this.stylesWatch = styles?.on?.("changed", () => applyStyles(styleNode, styles));
         }
 
         shadowRoot.replaceChildren(rootNode, styleNode);
@@ -262,13 +264,34 @@ class ElementState {
     }
 
     private render() {
-        this.reactIntegration?.render(this.options.component, this.props);
+        this.reactIntegration?.render(this.options.component ?? emptyComponent, this.props);
     }
 
-    private applyStyles(styleNode: HTMLStyleElement, styles: ObservableBox<string> | undefined) {
-        const cssValue = styles?.value ?? "";
-        const cssNode = document.createTextNode(cssValue);
-        styleNode.replaceChildren(cssNode);
+    private async initAPI(serviceLayer: ServiceLayer) {
+        const result = serviceLayer.getService(
+            "@open-pioneer/runtime",
+            {
+                interfaceName: "runtime.ApiService"
+            },
+            { ignoreDeclarationCheck: true }
+        );
+        if (result.type !== "found") {
+            throw new Error(
+                ErrorId.INTERNAL,
+                `Failed to find instance of 'runtime.ApiService' (result type '${result.type}').` +
+                    ` This is a builtin service that must be present exactly once.`
+            );
+        }
+
+        const apiService = result.value.getInstanceOrThrow() as ApiService;
+        try {
+            const api = (this.api = await apiService.getApi());
+            this.apiPromise?.resolve(api);
+        } catch (e) {
+            throw new Error(ErrorId.INTERNAL, "Failed to gather the application's API methods.", {
+                cause: e
+            });
+        }
     }
 }
 
@@ -284,6 +307,16 @@ function createServiceLayer(
             cause: e
         });
     }
+
+    // Add builtin services defined within this package.
+    if (packages.find((pkg) => pkg.name === RUNTIME_PACKAGE_NAME)) {
+        throw new Error(
+            ErrorId.INVALID_METADATA,
+            "User defined packages must not contain metadata for the runtime package."
+        );
+    }
+    packages.push(createBuiltinPackage());
+
     return {
         packages: new Map(packages.map((pkg) => [pkg.name, pkg])),
         serviceLayer: new ServiceLayer(packages)
@@ -323,6 +356,18 @@ function mergeProperties(properties: ApplicationProperties[]): ApplicationProper
         }
     }
     return merged;
+}
+
+// Applies application styles to the given style node.
+// Can be called multiple times in development mode to implement hot reloading.
+function applyStyles(styleNode: HTMLStyleElement, styles: ObservableBox<string> | undefined) {
+    const cssValue = styles?.value ?? "";
+    const cssNode = document.createTextNode(cssValue);
+    styleNode.replaceChildren(cssNode);
+}
+
+function emptyComponent() {
+    return null;
 }
 
 function logError(e: unknown) {
