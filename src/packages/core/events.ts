@@ -11,7 +11,29 @@ type ArgType<T> = [T] extends [void] ? [] : [event: T];
 type EventType<Events extends EventsBase, Name extends keyof Events> = ArgType<Events[Name]>;
 
 /**
- * A support class that supports emitting and listening for events.
+ * A support class that implements emitting and listening for events.
+ *
+ * This class supports inheritance or direct use:
+ *
+ * ```js
+ * const emitter = new EventEmitter();
+ * class MyClass extends EventEmitter {};
+ * ```
+ *
+ * When using this class from TypeScript, declare your supported event
+ * types using an interface first:
+ *
+ * ```ts
+ * interface Events {
+ *      // key: event name, value: event type
+ *      mouseClicked: MouseEvent;
+ * }
+ *
+ * const emitter = new EventEmitter<Events>();
+ * emitter.on("mouseClicked", (event) => {
+ *      // event is a MouseEvent
+ * });
+ * ```
  */
 export class EventEmitter<Events extends {}> {
     [state] = new EventEmitterState();
@@ -94,6 +116,8 @@ class EventEmitterState {
         }
 
         // Copy to allow (de-) registration of handlers during emit.
+        // This is convenient for correctness but may been further optimization
+        // if events are emitted frequently.
         const copy = [...handlers];
         for (const handler of copy) {
             if (handler.removed) {

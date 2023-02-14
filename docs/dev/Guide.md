@@ -229,6 +229,23 @@ It can be integrated into most modern IDEs to keep automatically keep edited fil
 It checks the code against configured rules (see `.eslintrc`) and fails the build when it detects a code style violation.
 ESLint helps detecting minor style issues (e.g. missing semicolons) and outright programming errors (e.g. wrong usage of react hooks).
 
+### Event Handling
+
+We currently do not have a global event bus.
+Instead, a developer can use the `EventEmitter` class from `@open-pioneer/core` to implement events that can be subscribed to.
+EventEmitter supports both inheritance and direct use.
+
+For example:
+
+```js
+import { EventEmitter } from "./events";
+const emitter = new EventEmitter();
+const events = [];
+const handle = emitter.on("mouseClicked", (event) => observed.push(event));
+emitter.emit("mouseClicked", { x: 1, y: 2 });
+handle.destroy(); // don't forget to unsubscribe during cleanup
+```
+
 ## Known Issues
 
 ### Hot reloading with \[jt\]sx-Files and side effects
