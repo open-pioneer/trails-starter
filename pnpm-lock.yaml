@@ -185,8 +185,10 @@ importers:
   src/packages/application-events:
     specifiers:
       '@open-pioneer/runtime': workspace:^
+      '@open-pioneer/test-utils': workspace:^
     devDependencies:
       '@open-pioneer/runtime': link:../runtime
+      '@open-pioneer/test-utils': link:../test-utils
 
   src/packages/chakra-integration:
     specifiers:

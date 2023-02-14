@@ -3,6 +3,7 @@
     "private": true,
     "main": "index",
     "devDependencies": {
-        "@open-pioneer/runtime": "workspace:^"
+        "@open-pioneer/runtime": "workspace:^",
+        "@open-pioneer/test-utils": "workspace:^"
     }
 }

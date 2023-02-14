@@ -82,3 +82,32 @@ it("should allow injection of service from the test", async () => {
 ```
 
 Take a look at the tests in this package for more examples.
+
+## Service utilities
+
+Provides a utility to construct new service instances.
+References to other service instances can be mocked with user defined test values.
+
+Example:
+
+```js
+import { expect, it } from "vitest";
+import { createService } from "@open-pioneer/test-utils/services";
+import { MyService } from "./MyService"; // User defined service
+
+it("creates a new service instance with the defined references", async () => {
+    const service = await createService(MyService, {
+        references: {
+            // Will be injected into the constructor.
+            // TypeScript checks are intentionally relaxed a bit.
+            someReference: {
+                bar() {
+                    return 123;
+                }
+            }
+        }
+    });
+    expect(service).toBeInstanceOf(MyService);
+    // ... other assertions ...
+});
+```

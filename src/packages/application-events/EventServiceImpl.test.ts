@@ -1,11 +1,11 @@
 /**
  * @vitest-environment jsdom
  */
-import { ApplicationContext } from "@open-pioneer/runtime";
+import { createService } from "@open-pioneer/test-utils/services";
 import { expect, it } from "vitest";
 import { EventServiceImpl } from "./EventServiceImpl";
 
-it("emits events on the application's host element", () => {
+it("emits events on the application's host element", async () => {
     const eventName = "my-custom-event";
 
     const events: string[] = [];
@@ -13,16 +13,14 @@ it("emits events on the application's host element", () => {
     div.addEventListener(eventName, (e) => {
         events.push(e.type);
     });
-    const ctx: Partial<ApplicationContext> = {
-        getHostElement() {
-            return div;
-        }
-    };
-    const eventService = new EventServiceImpl({
+    const eventService = await createService(EventServiceImpl, {
         references: {
-            ctx: ctx as ApplicationContext
-        },
-        properties: {}
+            ctx: {
+                getHostElement() {
+                    return div;
+                }
+            }
+        }
     });
     eventService.emitEvent(eventName);
     expect(events).toEqual([eventName]);

@@ -71,6 +71,9 @@ export class EventEmitter<Events extends {}> {
 
     /**
      * Emits an event of the given name and calls the registered event handlers.
+     *
+     * _Note:_ event handlers run synchronously.
+     * After `emit()` has completed, all listeners will already have been invoked.
      */
     emit<Name extends EventNames<Events>>(eventName: Name, ...args: EventType<Events, Name>): void {
         this[state].emit(eventName, args[0]);

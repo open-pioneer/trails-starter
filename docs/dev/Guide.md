@@ -218,6 +218,16 @@ Recommended libraries:
 -   `react-dom/test-utils`: <https://reactjs.org/docs/test-utils.html>
 -   Our own test utils in `@open-pioneer/test-utils`
 
+### Test utilities
+
+The package `@open-pioneer/test-utils` provides helpers to test components of a pioneer application:
+
+-   The application itself (that is, the web component).
+    Web components can be mounted in the DOM and their children can be searched.
+-   React components with dependencies to services, properties etc.
+    Test dependencies and data can be provided in such a way that the component renders into the DOM without any changes to the component's implementation.
+-   Service instances can be created with test references and properties.
+
 ### Linting and formatting
 
 We use [Prettier](https://prettier.io/) to handle automatic source code formatting.
