@@ -39,7 +39,7 @@ describe("simple rendering", function () {
     it("should render use styles", async () => {
         const { shadowRoot } = await renderComponentShadowDOM("simple-elem");
         const style = shadowRoot.querySelector("style")!;
-        expect(style.innerHTML).toBe(SIMPLE_STYLE);
+        expect(style).toMatchSnapshot();
     });
 
     it("should clean up its content when removed from the dom", async () => {

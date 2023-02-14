@@ -138,7 +138,7 @@ export const CustomChakraProvider: FC<CustomChakraProviderProps> = ({
     const ColorMode = mode === "light" ? LightMode : DarkMode;
 
     return (
-        <div className="chakra-host" ref={chakraHost} style={{ width: "100%", height: "100%" }}>
+        <div className="chakra-host" ref={chakraHost}>
             <CacheProvider value={cacheRef.current}>
                 <ThemeProvider theme={theme}>
                     <EnvironmentProvider>

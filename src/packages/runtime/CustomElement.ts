@@ -242,8 +242,7 @@ class ElementState {
         // Setup application root node in the shadow dom
         const rootNode = (this.rootNode = document.createElement("div"));
         rootNode.classList.add("pioneer-root");
-        rootNode.style.height = "100%";
-        rootNode.style.width = "100%";
+        rootNode.style.minHeight = "100%";
 
         const styles = options?.appMetadata?.styles;
         const styleNode = document.createElement("style");
@@ -360,11 +359,13 @@ function mergeProperties(properties: ApplicationProperties[]): ApplicationProper
     return merged;
 }
 
+const DISABLE_INHERIT = ":host { all: initial }";
+
 // Applies application styles to the given style node.
 // Can be called multiple times in development mode to implement hot reloading.
 function applyStyles(styleNode: HTMLStyleElement, styles: ObservableBox<string> | undefined) {
     const cssValue = styles?.value ?? "";
-    const cssNode = document.createTextNode(cssValue);
+    const cssNode = document.createTextNode([DISABLE_INHERIT, cssValue].join("\n"));
     styleNode.replaceChildren(cssNode);
 }
 
