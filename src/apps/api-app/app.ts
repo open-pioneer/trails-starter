@@ -1,9 +1,9 @@
 import { createCustomElement } from "@open-pioneer/runtime";
 import * as appMetadata from "open-pioneer:app";
-import { AppUI } from "./AppUI";
+import { DemoUI } from "./DemoUI";
 
 const Element = createCustomElement({
-    component: AppUI,
+    component: DemoUI,
     appMetadata
 });
 

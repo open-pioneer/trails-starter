@@ -248,7 +248,7 @@ EventEmitter supports both inheritance and direct use.
 For example:
 
 ```js
-import { EventEmitter } from "./events";
+import { EventEmitter } from "@open-pioneer/core";
 const emitter = new EventEmitter();
 const events = [];
 const handle = emitter.on("mouseClicked", (event) => observed.push(event));

@@ -2,11 +2,17 @@ import { defineBuildConfig } from "@open-pioneer/build-support";
 
 export default defineBuildConfig({
     services: {
-        TestApiExtension: {
-            provides: "runtime.ApiExtension"
+        TextApiExtension: {
+            provides: "runtime.ApiExtension",
+            references: {
+                textService: "api-app.TextService"
+            }
+        },
+        TextService: {
+            provides: "api-app.TextService"
         }
     },
     ui: {
-        references: ["application-events.EventService"]
+        references: ["api-app.TextService", "application-events.EventService"]
     }
 });

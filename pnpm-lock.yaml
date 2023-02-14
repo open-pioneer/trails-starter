@@ -120,10 +120,12 @@ importers:
     specifiers:
       '@open-pioneer/application-events': workspace:^
       '@open-pioneer/chakra-integration': workspace:^
+      '@open-pioneer/core': workspace:^
       '@open-pioneer/runtime': workspace:^
     dependencies:
       '@open-pioneer/application-events': link:../../packages/application-events
       '@open-pioneer/chakra-integration': link:../../packages/chakra-integration
+      '@open-pioneer/core': link:../../packages/core
       '@open-pioneer/runtime': link:../../packages/runtime
 
   src/apps/chakra-app:
