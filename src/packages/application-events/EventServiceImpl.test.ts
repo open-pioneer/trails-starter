@@ -8,7 +8,6 @@ import { EventServiceImpl } from "./EventServiceImpl";
 it("emits events on the application's host element", () => {
     const eventName = "my-custom-event";
 
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const events: string[] = [];
     const div = document.createElement("div");
     div.addEventListener(eventName, (e) => {
