@@ -256,6 +256,91 @@ emitter.emit("mouseClicked", { x: 1, y: 2 });
 handle.destroy(); // don't forget to unsubscribe during cleanup
 ```
 
+### Web compontent API
+
+It is possible to provide API functions that can be called from the outer site to trigger actions in the web component.
+Thereby the surrounding site can control the app.
+
+To use methods provided by the API in the surrounding site, call the `when()` method on the app.
+It resolves the app's API when the application has started.
+Thereupon it is possible to call the provided methods on the returned API instance.
+
+For Example:
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+    ...
+    <body>
+        <api-app id="app"></api-app>
+        <script type="module" src="example-path/app.ts"></script>
+    </body>
+    <script>
+        customElements.whenDefined("api-app").then(() => {
+            const app = document.getElementById("app");
+            app.when().then((api) => {
+                api.changeText("This is a test text.");
+            });
+        });
+    </script>
+</html>
+```
+
+To provide API functions a service providing `"runtime.ApiExtension"` needs to be implemented.
+The service must implement the `ApiExtension` interface from `@open-pioneer/runtime`.
+Inside the `getApiMethods` function, methods to be added to the web component API can be defined.
+
+For example:
+
+```js
+// build.config.mjs
+import { defineBuildConfig } from "@open-pioneer/build-support";
+
+export default defineBuildConfig({
+    services: {
+        TextApiExtension: {
+            provides: "runtime.ApiExtension",
+            references: {
+                textService: "api-app.TextService"
+            }
+        },
+        TextService: {
+            provides: "api-app.TextService"
+        },
+        ...
+    },
+    ...
+});
+```
+
+```ts
+// TextApiExtension.ts
+import { ApiExtension, ServiceOptions } from "@open-pioneer/runtime";
+import { TextService } from "./TextService";
+
+interface References {
+    textService: TextService;
+}
+
+// implement ApiExtension interface
+export class TextApiExtension implements ApiExtension {
+    private textService: TextService;
+    constructor(opts: ServiceOptions<References>) {
+        this.textService = opts.references.textService;
+    }
+
+    // returns a set of methods that will be added to the web component's API.
+    async getApiMethods() {
+        return {
+            // changeText method is available
+            changeText: (text: string) => {
+                this.textService.setText(text);
+            }
+        };
+    }
+}
+```
+
 ## Known Issues
 
 ### Hot reloading with \[jt\]sx-Files and side effects
