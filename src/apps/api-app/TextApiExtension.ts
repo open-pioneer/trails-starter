@@ -8,7 +8,6 @@ interface References {
 export class TextApiExtension implements ApiExtension {
     private textService: TextService;
     constructor(opts: ServiceOptions<References>) {
-        console.log("apiextenstion");
         this.textService = opts.references.textService;
     }
 

@@ -12,15 +12,27 @@ export class EventServiceImpl implements EventService {
         this.#ctx = references.ctx;
     }
 
-    emitEvent(name: string) {
-        const element = this.#ctx.getHostElement();
-        const event = new CustomEvent(name, {
+    emitEvent(name: string, detail?: unknown): void;
+    emitEvent(event: Event): void;
+    emitEvent(nameOrEvent: string | Event, detail: unknown = null) {
+        if (nameOrEvent == null) {
+            return;
+        }
+
+        if (nameOrEvent instanceof Event) {
+            this.#dispatch(nameOrEvent);
+            return;
+        }
+
+        const event = new CustomEvent(nameOrEvent, {
             bubbles: false,
             cancelable: false,
-            detail: {
-                prop: "value"
-            }
+            detail
         });
-        element.dispatchEvent(event);
+        this.#dispatch(event);
+    }
+
+    #dispatch(event: Event) {
+        this.#ctx.getHostElement().dispatchEvent(event);
     }
 }

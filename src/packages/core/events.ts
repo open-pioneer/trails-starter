@@ -26,13 +26,14 @@ type EventType<Events extends EventsBase, Name extends keyof Events> = ArgType<E
  * ```ts
  * interface Events {
  *      // key: event name, value: event type
- *      mouseClicked: MouseEvent;
+ *      "mouse-clicked": MouseEvent;
  * }
  *
  * const emitter = new EventEmitter<Events>();
- * emitter.on("mouseClicked", (event) => {
+ * emitter.on("mouse-clicked", (event) => {
  *      // event is a MouseEvent
  * });
+ * emitter.emit("mouse-clicked", new MouseEvent(...));
  * ```
  */
 export class EventEmitter<Events extends {}> {

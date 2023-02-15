@@ -10,6 +10,10 @@
         <script type="module" src="../../apps/api-app/app.ts"></script>
     </body>
     <script>
+        document.getElementById("app").addEventListener("my-custom-event", (event) => {
+            console.log("Got event from app:", event);
+        });
+
         customElements.whenDefined("api-app").then(() => {
             const app = document.getElementById("app");
             app.when().then((api) => {
@@ -17,9 +21,6 @@
                     api.changeText("Dies ist ein Test");
                     console.log("changeText called");
                 }, 3000);
-            });
-            app.addEventListener("my-event-type", (event) => {
-                console.log("Got event:", event);
             });
         });
     </script>
