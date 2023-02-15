@@ -17,6 +17,9 @@ export enum ErrorId {
     DUPLICATE_INTERFACE = "runtime:duplicate-interface",
     DEPENDENCY_CYCLE = "runtime:dependency-cycle",
 
+    // Web component API
+    DUPLICATE_API_METHODS = "runtime:duplicate-api-methods",
+
     // Internal
     INTERNAL = "runtime:internal-error"
 }

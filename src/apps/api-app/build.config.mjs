@@ -10,6 +10,9 @@ export default defineBuildConfig({
         },
         TextService: {
             provides: "api-app.TextService"
+        },
+        SecondApiExtension: {
+            provides: "runtime.ApiExtension"
         }
     },
     ui: {
