@@ -20,6 +20,11 @@
                 setTimeout(() => {
                     api.changeText("Dies ist ein Test");
                     console.log("changeText called");
+
+                    setTimeout(() => {
+                        api.changeText("Dies ist ein noch neuerer Text");
+                        console.log("changeText2 called");
+                    }, 3000);
                 }, 3000);
             });
         });

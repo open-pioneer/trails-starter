@@ -1,6 +1,7 @@
 import { useService } from "open-pioneer:react-hooks";
 import { TextService } from "./TextService";
 import { Button, Container, VStack, Text, Heading } from "@open-pioneer/chakra-integration";
+import { useState } from "react";
 
 export function DemoUI() {
     const eventService = useService("application-events.EventService");
@@ -11,7 +12,12 @@ export function DemoUI() {
     };
 
     const textService = useService("api-app.TextService") as TextService;
-    //service.on(); // todo listen on text-changed event
+
+    const [text, setText] = useState(textService.getText());
+
+    textService.on("text-changed", (event) => {
+        setText(event.newText);
+    });
 
     return (
         <Container>
@@ -23,7 +29,7 @@ export function DemoUI() {
                 <Heading size="md" pt={20}>
                     React to api calls from outer site
                 </Heading>
-                <div>Current text: {textService.getText()}</div>
+                <div>Current text: {text}</div>
             </VStack>
         </Container>
     );

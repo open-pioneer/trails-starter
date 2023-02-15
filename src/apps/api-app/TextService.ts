@@ -13,8 +13,9 @@ export class TextService extends EventEmitter<TextEvents> {
     private text = "not yet set";
 
     setText(text: string) {
+        const oldText = this.text;
         this.text = text;
-        // todo text-changed event
+        this.emit("text-changed", { newText: this.text, oldText: oldText });
     }
 
     getText() {
