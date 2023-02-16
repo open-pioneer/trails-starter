@@ -64,10 +64,15 @@ When the metadata format is altered, the build tooling will (most likely) have t
     It will immediately verify and index the services in the dependency graph.
     The construction is currently triggered from the custom element class when it is connected to the DOM.
 
+    During its construction, the service layer will first verify the entire service graph (needed _and_ unneeded services).
+    It will then compute the set of actually required services.
+    This set is currently made up of the services required by the UI (taking from package metadata) and the services required
+    by the framework (constructor parameter).
+    Only those services (and their transitive dependencies) will actually be started.
+
 2. _start_
 
-    The `start()` method is called.
-    It currently launches all services by calling `createService`, whether they are needed or not.
+    The `start()` method is called to launch all required services.
 
     `createService` is recursive: a service's dependencies must be created before the service itself can be created.
 
@@ -77,7 +82,7 @@ When the metadata format is altered, the build tooling will (most likely) have t
     2. Is the service in any other state than `not-constructed`? Throw an error (this is a sanity check, since `verifyDependency` should have caught the issue).
     3. Call `createService(d)` for every service `d` required by `s` and store the instance reference.
     4. Finally create the service `s` by passing the required references and other parameters into its constructor.
-       Note that this initializes service's reference count to `1`.
+       Note that this initializes the service's reference count to `1`.
 
     `start()` tracks the number of times a service is being used as a dependency.
     This is needed during shutdown.
@@ -170,10 +175,3 @@ class MyService {
     }
 }
 ```
-
-### Unneeded services are started
-
-We currently start all services, whether they are needed or not.
-In the future, only needed services should be started.
-
-It would also be desirable to output which services are not needed (or to optimize them away outright at build time).
