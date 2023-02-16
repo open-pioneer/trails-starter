@@ -256,13 +256,13 @@ emitter.emit("mouseClicked", { x: 1, y: 2 });
 handle.destroy(); // don't forget to unsubscribe during cleanup
 ```
 
-### Web compontent API
+### Web component API
 
 It is possible to provide API functions that can be called from the outer site to trigger actions in the web component.
-Thereby the surrounding site can control the app.
+This allows the surrounding site to control the app.
 
 To use methods provided by the API in the surrounding site, call the `when()` method on the app.
-It resolves the app's API when the application has started.
+It resolves to the app's API when the application has started.
 Thereupon it is possible to call the provided methods on the returned API instance.
 
 For Example:
@@ -288,7 +288,7 @@ For Example:
 
 To provide API functions a service providing `"runtime.ApiExtension"` needs to be implemented.
 The service must implement the `ApiExtension` interface from `@open-pioneer/runtime`.
-Inside the `getApiMethods` function, methods to be added to the web component API can be defined.
+Functions returned from `getApiMethods()` will automatically be added as methods on the web component's API object.
 
 For example:
 
@@ -325,6 +325,7 @@ interface References {
 // implement ApiExtension interface
 export class TextApiExtension implements ApiExtension {
     private textService: TextService;
+
     constructor(opts: ServiceOptions<References>) {
         this.textService = opts.references.textService;
     }
