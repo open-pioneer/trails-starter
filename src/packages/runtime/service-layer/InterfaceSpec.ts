@@ -2,6 +2,9 @@ import { Error } from "@open-pioneer/core";
 import { ErrorId } from "../errors";
 import { InterfaceReferenceMetadata } from "../metadata";
 
+/**
+ * Describes the implementation of an interface.
+ */
 export interface InterfaceSpec {
     interfaceName: string;
     qualifier?: string | undefined;
@@ -19,6 +22,9 @@ export interface AllImplementationsSpec extends Pick<InterfaceSpec, "interfaceNa
     all: true;
 }
 
+/**
+ * Describes a reference to one or more implementations of an interface.
+ */
 export type ReferenceSpec = SingleImplementationSpec | AllImplementationsSpec;
 
 export function parseReferenceSpec(metadata: InterfaceReferenceMetadata): ReferenceSpec {

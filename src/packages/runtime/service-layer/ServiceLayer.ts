@@ -3,6 +3,7 @@ import { Error } from "@open-pioneer/core";
 import { ErrorId } from "../errors";
 import {
     ComputedServiceDependencies,
+    FrameworkDependency,
     UIDependency,
     verifyDependencies
 } from "./verifyDependencies";
@@ -12,9 +13,11 @@ import {
     InterfaceSpec,
     isAllImplementationsSpec,
     isSingleImplementationSpec,
-    ReferenceSpec
+    ReferenceSpec,
+    renderInterfaceSpec
 } from "./InterfaceSpec";
 import { ReferenceMeta } from "../Service";
+import { RUNTIME_PACKAGE_NAME } from "../builtin-services";
 
 export type DynamicLookupResult = ServiceLookupResult | UndeclaredDependency;
 
@@ -29,6 +32,12 @@ interface DependencyDeclarations {
 }
 
 export class ServiceLayer {
+    // All services in the application.
+    private allServices: ServiceRepr[];
+
+    // Set of required services. These services and their dependencies will be started.
+    private requiredServices: Set<ServiceRepr>;
+
     private serviceLookup: ReadonlyServiceLookup;
 
     // Service id --> Service dependencies
@@ -36,33 +45,51 @@ export class ServiceLayer {
 
     // Package name --> Interface name --> Declarations
     private declaredDependencies;
-    private allServices: readonly ServiceRepr[];
     private state: "not-started" | "started" | "destroyed" = "not-started";
 
-    constructor(packages: readonly PackageRepr[]) {
-        this.allServices = packages.map((pkg) => pkg.services).flat();
+    /**
+     * Constructs a new service layer instance.
+     * Requires the application's set of packages (from which services are taken)
+     * and an optional set of forced references (interfaces whose implementing services will be started unconditionally).
+     *
+     * In its current form, the service layer will start only forced references and references needed by the UI (and their dependencies).
+     */
+    constructor(packages: readonly PackageRepr[], forcedReferences: ReferenceSpec[] = []) {
+        const allServices = packages.map((pkg) => pkg.services).flat();
+        const uiDependencies = packages
+            .map((pkg) =>
+                pkg.uiReferences.map<UIDependency>((dep) => {
+                    return {
+                        type: "ui",
+                        packageName: pkg.name,
+                        ...dep
+                    };
+                })
+            )
+            .flat();
+        const requiredReferences = [
+            ...forcedReferences.map<FrameworkDependency>((r) => ({
+                type: "framework",
+                ...r
+            })),
+            ...uiDependencies
+        ];
+
         const { serviceLookup, serviceDependencies } = verifyDependencies({
-            services: this.allServices,
-            uiDependencies: packages
-                .map((pkg) =>
-                    pkg.uiReferences.map<UIDependency>((dep) => {
-                        return {
-                            packageName: pkg.name,
-                            ...dep
-                        };
-                    })
-                )
-                .flat()
+            services: allServices,
+            requiredReferences: requiredReferences
         });
+        this.allServices = allServices;
+        this.requiredServices = getRequiredServices(requiredReferences, serviceLookup);
         this.serviceLookup = serviceLookup;
         this.serviceDependencies = serviceDependencies;
         this.declaredDependencies = buildDependencyIndex(packages);
     }
 
     destroy() {
-        this.allServices.forEach((value) => {
-            this.destroyService(value);
-        });
+        for (const service of this.requiredServices) {
+            this.destroyService(service);
+        }
         this.state = "destroyed";
     }
 
@@ -71,10 +98,28 @@ export class ServiceLayer {
             throw new Error(ErrorId.INTERNAL, "Service layer was already started.");
         }
 
-        this.allServices.forEach((value) => {
-            this.createService(value);
-        });
+        for (const service of this.requiredServices) {
+            this.createService(service);
+        }
         this.state = "started";
+
+        // Give warnings for unneeded services during development.
+        if (import.meta.env.DEV) {
+            const unneededServices = this.allServices
+                .filter(
+                    (service) =>
+                        service.packageName !== RUNTIME_PACKAGE_NAME &&
+                        service.state === "not-constructed"
+                )
+                .map((service) => `'${service.id}'`);
+            if (unneededServices.length) {
+                console.warn(
+                    `The following services are contained in the application but were not started: ${unneededServices.join(
+                        ", "
+                    )}.`
+                );
+            }
+        }
     }
 
     /**
@@ -100,7 +145,7 @@ export class ServiceLayer {
             return { type: "undeclared" };
         }
 
-        return this.serviceLookup.lookup(spec);
+        return this.serviceLookup.lookupOne(spec);
     }
 
     /**
@@ -244,6 +289,31 @@ export class ServiceLayer {
         }
         return dependencies;
     }
+}
+
+function getRequiredServices(
+    requiredReferences: readonly ReferenceSpec[],
+    serviceLookup: ReadonlyServiceLookup
+): Set<ServiceRepr> {
+    const requiredServices = new Set<ServiceRepr>();
+    for (const referenceSpec of requiredReferences) {
+        const result = serviceLookup.lookup(referenceSpec);
+        if (result.type !== "found") {
+            // Should be caught by verifier
+            throw new Error(
+                ErrorId.INTERNAL,
+                `Failed to find required reference to ${renderInterfaceSpec(referenceSpec)}.`
+            );
+        }
+        if (Array.isArray(result.value)) {
+            for (const service of result.value) {
+                requiredServices.add(service);
+            }
+        } else {
+            requiredServices.add(result.value);
+        }
+    }
+    return requiredServices;
 }
 
 function buildDependencyIndex(packages: readonly PackageRepr[]) {

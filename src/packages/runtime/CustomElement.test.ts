@@ -186,8 +186,21 @@ it("provides access to html containers through the application context", async (
                                 ctx: {
                                     name: "runtime.ApplicationContext"
                                 }
-                            }
+                            },
+                            provides: [
+                                {
+                                    name: "testInterface"
+                                }
+                            ]
                         }
+                    },
+                    ui: {
+                        references: [
+                            // Hack to start the service
+                            {
+                                name: "testInterface"
+                            }
+                        ]
                     }
                 }
             }

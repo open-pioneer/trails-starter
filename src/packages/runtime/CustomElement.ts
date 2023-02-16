@@ -15,7 +15,8 @@ import { getErrorChain } from "@open-pioneer/core";
 import { ReactIntegration } from "./react-integration/ReactIntegration";
 import { ApiMethods, ApiService } from "./api";
 import { createManualPromise, ManualPromise } from "./utils";
-import { createBuiltinPackage } from "./builtin-services";
+import { createBuiltinPackage, RUNTIME_API_SERVICE } from "./builtin-services";
+import { ReferenceSpec } from "./service-layer/InterfaceSpec";
 
 /**
  * Options for the {@link createCustomElement} function.
@@ -277,7 +278,7 @@ class ElementState {
         const result = serviceLayer.getService(
             "@open-pioneer/runtime",
             {
-                interfaceName: "runtime.ApiService"
+                interfaceName: RUNTIME_API_SERVICE
             },
             { ignoreDeclarationCheck: true }
         );
@@ -324,9 +325,15 @@ function createServiceLayer(
     }
     packages.push(builtinPackage);
 
+    const forcedReferences: ReferenceSpec[] = [
+        {
+            interfaceName: RUNTIME_API_SERVICE
+        }
+    ];
+    const serviceLayer = new ServiceLayer(packages, forcedReferences);
     return {
         packages: new Map(packages.map((pkg) => [pkg.name, pkg])),
-        serviceLayer: new ServiceLayer(packages)
+        serviceLayer: serviceLayer
     };
 }
 

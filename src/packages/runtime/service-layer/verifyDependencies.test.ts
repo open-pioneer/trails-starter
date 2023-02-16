@@ -51,7 +51,7 @@ it("throws when a service is not implemented", function () {
     const message = expectError(() =>
         verifyDependencies({
             services: services,
-            uiDependencies: []
+            requiredReferences: []
         })
     ).message;
     expect(message).toMatchSnapshot();
@@ -75,7 +75,7 @@ it("does not throw when an interface is implemented multiple times", function ()
 
     const { serviceLookup } = verifyDependencies({
         services: services,
-        uiDependencies: []
+        requiredReferences: []
     });
     expect(serviceLookup.serviceCount).toEqual(2);
 
@@ -110,7 +110,7 @@ it("allows multiple implementations if the services use a 'qualifier' for disamb
 
     const { serviceLookup } = verifyDependencies({
         services: services,
-        uiDependencies: []
+        requiredReferences: []
     });
     assert.strictEqual(serviceLookup.serviceCount, 2);
 
@@ -153,6 +153,15 @@ it("throws for ambiguous service reference", function () {
             ]
         },
         {
+            name: "Map4",
+            package: "map",
+            provides: [
+                {
+                    interfaceName: "services.Map"
+                }
+            ]
+        },
+        {
             name: "MapUser",
             package: "map-user",
             requires: [
@@ -166,7 +175,7 @@ it("throws for ambiguous service reference", function () {
     const message = expectError(() =>
         verifyDependencies({
             services: services,
-            uiDependencies: []
+            requiredReferences: []
         })
     ).message;
     expect(message).toMatchSnapshot();
@@ -208,7 +217,7 @@ it("allows to pick an unambiguous implementation via classifier", function () {
 
     const { serviceLookup, serviceDependencies: computedDependencies } = verifyDependencies({
         services: services,
-        uiDependencies: []
+        requiredReferences: []
     });
 
     const map2 = getService(serviceLookup, "services.Map", "map2");
@@ -255,7 +264,7 @@ it("allows to pick all implementations", function () {
 
     const { serviceDependencies, serviceLookup } = verifyDependencies({
         services: services,
-        uiDependencies: []
+        requiredReferences: []
     });
 
     const all = serviceLookup.lookupAll("services.Map").value;
@@ -332,8 +341,9 @@ it("does not return an error when the UI requires an existing interface", functi
 
     const { serviceLookup } = verifyDependencies({
         services: services,
-        uiDependencies: [
+        requiredReferences: [
             {
+                type: "ui",
                 interfaceName: "services.Map",
                 packageName: "foo"
             }
@@ -358,8 +368,9 @@ it("throws when the ui requires an interface that is not implemented", function 
     const message = expectError(() =>
         verifyDependencies({
             services,
-            uiDependencies: [
+            requiredReferences: [
                 {
+                    type: "ui",
                     packageName: "foo",
                     interfaceName: "services.Map2"
                 }
@@ -410,7 +421,7 @@ function getService(
     interfaceName: string,
     qualifier?: string | undefined
 ) {
-    const result = serviceLookup.lookup({ interfaceName, qualifier });
+    const result = serviceLookup.lookupOne({ interfaceName, qualifier });
     if (result.type !== "found") {
         throw new Error(`Failed to find interface ${interfaceName} (qualifier: ${qualifier}).`);
     }

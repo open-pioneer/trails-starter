@@ -36,7 +36,7 @@ it("starts and stops services in the expected order", function () {
         }
     }
 
-    const serviceLayer = new ServiceLayer([
+    const packages = [
         new PackageRepr({
             name: "a",
             services: [
@@ -44,6 +44,11 @@ it("starts and stops services in the expected order", function () {
                     name: "A",
                     packageName: "a",
                     factory: createConstructorFactory(ServiceA),
+                    interfaces: [
+                        {
+                            interfaceName: "a.serviceA"
+                        }
+                    ],
                     dependencies: [
                         {
                             referenceName: "b",
@@ -64,7 +69,13 @@ it("starts and stops services in the expected order", function () {
                 })
             ]
         })
-    ]);
+    ];
+    const forcedReferences = [
+        {
+            interfaceName: "a.serviceA"
+        }
+    ];
+    const serviceLayer = new ServiceLayer(packages, forcedReferences);
 
     serviceLayer.start();
     expect(events).toEqual(["construct-b", "construct-a"]); // dep before usage
@@ -133,7 +144,7 @@ it("destroys services once they are no longer referenced (but not before)", func
         interfaces: [{ interfaceName: "provider.Service" }]
     });
 
-    const serviceLayer = new ServiceLayer([
+    const packages = [
         new PackageRepr({
             name: "user-package",
             services: [
@@ -145,6 +156,11 @@ it("destroys services once they are no longer referenced (but not before)", func
                         {
                             referenceName: "provider",
                             interfaceName: "provider.Service"
+                        }
+                    ],
+                    interfaces: [
+                        {
+                            interfaceName: "user-package.A"
                         }
                     ],
                     properties: {
@@ -161,6 +177,11 @@ it("destroys services once they are no longer referenced (but not before)", func
                             interfaceName: "provider.Service"
                         }
                     ],
+                    interfaces: [
+                        {
+                            interfaceName: "user-package.B"
+                        }
+                    ],
                     properties: {
                         id: "B"
                     }
@@ -172,12 +193,21 @@ it("destroys services once they are no longer referenced (but not before)", func
             name: "provider-package",
             services: [providerService]
         })
-    ]);
+    ];
+    const forcedReferences = [
+        {
+            interfaceName: "user-package.A"
+        },
+        {
+            interfaceName: "user-package.B"
+        }
+    ];
+    const serviceLayer = new ServiceLayer(packages, forcedReferences);
 
     serviceLayer.start();
     expect(events[0]).toBe("construct-provider"); // before users
     expect(new Set(events.slice(1))).toEqual(new Set(["construct-B", "construct-A"])); // ignore order
-    expect(providerService.useCount).toBe(3);
+    expect(providerService.useCount).toBe(2);
     expect(providerService.state).toBe("constructed");
 
     events = [];
@@ -206,16 +236,28 @@ it("supports using a function to create service instances", function () {
         name: "A",
         packageName: "a",
         factory: createFunctionFactory(factory),
+        interfaces: [
+            {
+                interfaceName: "foo"
+            }
+        ],
         properties: {
             target: "world"
         }
     });
-    const serviceLayer = new ServiceLayer([
-        new PackageRepr({
-            name: "a",
-            services: [service]
-        })
-    ]);
+    const serviceLayer = new ServiceLayer(
+        [
+            new PackageRepr({
+                name: "a",
+                services: [service]
+            })
+        ],
+        [
+            {
+                interfaceName: "foo"
+            }
+        ]
+    );
 
     serviceLayer.start();
     expect(called).toBe(1);
@@ -254,7 +296,7 @@ it("injects all implementations of an interface when requested", function () {
         id = "ext2";
     }
 
-    const serviceLayer = new ServiceLayer([
+    const packages = [
         new PackageRepr({
             name: "test",
             services: [
@@ -267,6 +309,11 @@ it("injects all implementations of an interface when requested", function () {
                             referenceName: "extensions",
                             interfaceName: "test.Extension",
                             all: true
+                        }
+                    ],
+                    interfaces: [
+                        {
+                            interfaceName: "extensible.Service"
                         }
                     ]
                 }),
@@ -294,7 +341,13 @@ it("injects all implementations of an interface when requested", function () {
                 })
             ]
         })
-    ]);
+    ];
+    const forcedReferences = [
+        {
+            interfaceName: "extensible.Service"
+        }
+    ];
+    const serviceLayer = new ServiceLayer(packages, forcedReferences);
 
     serviceLayer.start();
     extensions.sort();

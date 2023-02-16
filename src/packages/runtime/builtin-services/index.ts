@@ -8,6 +8,9 @@ import { ApiServiceImpl } from "./ApiServiceImpl";
 import { ApplicationContextImpl, ApplicationContextProperties } from "./ApplicationContextImpl";
 
 export const RUNTIME_PACKAGE_NAME = "@open-pioneer/runtime";
+export const RUNTIME_API_SERVICE = "runtime.ApiService";
+export const RUNTIME_API_EXTENSION = "runtime.ApiExtension";
+export const RUNTIME_APPLICATION_CONTEXT = "runtime.ApplicationContext";
 
 export type BuiltinPackageProperties = ApplicationContextProperties;
 
@@ -28,27 +31,27 @@ export function createBuiltinPackage(properties: BuiltinPackageProperties): Pack
         factory: createConstructorFactory(ApiServiceImpl),
         interfaces: [
             {
-                interfaceName: "runtime.ApiService",
+                interfaceName: RUNTIME_API_SERVICE,
                 qualifier: "builtin"
             }
         ],
         dependencies: [
             {
                 referenceName: "providers",
-                interfaceName: "runtime.ApiExtension",
+                interfaceName: RUNTIME_API_EXTENSION,
                 all: true
             }
         ]
     });
     const appContext = new ServiceRepr({
-        name: "ApplicationServiceImpl",
+        name: "ApplicationContextImpl",
         packageName: RUNTIME_PACKAGE_NAME,
         factory: createFunctionFactory(
             (options) => new ApplicationContextImpl(options, properties)
         ),
         interfaces: [
             {
-                interfaceName: "runtime.ApplicationContext",
+                interfaceName: RUNTIME_APPLICATION_CONTEXT,
                 qualifier: "builtin"
             }
         ]

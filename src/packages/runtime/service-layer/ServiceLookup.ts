@@ -1,6 +1,6 @@
 import { Error } from "@open-pioneer/core";
 import { ErrorId } from "../errors";
-import { InterfaceSpec } from "./InterfaceSpec";
+import { InterfaceSpec, isSingleImplementationSpec, ReferenceSpec } from "./InterfaceSpec";
 import { ServiceRepr } from "./ServiceRepr";
 
 interface Services {
@@ -11,7 +11,10 @@ interface Services {
     byQualifier: Map<string, ServiceRepr>;
 }
 
-export type ReadonlyServiceLookup = Pick<ServiceLookup, "lookup" | "lookupAll" | "serviceCount">;
+export type ReadonlyServiceLookup = Pick<
+    ServiceLookup,
+    "lookup" | "lookupOne" | "lookupAll" | "serviceCount"
+>;
 
 export interface Unimplemented {
     type: "unimplemented";
@@ -88,9 +91,20 @@ export class ServiceLookup {
     }
 
     /**
+     * Attempts to find the service(s) required by the given reference spec.
+     */
+    lookup(ref: ReferenceSpec): ServiceLookupResult | ServicesLookupResult {
+        if (isSingleImplementationSpec(ref)) {
+            return this.lookupOne(ref);
+        } else {
+            return this.lookupAll(ref.interfaceName);
+        }
+    }
+
+    /**
      * Attempts to find a service implementing the given interface.
      */
-    lookup({ interfaceName, qualifier }: InterfaceSpec): ServiceLookupResult {
+    lookupOne({ interfaceName, qualifier }: InterfaceSpec): ServiceLookupResult {
         if (!interfaceName) {
             throw new Error(
                 ErrorId.INVALID_METADATA,
@@ -180,7 +194,7 @@ export class ServiceLookup {
     }
 }
 
-export function renderAmbiguousServiceChoices(choices: AmbiguousChoice[], max = 2): string {
+export function renderAmbiguousServiceChoices(choices: AmbiguousChoice[], max = 3): string {
     let message = "";
     let count = 0;
     for (const [serviceId, qualifier] of choices) {
