@@ -380,6 +380,12 @@ app.addEventListener("my-custom-event", (event) => {
 
 See the package documentation of `@open-pioneer/application-events` for more details.
 
+### Services and References
+
+> NOTE: Only referenced services will be constructed. If you do not provide any interfaces, or if you are never referenced (either by the UI or by another service), your service will not be started.
+
+TODO: More content
+
 ## Known Issues
 
 ### Hot reloading with \[jt\]sx-Files and side effects
