@@ -23,7 +23,7 @@ export class ApiServiceImpl implements ApiService {
 
         Promise.all(promises).then((providerMethods) => {
             // TODO: provide better error message (in which providers have the duplicate methods be defined?)
-            providerMethods.forEach((methods, i) => {
+            providerMethods.forEach((methods) => {
                 for (const methodName in methods) {
                     if (api[methodName]) {
                         throw new Error(

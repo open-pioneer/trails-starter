@@ -342,6 +342,44 @@ export class TextApiExtension implements ApiExtension {
 }
 ```
 
+### Web component events
+
+It is also possible to emit browser events from inside the web component.
+These events will be dispatched from the application's host element.
+
+You can reference the interface `"application-events.EventService"` (implemented by package `@open-pioneer/application-events
+`) to obtain the event service:
+
+```js
+// build.config.mjs
+export default defineBuildConfig({
+    services: {
+        YourService: {
+            references: {
+                eventService: "application-events.EventService"
+            }
+        }
+    }
+});
+```
+
+```js
+// In your service / UI
+eventService.emitEvent("my-custom-event", {
+    // ... data
+});
+```
+
+```js
+// In the host site
+const app = document.getElementById("app");
+app.addEventListener("my-custom-event", (event) => {
+    console.log(event);
+});
+```
+
+See the package documentation of `@open-pioneer/application-events` for more details.
+
 ## Known Issues
 
 ### Hot reloading with \[jt\]sx-Files and side effects
