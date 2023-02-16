@@ -18,6 +18,24 @@ export interface ServiceLifecycleHooks {
 export type Service<Interface extends {} = {}> = ServiceLifecycleHooks & Interface;
 
 /**
+ * Represents metadata for an injected reference.
+ */
+export interface ReferenceMeta {
+    serviceId: string;
+}
+
+/**
+ * Contains metadata about injected references.
+ * The key for the reference metadata is the reference's name.
+ */
+export type ReferencesMeta<References extends {}> = {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    [referenceName in keyof References]: References[referenceName] extends any[]
+        ? ReferenceMeta[]
+        : ReferenceMeta;
+};
+
+/**
  * Options passed to a service's constructor.
  */
 export type ServiceOptions<References extends {} = {}> = {
@@ -28,7 +46,20 @@ export type ServiceOptions<References extends {} = {}> = {
     references: References;
 
     /**
+     * Metadata about the injected references.
+     * The object contains one entry for every reference injected via `references` (under the same key).
+     *
+     * If a single service has been injected, `referencesMeta[key]` will be of type {@link ReferenceMeta}.
+     * If multiple services have been injected, an array of {@link ReferenceMeta} will be provided instead,
+     * where the indices match the order in the injected references array.
+     */
+    referencesMeta: ReferencesMeta<References>;
+
+    /**
      * Configuration properties.
+     *
+     * Default values are taken from the package's configuration, but these can be overridden
+     * by the application.
      */
     properties: Record<string, unknown>;
 };

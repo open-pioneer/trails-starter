@@ -91,6 +91,10 @@ it("destroys services once they are no longer referenced (but not before)", func
                 throw new Error("Illegal state: provider destroyed while still being referenced.");
             }
 
+            if (options.referencesMeta.provider.serviceId !== "provider-package::Provider") {
+                throw new Error("Unexpected service id from reference metadata.");
+            }
+
             const id = options.properties.id;
             if (typeof id !== "string") {
                 throw new Error("Expected the `id` property to be a string.");
@@ -227,6 +231,7 @@ it("injects all implementations of an interface when requested", function () {
     }
 
     const extensions: string[] = [];
+    const extensionsServiceIds: string[] = [];
 
     class ExtensibleService {
         constructor(
@@ -235,6 +240,9 @@ it("injects all implementations of an interface when requested", function () {
             }>
         ) {
             options.references.extensions.forEach((ext) => extensions.push(ext.id));
+            options.referencesMeta.extensions.forEach((meta) =>
+                extensionsServiceIds.push(meta.serviceId)
+            );
         }
     }
 
@@ -290,7 +298,9 @@ it("injects all implementations of an interface when requested", function () {
 
     serviceLayer.start();
     extensions.sort();
+    extensionsServiceIds.sort();
     expect(extensions).toEqual(["ext1", "ext2"]);
+    expect(extensionsServiceIds).toEqual(["test::Ext1", "test::Ext2"]);
     serviceLayer.destroy();
 });
 

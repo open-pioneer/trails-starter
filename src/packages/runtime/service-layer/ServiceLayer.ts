@@ -14,6 +14,7 @@ import {
     isSingleImplementationSpec,
     ReferenceSpec
 } from "./InterfaceSpec";
+import { ReferenceMeta } from "../Service";
 
 export type DynamicLookupResult = ServiceLookupResult | UndeclaredDependency;
 
@@ -144,21 +145,21 @@ export class ServiceLayer {
         }
 
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        const instances: Record<string, any> = {};
+        const references: Record<string, any> = {};
+        const referencesMeta: Record<string, ReferenceMeta | ReferenceMeta[]> = {};
 
         // Sets state to 'constructing' to detect cycles
         service.beforeCreate();
 
         // Initialize dependencies recursively before creating the current service.
         for (const [referenceName, serviceDeps] of Object.entries(this.getServiceDeps(service))) {
-            const referenceValue = Array.isArray(serviceDeps)
-                ? serviceDeps.map((dep) => this.createService(dep))
-                : this.createService(serviceDeps);
-            instances[referenceName] = referenceValue;
+            const [referenceValue, referenceMeta] = this.getReference(serviceDeps);
+            references[referenceName] = referenceValue;
+            referencesMeta[referenceName] = referenceMeta;
         }
 
         // Sets state to 'constructed' to finish the state transition, useCount is 1.
-        return service.create({ references: instances, properties: service.properties });
+        return service.create({ references, referencesMeta, properties: service.properties });
     }
 
     /**
@@ -205,6 +206,32 @@ export class ServiceLayer {
         } else {
             return interfaceEntry.all;
         }
+    }
+
+    private getReference(ref: ServiceRepr): [unknown, ReferenceMeta];
+    private getReference(ref: ServiceRepr[]): [unknown[], ReferenceMeta[]];
+    private getReference(
+        ref: ServiceRepr | ServiceRepr[]
+    ): [unknown, ReferenceMeta] | [unknown[], ReferenceMeta[]];
+    private getReference(
+        ref: ServiceRepr | ServiceRepr[]
+    ): [unknown, ReferenceMeta] | [unknown[], ReferenceMeta[]] {
+        if (Array.isArray(ref)) {
+            const referenceValues: unknown[] = [];
+            const referenceMeta: ReferenceMeta[] = [];
+            for (const d of ref) {
+                const [value, meta] = this.getReference(d);
+                referenceValues.push(value);
+                referenceMeta.push(meta);
+            }
+            return [referenceValues, referenceMeta];
+        }
+
+        const referenceValue = this.createService(ref);
+        const referenceMeta: ReferenceMeta = {
+            serviceId: ref.id
+        };
+        return [referenceValue, referenceMeta];
     }
 
     private getServiceDeps(service: ServiceRepr) {

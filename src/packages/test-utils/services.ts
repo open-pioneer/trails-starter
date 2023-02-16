@@ -1,4 +1,4 @@
-import { Service, ServiceConstructor } from "@open-pioneer/runtime";
+import { ReferenceMeta, Service, ServiceConstructor } from "@open-pioneer/runtime";
 
 /**
  * Options for the {@link createService} function.
@@ -20,7 +20,10 @@ export interface CreateServiceOptions<References> {
 }
 
 type PartialServiceReferences<References> = {
-    [referenceName in keyof References]?: Partial<References[referenceName]>;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    [referenceName in keyof References]?: References[referenceName] extends any[]
+        ? Partial<References[referenceName][number]>[]
+        : Partial<References[referenceName]>;
 };
 
 /**
@@ -45,9 +48,30 @@ export async function createService<References extends {}, Interface extends {}>
     clazz: ServiceConstructor<References, Interface>,
     options?: CreateServiceOptions<References>
 ): Promise<Service<Interface>> {
+    const references = options?.references ?? {};
+    const referencesMeta = Object.fromEntries(
+        Object.entries(references).map(([referenceName, reference]) => [
+            referenceName,
+            referenceMeta(referenceName, reference)
+        ])
+    );
+
     return new clazz({
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        references: (options?.references ?? {}) as any,
+        references: references as any,
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        referencesMeta: referencesMeta as any,
         properties: options?.properties ?? {}
     });
+}
+
+function referenceMeta(referenceName: string, reference: unknown): ReferenceMeta | ReferenceMeta[] {
+    if (Array.isArray(reference)) {
+        return reference.map<ReferenceMeta>((_, index) => ({
+            serviceId: `test-utils::${referenceName}-${index}`
+        }));
+    }
+    return {
+        serviceId: `test-utils::${referenceName}`
+    };
 }

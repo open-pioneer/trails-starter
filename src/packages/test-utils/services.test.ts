@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { ServiceOptions } from "@open-pioneer/runtime";
+import { ReferenceMeta, ServiceOptions } from "@open-pioneer/runtime";
 import { expect, it } from "vitest";
 import { createService } from "./services";
 
@@ -10,6 +10,7 @@ interface OtherService {
 
 interface ServiceReferences {
     other: OtherService;
+    array: OtherService[];
 }
 
 class Service {
@@ -48,4 +49,37 @@ it("creates a new service instance with the defined properties", async () => {
         }
     });
     expect((service.$opts.properties as any).foo).toBe("123");
+});
+
+it("creates a new service and provides metadata about references", async () => {
+    const service = await createService(Service, {
+        references: {
+            other: {
+                bar() {
+                    return 123;
+                }
+            },
+            array: [
+                {
+                    foo() {
+                        return 0;
+                    }
+                },
+                {
+                    bar() {
+                        return 1;
+                    }
+                }
+            ]
+        }
+    });
+
+    const meta = (service.$opts as any).referencesMeta;
+    const other = meta.other as ReferenceMeta;
+    expect(other.serviceId).toEqual(`test-utils::other`);
+
+    const array = meta.array as ReferenceMeta[];
+    expect(array).toHaveLength(2);
+    expect(array[0]!.serviceId).toEqual(`test-utils::array-0`);
+    expect(array[1]!.serviceId).toEqual(`test-utils::array-1`);
 });
