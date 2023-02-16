@@ -1,5 +1,5 @@
 {
-    "name": "@open-pioneer/application-events",
+    "name": "@open-pioneer/integration",
     "private": true,
     "main": "index",
     "devDependencies": {

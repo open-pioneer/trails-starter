@@ -1,11 +1,11 @@
 import { ApplicationContext, ServiceOptions } from "@open-pioneer/runtime";
-import { EventService } from "./api";
+import { ExternalEventService } from "./api";
 
 interface References {
     ctx: ApplicationContext;
 }
 
-export class EventServiceImpl implements EventService {
+export class ExternalEventServiceImpl implements ExternalEventService {
     #ctx: ApplicationContext;
 
     constructor({ references }: ServiceOptions<References>) {

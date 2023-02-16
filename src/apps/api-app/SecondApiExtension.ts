@@ -1,4 +1,4 @@
-import { ApiExtension } from "@open-pioneer/runtime";
+import { ApiExtension } from "@open-pioneer/integration";
 
 export class SecondApiExtension implements ApiExtension {
     async getApiMethods() {

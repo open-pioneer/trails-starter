@@ -47,7 +47,6 @@ export interface ApplicationContext {
 
 declare module "./ServiceRegistry" {
     interface ServiceRegistry {
-        "runtime.ApiExtension": ApiExtension;
         "runtime.ApiService": ApiService;
         "runtime.ApplicationContext": ApplicationContext;
     }

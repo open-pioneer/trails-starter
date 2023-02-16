@@ -286,8 +286,8 @@ For Example:
 </html>
 ```
 
-To provide API functions a service providing `"runtime.ApiExtension"` needs to be implemented.
-The service must implement the `ApiExtension` interface from `@open-pioneer/runtime`.
+To provide API functions a service providing `"integration.ApiExtension"` needs to be implemented.
+The service must implement the `ApiExtension` interface from `@open-pioneer/integration`.
 Functions returned from `getApiMethods()` will automatically be added as methods on the web component's API object.
 
 For example:
@@ -299,7 +299,7 @@ import { defineBuildConfig } from "@open-pioneer/build-support";
 export default defineBuildConfig({
     services: {
         TextApiExtension: {
-            provides: "runtime.ApiExtension",
+            provides: "integration.ApiExtension",
             references: {
                 textService: "api-app.TextService"
             }
@@ -315,7 +315,8 @@ export default defineBuildConfig({
 
 ```ts
 // TextApiExtension.ts
-import { ApiExtension, ServiceOptions } from "@open-pioneer/runtime";
+import { ServiceOptions } from "@open-pioneer/runtime";
+import { ApiExtension } from "@open-pioneer/integration";
 import { TextService } from "./TextService";
 
 interface References {
@@ -347,7 +348,7 @@ export class TextApiExtension implements ApiExtension {
 It is also possible to emit browser events from inside the web component.
 These events will be dispatched from the application's host element.
 
-You can reference the interface `"application-events.EventService"` (implemented by package `@open-pioneer/application-events
+You can reference the interface `"integration.ExternalEventService"` (implemented by package `@open-pioneer/integration
 `) to obtain the event service:
 
 ```js
@@ -356,7 +357,7 @@ export default defineBuildConfig({
     services: {
         YourService: {
             references: {
-                eventService: "application-events.EventService"
+                eventService: "integration.ExternalEventService"
             }
         }
     }
@@ -378,7 +379,7 @@ app.addEventListener("my-custom-event", (event) => {
 });
 ```
 
-See the package documentation of `@open-pioneer/application-events` for more details.
+See the package documentation of `@open-pioneer/integration` for more details.
 
 ### Services and References
 

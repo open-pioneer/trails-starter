@@ -118,14 +118,14 @@ importers:
 
   src/apps/api-app:
     specifiers:
-      '@open-pioneer/application-events': workspace:^
       '@open-pioneer/chakra-integration': workspace:^
       '@open-pioneer/core': workspace:^
+      '@open-pioneer/integration': workspace:^
       '@open-pioneer/runtime': workspace:^
     dependencies:
-      '@open-pioneer/application-events': link:../../packages/application-events
       '@open-pioneer/chakra-integration': link:../../packages/chakra-integration
       '@open-pioneer/core': link:../../packages/core
+      '@open-pioneer/integration': link:../../packages/integration
       '@open-pioneer/runtime': link:../../packages/runtime
 
   src/apps/chakra-app:
@@ -184,14 +184,6 @@ importers:
       '@open-pioneer/runtime': link:../../packages/runtime
       test-ui-components: link:../../packages/test-ui-components
 
-  src/packages/application-events:
-    specifiers:
-      '@open-pioneer/runtime': workspace:^
-      '@open-pioneer/test-utils': workspace:^
-    devDependencies:
-      '@open-pioneer/runtime': link:../runtime
-      '@open-pioneer/test-utils': link:../test-utils
-
   src/packages/chakra-integration:
     specifiers:
       '@babel/core': ^7.20.12
@@ -214,6 +206,14 @@ importers:
 
   src/packages/core:
     specifiers: {}
+
+  src/packages/integration:
+    specifiers:
+      '@open-pioneer/runtime': workspace:^
+      '@open-pioneer/test-utils': workspace:^
+    devDependencies:
+      '@open-pioneer/runtime': link:../runtime
+      '@open-pioneer/test-utils': link:../test-utils
 
   src/packages/logging:
     specifiers:

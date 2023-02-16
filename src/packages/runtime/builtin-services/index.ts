@@ -8,8 +8,8 @@ import { ApiServiceImpl } from "./ApiServiceImpl";
 import { ApplicationContextImpl, ApplicationContextProperties } from "./ApplicationContextImpl";
 
 export const RUNTIME_PACKAGE_NAME = "@open-pioneer/runtime";
+export const RUNTIME_API_EXTENSION = "integration.ApiExtension";
 export const RUNTIME_API_SERVICE = "runtime.ApiService";
-export const RUNTIME_API_EXTENSION = "runtime.ApiExtension";
 export const RUNTIME_APPLICATION_CONTEXT = "runtime.ApplicationContext";
 
 export type BuiltinPackageProperties = ApplicationContextProperties;

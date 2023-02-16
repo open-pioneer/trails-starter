@@ -1,12 +1,12 @@
-# @open-pioneer/application-events
+# @open-pioneer/integration
 
-Provides the `EventService`, which can be used to emit events to the host site from inside the open pioneer application.
+Provides the `ExternalEventService`, which can be used to emit events to the host site from inside the open pioneer application.
 
 This is useful when the application's web component is embedded into another site.
 
 ## Quick start
 
-In your UI or one of your services, reference the `"application-events.EventService"` interface to obtain an instance of the `EventService`.
+In your UI or one of your services, reference the `"integration.ExternalEventService"` interface to obtain an instance of the `ExternalEventService`.
 For example:
 
 ```js
@@ -15,7 +15,7 @@ export default defineBuildConfig({
     services: {
         YourService: {
             references: {
-                eventService: "application-events.EventService"
+                eventService: "integration.ExternalEventService"
             }
         }
     }

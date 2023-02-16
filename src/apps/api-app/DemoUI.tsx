@@ -4,7 +4,7 @@ import { Button, Container, VStack, Text, Heading } from "@open-pioneer/chakra-i
 import { useEffect, useState } from "react";
 
 export function DemoUI() {
-    const eventService = useService("application-events.EventService");
+    const eventService = useService("integration.ExternalEventService");
     const emitEvent = () => {
         eventService.emitEvent("my-custom-event", {
             data: "my-event-data"

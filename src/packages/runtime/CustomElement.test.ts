@@ -272,7 +272,7 @@ describe("element API", () => {
                                 name: "testService",
                                 provides: [
                                     {
-                                        name: "runtime.ApiExtension"
+                                        name: "integration.ApiExtension"
                                     }
                                 ],
                                 clazz: Extension

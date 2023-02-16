@@ -4,8 +4,8 @@
     "private": true,
     "dependencies": {
         "@open-pioneer/runtime": "workspace:^",
+        "@open-pioneer/integration": "workspace:^",
         "@open-pioneer/core": "workspace:^",
-        "@open-pioneer/application-events": "workspace:^",
         "@open-pioneer/chakra-integration": "workspace:^"
     }
 }

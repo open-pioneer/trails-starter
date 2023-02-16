@@ -1,4 +1,5 @@
-import { ApiExtension, ServiceOptions } from "@open-pioneer/runtime";
+import { ServiceOptions } from "@open-pioneer/runtime";
+import { ApiExtension } from "@open-pioneer/integration";
 import { TextService } from "./TextService";
 
 interface References {

@@ -4,7 +4,7 @@
  */
 import { createService } from "@open-pioneer/test-utils/services";
 import { expect, it } from "vitest";
-import { EventServiceImpl } from "./EventServiceImpl";
+import { ExternalEventServiceImpl } from "./ExternalEventServiceImpl";
 
 it("emits events on the application's host element", async () => {
     const eventName = "my-custom-event";
@@ -14,7 +14,7 @@ it("emits events on the application's host element", async () => {
     div.addEventListener(eventName, (e) => {
         events.push([e.type, (e as any).detail]);
     });
-    const eventService = await createService(EventServiceImpl, {
+    const eventService = await createService(ExternalEventServiceImpl, {
         references: {
             ctx: {
                 getHostElement() {
@@ -47,7 +47,7 @@ it("emits custom instances of Events", async () => {
     div.addEventListener("custom-event", (e) => {
         events.push(e);
     });
-    const eventService = await createService(EventServiceImpl, {
+    const eventService = await createService(ExternalEventServiceImpl, {
         references: {
             ctx: {
                 getHostElement() {

@@ -2,8 +2,8 @@ import { defineBuildConfig } from "@open-pioneer/build-support";
 
 export default defineBuildConfig({
     services: {
-        EventServiceImpl: {
-            provides: "application-events.EventService",
+        ExternalEventServiceImpl: {
+            provides: "integration.ExternalEventService",
             references: {
                 ctx: "runtime.ApplicationContext"
             }
