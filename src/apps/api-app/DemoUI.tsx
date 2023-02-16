@@ -1,7 +1,7 @@
 import { useService } from "open-pioneer:react-hooks";
 import { TextService } from "./TextService";
 import { Button, Container, VStack, Text, Heading } from "@open-pioneer/chakra-integration";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export function DemoUI() {
     const eventService = useService("application-events.EventService");
@@ -12,12 +12,14 @@ export function DemoUI() {
     };
 
     const textService = useService("api-app.TextService") as TextService;
-
-    const [text, setText] = useState(textService.getText());
-
-    textService.on("text-changed", (event) => {
-        setText(event.newText);
-    });
+    const [text, setText] = useState("");
+    useEffect(() => {
+        setText(textService.getText());
+        const handle = textService.on("text-changed", (event) => {
+            setText(event.newText);
+        });
+        return () => handle.destroy();
+    }, [textService]);
 
     return (
         <Container>
