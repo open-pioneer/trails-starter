@@ -34,13 +34,13 @@ const styles = createBox(stylesString);
 if (import.meta.hot) {
     import.meta.hot.data.styles ??= styles;
     import.meta.hot.accept((mod) => {
-        if (packages !== mod.packages) {
-            // Cannot handle changes in packages at the moment; trigger reload.
-            import.meta.hot.invalidate();
+        if (mod && mod.packages === packages) {
+            import.meta.hot.data.styles.setValue(mod.styles.value);
             return;
         }
         
-        import.meta.hot.data.styles.setValue(mod.styles.value);
+        // Cannot handle all other changes the moment; trigger reload.
+        import.meta.hot.invalidate();
     });
 }
 
