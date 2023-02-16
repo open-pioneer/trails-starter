@@ -21,6 +21,9 @@ export type Service<Interface extends {} = {}> = ServiceLifecycleHooks & Interfa
  * Represents metadata for an injected reference.
  */
 export interface ReferenceMeta {
+    /**
+     * The unique service id of the injected service.
+     */
     serviceId: string;
 }
 
