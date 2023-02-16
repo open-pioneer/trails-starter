@@ -1,10 +1,16 @@
 # @open-pioneer/integration
 
-Provides the `ExternalEventService`, which can be used to emit events to the host site from inside the open pioneer application.
-
+Provides techniques for the communication between an application (web component) and its embedding site.
 This is useful when the application's web component is embedded into another site.
 
-## Quick start
+The package exports the `ApiExtension` interface that can be used to provide API functions
+that can be called from the outer site to trigger actions in the web component.
+The ApiExtension support is implemented in the `@open-pioneer/runtime` package.
+
+Additionally, the package contains the `ExternalEventService`,
+which can be used to emit events to the host site from inside the open pioneer application.
+
+## Quick start (ExternalEventService)
 
 In your UI or one of your services, reference the `"integration.ExternalEventService"` interface to obtain an instance of the `ExternalEventService`.
 For example:

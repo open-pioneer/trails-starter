@@ -256,7 +256,14 @@ emitter.emit("mouseClicked", { x: 1, y: 2 });
 handle.destroy(); // don't forget to unsubscribe during cleanup
 ```
 
-### Web component API
+### Web component integration
+
+It is possible to implement a communication between the app which is a web component and the surrounding site.
+The outer site can call api methods implemented in the app to trigger action in the web component
+and on the other hand the web component can emit events to be received by the outer site.
+Both techniques are described in the following.
+
+#### Web component API
 
 It is possible to provide API functions that can be called from the outer site to trigger actions in the web component.
 This allows the surrounding site to control the app.
@@ -343,7 +350,7 @@ export class TextApiExtension implements ApiExtension {
 }
 ```
 
-### Web component events
+#### Web component events
 
 It is also possible to emit browser events from inside the web component.
 These events will be dispatched from the application's host element.
