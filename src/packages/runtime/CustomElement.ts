@@ -17,6 +17,7 @@ import { ApiMethods, ApiService } from "./api";
 import { createManualPromise, ManualPromise } from "./utils";
 import { createBuiltinPackage, RUNTIME_API_SERVICE } from "./builtin-services";
 import { ReferenceSpec } from "./service-layer/InterfaceSpec";
+import { PropertiesRegistry } from "./PropertiesRegistry";
 
 /**
  * Options for the {@link createCustomElement} function.
@@ -73,7 +74,7 @@ export interface PropertyContext {
 /**
  * Allows the application to override default properties in all packages.
  */
-export interface ApplicationProperties {
+export interface RawApplicationProperties {
     /**
      * Key: the name of the package.
      * Value: A record of configuration properties (key/value pairs).
@@ -82,6 +83,13 @@ export interface ApplicationProperties {
      */
     [packageName: string]: Record<string, unknown>;
 }
+
+/**
+ * Allows the application to override default properties in all packages.
+ *
+ * Properties are typed when the package contains type definitions for them.
+ */
+export type ApplicationProperties = RawApplicationProperties & Partial<PropertiesRegistry>;
 
 /**
  * The interface implemented by web components produced via {@link createCustomElement}.

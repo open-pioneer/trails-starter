@@ -4,12 +4,6 @@ export interface Logger {
     log(message: string): void;
 }
 
-declare module "@open-pioneer/runtime" {
-    interface ServiceRegistry {
-        "logging.LogService": Logger;
-    }
-}
-
 export class LogService implements Service<Logger> {
     constructor({ properties }: ServiceOptions) {
         const logLevel = properties.logLevel as string;
@@ -22,5 +16,19 @@ export class LogService implements Service<Logger> {
 
     log(msg: string) {
         console.info("LOG: " + msg);
+    }
+}
+
+export interface LoggingProperties {
+    logLevel: "DEBUG" | "INFO" | "ERROR";
+}
+
+declare module "@open-pioneer/runtime" {
+    interface ServiceRegistry {
+        "logging.LogService": Logger;
+    }
+
+    interface PropertiesRegistry {
+        logging: Partial<LoggingProperties>;
     }
 }

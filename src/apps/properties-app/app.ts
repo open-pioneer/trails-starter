@@ -1,4 +1,4 @@
-import { createCustomElement } from "@open-pioneer/runtime";
+import { ApplicationProperties, createCustomElement } from "@open-pioneer/runtime";
 import * as appMetadata from "open-pioneer:app";
 import { AppUI } from "./AppUI";
 
@@ -11,11 +11,12 @@ const element = createCustomElement({
             return undefined;
         }
 
-        return {
+        const customProperties: ApplicationProperties = {
             "properties-app": {
                 notifierLevel: customLevel
             }
         };
+        return customProperties;
     }
 });
 

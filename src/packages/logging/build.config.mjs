@@ -1,5 +1,10 @@
 import { defineBuildConfig } from "@open-pioneer/build-support";
 
+/** @type {import("./LogService").LoggingProperties} */
+const defaultProperties = {
+    logLevel: "INFO"
+};
+
 export default defineBuildConfig({
     services: {
         LogService: {
@@ -10,7 +15,6 @@ export default defineBuildConfig({
             ]
         }
     },
-    properties: {
-        logLevel: "INFO"
-    }
+
+    properties: defaultProperties
 });
