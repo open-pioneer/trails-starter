@@ -1,6 +1,0 @@
-{
-    "name": "test-app",
-    "dependencies": {
-        "test-package": "string234"
-    }
-}

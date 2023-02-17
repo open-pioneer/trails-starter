@@ -11,5 +11,4 @@ echo '--- run typescript check ---'
 pnpm check-types
 
 echo '--- run tests ---'
-pnpm test-plugin
 pnpm -- vitest run

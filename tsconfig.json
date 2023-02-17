@@ -20,8 +20,5 @@
         "skipLibCheck": true
     },
     "include": ["src"],
-    "references": [
-        { "path": "./tsconfig.node.json" },
-        { "path": "./build-tools/vite-plugin/tsconfig.json" }
-    ]
+    "references": [{ "path": "./tsconfig.node.json" }]
 }

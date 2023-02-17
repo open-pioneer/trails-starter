@@ -1,8 +1,0 @@
-{
-    "name": "test-app",
-    "main": "app",
-    "dependencies": {
-        "style1": "*",
-        "style2": "*"
-    }
-}

@@ -1,8 +1,0 @@
-{
-    "name": "test-app",
-    "private": true,
-    "main": "index",
-    "dependencies": {
-        "logging": "x.x"
-    }
-}

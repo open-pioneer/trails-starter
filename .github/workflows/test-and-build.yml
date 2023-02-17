@@ -30,11 +30,6 @@ jobs:
       - name: Check lint
         run: pnpm lint
 
-      - name: Build vite plugin
-        run: |
-          pnpm build-plugin
-          cd build-tools/vite-plugin && pnpm test
-
       - name: Run tests
         run: pnpm vitest run
 

@@ -1,4 +1,3 @@
 packages:
     - "src/**"
-    - "build-tools/**"
     - "!**/test-data/**"
