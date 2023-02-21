@@ -44,8 +44,15 @@ export default defineConfig({
         }),
         react(),
         eslint(),
-        visualize && (visualizer({ gzipSize: true, brotliSize: true, emitFile: true }) as PluginOption)
+        visualize &&
+            (visualizer({ gzipSize: true, brotliSize: true, emitFile: true }) as PluginOption)
     ],
+
+    // define global constants (e.g. log level (see below))
+    define: {
+        // __LOG_LEVEL__: allowed values are "DEBUG", "INFO", "WARN", "ERROR" (wrapped in JSON.stringify)
+        __LOG_LEVEL__: JSON.stringify("WARN")
+    },
 
     // https://vitest.dev/config/
     test: {
