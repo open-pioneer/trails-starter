@@ -3,6 +3,7 @@ import { ServiceMetadata } from "../metadata";
 import { Service, ServiceConstructor, ServiceOptions } from "../Service";
 import { Error } from "@open-pioneer/core";
 import { InterfaceSpec, parseReferenceSpec, ReferenceSpec } from "./InterfaceSpec";
+import { PackageI18n } from "../I18n";
 
 export type ServiceState = "not-constructed" | "constructing" | "constructed" | "destroyed";
 
@@ -21,6 +22,16 @@ export interface FunctionFactory {
 
 export type ServiceFactory = ConstructorFactory | FunctionFactory;
 
+export interface ServiceReprOptions {
+    name: string;
+    packageName: string;
+    factory: ServiceFactory;
+    i18n: PackageI18n;
+    dependencies?: ServiceDependency[];
+    interfaces?: InterfaceSpec[];
+    properties?: Record<string, unknown>;
+}
+
 /**
  * Represents metadata and state of a service in the runtime.
  * `this.instance` is the actual service instance (when constructed).
@@ -29,6 +40,7 @@ export class ServiceRepr {
     static create(
         packageName: string,
         data: ServiceMetadata,
+        i18n: PackageI18n,
         properties?: Record<string, unknown>
     ): ServiceRepr {
         const clazz = data.clazz;
@@ -55,6 +67,7 @@ export class ServiceRepr {
             name,
             packageName,
             factory,
+            i18n,
             dependencies,
             interfaces,
             properties
@@ -69,6 +82,9 @@ export class ServiceRepr {
 
     /** Name of the parent package. */
     readonly packageName: string;
+
+    /** Locale-dependant i18n messages. */
+    readonly i18n: PackageI18n;
 
     /** Service properties made available via the service's constructor. */
     readonly properties: Readonly<Record<string, unknown>>;
@@ -91,18 +107,12 @@ export class ServiceRepr {
     /** Service instance, once constructed. */
     private _instance: Service | undefined = undefined;
 
-    constructor(options: {
-        name: string;
-        packageName: string;
-        factory: ServiceFactory;
-        dependencies?: ServiceDependency[];
-        interfaces?: InterfaceSpec[];
-        properties?: Record<string, unknown>;
-    }) {
+    constructor(options: ServiceReprOptions) {
         const {
             name,
             packageName,
             factory,
+            i18n,
             dependencies = [],
             interfaces = [],
             properties = {}
@@ -115,6 +125,7 @@ export class ServiceRepr {
         this.name = name;
         this.packageName = packageName;
         this.factory = factory;
+        this.i18n = i18n;
         this.dependencies = dependencies;
         this.interfaces = interfaces;
         this.properties = properties;
@@ -170,7 +181,7 @@ export class ServiceRepr {
      *
      * `destroy()` can be invoked once the final `removeRef()` has returned zero.
      */
-    create(options: ServiceOptions) {
+    create(options: Pick<ServiceOptions, "references" | "referencesMeta">) {
         if (this._state !== "constructing" || this.instance !== undefined) {
             throw new Error(
                 ErrorId.INTERNAL,
@@ -178,7 +189,11 @@ export class ServiceRepr {
             );
         }
         try {
-            this._instance = createService(this.factory, options);
+            this._instance = createService(this.factory, {
+                ...options,
+                properties: this.properties,
+                i18n: this.i18n
+            });
             this._state = "constructed";
             this._useCount = 1;
             return this._instance;

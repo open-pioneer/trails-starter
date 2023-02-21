@@ -95,6 +95,10 @@ function createPackageContextMethods(
                 );
             }
             return packageProperties;
+        },
+        getI18n(packageName) {
+            // TODO
+            throw new Error(`No i18n messages for package '${packageName}' bound for testing.`);
         }
     };
 }

@@ -1,8 +1,0 @@
-{
-    "name": "sample",
-    "private": true,
-    "dependencies": {
-        "@open-pioneer/runtime": "workspace:^",
-        "react": "^18.2.0"
-    }
-}

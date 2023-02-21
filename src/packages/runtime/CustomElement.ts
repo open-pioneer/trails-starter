@@ -18,6 +18,7 @@ import { createManualPromise, ManualPromise } from "./utils";
 import { createBuiltinPackage, RUNTIME_API_SERVICE } from "./builtin-services";
 import { ReferenceSpec } from "./service-layer/InterfaceSpec";
 import { PropertiesRegistry } from "./PropertiesRegistry";
+import { AppI18n, initI18n } from "./I18n";
 
 /**
  * Options for the {@link createCustomElement} function.
@@ -47,12 +48,6 @@ export interface CustomElementOptions {
      * Properties returned by this function take precedence over the ones defined by {@link properties}.
      */
     resolveProperties?(ctx: PropertyContext): Promise<ApplicationProperties | undefined>;
-
-    /**
-     * Attribute names for component inputs. Changes on this attributes
-     * triggers the component rendering.
-     */
-    attributes?: string[];
 
     /**
      * Whether the shadow root element is accessible from the outside.
@@ -122,8 +117,8 @@ export function createCustomElement(options: CustomElementOptions): ApplicationE
         #shadowRoot: ShadowRoot;
         #state: ElementState | undefined;
 
-        static get observedAttributes() {
-            return options.attributes ?? [];
+        static get observedAttributes(): string[] {
+            return [];
         }
 
         constructor() {
@@ -149,10 +144,6 @@ export function createCustomElement(options: CustomElementOptions): ApplicationE
             this.#state = undefined;
         }
 
-        attributeChangedCallback(name: string, oldValue: string | null, newValue: string | null) {
-            this.#state?.onAttributeChanged(name, newValue ?? undefined);
-        }
-
         when() {
             if (!this.#state) {
                 return Promise.reject(
@@ -173,12 +164,15 @@ class ElementState {
     private hostElement: HTMLElement;
     private shadowRoot: ShadowRoot;
     private options: CustomElementOptions;
-    private props: Record<string, string> = {};
+
+    // Public API
     private apiPromise: ManualPromise<ApiMethods> | undefined; // Present when callers are waiting for the API
     private api: ApiMethods | undefined; // Present once started
 
     private state = "not-started" as "not-started" | "starting" | "started" | "destroyed";
+    private locale: string | undefined;
     private container: HTMLDivElement | undefined;
+    private properties: ApplicationProperties | undefined;
     private serviceLayer: ServiceLayer | undefined;
     private reactIntegration: ReactIntegration | undefined;
     private stylesWatch: Resource | undefined;
@@ -223,49 +217,30 @@ class ElementState {
         return apiPromise.promise;
     }
 
-    onAttributeChanged(name: string, value: string | undefined) {
-        this.props[name] = value ?? "";
-        this.render();
-    }
-
     private async startImpl() {
         const { options, shadowRoot, hostElement: outerHtmlElement } = this;
 
         // Resolve custom application properties
-        const properties = await gatherProperties(outerHtmlElement, options);
+        const properties = (this.properties = await gatherProperties(outerHtmlElement, options));
         if (this.state === "destroyed") {
             throwAbortError();
         }
 
+        // Decide on locale and load i18n messages (if any).
+        const i18n = await initI18n(options.appMetadata);
+
         // Setup application root node in the shadow dom
-        const container = (this.container = document.createElement("div"));
-        container.classList.add("pioneer-root");
-        container.style.minHeight = "100%";
-        container.style.height = "100%";
+        const container = (this.container = createContainer());
+        const styles = this.initStyles();
+        shadowRoot.replaceChildren(container, styles);
 
         // Launch the service layer
-        const rawPackages = options?.appMetadata?.packages ?? {};
-        const { serviceLayer, packages } = createServiceLayer(
-            rawPackages,
+        const { serviceLayer, packages } = this.initServiceLayer({
+            container,
             properties,
-            createBuiltinPackage({
-                host: this.hostElement,
-                shadowRoot: this.shadowRoot,
-                container: container
-            })
-        );
-        this.serviceLayer = serviceLayer;
-        serviceLayer.start();
+            i18n
+        });
         await this.initAPI(serviceLayer);
-
-        const styles = options?.appMetadata?.styles;
-        const styleNode = document.createElement("style");
-        applyStyles(styleNode, styles);
-        if (import.meta.hot) {
-            this.stylesWatch = styles?.on?.("changed", () => applyStyles(styleNode, styles));
-        }
-
-        shadowRoot.replaceChildren(container, styleNode);
 
         // Launch react
         this.reactIntegration = new ReactIntegration({
@@ -279,7 +254,31 @@ class ElementState {
     }
 
     private render() {
-        this.reactIntegration?.render(this.options.component ?? emptyComponent, this.props);
+        this.reactIntegration?.render(this.options.component ?? emptyComponent, {});
+    }
+
+    private initServiceLayer(config: {
+        container: HTMLDivElement;
+        properties: ApplicationProperties;
+        i18n: AppI18n;
+    }) {
+        const options = this.options;
+        const { container, properties, i18n } = config;
+        const packageMetadata = options.appMetadata?.packages ?? {};
+        const builtinPackage = createBuiltinPackage({
+            host: this.hostElement,
+            shadowRoot: this.shadowRoot,
+            container: container
+        });
+        const { serviceLayer, packages } = createServiceLayer({
+            packageMetadata,
+            builtinPackage,
+            properties,
+            i18n
+        });
+        this.serviceLayer = serviceLayer;
+        serviceLayer.start();
+        return { serviceLayer, packages };
     }
 
     private async initAPI(serviceLayer: ServiceLayer) {
@@ -308,16 +307,38 @@ class ElementState {
             });
         }
     }
+
+    private initStyles() {
+        const styles = this.options.appMetadata?.styles;
+        const styleNode = document.createElement("style");
+        applyStyles(styleNode, styles);
+        if (import.meta.hot) {
+            this.stylesWatch = styles?.on?.("changed", () => applyStyles(styleNode, styles));
+        }
+        return styleNode;
+    }
 }
 
-function createServiceLayer(
-    packageMetadata: Record<string, PackageMetadata> | undefined,
-    properties: ApplicationProperties,
-    builtinPackage: PackageRepr
-) {
+function createContainer() {
+    // Setup application root node in the shadow dom
+    const container = document.createElement("div");
+    container.classList.add("pioneer-root");
+    container.style.minHeight = "100%";
+    container.style.height = "100%";
+    return container;
+}
+
+function createServiceLayer(config: {
+    packageMetadata: Record<string, PackageMetadata> | undefined;
+    properties: ApplicationProperties;
+    builtinPackage: PackageRepr;
+    i18n: AppI18n;
+}) {
+    const { packageMetadata, properties, builtinPackage, i18n } = config;
+
     let packages: PackageRepr[];
     try {
-        packages = createPackages(packageMetadata ?? {}, properties);
+        packages = createPackages(packageMetadata ?? {}, i18n, properties);
     } catch (e) {
         throw new Error(ErrorId.INVALID_METADATA, "Failed to parse package metadata.", {
             cause: e
@@ -325,13 +346,13 @@ function createServiceLayer(
     }
 
     // Add builtin services defined within this package.
-    if (packages.find((pkg) => pkg.name === builtinPackage.name)) {
-        throw new Error(
-            ErrorId.INVALID_METADATA,
-            "User defined packages must not contain metadata for the runtime package."
-        );
+    {
+        const index = packages.findIndex((pkg) => pkg.name === builtinPackage.name);
+        if (index >= 0) {
+            packages.splice(index, 1);
+        }
+        packages.push(builtinPackage);
     }
-    packages.push(builtinPackage);
 
     const forcedReferences: ReferenceSpec[] = [
         {
@@ -345,6 +366,10 @@ function createServiceLayer(
     };
 }
 
+/**
+ * Gathers application properties by reading them from the options object
+ * and by (optionally) invoking the `resolveProperties` hook.
+ */
 async function gatherProperties(rootNode: HTMLElement, options: CustomElementOptions) {
     let properties: ApplicationProperties[];
     try {
@@ -369,6 +394,10 @@ async function gatherProperties(rootNode: HTMLElement, options: CustomElementOpt
     return mergeProperties(properties);
 }
 
+/**
+ * Merges application properties into a single object.
+ * Property objects at a later position overwrite properties from earlier ones.
+ */
 function mergeProperties(properties: ApplicationProperties[]): ApplicationProperties {
     const merged: ApplicationProperties = {};
     for (const props of properties) {
@@ -390,10 +419,6 @@ function applyStyles(styleNode: HTMLStyleElement, styles: ObservableBox<string> 
     styleNode.replaceChildren(cssNode);
 }
 
-function emptyComponent() {
-    return null;
-}
-
 function logError(e: unknown) {
     if (e instanceof Error) {
         const chain = getErrorChain(e).reverse();
@@ -410,4 +435,8 @@ function logError(e: unknown) {
     } else {
         console.error("Unexpected error", e);
     }
+}
+
+function emptyComponent() {
+    return null;
 }

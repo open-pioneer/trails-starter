@@ -32,15 +32,14 @@ export default defineConfig({
     plugins: [
         pioneer({
             rootSite: true,
-            apps: ["date-app"],
             sites: [
                 "api-sample",
                 "chakra-sample",
-                "date-sample",
                 "extension-sample",
                 "map-sample",
                 "properties-sample",
                 "styling-sample",
+                "i18n-sample"
             ]
         }),
         react(),

@@ -20,6 +20,7 @@ export class LogService implements Service<Logger> {
 }
 
 export interface LoggingProperties {
+    /** Log level for the shared logger. */
     logLevel: "DEBUG" | "INFO" | "ERROR";
 }
 

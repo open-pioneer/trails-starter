@@ -3,6 +3,7 @@ import { Error } from "@open-pioneer/core";
 import { InterfaceName, ServiceType } from "../ServiceRegistry";
 import { PackageContext as PackageContext, PackageContextMethods } from "./PackageContext";
 import { ErrorId } from "../errors";
+import { PackageI18n } from "../I18n";
 
 export interface UseServiceOptions {
     /** An additional qualifier to disambiguate service instances that implement the same interface. */
@@ -80,6 +81,19 @@ export function useServicesInternal(packageName: string, interfaceName: string):
 export function usePropertiesInternal(packageName: string): Readonly<Record<string, unknown>> {
     const context = useContext(PackageContext);
     return checkContext("useProperties", context).getProperties(packageName);
+}
+
+/**
+ * Returns the i18n object for the given package.
+ *
+ * This is an internal hook that is typically called indirectly via the hook
+ * provided from `"open-pioneer:react-hooks"`.
+ *
+ * @private
+ */
+export function useI18nInternal(packageName: string): PackageI18n {
+    const context = useContext(PackageContext);
+    return checkContext("useI18n", context).getI18n(packageName);
 }
 
 function checkContext(

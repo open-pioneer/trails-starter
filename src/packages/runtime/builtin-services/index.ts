@@ -1,3 +1,4 @@
+import { createEmptyI18n } from "../I18n";
 import { PackageRepr } from "../service-layer/PackageRepr";
 import {
     createConstructorFactory,
@@ -25,10 +26,12 @@ export type BuiltinPackageProperties = ApplicationContextProperties;
  * The package produced here is always part of the application.
  */
 export function createBuiltinPackage(properties: BuiltinPackageProperties): PackageRepr {
+    const i18n = createEmptyI18n();
     const apiService = new ServiceRepr({
         name: "ApiServiceImpl",
         packageName: RUNTIME_PACKAGE_NAME,
         factory: createConstructorFactory(ApiServiceImpl),
+        i18n,
         interfaces: [
             {
                 interfaceName: RUNTIME_API_SERVICE,
@@ -49,6 +52,7 @@ export function createBuiltinPackage(properties: BuiltinPackageProperties): Pack
         factory: createFunctionFactory(
             (options) => new ApplicationContextImpl(options, properties)
         ),
+        i18n,
         interfaces: [
             {
                 interfaceName: RUNTIME_APPLICATION_CONTEXT,
@@ -59,6 +63,7 @@ export function createBuiltinPackage(properties: BuiltinPackageProperties): Pack
 
     return new PackageRepr({
         name: RUNTIME_PACKAGE_NAME,
-        services: [apiService, appContext]
+        services: [apiService, appContext],
+        i18n
     });
 }

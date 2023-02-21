@@ -75,14 +75,10 @@ export class ReactIntegration {
                 }
             },
             getProperties: (packageName) => {
-                const pkg = this.packages.get(packageName);
-                if (!pkg) {
-                    throw new Error(
-                        ErrorId.INTERNAL,
-                        `Package '${packageName}' was not found in application.`
-                    );
-                }
-                return pkg.properties;
+                return this.getPackage(packageName).properties;
+            },
+            getI18n: (packageName) => {
+                return this.getPackage(packageName).i18n;
             }
         };
     }
@@ -101,5 +97,16 @@ export class ReactIntegration {
 
     destroy() {
         this.root.unmount();
+    }
+
+    private getPackage(packageName: string): PackageRepr {
+        const pkg = this.packages.get(packageName);
+        if (!pkg) {
+            throw new Error(
+                ErrorId.INTERNAL,
+                `Package '${packageName}' was not found in application.`
+            );
+        }
+        return pkg;
     }
 }

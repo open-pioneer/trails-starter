@@ -1,4 +1,4 @@
-import { ReferenceMeta, Service, ServiceConstructor } from "@open-pioneer/runtime";
+import { PackageI18n, ReferenceMeta, Service, ServiceConstructor } from "@open-pioneer/runtime";
 
 /**
  * Options for the {@link createService} function.
@@ -56,12 +56,20 @@ export async function createService<References extends {}, Interface extends {}>
         ])
     );
 
+    const i18n: PackageI18n = {
+        locale: "en",
+        formatMessage(options, values) {
+            throw new Error("not implemented yet"); // TODO
+        }
+    };
+
     return new clazz({
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         references: references as any,
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         referencesMeta: referencesMeta as any,
-        properties: options?.properties ?? {}
+        properties: options?.properties ?? {},
+        i18n
     });
 }
 

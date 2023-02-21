@@ -1,12 +1,25 @@
 import { Error } from "@open-pioneer/core";
 import { ApplicationProperties } from "../CustomElement";
 import { ErrorId } from "../errors";
+import { PackageI18n, AppI18n } from "../I18n";
 import { PackageMetadata, PropertyMetadata } from "../metadata";
 import { parseReferenceSpec, ReferenceSpec } from "./InterfaceSpec";
 import { ServiceRepr } from "./ServiceRepr";
 
+export interface PackageReprOptions {
+    name: string;
+    i18n: PackageI18n;
+    services?: ServiceRepr[];
+    uiReferences?: ReferenceSpec[];
+    properties?: Record<string, unknown>;
+}
+
 export class PackageRepr {
-    static create(data: PackageMetadata, customProperties?: Record<string, unknown>): PackageRepr {
+    static create(
+        data: PackageMetadata,
+        i18n: PackageI18n,
+        customProperties?: Record<string, unknown>
+    ): PackageRepr {
         const name = data.name;
         const properties = data.properties ?? {};
         const finalProperties = customizeProperties(name, properties, customProperties);
@@ -18,7 +31,7 @@ export class PackageRepr {
                         "Invalid metadata: service name mismatch."
                     );
                 }
-                return ServiceRepr.create(data.name, serviceData, finalProperties);
+                return ServiceRepr.create(data.name, serviceData, i18n, finalProperties);
             }
         );
         const uiReferences = data.ui?.references?.map((ref) => parseReferenceSpec(ref)) ?? [];
@@ -26,7 +39,8 @@ export class PackageRepr {
             name,
             services,
             uiReferences,
-            properties: finalProperties
+            properties: finalProperties,
+            i18n
         });
     }
 
@@ -42,12 +56,10 @@ export class PackageRepr {
     /** Resolved (perhaps customized) package properties. */
     readonly properties: Readonly<Record<string, unknown>>;
 
-    constructor(options: {
-        name: string;
-        services?: ServiceRepr[];
-        uiReferences?: ReferenceSpec[];
-        properties?: Record<string, unknown>;
-    }) {
+    /** Locale-dependant i18n messages. */
+    readonly i18n: PackageI18n;
+
+    constructor(options: PackageReprOptions) {
         const name = options.name;
         if (!isValidPackageName(name)) {
             throw new Error(ErrorId.INTERNAL, `Invalid package name: '${name}'.`);
@@ -56,12 +68,14 @@ export class PackageRepr {
         this.name = name;
         this.services = options.services ?? [];
         this.uiReferences = options.uiReferences ?? [];
-        this.properties = options?.properties ?? {};
+        this.properties = options.properties ?? {};
+        this.i18n = options.i18n;
     }
 }
 
 export function createPackages(
     packages: Record<string, PackageMetadata>,
+    i18n: AppI18n,
     customProperties?: ApplicationProperties
 ) {
     return Object.entries(packages).map<PackageRepr>(([name, packageMetadata]) => {
@@ -69,7 +83,8 @@ export function createPackages(
             throw new Error(ErrorId.INVALID_METADATA, "Invalid metadata: package name mismatch.");
         }
 
-        return PackageRepr.create(packageMetadata, customProperties?.[name]);
+        const packageI18n = i18n.createPackageI18n(name);
+        return PackageRepr.create(packageMetadata, packageI18n, customProperties?.[name]);
     });
 }
 

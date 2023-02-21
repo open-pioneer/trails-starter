@@ -4,12 +4,13 @@
 
 -   Complex plural support
 -   Localized number and date formatting
--   [ICU Message Format](https://crowdin.com/blog/2022/04/13/icu-guide) support (?)
+-   [ICU Message Format](https://phrase.com/blog/posts/guide-to-the-icu-message-format/) support (?)
 -   light weight
 -   support for package concept
 -   on runtime language detection
 -   one translation file per language / page
--   ...?
+-   active development / community
+-   license
 
 ## Overview
 
@@ -67,6 +68,7 @@
 -   light weight with minimum feature set
 -   simple solutions for translation, interpolation and pluralization
 -   no external dependencies
+-   support for nested phrase objects
 -   React integration with [Wrapper](https://github.com/nayaabkhan/react-polyglot)
 
 ### LinguiJS
@@ -91,6 +93,7 @@
 -   optimized for tree shaking
 -   built with hooks and functional components only
 -   support for dates, nummeric values and plurals
+-   nested support
 
 ### messageformat
 

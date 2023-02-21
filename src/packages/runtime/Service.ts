@@ -1,3 +1,5 @@
+import { PackageI18n } from "./I18n";
+
 /** Lifecycle hooks supported by the service interface. */
 export interface ServiceLifecycleHooks {
     /**
@@ -65,6 +67,11 @@ export type ServiceOptions<References extends {} = {}> = {
      * by the application.
      */
     properties: Record<string, unknown>;
+
+    /**
+     * A reference to the shared i18n object of the current package.
+     */
+    i18n: PackageI18n;
 };
 
 /**

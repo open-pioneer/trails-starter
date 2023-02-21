@@ -204,7 +204,7 @@ export class ServiceLayer {
         }
 
         // Sets state to 'constructed' to finish the state transition, useCount is 1.
-        return service.create({ references, referencesMeta, properties: service.properties });
+        return service.create({ references, referencesMeta });
     }
 
     /**

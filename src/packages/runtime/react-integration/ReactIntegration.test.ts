@@ -14,6 +14,7 @@ import { act } from "react-dom/test-utils";
 import { PackageRepr } from "../service-layer/PackageRepr";
 import { createConstructorFactory, ServiceRepr } from "../service-layer/ServiceRepr";
 import { InterfaceSpec, ReferenceSpec } from "../service-layer/InterfaceSpec";
+import { createEmptyI18n, PackageI18n } from "../I18n";
 
 interface TestProvider {
     value: string;
@@ -315,10 +316,12 @@ function createIntegration(options?: {
     packageName?: string;
     packageProperties?: Record<string, unknown>;
     packageUiReferences?: ReferenceSpec[];
+    i18n?: PackageI18n;
     services?: ServiceSpec[];
 }): TestIntegration {
     const wrapper = document.createElement("div");
     const packages = new Map<string, PackageRepr>();
+    const i18n = options?.i18n ?? createEmptyI18n();
     if (!options?.disablePackage) {
         const packageName = options?.packageName ?? "test";
         const services =
@@ -327,13 +330,15 @@ function createIntegration(options?: {
                     name: spec.name,
                     packageName,
                     interfaces: spec.interfaces,
-                    factory: createConstructorFactory(spec.clazz)
+                    factory: createConstructorFactory(spec.clazz),
+                    i18n: i18n
                 });
             }) ?? [];
         packages.set(
             packageName,
             new PackageRepr({
                 name: packageName,
+                i18n: i18n,
                 properties: options?.packageProperties,
                 uiReferences: options?.packageUiReferences,
                 services

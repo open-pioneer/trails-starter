@@ -17,9 +17,9 @@
         "prepare": "husky install"
     },
     "devDependencies": {
-        "@open-pioneer/build-support": "^0.1.0",
-        "@open-pioneer/vite-plugin-pioneer": "^0.1.0",
+        "@open-pioneer/build-support": "^0.2.0",
         "@open-pioneer/runtime": "workspace:*",
+        "@open-pioneer/vite-plugin-pioneer": "^0.2.2",
         "@testing-library/dom": "^8.20.0",
         "@testing-library/jest-dom": "^5.16.5",
         "@testing-library/react": "^13.4.0",

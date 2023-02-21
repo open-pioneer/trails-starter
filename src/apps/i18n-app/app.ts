@@ -1,11 +1,10 @@
 import { createCustomElement } from "@open-pioneer/runtime";
 import * as appMetadata from "open-pioneer:app";
-import { DateUI } from "./DateUI";
+import { I18nUI } from "./I18nUI";
 
 const Element = createCustomElement({
-    component: DateUI,
-    attributes: ["date"],
+    component: I18nUI,
     appMetadata
 });
 
-customElements.define("date-app", Element);
+customElements.define("i18n-app", Element);

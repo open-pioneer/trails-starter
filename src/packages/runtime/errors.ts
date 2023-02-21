@@ -6,6 +6,7 @@ export enum ErrorId {
     REQUIRED_PROPERTY = "runtime:required-property",
 
     // Application lifecycle
+    UNSUPPORTED_LOCALE = "runtime:unsupported-locale",
     NOT_MOUNTED = "runtime:element-not-mounted",
 
     // Service layer

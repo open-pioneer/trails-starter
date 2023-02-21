@@ -1,0 +1,11 @@
+messages:
+  open: "Dialog öffnen"
+  dialog:
+    title: "Titel des Dialogs"
+    content: |
+      Lorem ipsum dolor sit amet, consectetur adipisicing elit. Corrupti beatae at
+      quidem, eligendi dolorem, nesciunt maiores vel repudiandae labore,
+      reiciendis recusandae voluptatibus! Adipisci ut, minus consequuntur aut quae
+      doloribus voluptatibus.
+    confirm: "Bestätigen"
+    abort: "Abbrechen"

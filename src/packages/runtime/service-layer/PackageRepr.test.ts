@@ -1,4 +1,5 @@
 import { expect, it } from "vitest";
+import { AppI18n, createEmptyI18n, PackageI18n } from "../I18n";
 import { PackageMetadata } from "../metadata";
 import { expectError } from "../test-utils/expectError";
 import { createPackages, PackageRepr } from "./PackageRepr";
@@ -50,16 +51,30 @@ it("parses package metadata into internal package representations", function () 
         }
     };
 
-    const packages = createPackages(metadata);
+    const testi18n: AppI18n = {
+        locale: "test-locale",
+        createPackageI18n(packageName) {
+            return {
+                locale: this.locale,
+                formatMessage() {
+                    throw new Error("not implemented");
+                }
+            };
+        }
+    };
+
+    const packages = createPackages(metadata, testi18n);
     expect(packages).toHaveLength(2);
 
     const packageA = packages.find((b) => b.name === "a")!;
     expect(packageA).toBeDefined();
+    expect(packageA.i18n.locale).toEqual("test-locale");
 
     const serviceA = packageA.services.find((s) => s.name === "A")!;
     expect(serviceA).toBeDefined();
     expect(serviceA.id).toStrictEqual("a::A");
     expect(serviceA.state).toStrictEqual("not-constructed");
+    expect(serviceA.i18n.locale).toEqual("test-locale");
     expect(serviceA.instance).toBeUndefined();
     expect(serviceA.dependencies).toStrictEqual([
         {
@@ -72,6 +87,7 @@ it("parses package metadata into internal package representations", function () 
 
     const packageB = packages.find((b) => b.name === "b")!;
     expect(packageB).toBeDefined();
+    expect(packageB.i18n.locale).toEqual("test-locale");
 
     const serviceB = packageB.services.find((s) => s.name === "B")!;
     expect(serviceB).toBeDefined();
@@ -91,7 +107,7 @@ it("supports package properties", function () {
             }
         }
     };
-    const pkg = PackageRepr.create(metadata);
+    const pkg = createPackageFromMetadata(metadata);
     expect(pkg.properties).toStrictEqual({
         propertyName: "propertyValue"
     });
@@ -112,7 +128,7 @@ it("supports package properties in services", function () {
             }
         }
     };
-    const pkg = PackageRepr.create(metadata);
+    const pkg = createPackageFromMetadata(metadata);
     const service = pkg.services[0]!;
     expect(service).toBeDefined();
     expect(service.properties).toStrictEqual({
@@ -129,7 +145,7 @@ it("supports customization of package properties", function () {
             }
         }
     };
-    const pkg = PackageRepr.create(metadata, {
+    const pkg = createPackageFromMetadata(metadata, {
         propertyName: "override"
     });
     expect(pkg.properties).toStrictEqual({
@@ -148,7 +164,7 @@ it("throws an error if a required property is not specified", function () {
         }
     };
 
-    const err = expectError(() => PackageRepr.create(metadata));
+    const err = expectError(() => createPackageFromMetadata(metadata));
     expect(err.message).toMatchSnapshot();
 });
 
@@ -162,7 +178,7 @@ it("throws no error if a required property is specified", function () {
             }
         }
     };
-    const pkg = PackageRepr.create(metadata, {
+    const pkg = createPackageFromMetadata(metadata, {
         propertyName: 123
     });
     expect(pkg).toBeDefined();
@@ -179,7 +195,7 @@ it("throws an error if an attempt is made to customize a non-existent property",
     };
 
     const err = expectError(() =>
-        PackageRepr.create(metadata, {
+        createPackageFromMetadata(metadata, {
             otherProperty: 123
         })
     );
@@ -201,7 +217,7 @@ it("passes package properties to created ServiceRepr instances", function () {
             }
         }
     };
-    const pkg = PackageRepr.create(metadata, {
+    const pkg = createPackageFromMetadata(metadata, {
         propertyName: 123
     });
     const service = pkg.services[0]!;
@@ -209,3 +225,11 @@ it("passes package properties to created ServiceRepr instances", function () {
         propertyName: 123
     });
 });
+
+function createPackageFromMetadata(
+    data: PackageMetadata,
+    properties?: Record<string, unknown>,
+    i18n?: PackageI18n
+) {
+    return PackageRepr.create(data, i18n ?? createEmptyI18n(), properties);
+}

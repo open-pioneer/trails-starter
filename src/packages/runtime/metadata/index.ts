@@ -20,6 +20,17 @@ export interface ApplicationMetadata {
      * Styles for UI component.
      */
     styles?: ObservableBox<string>;
+
+    /**
+     * Locales supported by the application.
+     */
+    locales?: string[];
+
+    /**
+     * Loads messages for the given locale.
+     * @returns A record of packageName -> (messageId, messageTemplate) entries.
+     */
+    loadMessages?: (locale: string) => Promise<Record<string, Record<string, string>>>;
 }
 
 /**

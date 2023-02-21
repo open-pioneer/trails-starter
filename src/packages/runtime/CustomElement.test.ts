@@ -8,7 +8,7 @@ import {
     renderComponentShadowDOM
 } from "@open-pioneer/test-utils/web-components";
 import { waitFor } from "@testing-library/dom";
-import { Component, createElement } from "react";
+import { createElement } from "react";
 import { expect, it, describe } from "vitest";
 import { ApiExtension, ApiMethods, ApplicationContext } from "./api";
 import { ApplicationElement, createCustomElement } from "./CustomElement";
@@ -70,25 +70,6 @@ it("explicitly setting the shadow dom mode hides the shadow root", async () => {
     });
     const { node } = await renderComponent(elem);
     expect(node.shadowRoot).toBeNull();
-});
-
-it("should render test component with attribute 'name'", async () => {
-    class TestComponent extends Component<Record<string, string>> {
-        render() {
-            return createElement("span", this.props, `Hello ${this.props.name}`);
-        }
-    }
-
-    const attributeValue = "test";
-    const elem = createCustomElement({
-        component: TestComponent,
-        attributes: ["name"]
-    });
-    const { node, queries } = await renderComponentShadowDOM(elem);
-    node.setAttribute("name", attributeValue);
-
-    const span = await queries.findByText(`Hello ${attributeValue}`);
-    expect(span.tagName).toBe("SPAN");
 });
 
 it("should allow customization of package properties", async () => {
