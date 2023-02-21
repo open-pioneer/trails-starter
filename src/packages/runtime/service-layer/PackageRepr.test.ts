@@ -53,7 +53,7 @@ it("parses package metadata into internal package representations", function () 
 
     const testi18n: AppI18n = {
         locale: "test-locale",
-        createPackageI18n(packageName) {
+        createPackageI18n() {
             return {
                 locale: this.locale,
                 formatMessage() {

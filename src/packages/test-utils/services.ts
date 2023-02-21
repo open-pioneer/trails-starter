@@ -58,7 +58,7 @@ export async function createService<References extends {}, Interface extends {}>
 
     const i18n: PackageI18n = {
         locale: "en",
-        formatMessage(options, values) {
+        formatMessage() {
             throw new Error("not implemented yet"); // TODO
         }
     };
