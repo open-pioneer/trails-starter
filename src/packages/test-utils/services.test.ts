@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { ReferenceMeta, ServiceOptions } from "@open-pioneer/runtime";
+import { PackageIntl, ReferenceMeta, ServiceOptions } from "@open-pioneer/runtime";
 import { expect, it } from "vitest";
 import { createService } from "./services";
 
@@ -82,4 +82,21 @@ it("creates a new service and provides metadata about references", async () => {
     expect(array).toHaveLength(2);
     expect(array[0]!.serviceId).toEqual(`test-utils::array-0`);
     expect(array[1]!.serviceId).toEqual(`test-utils::array-1`);
+});
+
+it("creates a new service with access to intl", async () => {
+    const service = await createService(Service, {
+        locale: "de",
+        messages: {
+            "foo.bar": "Hello!"
+        }
+    });
+    const intl = service.$opts.intl as PackageIntl;
+    expect(intl.locale).toEqual("de");
+
+    const message = intl.formatMessage({ id: "foo.bar" });
+    expect(message).toEqual("Hello!");
+
+    const undefinedMessage = intl.formatMessage({ id: "not.defined" });
+    expect(undefinedMessage).toEqual("not.defined");
 });

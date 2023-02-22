@@ -1,3 +1,4 @@
+import { createIntl, createIntlCache, IntlShape } from "@formatjs/intl";
 import { Service } from "@open-pioneer/runtime";
 import {
     PackageContext as InternalPackageContext,
@@ -25,6 +26,36 @@ export interface PackageContextProviderProps {
         [packageName: string]: Record<string, unknown>;
     };
 
+    /**
+     * The locale for i18n messages and formatting.
+     *
+     * @default "en"
+     */
+    locale?: string;
+
+    /**
+     * I18n messages for packages
+     */
+    i18n?: {
+        [packageName: string]: {
+            /**
+             * The locale for embedded default messages.
+             *
+             * See also https://formatjs.io/docs/intl#message-descriptor
+             *
+             * @default "en"
+             */
+            defaultMessageLocale?: string;
+
+            /**
+             * I18n messages as (messageId, message) entries.
+             *
+             * @default {}
+             */
+            messages?: Record<string, string>;
+        };
+    };
+
     /** Children to render */
     children?: ReactNode;
 }
@@ -35,11 +66,8 @@ export interface PackageContextProviderProps {
  * will receive the mocked properties here instead.
  */
 export const PackageContextProvider: FC<PackageContextProviderProps> = (props) => {
-    const { services, qualifiedServices, properties, children } = props;
-    const contextMethods = useMemo(
-        () => createPackageContextMethods({ services, qualifiedServices, properties }),
-        [services, qualifiedServices, properties]
-    );
+    const { children, ...rest } = props;
+    const contextMethods = useMemo(() => createPackageContextMethods(rest), [rest]);
     return (
         <InternalPackageContext.Provider value={contextMethods}>
             {children}
@@ -53,6 +81,9 @@ function createPackageContextMethods(
     const services = options?.services ?? {};
     const qualifiedServices = options?.qualifiedServices ?? {};
     const properties = options?.properties ?? {};
+    const locale = options?.locale ?? "en";
+    const i18n = options?.i18n ?? {};
+    const cachedIntl: Record<string, IntlShape> = {};
     return {
         getService(packageName, interfaceName, options) {
             if (!options.qualifier) {
@@ -97,8 +128,21 @@ function createPackageContextMethods(
             return packageProperties;
         },
         getIntl(packageName) {
-            // TODO
-            throw new Error(`No i18n messages for package '${packageName}' bound for testing.`);
+            const initIntl = () => {
+                const packageI18n = i18n[packageName];
+                const defaultLocale = packageI18n?.defaultMessageLocale ?? "en";
+                const messages = packageI18n?.messages ?? {};
+                const cache = createIntlCache();
+                return createIntl(
+                    {
+                        locale,
+                        defaultLocale,
+                        messages
+                    },
+                    cache
+                );
+            };
+            return (cachedIntl[packageName] ??= initIntl());
         }
     };
 }
