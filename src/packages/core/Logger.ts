@@ -27,31 +27,60 @@ const logLevelNumbers: Record<LogLevel, number> = {
     ERROR: 3
 };
 
-/**
- * Type for the logger's log methods.
- */
-// todo allow Error as message?
-export type LogMethod = (message: string, ...values: unknown[]) => void;
+export interface LogMethod {
+    /**
+     * Logger's log method structure
+     * @param message Log message to be logged (attached to the prefix). Can be a string or an Error.
+     * @param values Additional values to be logged (attached to message). Takes an array of any values.
+     */
+    (message: string | Error, ...values: unknown[]): void;
+}
 
-// todo move docu to interface
 /**
- * Interface for Logger class.
+ * Provides a logger for a standardized application wide logging.
+ *
+ * The logger's log level is configured globally.
+ *
+ * Use the `createLogger` function to receive a new logger instance for logging.
  */
 export interface Logger {
-    prefix: string;
+    /**
+     * Prefix prepended to all logging messages
+     */
+    readonly prefix: string;
+
+    /**
+     * Returns true if debug log level is enabled.
+     */
     isDebug(): boolean;
+
+    /**
+     * Logging method for debug log level.
+     * Follows normal LogMethod structure but logs in debug level.
+     */
     debug: LogMethod;
+
+    /**
+     * Logging method for info log level.
+     * Follows normal log method structure but logs in info level.
+     */
     info: LogMethod;
+
+    /**
+     * Logging method for warn log level.
+     * Follows normal log method structure but logs in warn level.
+     */
     warn: LogMethod;
+
+    /**
+     * Logging method for debug error level.
+     * Follows normal log method structure but logs in error level.
+     */
     error: LogMethod;
 }
 
 /**
  * A class implementing a logger with a global log level.
- *
- * This logger should be used for a standardized application wide logging.
- *
- * Use the `createLogger` function to receive a new logger instance for logging.
  */
 class LoggerImpl implements Logger {
     prefix: string;
@@ -62,9 +91,6 @@ class LoggerImpl implements Logger {
         this.enabledLogLevelNumber = logLevelToLogLevelNumber(logLevel);
     }
 
-    /**
-     * Returns true if debug log level is enabled.
-     */
     isDebug() {
         return this.enabledLogLevelNumber === logLevelNumbers.DEBUG;
     }
@@ -74,7 +100,7 @@ class LoggerImpl implements Logger {
      * @param message
      * @param values
      */
-    debug(message: string, ...values: unknown[]) {
+    debug(message: string | Error, ...values: unknown[]) {
         this._doLog("DEBUG", message, values);
     }
 
@@ -83,7 +109,7 @@ class LoggerImpl implements Logger {
      * @param message
      * @param values
      */
-    info(message: string, ...values: unknown[]) {
+    info(message: string | Error, ...values: unknown[]) {
         this._doLog("INFO", message, values);
     }
 
@@ -92,7 +118,7 @@ class LoggerImpl implements Logger {
      * @param message
      * @param values
      */
-    warn(message: string, ...values: unknown[]) {
+    warn(message: string | Error, ...values: unknown[]) {
         this._doLog("WARN", message, values);
     }
 
@@ -101,22 +127,27 @@ class LoggerImpl implements Logger {
      * @param message
      * @param values
      */
-    error(message: string, ...values: unknown[]) {
+    error(message: string | Error, ...values: unknown[]) {
         this._doLog("ERROR", message, values);
     }
 
     /**
      * Internal method for performing the log if the specified level is enabled.
      * @param level
-     * @param message
+     * @param messageOrError
      * @param values
      * @private
      */
-    private _doLog(level: LogLevel, message: string, values: unknown[]) {
-        // todo if dev mode an debug level, do an additional trace log for each log?
+    private _doLog(level: LogLevel, messageOrError: string | Error, values: unknown[]) {
         if (this._isLogLevelEnabled(level)) {
+            let message = this.prefix + ":";
+            if (typeof messageOrError === "string") {
+                message += " " + messageOrError;
+            } else {
+                values.unshift(messageOrError);
+            }
             const consoleMethodName = logLevelToConsoleMethodName(level);
-            console[consoleMethodName](this.prefix + ": " + message, ...values);
+            console[consoleMethodName](message, ...values);
         }
     }
 
