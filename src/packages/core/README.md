@@ -36,3 +36,28 @@ const errors = getErrorChain(error);
 
 The `Resource` type exported from this package is used by objects with a destructor.
 All object needing some cleanup action to be called should use the `destroy` method for consistency and easier handling.
+
+## Logger
+
+The 'Logger' class provides a logger for standardized application wide logging. The log level is configured globally in the vite.config.js.
+
+To create a logger instance, call the `createLogger` method. It takes a prefix (string) to prepend to each message.
+
+The logger provides log methods for the following log levels with the following order: DEBUG < INFO < WARN < ERROR.
+
+For example:
+
+```ts
+import { createLogger, Logger } from "@open-pioneer/core";
+
+export class LoggerTestExample {
+    private logger: Logger;
+    constructor() {
+        this.logger = createLogger("example-package:LoggerTestExample");
+    }
+
+    testMethod() {
+        this.logger.warn("example message", { testLog: 123, text: "this is a text" });
+    }
+}
+```

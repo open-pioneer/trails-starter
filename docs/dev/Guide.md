@@ -394,6 +394,33 @@ See the package documentation of `@open-pioneer/integration` for more details.
 
 TODO: More content
 
+### Logger
+
+The framework provides a logger for standardized application wide logging. The log level is configured globally in the vite.config.js.
+
+To create a logger instance, call the `createLogger` method. It takes a prefix (string) to prepend to each message. The prefix should always contain the package name and if applicable additionally the service/class name.
+
+The logger provides log methods for the following log levels with the following order: DEBUG < INFO < WARN < ERROR.
+
+For example:
+
+```ts
+import { createLogger, Logger } from "@open-pioneer/core";
+
+export class LoggerTestExample {
+    private logger: Logger;
+    constructor() {
+        this.logger = createLogger("example-package:LoggerTestExample");
+    }
+
+    testMethod() {
+        this.logger.warn("example message", { testLog: 123, text: "this is a text" });
+    }
+}
+```
+
+Hint: If using the logger, the original trace is lost. However, in Chrome you can see the trace for error and warning messages if clicking on the message title. In firefox this only seems to work for error messages.
+
 ## Known Issues
 
 ### Hot reloading with \[jt\]sx-Files and side effects
