@@ -1,4 +1,5 @@
-import { PackageI18n, ReferenceMeta, Service, ServiceConstructor } from "@open-pioneer/runtime";
+import { ReferenceMeta, Service, ServiceConstructor } from "@open-pioneer/runtime";
+import { createIntl, createIntlCache } from "@formatjs/intl";
 
 /**
  * Options for the {@link createService} function.
@@ -17,6 +18,29 @@ export interface CreateServiceOptions<References> {
      * @default {}
      */
     properties?: Record<string, unknown>;
+
+    /**
+     * The locale for i18n messages and formatting.
+     *
+     * @default "en"
+     */
+    locale?: string;
+
+    /**
+     * The locale for embedded default messages.
+     *
+     * See also https://formatjs.io/docs/intl#message-descriptor
+     *
+     * @default "en"
+     */
+    defaultMessageLocale?: string;
+
+    /**
+     * I18n messages as (messageId, message) entries.
+     *
+     * @default {}
+     */
+    messages?: Record<string, string>;
 }
 
 type PartialServiceReferences<References> = {
@@ -56,12 +80,18 @@ export async function createService<References extends {}, Interface extends {}>
         ])
     );
 
-    const i18n: PackageI18n = {
-        locale: "en",
-        formatMessage() {
-            throw new Error("not implemented yet"); // TODO
-        }
-    };
+    const locale = options?.locale ?? "en";
+    const defaultMessageLocale = options?.defaultMessageLocale ?? "en";
+    const messages = options?.messages ?? {};
+    const cache = createIntlCache();
+    const intl = createIntl(
+        {
+            locale,
+            defaultLocale: defaultMessageLocale,
+            messages
+        },
+        cache
+    );
 
     return new clazz({
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -69,7 +99,7 @@ export async function createService<References extends {}, Interface extends {}>
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         referencesMeta: referencesMeta as any,
         properties: options?.properties ?? {},
-        i18n
+        intl
     });
 }
 

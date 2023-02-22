@@ -1,11 +1,12 @@
 export * from "./api";
-export { type PackageI18n } from "./I18n";
+export { type PackageIntl } from "./i18n";
 export {
     type ApplicationElement,
     type ApplicationElementConstructor,
     type ApplicationProperties,
+    type ApplicationConfig,
     type CustomElementOptions,
-    type PropertyContext,
+    type ConfigContext,
     createCustomElement
 } from "./CustomElement";
 export * from "./Service";

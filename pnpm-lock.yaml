@@ -99,10 +99,12 @@ importers:
   src/apps/i18n-app:
     specifiers:
       '@open-pioneer/chakra-integration': workspace:^
+      '@open-pioneer/integration': workspace:^
       '@open-pioneer/runtime': workspace:^
       test-i18n-package: workspace:^
     dependencies:
       '@open-pioneer/chakra-integration': link:../../packages/chakra-integration
+      '@open-pioneer/integration': link:../../packages/integration
       '@open-pioneer/runtime': link:../../packages/runtime
       test-i18n-package: link:../../packages/test-i18n-package
 
@@ -200,12 +202,14 @@ importers:
 
   src/packages/test-utils:
     specifiers:
+      '@formatjs/intl': ^2.6.7
       '@open-pioneer/runtime': workspace:^
       '@testing-library/dom': ^8.20.0
       '@testing-library/react': ^13.4.0
       react: ^18.2.0
       react-dom: ^18.2.0
     dependencies:
+      '@formatjs/intl': 2.6.7
       '@testing-library/dom': 8.20.0
     devDependencies:
       '@open-pioneer/runtime': link:../runtime

@@ -1,11 +1,12 @@
 messages:
-  open: "Dialog öffnen"
-  dialog:
-    title: "Titel des Dialogs"
-    content: |
-      Lorem ipsum dolor sit amet, consectetur adipisicing elit. Corrupti beatae at
-      quidem, eligendi dolorem, nesciunt maiores vel repudiandae labore,
-      reiciendis recusandae voluptatibus! Adipisci ut, minus consequuntur aut quae
-      doloribus voluptatibus.
-    confirm: "Bestätigen"
-    abort: "Abbrechen"
+  content:
+    header: "I18N Beispiel"
+    description: |
+      Dieses Beispiel enthält eine Anwendung, die mehrere Sprachen unterstützt.
+      Die tatsächlich von der Anwendung verwendete Sprache wird entweder aus den Einstellungen des Nutzers abgeleitet (Sprache des Browsers)
+      oder explizit während des Anwendungsstarts festgelegt.
+    open: "Dialog öffnen"
+
+  picker:
+    choose: "Wählen Sie eine Sprache aus:"
+    default: "Automatisch (standard)"

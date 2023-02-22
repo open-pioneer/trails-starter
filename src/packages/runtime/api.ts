@@ -43,6 +43,20 @@ export interface ApplicationContext {
      * The node containing the rest of the application _inside_ the current web component's shadow dom.
      */
     getApplicationContainer(): HTMLElement;
+
+    /**
+     * Returns the current locale of the application.
+     *
+     * E.g. "de-DE"
+     */
+    getLocale(): string;
+
+    /**
+     * Returns the locales supported by the application.
+     *
+     * E.g. ["de", "en"]
+     */
+    getSupportedLocales(): readonly string[];
 }
 
 declare module "./ServiceRegistry" {

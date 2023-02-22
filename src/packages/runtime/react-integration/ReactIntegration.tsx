@@ -77,8 +77,8 @@ export class ReactIntegration {
             getProperties: (packageName) => {
                 return this.getPackage(packageName).properties;
             },
-            getI18n: (packageName) => {
-                return this.getPackage(packageName).i18n;
+            getIntl: (packageName) => {
+                return this.getPackage(packageName).intl;
             }
         };
     }

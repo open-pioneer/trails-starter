@@ -1,14 +1,14 @@
 import { Error } from "@open-pioneer/core";
 import { ApplicationProperties } from "../CustomElement";
 import { ErrorId } from "../errors";
-import { PackageI18n, AppI18n } from "../I18n";
+import { PackageIntl, AppI18n } from "../i18n";
 import { PackageMetadata, PropertyMetadata } from "../metadata";
 import { parseReferenceSpec, ReferenceSpec } from "./InterfaceSpec";
 import { ServiceRepr } from "./ServiceRepr";
 
 export interface PackageReprOptions {
     name: string;
-    i18n: PackageI18n;
+    intl: PackageIntl;
     services?: ServiceRepr[];
     uiReferences?: ReferenceSpec[];
     properties?: Record<string, unknown>;
@@ -17,7 +17,7 @@ export interface PackageReprOptions {
 export class PackageRepr {
     static create(
         data: PackageMetadata,
-        i18n: PackageI18n,
+        i18n: PackageIntl,
         customProperties?: Record<string, unknown>
     ): PackageRepr {
         const name = data.name;
@@ -40,7 +40,7 @@ export class PackageRepr {
             services,
             uiReferences,
             properties: finalProperties,
-            i18n
+            intl: i18n
         });
     }
 
@@ -57,7 +57,7 @@ export class PackageRepr {
     readonly properties: Readonly<Record<string, unknown>>;
 
     /** Locale-dependant i18n messages. */
-    readonly i18n: PackageI18n;
+    readonly intl: PackageIntl;
 
     constructor(options: PackageReprOptions) {
         const name = options.name;
@@ -69,7 +69,7 @@ export class PackageRepr {
         this.services = options.services ?? [];
         this.uiReferences = options.uiReferences ?? [];
         this.properties = options.properties ?? {};
-        this.i18n = options.i18n;
+        this.intl = options.intl;
     }
 }
 

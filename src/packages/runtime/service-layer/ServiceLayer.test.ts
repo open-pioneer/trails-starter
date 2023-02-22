@@ -1,5 +1,5 @@
 import { expect, it } from "vitest";
-import { createEmptyI18n } from "../I18n";
+import { createEmptyI18n } from "../i18n";
 import { Service, ServiceOptions } from "../Service";
 import { PackageRepr, PackageReprOptions } from "./PackageRepr";
 import { ServiceLayer } from "./ServiceLayer";
@@ -445,7 +445,7 @@ function createService(options: Partial<ServiceReprOptions>) {
         name: "test-service",
         packageName: "test-package",
         factory: createConstructorFactory(class {}),
-        i18n: createEmptyI18n(),
+        intl: createEmptyI18n(),
         ...options
     });
 }
@@ -453,7 +453,7 @@ function createService(options: Partial<ServiceReprOptions>) {
 function createPackage(options: Partial<PackageReprOptions>) {
     return new PackageRepr({
         name: "test-package",
-        i18n: createEmptyI18n(),
+        intl: createEmptyI18n(),
         ...options
     });
 }

@@ -1,13 +1,13 @@
 export enum ErrorId {
     // Problems with application metadata
     INVALID_METADATA = "runtime:invalid-metadata",
-    PROPERTY_RESOLUTION_FAILED = "runtime:property-resolution-failed",
     INVALID_PROPERTY_NAME = "runtime:invalid-property-name",
     REQUIRED_PROPERTY = "runtime:required-property",
 
     // Application lifecycle
-    UNSUPPORTED_LOCALE = "runtime:unsupported-locale",
     NOT_MOUNTED = "runtime:element-not-mounted",
+    UNSUPPORTED_LOCALE = "runtime:unsupported-locale",
+    CONFIG_RESOLUTION_FAILED = "runtime:config-resolution-failed",
 
     // Service layer
     INTERFACE_NOT_FOUND = "runtime:interface-not-found",

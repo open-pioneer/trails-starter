@@ -1,11 +1,12 @@
 messages:
-  open: "Open dialog"
-  dialog:
-    title: "Dialog title"
-    content: |
-      Lorem ipsum dolor sit amet, consectetur adipisicing elit. Corrupti beatae at
-      quidem, eligendi dolorem, nesciunt maiores vel repudiandae labore,
-      reiciendis recusandae voluptatibus! Adipisci ut, minus consequuntur aut quae
-      doloribus voluptatibus.
-    confirm: "Confirm"
-    abort: "Abort"
+  content:
+    header: "I18N Sample"
+    description: |
+      This example demonstrates an app that supports multiple languages.
+      The app's actual language can be inferred from the user's environment (browser language) or by
+      explicitly forcing the locale during application start.
+    open: "Open dialog"
+
+  picker:
+    choose: "Select a language:"
+    default: "automatic (default)"

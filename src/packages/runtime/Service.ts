@@ -1,4 +1,4 @@
-import { PackageI18n } from "./I18n";
+import { PackageIntl } from "./i18n";
 
 /** Lifecycle hooks supported by the service interface. */
 export interface ServiceLifecycleHooks {
@@ -71,7 +71,7 @@ export type ServiceOptions<References extends {} = {}> = {
     /**
      * A reference to the shared i18n object of the current package.
      */
-    i18n: PackageI18n;
+    intl: PackageIntl;
 };
 
 /**

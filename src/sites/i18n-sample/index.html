@@ -6,7 +6,32 @@
         <title>I18n App Demo</title>
     </head>
     <body>
-        <i18n-app></i18n-app>
-        <script type="module" src="../../apps/i18n-app/app.ts"></script>
+        <div id="container"></div>
     </body>
+    <script type="module">
+        import "../../apps/i18n-app/app.ts";
+
+        const container = document.getElementById("container");
+        restartApp(undefined);
+
+        function restartApp(locale) {
+            container.replaceChildren();
+            console.info(`Starting app with locale ${locale}`);
+
+            // (re-) create the app component
+            const app = document.createElement("i18n-app");
+            if (locale) {
+                app.setAttribute("forced-locale", locale);
+            }
+
+            // listen for selection event emitted from the react UI
+            // and recreate the app with the new locale
+            app.addEventListener("locale-changed", (event) => {
+                const newLocale = event.detail.locale;
+                restartApp(newLocale);
+            });
+
+            container.appendChild(app);
+        }
+    </script>
 </html>

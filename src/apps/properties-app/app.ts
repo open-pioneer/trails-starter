@@ -5,18 +5,18 @@ import { AppUI } from "./AppUI";
 const element = createCustomElement({
     component: AppUI,
     appMetadata,
-    async resolveProperties(ctx) {
+    async resolveConfig(ctx) {
         const customLevel = ctx.getAttribute("level");
         if (!customLevel) {
             return undefined;
         }
 
-        const customProperties: ApplicationProperties = {
+        const properties: ApplicationProperties = {
             "properties-app": {
                 notifierLevel: customLevel
             }
         };
-        return customProperties;
+        return { properties };
     }
 });
 

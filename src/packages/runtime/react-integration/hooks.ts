@@ -3,7 +3,7 @@ import { Error } from "@open-pioneer/core";
 import { InterfaceName, ServiceType } from "../ServiceRegistry";
 import { PackageContext as PackageContext, PackageContextMethods } from "./PackageContext";
 import { ErrorId } from "../errors";
-import { PackageI18n } from "../I18n";
+import { PackageIntl } from "../i18n";
 
 export interface UseServiceOptions {
     /** An additional qualifier to disambiguate service instances that implement the same interface. */
@@ -91,9 +91,9 @@ export function usePropertiesInternal(packageName: string): Readonly<Record<stri
  *
  * @private
  */
-export function useI18nInternal(packageName: string): PackageI18n {
+export function useIntlInternal(packageName: string): PackageIntl {
     const context = useContext(PackageContext);
-    return checkContext("useI18n", context).getI18n(packageName);
+    return checkContext("useIntl", context).getIntl(packageName);
 }
 
 function checkContext(

@@ -1,5 +1,5 @@
 import { assert, expect, it } from "vitest";
-import { createEmptyI18n } from "../I18n";
+import { createEmptyI18n } from "../i18n";
 import { expectError } from "../test-utils/expectError";
 import { InterfaceSpec, ReferenceSpec } from "./InterfaceSpec";
 import { ReadonlyServiceLookup } from "./ServiceLookup";
@@ -404,7 +404,7 @@ function mockServices(data: ServiceData[]): ServiceRepr[] {
             name,
             packageName,
             factory: createConstructorFactory(clazz),
-            i18n: createEmptyI18n(),
+            intl: createEmptyI18n(),
             dependencies,
             interfaces
         });

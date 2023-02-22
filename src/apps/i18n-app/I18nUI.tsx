@@ -1,40 +1,69 @@
 import {
     Button,
-    Modal,
-    ModalBody,
-    ModalCloseButton,
-    ModalContent,
-    ModalFooter,
-    ModalHeader,
-    ModalOverlay,
-    useDisclosure
+    Center,
+    Container,
+    Heading,
+    HStack,
+    ListItem,
+    Text,
+    UnorderedList,
+    VStack
 } from "@open-pioneer/chakra-integration";
-import { useI18nInternal } from "@open-pioneer/runtime/react-integration/hooks";
+import { useIntlInternal } from "@open-pioneer/runtime/react-integration/hooks";
+import { useService } from "open-pioneer:react-hooks";
+import { ReactNode } from "react";
 
 export function I18nUI() {
-    const { isOpen, onOpen, onClose } = useDisclosure();
-    const i18n = useI18nInternal("i18n-app"); // TODO generated hook
+    const intl = useIntlInternal("i18n-app"); // TODO generated hook
+    const appCtx = useService("runtime.ApplicationContext");
+    const locale = appCtx.getLocale();
+    const supportedLocales = appCtx.getSupportedLocales();
+
     return (
-        <>
-            <Button onClick={onOpen}>{i18n.formatMessage({ id: "open" })}</Button>
+        <Container>
+            <Heading size="lg" mb={4}>
+                {intl.formatMessage({ id: "content.header" })}
+            </Heading>
 
-            <Modal isOpen={isOpen} onClose={onClose}>
-                <ModalOverlay />
-                <ModalContent>
-                    <ModalHeader>{i18n.formatMessage({ id: "dialog.title" })}</ModalHeader>
-                    <ModalCloseButton />
-                    <ModalBody>{i18n.formatMessage({ id: "dialog.content" })}</ModalBody>
+            <Text mb={4}>{intl.formatMessage({ id: "content.description" })}</Text>
 
-                    <ModalFooter>
-                        <Button colorScheme="blue" mr={3} onClick={onClose}>
-                            {i18n.formatMessage({ id: "dialog.confirm" })}
-                        </Button>
-                        <Button variant="ghost" onClick={onClose}>
-                            {i18n.formatMessage({ id: "dialog.abort" })}
-                        </Button>
-                    </ModalFooter>
-                </ModalContent>
-            </Modal>
-        </>
+            <UnorderedList mb={4}>
+                <ListItem>Current locale: {locale}</ListItem>
+                <ListItem>Supported locales: {supportedLocales.join(", ")}</ListItem>
+                <ListItem>Current date: {intl.formatDate(new Date())}</ListItem>
+                <ListItem>Large number: {intl.formatNumber(1234567.89)}</ListItem>
+            </UnorderedList>
+
+            <Center>
+                <LocalePicker current={locale} locales={supportedLocales} />
+            </Center>
+        </Container>
+    );
+}
+
+function LocalePicker(props: { current: string; locales: readonly string[] }) {
+    const intl = useIntlInternal("i18n-app"); // TODO generated hook
+    const eventService = useService("integration.ExternalEventService");
+    const changeLocale = (locale: string | undefined) => {
+        eventService.emitEvent("locale-changed", {
+            locale: locale
+        });
+    };
+
+    // One entry for every supported locale (to force it) and one empty
+    // to pick the default behavior.
+    const makeButton = (locale: string | undefined) => (
+        <Button key={locale ?? ""} onClick={() => changeLocale(locale)}>
+            {locale ?? intl.formatMessage({ id: "picker.default" })}
+        </Button>
+    );
+    const buttons: ReactNode[] = props.locales.map((locale) => makeButton(locale));
+    buttons.unshift(makeButton(undefined));
+
+    return (
+        <VStack>
+            <Text>{intl.formatMessage({ id: "picker.choose" })}</Text>
+            <HStack spacing={2}>{buttons}</HStack>
+        </VStack>
     );
 }

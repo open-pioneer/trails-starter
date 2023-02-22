@@ -1,5 +1,5 @@
 import { expect, it } from "vitest";
-import { AppI18n, createEmptyI18n, PackageI18n } from "../I18n";
+import { AppI18n, createEmptyI18n, PackageIntl } from "../i18n";
 import { PackageMetadata } from "../metadata";
 import { expectError } from "../test-utils/expectError";
 import { createPackages, PackageRepr } from "./PackageRepr";
@@ -53,13 +53,9 @@ it("parses package metadata into internal package representations", function () 
 
     const testi18n: AppI18n = {
         locale: "test-locale",
+        supportedLocales: [],
         createPackageI18n() {
-            return {
-                locale: this.locale,
-                formatMessage() {
-                    throw new Error("not implemented");
-                }
-            };
+            return createEmptyI18n("zh-CN");
         }
     };
 
@@ -68,13 +64,13 @@ it("parses package metadata into internal package representations", function () 
 
     const packageA = packages.find((b) => b.name === "a")!;
     expect(packageA).toBeDefined();
-    expect(packageA.i18n.locale).toEqual("test-locale");
+    expect(packageA.intl.locale).toEqual("zh-CN");
 
     const serviceA = packageA.services.find((s) => s.name === "A")!;
     expect(serviceA).toBeDefined();
     expect(serviceA.id).toStrictEqual("a::A");
     expect(serviceA.state).toStrictEqual("not-constructed");
-    expect(serviceA.i18n.locale).toEqual("test-locale");
+    expect(serviceA.intl.locale).toEqual("zh-CN");
     expect(serviceA.instance).toBeUndefined();
     expect(serviceA.dependencies).toStrictEqual([
         {
@@ -87,7 +83,7 @@ it("parses package metadata into internal package representations", function () 
 
     const packageB = packages.find((b) => b.name === "b")!;
     expect(packageB).toBeDefined();
-    expect(packageB.i18n.locale).toEqual("test-locale");
+    expect(packageB.intl.locale).toEqual("zh-CN");
 
     const serviceB = packageB.services.find((s) => s.name === "B")!;
     expect(serviceB).toBeDefined();
@@ -229,7 +225,7 @@ it("passes package properties to created ServiceRepr instances", function () {
 function createPackageFromMetadata(
     data: PackageMetadata,
     properties?: Record<string, unknown>,
-    i18n?: PackageI18n
+    i18n?: PackageIntl
 ) {
     return PackageRepr.create(data, i18n ?? createEmptyI18n(), properties);
 }

@@ -3,7 +3,7 @@ import { ServiceMetadata } from "../metadata";
 import { Service, ServiceConstructor, ServiceOptions } from "../Service";
 import { Error } from "@open-pioneer/core";
 import { InterfaceSpec, parseReferenceSpec, ReferenceSpec } from "./InterfaceSpec";
-import { PackageI18n } from "../I18n";
+import { PackageIntl } from "../i18n";
 
 export type ServiceState = "not-constructed" | "constructing" | "constructed" | "destroyed";
 
@@ -26,7 +26,7 @@ export interface ServiceReprOptions {
     name: string;
     packageName: string;
     factory: ServiceFactory;
-    i18n: PackageI18n;
+    intl: PackageIntl;
     dependencies?: ServiceDependency[];
     interfaces?: InterfaceSpec[];
     properties?: Record<string, unknown>;
@@ -40,7 +40,7 @@ export class ServiceRepr {
     static create(
         packageName: string,
         data: ServiceMetadata,
-        i18n: PackageI18n,
+        intl: PackageIntl,
         properties?: Record<string, unknown>
     ): ServiceRepr {
         const clazz = data.clazz;
@@ -67,7 +67,7 @@ export class ServiceRepr {
             name,
             packageName,
             factory,
-            i18n,
+            intl,
             dependencies,
             interfaces,
             properties
@@ -84,7 +84,7 @@ export class ServiceRepr {
     readonly packageName: string;
 
     /** Locale-dependant i18n messages. */
-    readonly i18n: PackageI18n;
+    readonly intl: PackageIntl;
 
     /** Service properties made available via the service's constructor. */
     readonly properties: Readonly<Record<string, unknown>>;
@@ -112,7 +112,7 @@ export class ServiceRepr {
             name,
             packageName,
             factory,
-            i18n,
+            intl,
             dependencies = [],
             interfaces = [],
             properties = {}
@@ -125,7 +125,7 @@ export class ServiceRepr {
         this.name = name;
         this.packageName = packageName;
         this.factory = factory;
-        this.i18n = i18n;
+        this.intl = intl;
         this.dependencies = dependencies;
         this.interfaces = interfaces;
         this.properties = properties;
@@ -192,7 +192,7 @@ export class ServiceRepr {
             this._instance = createService(this.factory, {
                 ...options,
                 properties: this.properties,
-                i18n: this.i18n
+                intl: this.intl
             });
             this._state = "constructed";
             this._useCount = 1;
