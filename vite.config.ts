@@ -58,4 +58,11 @@ export default defineConfig({
     test: {
         globals: true
     }
+
+    // disable hot reloading
+    // https://vitejs.dev/config/server-options.html#server-hmr
+    // in dev mode press "r" to trigger reload and make changes active
+    /*server: {
+        hmr: false
+    }*/
 });
