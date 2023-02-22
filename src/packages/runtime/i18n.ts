@@ -91,6 +91,7 @@ export interface LocalePickResult {
     messageLocale: string;
 }
 
+// TODO: Log messages
 /**
  * Picks a locale for the app. Exported for tests.
  *
@@ -103,10 +104,7 @@ export function pickLocale(
     appLocales: string[],
     userLocales: string[]
 ): LocalePickResult {
-    const pickImpl = (
-        requestedLocales: string[],
-        allowFallback = false
-    ): LocalePickResult | undefined => {
+    const pickImpl = (requestedLocales: string[]): LocalePickResult | undefined => {
         for (const requestedLocale of requestedLocales) {
             // try exact match
             if (appLocales.includes(requestedLocale)) {
@@ -115,7 +113,7 @@ export function pickLocale(
 
             // try plain language tag (e.g. "en") as fallback
             const plainLanguage = requestedLocale.match(/^([a-z]+)/i)?.[1];
-            if (allowFallback && plainLanguage && appLocales.includes(plainLanguage)) {
+            if (plainLanguage && appLocales.includes(plainLanguage)) {
                 return { messageLocale: plainLanguage, locale: requestedLocale };
             }
         }
@@ -137,7 +135,7 @@ export function pickLocale(
     }
 
     // Match preferred locale
-    const supportedLocale = pickImpl(userLocales, true);
+    const supportedLocale = pickImpl(userLocales);
     if (supportedLocale) {
         return supportedLocale;
     }

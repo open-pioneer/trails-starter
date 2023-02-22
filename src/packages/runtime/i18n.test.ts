@@ -42,11 +42,11 @@ it("supports forcing a custom locale", () => {
 });
 
 it("throws if a locale cannot be forced", () => {
-    const appLocales = ["en", "de"];
+    const appLocales = ["en", "zh"];
     const userLocales = ["de-DE"];
     expect(() =>
         pickLocale("de-simple", appLocales, userLocales)
     ).toThrowErrorMatchingInlineSnapshot(
-        "\"runtime:unsupported-locale: Locale 'de-simple' cannot be forced because it is not supported by the application. Supported locales are en, de.\""
+        "\"runtime:unsupported-locale: Locale 'de-simple' cannot be forced because it is not supported by the application. Supported locales are en, zh.\""
     );
 });
