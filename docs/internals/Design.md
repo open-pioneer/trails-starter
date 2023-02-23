@@ -40,10 +40,6 @@ The purpose of this project is building web applications from a set of composabl
 
 -   All routine tasks shall be automated.
 
-### Optional goals
-
-TDB
-
 ## Technology choices
 
 ### Vite
@@ -126,6 +122,12 @@ Reasons for that choice include:
 -   Can integrate (with some complexity) into the shadow dom technology
 
 [Material UI](https://mui.com/core/) was the second contender.
+
+### I18N Framework
+
+[FormatJS](https://formatjs.io/) was chosen as the i18n framework for our technology stack.
+It it well maintained, used by a large number of projects and has a well designed API.
+The central interface exposed by FormatJS is the `intl` object (see [API](https://formatjs.io/docs/react-intl/api/#intlshape)).
 
 ## Implementation strategy
 
@@ -269,11 +271,7 @@ The responsibilities are:
 4. Launch all requires services and inject required references (required components launch before their dependents, cycles are an error)
 5. Set up the UI Framework (Framework specific options, e.g. root nodes for menus).
 6. Render the application's UI
-
-TODO:
-
--   Implement properties on the HTML Tag, e.g. `<sample-app foo="bar" />`, perhaps including global options
--   Implement API on the web component instance (methods and events)
+7. Expose an API from the web component
 
 ### Test support
 
@@ -371,6 +369,16 @@ globalThis.customElements.define("sample-app", createCustomElement(app));
 
 More specific ways of configuration can be built on top of this generic API.
 For example, a hardcoded value can be returned, or a `.json` file can be imported and returned.
+
+### I18N Support
+
+FormatJS will be integrated as the runtime component for i18n support.
+Every package can define a set of translation files (one per supported language) which will be loaded at runtime by the framework.
+
+> NOTE: The build system combines translation files of individual packages into per-app translation files for efficiency.
+> Thus, there is one translation file per (app, supported language) combination.
+
+Every package currently receives its own `intl` instances with the appropriate messages defined in the translation files.
 
 ### Multi-page application
 
