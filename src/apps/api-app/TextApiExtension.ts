@@ -12,14 +12,14 @@ export class TextApiExtension implements ApiExtension {
     private logger: Logger;
     constructor(opts: ServiceOptions<References>) {
         this.textService = opts.references.textService;
-        this.logger = createLogger("test-prefix");
+        this.logger = createLogger("api-app:TextApiExtension");
     }
 
     async getApiMethods() {
         return {
             changeText: (text: string) => {
                 this.textService.setText(text);
-                this.logger.warn("api-app:TextApiExtension", { testLog: 123, text: text });
+                this.logger.warn("Test message", { testLog: 123, text: text });
             }
         };
     }

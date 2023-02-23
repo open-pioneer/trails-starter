@@ -1,8 +1,5 @@
 const LOG_LEVEL = validateLogLevel(__LOG_LEVEL__);
 
-// todo write tests
-//  (maybe override _doLog method)
-
 /**
  * Creates and returns a new logger instance for an application wide standardized logging.
  * For available log methods see Logger class.
@@ -84,7 +81,7 @@ export interface Logger {
 /**
  * A class implementing a logger with a global log level.
  */
-class LoggerImpl implements Logger {
+export class LoggerImpl implements Logger {
     prefix: string;
     private readonly enabledLogLevelNumber: number;
 
@@ -94,7 +91,7 @@ class LoggerImpl implements Logger {
     }
 
     isDebug() {
-        return this.enabledLogLevelNumber === logLevelNumbers.DEBUG;
+        return this._isLogLevelEnabled("DEBUG");
     }
 
     /**
@@ -163,12 +160,12 @@ class LoggerImpl implements Logger {
  * Converts a LogLevel to a browser's debugging console method name.
  * @param logLevel
  */
-function logLevelToConsoleMethodName(logLevel: LogLevel): "info" | "debug" | "warn" | "error" {
+function logLevelToConsoleMethodName(logLevel: LogLevel): "debug" | "info" | "warn" | "error" {
     switch (logLevel) {
-        case "INFO":
-            return "info";
         case "DEBUG":
             return "debug";
+        case "INFO":
+            return "info";
         case "WARN":
             return "warn";
         case "ERROR":
