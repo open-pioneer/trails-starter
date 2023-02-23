@@ -36,24 +36,13 @@ export interface PackageContextProviderProps {
     /**
      * I18n messages for packages
      */
-    i18n?: {
-        [packageName: string]: {
-            /**
-             * The locale for embedded default messages.
-             *
-             * See also https://formatjs.io/docs/intl#message-descriptor
-             *
-             * @default "en"
-             */
-            defaultMessageLocale?: string;
-
-            /**
-             * I18n messages as (messageId, message) entries.
-             *
-             * @default {}
-             */
-            messages?: Record<string, string>;
-        };
+    messages?: {
+        /**
+         * I18n messages as (messageId, message) entries.
+         *
+         * @default {}
+         */
+        [packageName: string]: Record<string, string>;
     };
 
     /** Children to render */
@@ -82,7 +71,7 @@ function createPackageContextMethods(
     const qualifiedServices = options?.qualifiedServices ?? {};
     const properties = options?.properties ?? {};
     const locale = options?.locale ?? "en";
-    const i18n = options?.i18n ?? {};
+    const messages = options?.messages ?? {};
     const cachedIntl: Record<string, IntlShape> = {};
     return {
         getService(packageName, interfaceName, options) {
@@ -129,15 +118,12 @@ function createPackageContextMethods(
         },
         getIntl(packageName) {
             const initIntl = () => {
-                const packageI18n = i18n[packageName];
-                const defaultLocale = packageI18n?.defaultMessageLocale ?? "en";
-                const messages = packageI18n?.messages ?? {};
+                const packageMessages = messages[packageName];
                 const cache = createIntlCache();
                 return createIntl(
                     {
                         locale,
-                        defaultLocale,
-                        messages
+                        messages: packageMessages
                     },
                     cache
                 );

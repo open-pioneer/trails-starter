@@ -5,6 +5,7 @@ import { expect, it } from "vitest";
 import { screen, render } from "@testing-library/react";
 import { PackageContextProvider, PackageContextProviderProps } from "./react";
 import { useProperties, useService, useServices } from "open-pioneer:react-hooks";
+import { useIntlInternal } from "@open-pioneer/runtime/react-integration/hooks";
 
 it("should allow injection of service from the test", async () => {
     function Component() {
@@ -132,5 +133,30 @@ it("should allow injection of properties from the test", async () => {
     );
 
     const div = await screen.findByText("Hello World!");
+    expect(div.tagName).toBe("DIV");
+});
+
+it("should allow injection of i18n messages from the test", async () => {
+    function Component() {
+        const intl = useIntlInternal("@open-pioneer/test-utils"); // TODO public hook
+        return <div>Message: {intl.formatMessage({ id: "message" })}</div>;
+    }
+
+    const mocks: PackageContextProviderProps = {
+        messages: {
+            "@open-pioneer/test-utils": {
+                message: "Hello World!"
+            }
+        }
+    };
+
+    render(
+        <PackageContextProvider {...mocks}>
+            <Component />
+        </PackageContextProvider>
+    );
+
+    const div = await screen.findByText(/^Message:/);
+    expect(div.textContent).toBe("Message: Hello World!");
     expect(div.tagName).toBe("DIV");
 });
