@@ -2,11 +2,15 @@
 
 ## App
 
-Apps are the main artifact created by this setup.
-They define a [Web Component](https://developer.mozilla.org/en-US/docs/Web/Web_Components) that can be embedded without friction into a host site by relying on a _Shadow Dom_.
+An app is a [Web Component](https://developer.mozilla.org/en-US/docs/Web/Web_Components) produced by this framework.
+
+Apps are defined by obtaining a custom element class from the `createCustomElement` factory function (from the runtime package), which can then be registered with the browser by calling `customElements.define(...)`.
+The resulting web component can be embedded without friction into a host site by relying on the [shadow DOM](https://developer.mozilla.org/en-US/docs/Web/Web_Components/Using_shadow_DOM).
 
 Multiple apps can be developed in the same repository.
 When they are built, they share common code and assets for efficiency.
+
+Apps are developed in application packages.
 
 ## Application package
 

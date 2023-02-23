@@ -110,6 +110,8 @@ Services and UI components will automatically receive appropriate `intl` objects
 -   The service constructor's `options` parameter contains `options.intl`
 -   The react hook `useIntl()` (see below) provides the same `intl` object.
 
+See [I18N Format](./I18nFormat.md) for more details.
+
 > NOTE: The `i18n` value has an additional meaning in application packages:
 > The defined languages will be the languages supported by the application, and they must either be defined
 > in all packages or must be added manually in the application (via `overrides` in a `lang.yaml` file).
@@ -354,6 +356,8 @@ function ExampleComponent() {
     return <h1>{intl.formatMessage({ id: "content.header" })}</h1>;
 }
 ```
+
+See [I18N Format](./I18nFormat.md) for more details.
 
 ## Advanced service references
 
