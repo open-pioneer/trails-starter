@@ -2,7 +2,7 @@ const LOG_LEVEL = validateLogLevel(__LOG_LEVEL__);
 
 /**
  * Creates and returns a new logger instance for an application wide standardized logging.
- * For available log methods see Logger class.
+ * For available log methods see {@link Logger} interface.
  * The log level is globally configured (see vite.config.ts).
  *
  * @param prefix Prefix used to prefix all log messages invoked by the created logger instance.

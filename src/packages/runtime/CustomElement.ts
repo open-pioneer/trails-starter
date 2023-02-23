@@ -1,6 +1,7 @@
 import { ComponentType } from "react";
 import {
     createAbortError,
+    createLogger,
     destroyResource,
     Error,
     isAbortError,
@@ -19,6 +20,7 @@ import { createBuiltinPackage, RUNTIME_API_SERVICE } from "./builtin-services";
 import { ReferenceSpec } from "./service-layer/InterfaceSpec";
 import { PropertiesRegistry } from "./PropertiesRegistry";
 import { AppI18n, initI18n } from "./i18n";
+const LOG = createLogger("runtime:CustomElement");
 
 /**
  * Options for the {@link createCustomElement} function.
@@ -157,6 +159,8 @@ export function createCustomElement(options: CustomElementOptions): ApplicationE
         }
 
         connectedCallback() {
+            LOG.debug("Launching application");
+
             if (this.#state) {
                 this.#state.destroy();
             }
@@ -166,8 +170,12 @@ export function createCustomElement(options: CustomElementOptions): ApplicationE
         }
 
         disconnectedCallback() {
+            LOG.debug("Shutting down application");
+
             this.#state?.destroy();
             this.#state = undefined;
+
+            LOG.debug("Application destroyed");
         }
 
         when() {
@@ -244,16 +252,16 @@ class ElementState {
     }
 
     private async startImpl() {
-        const { options, shadowRoot, hostElement: outerHtmlElement } = this;
+        const { options, shadowRoot, hostElement } = this;
 
         // Resolve custom application config
-        const config = (this.config = await gatherConfig(outerHtmlElement, options));
-        if (this.state === "destroyed") {
-            throwAbortError();
-        }
+        const config = (this.config = await gatherConfig(hostElement, options));
+        this.checkAbort();
+        LOG.debug("Application config is", config);
 
         // Decide on locale and load i18n messages (if any).
         const i18n = await initI18n(options.appMetadata, config.locale);
+        this.checkAbort();
 
         // Setup application root node in the shadow dom
         const container = (this.container = createContainer());
@@ -267,6 +275,7 @@ class ElementState {
             i18n
         });
         await this.initAPI(serviceLayer);
+        this.checkAbort();
 
         // Launch react
         this.reactIntegration = new ReactIntegration({
@@ -277,6 +286,8 @@ class ElementState {
         });
         this.render();
         this.state = "started";
+
+        LOG.debug("Application started");
     }
 
     private render() {
@@ -288,7 +299,10 @@ class ElementState {
         const styleNode = document.createElement("style");
         applyStyles(styleNode, styles);
         if (import.meta.hot) {
-            this.stylesWatch = styles?.on?.("changed", () => applyStyles(styleNode, styles));
+            this.stylesWatch = styles?.on?.("changed", () => {
+                LOG.debug("Application styles changed");
+                applyStyles(styleNode, styles);
+            });
         }
         return styleNode;
     }
@@ -315,6 +329,10 @@ class ElementState {
             i18n
         });
         this.serviceLayer = serviceLayer;
+
+        if (LOG.isDebug()) {
+            LOG.debug("Launching service layer with packages", Object.fromEntries(packages));
+        }
         serviceLayer.start();
         return { serviceLayer, packages };
     }
@@ -338,11 +356,18 @@ class ElementState {
         const apiService = result.value.getInstanceOrThrow() as ApiService;
         try {
             const api = (this.api = await apiService.getApi());
+            LOG.debug("Application API initialized to", api);
             this.apiPromise?.resolve(api);
         } catch (e) {
             throw new Error(ErrorId.INTERNAL, "Failed to gather the application's API methods.", {
                 cause: e
             });
+        }
+    }
+
+    private checkAbort() {
+        if (this.state === "destroyed") {
+            throwAbortError();
         }
     }
 }
@@ -398,14 +423,14 @@ function createServiceLayer(config: {
  * Gathers application properties by reading them from the options object
  * and by (optionally) invoking the `resolveProperties` hook.
  */
-async function gatherConfig(rootNode: HTMLElement, options: CustomElementOptions) {
+async function gatherConfig(hostElement: HTMLElement, options: CustomElementOptions) {
     let configs: ApplicationConfig[];
     try {
         configs = [
             options.config ?? {},
             (await options.resolveConfig?.({
                 getAttribute(name) {
-                    return rootNode.getAttribute(name) ?? undefined;
+                    return hostElement.getAttribute(name) ?? undefined;
                 }
             })) ?? {}
         ];

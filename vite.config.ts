@@ -14,56 +14,62 @@ const targets = ["chrome92", "edge92", "firefox91", "safari14"];
 
 // Generates a stats.html in the output dir to inspect bundle sizes.
 // See also: https://github.com/btd/rollup-plugin-visualizer
-const visualize = false;
+const visualize = true;
 
 // https://vitejs.dev/config/
-export default defineConfig({
-    root: resolve(__dirname, "src"),
+export default defineConfig(({ mode }) => {
+    const devMode = mode === "development";
 
-    // Generates relative urls in html etc.
-    base: "./",
+    // Allowed values are "DEBUG", "INFO", "WARN", "ERROR"
+    const logLevel = devMode ? "INFO": "WARN";
 
-    build: {
-        outDir: resolve(__dirname, "dist"),
-        emptyOutDir: true,
-        target: targets
-    },
+    return {
+        root: resolve(__dirname, "src"),
 
-    plugins: [
-        pioneer({
-            rootSite: true,
-            sites: [
-                "api-sample",
-                "chakra-sample",
-                "extension-sample",
-                "map-sample",
-                "properties-sample",
-                "styling-sample",
-                "i18n-sample"
-            ]
-        }),
-        react(),
-        eslint(),
-        visualize &&
-            (visualizer({ gzipSize: true, brotliSize: true, emitFile: true }) as PluginOption)
-    ],
+        // Generates relative urls in html etc.
+        base: "./",
 
-    // define global constants
-    // See also: https://vitejs.dev/config/shared-options.html#define
-    define: {
-        // __LOG_LEVEL__: allowed values are "DEBUG", "INFO", "WARN", "ERROR" (wrapped in JSON.stringify)
-        __LOG_LEVEL__: JSON.stringify("WARN")
-    },
+        build: {
+            outDir: resolve(__dirname, "dist"),
+            emptyOutDir: true,
+            target: targets
+        },
 
-    // https://vitest.dev/config/
-    test: {
-        globals: true
-    }
+        plugins: [
+            pioneer({
+                rootSite: true,
+                sites: [
+                    "api-sample",
+                    "chakra-sample",
+                    "extension-sample",
+                    "map-sample",
+                    "properties-sample",
+                    "styling-sample",
+                    "i18n-sample"
+                ]
+            }),
+            react(),
+            eslint(),
+            visualize &&
+                (visualizer({ gzipSize: true, brotliSize: true, emitFile: true }) as PluginOption)
+        ],
 
-    // disable hot reloading
-    // in dev mode press "r" to trigger reload and make changes active
-    // See also: https://vitejs.dev/config/server-options.html#server-hmr
-    /*server: {
-        hmr: false
-    }*/
+        // define global constants
+        // See also: https://vitejs.dev/config/shared-options.html#define
+        define: {
+            __LOG_LEVEL__: JSON.stringify(logLevel)
+        },
+
+        // https://vitest.dev/config/
+        test: {
+            globals: true
+        }
+
+        // disable hot reloading
+        // in dev mode press "r" to trigger reload and make changes active
+        // See also: https://vitejs.dev/config/server-options.html#server-hmr
+        /*server: {
+            hmr: false
+        }*/
+    };
 });

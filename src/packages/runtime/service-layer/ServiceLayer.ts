@@ -1,5 +1,5 @@
 import { ServiceRepr } from "./ServiceRepr";
-import { Error } from "@open-pioneer/core";
+import { createLogger, Error } from "@open-pioneer/core";
 import { ErrorId } from "../errors";
 import {
     ComputedServiceDependencies,
@@ -18,6 +18,8 @@ import {
 } from "./InterfaceSpec";
 import { ReferenceMeta } from "../Service";
 import { RUNTIME_PACKAGE_NAME } from "../builtin-services";
+
+const LOG = createLogger("runtime:ServiceLayer");
 
 export type DynamicLookupResult = ServiceLookupResult | UndeclaredDependency;
 
@@ -74,11 +76,11 @@ export class ServiceLayer {
             })),
             ...uiDependencies
         ];
-
         const { serviceLookup, serviceDependencies } = verifyDependencies({
             services: allServices,
             requiredReferences: requiredReferences
         });
+
         this.allServices = allServices;
         this.requiredServices = getRequiredServices(requiredReferences, serviceLookup);
         this.serviceLookup = serviceLookup;
@@ -113,10 +115,9 @@ export class ServiceLayer {
                 )
                 .map((service) => `'${service.id}'`);
             if (unneededServices.length) {
-                console.warn(
-                    `The following services are contained in the application but were not started: ${unneededServices.join(
-                        ", "
-                    )}.`
+                const services = unneededServices.join(", ");
+                LOG.warn(
+                    `The following services are contained in the application but were not started: ${services}.`
                 );
             }
         }
@@ -204,6 +205,7 @@ export class ServiceLayer {
         }
 
         // Sets state to 'constructed' to finish the state transition, useCount is 1.
+        LOG.debug(`Creating service '${service.id}'.`);
         return service.create({ references, referencesMeta });
     }
 
@@ -219,6 +221,7 @@ export class ServiceLayer {
         // Destroy the service before its dependencies (reverse order
         // compared to construction).
         if (service.removeRef() <= 0) {
+            LOG.debug(`Destroying service '${service.id}'`);
             service.destroy();
         }
 

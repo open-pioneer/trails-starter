@@ -1,7 +1,8 @@
 import { createIntl, createIntlCache, IntlFormatters, IntlShape } from "@formatjs/intl";
 import { ErrorId } from "./errors";
-import { Error } from "@open-pioneer/core";
+import { createLogger, Error } from "@open-pioneer/core";
 import { ApplicationMetadata } from "./metadata";
+const LOG = createLogger("runtime:i18n");
 
 /**
  * Represents i18n info for the entire application.
@@ -45,17 +46,31 @@ export async function initI18n(
     forcedLocale: string | undefined
 ): Promise<AppI18n> {
     const supportedLocales = appMetadata?.locales ?? [];
-    const loadMessages = appMetadata?.loadMessages;
+    const userLocales = getBrowserLocales();
+    if (LOG.isDebug()) {
+        LOG.debug(
+            `Attempting to pick locale for user (locales: ${userLocales.join(
+                ", "
+            )}) from app (supported locales: ${supportedLocales.join(
+                ", "
+            )}) [forcedLocale=${forcedLocale}].`
+        );
+    }
+
     const { locale, messageLocale } = pickLocale(
         forcedLocale,
         supportedLocales,
         getBrowserLocales()
     );
 
+    if (LOG.isDebug()) {
+        LOG.debug(`Using locale '${locale}' with messages from locale '${messageLocale}'.`);
+    }
+
     let messages: Record<string, Record<string, string>>;
     if (supportedLocales.includes(messageLocale)) {
         try {
-            messages = (await loadMessages?.(messageLocale)) ?? {};
+            messages = (await appMetadata?.loadMessages?.(messageLocale)) ?? {};
         } catch (e) {
             throw new Error(
                 ErrorId.INTERNAL,
@@ -129,6 +144,11 @@ export function pickLocale(
                 ErrorId.UNSUPPORTED_LOCALE,
                 `Locale '${forcedLocale}' cannot be forced because it is not supported by the application.` +
                     ` Supported locales are ${localesList}.`
+            );
+        }
+        if (result.locale !== result.messageLocale) {
+            LOG.warn(
+                `Non-exact match for forced locale '${forcedLocale}': using messages from '${result.messageLocale}'.`
             );
         }
         return result;
