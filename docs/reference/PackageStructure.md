@@ -51,6 +51,7 @@ export default defineBuildConfig({});
 ```ts
 interface BuildConfig {
     styles?: string;
+    i18n?: string[];
     services?: Record<string, ServiceConfig>;
     ui?: UiConfig;
     properties?: Record<string, unknown>;
@@ -73,6 +74,47 @@ export default defineBuildConfig({
     styles: "./styles.css"
 });
 ```
+
+### `i18n`
+
+An array of locales supported by the package or application.
+When a package declares support for a given locale `<LOC>`, then a file named `./i18n/<LOC>.yaml` must exist.
+See [I18N-Format](./I18nFormat) for more details about the format of i18n files.
+
+Example:
+
+```js
+// build.config.mjs
+export default defineBuildConfig({
+    // ./i18n/de.yaml and ./i18n/en.yaml must exist
+    i18n: ["de", "en"]
+});
+```
+
+```yaml
+# i18n/en.yaml
+messages:
+    content:
+        header: "i18n example"
+```
+
+```yaml
+# i18n/de.yaml
+messages:
+    content:
+        header: "i18n Beispiel"
+```
+
+Services and UI components will automatically receive appropriate `intl` objects from the framework for the current application locale:
+
+-   The service constructor's `options` parameter contains `options.intl`
+-   The react hook `useIntl()` (see below) provides the same `intl` object.
+
+> NOTE: The `i18n` value has an additional meaning in application packages:
+> The defined languages will be the languages supported by the application, and they must either be defined
+> in all packages or must be added manually in the application (via `overrides` in a `lang.yaml` file).
+>
+> The first language in `i18n` becomes the application's fallback language when no other language can be applied for a given user.
 
 #### `services`
 
@@ -295,6 +337,22 @@ export default defineBuildConfig({
         greeting: "Hello World"
     }
 });
+```
+
+### `useIntl` Hook
+
+Returns the `intl` object for the calling component's package.
+The intl object is configured for the current application locale (messages, date and number formatting, etc.).
+
+```jsx
+// ExampleComponent.jsx
+import { useIntl } from "open-pioneer:react-hooks";
+
+function ExampleComponent() {
+    // Uses the content.header value defined in the section "i18n" at the top of the document
+    const intl = useIntl();
+    return <h1>{intl.formatMessage({ id: "content.header" })}</h1>;
+}
 ```
 
 ## Advanced service references

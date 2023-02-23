@@ -8,6 +8,11 @@ They define a [Web Component](https://developer.mozilla.org/en-US/docs/Web/Web_C
 Multiple apps can be developed in the same repository.
 When they are built, they share common code and assets for efficiency.
 
+## Application package
+
+A package that provides an app (typically in `app.js` or `app.ts`).
+Application packages are also pioneer packages.
+
 ## Pioneer package
 
 A special package type that serve as the building blocks of an app.
