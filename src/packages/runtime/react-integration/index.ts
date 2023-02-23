@@ -2,6 +2,7 @@ export {
     useServiceInternal,
     useServicesInternal,
     usePropertiesInternal,
+    useIntlInternal,
     type UseServiceOptions
 } from "./hooks";
 

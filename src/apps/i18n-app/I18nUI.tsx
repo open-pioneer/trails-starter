@@ -9,12 +9,11 @@ import {
     UnorderedList,
     VStack
 } from "@open-pioneer/chakra-integration";
-import { useIntlInternal } from "@open-pioneer/runtime/react-integration/hooks";
-import { useService } from "open-pioneer:react-hooks";
+import { useIntl, useService } from "open-pioneer:react-hooks";
 import { ReactNode } from "react";
 
 export function I18nUI() {
-    const intl = useIntlInternal("i18n-app"); // TODO generated hook
+    const intl = useIntl();
     const appCtx = useService("runtime.ApplicationContext");
     const locale = appCtx.getLocale();
     const supportedLocales = appCtx.getSupportedLocales();
@@ -42,7 +41,7 @@ export function I18nUI() {
 }
 
 function LocalePicker(props: { current: string; locales: readonly string[] }) {
-    const intl = useIntlInternal("i18n-app"); // TODO generated hook
+    const intl = useIntl();
     const eventService = useService("integration.ExternalEventService");
     const changeLocale = (locale: string | undefined) => {
         eventService.emitEvent("locale-changed", {

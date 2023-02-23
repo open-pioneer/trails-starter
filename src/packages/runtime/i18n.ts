@@ -32,7 +32,6 @@ function createPackageIntl(locale: string, messages: Record<string, string>) {
         {
             locale,
             messages
-            // TODO: defaultLocale?
         },
         cache
     );
@@ -106,7 +105,6 @@ export interface LocalePickResult {
     messageLocale: string;
 }
 
-// TODO: Log messages
 /**
  * Picks a locale for the app. Exported for tests.
  *

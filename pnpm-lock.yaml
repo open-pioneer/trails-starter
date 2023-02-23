@@ -6,7 +6,7 @@ importers:
     specifiers:
       '@open-pioneer/build-support': ^0.2.0
       '@open-pioneer/runtime': workspace:*
-      '@open-pioneer/vite-plugin-pioneer': ^0.2.3
+      '@open-pioneer/vite-plugin-pioneer': ^0.2.4
       '@testing-library/dom': ^8.20.0
       '@testing-library/jest-dom': ^5.16.5
       '@testing-library/react': ^13.4.0
@@ -38,7 +38,7 @@ importers:
     devDependencies:
       '@open-pioneer/build-support': 0.2.0
       '@open-pioneer/runtime': link:src/packages/runtime
-      '@open-pioneer/vite-plugin-pioneer': 0.2.3_p2cqieivpmmdix5kus4knyiyzy
+      '@open-pioneer/vite-plugin-pioneer': 0.2.4_p2cqieivpmmdix5kus4knyiyzy
       '@testing-library/dom': 8.20.0
       '@testing-library/jest-dom': 5.16.5
       '@testing-library/react': 13.4.0_biqbaboplfbrettd7655fr4n2y
@@ -2096,8 +2096,8 @@ packages:
     resolution: {integrity: sha512-H9ODcKfhXyyWPwg6fbypmtRV8qqaCt/RqNkOo+f2nZhJiUu9P/ik/C5+PVQunizhgh06wYFT/tjQks/Iw7ITTw==}
     dev: true
 
-  /@open-pioneer/vite-plugin-pioneer/0.2.3_p2cqieivpmmdix5kus4knyiyzy:
-    resolution: {integrity: sha512-lSZmoIGeYPamj6yOayvFfHZIICVhVnI3piAX6JLXGtL/5dD7AJ0wNQbLRQJNzIbc4bMElIL3VPxCpF69Yj3W8A==}
+  /@open-pioneer/vite-plugin-pioneer/0.2.4_p2cqieivpmmdix5kus4knyiyzy:
+    resolution: {integrity: sha512-Zd2iuCQ47PeQujYekHiHmqJ7N1MfIN++mF1AdnkwYEbnZ3FXEYnasx9XE+NYe6+qz5BOAgrsSqw6Iq4kIewAdA==}
     peerDependencies:
       '@open-pioneer/runtime': '*'
       vite: ^4.0.0

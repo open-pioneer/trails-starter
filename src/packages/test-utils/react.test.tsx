@@ -4,8 +4,7 @@
 import { expect, it } from "vitest";
 import { screen, render } from "@testing-library/react";
 import { PackageContextProvider, PackageContextProviderProps } from "./react";
-import { useProperties, useService, useServices } from "open-pioneer:react-hooks";
-import { useIntlInternal } from "@open-pioneer/runtime/react-integration/hooks";
+import { useIntl, useProperties, useService, useServices } from "open-pioneer:react-hooks";
 
 it("should allow injection of service from the test", async () => {
     function Component() {
@@ -138,7 +137,7 @@ it("should allow injection of properties from the test", async () => {
 
 it("should allow injection of i18n messages from the test", async () => {
     function Component() {
-        const intl = useIntlInternal("@open-pioneer/test-utils"); // TODO public hook
+        const intl = useIntl();
         return <div>Message: {intl.formatMessage({ id: "message" })}</div>;
     }
 
