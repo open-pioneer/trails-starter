@@ -396,9 +396,12 @@ TODO: More content
 
 ### Logger
 
-The framework provides a logger for standardized application wide logging. The log level is configured globally in the vite.config.js.
+The framework provides a logger for standardized application wide logging.
+The log level is configured globally in the vite.config.js.
 
-To create a logger instance, call the `createLogger` method. It takes a prefix (string) to prepend to each message. The prefix should always contain the package name and if applicable additionally the service/class name.
+To create a logger instance, call the `createLogger` method.
+It takes a prefix (string) to prepend to each message.
+The prefix should always contain the package name and if applicable additionally the service/class name (separated with ':').
 
 The logger provides log methods for the following log levels with the following order: DEBUG < INFO < WARN < ERROR.
 
@@ -419,7 +422,9 @@ export class LoggerTestExample {
 }
 ```
 
-Hint: If using the logger, the original trace is lost. However, in Chrome you can see the trace for error and warning messages if clicking on the message title. In firefox this only seems to work for error messages.
+Hint: If you're using the logger instead of the browser's builtin console, the original trace will usually be lost lost.
+However, in Chrome you can see the trace for error and warning messages by clicking on the message title.
+In Firefox this only seems to work for error messages.
 
 ## Known Issues
 

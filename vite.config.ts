@@ -48,7 +48,8 @@ export default defineConfig({
             (visualizer({ gzipSize: true, brotliSize: true, emitFile: true }) as PluginOption)
     ],
 
-    // define global constants (e.g. log level (see below))
+    // define global constants
+    // See also: https://vitejs.dev/config/shared-options.html#define
     define: {
         // __LOG_LEVEL__: allowed values are "DEBUG", "INFO", "WARN", "ERROR" (wrapped in JSON.stringify)
         __LOG_LEVEL__: JSON.stringify("WARN")
@@ -60,8 +61,8 @@ export default defineConfig({
     }
 
     // disable hot reloading
-    // https://vitejs.dev/config/server-options.html#server-hmr
     // in dev mode press "r" to trigger reload and make changes active
+    // See also: https://vitejs.dev/config/server-options.html#server-hmr
     /*server: {
         hmr: false
     }*/

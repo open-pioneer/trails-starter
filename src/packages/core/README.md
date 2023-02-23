@@ -39,13 +39,16 @@ All object needing some cleanup action to be called should use the `destroy` met
 
 ## Logger
 
-The 'Logger' class provides a logger for standardized application wide logging. The log level is configured globally in the vite.config.js.
+The 'Logger' class provides a logger for standardized application wide logging.
+The log level is configured globally in the vite.config.js.
 
-To create a logger instance, call the `createLogger` method. It takes a prefix (string) to prepend to each message.
+To create a logger instance, call the `createLogger` method.
+It takes a prefix (string) to prepend to each message.
+Use `:` as a separator to encode hierarchical names (e.g. `"some-package:SomeClass"`).
 
 The logger provides log methods for the following log levels with the following order: DEBUG < INFO < WARN < ERROR.
 
-For example:
+For example (as class attribute):
 
 ```ts
 import { createLogger, Logger } from "@open-pioneer/core";
@@ -60,4 +63,11 @@ export class LoggerTestExample {
         this.logger.warn("example message", { testLog: 123, text: "this is a text" });
     }
 }
+```
+
+Or as a shared logger at module scope:
+
+```ts
+import { createLogger } from "@open-pioneer/core";
+const LOG = createLogger("example-package");
 ```

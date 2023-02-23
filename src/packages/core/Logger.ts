@@ -1,4 +1,4 @@
-const logLevel = validateLogLevel(__LOG_LEVEL__);
+const LOG_LEVEL = validateLogLevel(__LOG_LEVEL__);
 
 // todo write tests
 //  (maybe override _doLog method)
@@ -6,11 +6,12 @@ const logLevel = validateLogLevel(__LOG_LEVEL__);
 /**
  * Creates and returns a new logger instance for an application wide standardized logging.
  * For available log methods see Logger class.
- * The log level is globally configured.
+ * The log level is globally configured (see vite.config.ts).
+ *
  * @param prefix Prefix used to prefix all log messages invoked by the created logger instance.
  */
 export function createLogger(prefix: string): Logger {
-    return new LoggerImpl(prefix, logLevel);
+    return new LoggerImpl(prefix, LOG_LEVEL);
 }
 
 /**
@@ -29,9 +30,10 @@ const logLevelNumbers: Record<LogLevel, number> = {
 
 export interface LogMethod {
     /**
-     * Logger's log method structure
+     * Logger's log method signature
+     *
      * @param message Log message to be logged (attached to the prefix). Can be a string or an Error.
-     * @param values Additional values to be logged (attached to message). Takes an array of any values.
+     * @param values Arbitrary amount of additional values to be logged (attached to message).
      */
     (message: string | Error, ...values: unknown[]): void;
 }
