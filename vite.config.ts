@@ -14,7 +14,7 @@ const targets = ["chrome92", "edge92", "firefox91", "safari14"];
 
 // Generates a stats.html in the output dir to inspect bundle sizes.
 // See also: https://github.com/btd/rollup-plugin-visualizer
-const visualize = true;
+const visualize = false;
 
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => {
