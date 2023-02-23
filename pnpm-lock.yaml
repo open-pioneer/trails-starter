@@ -101,12 +101,10 @@ importers:
       '@open-pioneer/chakra-integration': workspace:^
       '@open-pioneer/integration': workspace:^
       '@open-pioneer/runtime': workspace:^
-      test-i18n-package: workspace:^
     dependencies:
       '@open-pioneer/chakra-integration': link:../../packages/chakra-integration
       '@open-pioneer/integration': link:../../packages/integration
       '@open-pioneer/runtime': link:../../packages/runtime
-      test-i18n-package: link:../../packages/test-i18n-package
 
   src/apps/ol-app:
     specifiers:
@@ -193,9 +191,6 @@ importers:
       react-dom: 18.2.0_react@18.2.0
     devDependencies:
       '@open-pioneer/test-utils': link:../test-utils
-
-  src/packages/test-i18n-package:
-    specifiers: {}
 
   src/packages/test-ui-components:
     specifiers: {}
