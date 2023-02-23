@@ -9,6 +9,7 @@
 
 -   [Glossary](./reference/Glossary.md)
 -   [Package Structure](./reference/PackageStructure.md)
+-   [I18N Format](./reference/I18nFormat.md)
 -   TODO: Spec app
 
 ## Internals
