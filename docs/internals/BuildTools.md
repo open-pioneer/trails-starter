@@ -217,3 +217,9 @@ The build plugin is organized into two important subdirectories:
     We rely heavily on [`@babel/generator`](https://babeljs.io/docs/babel-generator) and [`@babel/template`](https://babeljs.io/docs/babel-template) to achieve generation of valid JavaScript output.
 
     The input to the codegen functions is always one of the metadata types computed for application or package.
+
+## Further reading
+
+-   [Rollup's plugin API](https://rollupjs.org/plugin-development/)
+-   [Vite's plugin API](https://vitejs.dev/guide/api-plugin.html)
+-   [Vite's HMR API](https://vitejs.dev/guide/api-hmr.html)
