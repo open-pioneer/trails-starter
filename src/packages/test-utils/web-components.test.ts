@@ -46,21 +46,21 @@ it("should render the same component multiple times (needs shared tag name)", as
     const container2 = document.createElement("div");
     document.body.append(container1, container2);
 
-    await renderComponent(tag, {
+    const { node: node1 } = await renderComponent(tag, {
         attributes: {
             greeting: "Hello"
         },
         container: container1
     });
 
-    await renderComponent(tag, {
+    const { node: node2 } = await renderComponent(tag, {
         attributes: {
             greeting: "Bye"
         },
         container: container2
     });
 
-    expect(document.body).toMatchSnapshot();
+    expect([node1.innerHTML, node2.innerHTML]).toMatchSnapshot();
 });
 
 it("should render a web component with a shadow dom", async function () {

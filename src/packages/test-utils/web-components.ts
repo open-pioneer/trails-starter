@@ -1,6 +1,13 @@
 import { waitFor, within } from "@testing-library/dom";
 
-let counter = 1;
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const GLOBAL = global as any;
+
+function nextId(): number {
+    GLOBAL["__WEB_COMPONENT_COUNT__"] ??= 0;
+    const id = (GLOBAL["__WEB_COMPONENT_COUNT__"] += 1);
+    return id;
+}
 
 /**
  * Renders the given component into the DOM and returns the new node.
@@ -78,7 +85,7 @@ export function defineComponent(
     }
 ) {
     const nameHint = options?.nameHint ?? "test-component";
-    const tag = `${nameHint}-${counter++}`;
+    const tag = `${nameHint}-${nextId()}`;
     customElements.define(tag, component);
     return tag;
 }
