@@ -3,7 +3,7 @@
     "private": true,
     "main": "app",
     "dependencies": {
-        "@open-pioneer/runtime": "workspace:",
-        "styling-sample-components": "workspace:"
+        "@open-pioneer/runtime": "workspace:^0.0.1",
+        "styling-sample-components": "workspace:*"
     }
 }
