@@ -4,6 +4,6 @@
     "main": "app",
     "dependencies": {
         "@open-pioneer/runtime": "workspace:",
-        "test-ui-components": "workspace:"
+        "styling-sample-components": "workspace:"
     }
 }

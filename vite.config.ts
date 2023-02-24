@@ -37,16 +37,22 @@ export default defineConfig(({ mode }) => {
 
         plugins: [
             pioneer({
+                // Whether to include src/index.html in the built output
                 rootSite: true,
+
+                // Additional directories to include as html (must contain index.html files)
                 sites: [
-                    "api-sample",
-                    "chakra-sample",
-                    "extension-sample",
-                    "map-sample",
-                    "properties-sample",
-                    "styling-sample",
-                    "i18n-sample"
-                ]
+                    "samples/api-sample",
+                    "samples/chakra-sample",
+                    "samples/extension-sample",
+                    "samples/map-sample",
+                    "samples/properties-sample",
+                    "samples/styling-sample",
+                    "samples/i18n-sample"
+                ],
+
+                // Apps to distribute as .js files for embedded use cases
+                apps: []
             }),
             react(),
             eslint(),

@@ -19,7 +19,7 @@
     "devDependencies": {
         "@open-pioneer/build-support": "^0.2.0",
         "@open-pioneer/runtime": "workspace:*",
-        "@open-pioneer/vite-plugin-pioneer": "^0.2.4",
+        "@open-pioneer/vite-plugin-pioneer": "^0.3.0",
         "@testing-library/dom": "^8.20.0",
         "@testing-library/jest-dom": "^5.16.5",
         "@testing-library/react": "^13.4.0",

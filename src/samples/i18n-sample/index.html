@@ -9,11 +9,21 @@
         <div id="container"></div>
     </body>
     <script type="module">
-        import "../../apps/i18n-app/app.ts";
+        import "./i18n-app/app.ts";
 
         const container = document.getElementById("container");
         restartApp(undefined);
 
+        /**
+         * Restarts the app in the given locale.
+         * The existing app (if any) will be removed from the container and will clean itself up.
+         *
+         * Locale can be undefined to use the app's default.
+         *
+         * The locale is transported by attaching it to the app node as an attribute.
+         * The attribute is in turn read by the app (in app.ts) in order to configure
+         * the framework.
+         */
         function restartApp(locale) {
             container.replaceChildren();
             console.info(`Starting app with locale ${locale}`);

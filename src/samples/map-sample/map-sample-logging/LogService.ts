@@ -26,10 +26,10 @@ export interface LoggingProperties {
 
 declare module "@open-pioneer/runtime" {
     interface ServiceRegistry {
-        "logging.LogService": Logger;
+        "map-sample-logging.LogService": Logger;
     }
 
     interface PropertiesRegistry {
-        logging: Partial<LoggingProperties>;
+        "map-sample-logging": Partial<LoggingProperties>;
     }
 }

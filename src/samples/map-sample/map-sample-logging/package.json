@@ -1,5 +1,5 @@
 {
-    "name": "logging",
+    "name": "map-sample-logging",
     "private": true,
     "main": "index",
     "devDependencies": {

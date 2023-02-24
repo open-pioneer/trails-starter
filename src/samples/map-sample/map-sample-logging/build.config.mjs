@@ -10,7 +10,7 @@ export default defineBuildConfig({
         LogService: {
             provides: [
                 {
-                    name: "logging.LogService"
+                    name: "map-sample-logging.LogService"
                 }
             ]
         }

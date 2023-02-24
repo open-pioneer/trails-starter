@@ -4,7 +4,7 @@
     "main": "index",
     "dependencies": {
         "@open-pioneer/runtime": "workspace:^",
-        "logging": "workspace:^",
+        "map-sample-logging": "workspace:^",
         "ol": "^7.2.2",
         "react": "^18.2.0"
     }

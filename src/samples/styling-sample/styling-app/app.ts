@@ -1,5 +1,5 @@
 import { createCustomElement } from "@open-pioneer/runtime";
-import { SampleComponentWithCss } from "test-ui-components";
+import { SampleComponentWithCss } from "styling-sample-components";
 import * as appMetadata from "open-pioneer:app";
 
 const Element = createCustomElement({

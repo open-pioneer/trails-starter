@@ -14,7 +14,7 @@ export function MapApp() {
     const [selectedCoord, setSelectedCoord] = useState<Coordinate>();
 
     const mapElement = useRef<HTMLDivElement>(null);
-    const service = useService("logging.LogService");
+    const logService = useService("map-sample-logging.LogService");
     const mapConfig = useService("config.MapConfig") as MapConfigProvider;
     const map = useMap(mapElement, mapConfig);
 
@@ -24,15 +24,12 @@ export function MapApp() {
             if (coords) {
                 const transformedCoord = transform(coords, "EPSG:3857", "EPSG:4326");
                 setSelectedCoord(transformedCoord);
+
+                logService.log(`User clicked on ${toStringXY(transformedCoord, 5)}`);
             }
         });
         return () => key && unByKey(key);
-    }, [map, service]);
-
-    useEffect(() => {
-        service.log("Hello from component!");
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
+    }, [map, logService]);
 
     return (
         <div className="map-wrapper">

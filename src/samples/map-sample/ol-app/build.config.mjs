@@ -8,6 +8,6 @@ export default defineBuildConfig({
         }
     },
     ui: {
-        references: ["config.MapConfig", "logging.LogService"]
+        references: ["config.MapConfig", "map-sample-logging.LogService"]
     }
 });
