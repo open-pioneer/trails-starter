@@ -7,10 +7,12 @@ import {
     ListItem,
     Text,
     UnorderedList,
-    VStack
+    VStack,
+    Divider
 } from "@open-pioneer/chakra-integration";
 import { useIntl, useService } from "open-pioneer:react-hooks";
 import { ReactNode } from "react";
+import { SamplePackageComponent } from "i18n-sample-package/SamplePackageComponent";
 
 export function I18nUI() {
     const intl = useIntl();
@@ -33,9 +35,17 @@ export function I18nUI() {
                 <ListItem>Large number: {intl.formatNumber(1234567.89)}</ListItem>
             </UnorderedList>
 
-            <Center>
+            <Center mb={4}>
                 <LocalePicker current={locale} locales={supportedLocales} />
             </Center>
+
+            <Divider my={4} />
+
+            <Text mb={4}>
+                This component is from another package which does <em>not</em> support de-simple by
+                itself:
+            </Text>
+            <SamplePackageComponent />
         </Container>
     );
 }

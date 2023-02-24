@@ -1,0 +1,16 @@
+messages:
+  content:
+    header: "I18N Beispiel"
+    description: |
+      Dieses Beispiel enthält eine Anwendung, die mehrere Sprachen unterstützt.
+      Die tatsächlich von der Anwendung verwendete Sprache wird entweder aus den Einstellungen des Nutzers abgeleitet (Sprache des Browsers)
+      oder explizit während des Anwendungsstarts festgelegt.
+    open: "Dialog öffnen"
+
+  picker:
+    choose: "Wählen Sie eine Sprache aus:"
+    default: "Automatisch (standard)"
+
+overrides:
+  i18n-sample-package:
+    greeting: "Hallo (einfach)"

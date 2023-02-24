@@ -4,6 +4,7 @@
     "dependencies": {
         "@open-pioneer/runtime": "workspace:^",
         "@open-pioneer/integration": "workspace:^",
-        "@open-pioneer/chakra-integration": "workspace:^"
+        "@open-pioneer/chakra-integration": "workspace:^",
+        "i18n-sample-package": "workspace:*"
     }
 }

@@ -174,10 +174,15 @@ importers:
       '@open-pioneer/chakra-integration': workspace:^
       '@open-pioneer/integration': workspace:^
       '@open-pioneer/runtime': workspace:^
+      i18n-sample-package: workspace:*
     dependencies:
       '@open-pioneer/chakra-integration': link:../../../packages/framework/chakra-integration
       '@open-pioneer/integration': link:../../../packages/framework/integration
       '@open-pioneer/runtime': link:../../../packages/framework/runtime
+      i18n-sample-package: link:../i18n-sample-package
+
+  src/samples/i18n-sample/i18n-sample-package:
+    specifiers: {}
 
   src/samples/map-sample/map-sample-logging:
     specifiers:
