@@ -4,33 +4,64 @@
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Demo</title>
+        <style>
+            body {
+                max-width: 600px;
+                margin: auto;
+            }
+        </style>
     </head>
     <body>
         <h1>Open Pioneer Test Site</h1>
-        <p>Follow one of the links to see some samples:</p>
+
+        <h2>Empty App</h2>
+        <p>The following site has been prepared with an empty app:</p>
+        <ul>
+            <li><a href="./sites/empty/">Empty Site</a></li>
+            <li>App Code: <code>src/apps/empty/app.ts</code></li>
+            <li>Site Code: <code>src/sites/empty/index.html</code></li>
+        </ul>
+
+        <h2>Samples</h2>
+        <p>
+            Follow one of the links below to see some samples. The source code for the samples can
+            be found in the <code>src/samples/</code> directory.
+        </p>
         <ul>
             <li>
                 <a href="./samples/chakra-sample/">Chakra UI Sample</a>
+                <br />
+                Demonstrates a few Chakra components.
             </li>
             <li>
-                <a href="./samples/extension-sample/"
-                    >Extension Sample (1-to-N service dependencies)</a
-                >
+                <a href="./samples/extension-sample/">Extension Sample</a>
+                <br />
+                Contains an extensible service with a few plugins using 1-to-N service references.
             </li>
             <li>
                 <a href="./samples/properties-sample/">Properties sample</a>
+                <br />
+                Demonstrates how package properties can be used.
             </li>
             <li>
                 <a href="./samples/map-sample/">Open Layers Sample</a>
+                <br />
+                Integrates an Open Layers map.
             </li>
             <li>
-                <a href="./samples/styling-sample/">Styling sample (combined css)</a>
+                <a href="./samples/styling-sample/">Styling Sample</a>
+                <br />
+                Demonstrates how packages can use CSS rules.
             </li>
             <li>
-                <a href="./samples/api-sample/">API sample</a>
+                <a href="./samples/api-sample/">API Sample</a>
+                <br />
+                Demonstrates how to provide an API and emit events from the Web Component.
             </li>
             <li>
-                <a href="./samples/i18n-sample/">I18n sample</a>
+                <a href="./samples/i18n-sample/">I18n Sample</a>
+                <br />
+                Demonstrates how to translate an app in multiple languages.
             </li>
         </ul>
     </body>

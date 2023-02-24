@@ -17,15 +17,10 @@
         customElements.whenDefined("api-app").then(() => {
             const app = document.getElementById("app");
             app.when().then((api) => {
-                setTimeout(() => {
-                    api.changeText("Dies ist ein Test");
-                    console.log("changeText called");
-
-                    setTimeout(() => {
-                        api.changeText("Dies ist ein noch neuerer Text");
-                        console.log("changeText2 called");
-                    }, 3000);
-                }, 3000);
+                let count = 0;
+                setInterval(() => {
+                    api.changeText(`Text has been changed ${++count} times.`);
+                }, 1000);
             });
         });
     </script>

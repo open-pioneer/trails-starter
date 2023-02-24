@@ -18,8 +18,8 @@ export class TextApiExtension implements ApiExtension {
     async getApiMethods() {
         return {
             changeText: (text: string) => {
+                this.logger.info("Changing text to", JSON.stringify(text));
                 this.textService.setText(text);
-                this.logger.warn("Test message", { testLog: 123, text: text });
             }
         };
     }

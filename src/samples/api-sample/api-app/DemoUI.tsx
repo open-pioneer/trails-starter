@@ -29,7 +29,7 @@ export function DemoUI() {
                 <Button onClick={emitEvent}>Emit Event</Button>
 
                 <Heading size="md" pt={20}>
-                    React to api calls from outer site
+                    Reacting to API calls from the host site
                 </Heading>
                 <div>Current text: {text}</div>
             </VStack>
