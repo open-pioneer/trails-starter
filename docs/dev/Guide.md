@@ -11,7 +11,8 @@ starter
 ├── docs                    -- Documentation
 ├── src                     -- Contains project code
 │   ├── apps                -- Apps go here
-│   ├── packages            -- Bundles and plain node packages
+│   ├── packages            -- Packages that can be used by apps
+│   ├── samples             -- Example sites, apps and packages
 │   ├── types               -- TypeScript support files
 │   ├── sites               -- Additional .html sites
 │   └── index.html          -- Main HTML entry point
