@@ -473,7 +473,7 @@ function mergeConfigs(configs: ApplicationConfig[]): Required<ApplicationConfig>
     return mergedConfig;
 }
 
-const DISABLE_INHERIT = ":host { all: initial }";
+const DISABLE_INHERIT = ":host { all: initial; display: block; }";
 
 // Applies application styles to the given style node.
 // Can be called multiple times in development mode to implement hot reloading.
