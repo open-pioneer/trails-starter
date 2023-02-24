@@ -4,6 +4,10 @@ export interface Logger {
     log(message: string): void;
 }
 
+/**
+ * Example service that simply logs to the console.
+ * NOTE: use the logger from @open-pioneer/core in production!
+ */
 export class LogService implements Service<Logger> {
     constructor({ properties }: ServiceOptions) {
         const logLevel = properties.logLevel as string;
