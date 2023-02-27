@@ -2,9 +2,11 @@
 
 ![Build status](https://github.com/open-pioneer/starter/actions/workflows/test-and-build.yml/badge.svg) ![Dependency audit](https://github.com/open-pioneer/starter/actions/workflows/audit-dependencies.yml/badge.svg)
 
-## Current demonstration instance
+## Demo
 
-<https://open-pioneer.github.io/demo/>
+Samples: <https://open-pioneer.github.io/demo/>
+
+API Documentation: <https://open-pioneer.github.io/demo/docs>
 
 ## Quick start
 
