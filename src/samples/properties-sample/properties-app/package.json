@@ -1,6 +1,5 @@
 {
     "name": "properties-app",
-    "main": "index",
     "private": true,
     "dependencies": {
         "@open-pioneer/chakra-integration": "workspace:^",

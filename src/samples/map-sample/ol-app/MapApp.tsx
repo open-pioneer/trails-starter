@@ -10,7 +10,7 @@ import XYZ from "ol/source/XYZ";
 import View from "ol/View";
 import { RefObject, useEffect, useRef, useState } from "react";
 import { useService } from "open-pioneer:react-hooks";
-import { type MapConfigProvider } from "./index";
+import { type MapConfigProvider } from "./services";
 
 export function MapApp() {
     const [selectedCoord, setSelectedCoord] = useState<Coordinate>();

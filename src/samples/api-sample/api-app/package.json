@@ -1,6 +1,5 @@
 {
     "name": "api-app",
-    "main": "index",
     "private": true,
     "dependencies": {
         "@open-pioneer/runtime": "workspace:^",

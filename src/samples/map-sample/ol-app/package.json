@@ -1,7 +1,6 @@
 {
     "name": "ol-map",
     "private": true,
-    "main": "index",
     "dependencies": {
         "@open-pioneer/runtime": "workspace:^",
         "map-sample-logging": "workspace:^",

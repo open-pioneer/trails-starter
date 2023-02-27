@@ -4,9 +4,9 @@ importers:
 
   .:
     specifiers:
-      '@open-pioneer/build-support': ^0.2.0
+      '@open-pioneer/build-support': ^0.3.0
       '@open-pioneer/runtime': workspace:*
-      '@open-pioneer/vite-plugin-pioneer': ^0.3.3
+      '@open-pioneer/vite-plugin-pioneer': ^0.4.0
       '@testing-library/dom': ^8.20.0
       '@testing-library/jest-dom': ^5.16.5
       '@testing-library/react': ^13.4.0
@@ -37,9 +37,9 @@ importers:
       vite-plugin-eslint: ^1.8.1
       vitest: ^0.28.5
     devDependencies:
-      '@open-pioneer/build-support': 0.2.0
+      '@open-pioneer/build-support': 0.3.0
       '@open-pioneer/runtime': link:src/packages/framework/runtime
-      '@open-pioneer/vite-plugin-pioneer': 0.3.3_psndopyitrfw5izebjpdc62uim
+      '@open-pioneer/vite-plugin-pioneer': 0.4.0_psndopyitrfw5izebjpdc62uim
       '@testing-library/dom': 8.20.0
       '@testing-library/jest-dom': 5.16.5
       '@testing-library/react': 13.4.0_biqbaboplfbrettd7655fr4n2y
@@ -2041,12 +2041,12 @@ packages:
       fastq: 1.15.0
     dev: true
 
-  /@open-pioneer/build-support/0.2.0:
-    resolution: {integrity: sha512-H9ODcKfhXyyWPwg6fbypmtRV8qqaCt/RqNkOo+f2nZhJiUu9P/ik/C5+PVQunizhgh06wYFT/tjQks/Iw7ITTw==}
+  /@open-pioneer/build-support/0.3.0:
+    resolution: {integrity: sha512-hyGRW8ONLFBufUTku6IqJJKzECkpW18i7Iu7C/viZ4Rw1+rJh70dJH3+GMYDwDH5LQjkMmOQfwGBe5KWO2G4UQ==}
     dev: true
 
-  /@open-pioneer/vite-plugin-pioneer/0.3.3_psndopyitrfw5izebjpdc62uim:
-    resolution: {integrity: sha512-D2VK41SnEb25POlV9H7/zZ9aObXuI1HfnIxtMfg4T6xf53KOw7ZP/k4+8ULEoKRRgCyeiBE+QYaRrhW5lIBToA==}
+  /@open-pioneer/vite-plugin-pioneer/0.4.0_psndopyitrfw5izebjpdc62uim:
+    resolution: {integrity: sha512-xmqwSXz5Oyf6M1Kt3du5ntQ9cuTMSVHuzeq22Nuaw5ohfNafExKljYqREzfuOlUXO1FiYPVkQPrJsEfg95UCIg==}
     peerDependencies:
       '@open-pioneer/runtime': '*'
       vite: ^4.0.0

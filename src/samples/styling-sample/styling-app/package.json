@@ -1,7 +1,6 @@
 {
     "name": "styling-app",
     "private": true,
-    "main": "app",
     "dependencies": {
         "@open-pioneer/runtime": "workspace:^0.0.1",
         "styling-sample-components": "workspace:*"
