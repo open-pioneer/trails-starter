@@ -28,7 +28,7 @@ Additional in-depth information can be found in the [Dev Guide](./docs/dev/Guide
 
 ## License
 
-```
+```plaintext
 Copyright 2023 con terra GmbH and contributors
 
 Licensed under the Apache License, Version 2.0 (the "License");
