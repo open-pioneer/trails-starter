@@ -1,6 +1,6 @@
 {
     "name": "@open-pioneer/core",
     "private": true,
-    "main": "index",
+    "main": "index.ts",
     "dependencies": {}
 }

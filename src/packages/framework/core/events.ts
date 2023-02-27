@@ -4,13 +4,13 @@ import { Resource } from "./resources";
 
 const state = Symbol("EventEmitterState");
 
-type EventsBase = Record<string, unknown>;
-
-export type EventNames<Events extends EventsBase> = keyof Events & string;
+export type EventNames<Events extends Record<string, unknown>> = keyof Events & string;
 
 type ArgType<T> = [T] extends [void] ? [] : [event: T];
 
-type EventType<Events extends EventsBase, Name extends keyof Events> = ArgType<Events[Name]>;
+type EventType<Events extends Record<string, unknown>, Name extends keyof Events> = ArgType<
+    Events[Name]
+>;
 
 /**
  * A support class that implements emitting and listening for events.
@@ -39,7 +39,7 @@ type EventType<Events extends EventsBase, Name extends keyof Events> = ArgType<E
  * ```
  */
 export class EventEmitter<Events extends {}> {
-    [state] = new EventEmitterState();
+    private [state] = new EventEmitterState();
 
     /**
      * Registers the given listener function as an event handler for `eventName`.

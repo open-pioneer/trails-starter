@@ -28,7 +28,10 @@ declare global {
  * An example for a good error id is `runtime:dependency-cycle`.
  */
 export class Error extends GlobalError {
+    /** Unique error id */
     public readonly id: string;
+
+    /** Human readable error message */
     public readonly text: string;
 
     constructor(id: string, text: string, options?: { cause?: unknown }) {

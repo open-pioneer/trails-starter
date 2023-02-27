@@ -2,7 +2,7 @@
     "name": "@open-pioneer/runtime",
     "version": "0.0.1",
     "private": true,
-    "main": "index",
+    "main": "index.ts",
     "dependencies": {
         "@formatjs/intl": "^2.6.7",
         "@open-pioneer/chakra-integration": "workspace:^",

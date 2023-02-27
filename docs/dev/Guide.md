@@ -59,6 +59,12 @@ Builds the project as a static site.
 Generated files are output into the `dist` directory (which is cleared on every build).
 The main configuration file for vite is `vite.config.ts`.
 
+### `pnpm run build-docs`
+
+Builds the project's API documentation.
+Documentation is generated using [TypeDoc](https://typedoc.org/) and is configured in the main `tsconfig.json` (key `"typedocOptions"`).
+The API documentation is written into `dist/docs`.
+
 ### `pnpm run preview`
 
 Starts a local http server serving the contents of the `dist` directory.

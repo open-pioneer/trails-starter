@@ -1,7 +1,7 @@
 {
     "name": "@open-pioneer/integration",
     "private": true,
-    "main": "index",
+    "main": "index.ts",
     "devDependencies": {
         "@open-pioneer/runtime": "workspace:^",
         "@open-pioneer/test-utils": "workspace:^"

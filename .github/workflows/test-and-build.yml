@@ -36,6 +36,9 @@ jobs:
       - name: Build app
         run: pnpm build
 
+      - name: Build API documentation
+        run: pnpm build-docs
+
       - name: Upload artifact
         uses: actions/upload-artifact@v3
         with:

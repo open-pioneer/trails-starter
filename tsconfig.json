@@ -19,6 +19,24 @@
         "esModuleInterop": false,
         "skipLibCheck": true
     },
+    "typedocOptions": {
+        "name": "Open Pioneer Packages",
+
+        "out": "dist/docs",
+        "entryPointStrategy": "packages",
+        "entryPoints": ["src/packages/framework/*"],
+        "exclude": ["**/test-data/**", "**.test.*", "**/node_modules/**", "src/samples/**"],
+        "excludeExternals": true,
+        "excludePrivate": true,
+        "excludeInternal": true,
+
+        "skipErrorChecking": true,
+        "validation": {
+            "notExported": false,
+            "invalidLink": true,
+            "notDocumented": true
+        }
+    },
     "include": ["src"],
     "references": [{ "path": "./tsconfig.node.json" }]
 }

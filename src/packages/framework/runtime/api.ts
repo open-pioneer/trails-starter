@@ -4,6 +4,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 export type ApiMethod = (...args: any[]) => any;
 
+/**
+ * A record of exposed functions.
+ */
 export type ApiMethods = Record<string, ApiMethod>;
 
 /**

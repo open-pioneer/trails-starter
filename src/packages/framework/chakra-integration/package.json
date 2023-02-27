@@ -1,6 +1,6 @@
 {
     "name": "@open-pioneer/chakra-integration",
-    "main": "index",
+    "main": "index.tsx",
     "private": true,
     "dependencies": {
         "@babel/core": "^7.21.0",

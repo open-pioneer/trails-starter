@@ -9,6 +9,7 @@ export {
     type ApplicationConfig,
     type CustomElementOptions,
     type ConfigContext,
+    type RawApplicationProperties,
     createCustomElement
 } from "./CustomElement";
 export * from "./Service";
