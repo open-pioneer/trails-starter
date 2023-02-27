@@ -24,7 +24,7 @@ starter
 ├── package.json            -- Dependencies of the root package (mostly development tools)
 ├── pnpm-lock.yaml          -- Package manager lockfile
 ├── pnpm-workspace.yaml     -- Workspaces configuration file for pnpm
-├── tsconfig.json           -- Main TypeScript configuration file for the browser
+├── tsconfig.json           -- Main TypeScript configuration file for code that runs in the browser
 ├── tsconfig.node.json      -- Additional TypeScript configuration file for files running in Node
 └── vite.config.ts          -- Vite configuration file
 ```
