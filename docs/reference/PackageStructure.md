@@ -20,14 +20,13 @@ src/packages/<PACKAGE_NAME>
 A valid [`package.json`](https://docs.npmjs.com/cli/v9/configuring-npm/package-json) file.
 It must contain _at least_ a valid package `name`.
 
-If the package defines services, then it should also have a main entry point (typically called `index.js` or `index.ts`) from which those services are exported.
+If the package defines services, then it must also have a services module (typically called `services.js` or `services.ts`) from which those services are exported.
 The build system will automatically import the required service classes from the specified file.
 
 ```jsonc
 // package.json
 {
-    "name": "sample-package",
-    "main": "index"
+    "name": "sample-package"
 }
 ```
 
@@ -53,6 +52,7 @@ interface BuildConfig {
     styles?: string;
     i18n?: string[];
     services?: Record<string, ServiceConfig>;
+    servicesModule?: string;
     ui?: UiConfig;
     properties?: Record<string, unknown>;
     propertiesMeta?: Record<string, PropertiesMeta>;
@@ -75,7 +75,7 @@ export default defineBuildConfig({
 });
 ```
 
-### `i18n`
+#### `i18n`
 
 An array of locales supported by the package or application.
 When a package declares support for a given locale `<LOC>`, then a file named `./i18n/<LOC>.yaml` must exist.
@@ -123,7 +123,7 @@ See [I18N Format](./I18nFormat.md) for more details.
 Declares services that are provided by the package.
 Services will be included in the application and will automatically start when they are needed.
 
-The name of a service must match the exported class name from the package's main entry point.
+The name of a service must match the exported class name from the package's service module.
 
 ```ts
 export interface ServiceConfig {
@@ -138,13 +138,26 @@ Example:
 // build.config.mjs
 export default defineBuildConfig({
     services: {
-        // The framework will `import { LogService } from "packagename";`,
-        // so a matching export must exist.
+        // The framework will `import { LogService } from "packageName/services";`,
+        // by default, so a matching export must exist (see .js file below).
         LogService: {
             provides: "logging.LogService"
         }
     }
 });
+```
+
+Make sure to export a class under the same name (`LogService` in this case):
+
+```js
+// services.js
+export class LogService {
+    // implementation...
+}
+
+// or:
+
+export { LogService } from "./LogService";
 ```
 
 #### `service.provides`
@@ -194,6 +207,34 @@ export default defineBuildConfig({
         }
     }
 });
+```
+
+#### `servicesModule`
+
+The name of the module that exports the package's service classes.
+This value is `./services` by default, meaning that `./services.ts` or `./services.js` will be picked up automatically.
+
+Example:
+
+Read services from a different file:
+
+```js
+// build.config.mjs
+export default defineBuildConfig({
+    services: {
+        Foo: {
+            // ...
+        }
+    },
+    servicesModule: "./my-services-module.ts"
+});
+```
+
+```ts
+// my-services-module.ts
+export class Foo {
+    // ...
+}
 ```
 
 #### `ui`
