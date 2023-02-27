@@ -1,3 +1,5 @@
+// SPDX-FileCopyrightText: con terra GmbH and contributors
+// SPDX-License-Identifier: Apache-2.0
 import { PackageIntl } from "./i18n";
 
 /** Lifecycle hooks supported by the service interface. */

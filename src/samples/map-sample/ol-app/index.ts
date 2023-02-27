@@ -1,3 +1,5 @@
+// SPDX-FileCopyrightText: con terra GmbH and contributors
+// SPDX-License-Identifier: Apache-2.0
 import { MapOptions } from "ol/Map";
 import { Service } from "@open-pioneer/runtime";
 import View from "ol/View";

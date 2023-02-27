@@ -1,3 +1,5 @@
+// SPDX-FileCopyrightText: con terra GmbH and contributors
+// SPDX-License-Identifier: Apache-2.0
 import { createIntl, createIntlCache, IntlFormatters, IntlShape } from "@formatjs/intl";
 import { ErrorId } from "./errors";
 import { createLogger, Error } from "@open-pioneer/core";

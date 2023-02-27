@@ -1,3 +1,5 @@
+// SPDX-FileCopyrightText: con terra GmbH and contributors
+// SPDX-License-Identifier: Apache-2.0
 import { createEmptyI18n } from "../i18n";
 import { PackageRepr } from "../service-layer/PackageRepr";
 import {

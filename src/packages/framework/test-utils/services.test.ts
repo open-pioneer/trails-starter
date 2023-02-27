@@ -1,3 +1,6 @@
+// SPDX-FileCopyrightText: con terra GmbH and contributors
+// SPDX-License-Identifier: Apache-2.0
+
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { PackageIntl, ReferenceMeta, ServiceOptions } from "@open-pioneer/runtime";
 import { expect, it } from "vitest";

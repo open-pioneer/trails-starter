@@ -1,3 +1,5 @@
+// SPDX-FileCopyrightText: con terra GmbH and contributors
+// SPDX-License-Identifier: Apache-2.0
 import { type ApiExtension, type ApiMethods, type ApiMethod } from "@open-pioneer/runtime";
 
 /**

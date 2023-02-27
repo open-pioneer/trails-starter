@@ -1,3 +1,5 @@
+// SPDX-FileCopyrightText: con terra GmbH and contributors
+// SPDX-License-Identifier: Apache-2.0
 const GlobalError = globalThis.Error;
 
 // 'cause' property is missing in typescript typings

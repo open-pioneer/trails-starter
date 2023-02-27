@@ -9,7 +9,7 @@
         "prettier"
     ],
     "parser": "@typescript-eslint/parser",
-    "plugins": ["@typescript-eslint", "import", "unused-imports", "react", "react-hooks"],
+    "plugins": ["@typescript-eslint", "import", "unused-imports", "header", "react", "react-hooks"],
     "env": {
         "node": true,
         "browser": true
@@ -42,6 +42,16 @@
             }
         ],
         "semi": ["error", "always"],
+
+        // Enforce license header
+        "header/header": [
+            "error",
+            "line",
+            [
+                " SPDX-FileCopyrightText: con terra GmbH and contributors",
+                " SPDX-License-Identifier: Apache-2.0"
+            ]
+        ],
 
         // Disallow relative import into another package, e.g. `../other-package/foo`
         "import/no-relative-packages": "error",

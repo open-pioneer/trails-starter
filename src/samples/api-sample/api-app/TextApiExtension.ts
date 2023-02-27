@@ -1,3 +1,5 @@
+// SPDX-FileCopyrightText: con terra GmbH and contributors
+// SPDX-License-Identifier: Apache-2.0
 import { ServiceOptions } from "@open-pioneer/runtime";
 import { ApiExtension } from "@open-pioneer/integration";
 import { TextService } from "./TextService";

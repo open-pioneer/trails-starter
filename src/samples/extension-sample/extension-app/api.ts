@@ -1,3 +1,6 @@
+// SPDX-FileCopyrightText: con terra GmbH and contributors
+// SPDX-License-Identifier: Apache-2.0
+
 /**
  * Represents an action that can be triggered by the user.
  */

@@ -1,3 +1,5 @@
+// SPDX-FileCopyrightText: con terra GmbH and contributors
+// SPDX-License-Identifier: Apache-2.0
 import { ComponentType, StrictMode } from "react";
 import { createRoot, Root } from "react-dom/client";
 import { Error } from "@open-pioneer/core";

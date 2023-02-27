@@ -1,3 +1,5 @@
+// SPDX-FileCopyrightText: con terra GmbH and contributors
+// SPDX-License-Identifier: Apache-2.0
 import { Button, Container, Heading, Text, VStack } from "@open-pioneer/chakra-integration";
 import { useService } from "open-pioneer:react-hooks";
 

@@ -1,3 +1,5 @@
+// SPDX-FileCopyrightText: con terra GmbH and contributors
+// SPDX-License-Identifier: Apache-2.0
 import { useContext, useMemo } from "react";
 import { Error } from "@open-pioneer/core";
 import { InterfaceName, ServiceType } from "../ServiceRegistry";

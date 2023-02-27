@@ -1,18 +1,5 @@
-/**
- * Maps a registered interface name to a service type.
- * The interface can be reopened by client packages to add additional registrations.
- *
- * @example
- *
- * ```ts
- * declare module "@open-pioneer/runtime" {
- *    interface ServiceRegistry {
- *        // Associates the interface name with the TypeScript interface
- *        "logging.LogService": Logger;
- *    }
- * }
- * ```
- */
+// SPDX-FileCopyrightText: con terra GmbH and contributors
+// SPDX-License-Identifier: Apache-2.0
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
 export interface ServiceRegistry {}
 

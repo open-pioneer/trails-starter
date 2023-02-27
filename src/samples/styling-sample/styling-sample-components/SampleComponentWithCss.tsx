@@ -1,3 +1,5 @@
+// SPDX-FileCopyrightText: con terra GmbH and contributors
+// SPDX-License-Identifier: Apache-2.0
 export function SampleComponentWithCss() {
     return (
         <div className="sample-component-with-css">

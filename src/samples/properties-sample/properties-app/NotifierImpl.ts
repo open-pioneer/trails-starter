@@ -1,3 +1,5 @@
+// SPDX-FileCopyrightText: con terra GmbH and contributors
+// SPDX-License-Identifier: Apache-2.0
 import { EventEmitter } from "@open-pioneer/core";
 import { ServiceOptions } from "@open-pioneer/runtime";
 import { Notifier, NotificationLevel, NotifierEvents } from "./api";

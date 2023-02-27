@@ -1,3 +1,5 @@
+// SPDX-FileCopyrightText: con terra GmbH and contributors
+// SPDX-License-Identifier: Apache-2.0
 import { Error } from "@open-pioneer/core";
 import { ErrorId } from "../errors";
 import { InterfaceSpec, ReferenceSpec, renderInterfaceSpec } from "./InterfaceSpec";

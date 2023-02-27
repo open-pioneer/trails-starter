@@ -1,3 +1,5 @@
+// SPDX-FileCopyrightText: con terra GmbH and contributors
+// SPDX-License-Identifier: Apache-2.0
 import { type EventSource } from "@open-pioneer/core";
 
 export type NotificationLevel = "DEBUG" | "INFO" | "ERROR";

@@ -1,3 +1,5 @@
+// SPDX-FileCopyrightText: con terra GmbH and contributors
+// SPDX-License-Identifier: Apache-2.0
 import { afterEach, it, vi, expect } from "vitest";
 import { LoggerImpl } from "./Logger";
 

@@ -1,3 +1,5 @@
+// SPDX-FileCopyrightText: con terra GmbH and contributors
+// SPDX-License-Identifier: Apache-2.0
 import { Coordinate, toStringXY } from "ol/coordinate";
 import TileLayer from "ol/layer/Tile";
 import Map, { MapOptions } from "ol/Map";

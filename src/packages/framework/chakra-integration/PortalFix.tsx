@@ -1,3 +1,5 @@
+// SPDX-FileCopyrightText: con terra GmbH and contributors
+// SPDX-License-Identifier: Apache-2.0
 import { AlertDialog, Drawer, Modal, Portal, PortalProps, Tooltip } from "@chakra-ui/react";
 import { ComponentType, createContext, FC, RefObject, useContext } from "react";
 

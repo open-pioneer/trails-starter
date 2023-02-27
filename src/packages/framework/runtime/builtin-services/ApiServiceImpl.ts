@@ -1,3 +1,5 @@
+// SPDX-FileCopyrightText: con terra GmbH and contributors
+// SPDX-License-Identifier: Apache-2.0
 import { ServiceOptions } from "../Service";
 import { ApiExtension, ApiMethod, ApiMethods, ApiService } from "../api";
 import { Error } from "@open-pioneer/core";

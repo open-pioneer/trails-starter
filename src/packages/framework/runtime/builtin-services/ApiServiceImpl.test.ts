@@ -1,3 +1,5 @@
+// SPDX-FileCopyrightText: con terra GmbH and contributors
+// SPDX-License-Identifier: Apache-2.0
 import { createService } from "@open-pioneer/test-utils/services";
 import { expect, it } from "vitest";
 import { expectAsyncError } from "../test-utils/expectError";

@@ -1,3 +1,5 @@
+// SPDX-FileCopyrightText: con terra GmbH and contributors
+// SPDX-License-Identifier: Apache-2.0
 const LOG_LEVEL = validateLogLevel(__LOG_LEVEL__);
 
 /**

@@ -1,3 +1,5 @@
+// SPDX-FileCopyrightText: con terra GmbH and contributors
+// SPDX-License-Identifier: Apache-2.0
 export enum ErrorId {
     // Problems with application metadata
     INVALID_METADATA = "runtime:invalid-metadata",

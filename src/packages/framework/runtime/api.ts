@@ -1,4 +1,7 @@
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
+// SPDX-FileCopyrightText: con terra GmbH and contributors
+// SPDX-License-Identifier: Apache-2.0
+
+/* eslint-disable @typescript-eslint/no-explicit-any */
 export type ApiMethod = (...args: any[]) => any;
 
 export type ApiMethods = Record<string, ApiMethod>;

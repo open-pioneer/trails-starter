@@ -1,3 +1,5 @@
+// SPDX-FileCopyrightText: con terra GmbH and contributors
+// SPDX-License-Identifier: Apache-2.0
 import { EventEmitter } from "./events";
 import { expect, it } from "vitest";
 

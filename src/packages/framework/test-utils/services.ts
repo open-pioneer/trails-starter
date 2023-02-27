@@ -1,3 +1,5 @@
+// SPDX-FileCopyrightText: con terra GmbH and contributors
+// SPDX-License-Identifier: Apache-2.0
 import { ReferenceMeta, Service, ServiceConstructor } from "@open-pioneer/runtime";
 import { createIntl, createIntlCache } from "@formatjs/intl";
 

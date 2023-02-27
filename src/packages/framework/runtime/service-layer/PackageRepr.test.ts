@@ -1,3 +1,5 @@
+// SPDX-FileCopyrightText: con terra GmbH and contributors
+// SPDX-License-Identifier: Apache-2.0
 import { expect, it } from "vitest";
 import { AppI18n, createEmptyI18n, PackageIntl } from "../i18n";
 import { PackageMetadata } from "../metadata";
