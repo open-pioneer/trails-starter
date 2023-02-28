@@ -228,30 +228,30 @@ That information can be used like this:
 
 -   Using the `ServiceType` helper directly:
 
-        ```ts
-        // ExampleService.ts
-        import { Service, ServiceType } from "@open-pioneer/runtime";
+    ```ts
+    // ExampleService.ts
+    import { Service, ServiceType } from "@open-pioneer/runtime";
 
-        interface References {
-            // Automatically resolves to the registered type, or compilation
-            // fails if no type has been registered.
-            helloWorldService: ServiceType<"hello.HelloWorldService">;
-        }
+    interface References {
+        // Automatically resolves to the registered type, or compilation
+        // fails if no type has been registered.
+        helloWorldService: ServiceType<"hello.HelloWorldService">;
+    }
 
-        class ExampleService implements Service {
-            constructor(options: ServiceOptions<References>)
-        }
-        ```
+    class ExampleService implements Service {
+        constructor(options: ServiceOptions<References>);
+    }
+    ```
 
 -   Using the `useService` hook:
 
-        ```jsx
-        // ExampleComponent.tsx
-        function ExampleComponent() {
-            // Of type HelloWorldService, or `unknown` if no type has been registered.
-            const service = useService("hello.HelloWorldService");
-        }
-        ```
+    ```jsx
+    // ExampleComponent.tsx
+    function ExampleComponent() {
+        // Of type HelloWorldService, or `unknown` if no type has been registered.
+        const service = useService("hello.HelloWorldService");
+    }
+    ```
 
 ### Registering package properties
 
