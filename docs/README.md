@@ -17,3 +17,4 @@
 -   [Design](./internals/Design.md)
 -   [Service layer](./internals/ServiceLayer.md)
 -   [Build Tools](./internals/BuildTools.md)
+-   [React Integration](./internals/ReactIntegration.md)

@@ -133,6 +133,13 @@ injected into the service's constructor instead of the usual, single instance.
 Verification (e.g. cycle detection) has been extended to support this feature.
 Note that it is not an error if there are zero implementations of an interface: the array will simply be empty.
 
+## Runtime lookups
+
+The service layer provides an API to retrieve interface implementations at runtime (`getService` and `getServices`).
+This is a required building block for the integration with react components: when a react component calls `useService(...)`,
+a dynamic lookup will be triggered (the result can be cached).
+An error will be thrown if the dependency on that service has not been declared in the package's metadata (`ui.references`).
+
 ## Limitations
 
 ### Cycles are forbidden
