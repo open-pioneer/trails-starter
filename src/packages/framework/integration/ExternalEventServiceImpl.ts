@@ -1,13 +1,13 @@
 // SPDX-FileCopyrightText: con terra GmbH and contributors
 // SPDX-License-Identifier: Apache-2.0
-import { ApplicationContext, ServiceOptions } from "@open-pioneer/runtime";
+import { ApplicationContext, Service, ServiceOptions } from "@open-pioneer/runtime";
 import { ExternalEventService } from "./api";
 
 interface References {
     ctx: ApplicationContext;
 }
 
-export class ExternalEventServiceImpl implements ExternalEventService {
+export class ExternalEventServiceImpl implements Service<ExternalEventService> {
     #ctx: ApplicationContext;
 
     constructor({ references }: ServiceOptions<References>) {

@@ -26,7 +26,7 @@
 
     -   [Package Reference](./reference/Package.md)
     -   [I18N format](./reference/I18nFormat.md)
-    -   Service Layer ("What is a service?", ...)
+    -   [Services](./reference/Services.md)
     -   Guide to the repository (files, concepts, common use cases) [TODO: maybe move to HowTo?]
 
 -   Internal Documentation
