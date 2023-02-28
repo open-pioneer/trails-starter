@@ -1,4 +1,4 @@
-# Package Structure
+# Package Reference
 
 ## Introduction
 
@@ -6,6 +6,12 @@ This document specifies the structural requirements for an open pioneer package 
 
 > This specification applies to both apps and "normal" packages.
 > Apps are simply packages that expose a web component: they may use all package features such as services etc.
+
+## Application Packages
+
+An application package is a package that provides an app.
+Application packages can use all features documented below (like any other package).
+Some features are only available in application packages (e.g. overriding i18n messages).
 
 ## File structure
 

@@ -4,7 +4,7 @@
 
 I18N files use [YAML](https://yaml.org/) syntax and must conform to the schema defined in this document.
 
-I18n files are typically located in a package (or app) within the `i18n` directory.
+I18N files are typically located in a package (or app) within the `i18n` directory.
 The file name contains the supported language, for example `en.yaml`.
 
 ### Messages
