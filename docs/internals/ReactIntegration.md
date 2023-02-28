@@ -1,6 +1,6 @@
 # React Integration
 
-This framework currently requires all UI Components to be written using [React](https://reactjs.org/).
+This framework currently requires all UI components to be written using [React](https://reactjs.org/).
 
 ## Application UI
 
@@ -40,7 +40,8 @@ function TestComponent() {
 }
 ```
 
-`useIntl` and `useProperties` must return the appropriate value for `test-app`, and `useService` is supposed to
+`useIntl` and `useProperties` must return the appropriate value for `test-app`.
+`useService` returns the requested service (if it can be found) and is also supposed to
 check that `test-app` actually declares a reference to `foo.bar` (for dependency hygiene).
 
 ### Using the package context
@@ -86,7 +87,7 @@ export function useIntlInternal(packageName: string): PackageIntl {
 }
 ```
 
-`useIntlInternal` is the implementation of the `useIntl` hook (the other hooks look similar).
+`useIntlInternal` is the implementation of the `useIntl` hook.
 It retrieves the packageContext using react's Context API and then attempts to find a package with the given name
 in the shared lookup structure, finally returning its `intl` value.
 
