@@ -24,7 +24,7 @@ $ pnpm run dev                                          # Launch development ser
 Vite will print the project's local address (usually <http://localhost:5173/>).
 Point your browser at it and start programming!
 
-Additional in-depth information can be found in the [Dev Guide](./docs/dev/Guide.md).
+Additional in-depth information can be found in the [Documentation](./docs/README.md).
 
 ## License
 
