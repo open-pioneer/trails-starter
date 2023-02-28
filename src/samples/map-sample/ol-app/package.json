@@ -4,6 +4,7 @@
     "dependencies": {
         "@open-pioneer/runtime": "workspace:^",
         "@open-pioneer/open-layers": "workspace:^",
+        "@open-pioneer/chakra-integration": "workspace:^",
         "map-sample-logging": "workspace:^",
         "ol": "^7.2.2",
         "react": "^18.2.0"

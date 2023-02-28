@@ -208,12 +208,14 @@ importers:
 
   src/samples/map-sample/ol-app:
     specifiers:
+      '@open-pioneer/chakra-integration': workspace:^
       '@open-pioneer/open-layers': workspace:^
       '@open-pioneer/runtime': workspace:^
       map-sample-logging: workspace:^
       ol: ^7.2.2
       react: ^18.2.0
     dependencies:
+      '@open-pioneer/chakra-integration': link:../../../packages/framework/chakra-integration
       '@open-pioneer/open-layers': link:../../../packages/framework/open-layers
       '@open-pioneer/runtime': link:../../../packages/framework/runtime
       map-sample-logging: link:../map-sample-logging
