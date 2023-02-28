@@ -1,0 +1,11 @@
+{
+    "name": "@open-pioneer/open-layers",
+    "private": true,
+    "main": "index.ts",
+    "devDependencies": {
+        "@open-pioneer/runtime": "workspace:^",
+        "@open-pioneer/test-utils": "workspace:^",
+        "react": "^18.2.0",
+        "ol": "^7.2.2"
+    }
+}
