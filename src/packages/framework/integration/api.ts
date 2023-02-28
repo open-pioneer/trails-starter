@@ -28,7 +28,7 @@ export interface ExternalEventService {
     emitEvent(name: string, detail?: unknown): void;
 
     /**
-     * Events a prepared [DOM event](https://developer.mozilla.org/en-US/docs/Web/API/Event) to the host site.
+     * Emits a prepared [DOM event](https://developer.mozilla.org/en-US/docs/Web/API/Event) to the host site.
      *
      * The event will be dispatched on the web component's dom node without being altered by this service.
      *
