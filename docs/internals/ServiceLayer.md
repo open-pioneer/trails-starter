@@ -45,6 +45,8 @@ The most important classes and modules are:
 
     Parses metadata into instances of `PackageRepr` and `ServiceRepr`.
     This transforms the well defined metadata format (input to the service layer) into the internal runtime representation.
+    Package properties are also handled here: properties defined by the application are merged with the default values declared in
+    the individual packages.
 
 ## Metadata format
 
