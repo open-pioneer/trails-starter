@@ -15,7 +15,12 @@ export interface MapComponentProperties {
 export function MapComponent(props: MapComponentProperties) {
     const mapElement = useRef<HTMLDivElement>(null);
     useMap(props, mapElement);
-    return <div ref={mapElement} className="map-container"></div>;
+
+    const mapContainer: React.CSSProperties = {
+        height: "100%"
+    };
+
+    return <div ref={mapElement} style={mapContainer}></div>;
 }
 
 function useMap(properties: MapComponentProperties, domNode: RefObject<HTMLDivElement>) {

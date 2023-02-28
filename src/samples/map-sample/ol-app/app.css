@@ -1,16 +1,5 @@
 @import "ol/ol.css";
 
-.map-wrapper {
-    position: relative;
-    height: 100%;
-    width: 100%;
-}
-
-.map-container {
-    height: 100%;
-    width: 100%;
-}
-
 .right-bottom {
     position: absolute;
     right: 0;
