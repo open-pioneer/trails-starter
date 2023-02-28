@@ -15,5 +15,3 @@ export {
 export * from "./Service";
 export * from "./ServiceRegistry";
 export * from "./PropertiesRegistry";
-
-export { ApiServiceImpl } from "./builtin-services/ApiServiceImpl";
