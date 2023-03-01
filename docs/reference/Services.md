@@ -170,12 +170,12 @@ export class MyServiceImpl implements Service<MyService> {
 }
 ```
 
-The `ServiceOptions` type helps when using the service's constructor parameter.
-It accepts an optional `References` type parameter with the types of the expected references:
+The `ServiceOptions` type is helpful when typing a service's constructor parameters.
+It accepts an optional `References` type parameter with the types of the expected references, for example:
 
 ```ts
 // ExampleService.ts
-import { Service } from "@open-pioneer/runtime";
+import { Service, ServiceOptions } from "@open-pioneer/runtime";
 import { MyService } from "./api";
 import { SomeRefType } from "otherPackage/api";
 
@@ -185,11 +185,9 @@ interface References {
     someRef: SomeRefType;
 }
 
-// The Impl class implements Service<MyService>, i.e. the optional
-// lifecycle methods and the methods and properties defined by `MyService`.
 export class MyServiceImpl implements Service<MyService> {
     constructor(options: ServiceOptions<References>) {
-        const someRef = options.references.someRef; // of type SomeRefType, no compile error
+        const someRef = options.references.someRef; // of type SomeRefType, no compiler error
     }
 
     // ... methods
@@ -273,6 +271,32 @@ declare module "@open-pioneer/runtime" {
 }
 ```
 
-## Service start
+## Service start and stop behavior
 
-TBD: When do services start, in what order, cycles forbidden, etc.
+Services are started when the application launches, i.e. when the application's DOM element has been mounted.
+All services used by an app are started before the UI is rendered for the first time.
+
+A service is considered "used" when it is needed by the UI (see `ui.references` in `build.config.mjs`),
+or when it defines an API on the application (implements `integration.ApiExtension`).
+The framework will take care to start all those services (and their dependencies) in the correct order.
+
+The service start algorithm for a service `S` that depends (`references`) two other services `D1` and `D2`
+is as follows:
+
+1. Recursively create `D1` and `D2`.
+2. Invoke the constructor of `S` (passing references to `D1` and `D2`).
+
+Creating the dependencies before `S` ensures that `S` always sees a fully initialized version of its dependencies.
+
+Service destruction happens when the application is destroyed, i.e. when the DOM element gets unmounted.
+It reverses the construction algorithm:
+
+1. Destroy `S` if it is no longer being referenced by invoking the `destroy()` method.
+2. Recursively destroy `D1` and `D2`.
+
+Dependencies are destroyed after their dependents to ensure that their instances are still valid in the `destroy()` method of `S`.
+
+> NOTE:
+> Reference cycles between services are forbidden: the app will refuse to launch.
+> This can often be worked around by fixing the design: common functionality needs to move to a shared service.
+> In the future, we could consider implementing lazy references (see [Internal Documentation](../internals/ServiceLayer.md)).

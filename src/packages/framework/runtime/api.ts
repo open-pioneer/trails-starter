@@ -53,14 +53,15 @@ export interface ApplicationContext {
     /**
      * Returns the current locale of the application.
      *
-     * E.g. "de-DE"
+     * E.g. `"de-DE"`
      */
     getLocale(): string;
 
     /**
-     * Returns the locales supported by the application.
+     * Returns the locales supported by the application, i.e.
+     * the locales that have associated i18n messages.
      *
-     * E.g. ["de", "en"]
+     * For example: `["de", "en"]`
      */
     getSupportedLocales(): readonly string[];
 }
