@@ -141,7 +141,7 @@ export class LoggerImpl implements Logger {
      */
     private _doLog(level: LogLevel, messageOrError: string | Error, values: unknown[]) {
         if (this._isLogLevelEnabled(level)) {
-            let message = this.prefix + ":";
+            let message = `[${level}] ${this.prefix}:`;
             if (typeof messageOrError === "string") {
                 message += " " + messageOrError;
             } else {
