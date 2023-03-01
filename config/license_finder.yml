@@ -1,0 +1,5 @@
+---
+decisions_file: "./config/license_decisions.yml"
+pnpm_options: "-P" # Only report production licenses
+enabled_package_managers:
+  - pnpm
