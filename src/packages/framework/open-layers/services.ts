@@ -1,18 +1,23 @@
 // SPDX-FileCopyrightText: con terra GmbH and contributors
 // SPDX-License-Identifier: Apache-2.0
-import Map from "ol/Map";
-import { Service } from "@open-pioneer/runtime";
 import { createAbortError, createManualPromise, ManualPromise } from "@open-pioneer/core";
-export class OpenLayersMapService implements Service {
-    private map: Map | undefined = undefined;
+import { Service } from "@open-pioneer/runtime";
+import TileLayer from "ol/layer/Tile";
+import { default as OlMap, MapOptions } from "ol/Map";
+import OSM from "ol/source/OSM";
+import View from "ol/View";
 
-    private mapPromise: ManualPromise<Map> | undefined;
+const defaultLayer = new TileLayer({ source: new OSM() });
+export class OpenLayersMapService implements Service {
+    private map: OlMap | undefined = undefined;
+
+    private mapPromise: ManualPromise<OlMap> | undefined;
 
     destroy(): void {
         this.mapPromise?.reject(createAbortError());
     }
 
-    getMap(): Promise<Map> {
+    getMap(): Promise<OlMap> {
         if (this.map) {
             return Promise.resolve(this.map);
         }
@@ -21,12 +26,25 @@ export class OpenLayersMapService implements Service {
     }
 
     deleteMap(mapId: string) {
-        console.log(`deleteMap ${mapId}`);
+        this.map = undefined;
+        this.mapPromise = undefined;
     }
 
-    setMap(id: string, map: Map) {
-        this.map = map;
-        this.mapPromise?.resolve(this.map);
+    createMap(mapId: string, additionalMapOptions?: MapOptions) {
+        if (!this.map) {
+            const options: MapOptions = {
+                layers: [defaultLayer],
+                view: new View({
+                    projection: "EPSG:3857",
+                    center: [0, 0],
+                    zoom: 1
+                }),
+                ...additionalMapOptions
+            };
+            this.map = new OlMap(options);
+            this.mapPromise?.resolve(this.map);
+        }
+        return this.map;
     }
 }
 
