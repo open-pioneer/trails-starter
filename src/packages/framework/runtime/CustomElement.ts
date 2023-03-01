@@ -267,7 +267,7 @@ class ElementState {
         this.checkAbort();
 
         // Setup application root node in the shadow dom
-        const container = (this.container = createContainer());
+        const container = (this.container = createContainer(i18n.locale));
         const styles = this.initStyles();
         shadowRoot.replaceChildren(container, styles);
 
@@ -375,12 +375,15 @@ class ElementState {
     }
 }
 
-function createContainer() {
+function createContainer(locale: string) {
     // Setup application root node in the shadow dom
     const container = document.createElement("div");
     container.classList.add("pioneer-root");
     container.style.minHeight = "100%";
     container.style.height = "100%";
+    if (locale) {
+        container.lang = locale;
+    }
     return container;
 }
 
