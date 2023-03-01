@@ -4,3 +4,4 @@ export { Error, getErrorChain, isAbortError, throwAbortError, createAbortError }
 export { EventEmitter, type EventSource, type EventNames } from "./events";
 export { destroyResource, type Resource } from "./resources";
 export { createLogger, type Logger, type LogLevel, type LogMethod } from "./Logger";
+export { createManualPromise, type ManualPromise } from "./utils";

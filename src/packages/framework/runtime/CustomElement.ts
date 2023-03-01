@@ -4,9 +4,11 @@ import { ComponentType } from "react";
 import {
     createAbortError,
     createLogger,
+    createManualPromise,
     destroyResource,
     Error,
     isAbortError,
+    ManualPromise,
     Resource,
     throwAbortError
 } from "@open-pioneer/core";
@@ -17,7 +19,6 @@ import { ServiceLayer } from "./service-layer/ServiceLayer";
 import { getErrorChain } from "@open-pioneer/core";
 import { ReactIntegration } from "./react-integration/ReactIntegration";
 import { ApiMethods, ApiService } from "./api";
-import { createManualPromise, ManualPromise } from "./utils";
 import { createBuiltinPackage, RUNTIME_API_SERVICE } from "./builtin-services";
 import { ReferenceSpec } from "./service-layer/InterfaceSpec";
 import { PropertiesRegistry } from "./PropertiesRegistry";

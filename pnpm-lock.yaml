@@ -113,11 +113,13 @@ importers:
 
   src/packages/framework/open-layers:
     specifiers:
+      '@open-pioneer/core': workspace:^
       '@open-pioneer/runtime': workspace:^
       '@open-pioneer/test-utils': workspace:^
       ol: ^7.2.2
       react: ^18.2.0
     devDependencies:
+      '@open-pioneer/core': link:../core
       '@open-pioneer/runtime': link:../runtime
       '@open-pioneer/test-utils': link:../test-utils
       ol: 7.2.2

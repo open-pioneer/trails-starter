@@ -2,12 +2,15 @@
 // SPDX-License-Identifier: Apache-2.0
 import Map from "ol/Map";
 import { Service } from "@open-pioneer/runtime";
-import { createManualPromise, ManualPromise } from "@open-pioneer/runtime/utils";
-
+import { createAbortError, createManualPromise, ManualPromise } from "@open-pioneer/core";
 export class OpenLayersMapService implements Service {
     private map: Map | undefined = undefined;
 
     private mapPromise: ManualPromise<Map> | undefined;
+
+    destroy(): void {
+        this.mapPromise?.reject(createAbortError());
+    }
 
     getMap(): Promise<Map> {
         if (this.map) {
