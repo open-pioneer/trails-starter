@@ -1,7 +1,11 @@
 // SPDX-FileCopyrightText: con terra GmbH and contributors
 // SPDX-License-Identifier: Apache-2.0
 import { Box, Button, Flex, Spacer, useDisclosure } from "@open-pioneer/chakra-integration";
-import { CoordinateComponent, MapComponent } from "@open-pioneer/open-layers";
+import {
+    CoordinateComponent,
+    LayerControlComponent,
+    MapComponent
+} from "@open-pioneer/open-layers";
 import { useService } from "open-pioneer:react-hooks";
 
 import { MapConfigProvider } from "./services";
@@ -17,8 +21,9 @@ export function MapApp() {
                 display="flex"
                 flexDirection="column"
                 padding="10px"
-                width={isOpen ? "auto" : "300px"}
+                width={!isOpen ? "auto" : "300px"}
             >
+                <LayerControlComponent showopacitySlider={isOpen}></LayerControlComponent>
                 <Spacer></Spacer>
                 <Button onClick={onToggle}>Toggle</Button>
             </Box>

@@ -3,11 +3,11 @@
 import { createAbortError, createManualPromise, ManualPromise } from "@open-pioneer/core";
 import { Service } from "@open-pioneer/runtime";
 import TileLayer from "ol/layer/Tile";
-import { default as OlMap, MapOptions } from "ol/Map";
+import OlMap, { MapOptions } from "ol/Map";
 import OSM from "ol/source/OSM";
 import View from "ol/View";
 
-const defaultLayer = new TileLayer({ source: new OSM() });
+const defaultLayer = new TileLayer({ source: new OSM(), properties: { title: "OSM" } });
 export class OpenLayersMapService implements Service {
     private map: OlMap | undefined = undefined;
 

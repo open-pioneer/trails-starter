@@ -113,6 +113,7 @@ importers:
 
   src/packages/framework/open-layers:
     specifiers:
+      '@open-pioneer/chakra-integration': workspace:^
       '@open-pioneer/core': workspace:^
       '@open-pioneer/runtime': workspace:^
       '@open-pioneer/test-utils': workspace:^
@@ -120,6 +121,7 @@ importers:
       react: ^18.2.0
       react-use: ^17.4.0
     devDependencies:
+      '@open-pioneer/chakra-integration': link:../chakra-integration
       '@open-pioneer/core': link:../core
       '@open-pioneer/runtime': link:../runtime
       '@open-pioneer/test-utils': link:../test-utils
