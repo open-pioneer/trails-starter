@@ -9,11 +9,21 @@ import {
 import { useService } from "open-pioneer:react-hooks";
 
 import { MapConfigProvider } from "./services";
+import { useAsync } from "react-use";
 
 export function MapApp() {
     const mapConfig = useService("config.MapConfig") as MapConfigProvider;
 
     const { isOpen, onToggle } = useDisclosure();
+
+    const mapPromise = useService("open-layers-map-service").getMap();
+    const mapState = useAsync(async () => await mapPromise);
+
+    const centerBerlin = () => {
+        if (mapState.value) {
+            mapState.value.getView().fit([1489200, 6894026, 1489200, 6894026], { maxZoom: 13 });
+        }
+    };
 
     return (
         <Flex height="100%">
@@ -21,11 +31,13 @@ export function MapApp() {
                 display="flex"
                 flexDirection="column"
                 padding="10px"
+                gap="10px"
                 width={!isOpen ? "auto" : "300px"}
             >
                 <LayerControlComponent showopacitySlider={isOpen}></LayerControlComponent>
+                <Button onClick={centerBerlin}>Center Berlin</Button>
                 <Spacer></Spacer>
-                <Button onClick={onToggle}>Toggle</Button>
+                <Button onClick={onToggle}>Toggle Sidebar</Button>
             </Box>
             <Box flex="1">
                 <MapComponent id="test" mapOptions={mapConfig.mapOptions}></MapComponent>

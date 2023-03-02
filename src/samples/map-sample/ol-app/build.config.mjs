@@ -10,6 +10,6 @@ export default defineBuildConfig({
         }
     },
     ui: {
-        references: ["config.MapConfig", "map-sample-logging.LogService"]
+        references: ["config.MapConfig", "map-sample-logging.LogService", "open-layers-map-service"]
     }
 });
