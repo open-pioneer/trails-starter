@@ -48,10 +48,9 @@ export { HelloWorldService } from "./HelloWorldService";
 Services accept configuration options such as the interfaces they provide and the references they require.
 These options are provided by editing the `build.config.mjs` of the containing package, see [Package Reference](./Package.md).
 
-## Using a service from another service
+### Using a service from another service
 
 Services can depend on other services by referencing an interface name.
-The service implementing that interface name will automatically be injected by the framework into the other service's constructor.
 
 ```js
 // sample-app/build.config.mjs
@@ -69,8 +68,7 @@ export default defineBuildConfig({
 });
 ```
 
-When a reference cannot be satisfied, the application will refuse to start with a detailed error message.
-On success, the reference name in the other service's constructor (in `serviceOptions.references`) matches the name of the reference in _(1)_:
+If the reference can be satisfied, the service implementing that interface name will automatically be injected by the framework into the other service's constructor (in `serviceOptions.references`). The reference name in the other service's constructor matches the name of the reference in _(1)_:
 
 ```js
 // sample-app/services.js
@@ -87,7 +85,9 @@ References are either injected as an object (direct reference, the service that 
 or as an array (when multiple services are requested).
 See documentation and examples in [Package Reference](./Package.md) for more details.
 
-## Using a service from the UI
+If a reference cannot be satisfied, the application will refuse to start with a detailed error message.
+
+### Using a service from the UI
 
 Services can also be used directly from react components.
 Just like services, the UI must declare its dependencies before it can reference any service:
@@ -104,7 +104,7 @@ export default defineBuildConfig({
 The snippet above tells the system that React components from the package `sample-app` may reference the service implementing `"hello.HelloWorldService"`.
 The framework will ensure that that service is started, or that an error is thrown if no service implements that interface.
 
-From within the React component, the `useService` hook can be used:
+From within the React component, the `useService` hook can be used to reference the service:
 
 ```jsx
 // sample-app/ExampleComponent.jsx
@@ -143,9 +143,39 @@ The following values are available as properties of `serviceOptions`:
 -   `properties`: An object containing the current package's properties (default values from `build.config.mjs`, possibly modified/overwritten by the application).
 -   `intl`: The current package's `intl` object to support translations and formatting in the user's locale (see [I18N Format](./I18nFormat.md)).
 
-<!-- TODO: Link to hosted documentation ?? -->
+<!-- TODO: Link to hosted api documentation ?? -->
 
 Detailed documentation of `serviceOptions` is available in the API documentation of `@open-pioneer/runtime` (type `ServiceOptions`).
+
+## Service start and stop behavior
+
+Services are started when the application launches, i.e. when the application's DOM element has been mounted.
+All services used by an app are started before the UI is rendered for the first time.
+
+A service is considered "used" when it is needed by the UI (see `ui.references` in `build.config.mjs`),
+or when it defines an API on the application (implements `integration.ApiExtension`).
+The framework will take care to start all those services (and their dependencies) in the correct order.
+
+The service start algorithm for a service `S` that depends on (`references`) two other services `D1` and `D2`
+is as follows:
+
+1. Recursively create `D1` and `D2`.
+2. Invoke the constructor of `S` (passing references to `D1` and `D2`).
+
+Creating the dependencies before `S` ensures that `S` always sees a fully initialized version of its dependencies.
+
+Service destruction happens when the application is destroyed, i.e. when the DOM element gets unmounted.
+It reverses the construction algorithm:
+
+1. Destroy `S` if it is no longer being referenced by invoking the `destroy()` method.
+2. Recursively destroy `D1` and `D2`.
+
+Dependencies are destroyed after their dependents to ensure that their instances are still valid in the `destroy()` method of `S`.
+
+> NOTE:
+> Reference cycles between services are forbidden: the app will refuse to launch.
+> This can often be worked around by fixing the design: common functionality needs to move to a shared service.
+> In the future, we could consider implementing lazy references (see [Internal Documentation](../internals/ServiceLayer.md)).
 
 ## TypeScript Integration
 
@@ -154,7 +184,8 @@ The runtime provides a few facilities to aid with the implementation.
 
 The `Service` interface provides types for the service's lifecycle methods.
 At the time of this writing this is just `destroy()`, but more methods may be added in the future.
-It also accepts an optional type parameter for convenience that gets merged with the service's lifecycle methods:
+It also accepts an optional type parameter representing the service's public API.
+The properties and methods from the type are merged with the service's lifecycle methods:
 
 ```ts
 // ExampleService.ts
@@ -196,7 +227,7 @@ export class MyServiceImpl implements Service<MyService> {
 
 ### Registering service interfaces
 
-Interface name can be associated with TypeScript interfaces, which greatly improves the developer experience when interacting with services.
+An interface name can be associated with TypeScript interfaces, which greatly improves the developer experience when interacting with services.
 
 In order to provide a type for an interface name, extent the `ServiceRegistry` interface.
 This is usually done from a file called `api.ts` or `api/index.ts`:
@@ -224,23 +255,6 @@ The declaration above tells the compiler that whenever the interface `"hello.Hel
 
 That information can be used like this:
 
--   Using the `ServiceType` helper directly:
-
-    ```ts
-    // ExampleService.ts
-    import { Service, ServiceType } from "@open-pioneer/runtime";
-
-    interface References {
-        // Automatically resolves to the registered type, or compilation
-        // fails if no type has been registered.
-        helloWorldService: ServiceType<"hello.HelloWorldService">;
-    }
-
-    class ExampleService implements Service {
-        constructor(options: ServiceOptions<References>);
-    }
-    ```
-
 -   Using the `useService` hook:
 
     ```jsx
@@ -248,6 +262,23 @@ That information can be used like this:
     function ExampleComponent() {
         // Of type HelloWorldService, or `unknown` if no type has been registered.
         const service = useService("hello.HelloWorldService");
+    }
+    ```
+
+-   Using the `ServiceType` helper directly:
+
+    ```ts
+    // ExampleService.ts
+    import { Service, ServiceType } from "@open-pioneer/runtime";
+
+    interface References {
+        // Automatically resolves to the registered type
+        // or compilation fails if no type has been registered.
+        helloWorldService: ServiceType<"hello.HelloWorldService">;
+    }
+
+    class ExampleService implements Service {
+        constructor(options: ServiceOptions<References>) {}
     }
     ```
 
@@ -270,33 +301,3 @@ declare module "@open-pioneer/runtime" {
     }
 }
 ```
-
-## Service start and stop behavior
-
-Services are started when the application launches, i.e. when the application's DOM element has been mounted.
-All services used by an app are started before the UI is rendered for the first time.
-
-A service is considered "used" when it is needed by the UI (see `ui.references` in `build.config.mjs`),
-or when it defines an API on the application (implements `integration.ApiExtension`).
-The framework will take care to start all those services (and their dependencies) in the correct order.
-
-The service start algorithm for a service `S` that depends (`references`) two other services `D1` and `D2`
-is as follows:
-
-1. Recursively create `D1` and `D2`.
-2. Invoke the constructor of `S` (passing references to `D1` and `D2`).
-
-Creating the dependencies before `S` ensures that `S` always sees a fully initialized version of its dependencies.
-
-Service destruction happens when the application is destroyed, i.e. when the DOM element gets unmounted.
-It reverses the construction algorithm:
-
-1. Destroy `S` if it is no longer being referenced by invoking the `destroy()` method.
-2. Recursively destroy `D1` and `D2`.
-
-Dependencies are destroyed after their dependents to ensure that their instances are still valid in the `destroy()` method of `S`.
-
-> NOTE:
-> Reference cycles between services are forbidden: the app will refuse to launch.
-> This can often be worked around by fixing the design: common functionality needs to move to a shared service.
-> In the future, we could consider implementing lazy references (see [Internal Documentation](../internals/ServiceLayer.md)).
