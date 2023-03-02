@@ -19,3 +19,4 @@ This project is built on various high quality projects from the open source comm
 -   Framework Code is written in [TypeScript](https://www.typescriptlang.org/).
     We recommend, but do not require, TypeScript for application code as well.
 -   [PNPM](https://pnpm.io/) is our package manager.
+-   Finally, applications are shipped as [Web Components](https://developer.mozilla.org/en-US/docs/Web/Web_Components).
