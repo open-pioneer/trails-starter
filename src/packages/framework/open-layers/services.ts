@@ -1,6 +1,11 @@
 // SPDX-FileCopyrightText: con terra GmbH and contributors
 // SPDX-License-Identifier: Apache-2.0
-import { createAbortError, createManualPromise, ManualPromise } from "@open-pioneer/core";
+import {
+    createAbortError,
+    createManualPromise,
+    EventEmitter,
+    ManualPromise
+} from "@open-pioneer/core";
 import { Service } from "@open-pioneer/runtime";
 import TileLayer from "ol/layer/Tile";
 import OlMap, { MapOptions } from "ol/Map";
@@ -8,7 +13,11 @@ import OSM from "ol/source/OSM";
 import View from "ol/View";
 
 const defaultLayer = new TileLayer({ source: new OSM(), properties: { title: "OSM" } });
-export class OpenLayersMapService implements Service {
+
+interface Events {
+    "map-changed": void;
+}
+export class OpenLayersMapService extends EventEmitter<Events> implements Service {
     private map: OlMap | undefined = undefined;
 
     private mapPromise: ManualPromise<OlMap> | undefined;
@@ -25,7 +34,12 @@ export class OpenLayersMapService implements Service {
         return mapPromise.promise;
     }
 
+    getMapSync(): OlMap | undefined {
+        return this.map;
+    }
+
     deleteMap(mapId: string) {
+        this.emit("map-changed");
         this.map = undefined;
         this.mapPromise = undefined;
     }
@@ -43,6 +57,7 @@ export class OpenLayersMapService implements Service {
             };
             this.map = new OlMap(options);
             this.mapPromise?.resolve(this.map);
+            this.emit("map-changed");
         }
         return this.map;
     }
