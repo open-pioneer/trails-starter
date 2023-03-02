@@ -20,7 +20,8 @@
 
 ## New Table of Contents
 
--   Getting started
+-   [Introduction](./Introduction.md)
+-   [Getting started](./GettingStarted.md)
 -   Tutorials
 -   Reference
 
