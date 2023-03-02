@@ -1,0 +1,51 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "type": "npm",
+            "script": "build",
+            "group": "build",
+            "problemMatcher": [],
+            "label": "Build for production",
+            "detail": "Outputs the production build to ./dist"
+        },
+        {
+            "type": "npm",
+            "script": "preview",
+            "problemMatcher": [],
+            "label": "Run local web server",
+            "detail": "Requires built project in ./dist (run npm build first)"
+        },
+        {
+            "type": "npm",
+            "script": "dev",
+            "group": "test",
+            "problemMatcher": ["$vite"],
+            "label": "Run development server",
+            "detail": "Starts vite in development mode"
+        },
+        {
+            "type": "npm",
+            "script": "test",
+            "group": {
+                "kind": "test",
+                "isDefault": true
+            },
+            "problemMatcher": ["$vite"],
+            "label": "Run tests",
+            "detail": "Starts vitest in development mode (interactive)"
+        },
+        {
+            "type": "shell",
+            "command": "pnpm",
+            "args": ["exec", "vitest", "--", "run", "--run"],
+            "group": "test",
+            "problemMatcher": ["$vite"],
+            // Faking a CI environment because somehow vite defaults to watch mode when
+            // started from within a task (run --run should REALLY disable watch mode)
+            "options": { "env": { "CI": "1" } },
+            "label": "Run all tests",
+            "detail": "Runs all tests and exits"
+        }
+    ]
+}
