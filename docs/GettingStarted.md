@@ -21,6 +21,8 @@ $ git clone https://github.com/open-pioneer/starter.git PROJECT_NAME
 $ cd PROJECT_NAME
 ```
 
+For the remainder of this document, we'll assume that the root of the repository (`PROJECT_NAME` in the example) is the current working directory.
+
 ## Starting the development server
 
 Open the project directory in an IDE of your choice.
@@ -98,3 +100,15 @@ More information:
 
 -   [Vite's configuration reference](https://vitejs.dev/config/)
 -   [Env files](https://vitejs.dev/guide/env-and-mode.html#env-files)
+
+## Next steps
+
+We recommend making yourself familiar with the contents of the empty app before you continue.
+For example, you could try customizing the UI (in `src/apps/empty/AppUI.tsx`).
+If you start the development server and open the app in your browser, changes to the UI will become active immediately after saving the respective file.
+
+Recommended further reading:
+
+-   TODO: Guide to the repository
+-   [How to create an app](./tutorials/HowToCreateAnApp.md)
+-   [How to deploy an app](./tutorials/HowToDeployAnApp.md)

@@ -23,6 +23,10 @@
 -   [Introduction](./Introduction.md)
 -   [Getting started](./GettingStarted.md)
 -   Tutorials
+
+    -   [How to create an app](./tutorials/HowToCreateAnApp.md)
+    -   [How to deploy an app](./tutorials/HowToDeployAnApp.md)
+
 -   Reference
 
     -   [Package Reference](./reference/Package.md)
