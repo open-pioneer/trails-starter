@@ -43,7 +43,7 @@ export default defineConfig(({ mode }) => {
         base: "./",
 
         build: {
-            outDir: resolve(__dirname, "dist"),
+            outDir: resolve(__dirname, "dist/www"),
             emptyOutDir: true,
             target: targets
         },

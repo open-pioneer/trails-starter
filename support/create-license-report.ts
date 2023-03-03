@@ -1,14 +1,17 @@
 // SPDX-FileCopyrightText: con terra GmbH and contributors
 // SPDX-License-Identifier: Apache-2.0
-import { readFileSync, writeFileSync } from "fs";
-import { dirname, resolve } from "path";
-import { fileURLToPath } from "url";
+import { execSync } from "child_process";
+import glob from "fast-glob";
+import { readFileSync, writeFileSync, mkdirSync } from "fs";
 import Handlebars from "handlebars";
+import { load as loadYaml } from "js-yaml";
+import { basename, dirname, resolve } from "path";
+import { fileURLToPath } from "url";
 
 /**
  * Generates a license report from the dependencies of this repository.
  * Should be invoked via `pnpm build-license-report` (or manually from the project root).
- * 
+ *
  * The project name is read from the root `package.json` file.
  *
  * Outputs an html file (TODO: Location).
@@ -17,43 +20,113 @@ const THIS_DIR = resolve(dirname(fileURLToPath(import.meta.url)));
 const CONFIG_PATH = resolve(THIS_DIR, "license-config.yaml");
 
 const PACKAGE_DIR = resolve(THIS_DIR, "..");
-const PNPM_REPORT_JSON_PATH = resolve(PACKAGE_DIR, "pnpm-licenses.json");
-const REPORT_HTML_PATH = resolve(PACKAGE_DIR, "report.html");
 const PACKAGE_JSON_PATH = resolve(PACKAGE_DIR, "package.json");
+const OUTPUT_HTML_PATH = resolve(PACKAGE_DIR, "dist/license-report.html");
 
 function main() {
-    const reportJson = readPnpmLicenseReport(PNPM_REPORT_JSON_PATH);
+    const config = readLicenseConfig(CONFIG_PATH);
     const projectName = getProjectName();
 
-    // TODO: Handle multiple licenses
-    const licenseItems = Object.values(reportJson)
-        .flat()
-        .map((project, index) => {
-            const name = project.name;
-            const licenses = project.license;
+    // Invoke pnpm to gather dependency information.
+    const reportJson = getPnpmLicenseReport();
+
+    // Analyze licenses: find license information, handle configured overrides and print errors.
+    const { error, items } = analyzeLicenses(reportJson, config);
+
+    // Ensure directory exists, then write the report
+    mkdirSync(dirname(OUTPUT_HTML_PATH), {
+        recursive: true
+    });
+    const reportHtml = generateReportHtml(projectName, items);
+    writeFileSync(OUTPUT_HTML_PATH, reportHtml, "utf-8");
+
+    // Signal error if anything went wrong
+    process.exit(error ? 1 : 0);
+}
+
+function analyzeLicenses(
+    reportJson: PnpmLicensesReport,
+    config: LicenseConfig
+): {
+    error: boolean;
+    items: LicenseItem[];
+} {
+    let unknownLicenses = false;
+    let disallowedLicenses = false;
+    let missingLicenseText = false;
+
+    const usedOverrides = new Set<OverrideLicenseEntry>();
+    const getOverrideEntry = (name: string, version: string) => {
+        const entry = config.overrideLicenses.find((e) => e.name === name && e.version === version);
+        if (entry) {
+            usedOverrides.add(entry);
+        }
+        return entry;
+    };
+
+    const reportProjects = Object.values(reportJson).flat();
+    const items = reportProjects.map((project, index) => {
+        const name = project.name;
+        const version = project.version;
+        const overrideEntry = getOverrideEntry(name, version);
+        const licenses = overrideEntry?.license ?? project.license;
+        const licenseFiles = overrideEntry?.licenseFiles ?? findLicenseFiles(project.path);
+        const noticeFiles = overrideEntry?.noticeFiles ?? findNoticeFiles(project.path);
+
+        if (!overrideEntry?.license) {
             if (!licenses || licenses === "Unknown") {
+                unknownLicenses = true;
                 console.warn(`Failed to detect licenses of dependency '${name}'.`);
-                // TODO throw or overwritten value from config
+            } else if (!config.allowedLicenses.includes(licenses)) {
+                disallowedLicenses = true;
+                console.warn(
+                    `License '${licenses}' of dependency '${name}' is not allowed by configuration.`
+                );
             }
+        }
 
-            // TODO: Find texts
-            // const licenseText = project?.texts;
-            // if (!licenseText) {
-            //     console.warn(`Failed to detect license text of dependency '${name}'.`);
-            //     // TODO throw or overwritten value from config
-            // }
+        const readProjectFile = (file: string) => {
+            const path = resolve(project.path, file);
+            return readFileSync(path, "utf-8");
+        };
 
-            const item: LicenseItem = {
-                id: `dep-${index}`,
-                name: name,
-                license: licenses,
-                licenseText: "", // TODO
-                noticeText: "" // TODO
-            };
-            return item;
-        });
-    const reportHtml = generateReportHtml(projectName, licenseItems);
-    writeFileSync(REPORT_HTML_PATH, reportHtml, "utf-8");
+        const licenseTexts = licenseFiles.map(readProjectFile);
+        if (licenseTexts.length === 0) {
+            console.warn(
+                `Failed to detect license text of dependency '${name}' in ${project.path}`
+            );
+            missingLicenseText = true;
+        }
+
+        const noticeTexts = noticeFiles.map(readProjectFile);
+        const item: LicenseItem = {
+            id: `dep-${index}`,
+            name: name,
+            version: version,
+            license: licenses,
+            licenseText: licenseTexts.join("\n\n"),
+            noticeText: noticeTexts.join("\n\n")
+        };
+        return item;
+    });
+
+    items.sort((a, b) => {
+        return a.name.localeCompare(b.name, "en-US");
+    });
+
+    for (const overrideEntry of config.overrideLicenses) {
+        if (!usedOverrides.has(overrideEntry)) {
+            console.warn(
+                `License override for dependency '${overrideEntry.name}' (version ${overrideEntry.version}) was not used, it should either be updated or removed.`
+            );
+        }
+    }
+
+    const error = unknownLicenses || disallowedLicenses || missingLicenseText;
+    return {
+        error,
+        items
+    };
 }
 
 interface LicenseItem {
@@ -62,6 +135,9 @@ interface LicenseItem {
 
     /** Project name */
     name: string;
+
+    /** Project version */
+    version: string;
 
     /** License name(s) */
     license: string;
@@ -84,7 +160,6 @@ function generateReportHtml(projectName: string, licenseItems: LicenseItem[]): s
         }
     );
 }
-
 
 const partials = {
     "index": Handlebars.compile(`
@@ -220,11 +295,11 @@ const partials = {
         <li class="dependency">
             <div class="header">
                 <a class="toggle title" href="#" data-target="{{id}}-content">
-                    <h2>{{ name }} (License: {{license}})</h2>
+                    <h2>{{ name }} {{ version }} (License: {{license}})</h2>
                 </a>
             </div>
             <div id="{{id}}-content" class="content">
-                <h3>License:</h3>
+                <h3>License</h3>
                 <pre>{{licenseText}}</pre>
                 {{#if noticeText}}
                     <h3>Notice</h3>
@@ -253,18 +328,85 @@ interface PnpmLicenseProject {
     license: string;
 }
 
-function readPnpmLicenseReport(path: string): PnpmLicensesReport {
-    const content = readFileSync(path, "utf-8");
-    const json = JSON.parse(content);
-    return json;
+function getPnpmLicenseReport(): PnpmLicensesReport {
+    const reportJsonText = execSync("pnpm licenses list --json --long -P", { encoding: "utf-8" });
+    const reportJson = JSON.parse(reportJsonText);
+    return reportJson;
 }
 
 interface LicenseConfig {
     allowedLicenses: string[];
+    overrideLicenses: OverrideLicenseEntry[];
+}
+
+interface OverrideLicenseEntry {
+    /** Project name */
+    name: string;
+
+    /** Exact project version */
+    version: string;
+
+    /** Manual license name */
+    license?: string;
+
+    /** License files, relative to dependency dir */
+    licenseFiles?: string[];
+
+    /** Notice files, relative to dependency dir */
+    noticeFiles?: string[];
 }
 
 function readLicenseConfig(path: string): LicenseConfig {
-    
+    try {
+        const content = readFileSync(path, "utf-8");
+        const data = loadYaml(content);
+        return data as LicenseConfig;
+    } catch (e) {
+        throw new Error(`Failed to read license config from ${path}: ${e}`);
+    }
+}
+
+const LICENSE_FILES = "LICENSE LICENCE COPYING README".split(" ");
+const NOTICE_FILES = "NOTICE".split(" ");
+
+/**
+ * Attempts to find license files in the given directory.
+ * Returns the first file matching one of the file patterns above,
+ * without checking the content.
+ *
+ * For license files, this may currently fall back to the project's readme file.
+ *
+ * The license output must be checked manually!
+ */
+function findLicenseFiles(directory: string) {
+    return findFirstMatch(directory, LICENSE_FILES);
+}
+
+/**
+ * Like findLicenseFiles(), but for copyright NOTICE files.
+ */
+function findNoticeFiles(directory: string) {
+    return findFirstMatch(directory, NOTICE_FILES);
+}
+
+function findFirstMatch(directory: string, candidates: string[]): string[] {
+    // https://github.com/micromatch/micromatch#extended-globbing
+    const pattern = "(" + candidates.join("|") + ")";
+    const matches = glob.sync(`?(*)${pattern}*`, {
+        followSymbolicLinks: false,
+        cwd: directory,
+        caseSensitiveMatch: false
+    });
+
+    for (const candidateName of candidates) {
+        for (const matchPath of matches) {
+            const matchFileName = basename(matchPath);
+            if (matchFileName.toLowerCase().includes(candidateName.toLowerCase())) {
+                return [matchPath];
+            }
+        }
+    }
+    return [];
 }
 
 function getProjectName(): string {
@@ -282,4 +424,9 @@ function getProjectName(): string {
     throw new Error(`Failed to retrieve 'name' from package.json: it must be a string.`);
 }
 
-main();
+try {
+    main();
+} catch (e) {
+    console.error("Fatal error", e);
+    process.exit(1);
+}

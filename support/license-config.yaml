@@ -1,2 +1,28 @@
+# List of allowed dependency licenses.
 allowedLicenses:
-  - a
+  - "Apache-2.0"
+  - "MIT"
+  - "ISC"
+  - "BSD-3-Clause"
+  - "BSD-2-Clause"
+  - "0BSD"
+  - "CC0-1.0"
+  - "WTFPL"
+  - "Unlicense"
+
+# Some licenses are detected incorrectly.
+# Their information can be overwritten here.
+# Version and name must match exactly, otherwise entries here are not applied:
+overrideLicenses:
+  - name: "react-universal-interface"
+    version: "0.6.2"
+    license: "Unlicense"
+  - name: "fast-shallow-equal"
+    version: "1.0.0"
+    license: "Unlicense"
+  - name: "pako"
+    version: "2.1.0"
+    license: "MIT and Zlib"
+    licenseFiles:
+      - "./LICENSE"
+      - "./lib/zlib/README"
