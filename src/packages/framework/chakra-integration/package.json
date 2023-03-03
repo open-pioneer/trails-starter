@@ -1,7 +1,7 @@
 {
     "name": "@open-pioneer/chakra-integration",
     "main": "index.tsx",
-    "private": true,
+    "license": "Apache-2.0",
     "dependencies": {
         "@chakra-ui/react": "^2.5.1",
         "@emotion/cache": "^11.10.5",

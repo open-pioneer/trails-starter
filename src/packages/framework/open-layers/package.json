@@ -1,6 +1,6 @@
 {
     "name": "@open-pioneer/open-layers",
-    "private": true,
+    "license": "Apache-2.0",
     "main": "index.ts",
     "devDependencies": {
         "@open-pioneer/chakra-integration": "workspace:^",
