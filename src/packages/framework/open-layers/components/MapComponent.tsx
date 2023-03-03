@@ -7,11 +7,20 @@ import { RefObject, useEffect, useRef, useState } from "react";
 export interface MapComponentProperties {
     id: string;
     mapOptions?: MapOptions;
+    viewPadding?: Array<number> | undefined;
 }
 
 export function MapComponent(props: MapComponentProperties) {
     const mapElement = useRef<HTMLDivElement>(null);
-    useMap(props, mapElement);
+    const map = useMap(props, mapElement);
+
+    useEffect(() => {
+        if (props.viewPadding && map) {
+            const center = map.getView().getCenter();
+            map.getView().padding = props.viewPadding;
+            map.getView().animate({ center, duration: 300 });
+        }
+    }, [props.viewPadding, map]);
 
     const mapContainer: React.CSSProperties = {
         height: "100%"

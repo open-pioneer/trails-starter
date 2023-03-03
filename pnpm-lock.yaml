@@ -218,6 +218,7 @@ importers:
 
   src/samples/map-sample/ol-app:
     specifiers:
+      '@chakra-ui/icons': ^2.0.17
       '@open-pioneer/chakra-integration': workspace:^
       '@open-pioneer/open-layers': workspace:^
       '@open-pioneer/runtime': workspace:^
@@ -226,6 +227,7 @@ importers:
       react: ^18.2.0
       react-use: ^17.4.0
     dependencies:
+      '@chakra-ui/icons': 2.0.17_react@18.2.0
       '@open-pioneer/chakra-integration': link:../../../packages/framework/chakra-integration
       '@open-pioneer/open-layers': link:../../../packages/framework/open-layers
       '@open-pioneer/runtime': link:../../../packages/framework/runtime
@@ -752,6 +754,26 @@ packages:
     dependencies:
       '@chakra-ui/shared-utils': 2.0.5
       '@chakra-ui/system': 2.5.1_xqp3pgpqjlfxxa3zxu4zoc4fba
+      react: 18.2.0
+    dev: false
+
+  /@chakra-ui/icon/3.0.16_react@18.2.0:
+    resolution: {integrity: sha512-RpA1X5Ptz8Mt39HSyEIW1wxAz2AXyf9H0JJ5HVx/dBdMZaGMDJ0HyyPBVci0m4RCoJuyG1HHG/DXJaVfUTVAeg==}
+    peerDependencies:
+      '@chakra-ui/system': '>=2.0.0'
+      react: '>=18'
+    dependencies:
+      '@chakra-ui/shared-utils': 2.0.5
+      react: 18.2.0
+    dev: false
+
+  /@chakra-ui/icons/2.0.17_react@18.2.0:
+    resolution: {integrity: sha512-HMJP0WrJgAmFR9+Xh/CBH0nVnGMsJ4ZC8MK6tMgxPKd9/muvn0I4hsicHqdPlLpmB0TlxlhkBAKaVMtOdz6F0w==}
+    peerDependencies:
+      '@chakra-ui/system': '>=2.0.0'
+      react: '>=18'
+    dependencies:
+      '@chakra-ui/icon': 3.0.16_react@18.2.0
       react: 18.2.0
     dev: false
 

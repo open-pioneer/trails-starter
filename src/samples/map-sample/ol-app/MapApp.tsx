@@ -1,50 +1,85 @@
 // SPDX-FileCopyrightText: con terra GmbH and contributors
 // SPDX-License-Identifier: Apache-2.0
-import { Box, Button, Flex, Spacer, useDisclosure } from "@open-pioneer/chakra-integration";
+import { ArrowLeftIcon, ArrowRightIcon } from "@chakra-ui/icons";
+import {
+    Box,
+    Button,
+    Flex,
+    IconButton,
+    Spacer,
+    useDisclosure
+} from "@open-pioneer/chakra-integration";
 import {
     CoordinateComponent,
     LayerControlComponent,
     MapComponent
 } from "@open-pioneer/open-layers";
 import { useService } from "open-pioneer:react-hooks";
+import { useState } from "react";
+import { useAsync } from "react-use";
 
 import { MapConfigProvider } from "./services";
-import { useAsync } from "react-use";
+
+const berlin = [1489200, 6894026, 1489200, 6894026];
+
+// TODO: use dynamic sizes
+const sidebarWidthCollapsed = 150;
+const sidebarWidthExpanded = 400;
 
 export function MapApp() {
     const mapConfig = useService("config.MapConfig") as MapConfigProvider;
+    const [viewPadding, setViewPadding] = useState<number[]>();
+    // const sidebar = useRef<any>(null);
 
-    const { isOpen, onToggle } = useDisclosure();
+    const { isOpen, onToggle } = useDisclosure({
+        onOpen() {
+            // console.log(sidebar.current?.clientWidth);
+            setViewPadding([0, 0, 0, sidebarWidthExpanded / 2]);
+        },
+        onClose() {
+            // console.log(sidebar.current?.clientWidth);
+            setViewPadding([0, 0, 0, sidebarWidthCollapsed / 2]);
+        }
+    });
 
     const mapPromise = useService("open-layers-map-service").getMap();
     const mapState = useAsync(async () => await mapPromise);
 
     const centerBerlin = () => {
         if (mapState.value) {
-            mapState.value.getView().fit([1489200, 6894026, 1489200, 6894026], { maxZoom: 13 });
+            mapState.value.getView().fit(berlin, { maxZoom: 13 });
         }
     };
 
     return (
-        <Flex height="100%">
-            <Box
-                display="flex"
-                flexDirection="column"
-                padding="10px"
-                gap="10px"
-                width={!isOpen ? "auto" : "300px"}
-            >
-                <LayerControlComponent showopacitySlider={isOpen}></LayerControlComponent>
-                <Button onClick={centerBerlin}>Center Berlin</Button>
-                <Spacer></Spacer>
-                <Button onClick={onToggle}>Toggle Sidebar</Button>
-            </Box>
-            <Box flex="1">
-                <MapComponent id="test" mapOptions={mapConfig.mapOptions}></MapComponent>
+        <div style={{ height: "100%" }}>
+            <div style={{ height: "100%", position: "relative" }}>
+                <MapComponent
+                    id="test"
+                    mapOptions={mapConfig.mapOptions}
+                    viewPadding={viewPadding}
+                ></MapComponent>
                 <div className="right-bottom">
                     <CoordinateComponent></CoordinateComponent>
                 </div>
-            </Box>
-        </Flex>
+            </div>
+            <Flex
+                // ref={sidebar}
+                className="sidebar"
+                width={!isOpen ? `${sidebarWidthCollapsed}px` : `${sidebarWidthExpanded}px`}
+            >
+                <Box display="flex" width="100%" flexDirection="column" padding="10px" gap="10px">
+                    <LayerControlComponent showopacitySlider={isOpen}></LayerControlComponent>
+                    <Button onClick={centerBerlin}>Center Berlin</Button>
+                    <Spacer></Spacer>
+                    <IconButton
+                        aria-label="expand/collapse"
+                        variant="ghost"
+                        icon={!isOpen ? <ArrowRightIcon /> : <ArrowLeftIcon />}
+                        onClick={onToggle}
+                    />
+                </Box>
+            </Flex>
+        </div>
     );
 }

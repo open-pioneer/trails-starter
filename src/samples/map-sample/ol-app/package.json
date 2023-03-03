@@ -2,9 +2,10 @@
     "name": "ol-map",
     "private": true,
     "dependencies": {
-        "@open-pioneer/runtime": "workspace:^",
-        "@open-pioneer/open-layers": "workspace:^",
+        "@chakra-ui/icons": "^2.0.17",
         "@open-pioneer/chakra-integration": "workspace:^",
+        "@open-pioneer/open-layers": "workspace:^",
+        "@open-pioneer/runtime": "workspace:^",
         "map-sample-logging": "workspace:^",
         "ol": "^7.2.2",
         "react": "^18.2.0",
