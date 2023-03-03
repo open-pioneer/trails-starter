@@ -65,9 +65,12 @@ jobs:
 
       - name: Assemble site
         run: |
+          set -eux;
+
           mkdir -p site;
           touch site/.nojekyll;
-          mv dist/www/* site/*;
+          mv dist/www/* site/;
+          mv dist/docs site/docs;
 
       - name: Setup git
         shell: bash
