@@ -69,6 +69,8 @@ function analyzeLicenses(
         const name = project.name;
         const version = project.version;
         const overrideEntry = getOverrideEntry(name, version);
+        const dependencyInfo = `'${name}' (version ${version})`;
+
         const licenses = overrideEntry?.license ?? project.license;
         const licenseFiles = overrideEntry?.licenseFiles ?? findLicenseFiles(project.path);
         const noticeFiles = overrideEntry?.noticeFiles ?? findNoticeFiles(project.path);
@@ -76,11 +78,11 @@ function analyzeLicenses(
         if (!overrideEntry?.license) {
             if (!licenses || licenses === "Unknown") {
                 unknownLicenses = true;
-                console.warn(`Failed to detect licenses of dependency '${name}'.`);
+                console.warn(`Failed to detect licenses of dependency ${dependencyInfo}.`);
             } else if (!config.allowedLicenses.includes(licenses)) {
                 disallowedLicenses = true;
                 console.warn(
-                    `License '${licenses}' of dependency '${name}' is not allowed by configuration.`
+                    `License '${licenses}' of dependency ${dependencyInfo} is not allowed by configuration.`
                 );
             }
         }
@@ -93,7 +95,7 @@ function analyzeLicenses(
         const licenseTexts = licenseFiles.map(readProjectFile);
         if (licenseTexts.length === 0) {
             console.warn(
-                `Failed to detect license text of dependency '${name}' in ${project.path}`
+                `Failed to detect license text of dependency ${dependencyInfo} in ${project.path}`
             );
             missingLicenseText = true;
         }
@@ -366,7 +368,7 @@ function readLicenseConfig(path: string): LicenseConfig {
     }
 }
 
-const LICENSE_FILES = "LICENSE LICENCE COPYING README".split(" ");
+const LICENSE_FILES = "LICENSE LICENCE COPYING".split(" ");
 const NOTICE_FILES = "NOTICE".split(" ");
 
 /**

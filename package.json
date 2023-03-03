@@ -19,6 +19,11 @@
         "test": "vitest",
         "prepare": "husky install"
     },
+    "pnpm": {
+        "overrides": {
+            "ol-mapbox-style": "workspace:disabled-package@*"
+        }
+    },
     "devDependencies": {
         "@open-pioneer/build-support": "^0.3.0",
         "@open-pioneer/runtime": "workspace:*",

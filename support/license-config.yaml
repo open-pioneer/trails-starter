@@ -26,3 +26,11 @@ overrideLicenses:
     licenseFiles:
       - "./LICENSE"
       - "./lib/zlib/README"
+  - name: "react-remove-scroll-bar"
+    version: "2.3.4"
+    licenseFiles:
+      - "./README.md"
+  - name: "lerc"
+    version: "3.0.0"
+    licenseFiles:
+      - "./README.md"
