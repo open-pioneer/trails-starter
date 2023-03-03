@@ -62,25 +62,25 @@ $ pnpm run build
 vite v4.1.4 building for production...
 ✓ 1453 modules transformed.
 Generated an empty chunk: "index".
-../dist/samples/styling-sample/index.html       0.45 kB
-../dist/sites/empty/index.html                  0.52 kB
-../dist/samples/extension-sample/index.html     0.86 kB
-../dist/samples/map-sample/index.html           0.99 kB
-../dist/samples/i18n-sample/index.html          1.01 kB
-../dist/samples/properties-sample/index.html    1.16 kB
-../dist/samples/chakra-sample/index.html        1.46 kB
-../dist/samples/api-sample/index.html           1.55 kB
-../dist/index.html                              2.38 kB
+../dist/www/samples/styling-sample/index.html       0.45 kB
+../dist/www/sites/empty/index.html                  0.52 kB
+../dist/www/samples/extension-sample/index.html     0.86 kB
+../dist/www/samples/map-sample/index.html           0.99 kB
+../dist/www/samples/i18n-sample/index.html          1.01 kB
+../dist/www/samples/properties-sample/index.html    1.16 kB
+../dist/www/samples/chakra-sample/index.html        1.46 kB
+../dist/www/samples/api-sample/index.html           1.55 kB
+../dist/www/index.html                              2.38 kB
 ...
 ```
 
 All built artifacts are placed in the `dist` directory.
-`dist` contains a ready-to-use static web application that can be hosted on all common HTTP-Servers or CDNs (Content Delivery Networks), often without any additional configuration.
+`dist/www` contains a ready-to-use static web application that can be hosted on all common HTTP-Servers or CDNs (Content Delivery Networks), often without any additional configuration.
 
 The contents of your production build can be configured by editing the `pioneer` plugin settings in your `vite.config.ts`.
 You can chose which `.html` sites to deploy, or which `apps` to include, depending on your environment (development, production, testing) or other settings.
 
-Vite comes with a built in http server to serve the content of `dist` on your local machine.
+Vite comes with a built-in http server to serve the content of `dist/www` on your local machine.
 To start the server, simply run `pnpm preview` after building the project.
 
 ## Customizing the vite configuration

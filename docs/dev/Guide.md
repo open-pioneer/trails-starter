@@ -56,7 +56,7 @@ Vitest will automatically watch all source code files and will rerun tests durin
 ### `pnpm run build`
 
 Builds the project as a static site.
-Generated files are output into the `dist` directory (which is cleared on every build).
+Generated files are output into the `dist/www` directory.
 The main configuration file for vite is `vite.config.ts`.
 
 ### `pnpm run build-docs`
@@ -65,9 +65,16 @@ Builds the project's API documentation.
 Documentation is generated using [TypeDoc](https://typedoc.org/) and is configured in the main `tsconfig.json` (key `"typedocOptions"`).
 The API documentation is written into `dist/docs`.
 
+### `pnpm run build-license-report`
+
+Create a license report for dependencies used by the project.
+The report is written to `dist/license-report.html`.
+The source code for report generation is located in `support/create-license-report.ts`.
+Configuration happens via `support/license-config.yaml`.
+
 ### `pnpm run preview`
 
-Starts a local http server serving the contents of the `dist` directory.
+Starts a local http server serving the contents of the `dist/www` directory.
 
 ### `pnpm run clean`
 

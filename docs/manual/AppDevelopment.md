@@ -121,7 +121,7 @@ See the documentation of the package `@open-pioneer/vite-plugin-pioneer` for mor
 ## Deployment
 
 Running `pnpm run build` will package the project into the `dist` directory as a static website according to the configuration in `vite.config.ts`.
-The contents of the `dist` directory can be deployed to an arbitrary web server.
+The contents of the `dist/www` directory can be deployed to an arbitrary web server.
 
 As an example for a fully automated deployment, open the `test-and-build.yml` Github Actions Workflow file.
 The workflow automatically builds the project and deploys the result to Github Pages.
