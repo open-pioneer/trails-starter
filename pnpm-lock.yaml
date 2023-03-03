@@ -27,6 +27,7 @@ importers:
       eslint-plugin-unused-imports: ^2.0.0
       handlebars: ^4.7.7
       husky: ^8.0.3
+      js-yaml: ^4.1.0
       jsdom: ^21.1.0
       prettier: ^2.8.4
       react: ^18.2.0
@@ -64,6 +65,7 @@ importers:
       eslint-plugin-unused-imports: 2.0.0_cywiivd33wj5dtfbj25uyqfkna
       handlebars: 4.7.7
       husky: 8.0.3
+      js-yaml: 4.1.0
       jsdom: 21.1.0
       prettier: 2.8.4
       react: 18.2.0
@@ -250,7 +252,7 @@ importers:
 
   src/samples/styling-sample/styling-app:
     specifiers:
-      '@open-pioneer/runtime': workspace:^0.0.1
+      '@open-pioneer/runtime': workspace:*
       styling-sample-components: workspace:*
     dependencies:
       '@open-pioneer/runtime': link:../../../packages/framework/runtime

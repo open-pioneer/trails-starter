@@ -9,63 +9,51 @@ import Handlebars from "handlebars";
  * Generates a license report from the dependencies of this repository.
  * Should be invoked via `pnpm build-license-report` (or manually from the project root).
  * 
+ * The project name is read from the root `package.json` file.
+ *
  * Outputs an html file (TODO: Location).
  */
+const THIS_DIR = resolve(dirname(fileURLToPath(import.meta.url)));
+const CONFIG_PATH = resolve(THIS_DIR, "license-config.yaml");
 
-const PACKAGE_DIR = resolve(dirname(fileURLToPath(import.meta.url)), "..");
-const REPORT_JSON_PATH = resolve(PACKAGE_DIR, "report.json");
+const PACKAGE_DIR = resolve(THIS_DIR, "..");
+const PNPM_REPORT_JSON_PATH = resolve(PACKAGE_DIR, "pnpm-licenses.json");
 const REPORT_HTML_PATH = resolve(PACKAGE_DIR, "report.html");
 const PACKAGE_JSON_PATH = resolve(PACKAGE_DIR, "package.json");
 
 function main() {
-    const reportJson = readReportJson(REPORT_JSON_PATH);
+    const reportJson = readPnpmLicenseReport(PNPM_REPORT_JSON_PATH);
     const projectName = getProjectName();
 
     // TODO: Handle multiple licenses
-    const licenseItems = reportJson.dependencies.map((dependency, index) => {
-        const name = dependency.name;
-        const licenses = dependency.licenses?.join(", ");
-        if (!licenses) {
-            console.warn(`Failed to detect licenses of dependency '${name}'.`);
-            // TODO throw or overwritten value from config
-        }
+    const licenseItems = Object.values(reportJson)
+        .flat()
+        .map((project, index) => {
+            const name = project.name;
+            const licenses = project.license;
+            if (!licenses || licenses === "Unknown") {
+                console.warn(`Failed to detect licenses of dependency '${name}'.`);
+                // TODO throw or overwritten value from config
+            }
 
-        const licenseText = dependency?.texts;
-        if (!licenseText) {
-            console.warn(`Failed to detect license text of dependency '${name}'.`);
-            // TODO throw or overwritten value from config
-        }
+            // TODO: Find texts
+            // const licenseText = project?.texts;
+            // if (!licenseText) {
+            //     console.warn(`Failed to detect license text of dependency '${name}'.`);
+            //     // TODO throw or overwritten value from config
+            // }
 
-        const item: LicenseItem = {
-            id: `dep-${index}`,
-            name: name,
-            license: licenses,
-            licenseText: licenseText,
-            noticeText: dependency.notice
-        };
-        return item;
-    });
+            const item: LicenseItem = {
+                id: `dep-${index}`,
+                name: name,
+                license: licenses,
+                licenseText: "", // TODO
+                noticeText: "" // TODO
+            };
+            return item;
+        });
     const reportHtml = generateReportHtml(projectName, licenseItems);
     writeFileSync(REPORT_HTML_PATH, reportHtml, "utf-8");
-}
-
-interface Report {
-    dependencies: Dependency[];
-}
-
-interface Dependency {
-    name: string;
-    version: string;
-    authors: string;
-    licenses: string[];
-    texts: string;
-    notice: string;
-}
-
-function readReportJson(path: string): Report {
-    const content = readFileSync(path, "utf-8");
-    const json = JSON.parse(content);
-    return json;
 }
 
 interface LicenseItem {
@@ -86,28 +74,17 @@ interface LicenseItem {
 }
 
 function generateReportHtml(projectName: string, licenseItems: LicenseItem[]): string {
-    return partials.index({
-        projectName,
-        licenseItems,
-    }, {
-        partials
-    });
+    return partials.index(
+        {
+            projectName,
+            licenseItems
+        },
+        {
+            partials
+        }
+    );
 }
 
-function getProjectName(): string {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    let data: any;
-    try {
-        data = JSON.parse(readFileSync(PACKAGE_JSON_PATH, "utf-8"));
-    } catch (e) {
-        throw new Error(`Failed to read package.json: ${e}`);
-    }
-    const name = data?.name;
-    if (typeof name === "string") {
-        return name;
-    }
-    throw new Error(`Failed to retrieve 'name' from package.json: it must be a string.`);
-}
 
 const partials = {
     "index": Handlebars.compile(`
@@ -257,5 +234,52 @@ const partials = {
         </li>
     `)
 };
+
+interface PnpmLicensesReport {
+    [license: string]: PnpmLicenseProject[];
+}
+
+interface PnpmLicenseProject {
+    /** Project name */
+    name: string;
+
+    /** Project version */
+    version: string;
+
+    /** Location on disk */
+    path: string;
+
+    /** License (same as group key) in {@link PnpmLicensesReport} */
+    license: string;
+}
+
+function readPnpmLicenseReport(path: string): PnpmLicensesReport {
+    const content = readFileSync(path, "utf-8");
+    const json = JSON.parse(content);
+    return json;
+}
+
+interface LicenseConfig {
+    allowedLicenses: string[];
+}
+
+function readLicenseConfig(path: string): LicenseConfig {
+    
+}
+
+function getProjectName(): string {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    let data: any;
+    try {
+        data = JSON.parse(readFileSync(PACKAGE_JSON_PATH, "utf-8"));
+    } catch (e) {
+        throw new Error(`Failed to read package.json: ${e}`);
+    }
+    const name = data?.name;
+    if (typeof name === "string") {
+        return name;
+    }
+    throw new Error(`Failed to retrieve 'name' from package.json: it must be a string.`);
+}
 
 main();
