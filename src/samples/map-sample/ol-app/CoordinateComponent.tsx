@@ -6,8 +6,9 @@ import { transform } from "ol/proj";
 import { useService } from "open-pioneer:react-hooks";
 import { useState } from "react";
 import { useAsync } from "react-use";
-import { OlComponentConfig } from "./MapComponent";
+import { OlComponentConfig } from "@open-pioneer/open-layers-map";
 
+// TODO: currently just showcase remove later
 export function CoordinateComponent(props: OlComponentConfig) {
     const [selectedCoord, setSelectedCoord] = useState<Coordinate>();
 

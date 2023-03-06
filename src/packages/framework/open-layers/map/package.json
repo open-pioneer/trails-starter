@@ -1,0 +1,9 @@
+{
+    "name": "@open-pioneer/open-layers-map",
+    "license": "Apache-2.0",
+    "main": "index.ts",
+    "devDependencies": {
+        "@open-pioneer/core": "workspace:^",
+        "ol": "^7.2.2"
+    }
+}

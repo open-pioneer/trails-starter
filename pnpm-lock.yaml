@@ -124,23 +124,23 @@ importers:
       '@open-pioneer/runtime': link:../runtime
       '@open-pioneer/test-utils': link:../test-utils
 
-  src/packages/framework/open-layers:
+  src/packages/framework/open-layers/layer-control:
     specifiers:
       '@open-pioneer/chakra-integration': workspace:^
-      '@open-pioneer/core': workspace:^
-      '@open-pioneer/runtime': workspace:^
-      '@open-pioneer/test-utils': workspace:^
+      '@open-pioneer/open-layers-map': workspace:^
       ol: ^7.2.2
-      react: ^18.2.0
-      react-use: ^17.4.0
     devDependencies:
-      '@open-pioneer/chakra-integration': link:../chakra-integration
-      '@open-pioneer/core': link:../core
-      '@open-pioneer/runtime': link:../runtime
-      '@open-pioneer/test-utils': link:../test-utils
+      '@open-pioneer/chakra-integration': link:../../chakra-integration
+      '@open-pioneer/open-layers-map': link:../map
       ol: 7.2.2
-      react: 18.2.0
-      react-use: 17.4.0_react@18.2.0
+
+  src/packages/framework/open-layers/map:
+    specifiers:
+      '@open-pioneer/core': workspace:^
+      ol: ^7.2.2
+    devDependencies:
+      '@open-pioneer/core': link:../../core
+      ol: 7.2.2
 
   src/packages/framework/runtime:
     specifiers:
@@ -229,7 +229,8 @@ importers:
     specifiers:
       '@chakra-ui/icons': ^2.0.17
       '@open-pioneer/chakra-integration': workspace:^
-      '@open-pioneer/open-layers': workspace:^
+      '@open-pioneer/open-layers-layer-control': workspace:^
+      '@open-pioneer/open-layers-map': workspace:^
       '@open-pioneer/runtime': workspace:^
       map-sample-logging: workspace:^
       ol: ^7.2.2
@@ -238,7 +239,8 @@ importers:
     dependencies:
       '@chakra-ui/icons': 2.0.17_react@18.2.0
       '@open-pioneer/chakra-integration': link:../../../packages/framework/chakra-integration
-      '@open-pioneer/open-layers': link:../../../packages/framework/open-layers
+      '@open-pioneer/open-layers-layer-control': link:../../../packages/framework/open-layers/layer-control
+      '@open-pioneer/open-layers-map': link:../../../packages/framework/open-layers/map
       '@open-pioneer/runtime': link:../../../packages/framework/runtime
       map-sample-logging: link:../map-sample-logging
       ol: 7.2.2
@@ -4543,6 +4545,7 @@ packages:
       sourcemap-codec: 1.4.8
       stacktrace-js: 2.0.2
       stylis: 4.1.3
+    dev: false
 
   /nanoid/3.3.4:
     resolution: {integrity: sha512-MqBkQh/OHTS2egovRtLk45wEyNXwF+cokD+1YPf9u5VfJiRdAiRwB2froX5Co9Rh20xs4siNPm8naNotSD6RBw==}
@@ -5021,6 +5024,7 @@ packages:
       throttle-debounce: 3.0.1
       ts-easing: 0.2.0
       tslib: 2.5.0
+    dev: false
 
   /react/18.2.0:
     resolution: {integrity: sha512-/3IjMdb2L9QbBdWiW5e3P2/npwMBaU9mHCSCUzNln0ZCYbcfTsGbTJrU/kGemdH2IWmB2ioZ+zkxtmq6g09fGQ==}

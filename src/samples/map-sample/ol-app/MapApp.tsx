@@ -9,14 +9,13 @@ import {
     Spacer,
     useDisclosure
 } from "@open-pioneer/chakra-integration";
-import {
-    CoordinateComponent,
-    LayerControlComponent,
-    MapContainer
-} from "@open-pioneer/open-layers";
+import { LayerControlComponent } from "@open-pioneer/open-layers-layer-control";
+import { MapContainer } from "@open-pioneer/open-layers-map";
 import { useService } from "open-pioneer:react-hooks";
 import { useState } from "react";
 import { useAsync } from "react-use";
+
+import { CoordinateComponent } from "./CoordinateComponent";
 import { MAP_ID } from "./services";
 
 const berlin = [1489200, 6894026, 1489200, 6894026];

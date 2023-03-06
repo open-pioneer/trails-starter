@@ -13,7 +13,7 @@ import { useService } from "open-pioneer:react-hooks";
 import { useEffect, useState } from "react";
 import { useAsync } from "react-use";
 
-import { OlComponentConfig } from "./MapComponent";
+import { OlComponentConfig } from "@open-pioneer/open-layers-map";
 
 function LayerVisibilityTogglerComponent(props: { layer: Layer }) {
     const [visibility, setVisibility] = useState<boolean>(props.layer.getVisible());
@@ -79,6 +79,7 @@ interface LayerControlConfig extends OlComponentConfig {
     showopacitySlider: boolean;
 }
 
+// TODO: move to own package
 export function LayerControlComponent(config: LayerControlConfig) {
     const mapPromise = useService("open-layers-map-service").getMap(config.mapId);
 
