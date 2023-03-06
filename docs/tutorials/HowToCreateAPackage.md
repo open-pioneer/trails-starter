@@ -151,5 +151,5 @@ Open your browser's console to see the result:
 ## Further reading
 
 -   TODO: How to create UI components
--   TODO: How to create a service
+-   [How to create a service](./HowToCreateAService.md)
 -   [Package Reference](../reference/Package.md)

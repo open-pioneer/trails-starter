@@ -21,6 +21,7 @@ starter
 ├── .eslintrc               -- ESLint configuration file
 ├── .gitignore              -- Lists files ignored by git
 ├── .prettierrc             -- Prettier configuration file
+├── .syncpackrc.cjs         -- Syncpack configuration file
 ├── package.json            -- Dependencies of the root package (mostly development tools)
 ├── pnpm-lock.yaml          -- Package manager lockfile
 ├── pnpm-workspace.yaml     -- Workspaces configuration file for pnpm
@@ -95,6 +96,12 @@ Prettier and ESLint are integrated (see `.eslintrc`), so prettier rules are also
 
 Checks for known security issues with the installed packages. (Will also be checked with a nightly github action job)
 
+### `pnpm run update-shared-versions`
+
+Sets and updates shared dependency versions.
+This can be used to enforce consistent package versions for dependencies used by multiple packages (e.g. react).
+This uses [`syncpack`](https://jamiemason.github.io/syncpack/), which is configured by editing the `.syncpackrc.cjs`.
+
 ### Miscellaneous tools
 
 Installed node tools can be invoked by running `pnpm exec <TOOL_AND_OPTIONS>` (once again, the `exec` is optional).
@@ -117,7 +124,13 @@ TBD
 
 ### Keeping dependency versions in sync
 
-TBD
+We're using [Syncpack](https://jamiemason.github.io/syncpack/) to keep dependency versions in our `package.json` files in sync.
+
+`pnpm run update-shared-versions` will visit all `package.json` files in the workspace, and ensure that dependencies there use the versions defined in `.syncpackrc.cjs`.
+
+To manage a shared dependency (such as react), simply add or update an entry in the `VERSIONS` object in `.syncpackrc.cjs` and then run `pnpm run update-shared-versions` to rewrite the `package.json` files.
+
+Syncpack can also be executed directly, e.g. via `pnpm syncpack list-mismatches`.
 
 ## Concepts
 

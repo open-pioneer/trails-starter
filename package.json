@@ -17,6 +17,7 @@
         "prettier": "pnpm prettier:common -w",
         "prettier:common": "prettier ./src ./docs ./support --ignore-path .eslintignore --cache",
         "test": "vitest",
+        "update-shared-versions": "syncpack fix-mismatches",
         "prepare": "husky install"
     },
     "pnpm": {

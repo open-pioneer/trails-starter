@@ -1,6 +1,5 @@
 {
     "name": "@open-pioneer/core",
     "license": "Apache-2.0",
-    "main": "index.ts",
-    "dependencies": {}
+    "main": "index.ts"
 }
