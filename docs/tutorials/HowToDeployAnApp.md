@@ -64,7 +64,7 @@ Successfully tagged example-site:latest
 Start a container:
 
 ```
-$ docker run -it --rm -p 5555:80 example-server caddy file-server
+$ docker run -it --rm -p 5555:80 example-site caddy file-server
 ```
 
 Open you browser at <http://localhost:5555> to see the result.
