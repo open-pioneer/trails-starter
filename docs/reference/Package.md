@@ -327,7 +327,7 @@ export default defineBuildConfig({
 
 ## Service definition
 
-TODO: Document class
+Read [Services](./Services.md) to see how services can be defined.
 
 ## React Integration
 
