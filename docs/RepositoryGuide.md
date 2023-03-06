@@ -1,6 +1,6 @@
-# Dev Guide
+# Guide to the repository
 
-## Repository overview
+## Overview
 
 The following figure gives a brief overview of the repository structure.
 
