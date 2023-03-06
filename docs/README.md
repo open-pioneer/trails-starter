@@ -12,11 +12,11 @@
     -   [How to deploy an app](./tutorials/HowToDeployAnApp.md)
     -   [How to create a package](./tutorials/HowToCreateAPackage.md)
     -   [How to use a service](./tutorials/HowToUseAService.md)
-    -   TODO: How to create a service
+    -   [How to create a service](./tutorials/HowToCreateAService.md)
     -   TODO: How create (or use) UI components
-    -   TODO: How to provide an API
-    -   TODO: How to translate an App
     -   TODO: How to add custom styles
+    -   TODO: How to translate an App
+    -   TODO: How to provide an API
     -   TODO: How to write tests
 
 -   [Best practices and common issues](./BestPractices.md)
