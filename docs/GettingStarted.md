@@ -109,6 +109,6 @@ If you start the development server and open the app in your browser, changes to
 
 Recommended further reading:
 
--   TODO: Guide to the repository
+-   [Guide to the repository](./RepositoryGuide.md)
 -   [How to create an app](./tutorials/HowToCreateAnApp.md)
 -   [How to deploy an app](./tutorials/HowToDeployAnApp.md)
