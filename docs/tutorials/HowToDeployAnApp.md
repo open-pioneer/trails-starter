@@ -22,8 +22,8 @@ dist
 
 The `www` directory is designed to be deployed as a single unit.
 You should always deploy all files inside `www`, as they may be required at runtime by your application(s).
-If you want to reduce the number of files, you should customize your `vite.config.ts` instead.
-For example, the configuration of the `pioneer` plugin can be adapted to include only a select set of apps or sites in the build.
+If you want to reduce the number of files, you should customize your `vite.config.ts`.
+For example, the configuration of the `pioneer` plugin can be adapted to include only a selected set of apps or sites in the build.
 
 ## Deployment of a static site
 
@@ -84,7 +84,7 @@ pioneer({
     rootSite: false,
     sites: [],
     apps: ["empty"]
-}),
+});
 // ...
 ```
 

@@ -1,14 +1,14 @@
 # How to create an app
 
 An app is a JavaScript or TypeScript package that provides a web component.
-The web component can in turn be used within an html file in the same project.
+The web component can in turn be used within a html file in the same project.
 It can also be distributed on its own to be embedded into different host sites.
 
 This repository comes prepared with an empty app in `src/apps/empty`, which is embedded into the site at `src/sites/empty/index.html`.
 
 ## Required setup
 
-To create the application package for our app, first initialize a `package.json` file in a new directory.
+To create the application package for an app, first initialize a `package.json` file in a new directory.
 Application packages should by convention be placed in `src/apps/<APP_NAME>`, but technically they may be placed anywhere in the `src` directory.
 
 All pioneer packages are node packages to benefit from (p-)npm's dependency management.
@@ -46,7 +46,9 @@ export default defineBuildConfig({});
 ## Implementing the app
 
 We're going to create an app with a very simple UI.
-The entry point for an app defines the custom element (e.g. <my-app>) and is located at `<APP_NAME>/app.ts` (or `.js`) by convention:
+
+Create an `app.ts` file (or`.js`) which is by convention located at `<APP_NAME>/app.ts`.
+This file defines the web component (i.e. `<my-app-element>`):
 
 ```ts
 // src/apps/my-app/app.ts
@@ -84,7 +86,7 @@ This is the setup required for a minimal pioneer application:
 
 -   **(5)**
     `customElements.define()` registers our element class as a custom element.
-    It can now be used, for example, from html: `<my-app-element></my-app-element>`.
+    It can now be used, for example, from HTML: `<my-app-element></my-app-element>`.
     NOTE: custom element names must always contain a `-` so they don't collide with builtin HTML tags.
 
 Finally, we define the application's UI as a [React](https://reactjs.org) component.
@@ -143,7 +145,7 @@ Vite derives the site's URL from the `index.html` file's path in the source dire
 
 ## Building the site
 
-Until now we have just used the app and the site together with Vite's dev server.
+Until now, we have just used the app and the site together with Vite's dev server.
 During development, all sites and apps are always available.
 However, not all sites are designed to be shipped (for example, internal test sites should not be included in a release), and not all apps are designed to be embedded into arbitrary sites.
 

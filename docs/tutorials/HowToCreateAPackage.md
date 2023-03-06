@@ -8,12 +8,12 @@ At their core, they are simply [Node packages](https://nodejs.org/api/packages.h
 > Application packages are packages like all others.
 > They just have a few additional capabilities.
 
-## Background
+## Background information
 
 Every locally developed package must contain a `package.json` and a `build.config.mjs`.
-The `package.json` file is required by Node and PNPM, while the `build.config.mjs` is used to implement our extensions (services etc.).
+The `package.json` file is required by Node and PNPM, while the `build.config.mjs` is used to implement our framework specific extensions (services etc.).
 
-By convention, most packages are placed into `src/packages/../<PACKAGE_NAME>`.
+By convention, packages are placed into `src/packages/../<PACKAGE_NAME>`.
 However, they can be placed anywhere within the `src` directory: every `package.json` in the source directory is detected by pnpm as part of the workspace (see `pnpm-workspace.yaml`),
 and all packages in the workspace may reference each other ([more details](https://pnpm.io/workspaces)).
 
@@ -67,7 +67,7 @@ export function greet(target = "World") {
 ```
 
 Next, we will edit our `package.json` to declare `index.ts` as our package's [main entry point](https://docs.npmjs.com/cli/v9/configuring-npm/package-json#main).
-This will ensure that when someone imports `"hello-world"`, she will receive the exports from `index.ts`.
+This will ensure that when someone imports `"hello-world"`, they will receive the exports from `index.ts`.
 
 ```jsonc
 // src/packages/hello-world/package.json
@@ -89,7 +89,7 @@ This will ensure that when someone imports `"hello-world"`, she will receive the
 ## Using the package
 
 The last step is to actually use the function from one of our apps.
-For that, we're going to extent this project's empty starting app in `src/apps/empty`.
+For that, we're going to extend this project's empty app in `src/apps/empty`.
 
 First, start the development server:
 
@@ -117,7 +117,7 @@ In order to use the new package, it must be declared as a dependency in your app
 
 > **Note**  
 > The `workspace:` protocol instructs pnpm to always install the referenced package from the local workspace.
-> _Installation_ in this case means simply linking the packages together: `node_modules` will contain symlinks ([read more](https://pnpm.io/workspaces#workspace-protocol-workspace)).
+> _Installation_ in this case means simply linking the packages together: `node_modules` will contain links to the dependencies in the source directory ([read more](https://pnpm.io/workspaces#workspace-protocol-workspace)).
 
 At this point, your browser will likely display an error because the dependency cannot be found.
 We have to run `pnpm install` after editing the dependencies, then reload your browser: the error will be gone.
