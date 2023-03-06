@@ -1,17 +1,16 @@
 // SPDX-FileCopyrightText: con terra GmbH and contributors
 // SPDX-License-Identifier: Apache-2.0
-import { MapOptions } from "ol/Map";
-import { Service } from "@open-pioneer/runtime";
-import View from "ol/View";
+import { OpenlayersMapConfigurationProvider } from "@open-pioneer/open-layers/api";
 import TileLayer from "ol/layer/Tile";
+import { MapOptions } from "ol/Map";
 import OSM from "ol/source/OSM";
 import Stamen from "ol/source/Stamen";
+import View from "ol/View";
 
-export interface MapConfigProvider {
-    mapOptions?: MapOptions;
-}
+export const MAP_ID = "main";
+export class MainMapProvider implements OpenlayersMapConfigurationProvider {
+    mapId = MAP_ID;
 
-export class Provider implements Service<MapConfigProvider> {
     mapOptions: MapOptions = {
         view: new View({
             projection: "EPSG:3857",
@@ -36,4 +35,8 @@ export class Provider implements Service<MapConfigProvider> {
         ]
         // controls: [ ]
     };
+
+    getMapOptions(): MapOptions {
+        return this.mapOptions;
+    }
 }

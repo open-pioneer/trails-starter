@@ -12,13 +12,12 @@ import {
 import {
     CoordinateComponent,
     LayerControlComponent,
-    MapComponent
+    MapContainer
 } from "@open-pioneer/open-layers";
 import { useService } from "open-pioneer:react-hooks";
 import { useState } from "react";
 import { useAsync } from "react-use";
-
-import { MapConfigProvider } from "./services";
+import { MAP_ID } from "./services";
 
 const berlin = [1489200, 6894026, 1489200, 6894026];
 
@@ -27,7 +26,6 @@ const sidebarWidthCollapsed = 150;
 const sidebarWidthExpanded = 400;
 
 export function MapApp() {
-    const mapConfig = useService("config.MapConfig") as MapConfigProvider;
     const [viewPadding, setViewPadding] = useState<number[]>();
     // const sidebar = useRef<any>(null);
 
@@ -42,7 +40,7 @@ export function MapApp() {
         }
     });
 
-    const mapPromise = useService("open-layers-map-service").getMap();
+    const mapPromise = useService("open-layers-map-service").getMap(MAP_ID);
     const mapState = useAsync(async () => await mapPromise);
 
     const centerBerlin = () => {
@@ -54,13 +52,9 @@ export function MapApp() {
     return (
         <div style={{ height: "100%" }}>
             <div style={{ height: "100%", position: "relative" }}>
-                <MapComponent
-                    id="test"
-                    mapOptions={mapConfig.mapOptions}
-                    viewPadding={viewPadding}
-                ></MapComponent>
+                <MapContainer mapId={MAP_ID} viewPadding={viewPadding}></MapContainer>
                 <div className="right-bottom">
-                    <CoordinateComponent></CoordinateComponent>
+                    <CoordinateComponent mapId={MAP_ID}></CoordinateComponent>
                 </div>
             </div>
             <Flex
@@ -69,7 +63,10 @@ export function MapApp() {
                 width={!isOpen ? `${sidebarWidthCollapsed}px` : `${sidebarWidthExpanded}px`}
             >
                 <Box display="flex" width="100%" flexDirection="column" padding="10px" gap="10px">
-                    <LayerControlComponent showopacitySlider={isOpen}></LayerControlComponent>
+                    <LayerControlComponent
+                        mapId={MAP_ID}
+                        showopacitySlider={isOpen}
+                    ></LayerControlComponent>
                     <Button onClick={centerBerlin}>Center Berlin</Button>
                     <Spacer></Spacer>
                     <IconButton

@@ -5,11 +5,11 @@ import { defineBuildConfig } from "@open-pioneer/build-support";
 export default defineBuildConfig({
     styles: "./app.css",
     services: {
-        Provider: {
-            provides: ["config.MapConfig"]
+        MainMapProvider: {
+            provides: ["open-layers-map-config.MapConfigProvider"]
         }
     },
     ui: {
-        references: ["config.MapConfig", "map-sample-logging.LogService", "open-layers-map-service"]
+        references: ["map-sample-logging.LogService", "open-layers-map-service"]
     }
 });

@@ -4,8 +4,14 @@ import { defineBuildConfig } from "@open-pioneer/build-support";
 
 export default defineBuildConfig({
     services: {
-        OpenLayersMapService: {
-            provides: ["open-layers-map-service"]
+        OlMapRegistry: {
+            provides: ["open-layers-map-service"],
+            references: {
+                providers: {
+                    name: "open-layers-map-config.MapConfigProvider",
+                    all: true
+                }
+            }
         }
     },
     ui: {

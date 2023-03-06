@@ -13,6 +13,8 @@ import { useService } from "open-pioneer:react-hooks";
 import { useEffect, useState } from "react";
 import { useAsync } from "react-use";
 
+import { OlComponentConfig } from "./MapComponent";
+
 function LayerVisibilityTogglerComponent(props: { layer: Layer }) {
     const [visibility, setVisibility] = useState<boolean>(props.layer.getVisible());
 
@@ -73,8 +75,12 @@ function LayerOpacitySliderComponent(props: { layer: Layer }) {
     );
 }
 
-export function LayerControlComponent(config: { showopacitySlider: boolean }) {
-    const mapPromise = useService("open-layers-map-service").getMap();
+interface LayerControlConfig extends OlComponentConfig {
+    showopacitySlider: boolean;
+}
+
+export function LayerControlComponent(config: LayerControlConfig) {
+    const mapPromise = useService("open-layers-map-service").getMap(config.mapId);
 
     const state = useAsync(async () => {
         const map = await mapPromise;
