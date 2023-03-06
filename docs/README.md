@@ -10,6 +10,7 @@
 
     -   [How to create an app](./tutorials/HowToCreateAnApp.md)
     -   [How to deploy an app](./tutorials/HowToDeployAnApp.md)
+    -   [How to create a package](./tutorials/HowToCreateAPackage.md)
 
 -   [Best practices and common issues](./BestPractices.md)
 
