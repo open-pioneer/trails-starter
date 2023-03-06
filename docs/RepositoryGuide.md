@@ -132,12 +132,12 @@ Here is a list of some common commands you are likely to need:
     Adds the dependency to the package and installs it. Use `-D` for devDependencies.
     `pnpm remove` removes a dependency again.
 -   `pnpm -w <COMMAND>`: run the command in the workspace root instead of the local package.
--   `pnpm run <SCRIPT>`: runs the script from the `package.json`. Use `-w` to run a script from the workspace root, e.g. `pnpm run -w lint`.
+-   `pnpm run <SCRIPT>`: runs the script from the `package.json`.
 -   `pnpm exec <COMMAND>`: runs the CLI command (should be installed in node_modules), e.g. `pnpm exec -w tsc --noEmit`.
 
 ### Monorepo
 
-We use [PNPM's workspace support](https://pnpm.io/workspaces) to lay out our repository.
+We use [PNPM's workspace support](https://pnpm.io/workspaces) to manage packages in our repository.
 All node packages matching the patterns configured in the `pnpm-workspace.yaml` file are included in the workspace.
 Workspace packages may reference each other.
 
@@ -159,7 +159,8 @@ For example, `package-a/node_modules/package-b` will be a link to `package-b`'s 
 ### TypeScript
 
 As a general rule, most code should be written in TypeScript.
-This protects against bugs, improves the developer experience (autocompletion, early detection of problems, etc.) and
+The usage of typescript has many advantages.
+It protects against bugs, improves the developer experience (autocompletion, early detection of problems, etc.) and
 also ensures that type definitions and documentation for reusable libraries or bundles can be generated with little effort.
 
 However, usage of JavaScript _is_ supported.
@@ -183,10 +184,11 @@ function MyComponent() {
 ### Vite
 
 [Vite](https://vitejs.dev/) is our main build tool and development server.
-Custom functionality (such as our packages) are developed on top of Vite via plugins.
+Custom functionalities (such as our specific pioneer-framework package support) are developed on top of Vite via plugins.
 
-Vite reads the `vite.config.ts` on start, which can be customized to your liking (see [docs](https://vitejs.dev/config/)).
-However, the pioneer plugin should not be removed.
+Vite reads the configuration file `vite.config.ts` on start, which can be customized to your liking
+(see [docs](https://vitejs.dev/config/)).
+However, the pioneer and react plugin should not be removed from the configuration.
 
 #### Supported Browsers
 
@@ -208,7 +210,7 @@ Use `pnpm run test` to run the test suite.
 
 Please refer to the [official documentation](https://vitest.dev/guide/) for more information.
 
-### UI Tests
+#### UI Tests
 
 Vitest can be used to write simple UI tests by simulating a browser environment.
 In your test file, configure the vitest environment to `jsdom` (or `happy-dom`, see [Reference](https://vitest.dev/guide/environment.html)):
@@ -224,7 +226,7 @@ It is often more convenient (and faster) to test the react components instead of
 
 However, testing the final application can be great too for automated acceptance tests etc.
 
-You can take a look at the UI Tests of the runtime package (`@open-pioneer/runtime`, for some examples).
+You can take a look at the UI tests of the runtime package (`@open-pioneer/runtime`) for some examples.
 
 Recommended libraries:
 
@@ -232,7 +234,7 @@ Recommended libraries:
 -   `react-dom/test-utils`: <https://reactjs.org/docs/test-utils.html>
 -   Our own test utils in `@open-pioneer/test-utils`
 
-### Test utilities
+#### Test utilities
 
 The package `@open-pioneer/test-utils` provides helpers to test components of a pioneer application:
 
@@ -249,9 +251,9 @@ This keeps code readable with reasonable defaults and also ensures that we don't
 Prettier is configured by the `.prettierrc` file and it also respects parts of the `.editorconfig` file.
 It can be integrated into most modern IDEs to keep automatically keep edited files formatted properly.
 
-[ESLint](https://eslint.org/) runs within the dev server (as a vite plugin) and when pushing to the github repository (within the github actions workflow).
+[ESLint](https://eslint.org/) runs within the dev server (as a vite plugin) and when pushing to the GitHub repository (within the GitHub actions workflow).
 It checks the code against configured rules (see `.eslintrc`) and fails the build when it detects a code style violation.
-ESLint helps detecting minor style issues (e.g. missing semicolons) and outright programming errors (e.g. wrong usage of react hooks).
+ESLint helps to detect minor style issues (e.g. missing semicolons) and outright programming errors (e.g. wrong usage of react hooks).
 
 ### Web component integration
 

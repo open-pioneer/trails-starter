@@ -23,9 +23,17 @@ $ cd PROJECT_NAME
 
 For the remainder of this document, we'll assume that the root of the repository (`PROJECT_NAME` in the example) is the current working directory.
 
-## Starting the development server
+## Install dependencies
 
 Open the project directory in an IDE of your choice.
+To install all the dependencies of the project run the following command:
+
+```bash
+$ pnpm install
+```
+
+## Starting the development server
+
 To start the development server, execute the following command:
 
 ```bash
@@ -37,7 +45,7 @@ $ pnpm dev
 # ➜  press h to show help
 ```
 
-We also have prepared a few tasks for Visual Studio Code, should you be using that IDE (see `.vscode/tasks.json`).
+If you use Visual Studio Code as IDE, you can alternatively use some tasks we prepared (see `.vscode/tasks.json`).
 
 The `dev` script (defined in `package.json`) starts [Vite's](https://vitejs.dev/) development server.
 When you open the address that has been printed to the console (<http://localhost:5173/> in this case), you will be greeted by our test site (defined in `src/index.html`).
@@ -80,7 +88,7 @@ All built artifacts are placed in the `dist` directory.
 `dist/www` contains a ready-to-use static web application that can be hosted on all common HTTP-Servers or CDNs (Content Delivery Networks), often without any additional configuration.
 
 The contents of your production build can be configured by editing the `pioneer` plugin settings in your `vite.config.ts`.
-You can chose which `.html` sites to deploy, or which `apps` to include, depending on your environment (development, production, testing) or other settings.
+You can choose which `.html` sites to deploy, or which `apps` to include, depending on your environment (development, production, testing) or other settings.
 
 Vite comes with a built-in http server to serve the content of `dist/www` on your local machine.
 To start the server, simply run `pnpm preview` after building the project.
