@@ -11,7 +11,7 @@
     -   [How to create an app](./tutorials/HowToCreateAnApp.md)
     -   [How to deploy an app](./tutorials/HowToDeployAnApp.md)
     -   [How to create a package](./tutorials/HowToCreateAPackage.md)
-    -   TODO: How to use a service
+    -   [How to use a service](./tutorials/HowToUseAService.md)
     -   TODO: How to create a service
     -   TODO: How create (or use) UI components
     -   TODO: How to provide an API
