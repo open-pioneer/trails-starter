@@ -132,11 +132,11 @@ You can now launch the development server and inspect the result:
 ```bash
 $ pnpm install
 $ pnpm run dev
-VITE v4.0.4  ready in 518 ms
-
-  ➜  Local:   http://localhost:5173/
-  ➜  Network: use --host to expose
-  ➜  press h to show help
+# VITE v4.0.4  ready in 518 ms
+#
+#   ➜  Local:   http://localhost:5173/
+#   ➜  Network: use --host to expose
+#   ➜  press h to show help
 ```
 
 Vite derives the site's URL from the `index.html` file's path in the source directory, so it will serve your site at <http://localhost:5173/sites/my-app-test/>:

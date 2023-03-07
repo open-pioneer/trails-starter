@@ -69,19 +69,19 @@ The script `pnpm run build` creates a production build of your project:
 
 ```bash
 $ pnpm run build
-vite v4.1.4 building for production...
-✓ 1453 modules transformed.
-Generated an empty chunk: "index".
-../dist/www/samples/styling-sample/index.html       0.45 kB
-../dist/www/sites/empty/index.html                  0.52 kB
-../dist/www/samples/extension-sample/index.html     0.86 kB
-../dist/www/samples/map-sample/index.html           0.99 kB
-../dist/www/samples/i18n-sample/index.html          1.01 kB
-../dist/www/samples/properties-sample/index.html    1.16 kB
-../dist/www/samples/chakra-sample/index.html        1.46 kB
-../dist/www/samples/api-sample/index.html           1.55 kB
-../dist/www/index.html                              2.38 kB
-...
+# vite v4.1.4 building for production...
+# ✓ 1453 modules transformed.
+# Generated an empty chunk: "index".
+# ../dist/www/samples/styling-sample/index.html       0.45 kB
+# ../dist/www/sites/empty/index.html                  0.52 kB
+# ../dist/www/samples/extension-sample/index.html     0.86 kB
+# ../dist/www/samples/map-sample/index.html           0.99 kB
+# ../dist/www/samples/i18n-sample/index.html          1.01 kB
+# ../dist/www/samples/properties-sample/index.html    1.16 kB
+# ../dist/www/samples/chakra-sample/index.html        1.46 kB
+# ../dist/www/samples/api-sample/index.html           1.55 kB
+# ../dist/www/index.html                              2.38 kB
+# ...
 ```
 
 All built artifacts are placed in the `dist` directory.

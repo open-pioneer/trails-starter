@@ -49,16 +49,16 @@ To speed up the build, we exclude everything except for `dist` from the docker c
 
 Build the image:
 
-```
+```bash
 $ docker build -t example-site .
-Sending build context to Docker daemon  476.2kB
-Step 1/2 : FROM caddy:2.6-alpine
- ---> d8464e23f16f
-Step 2/2 : COPY dist/www /srv
- ---> Using cache
- ---> 35cda8904927
-Successfully built 35cda8904927
-Successfully tagged example-site:latest
+# Sending build context to Docker daemon  476.2kB
+# Step 1/2 : FROM caddy:2.6-alpine
+#  ---> d8464e23f16f
+# Step 2/2 : COPY dist/www /srv
+#  ---> Using cache
+#  ---> 35cda8904927
+# Successfully built 35cda8904927
+# Successfully tagged example-site:latest
 ```
 
 Start a container:

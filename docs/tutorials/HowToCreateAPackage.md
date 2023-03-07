@@ -42,15 +42,15 @@ Run `pnpm install` to ensure that `pnpm` knows about our new package.
 pnpm provides powerful tools to work with the local workspace, we can use this to verify our setup:
 you can run `pnpm ls -r --depth -1` (optionally with `--json`) to print all local packages.
 
-```plain
+```bash
 $ pnpm ls -r --depth -1 --json
-// ...
-    {
-        "name": "hello-world",
-        "path": "<PROJECT_PATH>/src/packages/hello-world",
-        "private": true
-    },
-// ...
+# ...
+#     {
+#         "name": "hello-world",
+#         "path": "<PROJECT_PATH>/src/packages/hello-world",
+#         "private": true
+#     },
+# ...
 ```
 
 ## Entry point

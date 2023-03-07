@@ -200,7 +200,7 @@ export default defineBuildConfig({
 
 And our UI will now call the methods of our `CssClassService`:
 
-```ts
+```tsx
 import { Container, Heading, Text } from "@open-pioneer/chakra-integration";
 import { useService } from "open-pioneer:react-hooks";
 import { useEffect } from "react";
