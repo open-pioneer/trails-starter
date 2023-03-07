@@ -70,14 +70,14 @@ export function I18nUI() {
                 </ListItem>
                 <ListItem>List: {intl.formatList(list, { type: "conjunction" })}</ListItem>
                 <ListItem>
-                    Gender - male:{" "}
+                    Gender - female:{" "}
                     {intl.formatMessage(
                         { id: "content.testgender" },
                         { gender: "female", name: name }
                     )}
                 </ListItem>
                 <ListItem>
-                    Gender - female:{" "}
+                    Gender - male:{" "}
                     {intl.formatMessage(
                         { id: "content.testgender" },
                         { gender: "male", name: name }
