@@ -6,6 +6,8 @@ messages:
       Die tatsächlich von der Anwendung verwendete Sprache wird entweder aus den Einstellungen des Nutzers abgeleitet (Sprache des Browsers)
       oder explizit während des Anwendungsstarts festgelegt.
     open: "Dialog öffnen"
+    testplural: "{n, plural, =0 {kein Pferd} one {ein Pferd} other {# Pferde}}"
+    testgender: "{gender, select, male {Herr} female {Frau} other {}} {name}"
 
   picker:
     choose: "Wählen Sie eine Sprache aus:"
