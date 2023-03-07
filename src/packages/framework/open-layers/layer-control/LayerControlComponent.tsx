@@ -9,20 +9,17 @@ import {
     Tooltip
 } from "@open-pioneer/chakra-integration";
 import Layer from "ol/layer/Layer";
-import { useService } from "open-pioneer:react-hooks";
-import { useEffect, useState } from "react";
+import { useIntl, useService } from "open-pioneer:react-hooks";
+import { useState } from "react";
 import { useAsync } from "react-use";
 
 import { OlComponentConfig } from "@open-pioneer/open-layers-map";
 
 function LayerVisibilityTogglerComponent(props: { layer: Layer }) {
+    const intl = useIntl();
     const [visibility, setVisibility] = useState<boolean>(props.layer.getVisible());
-
-    const [title, setTitle] = useState<string>();
-
-    useEffect(() => {
-        setTitle(props.layer.getProperties().title ?? "undefined layer title");
-    }, [props.layer]);
+    const title =
+        props.layer.getProperties().title ?? intl.formatMessage({ id: "undefined-layer-title" });
 
     const changeVisibility = () => {
         setVisibility(!visibility);
