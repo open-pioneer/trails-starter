@@ -36,7 +36,7 @@ export class MainMapProvider implements OpenlayersMapConfigurationProvider {
         // controls: [ ]
     };
 
-    getMapOptions(): MapOptions {
-        return this.mapOptions;
+    getMapOptions(): Promise<MapOptions> {
+        return new Promise<MapOptions>((res) => res(this.mapOptions));
     }
 }

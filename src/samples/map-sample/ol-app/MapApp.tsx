@@ -39,8 +39,8 @@ export function MapApp() {
         }
     });
 
-    const mapPromise = useService("open-layers-map-service").getMap(MAP_ID);
-    const mapState = useAsync(async () => await mapPromise);
+    const olMapRegistry = useService("open-layers-map-service");
+    const mapState = useAsync(async () => await olMapRegistry.getMap(MAP_ID));
 
     const centerBerlin = () => {
         if (mapState.value) {
@@ -64,7 +64,7 @@ export function MapApp() {
                 <Box display="flex" width="100%" flexDirection="column" padding="10px" gap="10px">
                     <LayerControlComponent
                         mapId={MAP_ID}
-                        showopacitySlider={isOpen}
+                        showOpacitySlider={isOpen}
                     ></LayerControlComponent>
                     <Button onClick={centerBerlin}>Center Berlin</Button>
                     <Spacer></Spacer>

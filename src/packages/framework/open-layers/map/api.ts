@@ -14,7 +14,7 @@ export interface OpenlayersMapConfigurationProvider {
     /**
      * Returns the map options that will be applied on the corresponding map.
      */
-    getMapOptions(): MapOptions;
+    getMapOptions(): Promise<MapOptions>;
 }
 
 declare module "@open-pioneer/runtime" {

@@ -15,15 +15,18 @@ export interface MapComponentProperties extends OlComponentConfig {
 export function MapContainer(props: MapComponentProperties) {
     const mapElement = useRef<HTMLDivElement>(null);
 
-    const mapService = useService("open-layers-map-service");
-    const mapPromise = mapService.getMap(props.mapId);
-    const mapState = useAsync(async () => {
-        const map = await mapPromise;
-        if (mapElement.current) {
-            mapService.setContainer(props.mapId, mapElement.current);
+    const olMapRegistry = useService("open-layers-map-service");
+    const mapPromise = olMapRegistry.getMap(props.mapId);
+    const mapState = useAsync(async () => await mapPromise);
+
+    useEffect(() => {
+        if (mapState.value) {
+            if (mapElement.current) {
+                olMapRegistry.setContainer(props.mapId, mapElement.current);
+            }
+            return () => olMapRegistry.setContainer(props.mapId, undefined);
         }
-        return map;
-    });
+    }, [mapState.value, olMapRegistry, props.mapId]);
 
     useEffect(() => {
         const mapView = mapState.value?.getView();

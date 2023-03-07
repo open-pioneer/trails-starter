@@ -76,18 +76,17 @@ function LayerOpacitySliderComponent(props: { layer: Layer }) {
 }
 
 interface LayerControlConfig extends OlComponentConfig {
-    showopacitySlider: boolean;
+    showOpacitySlider: boolean;
 }
 
-// TODO: move to own package
 export function LayerControlComponent(config: LayerControlConfig) {
-    const mapPromise = useService("open-layers-map-service").getMap(config.mapId);
+    const olMapRegistry = useService("open-layers-map-service");
 
     const state = useAsync(async () => {
-        const map = await mapPromise;
-        const layers = map.getAllLayers();
+        const map = await olMapRegistry.getMap(config.mapId);
+        const layers = map.getAllLayers().reverse();
         return layers;
-    });
+    }, []);
 
     return (
         <div>
@@ -102,7 +101,7 @@ export function LayerControlComponent(config: LayerControlConfig) {
                             <LayerVisibilityTogglerComponent
                                 layer={layer}
                             ></LayerVisibilityTogglerComponent>
-                            {config.showopacitySlider && (
+                            {config.showOpacitySlider && (
                                 <div>
                                     <LayerOpacitySliderComponent
                                         layer={layer}

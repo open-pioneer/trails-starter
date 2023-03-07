@@ -18,12 +18,12 @@ interface References {
 
 export class OlMapRegistry implements Service {
     private maps: Map<string, OlMap> = new Map();
-    private configProvider: Map<string, OpenlayersMapConfigurationProvider> = new Map();
+    private configProviders: Map<string, OpenlayersMapConfigurationProvider> = new Map();
 
     constructor(options: ServiceOptions<References>) {
         const providers = options.references.providers;
         for (const provider of providers) {
-            this.configProvider.set(provider.mapId, provider);
+            this.configProviders.set(provider.mapId, provider);
         }
     }
 
@@ -37,9 +37,9 @@ export class OlMapRegistry implements Service {
 
     async getMap(mapId: string): Promise<OlMap> {
         if (!this.maps.has(mapId)) {
-            let additionalMapOptions = this.configProvider.get(mapId)?.getMapOptions();
+            let additionalMapOptions = await this.configProviders.get(mapId)?.getMapOptions();
             if (!additionalMapOptions) {
-                LOG.warn(`config provider for map with id ${mapId} does not exist`);
+                LOG.warn(`config provider for map with id '${mapId}' does not exist`);
                 additionalMapOptions = {};
             }
             const defaultOptions: MapOptions = {
@@ -56,18 +56,18 @@ export class OlMapRegistry implements Service {
         }
         const map = this.maps.get(mapId);
         if (!map) {
-            throw new Error(`Map with id ${mapId} does not exist`);
+            throw new Error(`Map with id '${mapId}' does not exist`);
         }
         return map;
     }
 
-    setContainer(mapId: string, elem: HTMLDivElement) {
+    setContainer(mapId: string, elem: HTMLDivElement | undefined) {
         const map = this.maps.get(mapId);
         if (map) {
             map.setTarget(elem);
             return;
         } else {
-            throw new Error(`Map with id ${mapId} does not exist`);
+            throw new Error(`Map with id '${mapId}' does not exist`);
         }
     }
 }

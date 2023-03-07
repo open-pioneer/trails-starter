@@ -12,8 +12,8 @@ import { OlComponentConfig } from "@open-pioneer/open-layers-map";
 export function CoordinateComponent(props: OlComponentConfig) {
     const [selectedCoord, setSelectedCoord] = useState<Coordinate>();
 
-    const mapService = useService("open-layers-map-service");
-    const mapPromise = mapService.getMap(props.mapId);
+    const olMapRegistry = useService("open-layers-map-service");
+    const mapPromise = olMapRegistry.getMap(props.mapId);
     useAsync(async () => {
         const map = await mapPromise;
         map.on("click", (event: MapBrowserEvent<UIEvent>) => {
