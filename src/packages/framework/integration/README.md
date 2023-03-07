@@ -47,7 +47,7 @@ export class TextApiExtension implements ApiExtension {
     async getApiMethods() {
         return {
             // exampleMethodName method is available
-            exampleMethodName: (sampleParamter: string) => {
+            exampleMethodName: (sampleParameter: string) => {
                 // do something
             }
         };
