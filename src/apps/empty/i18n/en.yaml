@@ -1,0 +1,4 @@
+# at least an empty yaml for supported languages have to exist if all messages are defined in packages used by this app
+messages:
+  heading: Empty App
+  text: This is an empty app.
