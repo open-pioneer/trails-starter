@@ -222,7 +222,9 @@ export function AppUI() {
     This callback is triggered by the `<Button>` element.
     The result is stored into the component's state via `setResult()` and will be displayed by the bottommost `<Text>` element.
 
-See also [How to use a service](./HowToUseAService.md).
+Your UI should look like this:
+
+![Multiplication UI](./HowToCreateAService_UI.png)
 
 ## Integrating with TypeScript
 
