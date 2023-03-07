@@ -10,7 +10,7 @@ import {
 } from "@open-pioneer/chakra-integration";
 import Layer from "ol/layer/Layer";
 import { useIntl, useService } from "open-pioneer:react-hooks";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useAsync } from "react-use";
 
 import { OlComponentConfig } from "@open-pioneer/open-layers-map";
