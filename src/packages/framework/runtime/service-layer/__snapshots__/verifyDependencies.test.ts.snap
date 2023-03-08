@@ -1,4 +1,4 @@
-// Vitest Snapshot v1
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
 exports[`throws for ambiguous service reference 1`] = `"runtime:ambiguous-dependency: Service 'map-user::MapUser' requires the ambiguous interface 'services.Map' as dependency 'dep_0'. Possible choices are 'map::Map1' (with qualifier 'map1'), 'map::Map2' (with qualifier 'map2'), 'map::Map3' and 1 more."`;
 

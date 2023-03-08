@@ -1,4 +1,4 @@
-// Vitest Snapshot v1
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
 exports[`throws an error if a required property is not specified 1`] = `"runtime:required-property: Package 'foo' requires the property 'propertyName' to be initialized to a non-null value."`;
 
