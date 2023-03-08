@@ -143,42 +143,83 @@ To do this, simply call the method on the returned API:
 If you run the dev mode and load the empty app in your browser,
 you should see a log message with the text "Test text" in the browser's console.
 
-TODO:
-
 ## Web component events
 
-It is also possible to emit browser events from inside the web component.
-These events will be dispatched from the application's host element.
+In the following, we will extend the app to additionally emit events to be received by the outer site.
+As an example, we will extend the AppUI to send an event if a button is pressed.
 
-You can reference the interface `"integration.ExternalEventService"` (implemented by package `@open-pioneer/integration
-`) to obtain the event service:
+### Emit an event
 
-```js
-// build.config.mjs
+To emit an event we first need to reference the `"integration.ExternalEventService"` from the UI to obtain the event service.
+Therefore, edit the `build.config.mjs`:
+
+```jsonc
+// src/apps/empty/build.config.mjs
 export default defineBuildConfig({
-    services: {
-        YourService: {
-            references: {
-                eventService: "integration.ExternalEventService"
-            }
-        }
+    ...
+    ui: {
+        references: ["integration.ExternalEventService"]
     }
 });
 ```
 
-```js
-// In your service / UI
-eventService.emitEvent("my-custom-event", {
-    // ... data
-});
+Now we can use the event service in the UI and call its `emitEvent`method when a button is pressed:
+
+```tsx
+// src/apps/empty/AppUI.tsx
+import { Button, Container, Heading, Text } from "@open-pioneer/chakra-integration";
+import { useIntl, useService } from "open-pioneer:react-hooks";
+
+export function AppUI() {
+    // ...
+    const eventService = useService("integration.ExternalEventService");
+    const emitEventOnClick = () => {
+        eventService.emitEvent("my-custom-event", {
+            data: "my-event-data"
+        });
+    };
+
+    return (
+        <Container>
+            {/*...*/}
+            <Button onClick={emitEventOnClick}>Emit Event</Button>
+        </Container>
+    );
+}
 ```
 
-```js
-// In the host site
-const app = document.getElementById("app");
-app.addEventListener("my-custom-event", (event) => {
-    console.log(event);
-});
+The method takes an event name as a first argument and details in an object as a second parameter.
+
+### Receive event in the host site
+
+To receive the event in the host site, we will edit the `index.html` at `sites/empty` which embeds the empty-app by default.
+We add an event listener on the app that simply logs the event in the console if the `my-custom-event` is called:
+
+```html
+<!-- src/sites/empty/index.html -->
+<!-- ... -->
+<body>
+    <empty-app id="app"></empty-app>
+    <script type="module" src="/apps/empty/app.ts"></script>
+    <script>
+        customElements.whenDefined("empty-app").then(() => {
+            const app = document.getElementById("app");
+
+            // add event listener on the "my-custom-event" event
+            app.addEventListener("my-custom-event", (event) => {
+                console.log(event);
+            });
+        });
+    </script>
+</body>
+<!-- ... -->
 ```
 
-See the package documentation of `@open-pioneer/integration` for more details.
+If you run the dev mode and load the empty app in your browser, you should see a button "Emit Event".
+If you click this button, the event should be logged into the console.
+
+## Further reading
+
+For more details see the package documentation of `@open-pioneer/integration`.
+
+An additional example is shown in the `api-sample` at `scr/samples`.
