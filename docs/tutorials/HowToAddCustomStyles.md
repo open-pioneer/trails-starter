@@ -63,6 +63,34 @@ Your browser should show the new styles immediately:
 
 ![Styles have been applied](./HowToAddCustomStyles_StylesApplied.png)
 
+### Support for SCSS
+
+You can also use [SCSS](https://sass-lang.com/) to develop your stylesheets.
+
+For example:
+
+```js
+// src/apps/empty/build.config.mjs
+import { defineBuildConfig } from "@open-pioneer/build-support";
+
+export default defineBuildConfig({
+    styles: "./styles.scss" // Note the .scss extension
+});
+```
+
+The following scss file is equivalent to the css file from above:
+
+```scss
+/* src/apps/empty/styles.scss */
+
+.empty-app {
+    &-container {
+        background-color: hotpink;
+        color: white;
+    }
+}
+```
+
 ## Advanced styling
 
 ### Hot reloading
