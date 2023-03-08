@@ -223,40 +223,6 @@ Use `pnpm run test` to run the test suite.
 
 Please refer to the [official documentation](https://vitest.dev/guide/) for more information.
 
-#### UI Tests
-
-Vitest can be used to write simple UI tests by simulating a browser environment.
-In your test file, configure the vitest environment to `jsdom` (or `happy-dom`, see [Reference](https://vitest.dev/guide/environment.html)):
-
-```js
-// SomeClass.test.js
-// @vitest-environment jsdom
-/* ... tests ... */
-```
-
-Web Components or React Components can then be rendered into the simulated DOM for testing.
-It is often more convenient (and faster) to test the react components instead of the complete web component application since there are fewer moving parts and fewer dependencies to mock.
-
-However, testing the final application can be great too for automated acceptance tests etc.
-
-You can take a look at the UI tests of the runtime package (`@open-pioneer/runtime`) for some examples.
-
-Recommended libraries:
-
--   `@testing-library/react` (or `/dom`): <https://testing-library.com/>
--   `react-dom/test-utils`: <https://reactjs.org/docs/test-utils.html>
--   Our own test utils in `@open-pioneer/test-utils`
-
-#### Test utilities
-
-The package `@open-pioneer/test-utils` provides helpers to test components of a pioneer application:
-
--   The application itself (that is, the web component).
-    Web components can be mounted in the DOM and their children can be searched.
--   React components with dependencies to services, properties etc.
-    Test dependencies and data can be provided in such a way that the component renders into the DOM without any changes to the component's implementation.
--   Service instances can be created with test references and properties.
-
 ### Linting and formatting
 
 We use [Prettier](https://prettier.io/) to handle automatic source code formatting.
