@@ -1,31 +1,31 @@
 # How to provide an API
 
 An app is a package that provides a web component. The web component is usually embedded into a host site.
-In some use cases it is useful to be able to implement a communication between the app and the surrounding site.
+In some use cases it can be beneficial to implement communication between the app and the surrounding site.
 
 When implementing such a communication, two communication directions should be taken into account:
 communication from the host side to the web component and the other way around.
 
 The framework provides techniques for both directions.
-The outer site can call api methods implemented in the app to trigger action in the web component
+The outer site can call API methods implemented in the app to trigger actions in the web component
 and on the other hand the web component can emit events to be received by the outer site.
-In the following we will see how to use both techniques.
+In the following tutorial we will see how to use both techniques.
 
 ## Web component API
 
 To allow the outer side to trigger actions in the web component, we can provide API functions in the app.
 These functions can then be called from the surrounding site to control the app.
 
-Following, we will extend the empty app (at `src/apps/empty`) so that it provides an API Method which
-simply logs a log statement into the browsers console.
+Following, we will extend the empty app (at `src/apps/empty`) so that it provides an API method which
+simply logs a message into the browsers console.
 
 ### Create an API Extension that provides an API method
 
 First, we need to implement a service that will provide the API methods.
 For simplicity, we will create the extension service directly in the app package.
 
-Add a new File "LogApiExtension.ts" in the emtpy app directory (`src/apps/empty`).
-In the file create a new class (e.g. "LogApiExtension") that implements the `ApiExtension`interface from "@open-pioneer/integration".
+Add a new file `LogApiExtension.ts` in the empty app directory (`src/apps/empty`).
+In the file create a new class (e.g. `LogApiExtension`) that implements the `ApiExtension` interface from `"@open-pioneer/integration"`.
 
 Your class should look like this:
 
@@ -37,11 +37,11 @@ import { ApiExtension } from "@open-pioneer/integration";
 export class LogApiExtension implements ApiExtension {}
 ```
 
-Make sure to additionally add the `"@open-pioneer/integration": "workspace:^"` dependency in the package.json.
+Make sure to additionally add the `"@open-pioneer/integration": "workspace:^"` dependency in the package.json, then run `pnpm install`.
 
 Now you should see an error similar to "Property 'getApiMethods' is missing" on the class.
-This is because the Interface defines that a function `getApiMethods` needs to be implemented.
-This function should return a set of methods which will become available as methods in the app's API.
+This is because the interface requires that a function `getApiMethods` must exist.
+This function should return a set of methods - wrapped in a `Promise` - which will become available as methods in the app's API.
 
 Thus, add the implementation for this async function in your class. It should return an object with a single method called `logText` which simple logs the string that it is called with to the console.
 
@@ -53,7 +53,7 @@ export class LogApiExtension implements ApiExtension {
     // returns a set of methods that will be added to the web component's API.
     async getApiMethods() {
         return {
-            // logText method is available
+            // logText method can be called from the host site
             logText: (text: string) => {
                 console.log(text);
             }
@@ -62,16 +62,15 @@ export class LogApiExtension implements ApiExtension {
 }
 ```
 
-We must export it from the `services.ts` (or `.js`) so it can be found by the framework later:
+We must export it from the `services.ts` (or `.js`) module so it can be found by the framework later:
 
 ```ts
 // src/apps/empty/services.ts
 export { LogApiExtension } from "./LogApiExtension";
 ```
 
-Additionally, we need to declare the service in the `build.config.js`.
-It is important that it provides the interface `"integration.ApiExtension"`
-(as the framework will collect all the services providing this interface to generate the API).
+Additionally, we need to declare the service in the `build.config.mjs`.
+It is important that it provides the interface `"integration.ApiExtension"`: the framework will collect all the services providing this interface to generate the API.
 
 ```js
 // src/apps/empty/build.config.mjs
@@ -88,7 +87,7 @@ export default defineBuildConfig({
 
 Now, the API should provide the `logText` method.
 
-### Using the API method int the surrounding site
+### Using the API method in the surrounding site
 
 To use the provided `logText` method we will call it from the surrounding site.
 The "empty" app is by default embedded in the `index.html` at `sites/empty`.
@@ -107,7 +106,7 @@ It resolves to the app's API when the application has started.
         <!-- set id -->
         <script type="module" src="/apps/empty/app.ts"></script>
         <script>
-            customElements.whenDefined("api-app").then(() => {
+            customElements.whenDefined("empty-app").then(() => {
                 const app = document.getElementById("app");
                 // call when() method on the app to wait for the app to be started
                 app.when().then((api) => {});
@@ -117,8 +116,8 @@ It resolves to the app's API when the application has started.
 </html>
 ```
 
-Thereupon it is possible to call the provided methods on the returned API instance.
-To do this, simple call the method on the returned API:
+Now it is possible to call the provided methods on the returned API instance.
+To do this, simply call the method on the returned API:
 
 ```html
 <!-- src/sites/empty/index.html -->
@@ -142,7 +141,7 @@ To do this, simple call the method on the returned API:
 ```
 
 If you run the dev mode and load the empty app in your browser,
-you should see a log message wit the text "Test text" in the browser's console.
+you should see a log message with the text "Test text" in the browser's console.
 
 TODO:
 
