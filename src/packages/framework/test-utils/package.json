@@ -2,7 +2,7 @@
     "name": "@open-pioneer/test-utils",
     "private": true,
     "dependencies": {
-        "@testing-library/dom": "^8.20.0",
+        "@testing-library/dom": "^9.0.0",
         "@formatjs/intl": "^2.6.7"
     },
     "peerDependencies": {
@@ -10,7 +10,7 @@
     },
     "devDependencies": {
         "@open-pioneer/runtime": "workspace:^",
-        "@testing-library/react": "^13.4.0",
+        "@testing-library/react": "^14.0.0",
         "react": "^18.2.0",
         "react-dom": "^18.2.0"
     }
