@@ -12,7 +12,20 @@ allowedLicenses:
 
 # Some licenses are detected incorrectly.
 # Their information can be overwritten here.
+# Paths are relative to the project's directory on disk by default (somewhere in node_modules).
 # Version and name must match exactly, otherwise entries here are not applied:
+#
+# To overwrite licenses with a custom file that is not part of the original package,
+# configure the license like this:
+#
+#   - name: "some-package"
+#     version: "1.0.6"
+#     license: "MIT"
+#     licenseFiles:
+#      - custom: "./licenses/some-package-license.txt"
+#
+# `custom` makes the path relative to this directory instead of the package's directory.
+
 overrideLicenses:
   - name: "react-universal-interface"
     version: "0.6.2"
@@ -28,9 +41,11 @@ overrideLicenses:
       - "./lib/zlib/README"
   - name: "react-remove-scroll-bar"
     version: "2.3.4"
+    # readme contains license text
     licenseFiles:
       - "./README.md"
   - name: "lerc"
     version: "3.0.0"
+    # readme contains license text
     licenseFiles:
       - "./README.md"

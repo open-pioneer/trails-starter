@@ -14,7 +14,7 @@ import { fileURLToPath } from "url";
  *
  * The project name is read from the root `package.json` file.
  *
- * Outputs an html file (TODO: Location).
+ * Outputs an html file to `dist/license-report.html`.
  */
 const THIS_DIR = resolve(dirname(fileURLToPath(import.meta.url)));
 const CONFIG_PATH = resolve(THIS_DIR, "license-config.yaml");
@@ -44,6 +44,15 @@ function main() {
     process.exit(error ? 1 : 0);
 }
 
+/**
+ * Iterates over the results of the given license report.
+ * For valid projects, we read the license (and optionally notice) files and use them to build {@link LicenseItem} objects.
+ * All license items are then returned as an array.
+ *
+ * When an invalid project (e.g. missing license) is encountered, we report an error to the console and return `error: true`.
+ *
+ * The `config` argument supports local overrides for packages that do not have their license detected properly.
+ */
 function analyzeLicenses(
     reportJson: PnpmLicensesReport,
     config: LicenseConfig
@@ -87,9 +96,23 @@ function analyzeLicenses(
             }
         }
 
-        const readProjectFile = (file: string) => {
-            const path = resolve(project.path, file);
-            return readFileSync(path, "utf-8");
+        const readProjectFile = (file: FileSpec) => {
+            const basedir = ((file: FileSpec): string => {
+                switch (file.type) {
+                    case "custom":
+                        return THIS_DIR;
+                    case "package":
+                        return project.path;
+                }
+            })(file);
+            const path = resolve(basedir, file.path);
+            try {
+                return readFileSync(path, "utf-8");
+            } catch (e) {
+                throw new Error(
+                    `Failed to read license file for project ${dependencyInfo} at ${path}: ${e}`
+                );
+            }
         };
 
         const licenseTexts = licenseFiles.map(readProjectFile);
@@ -151,6 +174,9 @@ interface LicenseItem {
     noticeText: string;
 }
 
+/**
+ * Generates a html report from the given inputs.
+ */
 function generateReportHtml(projectName: string, licenseItems: LicenseItem[]): string {
     return partials.index(
         {
@@ -163,6 +189,7 @@ function generateReportHtml(projectName: string, licenseItems: LicenseItem[]): s
     );
 }
 
+/** Handlebars templates. See https://handlebarsjs.com/ */
 const partials = {
     "index": Handlebars.compile(`
         <html>
@@ -330,6 +357,9 @@ interface PnpmLicenseProject {
     license: string;
 }
 
+/**
+ * Invokes pnpm to list the licenses of all third party (production) dependencies used by this repository.
+ */
 function getPnpmLicenseReport(): PnpmLicensesReport {
     const reportJsonText = execSync("pnpm licenses list --json --long -P", { encoding: "utf-8" });
     const reportJson = JSON.parse(reportJsonText);
@@ -352,20 +382,76 @@ interface OverrideLicenseEntry {
     license?: string;
 
     /** License files, relative to dependency dir */
-    licenseFiles?: string[];
+    licenseFiles?: FileSpec[];
 
     /** Notice files, relative to dependency dir */
-    noticeFiles?: string[];
+    noticeFiles?: FileSpec[];
 }
 
+interface FileSpec {
+    /**
+     * project: path is relative to the package's directory on disk.
+     * custom: path is relative to this script.
+     */
+    type: "package" | "custom";
+    path: string;
+}
+
+/**
+ * Reads the license config yaml file.
+ */
 function readLicenseConfig(path: string): LicenseConfig {
     try {
         const content = readFileSync(path, "utf-8");
-        const data = loadYaml(content);
-        return data as LicenseConfig;
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        const rawConfig = loadYaml(content) as any;
+
+        const config: LicenseConfig = {
+            allowedLicenses: rawConfig.allowedLicenses,
+            overrideLicenses: rawConfig.overrideLicenses.map(
+                // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                (rawEntry: any): OverrideLicenseEntry => {
+                    const entry: OverrideLicenseEntry = {
+                        name: rawEntry.name,
+                        version: rawEntry.version,
+                        license: rawEntry.license,
+                        licenseFiles: readFileSpecs(rawEntry.licenseFiles),
+                        noticeFiles: readFileSpecs(rawEntry.noticeFiles)
+                    };
+                    return entry;
+                }
+            )
+        };
+        return config;
     } catch (e) {
         throw new Error(`Failed to read license config from ${path}: ${e}`);
     }
+}
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+function readFileSpecs(rawSpecs: any): FileSpec[] | undefined {
+    if (!rawSpecs) {
+        return undefined;
+    }
+
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const readRawSpec = (rawSpec: any): FileSpec => {
+        // Default is "package" when using a raw string
+        if (typeof rawSpec === "string") {
+            return { type: "package", path: rawSpec };
+        }
+        if (typeof rawSpec.package === "string") {
+            return { type: "package", path: rawSpec.package };
+        }
+        if (typeof rawSpec.custom === "string") {
+            return { type: "custom", path: rawSpec.custom };
+        }
+
+        throw new Error(
+            `Invalid file spec in license config: ${JSON.stringify(rawSpec, undefined, 4)}`
+        );
+    };
+    return rawSpecs.map(readRawSpec);
 }
 
 const LICENSE_FILES = "LICENSE LICENCE COPYING".split(" ");
@@ -380,15 +466,22 @@ const NOTICE_FILES = "NOTICE".split(" ");
  *
  * The license output must be checked manually!
  */
-function findLicenseFiles(directory: string) {
-    return findFirstMatch(directory, LICENSE_FILES);
+function findLicenseFiles(directory: string): FileSpec[] {
+    return toPackageFiles(findFirstMatch(directory, LICENSE_FILES));
 }
 
 /**
  * Like findLicenseFiles(), but for copyright NOTICE files.
  */
-function findNoticeFiles(directory: string) {
-    return findFirstMatch(directory, NOTICE_FILES);
+function findNoticeFiles(directory: string): FileSpec[] {
+    return toPackageFiles(findFirstMatch(directory, NOTICE_FILES));
+}
+
+function toPackageFiles(files: string[]): FileSpec[] {
+    return files.map((file) => ({
+        type: "package",
+        path: file
+    }));
 }
 
 function findFirstMatch(directory: string, candidates: string[]): string[] {
@@ -411,6 +504,9 @@ function findFirstMatch(directory: string, candidates: string[]): string[] {
     return [];
 }
 
+/**
+ * Returns the project's name from the package.json file in the repository root.
+ */
 function getProjectName(): string {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     let data: any;
