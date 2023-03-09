@@ -3,6 +3,7 @@
 import { defineBuildConfig } from "@open-pioneer/build-support";
 
 export default defineBuildConfig({
+    styles: `./styles.css`,
     services: {
         OlMapRegistry: {
             provides: ["open-layers-map-service"],
