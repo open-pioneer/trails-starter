@@ -3,7 +3,7 @@
 Services are one of the central mechanisms of code sharing in an open pioneer client application.
 Instead of using global variables (or singletons), services are started per-application instance.
 
-Builtin dependency injection support allows services to declare their dependencies.
+Builtin dependency injection support allows services to declare their dependencies on other services.
 The framework automatically starts all required services in their correct order and injects references where needed.
 
 Services can be used from other services or from UI components.
@@ -14,7 +14,7 @@ In this section, we will customize the `empty` app's UI (in `src/apps/empty`).
 Our objective is to add a custom CSS class to the application's root `div` from our React UI.
 
 To obtain a reference to the root `div`, we need the service implementing `"runtime.ApplicationContext"`.
-Thus, we edit our app's `build.config.mjs`:
+Thus, we edit our app's `build.config.mjs` to state that the UI requires a reference of the service:
 
 ```js
 // src/apps/empty/build.config.mjs
@@ -28,9 +28,9 @@ export default defineBuildConfig({
 ```
 
 The package providing the implementation of a service must be declared as a dependency in the `package.json`.
-Luckily, the empty app already depends on the `@open-pioneer/runtime` package so we don't have to do anything in this case.
+Luckily, the empty app already depends on the `@open-pioneer/runtime` package, so we don't have to do anything in this case.
 
-React components can use [hooks](https://reactjs.org/docs/hooks-intro.html) to interact with the pioneer framework, one of which is the `useService` hook used below.
+React components can use [hooks](https://reactjs.org/docs/hooks-intro.html) to interact with the pioneer framework. One of which is the `useService` hook, we will use below.
 We extend the UI of the empty app to add our custom class:
 
 ```tsx
@@ -83,12 +83,16 @@ The custom class will now be present when you inspect your app:
 
 ## Using a service from another service
 
-For this example, we will move the logic of adding and removing the class into a service.
+For this example, we will build upon the example from previous section.
+We will move the logic of adding and removing the css class into a service.
 The new service will reference `"runtime.ApplicationContext"`, and the UI will be changed to reference our new service instead.
 
 To define our new service - which we will call `CssClassService` - we create a `service.ts` file in our application package.
 When searching for the implementation of a service, the framework will try to import it from a file called `<PACKAGE_NAME>/services.ts` (or `.js`) by default.
 If the file does not exist, or if it does not contain a matching `export`, an error will be generated.
+Thus, make sure to add an export in there.
+
+We will create the class for our service:
 
 ```ts
 // src/apps/empty-app/services.ts
@@ -126,8 +130,8 @@ export default defineBuildConfig({
 
 -   **(2)**  
     Declares the interfaces provided by the new service.
-    Interfaces names can be chosen arbitrarily, but they should not collide.
-    It is a good practice to chose a prefix similar (or equal) to the package name.
+    Interface names can be chosen arbitrarily, but they should not collide.
+    It is a good practice to choose a prefix similar (or equal) to the package name.
 
 -   **(3)**  
     References the interface `"runtime.ApplicationContext"`.
@@ -234,10 +238,12 @@ export function AppUI() {
     This is because we have not registered the interface type with the framework (which can be okay for internal services and simple examples).
     The document [How to create a service](./HowToCreateAService.md) goes into more detail.
 
+    Note that this is only needed if you're using TypeScript.
+
 -   **(2)**  
     The body of the `useEffect` hook now calls our service.
 
-After following these steps, your application's container node will still have its custom class.
+After following these steps, your application's container node will (still) have its custom class.
 
 ## Further reading
 
