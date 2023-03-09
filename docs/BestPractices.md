@@ -7,6 +7,10 @@
 The framework provides a logger for standardized application wide logging.
 The log level is configured globally in the vite.config.js.
 
+We recommend to use this logger for all log messages to achieve a uniform logging.
+This is especially helpful if the loglevel should be change or the logger should be
+replaced with a new implementation later on.
+
 To create a logger instance, call the `createLogger` method.
 It takes a prefix (string) to prepend to each message.
 The prefix should always contain the package name and if applicable additionally the service/class name (separated with ':').
@@ -30,7 +34,7 @@ export class LoggerTestExample {
 }
 ```
 
-Hint: If you're using the logger instead of the browser's builtin console, the original trace will usually be lost lost.
+Hint: If you're using the logger instead of the browser's builtin console, the original trace is usually lost.
 However, in Chrome you can see the trace for error and warning messages by clicking on the message title.
 In Firefox this only seems to work for error messages.
 
@@ -56,7 +60,7 @@ handle.destroy(); // don't forget to unsubscribe during cleanup
 ### Services are not started
 
 Only referenced services will be constructed.
-If you do not provide any interfaces, or if you are never referenced (either by the UI or by another service), your service will not be started.
+If a service does not provide any interfaces, or if the service is never referenced (either by the UI or by another service), the service will not be started.
 
 ### Hot reloading with \[jt\]sx-Files and side effects
 
@@ -64,7 +68,7 @@ Vite will automatically hot reload `.jsx` and `.tsx` files when they are being e
 Most changes to react components can then be applied without reloading the page.
 
 However, during hot reload, the containing module will be executed again.
-It should therefore be free of side effects on module level.
+It should therefore be free of side effects at the module level.
 
 This might be a problem if a `.[jt]sx` defines a Web Component (via `customElements.define(...)`) because redefining a Web Component is an error.
 

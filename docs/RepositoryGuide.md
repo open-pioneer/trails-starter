@@ -126,7 +126,7 @@ TBD
 
 We're using [Syncpack](https://jamiemason.github.io/syncpack/) to keep dependency versions in our `package.json` files in sync.
 
-`pnpm run update-shared-versions` will visit all `package.json` files in the workspace, and ensure that dependencies there use the versions defined in `.syncpackrc.cjs`.
+`pnpm run update-shared-versions` will visit all `package.json` files in the workspace, and ensure that dependencies in there use the versions defined in `.syncpackrc.cjs`.
 
 To manage a shared dependency (such as react), simply add or update an entry in the `VERSIONS` object in `.syncpackrc.cjs` and then run `pnpm run update-shared-versions` to rewrite the `package.json` files.
 
