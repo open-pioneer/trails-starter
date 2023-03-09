@@ -120,7 +120,20 @@ Keep in mind to execute `pnpm install` to update the lockfile after you're done 
 
 ### Updating a dependency
 
-TBD
+You can always update your dependencies by simply editing the `package.json` files directly, or by using syncpack (see below).
+Keep in mind to also execute `pnpm install` in that case, to make sure that your lockfile reflects the changes you made.
+
+pnpm has a helpful [`update`](https://pnpm.io/cli/update) command to update packages automatically or interactively.
+For example:
+
+```bash
+# Updates all dependencies in all packages interactively with a simple CLI wizard.
+# By default, updates will respect the sematic versioning restrictions in your package.json (e.g. update ^14.0.0 to ^14.1.0 is allowed).
+# Use --latest to go the latest versions instead.
+$ pnpm update -r -i
+```
+
+[`pnpm outdated`](https://pnpm.io/cli/outdated) can be used to show outdated packages.
 
 ### Keeping dependency versions in sync
 
@@ -131,6 +144,30 @@ We're using [Syncpack](https://jamiemason.github.io/syncpack/) to keep dependenc
 To manage a shared dependency (such as react), simply add or update an entry in the `VERSIONS` object in `.syncpackrc.cjs` and then run `pnpm run update-shared-versions` to rewrite the `package.json` files.
 
 Syncpack can also be executed directly, e.g. via `pnpm syncpack list-mismatches`.
+
+### Explaining a dependency
+
+Use [`pnpm why`](https://pnpm.io/cli/why) to display why a certain package is a dependency (`-r` to include all packages in the workspace).
+For example:
+
+```bash
+# Explains why the runtime package depedends on @formatjs/fast-memoize
+$ pnpm why -r --filter runtime @formatjs/fast-memoize
+# @open-pioneer/runtime@0.1.0 /home/<PROJECT_PATH>/src/packages/framework/runtime
+#
+# dependencies:
+# @formatjs/intl 2.6.7
+# ├── @formatjs/fast-memoize 1.2.8
+# └─┬ intl-messageformat 10.3.1
+#   └── @formatjs/fast-memoize 1.2.8
+#
+# devDependencies:
+# @open-pioneer/test-utils link:../test-utils
+# └─┬ @formatjs/intl 2.6.7
+#   ├── @formatjs/fast-memoize 1.2.8
+#   └─┬ intl-messageformat 10.3.1
+#     └── @formatjs/fast-memoize 1.2.8
+```
 
 ## Concepts
 

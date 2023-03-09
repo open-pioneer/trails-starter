@@ -20,7 +20,7 @@ const VERSIONS = {
     "framer-motion": "^9.1.7",
 
     // testing
-    "@testing-library/dom": "^9.0.0",
+    "@testing-library/dom": "^9.0.1",
     "@testing-library/react": "^14.0.0",
 
     // open layers
