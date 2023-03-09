@@ -132,8 +132,8 @@ importers:
     specifiers:
       '@chakra-ui/icons': ^2.0.17
       '@chakra-ui/system': ^2.5.1
-      '@emotion/react': ^11.0.0
-      '@emotion/styled': ^11.0.0
+      '@emotion/react': ^11.10.6
+      '@emotion/styled': ^11.10.6
       '@open-pioneer/chakra-integration': workspace:^
       react: ^18.2.0
     devDependencies:
@@ -249,8 +249,8 @@ importers:
     specifiers:
       '@chakra-ui/icons': ^2.0.17
       '@chakra-ui/system': ^2.5.1
-      '@emotion/react': ^11.0.0
-      '@emotion/styled': ^11.0.0
+      '@emotion/react': ^11.10.6
+      '@emotion/styled': ^11.10.6
       '@open-pioneer/chakra-integration': workspace:^
       '@open-pioneer/layout-sidebar': workspace:^
       '@open-pioneer/open-layers-layer-control': workspace:^
