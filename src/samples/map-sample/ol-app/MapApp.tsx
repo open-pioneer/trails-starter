@@ -1,14 +1,7 @@
 // SPDX-FileCopyrightText: con terra GmbH and contributors
 // SPDX-License-Identifier: Apache-2.0
-import { ArrowLeftIcon, ArrowRightIcon } from "@chakra-ui/icons";
-import {
-    Box,
-    Button,
-    Flex,
-    IconButton,
-    Spacer,
-    useDisclosure
-} from "@open-pioneer/chakra-integration";
+import { Button } from "@open-pioneer/chakra-integration";
+import { Sidebar } from "@open-pioneer/layout-sidebar";
 import { LayerControlComponent } from "@open-pioneer/open-layers-layer-control";
 import { MapContainer } from "@open-pioneer/open-layers-map";
 import { useService } from "open-pioneer:react-hooks";
@@ -20,24 +13,9 @@ import { MAP_ID } from "./services";
 
 const berlin = [1489200, 6894026, 1489200, 6894026];
 
-// TODO: use dynamic sizes
-const sidebarWidthCollapsed = 150;
-const sidebarWidthExpanded = 400;
-
 export function MapApp() {
     const [viewPadding, setViewPadding] = useState<number[]>();
-    // const sidebar = useRef<any>(null);
-
-    const { isOpen, onToggle } = useDisclosure({
-        onOpen() {
-            // console.log(sidebar.current?.clientWidth);
-            setViewPadding([0, 0, 0, sidebarWidthExpanded / 2]);
-        },
-        onClose() {
-            // console.log(sidebar.current?.clientWidth);
-            setViewPadding([0, 0, 0, sidebarWidthCollapsed / 2]);
-        }
-    });
+    const [isExpanded, setExpanded] = useState<boolean>(true);
 
     const olMapRegistry = useService("open-layers-map-service");
     const mapState = useAsync(async () => await olMapRegistry.getMap(MAP_ID));
@@ -56,26 +34,17 @@ export function MapApp() {
                     <CoordinateComponent mapId={MAP_ID}></CoordinateComponent>
                 </div>
             </div>
-            <Flex
-                // ref={sidebar}
-                className="sidebar"
-                width={!isOpen ? `${sidebarWidthCollapsed}px` : `${sidebarWidthExpanded}px`}
+            <Sidebar
+                defaultExpanded={isExpanded}
+                expandedChanged={(expanded) => setExpanded(expanded)}
+                sidebarWidthChanged={(width) => setViewPadding([0, 0, 0, width / 2])}
             >
-                <Box display="flex" width="100%" flexDirection="column" padding="10px" gap="10px">
-                    <LayerControlComponent
-                        mapId={MAP_ID}
-                        showOpacitySlider={isOpen}
-                    ></LayerControlComponent>
-                    <Button onClick={centerBerlin}>Center Berlin</Button>
-                    <Spacer></Spacer>
-                    <IconButton
-                        aria-label="expand/collapse"
-                        variant="ghost"
-                        icon={!isOpen ? <ArrowRightIcon /> : <ArrowLeftIcon />}
-                        onClick={onToggle}
-                    />
-                </Box>
-            </Flex>
+                <LayerControlComponent
+                    mapId={MAP_ID}
+                    showOpacitySlider={isExpanded}
+                ></LayerControlComponent>
+                <Button onClick={centerBerlin}>Center Berlin</Button>
+            </Sidebar>
         </div>
     );
 }
