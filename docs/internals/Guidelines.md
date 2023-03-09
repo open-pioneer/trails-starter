@@ -24,3 +24,16 @@
 -   Use Unix style newlines.
     When developing on windows, configure git to replace accidentally introduced Windows-style newlines on commit:
     `git config --global core.autocrlf input` (see <https://git-scm.com/book/en/v2/Customizing-Git-Git-Configuration>)
+
+## Documentation
+
+-   Make sure to always create sufficient documentation.
+    The type of documentation required depends on the type of contribution.
+-   Types of documentation:
+    -   README.md in packages (each package should contain a README.md with at least information about main )
+    -   API doc in Code
+    -   markdown documentation in docs folder (with different purposes)
+        -   tutorials: tutorials for developers of apps and packages
+        -   internals: for developers of the framework
+        -   reference: cross-cutting concepts in detail
+        -   Glossary: explanation of important terms
