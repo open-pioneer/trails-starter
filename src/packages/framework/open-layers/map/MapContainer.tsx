@@ -24,7 +24,6 @@ export function MapContainer(props: MapComponentProperties) {
             if (mapElement.current) {
                 olMapRegistry.setContainer(props.mapId, mapElement.current);
             }
-            return () => olMapRegistry.setContainer(props.mapId, undefined);
         }
     }, [mapState.value, olMapRegistry, props.mapId]);
 
