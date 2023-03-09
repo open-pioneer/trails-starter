@@ -8,12 +8,12 @@ import {
     SliderTrack,
     Tooltip
 } from "@open-pioneer/chakra-integration";
+import { OlComponentConfig } from "@open-pioneer/open-layers-map";
 import Layer from "ol/layer/Layer";
+import { unByKey } from "ol/Observable";
 import { useIntl, useService } from "open-pioneer:react-hooks";
 import { useEffect, useState } from "react";
 import { useAsync } from "react-use";
-
-import { OlComponentConfig } from "@open-pioneer/open-layers-map";
 
 function LayerVisibilityTogglerComponent(props: { layer: Layer }) {
     const intl = useIntl();
@@ -38,20 +38,24 @@ function LayerOpacitySliderComponent(props: { layer: Layer }) {
     const [showTooltip, setShowTooltip] = useState(false);
 
     useEffect(() => {
-        const curr = props.layer.getOpacity() * 100;
-        if (curr !== sliderValue) {
-            props.layer.setOpacity(sliderValue / 100);
-        }
-    }, [props.layer, sliderValue]);
+        const opacityChangeListener = props.layer.on("change:opacity", () => {
+            const opacity = props.layer.getOpacity() * 100;
+            if (opacity !== sliderValue) {
+                setSliderValue(Math.round(opacity));
+            }
+        });
+        return () => unByKey(opacityChangeListener);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
     return (
         <Slider
             id="slider"
-            defaultValue={sliderValue}
+            value={sliderValue}
             min={0}
             max={100}
             colorScheme="teal"
-            onChange={(v) => setSliderValue(v)}
+            onChange={(v) => props.layer.setOpacity(v / 100)}
             onMouseEnter={() => setShowTooltip(true)}
             onMouseLeave={() => setShowTooltip(false)}
         >
