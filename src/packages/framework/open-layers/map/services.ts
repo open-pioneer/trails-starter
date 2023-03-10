@@ -12,7 +12,7 @@ import { OlMapRegistry as OlMapRegistryInterface, OlMapConfigurationProvider } f
 const LOG = createLogger("open-layers:OlMapRegistry");
 
 interface References {
-    providers: ServiceType<"open-layers-map-config.MapConfigProvider">[];
+    providers: ServiceType<"ol-map-config.MapConfigProvider">[];
 }
 
 export class OlMapRegistry implements Service, OlMapRegistryInterface {

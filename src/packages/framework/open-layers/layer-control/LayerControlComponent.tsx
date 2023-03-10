@@ -8,7 +8,7 @@ import {
     SliderTrack,
     Tooltip
 } from "@open-pioneer/chakra-integration";
-import { OlComponentConfig } from "@open-pioneer/open-layers-map";
+import { OlComponentConfig } from "@open-pioneer/ol-map";
 import Layer from "ol/layer/Layer";
 import { unByKey } from "ol/Observable";
 import { useIntl, useService } from "open-pioneer:react-hooks";
@@ -81,7 +81,7 @@ interface LayerControlConfig extends OlComponentConfig {
 }
 
 export function LayerControlComponent(config: LayerControlConfig) {
-    const olMapRegistry = useService("open-layers-map-registry");
+    const olMapRegistry = useService("ol-map.MapRegistry");
 
     const state = useAsync(async () => {
         const map = await olMapRegistry.getMap(config.mapId);

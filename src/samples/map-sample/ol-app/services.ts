@@ -1,6 +1,6 @@
 // SPDX-FileCopyrightText: con terra GmbH and contributors
 // SPDX-License-Identifier: Apache-2.0
-import { OlMapConfigurationProvider } from "@open-pioneer/open-layers-map/api";
+import { OlMapConfigurationProvider } from "@open-pioneer/ol-map/api";
 import TileLayer from "ol/layer/Tile";
 import { MapOptions } from "ol/Map";
 import OSM from "ol/source/OSM";

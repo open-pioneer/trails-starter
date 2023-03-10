@@ -56,7 +56,7 @@ it("should successfully create a map", async () => {
 
     const mocks: PackageContextProviderProps = {
         services: {
-            "open-layers-map-registry": service
+            "ol-map.MapRegistry": service
         }
     };
 

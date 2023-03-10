@@ -6,13 +6,13 @@ import { transform } from "ol/proj";
 import { useService } from "open-pioneer:react-hooks";
 import { useState } from "react";
 import { useAsync } from "react-use";
-import { OlComponentConfig } from "@open-pioneer/open-layers-map";
+import { OlComponentConfig } from "@open-pioneer/ol-map";
 
 // TODO: currently just showcase remove later
 export function CoordinateComponent(props: OlComponentConfig) {
     const [selectedCoord, setSelectedCoord] = useState<Coordinate>();
 
-    const olMapRegistry = useService("open-layers-map-registry");
+    const olMapRegistry = useService("ol-map.MapRegistry");
     useAsync(async () => {
         const map = await olMapRegistry.getMap(props.mapId);
         map.on("click", (event: MapBrowserEvent<UIEvent>) => {

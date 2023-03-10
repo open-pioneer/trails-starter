@@ -7,10 +7,10 @@ export default defineBuildConfig({
     i18n: ["en", "de"],
     services: {
         MainMapProvider: {
-            provides: ["open-layers-map-config.MapConfigProvider"]
+            provides: ["ol-map-config.MapConfigProvider"]
         }
     },
     ui: {
-        references: ["map-sample-logging.LogService", "open-layers-map-registry"]
+        references: ["map-sample-logging.LogService", "ol-map.MapRegistry"]
     }
 });

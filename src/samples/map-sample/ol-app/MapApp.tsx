@@ -2,8 +2,8 @@
 // SPDX-License-Identifier: Apache-2.0
 import { Button } from "@open-pioneer/chakra-integration";
 import { Sidebar } from "@open-pioneer/layout-sidebar";
-import { LayerControlComponent } from "@open-pioneer/open-layers-layer-control";
-import { MapContainer, MapPadding } from "@open-pioneer/open-layers-map";
+import { LayerControlComponent } from "@open-pioneer/ol-layer-control";
+import { MapContainer, MapPadding } from "@open-pioneer/ol-map";
 import { useService } from "open-pioneer:react-hooks";
 import { useState } from "react";
 import { useAsync } from "react-use";
@@ -17,7 +17,7 @@ export function MapApp() {
     const [viewPadding, setViewPadding] = useState<MapPadding>();
     const [isExpanded, setExpanded] = useState<boolean>(true);
 
-    const olMapRegistry = useService("open-layers-map-registry");
+    const olMapRegistry = useService("ol-map.MapRegistry");
     const mapState = useAsync(async () => await olMapRegistry.getMap(MAP_ID));
 
     const centerBerlin = () => {

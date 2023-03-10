@@ -25,12 +25,12 @@ Simple integration of a map container with an map id:
 
 ### Map registry service
 
-The service is registered with the name `"open-layers-map-registry"`.
+The service is registered with the name `"ol-map.MapRegistry"`.
 While injecting it the common way, you can access the map via the following snippet:
 
 ```ts
 // get open layers map registry
-const olMapRegistry = useService("open-layers-map-registry");
+const olMapRegistry = useService("ol-map.MapRegistry");
 // get mapState with a given map id
 const mapState = useAsync(async () => await olMapRegistry.getMap(MAP_ID));
 ```

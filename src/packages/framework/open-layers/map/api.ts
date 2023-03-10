@@ -38,7 +38,7 @@ export interface OlMapRegistry {
 
 declare module "@open-pioneer/runtime" {
     interface ServiceRegistry {
-        "open-layers-map-config.MapConfigProvider": OlMapConfigurationProvider;
-        "open-layers-map-registry": OlMapRegistry;
+        "ol-map-config.MapConfigProvider": OlMapConfigurationProvider;
+        "ol-map.MapRegistry": OlMapRegistry;
     }
 }
