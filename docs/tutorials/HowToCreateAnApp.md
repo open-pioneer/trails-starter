@@ -222,4 +222,4 @@ For more details about our vite plugin, head over to its [Documentation](https:/
 ## Next steps
 
 -   [How to deploy an app](./HowToDeployAnApp.md)
--   TODO: How to use UI components
+-   [How to create UI components](./HowToCreateUiComponents.md)

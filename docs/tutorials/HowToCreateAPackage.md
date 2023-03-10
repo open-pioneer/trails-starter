@@ -150,6 +150,6 @@ Open your browser's console to see the result:
 
 ## Further reading
 
--   TODO: How to create UI components
+-   [How to create UI components](./HowToCreateUiComponents.md)
 -   [How to create a service](./HowToCreateAService.md)
 -   [Package Reference](../reference/Package.md)
