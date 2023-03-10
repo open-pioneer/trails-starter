@@ -5,6 +5,7 @@ exports[`should successfully create a map 1`] = `
   data-testid="base"
 >
   <div
+    class="ol-map-container"
     style="height: 100%;"
   >
     <div

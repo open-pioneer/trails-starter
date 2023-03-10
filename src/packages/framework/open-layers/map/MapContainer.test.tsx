@@ -15,14 +15,14 @@ import { MapOptions } from "ol/Map";
 import Stamen from "ol/source/Stamen";
 import { expect, it } from "vitest";
 
-import { OpenlayersMapConfigurationProvider } from "./api";
+import { OlMapConfigurationProvider } from "./api";
 import { MapContainer } from "./MapContainer";
 import { OlMapRegistry } from "./services";
 
 // used to avoid a "ResizeObserver is not defined" error
 global.ResizeObserver = require("resize-observer-polyfill");
 
-class MapConfigProvider implements OpenlayersMapConfigurationProvider {
+class MapConfigProvider implements OlMapConfigurationProvider {
     mapId = "default";
     mapOptions: MapOptions = {};
 
@@ -36,7 +36,7 @@ class MapConfigProvider implements OpenlayersMapConfigurationProvider {
     }
 
     getMapOptions(): Promise<MapOptions> {
-        return new Promise<MapOptions>((res) => res(this.mapOptions));
+        return Promise.resolve(this.mapOptions);
     }
 }
 
@@ -60,7 +60,7 @@ it("should successfully create a map", async () => {
         }
     };
 
-    render(
+    const renderResult = render(
         <PackageContextProvider {...mocks}>
             <div data-testid="base">
                 <MapContainer mapId="test" />
@@ -68,8 +68,48 @@ it("should successfully create a map", async () => {
         </PackageContextProvider>
     );
 
+    // Assert map is mounted
     const div = await screen.findByTestId("base");
     expect(div).toMatchSnapshot();
+
+    // Div is registered as map target
+    const map = await service.getMap("test");
+    const container = renderResult.container.querySelector(".ol-map-container");
+    expect(container).toBeInstanceOf(HTMLDivElement);
+    expect(map.getTarget()).toBe(container);
+
+    // Unmounting removes the container from the map
+    renderResult.unmount();
+    expect(map.getTarget()).toBeUndefined();
+});
+
+it("should throw an error if the map container is registered twice", async () => {
+    const mapId = "test";
+
+    const mapConfigProvider = await createService(MapConfigProvider, {
+        properties: {
+            mapOptions: {} as MapOptions,
+            mapId: mapId
+        }
+    });
+
+    const service = await createService(OlMapRegistry, {
+        references: {
+            providers: [mapConfigProvider]
+        }
+    });
+
+    const map = await service.getMap(mapId);
+    const div1 = document.createElement("div");
+    const div2 = document.createElement("div");
+
+    service.setContainer(mapId, div1);
+    expect(map.getTarget()).toBe(div1);
+
+    expect(() => service.setContainer(mapId, div2)).toThrowErrorMatchingInlineSnapshot(
+        "\"Map with id 'test' already has a container.\""
+    );
+    expect(map.getTarget()).toBe(div1); // unchanged
 });
 
 it("should successfully create a map with given configuration", async () => {

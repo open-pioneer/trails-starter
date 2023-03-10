@@ -1,15 +1,13 @@
 // SPDX-FileCopyrightText: con terra GmbH and contributors
 // SPDX-License-Identifier: Apache-2.0
-import { createLogger } from "@open-pioneer/core";
+import { createLogger, Resource } from "@open-pioneer/core";
 import { Service, ServiceOptions, ServiceType } from "@open-pioneer/runtime";
 import TileLayer from "ol/layer/Tile";
 import OlMap, { MapOptions } from "ol/Map";
 import OSM from "ol/source/OSM";
 import View from "ol/View";
 
-import { OpenlayersMapConfigurationProvider } from "./api";
-
-const defaultLayer = new TileLayer({ source: new OSM(), properties: { title: "OSM" } });
+import { OlMapRegistry as OlMapRegistryInterface, OlMapConfigurationProvider } from "./api";
 
 const LOG = createLogger("open-layers:OlMapRegistry");
 
@@ -17,9 +15,9 @@ interface References {
     providers: ServiceType<"open-layers-map-config.MapConfigProvider">[];
 }
 
-export class OlMapRegistry implements Service {
+export class OlMapRegistry implements Service, OlMapRegistryInterface {
     private maps: Map<string, OlMap> = new Map();
-    private configProviders: Map<string, OpenlayersMapConfigurationProvider> = new Map();
+    private configProviders: Map<string, OlMapConfigurationProvider> = new Map();
     private mapCreations = new Map<string, Promise<OlMap>>();
 
     constructor(options: ServiceOptions<References>) {
@@ -58,17 +56,25 @@ export class OlMapRegistry implements Service {
             LOG.warn(`config provider for map with id '${mapId}' does not exist`);
             additionalMapOptions = {};
         }
-        const defaultOptions: MapOptions = {
-            layers: [defaultLayer],
-            view: new View({
+
+        const options: MapOptions = {
+            ...additionalMapOptions
+        };
+
+        if (!options.layers) {
+            options.layers = [new TileLayer({ source: new OSM(), properties: { title: "OSM" } })];
+        }
+
+        if (!options.view) {
+            options.view = new View({
                 projection: "EPSG:3857",
                 center: [0, 0],
                 zoom: 1
-            }),
-            ...additionalMapOptions
-        };
+            });
+        }
+
         LOG.info(`Create map with id '${mapId}'`);
-        const map = new OlMap(defaultOptions);
+        const map = new OlMap(options);
         this.maps.set(mapId, map);
         this.mapCreations.delete(mapId);
         return map;
@@ -86,23 +92,31 @@ export class OlMapRegistry implements Service {
         }
     }
 
-    setContainer(mapId: string, target: HTMLDivElement) {
+    setContainer(mapId: string, target: HTMLDivElement): Resource {
         if (!target) {
-            LOG.warn(`Map target is not defined, so the map couldn't be mounted.`);
-            return;
+            throw new Error(`Map target is not defined, so the map couldn't be mounted.`);
         }
-        const map = this.maps.get(mapId);
-        if (map) {
-            map.setTarget(target);
-            return;
-        } else {
-            throw new Error(`Map with id '${mapId}' does not exist`);
-        }
-    }
-}
 
-declare module "@open-pioneer/runtime" {
-    interface ServiceRegistry {
-        "open-layers-map-registry": OlMapRegistry;
+        const map = this.maps.get(mapId);
+        if (!map) {
+            throw new Error(`Map with id '${mapId}' does not exist.`);
+        }
+
+        if (map.getTarget()) {
+            throw new Error(`Map with id '${mapId}' already has a container.`);
+        }
+
+        LOG.isDebug() && LOG.debug(`Setting container of map '${mapId}':`, target);
+        map.setTarget(target);
+        let unregistered = false;
+        return {
+            destroy() {
+                if (!unregistered) {
+                    LOG.isDebug() && LOG.debug(`Removing container of map '${mapId}':`, target);
+                    map.setTarget(undefined);
+                    unregistered = true;
+                }
+            }
+        };
     }
 }

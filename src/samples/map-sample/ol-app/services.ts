@@ -1,6 +1,6 @@
 // SPDX-FileCopyrightText: con terra GmbH and contributors
 // SPDX-License-Identifier: Apache-2.0
-import { OpenlayersMapConfigurationProvider } from "@open-pioneer/open-layers-map/api";
+import { OlMapConfigurationProvider } from "@open-pioneer/open-layers-map/api";
 import TileLayer from "ol/layer/Tile";
 import { MapOptions } from "ol/Map";
 import OSM from "ol/source/OSM";
@@ -8,7 +8,7 @@ import Stamen from "ol/source/Stamen";
 import View from "ol/View";
 
 export const MAP_ID = "main";
-export class MainMapProvider implements OpenlayersMapConfigurationProvider {
+export class MainMapProvider implements OlMapConfigurationProvider {
     mapId = MAP_ID;
 
     mapOptions: MapOptions = {

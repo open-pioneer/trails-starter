@@ -22,7 +22,7 @@ export interface MapPadding {
 
 export interface MapComponentProperties extends OlComponentConfig {
     /**
-     * Set's the map's padding directly.
+     * Sets the map's padding directly.
      *
      * See: https://openlayers.org/en/latest/apidoc/module-ol_View-View.html#padding)
      */
@@ -31,16 +31,14 @@ export interface MapComponentProperties extends OlComponentConfig {
 
 export function MapContainer(props: MapComponentProperties) {
     const mapElement = useRef<HTMLDivElement>(null);
-
     const olMapRegistry = useService("open-layers-map-registry");
-    const mapPromise = olMapRegistry.getMap(props.mapId);
-    const mapState = useAsync(async () => await mapPromise);
+    const mapState = useAsync(async () => await olMapRegistry.getMap(props.mapId));
 
     useEffect(() => {
-        if (mapState.value) {
-            if (mapElement.current) {
-                olMapRegistry.setContainer(props.mapId, mapElement.current);
-            }
+        if (mapState.value && mapElement.current) {
+            // Register div as render target
+            const resource = olMapRegistry.setContainer(props.mapId, mapElement.current);
+            return () => resource.destroy();
         }
     }, [mapState.value, olMapRegistry, props.mapId]);
 
@@ -52,11 +50,10 @@ export function MapContainer(props: MapComponentProperties) {
             mapView.padding = [top, right, bottom, left];
             mapView.animate({ center, duration: 300 });
         }
-    }, [props.viewPadding, mapState]);
+    }, [props.viewPadding, mapState.value]);
 
     const mapContainer: React.CSSProperties = {
         height: "100%"
     };
-
-    return <div ref={mapElement} style={mapContainer}></div>;
+    return <div className="ol-map-container" ref={mapElement} style={mapContainer}></div>;
 }
