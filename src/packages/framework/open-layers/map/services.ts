@@ -103,6 +103,6 @@ export class OlMapRegistry implements Service {
 
 declare module "@open-pioneer/runtime" {
     interface ServiceRegistry {
-        "open-layers-map-service": OlMapRegistry;
+        "open-layers-map-registry": OlMapRegistry;
     }
 }

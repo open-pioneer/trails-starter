@@ -81,7 +81,7 @@ interface LayerControlConfig extends OlComponentConfig {
 }
 
 export function LayerControlComponent(config: LayerControlConfig) {
-    const olMapRegistry = useService("open-layers-map-service");
+    const olMapRegistry = useService("open-layers-map-registry");
 
     const state = useAsync(async () => {
         const map = await olMapRegistry.getMap(config.mapId);

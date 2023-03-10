@@ -11,6 +11,6 @@ export default defineBuildConfig({
         }
     },
     ui: {
-        references: ["map-sample-logging.LogService", "open-layers-map-service"]
+        references: ["map-sample-logging.LogService", "open-layers-map-registry"]
     }
 });

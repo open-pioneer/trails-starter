@@ -12,7 +12,7 @@ import { OlComponentConfig } from "@open-pioneer/open-layers-map";
 export function CoordinateComponent(props: OlComponentConfig) {
     const [selectedCoord, setSelectedCoord] = useState<Coordinate>();
 
-    const olMapRegistry = useService("open-layers-map-service");
+    const olMapRegistry = useService("open-layers-map-registry");
     const mapPromise = olMapRegistry.getMap(props.mapId);
     useAsync(async () => {
         const map = await mapPromise;

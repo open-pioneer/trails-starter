@@ -9,13 +9,16 @@ export interface OlComponentConfig {
 }
 
 export interface MapComponentProperties extends OlComponentConfig {
+    /**
+     * padding for the map view can be set directly adjusted effect (see: https://openlayers.org/en/latest/apidoc/module-ol_View-View.html#padding)
+     */
     viewPadding?: Array<number> | undefined;
 }
 
 export function MapContainer(props: MapComponentProperties) {
     const mapElement = useRef<HTMLDivElement>(null);
 
-    const olMapRegistry = useService("open-layers-map-service");
+    const olMapRegistry = useService("open-layers-map-registry");
     const mapPromise = olMapRegistry.getMap(props.mapId);
     const mapState = useAsync(async () => await mapPromise);
 

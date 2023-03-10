@@ -17,7 +17,7 @@ export function MapApp() {
     const [viewPadding, setViewPadding] = useState<number[]>();
     const [isExpanded, setExpanded] = useState<boolean>(true);
 
-    const olMapRegistry = useService("open-layers-map-service");
+    const olMapRegistry = useService("open-layers-map-registry");
     const mapState = useAsync(async () => await olMapRegistry.getMap(MAP_ID));
 
     const centerBerlin = () => {

@@ -6,7 +6,7 @@ export default defineBuildConfig({
     styles: `./styles.css`,
     services: {
         OlMapRegistry: {
-            provides: ["open-layers-map-service"],
+            provides: ["open-layers-map-registry"],
             references: {
                 providers: {
                     name: "open-layers-map-config.MapConfigProvider",
@@ -16,6 +16,6 @@ export default defineBuildConfig({
         }
     },
     ui: {
-        references: ["open-layers-map-service"]
+        references: ["open-layers-map-registry"]
     }
 });
