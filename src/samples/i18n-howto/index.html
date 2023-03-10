@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Empty Site</title>
+    </head>
+    <body>
+        <div id="container"></div>
+        <script type="module">
+            import "./app/app.ts";
+
+            const container = document.getElementById("container");
+            initApp();
+
+            function initApp() {
+                const queryString = window.location.search;
+                const urlParams = new URLSearchParams(queryString);
+                const lang = urlParams.get("lang");
+                const app = document.createElement("i18n-howto");
+                if (lang) {
+                    app.setAttribute("forced-locale", lang);
+                }
+                container.appendChild(app);
+            }
+        </script>
+    </body>
+</html>

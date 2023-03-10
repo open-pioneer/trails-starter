@@ -1,0 +1,30 @@
+# at least one empty yaml file must exist for each supported language
+# (might be empty if all messages are defined in the packages used by this app)
+messages:
+  heading: I18n HowTo
+  text: Wie lässt sich I18n in Pioneer Apps nutzen?
+  interpolation:
+    heading: Beispiel für Interpolation (dynamische Werte)
+    value: Hallo {name}
+    placeholder: Geben Sie Ihren Namen ein...
+  plurals:
+    heading: Beispiel für Plural
+    value: "Wir trinken {n, plural, =0 {kein Bier} one {ein Bier} other {# Biere} =99 {zu viele Biere}}"
+  selection:
+    heading: Beispiel für Selektion
+    value: "{gender, select, male {Herr} female {Frau} other {}} {name}"
+    gender:
+      male: männlich
+      female: weiblich
+      other: divers
+  numberformat:
+    heading: Beispiele für NumberFormat
+    example:
+      currency1: "Währung (Symbol): "
+      currency2: "Währung (lang): "
+      unit1: "Maßeinheiten (kurz): "
+      unit2: "Maßeinheiten (lang): "
+  datetimeformat:
+    heading: Beispiel DateTimeFormat
+    timelabel: "Der gewählte Zeitpunkt ist "
+    relativetimelabel: "Relative Zeit zum gewählten Zeitpunkt: "
