@@ -11,9 +11,15 @@ Services can be used from other services or from UI components.
 ## Using a service from a React component
 
 In this section, we will customize the `empty` app's UI (in `src/apps/empty`).
-Our objective is to add a custom CSS class to the application's root `div` from our React UI.
+At the time of this writing, the framework does not contain a lot of builtin services we could use for our example, so the following use case is somewhat constructed.
 
-To obtain a reference to the root `div`, we need the service implementing `"runtime.ApplicationContext"`.
+Consider an app embedded as a custom component into some site.
+It can be useful to change the component's attributes from inside the application, for example to allow the surrounding site to apply different styles to the component (e.g. by using [attribute selectors](https://developer.mozilla.org/en-US/docs/Web/CSS/Attribute_selectors)).
+
+Our objective in this section is to add a custom attribute to the component by pressing a button in our app's UI.
+By default, services or UI components inside the app do not get a reference to the app's custom element.
+However, the builtin service implementing `"runtime.ApplicationContext"` can be used to achieve that goal.
+
 Thus, we edit our app's `build.config.mjs` to state that the UI requires a reference of the service:
 
 ```js
@@ -35,31 +41,31 @@ We extend the UI of the empty app to add our custom class:
 
 ```tsx
 // src/apps/empty/AppUI.tsx
-import { Container, Heading, Text } from "@open-pioneer/chakra-integration";
+import { Button, Container, Text, VStack } from "@open-pioneer/chakra-integration";
 import { useService } from "open-pioneer:react-hooks";
-import { useEffect } from "react";
-
-const CLASS_NAME = "my-custom-class";
+import { useState } from "react";
 
 export function AppUI() {
     // (1)
     const appCtx = useService("runtime.ApplicationContext");
 
     // (2)
-    useEffect(() => {
-        const div = appCtx.getApplicationContainer();
-        div.classList.add(CLASS_NAME);
+    const [clickCount, setClickCount] = useState(0);
+    const onButtonClicked = () => {
+        const newCount = clickCount + 1;
+        setClickCount(newCount);
 
         // (3)
-        return () => div.classList.remove(CLASS_NAME);
-    }, [appCtx]);
+        const host = appCtx.getHostElement();
+        host.setAttribute("data-clicked", String(newCount));
+    };
 
     return (
         <Container>
-            <Heading as="h1" size="lg">
-                Empty App
-            </Heading>
-            <Text>This is an empty app.</Text>
+            <VStack>
+                <Button onClick={onButtonClicked}>Click me</Button>
+                <Text>I have been clicked {clickCount} times.</Text>
+            </VStack>
         </Container>
     );
 }
@@ -68,26 +74,21 @@ export function AppUI() {
 -   **(1)**
     Fetches a reference to the service.
 -   **(2)**
-    Uses the [`useEffect`](https://reactjs.org/docs/hooks-effect.html) hook to perform a side effect when the component is mounted.
-    We add a single class to the application's container-`div`.
-
-    > **Note**  
-    > This is just an example to demonstrate a side effect. Adding a class to the container `div` is usually not needed.
-
+    React's [`useState`](https://reactjs.org/docs/hooks-state.html) is used to manage the component's click count.
 -   **(3)**
-    We return a cleanup function: this will be called by react to revert the side effect in the `useEffect` hook. Forgetting to return cleanup function is a frequent error when executing side effects.
+    Applies the new click count to the application's host element.
 
-The custom class will now be present when you inspect your app:
+The custom attribute will now be present when you inspect your app after pressing the button:
 
-![Custom class on application container](./HowToUseAService_CustomClass.png)
+![Custom attribute on host element](./HowToUseAService_CustomAttribute.png)
 
 ## Using a service from another service
 
 For this example, we will build upon the example from previous section.
-We will move the logic of adding and removing the css class into a service.
+We will move the logic of updating the element's attribute into a service.
 The new service will reference `"runtime.ApplicationContext"`, and the UI will be changed to reference our new service instead.
 
-To define our new service - which we will call `CssClassService` - we create a `service.ts` file in our application package.
+To define our new service - which we will call `AttributeService` - we create a `service.ts` file in our application package.
 When searching for the implementation of a service, the framework will try to import it from a file called `<PACKAGE_NAME>/services.ts` (or `.js`) by default.
 If the file does not exist, or if it does not contain a matching `export`, an error will be generated.
 Thus, make sure to add an export in there.
@@ -96,7 +97,7 @@ We will create the class for our service:
 
 ```ts
 // src/apps/empty-app/services.ts
-export class CssClassService {
+export class AttributeService {
     // TODO
 }
 ```
@@ -110,9 +111,9 @@ import { defineBuildConfig } from "@open-pioneer/build-support";
 export default defineBuildConfig({
     services: {
         // (1)
-        CssClassService: {
+        AttributeService: {
             // (2)
-            provides: "empty.CssClassService",
+            provides: "empty.AttributeService",
             // (3)
             references: {
                 ctx: "runtime.ApplicationContext"
@@ -137,7 +138,7 @@ export default defineBuildConfig({
     References the interface `"runtime.ApplicationContext"`.
     The service object will be injected by the framework into the class' constructor as `ctx` (the name can be freely chosen).
 
-Next, we will fill in the implementation of `CssClassService`:
+Next, we will fill in the implementation of `AttributeService`:
 
 ```ts
 // src/apps/empty-app/services.ts
@@ -185,10 +186,10 @@ export class CssClassService {
     The name `ctx` is the same as the name of the reference in the `build.config.mjs`.
 
 -   **(3)**
-    The implementation of `addClass()` and `removeClass()` was moved from the React component.
+    The implementation of `updateAttribute()` was moved from the React component.
 
 Finally, we will update our UI to use our new service.
-In the `build.config.mjs`, the UI now requires the interface `"empty.CssClassService"`:
+In the `build.config.mjs`, the UI now requires the interface `"empty.AttributeService"`:
 
 ```js
 // src/apps/empty-app/build.config.mjs
@@ -197,35 +198,37 @@ import { defineBuildConfig } from "@open-pioneer/build-support";
 export default defineBuildConfig({
     // ... services ...
     ui: {
-        references: ["empty.CssClassService"]
+        references: ["empty.AttributeService"]
     }
 });
 ```
 
-And our UI will now call the methods of our `CssClassService`:
+And our UI will now call the methods of our `AttributeService`:
 
 ```tsx
-import { Container, Heading, Text } from "@open-pioneer/chakra-integration";
+import { Button, Container, Text, VStack } from "@open-pioneer/chakra-integration";
 import { useService } from "open-pioneer:react-hooks";
-import { useEffect } from "react";
-import { type CssClassService } from "./services";
+import { useState } from "react";
+import { type AttributeService } from "./services";
 
 export function AppUI() {
     // (1)
-    const classService = useService("empty.CssClassService") as CssClassService;
+    const attributeService = useService("empty.AttributeService") as AttributeService;
 
     // (2)
-    useEffect(() => {
-        classService.addClass();
-        return () => classService.removeClass();
-    }, [classService]);
+    const [clickCount, setClickCount] = useState(0);
+    const onButtonClicked = () => {
+        const newCount = clickCount + 1;
+        setClickCount(newCount);
+        attributeService.updateAttribute(newCount);
+    };
 
     return (
         <Container>
-            <Heading as="h1" size="lg">
-                Empty App
-            </Heading>
-            <Text>This is an empty app.</Text>
+            <VStack>
+                <Button onClick={onButtonClicked}>Click me</Button>
+                <Text>I have been clicked {clickCount} times.</Text>
+            </VStack>
         </Container>
     );
 }
@@ -241,9 +244,9 @@ export function AppUI() {
     Note that this is only needed if you're using TypeScript.
 
 -   **(2)**  
-    The body of the `useEffect` hook now calls our service.
+    The body of the click handler now calls our service.
 
-After following these steps, your application's container node will (still) have its custom class.
+After following these steps, your application's external behavior will be unchanged: the attribute will still be updated.
 
 ## Further reading
 
