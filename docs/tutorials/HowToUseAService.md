@@ -13,8 +13,8 @@ Services can be used from other services or from UI components.
 In this section, we will customize the `empty` app's UI (in `src/apps/empty`).
 At the time of this writing, the framework does not contain a lot of builtin services we could use for our example, so the following use case is somewhat constructed.
 
-Consider an app embedded as a custom component into some site.
-It can be useful to change the component's attributes from inside the application, for example to allow the surrounding site to apply different styles to the component (e.g. by using [attribute selectors](https://developer.mozilla.org/en-US/docs/Web/CSS/Attribute_selectors)).
+Consider an app embedded as a custom element into some site.
+It can be useful to change the element's attributes from inside the application, for example to allow the surrounding site to apply different styles to the element (e.g. by using [attribute selectors](https://developer.mozilla.org/en-US/docs/Web/CSS/Attribute_selectors)).
 
 Our objective in this section is to add a custom attribute to the component by pressing a button in our app's UI.
 By default, services or UI components inside the app do not get a reference to the app's custom element.
@@ -36,7 +36,8 @@ export default defineBuildConfig({
 The package providing the implementation of a service must be declared as a dependency in the `package.json`.
 Luckily, the empty app already depends on the `@open-pioneer/runtime` package, so we don't have to do anything in this case.
 
-React components can use [hooks](https://reactjs.org/docs/hooks-intro.html) to interact with the pioneer framework. One of which is the `useService` hook, we will use below.
+React components can use [hooks](https://reactjs.org/docs/hooks-intro.html) to interact with the pioneer framework.
+One of which is the `useService` hook, we will use below.
 We extend the UI of the empty app to add our custom class:
 
 ```tsx
@@ -72,7 +73,7 @@ export function AppUI() {
 ```
 
 -   **(1)**
-    Fetches a reference to the service.
+    Fetches a reference to the service using the `useService` hook from `"open-pioneer:react-hooks"`.
 -   **(2)**
     React's [`useState`](https://reactjs.org/docs/hooks-state.html) is used to manage the component's click count.
 -   **(3)**
