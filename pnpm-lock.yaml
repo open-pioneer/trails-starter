@@ -226,6 +226,14 @@ importers:
       '@open-pioneer/chakra-integration': link:../../../packages/framework/chakra-integration
       '@open-pioneer/runtime': link:../../../packages/framework/runtime
 
+  src/samples/i18n-howto/app:
+    specifiers:
+      '@open-pioneer/chakra-integration': workspace:^
+      '@open-pioneer/runtime': workspace:^
+    dependencies:
+      '@open-pioneer/chakra-integration': link:../../../packages/framework/chakra-integration
+      '@open-pioneer/runtime': link:../../../packages/framework/runtime
+
   src/samples/i18n-sample/i18n-app:
     specifiers:
       '@open-pioneer/chakra-integration': workspace:^

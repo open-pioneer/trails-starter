@@ -42,6 +42,8 @@ messages:
 By default, the app uses the browser settings or system default for determining the locale.
 If your browser locale is set to `de` you should see the values from `de.yaml`.
 
+![i18n howto app](./HowToTranslateAnApp_App.png)
+
 To demonstrate the multi-language support and force a language of our choice, we need to modify the `app.ts`:
 
 ```javascript
@@ -195,6 +197,8 @@ Add the defined keys to all yaml files.
 The `interpolation.value` key uses a placeholder for `name`.
 In the rendered text the passed value of `name` will replace the placeholder.
 
+![interplation example](./HowToTranslateAnApp_Interpolation.png)
+
 ### Plurals
 
 We generate another entry in our `ExampleStack` for our `PluralsExample`:
@@ -271,6 +275,8 @@ messages:
 Add the defined keys to all yaml files.
 
 The `plurals.value` key defines a count parameter `n`. In result the passed value of `n` will be used to generate the matching output.
+
+![plurals example](./HowToTranslateAnApp_Plurals.png)
 
 ### Selection
 
@@ -366,6 +372,8 @@ The `selection.value` key defines a parameter `gender` for selection and uses th
 In a selection we always have to define the `other` parameter.
 It is used if the given parameter value does not match one of the other values (e.g. `male` or `female`).
 In result the passed value of `gender` and `name` will be used to generate the matching output.
+
+![selection example](./HowToTranslateAnApp_Selection.png)
 
 ### Number Format
 
@@ -473,6 +481,8 @@ Add the defined keys to all yaml files.
 
 We pass the `value` with different `NumberFormatOptions` to `intl.formatNumber`. In result, we see our formatted numbers.
 
+![number format example](./HowToTranslateAnApp_Numberformat.png)
+
 ### Date/Time Format and Relative Time Format
 
 Finally, we add an entry for the `DateTimeFormatExample` to our `ExampleStack` :
@@ -571,10 +581,16 @@ and with `RelativeTimeFormatOptions` to `intl.formatRelativeTime` (see [Link](ht
 
 In result, we see our selected formatted datetime and the relative time between now and the selected datetime.
 
+![datetime format example](./HowToTranslateAnApp_DateTimeFormat.png)
+
 > **Note**  
 > The used datetime input does not support a forced locale.
 > It always uses the defined browser locale or the system default. In our example, if your browser uses locale `de`
 > but your app uses url parameter `lang=en` the input will show values matching to locale `de`.
+
+## Demo App
+
+The complete app `i18n-howto` can be found in the `samples` folder.
 
 ## Further reading
 
