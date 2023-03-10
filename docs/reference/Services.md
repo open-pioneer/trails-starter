@@ -81,7 +81,7 @@ export class HelloWorldConsumer {
 }
 ```
 
-References are either injected as an object (direct reference, the service that implements the interface)
+References are either injected as an object (direct reference, the service that provides the interface)
 or as an array (when multiple services are requested).
 See documentation and examples in [Package Reference](./Package.md) for more details.
 
@@ -102,7 +102,7 @@ export default defineBuildConfig({
 ```
 
 The snippet above tells the system that React components from the package `sample-app` may reference the service implementing `"hello.HelloWorldService"`.
-The framework will ensure that that service is started, or that an error is thrown if no service implements that interface.
+The framework will ensure that that service is started, or that an error is thrown if no service provides that interface.
 
 From within the React component, the `useService` hook can be used to reference the service:
 
@@ -119,6 +119,13 @@ function ExampleComponent() {
     return <div>This components calls service.sayHello after mounting</div>;
 }
 ```
+
+### Reference all services that provide a certain interface
+
+It is possible to gather all services that provide a certain interface name by specifying `all: true` in the `build.config.mjs`.
+The services are gathered and available as an array in the referencing service or UI.
+
+An example is shown in [How To Create a Service Tutorial](../tutorials/HowToCreateAService.md).
 
 See documentation and examples in [Package Reference](./Package.md) for more details.
 
@@ -153,7 +160,7 @@ Services are started when the application launches, i.e. when the application's 
 All services used by an app are started before the UI is rendered for the first time.
 
 A service is considered "used" when it is needed by the UI (see `ui.references` in `build.config.mjs`),
-or when it defines an API on the application (implements `integration.ApiExtension`).
+or when it defines an API on the application (provides `integration.ApiExtension`).
 The framework will take care to start all those services (and their dependencies) in the correct order.
 
 The service start algorithm for a service `S` that depends on (`references`) two other services `D1` and `D2`

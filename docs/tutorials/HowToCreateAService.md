@@ -6,6 +6,7 @@ We recommend reading the simpler [How to use a service](./HowToUseAService.md) t
 ## Creating the service class
 
 In this section, we will create a `MathService` in a new package.
+
 First, create the directory `src/packages/math` with the following required package files (see also [Package reference](../reference/Package.md)):
 
 ```js
@@ -24,7 +25,7 @@ export default defineBuildConfig({});
 ```
 
 The service's implementation is trivial.
-We provide a simple method to our users that multiplies two numbers:
+It provides a simple method to the users that multiplies two numbers:
 
 ```ts
 // src/packages/math/MathServiceImpl.ts
@@ -105,7 +106,7 @@ it("multiplies two numbers", async () => {
 });
 ```
 
-The test creates a new service instance by calling the `createService` helper and then tests the result of `multiply(...)` by using vitest's [`expect` API](https://vitest.dev/api/expect.html).
+The test creates a new service instance by calling the `createService` helper and then tests the result of `multiply(...)` by using Vitest's [`expect` API](https://vitest.dev/api/expect.html).
 
 We can run `pnpm test` to execute all tests in this repository, which is Vitest's default behavior.
 For this example, we will only execute tests in the `math` directory for the sake of simplicity:
@@ -290,16 +291,18 @@ export class MathServiceImpl implements MathService {
 }
 ```
 
-## Adding an extension API
+## Referencing all services that provide a certain interface
 
-Services have the powerful capability to gather all implementations of a certain interface.
-This can be used, for example, to provide an extension API: a user may add its own services into the inner workings of another service by implementing an interface.
+Services have the powerful capability to gather all services that provide a certain interface name
+by specifying `all: true` in the `build.config.mjs`.
 
-This section demonstrates how to do that by adding a simple extension API to the `MathService`: clients will be called whenever someone triggers are call to `multiply`.
+This can be used, for example, to implement an extension API: a user may add its own services into the inner workings of another service by providing an interface.
+
+This section demonstrates how to do that by adding a simple extension API to the `MathService`: clients will be called whenever someone triggers a call to `multiply`.
 
 This time, we will start with the TypeScript integration.
 
-### Updating the TypeScript API
+### Creating the TypeScript API for the new interface
 
 In your `api.ts`, add another interface:
 
@@ -325,9 +328,9 @@ declare module "@open-pioneer/runtime" {
 }
 ```
 
-### Implementing the extension support
+### Gathering and using all services providing the interface
 
-In the configuration file, we gather all implementations of that extension interface:
+In the configuration file, we gather all services providing that extension interface:
 
 ```js
 // src/packages/math/build.config.mjs
@@ -458,7 +461,7 @@ it("invokes the extensions when a multiplication is triggered", async () => {
 -   **(3)**
     We call `multiply` and check that our extensions have been invoked by asserting the contents of the `events` array.
 
-#### Implementing an actual extension
+#### Implementing an actual service providing the interface
 
 Now we will implement an extension class that simply logs all arguments to demonstrate that the system works as expected. Like before, we'll use the empty app to do this.
 
@@ -524,4 +527,4 @@ Your console should display a message just like this:
 
 Some service features have not been touched in this tutorial.
 For example, you can translate messages within a service by using the `intl` object in the constructor's `ServiceOptions` object.
-All details are documented in the [Services reference](../reference/Services.md).
+All details are documented in the [Services reference](../reference/Services.md) and in the [Package reference](../reference/Package.md).

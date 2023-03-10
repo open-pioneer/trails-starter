@@ -18,7 +18,7 @@ It can be useful to change the element's attributes from inside the application,
 
 Our objective in this section is to add a custom attribute to the component by pressing a button in our app's UI.
 By default, services or UI components inside the app do not get a reference to the app's custom element.
-However, the builtin service implementing `"runtime.ApplicationContext"` can be used to achieve that goal.
+However, the builtin service providing `"runtime.ApplicationContext"` can be used to achieve that goal.
 
 Thus, we edit our app's `build.config.mjs` to state that the UI requires a reference of the service:
 

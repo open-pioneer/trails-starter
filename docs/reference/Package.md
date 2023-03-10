@@ -167,7 +167,7 @@ export { LogService } from "./LogService";
 
 #### `service.provides`
 
-Interfaces implemented by the service.
+Interfaces provided by the service.
 They can be configured as a single string (a single interface name), or an array of entries.
 Every array entry can specify a string (the interface name) or an object with advanced properties.
 
@@ -333,7 +333,7 @@ Read [Services](./Services.md) to see how services can be defined.
 
 ### `useService` Hook
 
-Retrieves a service implementing the given interface.
+Retrieves a service providing the given interface.
 The dependency on that interface must have been declared in the `build.config.mjs` (see `ui.references`).
 
 ```jsx
@@ -348,7 +348,7 @@ function ExampleComponent() {
 
 ### `useServices` Hook
 
-Retrieves all services implementing the given interface as an array.
+Retrieves all services providing the given interface as an array.
 The dependency must have been declared in the `build.config.mjs` (see `ui.references`).
 
 ```jsx
@@ -425,7 +425,7 @@ This attribute is mandatory.
 ### `referenceConfig.qualifier`
 
 The exact interface qualifier required by the reference.
-This attribute allows disambiguation when there are multiple services that implement the same interface.
+This attribute allows disambiguation when there are multiple services that provide the same interface.
 Note that ambiguous references (references that do not exactly match a single service) are always an error.
 
 ### `referenceConfig.all`
@@ -439,7 +439,7 @@ This attribute cannot be used together with `qualifier`.
 #### Referencing single instance
 
 A service that requires a reference to a single other service.
-There can only be a single service implementing `"example.ExampleService"`, otherwise the system will throw an error because the reference needs additional disambiguation.
+There can only be a single service providing `"example.ExampleService"`, otherwise the system will throw an error because the reference needs additional disambiguation.
 
 ```js
 // build.config.mjs
@@ -456,7 +456,7 @@ export default defineBuildConfig({
 
 #### Referencing a single instance with qualifier
 
-When there are multiple implementations of an interface, the `qualifier` can be used to pick a specific one.
+When there are multiple services providing the same interface, the `qualifier` can be used to pick a specific one.
 The `qualifier` must match the value in the referenced service's `provides` section.
 
 ```js
@@ -486,9 +486,9 @@ export default defineBuildConfig({
 });
 ```
 
-#### Referencing all implementations
+#### Referencing all services providing a specific interface
 
-All services implementing an interface can be referenced by specifying `all: true` in your `build.config.mjs`:
+All services providing an interface can be referenced by specifying `all: true` in your `build.config.mjs`:
 
 ```js
 // build.config.mjs
@@ -497,7 +497,7 @@ export default defineBuildConfig({
         ActionServiceImpl: {
             provides: ["extension-app.ActionService"],
             references: {
-                // Gathers all services that implement "extension-app.ActionProvider" as an array.
+                // Gathers all services that provide "extension-app.ActionProvider" as an array.
                 providers: {
                     name: "extension-app.ActionProvider",
                     all: true
@@ -568,7 +568,9 @@ function ExampleComponent() {
 }
 ```
 
-#### Referencing all services that implement an interface from the UI
+#### Referencing all services that provide an interface from the UI
+
+Gather all services that provide a certain interface name:
 
 ```js
 // build.config.mjs
@@ -583,6 +585,8 @@ export default defineBuildConfig({
     }
 });
 ```
+
+The services are gathered and available as an array in the referencing service or UI:
 
 ```jsx
 // ExampleComponent.jsx
