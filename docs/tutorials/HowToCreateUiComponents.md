@@ -79,9 +79,7 @@ export function AppUI() {
     In this case, Chakra components (e.g. `Container`, `Text`) are used.
     You can also use plain html elements, like `div` or `p`.
 
-    <!-- TODO Link to tutorial-->
-
-    The `intl` object here is used to translate messages into multiple languages (see [How to translate an App](./TODO)). We will not dive into internationalization (i18n) in this tutorial and use static strings instead.
+    The `intl` object here is used to translate messages into multiple languages (see [How to translate an App](./HowToTranslateAnApp.md)). We will not dive into internationalization (i18n) in this tutorial and use static strings instead.
 
 ## Defining new components
 
@@ -170,7 +168,7 @@ However, props work only from parent to child, which can be tedious with deeply 
 React has a second system (the [`Context API`](https://beta.reactjs.org/reference/react/useContext)) that can be used to inherit values into all children (and their children etc.) of a certain component.
 This can be extremely powerful but also makes components harder to understand.
 
-We have implemented hooks such as `useService` and `useIntl` (built on top of the context API) to allow react components to interact with the rest of the framework (see [How to use a service](./HowToUseAService.md) and [How to translate an app](./TODO)).
+We have implemented hooks such as `useService` and `useIntl` (built on top of the context API) to allow react components to interact with the rest of the framework (see [How to use a service](./HowToUseAService.md) and [How to translate an app](./HowToTranslateAnApp.md)).
 
 It is best to compose a UI from a set of simple, reusable React components that mostly rely on `props` and hooks.
 This makes them easier to understand, to reuse and to test in isolation.

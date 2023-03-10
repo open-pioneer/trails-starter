@@ -15,7 +15,7 @@
     -   [How to create a service](./tutorials/HowToCreateAService.md)
     -   [How to create UI components](./tutorials/HowToCreateUiComponents.md)
     -   [How to add custom styles](./tutorials/HowToAddCustomStyles.md)
-    -   TODO: How to translate an App
+    -   [How to translate an App](./tutorials/HowToTranslateAnApp.md)
     -   [How to provide an API](./tutorials/HowToProvideAnAPI.md)
     -   [How to write tests](./tutorials/HowToWriteTests.md)
 
