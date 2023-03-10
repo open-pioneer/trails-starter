@@ -123,7 +123,7 @@ function ClickableButton({ label }: ClickableButtonProps) {
 
     > **Note**
     > In simple (local) components like this, you could also inline the type definition of `ClickableButtonProps`.
-    > If you have many properties, or intent to share your components across modules or packages, using a separate type is strongly recommended.
+    > If you have many properties, or intend to share your components across modules or packages, using a separate type is strongly recommended.
 
 -   **(2)**
     Uses the [`useState`](https://beta.reactjs.org/reference/react/useState) hook to remember the number of types the button has been clicked.
