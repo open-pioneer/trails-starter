@@ -26,7 +26,8 @@ const sampleSites = [
     "samples/map-sample",
     "samples/properties-sample",
     "samples/styling-sample",
-    "samples/i18n-sample"
+    "samples/i18n-sample",
+    "samples/i18n-howto"
 ];
 
 // https://vitejs.dev/config/
