@@ -7,11 +7,17 @@ Besides the component, there is a service, which handles the registration and cr
 
 ### Map container component
 
-To integrate a map container in a react template, place it at the point where it should appear. The wrapping component should provide 100% height. The component itself uses the map registry service to create the map. Therefore a unique map id should be defined. With this map id, the map can be used in other component via the map registry service. For more configuration of the map see in `./ProMapContainer.tsx` and check the .
+To integrate a map container in a react template, place it at the point where it should appear.
+The wrapping component should provide 100% height.
+
+The component itself uses the map registry service to create the map.
+Therefore a unique map id should be defined.
+With this map id, the map can be used in other component via the map registry service.
+For more configuration of the map see in `./ProMapContainer.tsx` and check the .
 
 Simple integration of a map container with an map id:
 
-```html
+```jsx
 <div height="100%">
     <MapContainer mapId="map_id"></MapContainer>
 </div>
@@ -19,7 +25,8 @@ Simple integration of a map container with an map id:
 
 ### Map registry service
 
-The service is registered with the name `"open-layers-map-registry"`. While injecting it the common way, you can access the map via the following snippet:
+The service is registered with the name `"open-layers-map-registry"`.
+While injecting it the common way, you can access the map via the following snippet:
 
 ```ts
 // get open layers map registry

@@ -13,7 +13,6 @@ import { render, screen } from "@testing-library/react";
 import TileLayer from "ol/layer/Tile";
 import { MapOptions } from "ol/Map";
 import Stamen from "ol/source/Stamen";
-import { act } from "react-dom/test-utils";
 import { expect, it } from "vitest";
 
 import { OpenlayersMapConfigurationProvider } from "./api";
@@ -57,8 +56,7 @@ it("should successfully create a map", async () => {
 
     const mocks: PackageContextProviderProps = {
         services: {
-            // eslint-disable-next-line @typescript-eslint/no-explicit-any
-            "open-layers-map-registry": service as any
+            "open-layers-map-registry": service
         }
     };
 
@@ -101,26 +99,9 @@ it("should successfully create a map with given configuration", async () => {
         }
     });
 
-    const mocks: PackageContextProviderProps = {
-        services: {
-            // eslint-disable-next-line @typescript-eslint/no-explicit-any
-            "open-layers-map-registry": service as any
-        }
-    };
-
-    render(
-        <PackageContextProvider {...mocks}>
-            <div data-testid="base">
-                <MapContainer mapId="test" />
-            </div>
-        </PackageContextProvider>
-    );
-
-    await act(async () => {
-        const map = await service.getMap("test");
-        const layers = map.getAllLayers();
-        expect(layers.length).toBe(2);
-        expect(layers[0]?.getProperties().title).toBe("Watercolor");
-        expect(layers[1]?.getProperties().title).toBe("Toner");
-    });
+    const map = await service.getMap("test");
+    const layers = map.getAllLayers();
+    expect(layers.length).toBe(2);
+    expect(layers[0]?.getProperties().title).toBe("Watercolor");
+    expect(layers[1]?.getProperties().title).toBe("Toner");
 });

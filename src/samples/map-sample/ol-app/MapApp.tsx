@@ -3,7 +3,7 @@
 import { Button } from "@open-pioneer/chakra-integration";
 import { Sidebar } from "@open-pioneer/layout-sidebar";
 import { LayerControlComponent } from "@open-pioneer/open-layers-layer-control";
-import { MapContainer } from "@open-pioneer/open-layers-map";
+import { MapContainer, MapPadding } from "@open-pioneer/open-layers-map";
 import { useService } from "open-pioneer:react-hooks";
 import { useState } from "react";
 import { useAsync } from "react-use";
@@ -14,7 +14,7 @@ import { MAP_ID } from "./services";
 const berlin = [1489200, 6894026, 1489200, 6894026];
 
 export function MapApp() {
-    const [viewPadding, setViewPadding] = useState<number[]>();
+    const [viewPadding, setViewPadding] = useState<MapPadding>();
     const [isExpanded, setExpanded] = useState<boolean>(true);
 
     const olMapRegistry = useService("open-layers-map-registry");
@@ -37,7 +37,7 @@ export function MapApp() {
             <Sidebar
                 defaultExpanded={isExpanded}
                 expandedChanged={(expanded) => setExpanded(expanded)}
-                sidebarWidthChanged={(width) => setViewPadding([0, 0, 0, width / 2])}
+                sidebarWidthChanged={(width) => setViewPadding({ left: width / 2 })}
             >
                 <LayerControlComponent
                     mapId={MAP_ID}

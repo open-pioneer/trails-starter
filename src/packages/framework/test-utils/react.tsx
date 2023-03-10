@@ -8,7 +8,8 @@ import {
 } from "@open-pioneer/runtime/react-integration";
 import { FC, ReactNode, useMemo } from "react";
 
-export type AnyService = Service<Record<string, unknown>>;
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export type AnyService = Service<any>;
 
 export interface PackageContextProviderProps {
     /** Interface implementations, keyed by interface name. */

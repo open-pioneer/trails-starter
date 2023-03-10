@@ -8,11 +8,25 @@ export interface OlComponentConfig {
     mapId: string;
 }
 
+/**
+ * Map padding, all values are pixels.
+ *
+ * See https://openlayers.org/en/latest/apidoc/module-ol_View-View.html#padding
+ */
+export interface MapPadding {
+    left?: number;
+    right?: number;
+    top?: number;
+    bottom?: number;
+}
+
 export interface MapComponentProperties extends OlComponentConfig {
     /**
-     * padding for the map view can be set directly adjusted effect (see: https://openlayers.org/en/latest/apidoc/module-ol_View-View.html#padding)
+     * Set's the map's padding directly.
+     *
+     * See: https://openlayers.org/en/latest/apidoc/module-ol_View-View.html#padding)
      */
-    viewPadding?: Array<number> | undefined;
+    viewPadding?: MapPadding | undefined;
 }
 
 export function MapContainer(props: MapComponentProperties) {
@@ -34,7 +48,8 @@ export function MapContainer(props: MapComponentProperties) {
         const mapView = mapState.value?.getView();
         if (props.viewPadding && mapView) {
             const center = mapView.getCenter();
-            mapView.padding = props.viewPadding;
+            const { top = 0, right = 0, bottom = 0, left = 0 } = props.viewPadding;
+            mapView.padding = [top, right, bottom, left];
             mapView.animate({ center, duration: 300 });
         }
     }, [props.viewPadding, mapState]);

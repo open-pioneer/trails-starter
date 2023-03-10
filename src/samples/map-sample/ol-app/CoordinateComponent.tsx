@@ -13,9 +13,8 @@ export function CoordinateComponent(props: OlComponentConfig) {
     const [selectedCoord, setSelectedCoord] = useState<Coordinate>();
 
     const olMapRegistry = useService("open-layers-map-registry");
-    const mapPromise = olMapRegistry.getMap(props.mapId);
     useAsync(async () => {
-        const map = await mapPromise;
+        const map = await olMapRegistry.getMap(props.mapId);
         map.on("click", (event: MapBrowserEvent<UIEvent>) => {
             const coords = map.getCoordinateFromPixel(event.pixel);
             if (coords) {
