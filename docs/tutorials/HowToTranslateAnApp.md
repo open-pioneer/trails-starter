@@ -3,7 +3,7 @@
 To show how we can use I18n in our pioneer apps, we will extend the empty app (at `src/apps/empty`).
 
 By default, the empty app is prepared to support I18n with locale `en`.
-We will add support for another language (locale `de`) and demonstrate advanced features of FormatJS Intl.
+We will add support for another language (locale `de`) and demonstrate advanced features of [FormatJS](https://formatjs.io/) Intl.
 
 > **Note**  
 > For more details to I18n file format please check [I18nFormat](../reference/I18nFormat.md).
@@ -30,7 +30,7 @@ export default defineBuildConfig({
 ```
 
 We will see an error message in browser, because of the missing yaml file for our new locale.
-We need to create the file in the `i18n` folder. The naming schema of the file is {locale}.yaml.
+We need to create the file in the `i18n` folder. The naming schema of the file is `{locale}.yaml`.
 
 ```yaml
 # src/apps/empty/i18n/de.yaml
@@ -155,6 +155,7 @@ Interpolation allows replacement with dynamic values. That's why we use a text i
 ```javascript
 // src/apps/empty/AppUI.tsx
 function InterpolationExample() {
+    const intl = useIntl();
     const [value, setValue] = useState("");
     return (
         <>
@@ -175,7 +176,8 @@ function InterpolationExample() {
 }
 ```
 
-As we can see, the bound input value `value` is passed to the `intl.formatMessage` function with the parameter name `name`. Add the keys and values to the yaml configuration:
+As we can see, the bound input value `value` is passed to the `intl.formatMessage` function with the parameter name `name`.
+Add the keys and values to the yaml configuration:
 
 ```yaml
 # src/apps/empty/i18n/de.yaml
@@ -190,7 +192,8 @@ messages:
 
 Add the defined keys to all yaml files.
 
-The `interpolation.value` key uses a placeholder for `name`. In result the passed value of `name` will replace the placeholder.
+The `interpolation.value` key uses a placeholder for `name`.
+In the rendered text the passed value of `name` will replace the placeholder.
 
 ### Plurals
 
@@ -218,11 +221,13 @@ function ExampleStack() {
 }
 ```
 
-With plural support we can output different text depending on a count value (see [Link](https://formatjs.io/docs/core-concepts/icu-syntax/#plural-format)). We will use a RadioGroup to change the count value in our example:
+With plural support we can output different text depending on a count value (see [Link](https://formatjs.io/docs/core-concepts/icu-syntax/#plural-format)).
+We will use a RadioGroup to change the count value in our example:
 
 ```javascript
 // src/apps/empty/AppUI.tsx
 function PluralsExample() {
+    const intl = useIntl();
     const [value, setValue] = useState("1");
     return (
         <>
@@ -269,7 +274,7 @@ The `plurals.value` key defines a count parameter `n`. In result the passed valu
 
 ### Selection
 
-Let's add an entry for `SelectionExample` in our `ExampleStack` :
+Let's add an entry for `SelectionExample` in our `ExampleStack`:
 
 ```javascript
 // src/apps/empty/AppUI.tsx
@@ -297,11 +302,13 @@ function ExampleStack() {
 ```
 
 With selection support we can output different text depending on a set of given values (see [Link](https://formatjs.io/docs/core-concepts/icu-syntax/#select-format)).
-In our example we will change the title depending on a gender selection. We will use a text input for name and a RadioGroup for gender selection:
+In our example we will change the title depending on a gender selection.
+We will use a text input for name and a RadioGroup for gender selection:
 
 ```javascript
 // src/apps/empty/AppUI.tsx
 function SelectionExample() {
+    const intl = useIntl();
     const [value1, setValue1] = useState("");
     const [value2, setValue2] = useState("male");
     return (
@@ -336,7 +343,8 @@ function SelectionExample() {
 }
 ```
 
-We pass the name (`value1`) and gender (`value2`) to the `intl.formatMessage`. Here is the yaml configuration:
+We pass the name (`value1`) and gender (`value2`) to the `intl.formatMessage`.
+Here is the yaml configuration:
 
 ```yaml
 # src/apps/empty/i18n/de.yaml
@@ -352,10 +360,11 @@ messages:
 #....
 ```
 
-Add the defined keys to all yaml files.
+Add the defined keys to all `yaml` files.
 
-The `selection.value` key defines a parameter `gender` for selection and uses dynamic parameter `name`.
-In a selection we always have to define the `other` parameter. It is used if the given parameter value does not match one of the other values (e.g. `male` or `female`).
+The `selection.value` key defines a parameter `gender` for selection and uses the dynamic parameter `name`.
+In a selection we always have to define the `other` parameter.
+It is used if the given parameter value does not match one of the other values (e.g. `male` or `female`).
 In result the passed value of `gender` and `name` will be used to generate the matching output.
 
 ### Number Format
@@ -396,6 +405,7 @@ In our example we will have a number input and an output with different forms of
 ```javascript
 // src/apps/empty/AppUI.tsx
 function NumberFormatExample() {
+    const intl = useIntl();
     const [value, setValue] = useState("424224.24");
     return (
         <>
@@ -503,6 +513,7 @@ In our example we will have a date time input:
 ```javascript
 // src/apps/empty/AppUI.tsx
 function DateTimeFormatExample() {
+    const intl = useIntl();
     const [value, setValue] = useState("2023-02-19T19:02");
     return (
         <>
@@ -564,3 +575,9 @@ In result, we see our selected formatted datetime and the relative time between 
 > The used datetime input does not support a forced locale.
 > It always uses the defined browser locale or the system default. In our example, if your browser uses locale `de`
 > but your app uses url parameter `lang=en` the input will show values matching to locale `de`.
+
+## Further reading
+
+-   [FormatJS Documentation](https://formatjs.io/docs/getting-started/installation)
+-   [Message syntax](https://formatjs.io/docs/core-concepts/icu-syntax)
+-   [Intl Reference](https://formatjs.io/docs/react-intl/api#intlshape) (interface `IntlFormatters`)
