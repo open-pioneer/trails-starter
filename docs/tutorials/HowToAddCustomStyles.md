@@ -41,7 +41,7 @@ Now create it:
 
 After reloading your browser, the previous error will be gone.
 However, since the class isn't being used, your UI still looks the same.
-Setting the css class of a react element is done via the `className` prop:
+Setting the css class of a React element is done via the `className` prop:
 
 ```tsx
 import { Container, Heading, Text } from "@open-pioneer/chakra-integration";
@@ -121,11 +121,11 @@ This section contains a few hints and examples for different ways to style your 
 Chakra UI already comes with a very large set of properties to customize single components: [Documentation](https://chakra-ui.com/docs/styled-system/style-props).
 
 Chakra also provides extensive support theming ([Documentation](https://chakra-ui.com/docs/styled-system/theme)).
-The theme of the entire application does not support configuration at this time (please file a feature request!), but it can be customized by directly editing the chakra provider in `@open-pioneer/chakra-integration/Provider.tsx`.
+The theme of the entire application does not support configuration at this time (please submit a feature request!), but it can be customized by directly editing the chakra provider in `@open-pioneer/chakra-integration/Provider.tsx`.
 
 #### React classes
 
-React supports the `className` prop to set an elements css classes as a string ([Documentation](https://reactjs.org/docs/faq-styling.html)).
+React supports the `className` prop to set an element's css classes as a string ([Documentation](https://reactjs.org/docs/faq-styling.html)).
 
 The popular [`classnames`](https://www.npmjs.com/package/classnames) packages can be used to assemble the `className` prop from multiple, potentially dynamic inputs:
 
