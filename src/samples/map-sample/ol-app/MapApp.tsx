@@ -15,7 +15,7 @@ const berlin = [1489200, 6894026, 1489200, 6894026];
 
 export function MapApp() {
     const [viewPadding, setViewPadding] = useState<MapPadding>();
-    const [isExpanded, setExpanded] = useState<boolean>(true);
+    const [isExpanded, setExpanded] = useState<boolean>(false);
 
     const olMapRegistry = useService("ol-map.MapRegistry");
     const mapState = useAsync(async () => await olMapRegistry.getMap(MAP_ID));

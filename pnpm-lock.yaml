@@ -148,10 +148,12 @@ importers:
     specifiers:
       '@open-pioneer/chakra-integration': workspace:^
       '@open-pioneer/ol-map': workspace:^
+      '@open-pioneer/test-utils': workspace:^
       ol: ^7.2.2
     devDependencies:
       '@open-pioneer/chakra-integration': link:../../chakra-integration
       '@open-pioneer/ol-map': link:../map
+      '@open-pioneer/test-utils': link:../../test-utils
       ol: 7.3.0
 
   src/packages/framework/open-layers/map:

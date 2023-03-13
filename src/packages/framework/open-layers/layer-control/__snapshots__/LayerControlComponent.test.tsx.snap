@@ -1,0 +1,35 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`should successfully create a layer control component 1`] = `
+<div
+  data-testid="base"
+>
+  <div>
+    <div>
+      <div
+        class="layer-entry"
+      >
+        <label
+          class="chakra-checkbox layer-select css-1elxtiq"
+        >
+          <input
+            class="chakra-checkbox__input"
+            style="border: 0px; clip: rect(0px, 0px, 0px, 0px); height: 1px; width: 1px; margin: -1px; padding: 0px; overflow: hidden; white-space: nowrap; position: absolute;"
+            type="checkbox"
+            value=""
+          />
+          <span
+            aria-hidden="true"
+            class="chakra-checkbox__control css-dnty2r"
+          />
+          <span
+            class="chakra-checkbox__label css-1oeb2oe"
+          >
+            Watercolor
+          </span>
+        </label>
+      </div>
+    </div>
+  </div>
+</div>
+`;

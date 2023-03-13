@@ -27,7 +27,12 @@ function LayerVisibilityTogglerComponent(props: { layer: Layer }) {
     };
 
     return (
-        <Checkbox size="lg" isChecked={visibility} onChange={changeVisibility}>
+        <Checkbox
+            className="layer-select"
+            size="lg"
+            isChecked={visibility}
+            onChange={changeVisibility}
+        >
             {title}
         </Checkbox>
     );
@@ -77,7 +82,10 @@ function LayerOpacitySliderComponent(props: { layer: Layer }) {
 }
 
 interface LayerControlConfig extends OlComponentConfig {
-    showOpacitySlider: boolean;
+    /**
+     * Sets visibility of opacity slider
+     */
+    showOpacitySlider?: boolean;
 }
 
 export function LayerControlComponent(config: LayerControlConfig) {
@@ -98,7 +106,7 @@ export function LayerControlComponent(config: LayerControlConfig) {
             ) : (
                 <div>
                     {state.value?.map((layer, i) => (
-                        <div key={i}>
+                        <div key={i} className="layer-entry">
                             <LayerVisibilityTogglerComponent
                                 layer={layer}
                             ></LayerVisibilityTogglerComponent>
