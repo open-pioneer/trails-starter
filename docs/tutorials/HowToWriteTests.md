@@ -44,7 +44,7 @@ $ pnpm test src/packages/framework/core/
 ### Watch mode
 
 Vitest will remain running after executing the test suite when executed locally.
-It will watch for file changes (similar to vite's hot reloading) and re-execute tests that are impacted by this changes ([Documentation](https://vitest.dev/guide/features.html#watch-mode)).-
+It will watch for file changes (similar to vite's hot reloading) and re-execute tests that are impacted by this changes ([Documentation](https://vitest.dev/guide/features.html#watch-mode)).
 
 ### Running Vitest manually
 
