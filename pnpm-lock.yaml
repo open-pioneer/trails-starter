@@ -186,6 +186,7 @@ importers:
   src/packages/framework/test-utils:
     specifiers:
       '@formatjs/intl': ^2.6.7
+      '@open-pioneer/chakra-integration': workspace:^
       '@open-pioneer/runtime': workspace:^
       '@testing-library/dom': ^9.0.1
       '@testing-library/react': ^14.0.0
@@ -195,6 +196,7 @@ importers:
       '@formatjs/intl': 2.6.7
       '@testing-library/dom': 9.0.1
     devDependencies:
+      '@open-pioneer/chakra-integration': link:../chakra-integration
       '@open-pioneer/runtime': link:../runtime
       '@testing-library/react': 14.0.0_biqbaboplfbrettd7655fr4n2y
       react: 18.2.0

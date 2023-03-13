@@ -10,7 +10,8 @@ exports[`should successfully create a layer control component 1`] = `
         class="layer-entry"
       >
         <label
-          class="chakra-checkbox layer-select css-1elxtiq"
+          class="chakra-checkbox layer-select css-1577qb8"
+          data-theme="light"
         >
           <input
             class="chakra-checkbox__input"
@@ -20,10 +21,12 @@ exports[`should successfully create a layer control component 1`] = `
           />
           <span
             aria-hidden="true"
-            class="chakra-checkbox__control css-dnty2r"
+            class="chakra-checkbox__control css-edb818"
+            data-theme="light"
           />
           <span
-            class="chakra-checkbox__label css-1oeb2oe"
+            class="chakra-checkbox__label css-r90m2q"
+            data-theme="light"
           >
             Watercolor
           </span>

@@ -1,6 +1,7 @@
 // SPDX-FileCopyrightText: con terra GmbH and contributors
 // SPDX-License-Identifier: Apache-2.0
 import { createIntl, createIntlCache, IntlShape } from "@formatjs/intl";
+import { CustomChakraProvider } from "@open-pioneer/chakra-integration";
 import { Service } from "@open-pioneer/runtime";
 import {
     PackageContext as InternalPackageContext,
@@ -56,14 +57,17 @@ export interface PackageContextProviderProps {
  * Injects services and properties into the component tree.
  * React components using pioneer hooks like `useService` and `useProperties`
  * will receive the mocked properties here instead.
+ * Currently also wrapped with the CustomChakraProvider to support chakra-ui elements
  */
 export const PackageContextProvider: FC<PackageContextProviderProps> = (props) => {
     const { children, ...rest } = props;
     const contextMethods = useMemo(() => createPackageContextMethods(rest), [rest]);
     return (
-        <InternalPackageContext.Provider value={contextMethods}>
-            {children}
-        </InternalPackageContext.Provider>
+        <CustomChakraProvider container={document.body}>
+            <InternalPackageContext.Provider value={contextMethods}>
+                {children}
+            </InternalPackageContext.Provider>
+        </CustomChakraProvider>
     );
 };
 
