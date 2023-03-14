@@ -111,11 +111,9 @@ export function LayerControlComponent(config: LayerControlConfig) {
                                 layer={layer}
                             ></LayerVisibilityTogglerComponent>
                             {config.showOpacitySlider && (
-                                <div>
-                                    <LayerOpacitySliderComponent
-                                        layer={layer}
-                                    ></LayerOpacitySliderComponent>
-                                </div>
+                                <LayerOpacitySliderComponent
+                                    layer={layer}
+                                ></LayerOpacitySliderComponent>
                             )}
                         </div>
                     ))}
