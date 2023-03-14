@@ -81,7 +81,7 @@ export function AppUI() {
 
     The `intl` object here is used to translate messages into multiple languages (see [How to translate an App](./HowToTranslateAnApp.md)). We will not dive into internationalization (i18n) in this tutorial and use static strings instead.
 
-## Defining new components
+## Defining new UI components
 
 Defining a new react component is as simple as creating a new function.
 For this example, we will create a button that has a `label` and tracks the number of times it has been clicked:
@@ -181,6 +181,6 @@ Like mentioned above, simple state can often be managed through props and compon
 Plain services (together with events) can be used to keep state that is used in multiple places (components, services) of the application.
 
 To manage more complex state, React developers usually reach for a state management library (e.g. Redux).
-[Zustand](https://github.com/pmndrs/zustand) or [Valtio](https://github.com/pmndrs/valtio) appear to be rather simple to integrate but we have not used them yet.
-A service could create a `valtio` or `zustand` instance to be shared with other services and the UI.
+[Zustand](https://github.com/pmndrs/zustand), [Jotai](https://jotai.org/) or [Valtio](https://github.com/pmndrs/valtio) appear to be rather simple to integrate but we have not used them yet.
+A service could create a central "store" instance to be shared with other services and the UI.
 Let us know if you need this feature.
