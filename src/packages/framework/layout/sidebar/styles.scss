@@ -16,6 +16,7 @@
     }
 
     .layout-sidebar-content {
+        overflow: auto;
         transition: width 300ms ease-out 0s;
 
         .content-section {
