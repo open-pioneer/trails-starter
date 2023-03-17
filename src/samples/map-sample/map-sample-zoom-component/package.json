@@ -1,0 +1,15 @@
+{
+    "name": "map-sample-zoom-component",
+    "main": "index",
+    "private": true,
+    "dependencies": {
+        "@chakra-ui/icons": "^2.0.17",
+        "@chakra-ui/system": "^2.5.1",
+        "@emotion/react": "^11.10.6",
+        "@emotion/styled": "^11.10.6",
+        "@open-pioneer/chakra-integration": "workspace:^",
+        "@open-pioneer/ol-map": "workspace:^",
+        "ol": "^7.2.2",
+        "react": "^18.2.0"
+    }
+}

@@ -259,6 +259,34 @@ importers:
     devDependencies:
       '@open-pioneer/runtime': link:../../../packages/framework/runtime
 
+  src/samples/map-sample/map-sample-scale-component:
+    specifiers:
+      '@open-pioneer/ol-map': workspace:^
+      ol: ^7.2.2
+    dependencies:
+      '@open-pioneer/ol-map': link:../../../packages/framework/open-layers/map
+      ol: 7.3.0
+
+  src/samples/map-sample/map-sample-zoom-component:
+    specifiers:
+      '@chakra-ui/icons': ^2.0.17
+      '@chakra-ui/system': ^2.5.1
+      '@emotion/react': ^11.10.6
+      '@emotion/styled': ^11.10.6
+      '@open-pioneer/chakra-integration': workspace:^
+      '@open-pioneer/ol-map': workspace:^
+      ol: ^7.2.2
+      react: ^18.2.0
+    dependencies:
+      '@chakra-ui/icons': 2.0.17_n3dxrjldmk5gnycgnw7noyo5tu
+      '@chakra-ui/system': 2.5.1_xqp3pgpqjlfxxa3zxu4zoc4fba
+      '@emotion/react': 11.10.6_react@18.2.0
+      '@emotion/styled': 11.10.6_3og6jmu6wvzuytygvdoxepq3x4
+      '@open-pioneer/chakra-integration': link:../../../packages/framework/chakra-integration
+      '@open-pioneer/ol-map': link:../../../packages/framework/open-layers/map
+      ol: 7.3.0
+      react: 18.2.0
+
   src/samples/map-sample/ol-app:
     specifiers:
       '@chakra-ui/icons': ^2.0.17
@@ -271,13 +299,13 @@ importers:
       '@open-pioneer/ol-map': workspace:^
       '@open-pioneer/runtime': workspace:^
       map-sample-logging: workspace:^
+      map-sample-scale-component: workspace:*
+      map-sample-zoom-component: workspace:*
       ol: ^7.2.2
       react: ^18.2.0
       react-dom: ^18.2.0
       react-icons: 4.8.0
       react-use: ^17.4.0
-      scale-component: workspace:*
-      zoom-component: workspace:*
     dependencies:
       '@chakra-ui/icons': 2.0.17_n3dxrjldmk5gnycgnw7noyo5tu
       '@chakra-ui/system': 2.5.1_xqp3pgpqjlfxxa3zxu4zoc4fba
@@ -289,19 +317,13 @@ importers:
       '@open-pioneer/ol-map': link:../../../packages/framework/open-layers/map
       '@open-pioneer/runtime': link:../../../packages/framework/runtime
       map-sample-logging: link:../map-sample-logging
+      map-sample-scale-component: link:../map-sample-scale-component
+      map-sample-zoom-component: link:../map-sample-zoom-component
       ol: 7.3.0
       react: 18.2.0
       react-dom: 18.2.0_react@18.2.0
       react-icons: 4.8.0_react@18.2.0
       react-use: 17.4.0_biqbaboplfbrettd7655fr4n2y
-      scale-component: link:scale-component
-      zoom-component: link:zoom-component
-
-  src/samples/map-sample/ol-app/scale-component:
-    specifiers: {}
-
-  src/samples/map-sample/ol-app/zoom-component:
-    specifiers: {}
 
   src/samples/properties-sample/properties-app:
     specifiers:

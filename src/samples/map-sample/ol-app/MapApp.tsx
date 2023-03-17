@@ -4,14 +4,14 @@ import { Box, Button, Flex, Icon } from "@open-pioneer/chakra-integration";
 import { Sidebar, SidebarItem } from "@open-pioneer/layout-sidebar";
 import { LayerControlComponent } from "@open-pioneer/ol-layer-control";
 import { MapContainer, MapPadding } from "@open-pioneer/ol-map";
+import { ScaleComponent } from "map-sample-scale-component";
+import { ZoomComponent } from "map-sample-zoom-component";
 import { useService } from "open-pioneer:react-hooks";
 import { useState } from "react";
-import { useAsync } from "react-use";
-import { ScaleComponent } from "scale-component";
 import { FiCodesandbox, FiLayers } from "react-icons/fi";
+import { useAsync } from "react-use";
 
 import { MAP_ID } from "./services";
-import { ZoomComponent } from "zoom-component";
 
 const berlin = [1489200, 6894026, 1489200, 6894026];
 
@@ -48,9 +48,7 @@ export function MapApp() {
             <Box>Open Pioneer - Map sample</Box>
             <Flex flex="1" direction="column" position="relative">
                 <MapContainer mapId={MAP_ID} viewPadding={viewPadding}></MapContainer>
-                <div className="zoom-controls">
-                    <ZoomComponent mapId={MAP_ID}></ZoomComponent>
-                </div>
+                <ZoomComponent className="zoom-controls" mapId={MAP_ID}></ZoomComponent>
                 <Sidebar
                     defaultExpanded={isExpanded}
                     expandedChanged={(expanded) => setExpanded(expanded)}

@@ -32,7 +32,7 @@ export interface MapComponentProperties extends OlComponentConfig {
 export function MapContainer(props: MapComponentProperties) {
     const mapElement = useRef<HTMLDivElement>(null);
     const olMapRegistry = useService("ol-map.MapRegistry");
-    const mapState = useAsync(async () => await olMapRegistry.getMap(props.mapId));
+    const mapState = useAsync(async () => await olMapRegistry.getMap(props.mapId), [props.mapId]);
 
     useEffect(() => {
         if (mapState.value && mapElement.current) {

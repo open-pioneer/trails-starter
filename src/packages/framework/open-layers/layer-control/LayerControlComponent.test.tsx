@@ -159,6 +159,6 @@ it("layer control should have usable opacity slider", async () => {
     await act(async () => {
         slider.focus();
         await user.keyboard("[ArrowLeft]");
-        expect(firstLayer.getOpacity()).toBe(0.99);
+        expect(firstLayer.getOpacity()).toBeCloseTo(0.99);
     });
 });

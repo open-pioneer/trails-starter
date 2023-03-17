@@ -4,11 +4,13 @@ import { AddIcon, MinusIcon } from "@chakra-ui/icons";
 import { Flex, IconButton } from "@open-pioneer/chakra-integration";
 import { OlComponentConfig } from "@open-pioneer/ol-map";
 import { useService } from "open-pioneer:react-hooks";
+import { HTMLAttributes } from "react";
 import { useAsync } from "react-use";
 
-export function ZoomComponent(props: OlComponentConfig) {
+export function ZoomComponent(props: OlComponentConfig & HTMLAttributes<HTMLDivElement>) {
+    const { mapId, ...rest } = props;
     const olMapRegistry = useService("ol-map.MapRegistry");
-    const mapState = useAsync(async () => await olMapRegistry.getMap(props.mapId));
+    const mapState = useAsync(async () => await olMapRegistry.getMap(mapId), [mapId]);
     const duration = 200;
 
     function zoom(zoomIn: boolean) {
@@ -20,7 +22,7 @@ export function ZoomComponent(props: OlComponentConfig) {
     }
 
     return (
-        <Flex direction={"column"} gap="1">
+        <Flex direction={"column"} gap="1" {...rest}>
             <IconButton
                 size="sm"
                 aria-label="zoom in"

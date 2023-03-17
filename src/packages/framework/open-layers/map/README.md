@@ -1,4 +1,4 @@
-# @open-pioneer/open-layers
+# @open-pioneer/ol-map
 
 This package provides a map container component to integrate an [open layers](https://openlayers.org/) map into an open pioneer project.
 Besides the component, there is a service, which handles the registration and creation of a map.
