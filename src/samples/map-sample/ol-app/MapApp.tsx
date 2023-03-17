@@ -10,7 +10,6 @@ import { useAsync } from "react-use";
 import { ScaleComponent } from "scale-component";
 import { FiCodesandbox, FiLayers } from "react-icons/fi";
 
-import { CoordinateComponent } from "./CoordinateComponent";
 import { MAP_ID } from "./services";
 import { ZoomComponent } from "zoom-component";
 
@@ -59,12 +58,7 @@ export function MapApp() {
                     items={items}
                 />
             </Flex>
-            <Flex gap={3} alignItems="center">
-                <div>Footer</div>
-                <div>
-                    <span>Last click in map: </span>
-                    <CoordinateComponent mapId={MAP_ID}></CoordinateComponent>
-                </div>
+            <Flex gap={3} alignItems="center" justifyContent="center">
                 <ScaleComponent mapId={MAP_ID}></ScaleComponent>
             </Flex>
         </Flex>
