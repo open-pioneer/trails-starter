@@ -87,7 +87,9 @@ function analyzeLicenses(
         if (!overrideEntry?.license) {
             if (!licenses || licenses === "Unknown") {
                 unknownLicenses = true;
-                console.warn(`Failed to detect licenses of dependency ${dependencyInfo}.`);
+                console.warn(
+                    `Failed to detect licenses of dependency ${dependencyInfo} at ${project.path}`
+                );
             } else if (!config.allowedLicenses.includes(licenses)) {
                 disallowedLicenses = true;
                 console.warn(

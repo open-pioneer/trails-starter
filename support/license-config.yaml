@@ -27,25 +27,48 @@ allowedLicenses:
 # `custom` makes the path relative to this directory instead of the package's directory.
 
 overrideLicenses:
+  # 'license' missing in package.json but LICENSE file exists:
   - name: "react-universal-interface"
     version: "0.6.2"
     license: "Unlicense"
   - name: "fast-shallow-equal"
     version: "1.0.0"
     license: "Unlicense"
+
+  # Different parts of this package are under different licenses
   - name: "pako"
     version: "2.1.0"
     license: "MIT and Zlib"
     licenseFiles:
       - "./LICENSE"
       - "./lib/zlib/README"
+
+  # readme contains license text
   - name: "react-remove-scroll-bar"
     version: "2.3.4"
-    # readme contains license text
     licenseFiles:
       - "./README.md"
+
+  # readme contains license text
   - name: "lerc"
     version: "3.0.0"
-    # readme contains license text
     licenseFiles:
       - "./README.md"
+
+  # Declares 'license': 'MIT' in package.json but contains no license file.
+  # License file was added to the GitHub repository after the 1.0.6 release:
+  # https://github.com/sudodoki/toggle-selection/blob/538dc4e9de40b8aee41f1e9066a4c5de3f4adc0a/LICENSE
+  #
+  # Author confirmed via email that license applies to older releases as well (no new release yet).
+  - name: "toggle-selection"
+    version: "1.0.6"
+    licenseFiles:
+      - custom: "./licenses/toggle_selection_mit"
+
+  # Declares 'license': 'MIT' in package.json but does not contain a license file.
+  # Author merged our pull request and confirmed the license (no new release yet):
+  # https://github.com/theKashey/react-style-singleton/pull/7
+  - name: "react-style-singleton"
+    version: "2.2.1"
+    licenseFiles:
+      - custom: "./licenses/react_style_singleton_mit"
