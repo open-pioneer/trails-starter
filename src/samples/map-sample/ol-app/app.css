@@ -13,6 +13,13 @@
     background: white;
 }
 
+.zoom-controls {
+    position: absolute;
+    z-index: 1000;
+    bottom: 2rem;
+    right: 1rem;
+}
+
 .ol-control.ol-zoom {
     left: unset;
     right: 0.5em;

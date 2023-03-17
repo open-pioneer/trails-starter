@@ -277,6 +277,7 @@ importers:
       react-icons: 4.8.0
       react-use: ^17.4.0
       scale-component: workspace:*
+      zoom-component: workspace:*
     dependencies:
       '@chakra-ui/icons': 2.0.17_n3dxrjldmk5gnycgnw7noyo5tu
       '@chakra-ui/system': 2.5.1_xqp3pgpqjlfxxa3zxu4zoc4fba
@@ -294,8 +295,12 @@ importers:
       react-icons: 4.8.0_react@18.2.0
       react-use: 17.4.0_biqbaboplfbrettd7655fr4n2y
       scale-component: link:scale-component
+      zoom-component: link:zoom-component
 
   src/samples/map-sample/ol-app/scale-component:
+    specifiers: {}
+
+  src/samples/map-sample/ol-app/zoom-component:
     specifiers: {}
 
   src/samples/properties-sample/properties-app:

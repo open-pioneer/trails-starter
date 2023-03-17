@@ -17,6 +17,7 @@
         "react-dom": "^18.2.0",
         "react-icons": "4.8.0",
         "react-use": "^17.4.0",
-        "scale-component": "workspace:*"
+        "scale-component": "workspace:*",
+        "zoom-component": "workspace:*"
     }
 }

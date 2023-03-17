@@ -12,6 +12,7 @@ import { FiCodesandbox, FiLayers } from "react-icons/fi";
 
 import { CoordinateComponent } from "./CoordinateComponent";
 import { MAP_ID } from "./services";
+import { ZoomComponent } from "zoom-component";
 
 const berlin = [1489200, 6894026, 1489200, 6894026];
 
@@ -48,6 +49,9 @@ export function MapApp() {
             <Box>Open Pioneer - Map sample</Box>
             <Flex flex="1" direction="column" position="relative">
                 <MapContainer mapId={MAP_ID} viewPadding={viewPadding}></MapContainer>
+                <div className="zoom-controls">
+                    <ZoomComponent mapId={MAP_ID}></ZoomComponent>
+                </div>
                 <Sidebar
                     defaultExpanded={isExpanded}
                     expandedChanged={(expanded) => setExpanded(expanded)}

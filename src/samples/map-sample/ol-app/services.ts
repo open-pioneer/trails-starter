@@ -1,6 +1,7 @@
 // SPDX-FileCopyrightText: con terra GmbH and contributors
 // SPDX-License-Identifier: Apache-2.0
 import { OlMapConfigurationProvider } from "@open-pioneer/ol-map/api";
+import { Attribution } from "ol/control";
 import TileLayer from "ol/layer/Tile";
 import { MapOptions } from "ol/Map";
 import OSM from "ol/source/OSM";
@@ -32,8 +33,8 @@ export class MainMapProvider implements OlMapConfigurationProvider {
                 properties: { title: "Toner" },
                 visible: false
             })
-        ]
-        // controls: [ ]
+        ],
+        controls: [new Attribution()]
     };
 
     getMapOptions(): Promise<MapOptions> {
