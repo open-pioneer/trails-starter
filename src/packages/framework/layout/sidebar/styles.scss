@@ -1,0 +1,33 @@
+.layout-sidebar {
+    height: 100%;
+    position: absolute;
+    top: 0;
+
+    &[data-theme="light"] {
+        background-color: var(--chakra-colors-whiteAlpha-700);
+    }
+    &[data-theme="dark"] {
+        background-color: var(--chakra-colors-blackAlpha-700);
+    }
+
+    .layout-sidebar-main {
+        transition: width 300ms ease-out 0s;
+        border-right: 1px solid var(--chakra-colors-chakra-border-color);
+    }
+
+    .layout-sidebar-content {
+        transition: width 300ms ease-out 0s;
+
+        .content-section {
+            .content-header {
+                font-size: 1.5em;
+                background-color: var(--chakra-colors-blackAlpha-500);
+                padding: 0.5rem 1rem;
+            }
+
+            .content-body {
+                padding: 1rem;
+            }
+        }
+    }
+}

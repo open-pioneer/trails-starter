@@ -274,7 +274,9 @@ importers:
       ol: ^7.2.2
       react: ^18.2.0
       react-dom: ^18.2.0
+      react-icons: 4.8.0
       react-use: ^17.4.0
+      scale-component: workspace:*
     dependencies:
       '@chakra-ui/icons': 2.0.17_n3dxrjldmk5gnycgnw7noyo5tu
       '@chakra-ui/system': 2.5.1_xqp3pgpqjlfxxa3zxu4zoc4fba
@@ -289,7 +291,12 @@ importers:
       ol: 7.3.0
       react: 18.2.0
       react-dom: 18.2.0_react@18.2.0
+      react-icons: 4.8.0_react@18.2.0
       react-use: 17.4.0_biqbaboplfbrettd7655fr4n2y
+      scale-component: link:scale-component
+
+  src/samples/map-sample/ol-app/scale-component:
+    specifiers: {}
 
   src/samples/properties-sample/properties-app:
     specifiers:
@@ -5026,6 +5033,14 @@ packages:
       react-clientside-effect: 1.2.6_react@18.2.0
       use-callback-ref: 1.3.0_react@18.2.0
       use-sidecar: 1.1.2_react@18.2.0
+    dev: false
+
+  /react-icons/4.8.0_react@18.2.0:
+    resolution: {integrity: sha512-N6+kOLcihDiAnj5Czu637waJqSnwlMNROzVZMhfX68V/9bu9qHaMIJC4UdozWoOk57gahFCNHwVvWzm0MTzRjg==}
+    peerDependencies:
+      react: '*'
+    dependencies:
+      react: 18.2.0
     dev: false
 
   /react-is/16.13.1:

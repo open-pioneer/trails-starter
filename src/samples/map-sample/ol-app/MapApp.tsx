@@ -1,12 +1,14 @@
 // SPDX-FileCopyrightText: con terra GmbH and contributors
 // SPDX-License-Identifier: Apache-2.0
-import { Button } from "@open-pioneer/chakra-integration";
-import { Sidebar } from "@open-pioneer/layout-sidebar";
+import { Box, Button, Flex, Icon } from "@open-pioneer/chakra-integration";
+import { Sidebar, SidebarItem } from "@open-pioneer/layout-sidebar";
 import { LayerControlComponent } from "@open-pioneer/ol-layer-control";
 import { MapContainer, MapPadding } from "@open-pioneer/ol-map";
 import { useService } from "open-pioneer:react-hooks";
 import { useState } from "react";
 import { useAsync } from "react-use";
+import { ScaleComponent } from "scale-component";
+import { FiCodesandbox, FiLayers } from "react-icons/fi";
 
 import { CoordinateComponent } from "./CoordinateComponent";
 import { MAP_ID } from "./services";
@@ -26,25 +28,41 @@ export function MapApp() {
         }
     };
 
+    const items: SidebarItem[] = [
+        {
+            id: "mapcontent",
+            icon: <Icon as={FiLayers} />,
+            label: "Karteninhalt",
+            content: <LayerControlComponent mapId={MAP_ID} showOpacitySlider={true} />
+        },
+        {
+            id: "sandbox",
+            icon: <FiCodesandbox />,
+            label: "Sandbox",
+            content: <Button onClick={centerBerlin}>Center Berlin</Button>
+        }
+    ];
+
     return (
-        <div style={{ height: "100%" }}>
-            <div style={{ height: "100%", position: "relative" }}>
+        <Flex height="100%" direction="column">
+            <Box>Open Pioneer - Map sample</Box>
+            <Flex flex="1" direction="column" position="relative">
                 <MapContainer mapId={MAP_ID} viewPadding={viewPadding}></MapContainer>
-                <div className="right-bottom">
+                <Sidebar
+                    defaultExpanded={isExpanded}
+                    expandedChanged={(expanded) => setExpanded(expanded)}
+                    sidebarWidthChanged={(width) => setViewPadding({ left: width / 2 })}
+                    items={items}
+                />
+            </Flex>
+            <Flex gap={3} alignItems="center">
+                <div>Footer</div>
+                <div>
+                    <span>Last click in map: </span>
                     <CoordinateComponent mapId={MAP_ID}></CoordinateComponent>
                 </div>
-            </div>
-            <Sidebar
-                defaultExpanded={isExpanded}
-                expandedChanged={(expanded) => setExpanded(expanded)}
-                sidebarWidthChanged={(width) => setViewPadding({ left: width / 2 })}
-            >
-                <LayerControlComponent
-                    mapId={MAP_ID}
-                    showOpacitySlider={isExpanded}
-                ></LayerControlComponent>
-                <Button onClick={centerBerlin}>Center Berlin</Button>
-            </Sidebar>
-        </div>
+                <ScaleComponent mapId={MAP_ID}></ScaleComponent>
+            </Flex>
+        </Flex>
     );
 }

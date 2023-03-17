@@ -1,0 +1,12 @@
+.scale-wrapper {
+    .ol-scale-line {
+        position: relative;
+        bottom: 0px;
+        left: 0px;
+        background: none;
+        .ol-scale-line-inner {
+            color: var(--chakra-white);
+            border-color: var(--chakra-white);
+        }
+    }
+}
