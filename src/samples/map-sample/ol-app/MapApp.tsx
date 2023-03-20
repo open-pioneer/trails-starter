@@ -1,6 +1,6 @@
 // SPDX-FileCopyrightText: con terra GmbH and contributors
 // SPDX-License-Identifier: Apache-2.0
-import { Box, Button, Flex, Icon } from "@open-pioneer/chakra-integration";
+import { Box, Button, Flex } from "@open-pioneer/chakra-integration";
 import { Sidebar, SidebarItem } from "@open-pioneer/layout-sidebar";
 import { LayerControlComponent } from "@open-pioneer/ol-layer-control";
 import { MapContainer, MapPadding } from "@open-pioneer/ol-map";
@@ -17,7 +17,7 @@ const berlin = [1489200, 6894026, 1489200, 6894026];
 
 export function MapApp() {
     const [viewPadding, setViewPadding] = useState<MapPadding>();
-    const [isExpanded, setExpanded] = useState<boolean>(false);
+    const [isExpanded, setExpanded] = useState<boolean>(true);
 
     const olMapRegistry = useService("ol-map.MapRegistry");
     const mapState = useAsync(async () => await olMapRegistry.getMap(MAP_ID));
@@ -31,7 +31,7 @@ export function MapApp() {
     const items: SidebarItem[] = [
         {
             id: "mapcontent",
-            icon: <Icon as={FiLayers} />,
+            icon: <FiLayers />,
             label: "Karteninhalt",
             content: <LayerControlComponent mapId={MAP_ID} showOpacitySlider={true} />
         },

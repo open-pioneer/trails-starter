@@ -14,18 +14,44 @@ import { ReactElement, ReactNode, useEffect } from "react";
 import { useList } from "react-use";
 
 export interface SidebarItem {
+    /**
+     * Unique identifier
+     */
     id: string;
+    /**
+     * Element which is shown in the sidebar menu as icon
+     */
     icon: ReactElement;
+    /**
+     * Label in the menu entry
+     */
     label: string;
+    /**
+     * Corresponding content to the sidebar entry
+     */
     content: ReactNode;
 }
 
+/**
+ * Sidebar configuration
+ */
 export interface SidebarProperties {
+    /**
+     * Defines if the sidebar initially is expanded
+     */
     defaultExpanded?: boolean;
+    /**
+     * Event which is triggered when the main section is expanded/collapsed.
+     */
     expandedChanged?: (expanded: boolean) => void;
+    /**
+     * Event which is triggered when sidebar width is changed and returns the new width.
+     */
     sidebarWidthChanged?: (width: number) => void;
+    /**
+     * The visible menu entries and their corrensponding content.
+     */
     items?: SidebarItem[];
-    children?: ReactNode;
 }
 
 const mainSidebarWidthCollapsed = 60;
@@ -35,14 +61,15 @@ const contentSidebarWidth = 300;
 export function Sidebar(props: SidebarProperties) {
     const [selectedEntries, { removeAt: removeSelectedEntry, push: pushSelectedEntry }] =
         useList<string>();
+    const { defaultExpanded, expandedChanged, sidebarWidthChanged, items } = props;
 
     const { isOpen: isMainToggled, onToggle: toggleMain } = useDisclosure({
-        defaultIsOpen: props.defaultExpanded,
+        defaultIsOpen: defaultExpanded,
         onOpen() {
-            if (props.expandedChanged) props.expandedChanged(true);
+            expandedChanged && expandedChanged(true);
         },
         onClose() {
-            if (props.expandedChanged) props.expandedChanged(false);
+            expandedChanged && expandedChanged(false);
         }
     });
 
@@ -61,7 +88,7 @@ export function Sidebar(props: SidebarProperties) {
 
     // handle sidebar width and propagate changes
     useEffect(() => {
-        if (props.sidebarWidthChanged) {
+        if (sidebarWidthChanged) {
             let width = mainSidebarWidthCollapsed;
             if (isMainToggled) {
                 width = mainSidebarWidthExpanded;
@@ -69,7 +96,7 @@ export function Sidebar(props: SidebarProperties) {
             if (isContentToggled) {
                 width += contentSidebarWidth;
             }
-            props.sidebarWidthChanged(width);
+            sidebarWidthChanged(width);
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isMainToggled, isContentToggled]);
@@ -83,7 +110,7 @@ export function Sidebar(props: SidebarProperties) {
         }
     };
 
-    const entries = props.items?.map((item, idx) => {
+    const entries = items?.map((item, idx) => {
         const color = "white";
         const variant = selectedEntries.find((e) => e === item.id) ? "outline" : "ghost";
         return (
@@ -110,8 +137,8 @@ export function Sidebar(props: SidebarProperties) {
         );
     });
 
-    const content = Array.from(selectedEntries).map((a) => {
-        const match = props.items?.find((e) => e.id === a);
+    const content = selectedEntries.map((a) => {
+        const match = items?.find((e) => e.id === a);
         if (match) {
             return (
                 <div className="content-section" key={a}>
