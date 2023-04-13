@@ -21,7 +21,7 @@
     },
     "typedocOptions": {
         "name": "Open Pioneer Packages",
-
+        "readme": "none",
         "out": "dist/docs",
         "entryPointStrategy": "packages",
         "entryPoints": ["src/packages/framework/*"],
