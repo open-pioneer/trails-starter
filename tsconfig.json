@@ -17,25 +17,11 @@
 
         "isolatedModules": true,
         "esModuleInterop": false,
-        "skipLibCheck": true
-    },
-    "typedocOptions": {
-        "name": "Open Pioneer Packages",
-        "readme": "none",
-        "out": "dist/docs",
-        "entryPointStrategy": "packages",
-        "entryPoints": ["src/packages/framework/*"],
-        "exclude": ["**/test-data/**", "**.test.*", "**/node_modules/**", "src/samples/**"],
-        "excludeExternals": true,
-        "excludePrivate": true,
-        "excludeInternal": true,
+        "skipLibCheck": true,
 
-        "skipErrorChecking": true,
-        "validation": {
-            "notExported": false,
-            "invalidLink": true,
-            "notDocumented": true
-        }
+        // These options are necessary so that TypeDoc can resolve references across packages
+        "declaration": true,
+        "declarationMap": true
     },
     "include": ["src"],
     "references": [{ "path": "./tsconfig.node.json" }]

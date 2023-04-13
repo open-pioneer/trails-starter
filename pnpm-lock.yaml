@@ -43,7 +43,7 @@ importers:
       sass: ^1.58.3
       syncpack: ^9.8.4
       ts-node: ^10.9.1
-      typedoc: ^0.23.26
+      typedoc: ^0.24.1
       typescript: ^4.9.5
       vite: ^4.1.4
       vite-plugin-eslint: ^1.8.1
@@ -85,7 +85,7 @@ importers:
       sass: 1.58.3
       syncpack: 9.8.4
       ts-node: 10.9.1_zix2iy4c4a7fivhrc3ey4gy2pu
-      typedoc: 0.23.26_typescript@4.9.5
+      typedoc: 0.24.1_typescript@4.9.5
       typescript: 4.9.5
       vite: 4.1.4_fpjv4tsigblrciiftj5iuq7r5i
       vite-plugin-eslint: 1.8.1_eslint@8.35.0+vite@4.1.4
@@ -4635,13 +4635,6 @@ packages:
       brace-expansion: 2.0.1
     dev: true
 
-  /minimatch/7.2.0:
-    resolution: {integrity: sha512-rMRHmwySzopAQjmWW6TkAKCEDKNaY/HuV/c2YkWWuWnfkTwApt0V4hnYzzPnZ/5Gcd2+8MPncSyuOGPl3xPvcg==}
-    engines: {node: '>=10'}
-    dependencies:
-      brace-expansion: 2.0.1
-    dev: true
-
   /minimatch/7.4.2:
     resolution: {integrity: sha512-xy4q7wou3vUoC9k1xGTXc+awNdGaGVHtFUaey8tiX4H1QRc04DZ/rmDFwNm2EBsuYEhAZ6SgMmYf3InGY6OauA==}
     engines: {node: '>=10'}
@@ -5786,16 +5779,16 @@ packages:
       is-typed-array: 1.1.10
     dev: true
 
-  /typedoc/0.23.26_typescript@4.9.5:
-    resolution: {integrity: sha512-5m4KwR5tOLnk0OtMaRn9IdbeRM32uPemN9kur7YK9wFqx8U0CYrvO9aVq6ysdZSV1c824BTm+BuQl2Ze/k1HtA==}
+  /typedoc/0.24.1_typescript@4.9.5:
+    resolution: {integrity: sha512-u4HwjZcSQhQSkkhLjgcs0ooAf6HrFVLDHHrwU2xZW8WxH0KnGZlNkaWxiOcK5Gagj7mxJSgwWx0dv8ACDAOXAQ==}
     engines: {node: '>= 14.14'}
     hasBin: true
     peerDependencies:
-      typescript: 4.6.x || 4.7.x || 4.8.x || 4.9.x
+      typescript: 4.6.x || 4.7.x || 4.8.x || 4.9.x || 5.0.x
     dependencies:
       lunr: 2.3.9
       marked: 4.2.12
-      minimatch: 7.2.0
+      minimatch: 7.4.2
       shiki: 0.14.1
       typescript: 4.9.5
     dev: true
