@@ -6,25 +6,27 @@
  */
 const VERSIONS = {
     // i18n
-    "@formatjs/intl": "^2.6.7",
+    "@formatjs/intl": "^2.7.1",
 
     // react base
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
 
     // chakra-ui
-    "@chakra-ui/react": "^2.5.1",
-    "@emotion/cache": "^11.10.5",
+    "@chakra-ui/react": "^2.6.0",
+    "@chakra-ui/icons": "^2.0.19",
+    "@chakra-ui/system": "^2.5.6",
+    "@emotion/cache": "^11.10.7",
     "@emotion/react": "^11.10.6",
     "@emotion/styled": "^11.10.6",
-    "framer-motion": "^9.1.7",
+    "framer-motion": "^10.12.4",
 
     // testing
-    "@testing-library/dom": "^9.0.1",
+    "@testing-library/dom": "^9.2.0",
     "@testing-library/react": "^14.0.0",
 
     // open layers
-    "ol": "^7.2.2"
+    "ol": "^7.3.0"
 };
 
 /**

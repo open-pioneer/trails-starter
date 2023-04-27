@@ -4,6 +4,6 @@
     "private": true,
     "dependencies": {
         "@open-pioneer/ol-map": "workspace:^",
-        "ol": "^7.2.2"
+        "ol": "^7.3.0"
     }
 }

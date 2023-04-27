@@ -2,8 +2,8 @@
     "name": "@open-pioneer/test-utils",
     "private": true,
     "dependencies": {
-        "@testing-library/dom": "^9.0.1",
-        "@formatjs/intl": "^2.6.7"
+        "@testing-library/dom": "^9.2.0",
+        "@formatjs/intl": "^2.7.1"
     },
     "peerDependencies": {
         "@open-pioneer/runtime": "workspace:^"

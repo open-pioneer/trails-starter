@@ -342,10 +342,14 @@ function buildDependencyIndex(packages: readonly PackageRepr[]) {
 
             if (isAllImplementationsSpec(uiReference)) {
                 interfaceEntry.all = true;
-            } else if (uiReference.qualifier == null) {
-                interfaceEntry.unqualified = true;
+            } else if (isSingleImplementationSpec(uiReference)) {
+                if (uiReference.qualifier == null) {
+                    interfaceEntry.unqualified = true;
+                } else {
+                    interfaceEntry.qualifiers.add(uiReference.qualifier);
+                }
             } else {
-                interfaceEntry.qualifiers.add(uiReference.qualifier);
+                throw new Error(ErrorId.INTERNAL, `Unexpected implementation spec.`);
             }
         }
         index.set(packageName, packageEntry);
