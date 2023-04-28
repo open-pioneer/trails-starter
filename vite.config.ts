@@ -3,7 +3,7 @@
 
 /// <reference types="vitest" />
 import { pioneer } from "@open-pioneer/vite-plugin-pioneer";
-import react from "@vitejs/plugin-react";
+import react from "@vitejs/plugin-react-swc";
 import { resolve } from "node:path";
 import { defineConfig, PluginOption } from "vite";
 import eslint from "vite-plugin-eslint";
