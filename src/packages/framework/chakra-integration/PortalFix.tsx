@@ -1,16 +1,30 @@
 // SPDX-FileCopyrightText: con terra GmbH and contributors
 // SPDX-License-Identifier: Apache-2.0
-import { AlertDialog, Drawer, Modal, Portal, PortalProps, Tooltip } from "@chakra-ui/react";
+import {
+    AlertDialog,
+    AlertDialogProps,
+    Drawer,
+    DrawerProps,
+    Modal,
+    ModalProps,
+    Portal,
+    PortalProps,
+    Tooltip,
+    TooltipProps
+} from "@chakra-ui/react";
 import { ComponentType, createContext, FC, RefObject, useContext } from "react";
 
 const PortalRootContext = createContext<RefObject<HTMLElement | null> | undefined>(undefined);
 
 export const PortalRootProvider = PortalRootContext.Provider;
 
-export const FixedDrawer = /*@__PURE__*/ withFixedPortalLocation(Drawer);
-export const FixedModal = /*@__PURE__*/ withFixedPortalLocation(Modal);
-export const FixedTooltip = /*@__PURE__*/ withFixedPortalLocation(Tooltip);
-export const FixedAlertDialog = /*@__PURE__*/ withFixedPortalLocation(AlertDialog);
+export const FixedDrawer: ComponentType<DrawerProps> =
+    /*@__PURE__*/ withFixedPortalLocation(Drawer);
+export const FixedModal: ComponentType<ModalProps> = /*@__PURE__*/ withFixedPortalLocation(Modal);
+export const FixedTooltip: ComponentType<TooltipProps> =
+    /*@__PURE__*/ withFixedPortalLocation(Tooltip);
+export const FixedAlertDialog: ComponentType<AlertDialogProps> =
+    /*@__PURE__*/ withFixedPortalLocation(AlertDialog);
 
 export const FixedPortal: FC<PortalProps> = (props: PortalProps) => {
     const portalContainer = usePortalContainer();
