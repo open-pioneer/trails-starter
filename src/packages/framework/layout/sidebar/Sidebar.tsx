@@ -8,6 +8,7 @@ import {
     Flex,
     IconButton,
     Spacer,
+    Tooltip,
     useDisclosure
 } from "@open-pioneer/chakra-integration";
 import { ReactElement, ReactNode, useEffect } from "react";
@@ -125,13 +126,15 @@ export function Sidebar(props: SidebarProperties) {
                         {item.label}
                     </Button>
                 ) : (
-                    <IconButton
-                        aria-label={item.label}
-                        variant={variant}
-                        colorScheme={color}
-                        icon={item.icon}
-                        onClick={() => onToggleItem(item)}
-                    />
+                    <Tooltip hasArrow label={item.label} placement="right">
+                        <IconButton
+                            aria-label={item.label}
+                            variant={variant}
+                            colorScheme={color}
+                            icon={item.icon}
+                            onClick={() => onToggleItem(item)}
+                        />
+                    </Tooltip>
                 )}
             </div>
         );
