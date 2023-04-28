@@ -1,0 +1,4 @@
+messages:
+  toggle:
+    expand: "Expand"
+    collapse: "Collapse"

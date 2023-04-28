@@ -11,8 +11,9 @@ import {
     Tooltip,
     useDisclosure
 } from "@open-pioneer/chakra-integration";
-import { ReactElement, ReactNode, useEffect } from "react";
-import { useList } from "react-use";
+import { useIntl } from "open-pioneer:react-hooks";
+import { useCallback } from "react";
+import { ReactElement, ReactNode, useEffect, useReducer } from "react";
 
 export interface SidebarItem {
     /**
@@ -59,35 +60,40 @@ const mainSidebarWidthCollapsed = 60;
 const mainSidebarWidthExpanded = 180;
 const contentSidebarWidth = 300;
 
-export function Sidebar(props: SidebarProperties) {
-    const [selectedEntries, { removeAt: removeSelectedEntry, push: pushSelectedEntry }] =
-        useList<string>();
-    const { defaultExpanded, expandedChanged, sidebarWidthChanged, items } = props;
+export function Sidebar({
+    defaultExpanded,
+    expandedChanged,
+    sidebarWidthChanged,
+    items
+}: SidebarProperties) {
+    const intl = useIntl();
+    const [selectedItems, { toggle: toggleItem }] = useSelection(items);
 
+    // Handles the main section (buttons to open widgets).
     const { isOpen: isMainToggled, onToggle: toggleMain } = useDisclosure({
         defaultIsOpen: defaultExpanded,
         onOpen() {
-            expandedChanged && expandedChanged(true);
+            expandedChanged?.(true);
         },
         onClose() {
-            expandedChanged && expandedChanged(false);
+            expandedChanged?.(false);
         }
     });
 
+    // Handles the content section (contents of open widgets).
     const { isOpen: isContentToggled, onToggle: toggleContent } = useDisclosure();
-
-    // handle toggling of content section
+    const hasSelectedItems = selectedItems.size > 0;
     useEffect(() => {
-        if (selectedEntries.length && !isContentToggled) {
+        if (hasSelectedItems && !isContentToggled) {
             toggleContent();
         }
-        if (!selectedEntries.length && isContentToggled) {
+        if (!hasSelectedItems && isContentToggled) {
             toggleContent();
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [selectedEntries.length]);
+    }, [hasSelectedItems]);
 
-    // handle sidebar width and propagate changes
+    // Handle sidebar width and propagate changes
     useEffect(() => {
         if (sidebarWidthChanged) {
             let width = mainSidebarWidthCollapsed;
@@ -102,37 +108,30 @@ export function Sidebar(props: SidebarProperties) {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isMainToggled, isContentToggled]);
 
-    const onToggleItem = (item: SidebarItem) => {
-        const idx = selectedEntries.findIndex((e) => e === item.id);
-        if (idx >= 0) {
-            removeSelectedEntry(idx);
-        } else {
-            pushSelectedEntry(item.id);
-        }
-    };
-
-    const entries = items?.map((item, idx) => {
+    // Render one button for every sidebar item.
+    const sidebarButtons = items?.map((item, idx) => {
         const color = "white";
-        const variant = selectedEntries.find((e) => e === item.id) ? "outline" : "ghost";
+        const variant = selectedItems.has(item.id) ? "outline" : "ghost";
         return (
             <div key={idx}>
                 {isMainToggled ? (
                     <Button
+                        key={item.id}
                         leftIcon={item.icon}
                         variant={variant}
                         colorScheme={color}
-                        onClick={() => onToggleItem(item)}
+                        onClick={() => toggleItem(item)}
                     >
                         {item.label}
                     </Button>
                 ) : (
-                    <Tooltip hasArrow label={item.label} placement="right">
+                    <Tooltip key={item.id} hasArrow label={item.label} placement="right">
                         <IconButton
                             aria-label={item.label}
                             variant={variant}
                             colorScheme={color}
                             icon={item.icon}
-                            onClick={() => onToggleItem(item)}
+                            onClick={() => toggleItem(item)}
                         />
                     </Tooltip>
                 )}
@@ -140,22 +139,25 @@ export function Sidebar(props: SidebarProperties) {
         );
     });
 
-    const content = selectedEntries.map((a) => {
-        const match = items?.find((e) => e.id === a);
-        if (match) {
+    // Render the content of selected items in the same order as their buttons.
+    const content = items
+        ?.filter((item) => selectedItems.has(item.id))
+        .map((item) => {
             return (
-                <div className="content-section" key={a}>
+                <div className="content-section" key={item.id}>
                     <Flex className="content-header" alignItems="center">
-                        <Box>{match.label}</Box>
+                        <Box>{item.label}</Box>
                         <Spacer></Spacer>
-                        <CloseButton onClick={() => onToggleItem(match)} />
+                        <CloseButton onClick={() => toggleItem(item)} />
                     </Flex>
-                    <div className="content-body">{match.content}</div>
+                    <div className="content-body">{item.content}</div>
                 </div>
             );
-        }
-    });
+        });
 
+    const toggleButtonLabel = intl.formatMessage({
+        id: isMainToggled ? "toggle.collapse" : "toggle.expand"
+    });
     return (
         <Flex className="layout-sidebar">
             <Box
@@ -170,14 +172,16 @@ export function Sidebar(props: SidebarProperties) {
                 padding="10px"
                 gap="10px"
             >
-                {entries}
+                {sidebarButtons}
                 <Spacer></Spacer>
-                <IconButton
-                    aria-label="expand/collapse"
-                    variant="ghost"
-                    icon={!isMainToggled ? <ArrowRightIcon /> : <ArrowLeftIcon />}
-                    onClick={toggleMain}
-                />
+                <Tooltip label={toggleButtonLabel} hasArrow placement="right">
+                    <IconButton
+                        aria-label={toggleButtonLabel}
+                        variant="ghost"
+                        icon={!isMainToggled ? <ArrowRightIcon /> : <ArrowLeftIcon />}
+                        onClick={toggleMain}
+                    />
+                </Tooltip>
             </Box>
             <Box
                 className="layout-sidebar-content"
@@ -187,4 +191,54 @@ export function Sidebar(props: SidebarProperties) {
             </Box>
         </Flex>
     );
+}
+
+/**
+ * React hook that keeps track of a selection by storing the `id` of selected items.
+ */
+function useSelection<Item extends { id: string }>(
+    items: Item[] | undefined
+): [ReadonlySet<string>, { toggle(item: Item): void }] {
+    type Action = { type: "toggle"; id: string } | { type: "retain"; ids: string[] };
+
+    const [selected, dispatch] = useReducer(
+        (state: Set<string>, action: Action) => {
+            switch (action.type) {
+                case "toggle": {
+                    const newState = new Set(state);
+                    if (newState.has(action.id)) {
+                        newState.delete(action.id);
+                    } else {
+                        newState.add(action.id);
+                    }
+                    return newState;
+                }
+                case "retain": {
+                    const allIds = new Set(action.ids);
+                    const newState = new Set(state);
+                    for (const id of newState) {
+                        if (!allIds.has(id)) {
+                            newState.delete(id);
+                        }
+                    }
+                    return newState;
+                }
+            }
+        },
+        undefined,
+        () => new Set<string>()
+    );
+    const toggle = useCallback(
+        (item: Item) => {
+            dispatch({ type: "toggle", id: item.id });
+        },
+        [dispatch]
+    );
+
+    // Reset outdated ids if items change.
+    useEffect(() => {
+        dispatch({ type: "retain", ids: items?.map((item) => item.id) ?? [] });
+    }, [items, dispatch]);
+
+    return [selected, { toggle }];
 }
