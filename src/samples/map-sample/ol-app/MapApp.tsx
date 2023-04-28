@@ -45,7 +45,9 @@ export function MapApp() {
 
     return (
         <Flex height="100%" direction="column" overflow="hidden">
-            <Box>Open Pioneer - Map sample</Box>
+            <Box textAlign="center" py={1}>
+                Open Pioneer - Map sample
+            </Box>
             <Flex flex="1" direction="column" position="relative">
                 <MapContainer mapId={MAP_ID} viewPadding={viewPadding}></MapContainer>
                 <ZoomComponent className="zoom-controls" mapId={MAP_ID}></ZoomComponent>

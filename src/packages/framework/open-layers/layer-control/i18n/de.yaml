@@ -1,2 +1,4 @@
 messages:
+  loading: "Wird geladen..."
+  error: "Fehler:"
   undefined-layer-title: "Kein Layername definiert"

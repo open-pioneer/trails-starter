@@ -5,6 +5,6 @@ import { defineBuildConfig } from "@open-pioneer/build-support";
 export default defineBuildConfig({
     styles: "./style.scss",
     ui: {
-        references: ["ol-map.MapRegistry"]
+        references: []
     }
 });

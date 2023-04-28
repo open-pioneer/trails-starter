@@ -1,2 +1,4 @@
 messages:
+  loading: "Loading..."
+  error: "Error:"
   undefined-layer-title: "undefined layer title"

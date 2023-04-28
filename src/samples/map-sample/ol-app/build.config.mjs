@@ -7,7 +7,7 @@ export default defineBuildConfig({
     i18n: ["en", "de"],
     services: {
         MainMapProvider: {
-            provides: ["ol-map-config.MapConfigProvider"]
+            provides: ["ol-map.MapConfigProvider"]
         }
     },
     ui: {

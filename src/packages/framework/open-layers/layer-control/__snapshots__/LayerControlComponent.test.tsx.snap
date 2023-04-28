@@ -4,7 +4,10 @@ exports[`should successfully create a layer control component 1`] = `
 <div
   data-testid="base"
 >
-  <div>
+  <div
+    class="chakra-offset-slide"
+    style="opacity: 0; transform: scale(0.95) translateZ(0);"
+  >
     <div>
       <div
         class="layer-entry"

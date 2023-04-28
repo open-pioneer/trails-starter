@@ -4,7 +4,7 @@ import { useService } from "open-pioneer:react-hooks";
 import { useEffect, useRef } from "react";
 import { useAsync } from "react-use";
 
-export interface OlComponentConfig {
+export interface OlComponentProps {
     mapId: string;
 }
 
@@ -20,7 +20,7 @@ export interface MapPadding {
     bottom?: number;
 }
 
-export interface MapComponentProperties extends OlComponentConfig {
+export interface MapComponentProps extends OlComponentProps {
     /**
      * Sets the map's padding directly.
      *
@@ -29,7 +29,7 @@ export interface MapComponentProperties extends OlComponentConfig {
     viewPadding?: MapPadding | undefined;
 }
 
-export function MapContainer(props: MapComponentProperties) {
+export function MapContainer(props: MapComponentProps) {
     const mapElement = useRef<HTMLDivElement>(null);
     const olMapRegistry = useService("ol-map.MapRegistry");
     const mapState = useAsync(async () => await olMapRegistry.getMap(props.mapId), [props.mapId]);

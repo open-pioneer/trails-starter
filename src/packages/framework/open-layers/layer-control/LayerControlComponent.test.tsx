@@ -12,11 +12,11 @@ import {
 } from "@open-pioneer/test-utils/react";
 import { createService } from "@open-pioneer/test-utils/services";
 import { act, render, screen } from "@testing-library/react";
-import TileLayer from "ol/layer/Tile";
+import userEvent from "@testing-library/user-event";
 import { MapOptions } from "ol/Map";
+import TileLayer from "ol/layer/Tile";
 import Stamen from "ol/source/Stamen";
 import { expect, it } from "vitest";
-import userEvent from "@testing-library/user-event";
 
 import { LayerControlComponent } from "./LayerControlComponent";
 

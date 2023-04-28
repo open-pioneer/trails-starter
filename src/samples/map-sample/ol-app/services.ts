@@ -37,7 +37,7 @@ export class MainMapProvider implements OlMapConfigurationProvider {
         controls: [new Attribution()]
     };
 
-    getMapOptions(): Promise<MapOptions> {
-        return new Promise<MapOptions>((res) => res(this.mapOptions));
+    async getMapOptions(): Promise<MapOptions> {
+        return this.mapOptions;
     }
 }

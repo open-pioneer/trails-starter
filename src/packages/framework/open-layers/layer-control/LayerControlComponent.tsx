@@ -2,18 +2,63 @@
 // SPDX-License-Identifier: Apache-2.0
 import {
     Checkbox,
+    ScaleFade,
     Slider,
     SliderFilledTrack,
     SliderThumb,
     SliderTrack,
     Tooltip
 } from "@open-pioneer/chakra-integration";
-import { OlComponentConfig } from "@open-pioneer/ol-map";
+import { OlComponentProps, useMap } from "@open-pioneer/ol-map";
 import Layer from "ol/layer/Layer";
 import { unByKey } from "ol/Observable";
-import { useIntl, useService } from "open-pioneer:react-hooks";
-import { useEffect, useState } from "react";
-import { useAsync } from "react-use";
+import { useIntl } from "open-pioneer:react-hooks";
+import { useEffect, useMemo, useState } from "react";
+import { useTimeout } from "react-use";
+
+export interface LayerControlProps extends OlComponentProps {
+    /**
+     * Sets visibility of opacity slider
+     */
+    showOpacitySlider?: boolean;
+}
+
+export function LayerControlComponent(config: LayerControlProps) {
+    const intl = useIntl();
+    const { loading, error, map } = useMap(config.mapId);
+    const layers = useMemo(() => map?.getAllLayers().reverse() ?? [], [map]);
+
+    // Small timeout before "Loading..." to optimize for the common case where the map
+    // is available almost immediately. This prevents some flickering in the UI.
+    const [hasTimeoutElapsed] = useTimeout(100);
+    const fadeIn = !loading || hasTimeoutElapsed() || false;
+    return (
+        <ScaleFade in={fadeIn}>
+            {loading ? (
+                <div>{intl.formatMessage({ id: "loading" })}</div>
+            ) : error ? (
+                <div>
+                    {intl.formatMessage({ id: "error" })} {error.message}
+                </div>
+            ) : (
+                <div>
+                    {layers.map((layer, i) => (
+                        <div key={i} className="layer-entry">
+                            <LayerVisibilityTogglerComponent
+                                layer={layer}
+                            ></LayerVisibilityTogglerComponent>
+                            {config.showOpacitySlider && (
+                                <LayerOpacitySliderComponent
+                                    layer={layer}
+                                ></LayerOpacitySliderComponent>
+                            )}
+                        </div>
+                    ))}
+                </div>
+            )}
+        </ScaleFade>
+    );
+}
 
 function LayerVisibilityTogglerComponent(props: { layer: Layer }) {
     const intl = useIntl();
@@ -78,47 +123,5 @@ function LayerOpacitySliderComponent(props: { layer: Layer }) {
                 <SliderThumb bg="teal.500"></SliderThumb>
             </Tooltip>
         </Slider>
-    );
-}
-
-interface LayerControlConfig extends OlComponentConfig {
-    /**
-     * Sets visibility of opacity slider
-     */
-    showOpacitySlider?: boolean;
-}
-
-export function LayerControlComponent(config: LayerControlConfig) {
-    const olMapRegistry = useService("ol-map.MapRegistry");
-
-    const state = useAsync(async () => {
-        const map = await olMapRegistry.getMap(config.mapId);
-        const layers = map.getAllLayers().reverse();
-        return layers;
-    }, []);
-
-    return (
-        <div>
-            {state.loading ? (
-                <div>Loading...</div>
-            ) : state.error ? (
-                <div>Error: {state.error.message}</div>
-            ) : (
-                <div>
-                    {state.value?.map((layer, i) => (
-                        <div key={i} className="layer-entry">
-                            <LayerVisibilityTogglerComponent
-                                layer={layer}
-                            ></LayerVisibilityTogglerComponent>
-                            {config.showOpacitySlider && (
-                                <LayerOpacitySliderComponent
-                                    layer={layer}
-                                ></LayerOpacitySliderComponent>
-                            )}
-                        </div>
-                    ))}
-                </div>
-            )}
-        </div>
     );
 }

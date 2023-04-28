@@ -9,7 +9,7 @@ export default defineBuildConfig({
             provides: ["ol-map.MapRegistry"],
             references: {
                 providers: {
-                    name: "ol-map-config.MapConfigProvider",
+                    name: "ol-map.MapConfigProvider",
                     all: true
                 }
             }

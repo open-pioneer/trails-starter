@@ -1,30 +1,27 @@
 // SPDX-FileCopyrightText: con terra GmbH and contributors
 // SPDX-License-Identifier: Apache-2.0
-import { useService } from "open-pioneer:react-hooks";
-import { HTMLAttributes, useEffect, useRef } from "react";
-import { useAsync } from "react-use";
-import { OlComponentConfig } from "@open-pioneer/ol-map";
+import { OlComponentProps, useMap } from "@open-pioneer/ol-map";
 import { ScaleLine } from "ol/control";
+import { HTMLAttributes, useEffect, useRef } from "react";
 
-export function ScaleComponent(props: OlComponentConfig & HTMLAttributes<HTMLDivElement>) {
+export function ScaleComponent(props: OlComponentProps & HTMLAttributes<HTMLDivElement>) {
     const { mapId, ...rest } = props;
     const scaleElem = useRef(null);
-    const olMapRegistry = useService("ol-map.MapRegistry");
-    const map = useAsync(async () => await olMapRegistry.getMap(mapId), [mapId]);
+    const { map } = useMap(mapId);
 
     useEffect(() => {
-        if (scaleElem.current && map.value) {
-            const currmap = map.value;
+        if (scaleElem.current && map) {
+            const currentMap = map;
             const scaleControl = new ScaleLine({
                 units: "metric",
                 target: scaleElem.current
             });
-            currmap.addControl(scaleControl);
+            currentMap.addControl(scaleControl);
             return () => {
-                currmap.removeControl(scaleControl);
+                currentMap.removeControl(scaleControl);
             };
         }
-    }, [map.value]);
+    }, [map]);
 
     return <div className="scale-wrapper" ref={scaleElem} {...rest}></div>;
 }

@@ -2,19 +2,16 @@
 // SPDX-License-Identifier: Apache-2.0
 import { AddIcon, MinusIcon } from "@chakra-ui/icons";
 import { Flex, IconButton } from "@open-pioneer/chakra-integration";
-import { OlComponentConfig } from "@open-pioneer/ol-map";
-import { useService } from "open-pioneer:react-hooks";
+import { OlComponentProps, useMap } from "@open-pioneer/ol-map";
 import { HTMLAttributes } from "react";
-import { useAsync } from "react-use";
 
-export function ZoomComponent(props: OlComponentConfig & HTMLAttributes<HTMLDivElement>) {
+export function ZoomComponent(props: OlComponentProps & HTMLAttributes<HTMLDivElement>) {
     const { mapId, ...rest } = props;
-    const olMapRegistry = useService("ol-map.MapRegistry");
-    const mapState = useAsync(async () => await olMapRegistry.getMap(mapId), [mapId]);
+    const { map } = useMap(mapId);
     const duration = 200;
 
     function zoom(zoomIn: boolean) {
-        const view = mapState.value?.getView();
+        const view = map?.getView();
         const currZoom = view?.getZoom();
         if (view && currZoom !== undefined) {
             view.animate({ zoom: currZoom + (zoomIn ? 1 : -1), duration: duration });
