@@ -29,7 +29,8 @@
 
 -   Internal Documentation
 
-    -   [Design](./internals/Design.md)
+    -   [Design (Phase 1)](./internals/Design_Phase1.md)
+    -   [Design (Phase 2)](./internals/Design_Phase2.md)
     -   [Service layer](./internals/ServiceLayer.md)
     -   [Build tools](./internals/BuildTools.md)
     -   [React integration](./internals/ReactIntegration.md)
