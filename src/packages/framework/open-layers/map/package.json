@@ -2,9 +2,11 @@
     "name": "@open-pioneer/ol-map",
     "license": "Apache-2.0",
     "main": "index.ts",
-    "devDependencies": {
+    "dependencies": {
         "@open-pioneer/core": "workspace:^",
-        "@open-pioneer/test-utils": "workspace:^",
         "ol": "^7.3.0"
+    },
+    "devDependencies": {
+        "@open-pioneer/test-utils": "workspace:^"
     }
 }

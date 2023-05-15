@@ -1,5 +1,6 @@
 {
     "name": "@open-pioneer/chakra-integration",
+    "version": "0.0.1",
     "main": "index.tsx",
     "license": "Apache-2.0",
     "dependencies": {

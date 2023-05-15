@@ -212,16 +212,17 @@ importers:
         version: 7.3.0
 
   src/packages/framework/open-layers/map:
-    devDependencies:
+    dependencies:
       '@open-pioneer/core':
         specifier: workspace:^
         version: link:../../core
-      '@open-pioneer/test-utils':
-        specifier: workspace:^
-        version: link:../../test-utils
       ol:
         specifier: ^7.3.0
         version: 7.3.0
+    devDependencies:
+      '@open-pioneer/test-utils':
+        specifier: workspace:^
+        version: link:../../test-utils
 
   src/packages/framework/runtime:
     dependencies:
@@ -244,6 +245,8 @@ importers:
       '@open-pioneer/test-utils':
         specifier: workspace:^
         version: link:../test-utils
+
+  src/packages/framework/runtime/dist: {}
 
   src/packages/framework/test-utils:
     dependencies:
