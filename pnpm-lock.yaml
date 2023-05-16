@@ -14,8 +14,8 @@ importers:
         specifier: workspace:*
         version: link:src/packages/framework/runtime
       '@open-pioneer/vite-plugin-pioneer':
-        specifier: ^0.5.1
-        version: 0.5.1(@open-pioneer/runtime@src+packages+framework+runtime)(sass@1.62.1)(vite@4.3.3)
+        specifier: ^0.5.2
+        version: 0.5.2(@open-pioneer/runtime@src+packages+framework+runtime)(sass@1.62.1)(vite@4.3.3)
       '@testing-library/dom':
         specifier: ^9.2.0
         version: 9.2.0
@@ -2133,12 +2133,19 @@ packages:
       fastq: 1.15.0
     dev: true
 
+  /@open-pioneer/build-common@0.1.0:
+    resolution: {integrity: sha512-Ok/GiJ0vvw8XuK3fbslQj//EbOuDNJMwWWcXYFgPF60wI3BngC8IQXiQwIjoEH5W1OxASrRH8Pu6GxxHZ9vWcg==}
+    dependencies:
+      zod: 3.21.4
+      zod-validation-error: 1.3.0(zod@3.21.4)
+    dev: true
+
   /@open-pioneer/build-support@0.3.2:
     resolution: {integrity: sha512-5DTuGcuz4YnkyMpIvBZNXImV+7SjuE2YQfNB5+JkM+DA+RAwpFqqxLsQAy9f8HXdZNHOQ64d74ZqkiU+MaGhIw==}
     dev: true
 
-  /@open-pioneer/vite-plugin-pioneer@0.5.1(@open-pioneer/runtime@src+packages+framework+runtime)(sass@1.62.1)(vite@4.3.3):
-    resolution: {integrity: sha512-KBYFAnYqdELluPQe0r89jd9LNNDg7GAYEA4mXwJ0huKG438L+qd9F/ONqfYCv6eV1S16JY6RsJ1Xysrh4Syh3A==}
+  /@open-pioneer/vite-plugin-pioneer@0.5.2(@open-pioneer/runtime@src+packages+framework+runtime)(sass@1.62.1)(vite@4.3.3):
+    resolution: {integrity: sha512-Pf4kaKoLjR1OOcapAdnp/7RKvh2rrmbJEcDt8obbU6lNGhvwKnFR49A0gAvUCX++BJM7dRpjFnnf4fNS9rFPMg==}
     peerDependencies:
       '@open-pioneer/runtime': '*'
       sass: ^1.58.3
@@ -2147,6 +2154,7 @@ packages:
       '@babel/generator': 7.21.5
       '@babel/template': 7.20.7
       '@babel/types': 7.21.5
+      '@open-pioneer/build-common': 0.1.0
       '@open-pioneer/runtime': link:src/packages/framework/runtime
       debug: 4.3.4
       js-yaml: 4.1.0
