@@ -8,14 +8,14 @@ importers:
   .:
     devDependencies:
       '@open-pioneer/build-support':
-        specifier: ^0.3.1
-        version: 0.3.1
+        specifier: ^0.3.2
+        version: 0.3.2
       '@open-pioneer/runtime':
         specifier: workspace:*
         version: link:src/packages/framework/runtime
       '@open-pioneer/vite-plugin-pioneer':
-        specifier: ^0.5.0
-        version: 0.5.0(@open-pioneer/runtime@src+packages+framework+runtime)(sass@1.62.1)(vite@4.3.3)
+        specifier: ^0.5.1
+        version: 0.5.1(@open-pioneer/runtime@src+packages+framework+runtime)(sass@1.62.1)(vite@4.3.3)
       '@testing-library/dom':
         specifier: ^9.2.0
         version: 9.2.0
@@ -462,24 +462,17 @@ packages:
     resolution: {integrity: sha512-E09FiIft46CmH5Qnjb0wsW54/YQd69LsxeKUOWawmws1XWvyFGURnAChH0mlr7YPFR1ofwvUQfcL0J3lMxXqPA==}
     dev: true
 
-  /@babel/code-frame@7.18.6:
-    resolution: {integrity: sha512-TDCmlK5eOvH+eH7cdAFlNXeVJqWIQ7gW9tY1GJIpUtFb6CmjVyq2VM3u71bOyR8CRihcCgMUYoDNyLXao3+70Q==}
-    engines: {node: '>=6.9.0'}
-    dependencies:
-      '@babel/highlight': 7.18.6
-    dev: true
-
   /@babel/code-frame@7.21.4:
     resolution: {integrity: sha512-LYvhNKfwWSPpocw8GI7gpK2nq3HSDuEPC/uSYaALSJu9xjsalaaYFOq0Pwt5KmVqwEbZlDu81aLXwBOmD/Fv9g==}
     engines: {node: '>=6.9.0'}
     dependencies:
       '@babel/highlight': 7.18.6
 
-  /@babel/generator@7.21.1:
-    resolution: {integrity: sha512-1lT45bAYlQhFn/BHivJs43AiW2rg3/UbLyShGfF3C0KmHvO5fSghWd5kBJy30kpRRucGzXStvnnCFniCR2kXAA==}
+  /@babel/generator@7.21.5:
+    resolution: {integrity: sha512-SrKK/sRv8GesIW1bDagf9cCG38IOMYZusoe1dfg0D8aiUe3Amvoj1QtjTPAWcfrZFvIwlleLb0gxzQidL9w14w==}
     engines: {node: '>=6.9.0'}
     dependencies:
-      '@babel/types': 7.21.2
+      '@babel/types': 7.21.5
       '@jridgewell/gen-mapping': 0.3.2
       '@jridgewell/trace-mapping': 0.3.17
       jsesc: 2.5.2
@@ -489,10 +482,10 @@ packages:
     resolution: {integrity: sha512-0NFvs3VkuSYbFi1x2Vd6tKrywq+z/cLeYC/RJNFrIX/30Bf5aiGYbtvGXolEktzJH8o5E5KJ3tT+nkxuuZFVlA==}
     engines: {node: '>=6.9.0'}
     dependencies:
-      '@babel/types': 7.21.2
+      '@babel/types': 7.21.5
 
-  /@babel/helper-string-parser@7.19.4:
-    resolution: {integrity: sha512-nHtDoQcuqFmwYNYPz3Rah5ph2p8PFeFCsZk9A/48dPc/rGocJ5J3hAAZ7pb76VWX3fZKu+uEr/FhH5jLx7umrw==}
+  /@babel/helper-string-parser@7.21.5:
+    resolution: {integrity: sha512-5pTUx3hAJaZIdW99sJ6ZUUgWq/Y+Hja7TowEnLNMm1VivRgZQL3vpBY3qUACVsvw+yQU6+YgfBVmcbLaZtrA1w==}
     engines: {node: '>=6.9.0'}
 
   /@babel/helper-validator-identifier@7.19.1:
@@ -512,7 +505,7 @@ packages:
     engines: {node: '>=6.0.0'}
     hasBin: true
     dependencies:
-      '@babel/types': 7.21.2
+      '@babel/types': 7.21.5
     dev: true
 
   /@babel/runtime@7.21.0:
@@ -525,16 +518,16 @@ packages:
     resolution: {integrity: sha512-8SegXApWe6VoNw0r9JHpSteLKTpTiLZ4rMlGIm9JQ18KiCtyQiAMEazujAHrUS5flrcqYZa75ukev3P6QmUwUw==}
     engines: {node: '>=6.9.0'}
     dependencies:
-      '@babel/code-frame': 7.18.6
+      '@babel/code-frame': 7.21.4
       '@babel/parser': 7.21.2
-      '@babel/types': 7.21.2
+      '@babel/types': 7.21.5
     dev: true
 
-  /@babel/types@7.21.2:
-    resolution: {integrity: sha512-3wRZSs7jiFaB8AjxiiD+VqN5DTG2iRvJGQ+qYFrs/654lg6kGTQWIOFjlBo5RaXuAZjBmP3+OQH4dmhqiiyYxw==}
+  /@babel/types@7.21.5:
+    resolution: {integrity: sha512-m4AfNvVF2mVC/F7fDEdH2El3HzUg9It/XsCxZiOTTA3m3qYfcSVSbTfM6Q9xG+hYDniZssYhlXKKUMD5m8tF4Q==}
     engines: {node: '>=6.9.0'}
     dependencies:
-      '@babel/helper-string-parser': 7.19.4
+      '@babel/helper-string-parser': 7.21.5
       '@babel/helper-validator-identifier': 7.19.1
       to-fast-properties: 2.0.0
 
@@ -2140,27 +2133,27 @@ packages:
       fastq: 1.15.0
     dev: true
 
-  /@open-pioneer/build-support@0.3.1:
-    resolution: {integrity: sha512-nrb0lyZCfhtQqmbwwKtr8c4qPkyiJORQ6TxUdCDoKbY1cNVl2QWDHbkia/rPzTDm1o9L4cr5bSqgFAYpd/8nDQ==}
+  /@open-pioneer/build-support@0.3.2:
+    resolution: {integrity: sha512-5DTuGcuz4YnkyMpIvBZNXImV+7SjuE2YQfNB5+JkM+DA+RAwpFqqxLsQAy9f8HXdZNHOQ64d74ZqkiU+MaGhIw==}
     dev: true
 
-  /@open-pioneer/vite-plugin-pioneer@0.5.0(@open-pioneer/runtime@src+packages+framework+runtime)(sass@1.62.1)(vite@4.3.3):
-    resolution: {integrity: sha512-gY54wc9LMxlc6Fuk1KEBZMPMbhOerUfIlgUQY3ZQPkK1+Ovu5/8UlavvD13l/IADrDMaVqYH0CNk8BtST+Fg0g==}
+  /@open-pioneer/vite-plugin-pioneer@0.5.1(@open-pioneer/runtime@src+packages+framework+runtime)(sass@1.62.1)(vite@4.3.3):
+    resolution: {integrity: sha512-KBYFAnYqdELluPQe0r89jd9LNNDg7GAYEA4mXwJ0huKG438L+qd9F/ONqfYCv6eV1S16JY6RsJ1Xysrh4Syh3A==}
     peerDependencies:
       '@open-pioneer/runtime': '*'
       sass: ^1.58.3
       vite: ^4.0.0
     dependencies:
-      '@babel/generator': 7.21.1
+      '@babel/generator': 7.21.5
       '@babel/template': 7.20.7
-      '@babel/types': 7.21.2
+      '@babel/types': 7.21.5
       '@open-pioneer/runtime': link:src/packages/framework/runtime
       debug: 4.3.4
       js-yaml: 4.1.0
       sass: 1.62.1
       vite: 4.3.3(@types/node@16.18.25)(sass@1.62.1)
-      zod: 3.20.6
-      zod-validation-error: 0.3.1(zod@3.20.6)
+      zod: 3.21.4
+      zod-validation-error: 1.3.0(zod@3.21.4)
     transitivePeerDependencies:
       - supports-color
     dev: true
@@ -6254,17 +6247,13 @@ packages:
     engines: {node: '>=12.20'}
     dev: true
 
-  /zod-validation-error@0.3.1(zod@3.20.6):
-    resolution: {integrity: sha512-3m7VcE4YT3ZdGJoYBZnLt8E1S/r8zPFNDWMc2njaeC7Vxe5FQbgIiwHoerSkli5PgsUyxWQhpFxEAJXkBJvoDg==}
-    engines: {node: ^14.17 || >=16.0.0}
+  /zod-validation-error@1.3.0(zod@3.21.4):
+    resolution: {integrity: sha512-4WoQnuWnj06kwKR4A+cykRxFmy+CTvwMQO5ogTXLiVx1AuvYYmMjixh7sbkSsQTr1Fvtss6d5kVz8PGeMPUQjQ==}
+    engines: {node: '>=16.0.0'}
     peerDependencies:
       zod: ^3.18.0
     dependencies:
-      zod: 3.20.6
-    dev: true
-
-  /zod@3.20.6:
-    resolution: {integrity: sha512-oyu0m54SGCtzh6EClBVqDDlAYRz4jrVtKwQ7ZnsEmMI9HnzuZFj8QFwAY1M5uniIYACdGvv0PBWPF2kO0aNofA==}
+      zod: 3.21.4
     dev: true
 
   /zod@3.21.4:
