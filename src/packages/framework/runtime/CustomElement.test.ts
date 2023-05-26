@@ -13,12 +13,18 @@ import {
 import { waitFor } from "@testing-library/dom";
 import { createElement } from "react";
 import { expect, it, describe, vi, afterEach } from "vitest";
-import { ApiExtension, ApiMethods, ApplicationContext } from "./api";
+import { ApiExtension, ApiMethods, ApplicationContext, ApplicationLifecycleListener } from "./api";
 import { ApplicationElement, createCustomElement, CustomElementOptions } from "./CustomElement";
 import { createBox } from "./metadata";
 import { usePropertiesInternal } from "./react-integration";
 import { ServiceOptions } from "./Service";
 import { expectAsyncError } from "./test-utils/expectError";
+
+/** Hidden properties available during development / testing */
+interface InternalElementType extends ApplicationElement {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    $inspectElementState?(): any;
+}
 
 describe("simple rendering", function () {
     const SIMPLE_STYLE = ".test { color: red }";
@@ -287,6 +293,104 @@ describe("element API", () => {
 
         api.otherMethod!();
         expect(events).toEqual(["add", "otherMethod"]);
+    });
+});
+
+describe("application lifecycle events", function () {
+    it("signals 'after-start' and 'before-stop' events", async function () {
+        const events: string[] = [];
+        class Listener implements ApplicationLifecycleListener {
+            afterApplicationStart() {
+                events.push("start");
+            }
+
+            beforeApplicationStop() {
+                events.push("stop");
+            }
+        }
+
+        const elem = createCustomElement({
+            appMetadata: {
+                packages: {
+                    test: {
+                        name: "test",
+                        services: {
+                            Listener: {
+                                name: "Listener",
+                                provides: [
+                                    {
+                                        name: "runtime.ApplicationLifecycleListener"
+                                    }
+                                ],
+                                clazz: Listener
+                            }
+                        }
+                    }
+                }
+            }
+        });
+
+        const { node, innerContainer } = await renderComponentShadowDOM(elem);
+        expect(events).toEqual(["start"]);
+
+        // Wait until divs are gone
+        node.remove();
+        await waitFor(() => {
+            const div = innerContainer.querySelector("div");
+            if (div) {
+                throw new Error("content still not destroyed");
+            }
+        });
+
+        expect(events).toEqual(["start", "stop"]);
+    });
+
+    it("does not signal 'before-stop' when start fails", async function () {
+        const events: string[] = [];
+        class Listener implements ApplicationLifecycleListener {
+            afterApplicationStart() {
+                events.push("start");
+            }
+
+            beforeApplicationStop() {
+                events.push("stop");
+            }
+        }
+
+        const elem = createCustomElement({
+            async resolveConfig() {
+                throw new Error("help!");
+            },
+            appMetadata: {
+                packages: {
+                    test: {
+                        name: "test",
+                        services: {
+                            Listener: {
+                                name: "Listener",
+                                provides: [
+                                    {
+                                        name: "runtime.ApplicationLifecycleListener"
+                                    }
+                                ],
+                                clazz: Listener
+                            }
+                        }
+                    }
+                }
+            }
+        });
+
+        // App starts up and immediately stops because of the error in `resolveConfig` above.
+        const { node } = await renderComponent(elem);
+        await waitFor(() => {
+            const state = (node as InternalElementType).$inspectElementState?.().state;
+            if (state !== "destroyed") {
+                throw new Error(`App did not reach destroyed state.`);
+            }
+        });
+
+        expect(events).toEqual([]);
     });
 });
 

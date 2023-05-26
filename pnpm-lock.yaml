@@ -246,8 +246,6 @@ importers:
         specifier: workspace:^
         version: link:../test-utils
 
-  src/packages/framework/runtime/dist: {}
-
   src/packages/framework/test-utils:
     dependencies:
       '@formatjs/intl':

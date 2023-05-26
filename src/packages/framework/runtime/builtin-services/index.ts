@@ -9,11 +9,14 @@ import {
 } from "../service-layer/ServiceRepr";
 import { ApiServiceImpl } from "./ApiServiceImpl";
 import { ApplicationContextImpl, ApplicationContextProperties } from "./ApplicationContextImpl";
+import { ApplicationLifecycleEventService } from "./ApplicationLifecycleEventService";
 
 export const RUNTIME_PACKAGE_NAME = "@open-pioneer/runtime";
 export const RUNTIME_API_EXTENSION = "integration.ApiExtension";
 export const RUNTIME_API_SERVICE = "runtime.ApiService";
 export const RUNTIME_APPLICATION_CONTEXT = "runtime.ApplicationContext";
+export const RUNTIME_APPLICATION_LIFECYCLE_EVENT_SERVICE =
+    "runtime.ApplicationLifecycleEventService";
 
 export type BuiltinPackageProperties = ApplicationContextProperties;
 
@@ -62,10 +65,29 @@ export function createBuiltinPackage(properties: BuiltinPackageProperties): Pack
             }
         ]
     });
+    const lifecycleEventService = new ServiceRepr({
+        name: "ApplicationLifecycleEventServiceImpl",
+        packageName: RUNTIME_PACKAGE_NAME,
+        factory: createConstructorFactory(ApplicationLifecycleEventService),
+        intl: i18n,
+        interfaces: [
+            {
+                interfaceName: RUNTIME_APPLICATION_LIFECYCLE_EVENT_SERVICE,
+                qualifier: "builtin"
+            }
+        ],
+        dependencies: [
+            {
+                referenceName: "listeners",
+                interfaceName: "runtime.ApplicationLifecycleListener",
+                all: true
+            }
+        ]
+    });
 
     return new PackageRepr({
         name: RUNTIME_PACKAGE_NAME,
-        services: [apiService, appContext],
+        services: [apiService, appContext, lifecycleEventService],
         intl: i18n
     });
 }

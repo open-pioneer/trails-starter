@@ -19,10 +19,15 @@ import { ServiceLayer } from "./service-layer/ServiceLayer";
 import { getErrorChain } from "@open-pioneer/core";
 import { ReactIntegration } from "./react-integration/ReactIntegration";
 import { ApiMethods, ApiService } from "./api";
-import { createBuiltinPackage, RUNTIME_API_SERVICE } from "./builtin-services";
+import {
+    createBuiltinPackage,
+    RUNTIME_API_SERVICE,
+    RUNTIME_APPLICATION_LIFECYCLE_EVENT_SERVICE
+} from "./builtin-services";
 import { ReferenceSpec } from "./service-layer/InterfaceSpec";
 import { PropertiesRegistry } from "./PropertiesRegistry";
 import { AppI18n, initI18n } from "./i18n";
+import { ApplicationLifecycleEventService } from "./builtin-services/ApplicationLifecycleEventService";
 const LOG = createLogger("runtime:CustomElement");
 
 /**
@@ -159,6 +164,11 @@ export function createCustomElement(options: CustomElementOptions): ApplicationE
             this.#shadowRoot = this.attachShadow({
                 mode: mode
             });
+
+            if (import.meta.env.DEV) {
+                // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                (this as any).$inspectElementState = () => this.#state;
+            }
         }
 
         connectedCallback() {
@@ -211,6 +221,7 @@ class ElementState {
     private container: HTMLDivElement | undefined;
     private config: ApplicationConfig | undefined;
     private serviceLayer: ServiceLayer | undefined;
+    private lifecycleEvents: ApplicationLifecycleEventService | undefined;
     private reactIntegration: ReactIntegration | undefined;
     private stylesWatch: Resource | undefined;
 
@@ -236,11 +247,24 @@ class ElementState {
     }
 
     destroy() {
+        if (this.state === "destroyed") {
+            return;
+        }
+
+        // Only call event listener when 'started' was also signalled.
+        if (this.state === "started") {
+            try {
+                this.triggerApplicationLifecycleEvent("before-stop");
+            } catch (e) {
+                void e; // Ignored
+            }
+        }
         this.state = "destroyed";
         this.apiPromise?.reject(createAbortError());
         this.reactIntegration = destroyResource(this.reactIntegration);
         this.shadowRoot.replaceChildren();
         this.container = undefined;
+        this.lifecycleEvents = undefined;
         this.serviceLayer = destroyResource(this.serviceLayer);
         this.stylesWatch = destroyResource(this.stylesWatch);
     }
@@ -277,6 +301,11 @@ class ElementState {
             properties: config.properties,
             i18n
         });
+        this.lifecycleEvents = getInternalService<ApplicationLifecycleEventService>(
+            serviceLayer,
+            RUNTIME_APPLICATION_LIFECYCLE_EVENT_SERVICE
+        );
+
         await this.initAPI(serviceLayer);
         this.checkAbort();
 
@@ -290,6 +319,7 @@ class ElementState {
         this.render();
         this.state = "started";
 
+        this.triggerApplicationLifecycleEvent("after-start");
         LOG.debug("Application started");
     }
 
@@ -347,22 +377,7 @@ class ElementState {
     }
 
     private async initAPI(serviceLayer: ServiceLayer) {
-        const result = serviceLayer.getService(
-            "@open-pioneer/runtime",
-            {
-                interfaceName: RUNTIME_API_SERVICE
-            },
-            { ignoreDeclarationCheck: true }
-        );
-        if (result.type !== "found") {
-            throw new Error(
-                ErrorId.INTERNAL,
-                `Failed to find instance of 'runtime.ApiService' (result type '${result.type}').` +
-                    ` This is a builtin service that must be present exactly once.`
-            );
-        }
-
-        const apiService = result.value.getInstanceOrThrow() as ApiService;
+        const apiService = getInternalService<ApiService>(serviceLayer, RUNTIME_API_SERVICE);
         try {
             const api = (this.api = await apiService.getApi());
             LOG.debug("Application API initialized to", api);
@@ -372,6 +387,10 @@ class ElementState {
                 cause: e
             });
         }
+    }
+
+    private triggerApplicationLifecycleEvent(event: "after-start" | "before-stop") {
+        this.lifecycleEvents?.emitLifecycleEvent(event);
     }
 
     private checkAbort() {
@@ -419,9 +438,13 @@ function createServiceLayer(config: {
         packages.push(builtinPackage);
     }
 
+    // Automatically required references (-> forces services to start)
     const forcedReferences: ReferenceSpec[] = [
         {
             interfaceName: RUNTIME_API_SERVICE
+        },
+        {
+            interfaceName: RUNTIME_APPLICATION_LIFECYCLE_EVENT_SERVICE
         }
     ];
     const serviceLayer = new ServiceLayer(packages, forcedReferences);
@@ -431,6 +454,25 @@ function createServiceLayer(config: {
     };
 }
 
+function getInternalService<T = unknown>(serviceLayer: ServiceLayer, interfaceName: string) {
+    const result = serviceLayer.getService(
+        "@open-pioneer/runtime",
+        {
+            interfaceName
+        },
+        { ignoreDeclarationCheck: true }
+    );
+    if (result.type !== "found") {
+        throw new Error(
+            ErrorId.INTERNAL,
+            `Failed to find instance of '${interfaceName}' (result type '${result.type}').` +
+                ` This is a builtin service that must be present exactly once.`
+        );
+    }
+
+    return result.value.getInstanceOrThrow() as T;
+}
+
 /**
  * Gathers application properties by reading them from the options object
  * and by (optionally) invoking the `resolveProperties` hook.
@@ -438,14 +480,15 @@ function createServiceLayer(config: {
 async function gatherConfig(hostElement: HTMLElement, options: CustomElementOptions) {
     let configs: ApplicationConfig[];
     try {
-        configs = [
-            options.config ?? {},
+        const staticConfig = options.config ?? {};
+        const dynamicConfig =
             (await options.resolveConfig?.({
                 getAttribute(name) {
                     return hostElement.getAttribute(name) ?? undefined;
                 }
-            })) ?? {}
-        ];
+            })) ?? {};
+
+        configs = [staticConfig, dynamicConfig];
     } catch (e) {
         throw new Error(
             ErrorId.CONFIG_RESOLUTION_FAILED,

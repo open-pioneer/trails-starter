@@ -66,9 +66,26 @@ export interface ApplicationContext {
     getSupportedLocales(): readonly string[];
 }
 
+/**
+ * Implementing this interface allows a service to be notified on certain
+ * application-wide lifecycle events.
+ */
+export interface ApplicationLifecycleListener {
+    /**
+     * Called after all services required by the application have been started.
+     */
+    afterApplicationStart?(): void;
+
+    /**
+     * Called during the application shutdown just before services will be destroyed.
+     */
+    beforeApplicationStop?(): void;
+}
+
 declare module "./ServiceRegistry" {
     interface ServiceRegistry {
         "runtime.ApiService": ApiService;
         "runtime.ApplicationContext": ApplicationContext;
+        "runtime.ApplicationLifecycleListener": ApplicationLifecycleListener;
     }
 }
