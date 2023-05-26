@@ -42,7 +42,10 @@ describe("simple rendering", function () {
 
     it("should render use styles", async () => {
         const { shadowRoot } = await renderComponentShadowDOM("simple-elem");
-        const style = shadowRoot.querySelector("style")!;
+        // filter stuff from chakra for clarity
+        const style = Array.from(shadowRoot.querySelectorAll("style")).filter(
+            (n) => !n.dataset["emotion"]
+        );
         expect(style).toMatchSnapshot();
     });
 

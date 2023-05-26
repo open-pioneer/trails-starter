@@ -13,7 +13,7 @@ import {
     throwAbortError
 } from "@open-pioneer/core";
 import { ErrorId } from "./errors";
-import { ApplicationMetadata, ObservableBox, PackageMetadata } from "./metadata";
+import { ApplicationMetadata, PackageMetadata } from "./metadata";
 import { PackageRepr, createPackages } from "./service-layer/PackageRepr";
 import { ServiceLayer } from "./service-layer/ServiceLayer";
 import { getErrorChain } from "@open-pioneer/core";
@@ -269,7 +269,7 @@ class ElementState {
         // Setup application root node in the shadow dom
         const container = (this.container = createContainer(i18n.locale));
         const styles = this.initStyles();
-        shadowRoot.replaceChildren(container, styles);
+        shadowRoot.replaceChildren(container, ...styles);
 
         // Launch the service layer
         const { serviceLayer, packages } = this.initServiceLayer({
@@ -298,16 +298,22 @@ class ElementState {
     }
 
     private initStyles() {
-        const styles = this.options.appMetadata?.styles;
-        const styleNode = document.createElement("style");
-        applyStyles(styleNode, styles);
+        // Prevent inheritance of certain css values and normalize to display: block by default.
+        // See https://open-wc.org/guides/knowledge/styling/styles-piercing-shadow-dom/
+        const builtinStyles = ":host { all: initial; display: block; }";
+        const builtinStylesNode = document.createElement("style");
+        applyStyles(builtinStylesNode, { value: builtinStyles });
+
+        const appStyles = this.options.appMetadata?.styles;
+        const appStylesNode = document.createElement("style");
+        applyStyles(appStylesNode, appStyles);
         if (import.meta.hot) {
-            this.stylesWatch = styles?.on?.("changed", () => {
+            this.stylesWatch = appStyles?.on?.("changed", () => {
                 LOG.debug("Application styles changed");
-                applyStyles(styleNode, styles);
+                applyStyles(appStylesNode, appStyles);
             });
         }
-        return styleNode;
+        return [builtinStylesNode, appStylesNode];
     }
 
     private initServiceLayer(config: {
@@ -479,13 +485,11 @@ function mergeConfigs(configs: ApplicationConfig[]): Required<ApplicationConfig>
     return mergedConfig;
 }
 
-const DISABLE_INHERIT = ":host { all: initial; display: block; }";
-
 // Applies application styles to the given style node.
 // Can be called multiple times in development mode to implement hot reloading.
-function applyStyles(styleNode: HTMLStyleElement, styles: ObservableBox<string> | undefined) {
+function applyStyles(styleNode: HTMLStyleElement, styles: { value: string } | undefined) {
     const cssValue = styles?.value ?? "";
-    const cssNode = document.createTextNode([DISABLE_INHERIT, cssValue].join("\n"));
+    const cssNode = document.createTextNode(cssValue);
     styleNode.replaceChildren(cssNode);
 }
 
