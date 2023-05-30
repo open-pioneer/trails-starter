@@ -3,8 +3,8 @@
     "private": true,
     "version": "0.0.1",
     "dependencies": {
-        "@testing-library/dom": "^9.2.0",
-        "@formatjs/intl": "^2.7.1"
+        "@testing-library/dom": "^9.3.0",
+        "@formatjs/intl": "^2.7.2"
     },
     "peerDependencies": {
         "@open-pioneer/runtime": "workspace:^"

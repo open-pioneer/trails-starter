@@ -4,45 +4,49 @@
 /**
  * See https://jamiemason.github.io/syncpack/
  */
-const VERSIONS = {
-    // i18n
-    "@formatjs/intl": "^2.7.1",
+
+// Packages listed here will have their versions enforced
+// by the dependencies in the root package.json.
+const ROOT_PACKAGE_NAME = require("./package.json").name;
+const ENFORCED_BY_ROOT_PACKAGE = [
+    "@formatjs/intl",
 
     // react base
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
+    "react",
+    "react-dom",
+    "react-use",
 
     // chakra-ui
-    "@chakra-ui/react": "^2.6.0",
-    "@chakra-ui/icons": "^2.0.19",
-    "@chakra-ui/system": "^2.5.6",
-    "@emotion/cache": "^11.10.7",
-    "@emotion/react": "^11.10.6",
-    "@emotion/styled": "^11.10.6",
-    "framer-motion": "^10.12.4",
+    "@chakra-ui/react",
+    "@chakra-ui/icons",
+    "@chakra-ui/system",
+    "@emotion/cache",
+    "@emotion/react",
+    "@emotion/styled",
+    "framer-motion",
 
     // testing
-    "@testing-library/dom": "^9.2.0",
-    "@testing-library/react": "^14.0.0",
+    "@testing-library/dom",
+    "@testing-library/react",
+    "@testing-library/jest-dom",
+    "@testing-library/user-event",
 
     // open layers
-    "ol": "^7.3.0"
-};
-
-/**
- * When a package from `SHARED_VERSIONS` is used, its version must be exactly the
- * one defined in the object above.
- */
-const SHARED_VERSIONS = Object.entries(VERSIONS).map(([pkg, version]) => {
-    return {
-        label: `Pin version of '${pkg}' to ${version}`,
-        dependencies: [pkg],
-        packages: ["**"],
-        pinVersion: version
-    };
-});
+    "ol",
+]
 
 module.exports = {
+    // Indent used in package.json files
     indent: "    ",
-    versionGroups: SHARED_VERSIONS
+    
+    // The first entry here forces all packages in the workspace to use the dependency version
+    // from the root package.json when the dependency name is listed in `ENFORCED_BY_ROOT_PACKAGE`.
+    // See https://jamiemason.github.io/syncpack/config/version-groups for advanced usage of version groups.
+    versionGroups: [
+        {
+            dependencies: ENFORCED_BY_ROOT_PACKAGE,
+            packages: ["**"],   // packages where the pinned version is enforced
+            snapTo: [ROOT_PACKAGE_NAME] // package that defines the version to use
+        }
+    ]
 };

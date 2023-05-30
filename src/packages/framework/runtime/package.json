@@ -4,7 +4,7 @@
     "license": "Apache-2.0",
     "main": "index.ts",
     "dependencies": {
-        "@formatjs/intl": "^2.7.1",
+        "@formatjs/intl": "^2.7.2",
         "@open-pioneer/chakra-integration": "workspace:^",
         "@open-pioneer/core": "workspace:^",
         "react": "^18.2.0",

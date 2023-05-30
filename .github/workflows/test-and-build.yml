@@ -27,7 +27,10 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
-      - name: Check lint
+      - name: Lint dependencies
+        run: pnpm lint-shared-versions
+
+      - name: Lint code
         run: pnpm lint
 
       - name: Run tests
@@ -41,7 +44,7 @@ jobs:
 
       # TODO: errors are ignored right now
       - name: Create license report
-        run: pnpm build-license-report || true; 
+        run: pnpm build-license-report || true;
 
       - name: Upload artifact
         uses: actions/upload-artifact@v3
@@ -56,7 +59,7 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
-        
+
       - name: Load artifact
         uses: actions/download-artifact@v3
         with:

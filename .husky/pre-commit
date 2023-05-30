@@ -1,5 +1,13 @@
 #!/usr/bin/env sh
+if [ "$NO_VERIFY" ]; then
+    echo 'pre-commit hook skipped' 1>&2
+    exit 0
+fi
+
 . "$(dirname -- "$0")/_/husky.sh"
+
+echo '--- checking for consistent dependencies across packages'
+pnpm lint-shared-versions
 
 echo '--- run linting --- '
 pnpm lint

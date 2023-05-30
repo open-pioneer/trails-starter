@@ -4,11 +4,11 @@
     "main": "index.tsx",
     "license": "Apache-2.0",
     "dependencies": {
-        "@chakra-ui/react": "^2.6.0",
-        "@emotion/cache": "^11.10.7",
-        "@emotion/react": "^11.10.6",
-        "@emotion/styled": "^11.10.6",
-        "framer-motion": "^10.12.4",
+        "@chakra-ui/react": "^2.6.1",
+        "@emotion/cache": "^11.11.0",
+        "@emotion/react": "^11.11.0",
+        "@emotion/styled": "^11.11.0",
+        "framer-motion": "^10.12.16",
         "react": "^18.2.0",
         "react-dom": "^18.2.0"
     }
