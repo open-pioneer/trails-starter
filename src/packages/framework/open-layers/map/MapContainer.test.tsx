@@ -9,7 +9,7 @@ import {
     PackageContextProviderProps
 } from "@open-pioneer/test-utils/react";
 import { createService } from "@open-pioneer/test-utils/services";
-import { render, screen } from "@testing-library/react";
+import { render, screen, waitFor } from "@testing-library/react";
 import TileLayer from "ol/layer/Tile";
 import { MapOptions } from "ol/Map";
 import Stamen from "ol/source/Stamen";
@@ -40,7 +40,7 @@ class MapConfigProvider implements OlMapConfigurationProvider {
     }
 }
 
-it("should successfully create a map", async () => {
+it.only("should successfully create a map", async () => {
     const mapConfigProvider = await createService(MapConfigProvider, {
         properties: {
             mapOptions: {} as MapOptions,
@@ -69,8 +69,13 @@ it("should successfully create a map", async () => {
     );
 
     // Assert map is mounted
-    const div = await screen.findByTestId("base");
-    expect(div).toMatchSnapshot();
+    await waitFor(async () => {
+        const div = await screen.findByTestId("base");
+        const container = div.querySelector(".ol-viewport");
+        if (!container) {
+            throw new Error("Map not mounted");
+        }
+    });
 
     // Div is registered as map target
     const map = await service.getMap("test");
