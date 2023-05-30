@@ -40,7 +40,7 @@ class MapConfigProvider implements OlMapConfigurationProvider {
     }
 }
 
-it.only("should successfully create a map", async () => {
+it("should successfully create a map", async () => {
     const mapConfigProvider = await createService(MapConfigProvider, {
         properties: {
             mapOptions: {} as MapOptions,
