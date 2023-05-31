@@ -2,3 +2,4 @@ packages:
     - "src/**"
     - "!**/test-data/**"
     - support/disabled-package
+    - "!**/dist/**"

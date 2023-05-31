@@ -1,4 +1,8 @@
-lockfileVersion: '6.0'
+lockfileVersion: '6.1'
+
+settings:
+  autoInstallPeers: true
+  excludeLinksFromLockfile: false
 
 overrides:
   ol-mapbox-style: workspace:disabled-package@*
@@ -45,8 +49,8 @@ importers:
         version: 17.4.0(react-dom@18.2.0)(react@18.2.0)
     devDependencies:
       '@open-pioneer/build-package':
-        specifier: ^0.3.0
-        version: 0.3.0(sass@1.62.1)(typescript@5.0.4)
+        specifier: ^0.3.1
+        version: 0.3.1(sass@1.62.1)(typescript@5.0.4)
       '@open-pioneer/build-support':
         specifier: ^0.5.1
         version: 0.5.1
@@ -2368,8 +2372,8 @@ packages:
       zod-validation-error: 1.3.0(zod@3.21.4)
     dev: true
 
-  /@open-pioneer/build-package@0.3.0(sass@1.62.1)(typescript@5.0.4):
-    resolution: {integrity: sha512-ypSmQEHySBMCzP3NwtWlAV41zX0n7U5dlaPPFKukzDfMG2VqAQgDA70VOWWQdN2L+l0/ql8/NlkUD5fqcbe5+g==}
+  /@open-pioneer/build-package@0.3.1(sass@1.62.1)(typescript@5.0.4):
+    resolution: {integrity: sha512-9dFUR1G6G+jdX1WNe9uAFamiNNGEr7gGlnc6Hnba4i1uPS3XrxjLI2M1SVh+7FChH69QOyJmsF+j34/yYDhFHw==}
     peerDependencies:
       sass: '*'
       typescript: '*'
