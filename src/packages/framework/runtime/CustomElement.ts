@@ -22,7 +22,8 @@ import { ApiMethods, ApiService } from "./api";
 import {
     createBuiltinPackage,
     RUNTIME_API_SERVICE,
-    RUNTIME_APPLICATION_LIFECYCLE_EVENT_SERVICE
+    RUNTIME_APPLICATION_LIFECYCLE_EVENT_SERVICE,
+    RUNTIME_AUTO_START
 } from "./builtin-services";
 import { ReferenceSpec } from "./service-layer/InterfaceSpec";
 import { PropertiesRegistry } from "./PropertiesRegistry";
@@ -445,6 +446,10 @@ function createServiceLayer(config: {
         },
         {
             interfaceName: RUNTIME_APPLICATION_LIFECYCLE_EVENT_SERVICE
+        },
+        {
+            interfaceName: RUNTIME_AUTO_START,
+            all: true
         }
     ];
     const serviceLayer = new ServiceLayer(packages, forcedReferences);

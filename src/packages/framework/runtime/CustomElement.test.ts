@@ -394,6 +394,56 @@ describe("application lifecycle events", function () {
     });
 });
 
+describe("service autostart", function () {
+    it("starts all services implementing the AutoStart interface", async function () {
+        const events: string[] = [];
+        class ListenerA {
+            constructor() {
+                events.push("A");
+            }
+        }
+        class ListenerB {
+            constructor() {
+                events.push("B");
+            }
+        }
+
+        const elem = createCustomElement({
+            appMetadata: {
+                packages: {
+                    test: {
+                        name: "test",
+                        services: {
+                            ListenerA: {
+                                name: "ListenerA",
+                                provides: [
+                                    {
+                                        name: "runtime.AutoStart"
+                                    }
+                                ],
+                                clazz: ListenerA
+                            },
+                            ListenerB: {
+                                name: "ListenerB",
+                                provides: [
+                                    {
+                                        name: "runtime.AutoStart"
+                                    }
+                                ],
+                                clazz: ListenerB
+                            }
+                        }
+                    }
+                }
+            }
+        });
+
+        await renderComponentShadowDOM(elem);
+        events.sort();
+        expect(events).toEqual(["A", "B"]);
+    });
+});
+
 describe("i18n support", function () {
     afterEach(() => {
         vi.restoreAllMocks();

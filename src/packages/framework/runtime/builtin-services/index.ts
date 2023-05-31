@@ -17,6 +17,7 @@ export const RUNTIME_API_SERVICE = "runtime.ApiService";
 export const RUNTIME_APPLICATION_CONTEXT = "runtime.ApplicationContext";
 export const RUNTIME_APPLICATION_LIFECYCLE_EVENT_SERVICE =
     "runtime.ApplicationLifecycleEventService";
+export const RUNTIME_AUTO_START = "runtime.AutoStart";
 
 export type BuiltinPackageProperties = ApplicationContextProperties;
 
