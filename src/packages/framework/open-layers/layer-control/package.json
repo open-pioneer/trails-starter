@@ -1,11 +1,21 @@
 {
     "name": "@open-pioneer/ol-layer-control",
+    "version": "0.0.1-test.1",
     "license": "Apache-2.0",
     "main": "index.ts",
-    "devDependencies": {
+    "dependencies": {
         "@open-pioneer/chakra-integration": "workspace:^",
+        "ol": "^7.3.0",
         "@open-pioneer/ol-map": "workspace:^",
-        "@open-pioneer/test-utils": "workspace:^",
-        "ol": "^7.3.0"
+        "@open-pioneer/runtime": "workspace:^",
+        "react": "^18.2.0",
+        "react-use": "^17.4.0"
+    },
+    "devDependencies": {
+        "@open-pioneer/test-utils": "workspace:^"
+    },
+    "publishConfig": {
+        "directory": "dist",
+        "linkDirectory": false
     }
 }

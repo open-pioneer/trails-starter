@@ -1,13 +1,19 @@
 {
     "name": "@open-pioneer/layout-sidebar",
+    "version": "0.0.1-test.1",
     "license": "Apache-2.0",
     "main": "index.ts",
-    "devDependencies": {
+    "dependencies": {
         "@chakra-ui/icons": "^2.0.19",
         "@chakra-ui/system": "^2.5.7",
         "@emotion/react": "^11.11.0",
         "@emotion/styled": "^11.11.0",
         "@open-pioneer/chakra-integration": "workspace:^",
+        "@open-pioneer/runtime": "workspace:^",
         "react": "^18.2.0"
+    },
+    "publishConfig": {
+        "directory": "dist",
+        "linkDirectory": false
     }
 }

@@ -1,5 +1,5 @@
 packages:
     - "src/**"
-    - "!**/test-data/**"
     - support/disabled-package
+    - "!**/test-data/**"
     - "!**/dist/**"
