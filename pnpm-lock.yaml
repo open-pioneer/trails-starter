@@ -49,17 +49,17 @@ importers:
         version: 17.4.0(react-dom@18.2.0)(react@18.2.0)
     devDependencies:
       '@open-pioneer/build-package':
-        specifier: ^0.3.1
-        version: 0.3.1(sass@1.62.1)(typescript@5.0.4)
+        specifier: ^0.4.0
+        version: 0.4.0(sass@1.62.1)(typescript@5.0.4)
       '@open-pioneer/build-support':
-        specifier: ^0.5.1
-        version: 0.5.1
+        specifier: ^0.5.2
+        version: 0.5.2
       '@open-pioneer/runtime':
         specifier: workspace:^
         version: link:src/packages/framework/runtime
       '@open-pioneer/vite-plugin-pioneer':
-        specifier: ^0.7.0
-        version: 0.7.0(@open-pioneer/runtime@src+packages+framework+runtime)(sass@1.62.1)(vite@4.3.9)
+        specifier: ^0.8.0
+        version: 0.8.0(@open-pioneer/runtime@src+packages+framework+runtime)(sass@1.62.1)(vite@4.3.9)
       '@testing-library/dom':
         specifier: ^9.3.0
         version: 9.3.0
@@ -2364,16 +2364,18 @@ packages:
       fastq: 1.15.0
     dev: true
 
-  /@open-pioneer/build-common@0.3.1:
-    resolution: {integrity: sha512-x/tU2P16UkX8dJ/fvI+s+Rlvx5fEfJhPU2qQH7P9evWUqe9P636IXkebWUX6ID62HUPxXagyCTCw/a2sQzoB/w==}
+  /@open-pioneer/build-common@0.4.0:
+    resolution: {integrity: sha512-1XZ1vHCqpqRLyUnWUsdEd+tY/Vxu2b2EciAi1VRUrF+AdNUMboPq5jDgXqE8SSk8IK5XbRZqvha+nW/hrZFWnA==}
+    engines: {node: '>= 16'}
     dependencies:
       semver: 7.5.1
       zod: 3.21.4
       zod-validation-error: 1.3.0(zod@3.21.4)
     dev: true
 
-  /@open-pioneer/build-package@0.3.1(sass@1.62.1)(typescript@5.0.4):
-    resolution: {integrity: sha512-9dFUR1G6G+jdX1WNe9uAFamiNNGEr7gGlnc6Hnba4i1uPS3XrxjLI2M1SVh+7FChH69QOyJmsF+j34/yYDhFHw==}
+  /@open-pioneer/build-package@0.4.0(sass@1.62.1)(typescript@5.0.4):
+    resolution: {integrity: sha512-h9unWxKm8nRXMGBN1SR80eO/haxyRStYwGZXlU+PUdjnJPAPSyYcSYxYHCdn1eZewYMgzMBMNIFWqkqIvdbfiw==}
+    engines: {node: '>= 16'}
     peerDependencies:
       sass: '*'
       typescript: '*'
@@ -2383,8 +2385,9 @@ packages:
       typescript:
         optional: true
     dependencies:
-      '@open-pioneer/build-common': 0.3.1
-      '@open-pioneer/build-support': 0.5.1
+      '@open-pioneer/build-common': 0.4.0
+      '@open-pioneer/build-support': 0.5.2
+      chalk: 5.2.0
       debug: 4.3.4
       esbuild: 0.17.19
       fast-glob: 3.2.12
@@ -2399,12 +2402,14 @@ packages:
       - supports-color
     dev: true
 
-  /@open-pioneer/build-support@0.5.1:
-    resolution: {integrity: sha512-W+7kmZ2ePht5HW5TLcXzH7enKQeaKFtfNcltXQfcM3Xmwxp0kMZHArFCb23JHlyrpz5WKP/IPWiUFmvbL9CFIQ==}
+  /@open-pioneer/build-support@0.5.2:
+    resolution: {integrity: sha512-B2z940fAuDu23G2QKEDRSSRwsyl+P8z9uAiTtw+tCxeZ5Yhju2mbOuW1qRHgQcUU9bFftjxke8Q68o+VMNNoFw==}
+    engines: {node: '>= 16'}
     dev: true
 
-  /@open-pioneer/vite-plugin-pioneer@0.7.0(@open-pioneer/runtime@src+packages+framework+runtime)(sass@1.62.1)(vite@4.3.9):
-    resolution: {integrity: sha512-GxhSQ90JqCGdGHPJq1+4ngJGx4+BLiZenv2dPMP6XXurzD/o/kej7rymywTdJBohlcW8IT1ZjCbWXD3phY5Daw==}
+  /@open-pioneer/vite-plugin-pioneer@0.8.0(@open-pioneer/runtime@src+packages+framework+runtime)(sass@1.62.1)(vite@4.3.9):
+    resolution: {integrity: sha512-pzSMGdPiHaOv+kmXVbpLnHlkmFTwgjxSk7WiWMYCpgXHA+SsrNEatQPquVOua5qxtuNU2QxLu+0q1BxWVWF6ig==}
+    engines: {node: '>= 16'}
     peerDependencies:
       '@open-pioneer/runtime': '*'
       sass: ^1.58.3
@@ -2413,7 +2418,7 @@ packages:
       '@babel/generator': 7.22.3
       '@babel/template': 7.21.9
       '@babel/types': 7.22.4
-      '@open-pioneer/build-common': 0.3.1
+      '@open-pioneer/build-common': 0.4.0
       '@open-pioneer/runtime': link:src/packages/framework/runtime
       debug: 4.3.4
       js-yaml: 4.1.0
@@ -3225,6 +3230,11 @@ packages:
     dependencies:
       ansi-styles: 4.3.0
       supports-color: 7.2.0
+
+  /chalk@5.2.0:
+    resolution: {integrity: sha512-ree3Gqw/nazQAPuJJEy+avdl7QfZMcUvmHIKgEZkGL+xOBzRvup5Hxo6LHuMceSxOabuJLJm5Yp/92R9eMmMvA==}
+    engines: {node: ^12.17.0 || ^14.13 || >=16.0.0}
+    dev: true
 
   /check-error@1.0.2:
     resolution: {integrity: sha512-BrgHpW9NURQgzoNyjfq0Wu6VFO6D7IZEmJNdtgNqpzGG8RuNFHt2jQxWlAs4HMe119chBnv+34syEZtc6IhLtA==}
