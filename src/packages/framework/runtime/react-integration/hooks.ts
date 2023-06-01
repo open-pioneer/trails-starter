@@ -7,6 +7,23 @@ import { PackageContext as PackageContext, PackageContextMethods } from "./Packa
 import { ErrorId } from "../errors";
 import { PackageIntl } from "../i18n";
 
+/*
+
+    IMPORTANT
+    =========
+
+    The functions in this file are part of the public API.
+    They are imported by code generated during separate package generation via:
+
+        import { hookName } from '@open-pioneer/runtime/react-integration'
+
+    The matching exports are in the neighboring `index.ts`.
+    The interfaces of these hooks must remain stable so that already published packages can continue to work in the future.
+
+    See also the implementation of @open-pioneer/build-package.
+
+*/
+
 export interface UseServiceOptions {
     /** An additional qualifier to disambiguate service instances that implement the same interface. */
     qualifier?: string;
