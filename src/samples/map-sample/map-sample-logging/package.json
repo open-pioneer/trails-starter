@@ -2,6 +2,6 @@
     "name": "map-sample-logging",
     "private": true,
     "devDependencies": {
-        "@open-pioneer/runtime": "workspace:^"
+        "@open-pioneer/runtime": "^0.1.3"
     }
 }

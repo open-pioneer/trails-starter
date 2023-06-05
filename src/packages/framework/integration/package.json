@@ -1,9 +1,0 @@
-{
-    "name": "@open-pioneer/integration",
-    "license": "Apache-2.0",
-    "main": "index.ts",
-    "devDependencies": {
-        "@open-pioneer/runtime": "workspace:^",
-        "@open-pioneer/test-utils": "workspace:^"
-    }
-}

@@ -4,10 +4,10 @@
     "license": "Apache-2.0",
     "main": "index.ts",
     "dependencies": {
-        "@open-pioneer/core": "workspace:^",
+        "@open-pioneer/core": "^0.1.2",
         "ol": "^7.3.0"
     },
     "devDependencies": {
-        "@open-pioneer/test-utils": "workspace:^"
+        "@open-pioneer/test-utils": "^0.1.3"
     }
 }

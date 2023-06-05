@@ -33,6 +33,13 @@ const ENFORCED_BY_ROOT_PACKAGE = [
 
     // open layers
     "ol",
+
+    // core packages
+    "@open-pioneer/core",
+    "@open-pioneer/runtime",
+    "@open-pioneer/integration",
+    "@open-pioneer/test-utils",
+    "@open-pioneer/chakra-integration",
 ]
 
 module.exports = {

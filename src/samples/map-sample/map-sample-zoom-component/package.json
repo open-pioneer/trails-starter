@@ -7,7 +7,7 @@
         "@chakra-ui/system": "^2.5.7",
         "@emotion/react": "^11.11.0",
         "@emotion/styled": "^11.11.0",
-        "@open-pioneer/chakra-integration": "workspace:^",
+        "@open-pioneer/chakra-integration": "^0.1.2",
         "@open-pioneer/ol-map": "workspace:^",
         "ol": "^7.3.0",
         "react": "^18.2.0"

@@ -4,15 +4,15 @@
     "license": "Apache-2.0",
     "main": "index.ts",
     "dependencies": {
-        "@open-pioneer/chakra-integration": "workspace:^",
+        "@open-pioneer/chakra-integration": "^0.1.2",
         "ol": "^7.3.0",
         "@open-pioneer/ol-map": "workspace:^",
-        "@open-pioneer/runtime": "workspace:^",
+        "@open-pioneer/runtime": "^0.1.3",
         "react": "^18.2.0",
         "react-use": "^17.4.0"
     },
     "devDependencies": {
-        "@open-pioneer/test-utils": "workspace:^"
+        "@open-pioneer/test-utils": "^0.1.3"
     },
     "publishConfig": {
         "directory": "dist",
