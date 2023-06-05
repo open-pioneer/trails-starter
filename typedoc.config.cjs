@@ -2,14 +2,9 @@
 // SPDX-License-Identifier: Apache-2.0
 
 const documentedPackages = [
-    "framework/chakra-integration",
-    "framework/core",
-    "framework/integration",
     "framework/layout/sidebar",
     "framework/open-layers/layer-control",
-    "framework/open-layers/map",
-    "framework/runtime",
-    "framework/test-utils",
+    "framework/open-layers/map"
 ];
 
 // See https://typedoc.org/options/
