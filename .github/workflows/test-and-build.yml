@@ -89,3 +89,4 @@ jobs:
           git-config-name: github-actions
           git-config-email: github-actions@github.com
           folder: site
+          target-folder: starter
