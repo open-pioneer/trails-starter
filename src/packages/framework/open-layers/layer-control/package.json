@@ -12,7 +12,7 @@
         "react-use": "^17.4.0"
     },
     "devDependencies": {
-        "@open-pioneer/test-utils": "^0.1.4"
+        "@open-pioneer/test-utils": "^0.1.5"
     },
     "publishConfig": {
         "directory": "dist",
