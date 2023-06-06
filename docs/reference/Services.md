@@ -251,6 +251,7 @@ export interface HelloWorldService {
 // This uses a typescript feature called "declaration merging".
 // All packages can (optionally) associate interface names with their typescript types.
 // See also https://www.typescriptlang.org/docs/handbook/declaration-merging.html#merging-interfaces
+import "@open-pioneer/runtime";
 declare module "@open-pioneer/runtime" {
     interface ServiceRegistry {
         "hello.HelloWorldService": HelloWorldService;
@@ -301,6 +302,7 @@ export interface LoggingProperties {
     logLevel: "DEBUG" | "INFO" | "ERROR";
 }
 
+import "@open-pioneer/runtime";
 declare module "@open-pioneer/runtime" {
     interface PropertiesRegistry {
         // Associates the package name with the given interface for its property types.

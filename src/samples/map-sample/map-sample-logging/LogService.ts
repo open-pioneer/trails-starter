@@ -30,6 +30,7 @@ export interface LoggingProperties {
     logLevel: "DEBUG" | "INFO" | "ERROR";
 }
 
+import "@open-pioneer/runtime";
 declare module "@open-pioneer/runtime" {
     interface ServiceRegistry {
         "map-sample-logging.LogService": Logger;

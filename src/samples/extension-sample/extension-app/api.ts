@@ -44,6 +44,7 @@ export interface ActionService {
     triggerAction(id: string): void;
 }
 
+import "@open-pioneer/runtime";
 declare module "@open-pioneer/runtime" {
     interface ServiceRegistry {
         "extension-app.ActionProvider": ActionProvider;

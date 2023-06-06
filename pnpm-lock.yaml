@@ -33,20 +33,20 @@ importers:
         specifier: ^2.7.2
         version: 2.7.2(typescript@5.0.4)
       '@open-pioneer/chakra-integration':
-        specifier: ^0.1.2
-        version: 0.1.2(@types/react@18.2.7)
+        specifier: ^0.1.3
+        version: 0.1.3(@types/react@18.2.7)
       '@open-pioneer/core':
-        specifier: ^0.1.2
-        version: 0.1.2
+        specifier: ^0.1.3
+        version: 0.1.3
       '@open-pioneer/integration':
-        specifier: ^0.1.2
-        version: 0.1.2
+        specifier: ^0.1.3
+        version: 0.1.3(@types/react@18.2.7)(typescript@5.0.4)
       '@open-pioneer/runtime':
-        specifier: ^0.1.3
-        version: 0.1.3(@types/react@18.2.7)(typescript@5.0.4)
+        specifier: ^0.1.4
+        version: 0.1.4(@types/react@18.2.7)(typescript@5.0.4)
       '@open-pioneer/test-utils':
-        specifier: ^0.1.3
-        version: 0.1.3(@types/react@18.2.7)(typescript@5.0.4)
+        specifier: ^0.1.4
+        version: 0.1.4(@types/react@18.2.7)(typescript@5.0.4)
       framer-motion:
         specifier: ^10.12.16
         version: 10.12.16(react-dom@18.2.0)(react@18.2.0)
@@ -64,14 +64,14 @@ importers:
         version: 17.4.0(react-dom@18.2.0)(react@18.2.0)
     devDependencies:
       '@open-pioneer/build-package':
-        specifier: ^0.6.2
-        version: 0.6.2(sass@1.62.1)(typescript@5.0.4)
+        specifier: ^0.7.0
+        version: 0.7.0(sass@1.62.1)(typescript@5.0.4)
       '@open-pioneer/build-support':
-        specifier: ^0.5.2
-        version: 0.5.2
+        specifier: ^0.6.0
+        version: 0.6.0
       '@open-pioneer/vite-plugin-pioneer':
-        specifier: ^0.8.2
-        version: 0.8.2(@open-pioneer/runtime@0.1.3)(sass@1.62.1)(vite@4.3.9)
+        specifier: ^0.8.4
+        version: 0.8.4(@open-pioneer/runtime@0.1.4)(sass@1.62.1)(vite@4.3.9)
       '@testing-library/dom':
         specifier: ^9.3.0
         version: 9.3.0
@@ -181,11 +181,11 @@ importers:
   src/apps/empty:
     dependencies:
       '@open-pioneer/chakra-integration':
-        specifier: ^0.1.2
-        version: 0.1.2(@types/react@18.2.7)
-      '@open-pioneer/runtime':
         specifier: ^0.1.3
-        version: 0.1.3(@types/react@18.2.7)(typescript@5.0.4)
+        version: 0.1.3(@types/react@18.2.7)
+      '@open-pioneer/runtime':
+        specifier: ^0.1.4
+        version: 0.1.4(@types/react@18.2.7)(typescript@5.0.4)
 
   src/packages/framework/layout/sidebar:
     dependencies:
@@ -202,11 +202,11 @@ importers:
         specifier: ^11.11.0
         version: 11.11.0(@emotion/react@11.11.0)(@types/react@18.2.7)(react@18.2.0)
       '@open-pioneer/chakra-integration':
-        specifier: ^0.1.2
-        version: 0.1.2(@types/react@18.2.7)
-      '@open-pioneer/runtime':
         specifier: ^0.1.3
-        version: 0.1.3(@types/react@18.2.7)(typescript@5.0.4)
+        version: 0.1.3(@types/react@18.2.7)
+      '@open-pioneer/runtime':
+        specifier: ^0.1.4
+        version: 0.1.4(@types/react@18.2.7)(typescript@5.0.4)
       react:
         specifier: ^18.2.0
         version: 18.2.0
@@ -215,14 +215,14 @@ importers:
   src/packages/framework/open-layers/layer-control:
     dependencies:
       '@open-pioneer/chakra-integration':
-        specifier: ^0.1.2
-        version: 0.1.2(@types/react@18.2.7)
+        specifier: ^0.1.3
+        version: 0.1.3(@types/react@18.2.7)
       '@open-pioneer/ol-map':
         specifier: workspace:^
         version: link:../map
       '@open-pioneer/runtime':
-        specifier: ^0.1.3
-        version: 0.1.3(@types/react@18.2.7)(typescript@5.0.4)
+        specifier: ^0.1.4
+        version: 0.1.4(@types/react@18.2.7)(typescript@5.0.4)
       ol:
         specifier: ^7.3.0
         version: 7.3.0
@@ -234,76 +234,79 @@ importers:
         version: 17.4.0(react-dom@18.2.0)(react@18.2.0)
     devDependencies:
       '@open-pioneer/test-utils':
-        specifier: ^0.1.3
-        version: 0.1.3(@types/react@18.2.7)(typescript@5.0.4)
+        specifier: ^0.1.4
+        version: 0.1.4(@types/react@18.2.7)(typescript@5.0.4)
     publishDirectory: dist
 
   src/packages/framework/open-layers/map:
     dependencies:
       '@open-pioneer/core':
-        specifier: ^0.1.2
-        version: 0.1.2
+        specifier: ^0.1.3
+        version: 0.1.3
       ol:
         specifier: ^7.3.0
         version: 7.3.0
     devDependencies:
       '@open-pioneer/test-utils':
-        specifier: ^0.1.3
-        version: 0.1.3(@types/react@18.2.7)(typescript@5.0.4)
+        specifier: ^0.1.4
+        version: 0.1.4(@types/react@18.2.7)(typescript@5.0.4)
 
   src/samples/api-sample/api-app:
     dependencies:
       '@open-pioneer/chakra-integration':
-        specifier: ^0.1.2
-        version: 0.1.2(@types/react@18.2.7)
+        specifier: ^0.1.3
+        version: 0.1.3(@types/react@18.2.7)
       '@open-pioneer/core':
-        specifier: ^0.1.2
-        version: 0.1.2
+        specifier: ^0.1.3
+        version: 0.1.3
+      '@open-pioneer/http':
+        specifier: ^0.1.0
+        version: 0.1.0(@types/react@18.2.7)(typescript@5.0.4)
       '@open-pioneer/integration':
-        specifier: ^0.1.2
-        version: 0.1.2
-      '@open-pioneer/runtime':
         specifier: ^0.1.3
         version: 0.1.3(@types/react@18.2.7)(typescript@5.0.4)
+      '@open-pioneer/runtime':
+        specifier: ^0.1.4
+        version: 0.1.4(@types/react@18.2.7)(typescript@5.0.4)
 
   src/samples/chakra-sample/chakra-app:
     dependencies:
       '@open-pioneer/chakra-integration':
-        specifier: ^0.1.2
-        version: 0.1.2(@types/react@18.2.7)
-      '@open-pioneer/runtime':
         specifier: ^0.1.3
-        version: 0.1.3(@types/react@18.2.7)(typescript@5.0.4)
+        version: 0.1.3(@types/react@18.2.7)
+      '@open-pioneer/runtime':
+        specifier: ^0.1.4
+        version: 0.1.4(@types/react@18.2.7)(typescript@5.0.4)
 
   src/samples/extension-sample/extension-app:
     dependencies:
       '@open-pioneer/chakra-integration':
-        specifier: ^0.1.2
-        version: 0.1.2(@types/react@18.2.7)
-      '@open-pioneer/runtime':
         specifier: ^0.1.3
-        version: 0.1.3(@types/react@18.2.7)(typescript@5.0.4)
+        version: 0.1.3(@types/react@18.2.7)
+      '@open-pioneer/runtime':
+        specifier: ^0.1.4
+        version: 0.1.4(@types/react@18.2.7)(typescript@5.0.4)
 
   src/samples/i18n-howto/app:
     dependencies:
       '@open-pioneer/chakra-integration':
-        specifier: ^0.1.2
-        version: 0.1.2(@types/react@18.2.7)
-      '@open-pioneer/runtime':
         specifier: ^0.1.3
-        version: 0.1.3(@types/react@18.2.7)(typescript@5.0.4)
+        version: 0.1.3(@types/react@18.2.7)
+      '@open-pioneer/runtime':
+        specifier: ^0.1.4
+        version: 0.1.4(@types/react@18.2.7)(typescript@5.0.4)
 
   src/samples/i18n-sample/i18n-app:
     dependencies:
       '@open-pioneer/chakra-integration':
-        specifier: ^0.1.2
-        version: 0.1.2(@types/react@18.2.7)
+        specifier: ^0.1.3
+        version: 0.1.3(@types/react@18.2.7)
       '@open-pioneer/integration':
-        specifier: ^0.1.2
-        version: 0.1.2
-      '@open-pioneer/runtime':
         specifier: ^0.1.3
         version: 0.1.3(@types/react@18.2.7)(typescript@5.0.4)
+      '@open-pioneer/runtime':
+        specifier: ^0.1.4
+        version: 0.1.4(@types/react@18.2.7)(typescript@5.0.4)
       i18n-sample-package:
         specifier: workspace:*
         version: link:../i18n-sample-package
@@ -313,8 +316,8 @@ importers:
   src/samples/map-sample/map-sample-logging:
     devDependencies:
       '@open-pioneer/runtime':
-        specifier: ^0.1.3
-        version: 0.1.3(@types/react@18.2.7)(typescript@5.0.4)
+        specifier: ^0.1.4
+        version: 0.1.4(@types/react@18.2.7)(typescript@5.0.4)
 
   src/samples/map-sample/map-sample-scale-component:
     dependencies:
@@ -340,8 +343,8 @@ importers:
         specifier: ^11.11.0
         version: 11.11.0(@emotion/react@11.11.0)(@types/react@18.2.7)(react@18.2.0)
       '@open-pioneer/chakra-integration':
-        specifier: ^0.1.2
-        version: 0.1.2(@types/react@18.2.7)
+        specifier: ^0.1.3
+        version: 0.1.3(@types/react@18.2.7)
       '@open-pioneer/ol-map':
         specifier: workspace:^
         version: link:../../../packages/framework/open-layers/map
@@ -367,8 +370,8 @@ importers:
         specifier: ^11.11.0
         version: 11.11.0(@emotion/react@11.11.0)(@types/react@18.2.7)(react@18.2.0)
       '@open-pioneer/chakra-integration':
-        specifier: ^0.1.2
-        version: 0.1.2(@types/react@18.2.7)
+        specifier: ^0.1.3
+        version: 0.1.3(@types/react@18.2.7)
       '@open-pioneer/layout-sidebar':
         specifier: workspace:^
         version: link:../../../packages/framework/layout/sidebar
@@ -379,8 +382,8 @@ importers:
         specifier: workspace:^
         version: link:../../../packages/framework/open-layers/map
       '@open-pioneer/runtime':
-        specifier: ^0.1.3
-        version: 0.1.3(@types/react@18.2.7)(typescript@5.0.4)
+        specifier: ^0.1.4
+        version: 0.1.4(@types/react@18.2.7)(typescript@5.0.4)
       map-sample-logging:
         specifier: workspace:^
         version: link:../map-sample-logging
@@ -409,14 +412,14 @@ importers:
   src/samples/properties-sample/properties-app:
     dependencies:
       '@open-pioneer/chakra-integration':
-        specifier: ^0.1.2
-        version: 0.1.2(@types/react@18.2.7)
-      '@open-pioneer/core':
-        specifier: ^0.1.2
-        version: 0.1.2
-      '@open-pioneer/runtime':
         specifier: ^0.1.3
-        version: 0.1.3(@types/react@18.2.7)(typescript@5.0.4)
+        version: 0.1.3(@types/react@18.2.7)
+      '@open-pioneer/core':
+        specifier: ^0.1.3
+        version: 0.1.3
+      '@open-pioneer/runtime':
+        specifier: ^0.1.4
+        version: 0.1.4(@types/react@18.2.7)(typescript@5.0.4)
       react:
         specifier: ^18.2.0
         version: 18.2.0
@@ -424,8 +427,8 @@ importers:
   src/samples/styling-sample/styling-app:
     dependencies:
       '@open-pioneer/runtime':
-        specifier: ^0.1.3
-        version: 0.1.3(@types/react@18.2.7)(typescript@5.0.4)
+        specifier: ^0.1.4
+        version: 0.1.4(@types/react@18.2.7)(typescript@5.0.4)
       styling-sample-components:
         specifier: workspace:^
         version: link:../styling-sample-components
@@ -2227,8 +2230,8 @@ packages:
       fastq: 1.15.0
     dev: true
 
-  /@open-pioneer/build-common@0.5.1:
-    resolution: {integrity: sha512-kdajnTRPsxYxtvHc1N0H6l6j7slZ9wrGl4rQosDNgVRmMt/ZJYIU138hPfN7kYuyDPXbvHvaOqk56RJ3l3LS7w==}
+  /@open-pioneer/build-common@0.6.0:
+    resolution: {integrity: sha512-hE0CRnlQFLAUZ8URaQMilIBao6+BAXlbaG0xRAUPgGNETC+pU6oVwt/nSwhikH7fsOelH/PXOrXrI/P0zxQvyA==}
     engines: {node: '>= 16'}
     dependencies:
       semver: 7.5.1
@@ -2236,8 +2239,8 @@ packages:
       zod-validation-error: 1.3.0(zod@3.21.4)
     dev: true
 
-  /@open-pioneer/build-package@0.6.2(sass@1.62.1)(typescript@5.0.4):
-    resolution: {integrity: sha512-p4sRbraDpmpdCJ31nRuhWmrRWa43sjJwbbIRCef4jtJ/qocYTeWmcWFCSYlkkYOXBQF30Zi+WXwcLG2ywzD7XA==}
+  /@open-pioneer/build-package@0.7.0(sass@1.62.1)(typescript@5.0.4):
+    resolution: {integrity: sha512-bCU60ZXdbglzIFFTZMhat/ZLBxyrpYhVtxvI5dogOC/0Z72aJoDMXNNLdOVcovyQrltH1OmdTlvDo/XQKcql2w==}
     engines: {node: '>= 16'}
     peerDependencies:
       sass: '*'
@@ -2248,8 +2251,8 @@ packages:
       typescript:
         optional: true
     dependencies:
-      '@open-pioneer/build-common': 0.5.1
-      '@open-pioneer/build-support': 0.5.2
+      '@open-pioneer/build-common': 0.6.0
+      '@open-pioneer/build-support': 0.6.0
       chalk: 5.2.0
       debug: 4.3.4
       esbuild: 0.17.19
@@ -2265,13 +2268,13 @@ packages:
       - supports-color
     dev: true
 
-  /@open-pioneer/build-support@0.5.2:
-    resolution: {integrity: sha512-B2z940fAuDu23G2QKEDRSSRwsyl+P8z9uAiTtw+tCxeZ5Yhju2mbOuW1qRHgQcUU9bFftjxke8Q68o+VMNNoFw==}
+  /@open-pioneer/build-support@0.6.0:
+    resolution: {integrity: sha512-3JV97gjkx4zWZKykFCm9zuQhc931au6HUNKW/knzXsuKnPHXCCkjTPJTAXw3cqvmQ/hJya6zOjW6A4tCxnmbTA==}
     engines: {node: '>= 16'}
     dev: true
 
-  /@open-pioneer/chakra-integration@0.1.2(@types/react@18.2.7):
-    resolution: {integrity: sha512-kJ5vWV8k3TSQ7vohrJRkd3cvLZvqImENydXFw/h/xzUn1vCVKHlN5pKGbFo5yr4cW4XIrb/Sj3szUNymaY0/fA==}
+  /@open-pioneer/chakra-integration@0.1.3(@types/react@18.2.7):
+    resolution: {integrity: sha512-9vdlQbIYYsZtbtm0yv70DWbzJhK78n3kw/OfC0MtmPTX4FWy7Nx9bj1j3ZrtaoYyUjPl6mG8tJhkA+iP1bTpjA==}
     dependencies:
       '@chakra-ui/react': 2.6.1(@emotion/react@11.11.0)(@emotion/styled@11.11.0)(@types/react@18.2.7)(framer-motion@10.12.16)(react-dom@18.2.0)(react@18.2.0)
       '@emotion/cache': 11.11.0
@@ -2283,37 +2286,51 @@ packages:
     transitivePeerDependencies:
       - '@types/react'
 
-  /@open-pioneer/core@0.1.2:
-    resolution: {integrity: sha512-NKKK7M+gFrSPZPEtddyUA6DRNmeT9FGyXaU63QtJKIC3Dns9GWqt5vjiJxZVL/wlxsHsi9FJWLmgVdEgKVSe3A==}
+  /@open-pioneer/core@0.1.3:
+    resolution: {integrity: sha512-0GM2kcx14tXuNAroxVppDPzaOKGlTFdbmWp/0LyRF5nM7bKaHZ3JLDtmQQs7oLtl3tpzGA9UVXt4q68BbMW6Ig==}
 
-  /@open-pioneer/integration@0.1.2:
-    resolution: {integrity: sha512-t+rnl+spbtggmAjRyh9q1wBpo/epshOIbjTukzbmSM5LTcHvskVP808br0Ddexh4fLbcMZZ94u638PY/tuWDnQ==}
+  /@open-pioneer/http@0.1.0(@types/react@18.2.7)(typescript@5.0.4):
+    resolution: {integrity: sha512-/h00wBYWDBkb3xeXYUEWqOcmNutXsoYu5uabpAkTr6qzVjKT8b1sD4H8AEtd/3ptHp08dor2rBA2EQJML/9+WQ==}
+    dependencies:
+      '@open-pioneer/runtime': 0.1.4(@types/react@18.2.7)(typescript@5.0.4)
+    transitivePeerDependencies:
+      - '@types/react'
+      - typescript
     dev: false
 
-  /@open-pioneer/runtime-react-support@0.1.0:
-    resolution: {integrity: sha512-Fr9bhGspOyYUz9gCgejhnof4ZC+AXQeb8UpQBb4+SuPbRL1zLwTZU7sPhUK/x5b53H/4/ezeHVff2AY1HKx5tg==}
+  /@open-pioneer/integration@0.1.3(@types/react@18.2.7)(typescript@5.0.4):
+    resolution: {integrity: sha512-69MPAKfbqOjLieF8ahCLY9te4ye2F5PYOpziiIScvhFGhydt63WCTGH7qgxiZ4GjbFo9Wg5lJH91UeJ1mhxbFg==}
+    dependencies:
+      '@open-pioneer/runtime': 0.1.4(@types/react@18.2.7)(typescript@5.0.4)
+    transitivePeerDependencies:
+      - '@types/react'
+      - typescript
+    dev: false
+
+  /@open-pioneer/runtime-react-support@0.1.1:
+    resolution: {integrity: sha512-/WoxN7zuCHmZQVjLczMBOXCHtK6gnoAFaYWd6q7Bls5SNm2+f/+W+DMv1uSJvvod6DsabMyqdRQ5sYx3kB/4yg==}
     dependencies:
       react: 18.2.0
 
-  /@open-pioneer/runtime@0.1.3(@types/react@18.2.7)(typescript@5.0.4):
-    resolution: {integrity: sha512-CT7J3BZNU3O0JrMBTGTpcvH9WIud9RFdw/fqYN6q4nfXZCcyvAYhE5h5zkL2R0tXRZkMedevnAbQMDQLSNee4w==}
+  /@open-pioneer/runtime@0.1.4(@types/react@18.2.7)(typescript@5.0.4):
+    resolution: {integrity: sha512-mj/ibTln/GO6e2j6KiXHbFnzxfNiNSh5+X+UlO6jftwMv4+VYyKYEam7VPF7MD4ncQWZbnqxKpmnctmZlCBGdw==}
     dependencies:
       '@formatjs/intl': 2.7.2(typescript@5.0.4)
-      '@open-pioneer/chakra-integration': 0.1.2(@types/react@18.2.7)
-      '@open-pioneer/core': 0.1.2
-      '@open-pioneer/runtime-react-support': 0.1.0
+      '@open-pioneer/chakra-integration': 0.1.3(@types/react@18.2.7)
+      '@open-pioneer/core': 0.1.3
+      '@open-pioneer/runtime-react-support': 0.1.1
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
     transitivePeerDependencies:
       - '@types/react'
       - typescript
 
-  /@open-pioneer/test-utils@0.1.3(@types/react@18.2.7)(typescript@5.0.4):
-    resolution: {integrity: sha512-RIEDqtMxI6wdYy44tGoieEAOwSGHb2aNGQLZn1L4Qe3fbsVRReiMM4ax9EUYQNcxb90wZVtmWJvYLtSDtSUCJg==}
+  /@open-pioneer/test-utils@0.1.4(@types/react@18.2.7)(typescript@5.0.4):
+    resolution: {integrity: sha512-I5olTRdy7yQkB70zeChERloJmW8jMJsz/q0JubQOaCOOd7tfIUl0KAiDF8oMOaxdmspe05UP0XeWkKlRtFDWeA==}
     dependencies:
       '@formatjs/intl': 2.7.2(typescript@5.0.4)
-      '@open-pioneer/chakra-integration': 0.1.2(@types/react@18.2.7)
-      '@open-pioneer/runtime-react-support': 0.1.0
+      '@open-pioneer/chakra-integration': 0.1.3(@types/react@18.2.7)
+      '@open-pioneer/runtime-react-support': 0.1.1
       '@testing-library/dom': 9.3.0
       '@testing-library/react': 14.0.0(react-dom@18.2.0)(react@18.2.0)
       react: 18.2.0
@@ -2322,8 +2339,8 @@ packages:
       - '@types/react'
       - typescript
 
-  /@open-pioneer/vite-plugin-pioneer@0.8.2(@open-pioneer/runtime@0.1.3)(sass@1.62.1)(vite@4.3.9):
-    resolution: {integrity: sha512-6aBhrsKsOue4rZrubXlAQyznFx5hadAYqzIDSac0WlShhXerXlt5P84ra/ZTRNRKaOCn/ekbYPnFhw2ITvXo5w==}
+  /@open-pioneer/vite-plugin-pioneer@0.8.4(@open-pioneer/runtime@0.1.4)(sass@1.62.1)(vite@4.3.9):
+    resolution: {integrity: sha512-tcnmX/T4YquYKHj7Dz9gn3+SfqzOIThmdO26V3/fZ6qvoPCB6Jw8mT774pWepJdxvqCUMg6CQzXZQK9g6GzQ4g==}
     engines: {node: '>= 16'}
     peerDependencies:
       '@open-pioneer/runtime': '*'
@@ -2333,8 +2350,8 @@ packages:
       '@babel/generator': 7.22.3
       '@babel/template': 7.21.9
       '@babel/types': 7.22.4
-      '@open-pioneer/build-common': 0.5.1
-      '@open-pioneer/runtime': 0.1.3(@types/react@18.2.7)(typescript@5.0.4)
+      '@open-pioneer/build-common': 0.6.0
+      '@open-pioneer/runtime': 0.1.4(@types/react@18.2.7)(typescript@5.0.4)
       debug: 4.3.4
       js-yaml: 4.1.0
       sass: 1.62.1

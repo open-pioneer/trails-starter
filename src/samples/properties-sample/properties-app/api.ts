@@ -25,6 +25,7 @@ export interface Notifier extends EventSource<NotifierEvents> {
     notify(message: string, level?: NotificationLevel): void;
 }
 
+import "@open-pioneer/runtime";
 declare module "@open-pioneer/runtime" {
     interface ServiceRegistry {
         "properties-app.Notifier": Notifier;

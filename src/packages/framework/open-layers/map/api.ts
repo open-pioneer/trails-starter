@@ -36,6 +36,7 @@ export interface OlMapRegistry {
     setContainer(mapId: string, target: HTMLDivElement): Resource;
 }
 
+import "@open-pioneer/runtime";
 declare module "@open-pioneer/runtime" {
     interface ServiceRegistry {
         "ol-map.MapConfigProvider": OlMapConfigurationProvider;

@@ -265,6 +265,7 @@ export interface MathService {
     multiply(a: number, b: number): number;
 }
 
+import "@open-pioneer/runtime";
 declare module "@open-pioneer/runtime" {
     interface ServiceRegistry {
         "math.MathService": MathService; // (1)
@@ -320,6 +321,7 @@ export interface MathServiceExtension {
     onMultiply(a: number, b: number, result: number): void;
 }
 
+import "@open-pioneer/runtime";
 declare module "@open-pioneer/runtime" {
     interface ServiceRegistry {
         // ...
