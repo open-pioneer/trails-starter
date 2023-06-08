@@ -19,4 +19,4 @@ echo '--- run typescript check ---'
 pnpm check-types
 
 echo '--- run tests ---'
-pnpm -- vitest run
+CI=1 pnpm test run # CI=1 disallows `.only` in tests

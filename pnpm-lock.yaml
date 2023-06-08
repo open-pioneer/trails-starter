@@ -70,8 +70,8 @@ importers:
         specifier: ^0.6.0
         version: 0.6.0
       '@open-pioneer/vite-plugin-pioneer':
-        specifier: ^0.8.5
-        version: 0.8.5(@open-pioneer/runtime@0.1.4)(sass@1.62.1)(vite@4.3.9)
+        specifier: ^0.8.6
+        version: 0.8.6(@open-pioneer/runtime@0.1.4)(sass@1.62.1)(vite@4.3.9)
       '@testing-library/dom':
         specifier: ^9.3.0
         version: 9.3.0
@@ -258,8 +258,8 @@ importers:
   src/samples/map-sample/map-sample-scale-component:
     dependencies:
       '@open-pioneer/experimental-ol-map':
-        specifier: ^0.1.0
-        version: 0.1.0(@types/react@18.2.7)(react-dom@18.2.0)(typescript@5.0.4)
+        specifier: ^0.1.3
+        version: 0.1.3(@types/react@18.2.7)(react-dom@18.2.0)(typescript@5.0.4)
       ol:
         specifier: ^7.3.0
         version: 7.3.0
@@ -282,8 +282,8 @@ importers:
         specifier: ^0.1.3
         version: 0.1.3(@types/react@18.2.7)
       '@open-pioneer/experimental-ol-map':
-        specifier: ^0.1.0
-        version: 0.1.0(@types/react@18.2.7)(react-dom@18.2.0)(typescript@5.0.4)
+        specifier: ^0.1.3
+        version: 0.1.3(@types/react@18.2.7)(react-dom@18.2.0)(typescript@5.0.4)
       ol:
         specifier: ^7.3.0
         version: 7.3.0
@@ -309,17 +309,14 @@ importers:
         specifier: ^0.1.3
         version: 0.1.3(@types/react@18.2.7)
       '@open-pioneer/experimental-layout-sidebar':
-        specifier: ^0.1.0
-        version: 0.1.0(@types/react@18.2.7)(typescript@5.0.4)
+        specifier: ^0.1.1
+        version: 0.1.1(@types/react@18.2.7)(typescript@5.0.4)
       '@open-pioneer/experimental-ol-layer-control':
-        specifier: ^0.1.0
-        version: 0.1.0(@types/react@18.2.7)(react-dom@18.2.0)(typescript@5.0.4)
+        specifier: ^0.1.3
+        version: 0.1.3(@types/react@18.2.7)(react-dom@18.2.0)(typescript@5.0.4)
       '@open-pioneer/experimental-ol-map':
-        specifier: ^0.1.0
-        version: 0.1.0(@types/react@18.2.7)(react-dom@18.2.0)(typescript@5.0.4)
-      '@open-pioneer/http':
-        specifier: ^0.1.0
-        version: 0.1.0(@types/react@18.2.7)(typescript@5.0.4)
+        specifier: ^0.1.3
+        version: 0.1.3(@types/react@18.2.7)(react-dom@18.2.0)(typescript@5.0.4)
       '@open-pioneer/runtime':
         specifier: ^0.1.4
         version: 0.1.4(@types/react@18.2.7)(typescript@5.0.4)
@@ -1971,6 +1968,18 @@ packages:
       fastq: 1.15.0
     dev: true
 
+  /@open-pioneer/--test-package@0.0.3(@types/react@18.2.7)(typescript@5.0.4):
+    resolution: {integrity: sha512-upHufvoo8aguwysnHPNDmoUgjhupjjvvUI9ZaIPFKHUj0acvNIKxosGLKBr0Ao97bdWEByqXZH6283UskROTPw==}
+    dependencies:
+      '@open-pioneer/core': 0.1.3
+      '@open-pioneer/http': 0.1.0(@types/react@18.2.7)(typescript@5.0.4)
+      '@open-pioneer/runtime': 0.1.4(@types/react@18.2.7)(typescript@5.0.4)
+      ol: 7.3.0
+    transitivePeerDependencies:
+      - '@types/react'
+      - typescript
+    dev: false
+
   /@open-pioneer/build-common@0.6.0:
     resolution: {integrity: sha512-hE0CRnlQFLAUZ8URaQMilIBao6+BAXlbaG0xRAUPgGNETC+pU6oVwt/nSwhikH7fsOelH/PXOrXrI/P0zxQvyA==}
     engines: {node: '>= 16'}
@@ -2030,8 +2039,8 @@ packages:
   /@open-pioneer/core@0.1.3:
     resolution: {integrity: sha512-0GM2kcx14tXuNAroxVppDPzaOKGlTFdbmWp/0LyRF5nM7bKaHZ3JLDtmQQs7oLtl3tpzGA9UVXt4q68BbMW6Ig==}
 
-  /@open-pioneer/experimental-layout-sidebar@0.1.0(@types/react@18.2.7)(typescript@5.0.4):
-    resolution: {integrity: sha512-SMDlIPQh+lLapp6EIeEDXyMI3zCAvx/nQDA5JYghD+AmRRouMAjGxjlPelHXHoGkQTTYbkgSRPf2svpiOmmuXQ==}
+  /@open-pioneer/experimental-layout-sidebar@0.1.1(@types/react@18.2.7)(typescript@5.0.4):
+    resolution: {integrity: sha512-SUoT11RELTTh3v1MCe8aVjwoIkJY+P5XtfI7y5I9Um6buZzSrfOspcrlfKB90Mw6cMrIcEuXQ+gLd1RkC40A/Q==}
     dependencies:
       '@chakra-ui/icons': 2.0.19(@chakra-ui/system@2.5.7)(react@18.2.0)
       '@chakra-ui/system': 2.5.7(@emotion/react@11.11.0)(@emotion/styled@11.11.0)(react@18.2.0)
@@ -2045,11 +2054,11 @@ packages:
       - typescript
     dev: false
 
-  /@open-pioneer/experimental-ol-layer-control@0.1.0(@types/react@18.2.7)(react-dom@18.2.0)(typescript@5.0.4):
-    resolution: {integrity: sha512-+9eGcn4Uu2xvl7EW5MD2LodbhqJYSNiWXEGohElaLvzi8i7GQWlPfQ9W7YDMNKCed7I9204gLrEGeetbCi5Gug==}
+  /@open-pioneer/experimental-ol-layer-control@0.1.3(@types/react@18.2.7)(react-dom@18.2.0)(typescript@5.0.4):
+    resolution: {integrity: sha512-HSis+ce/NG884jQduUCzAvaZ+MZBHBZUAjCuCxb8+uWmq4jf+h9FegoQlYQEaMFrMoMNwaSJzE3qhtfspIHmGg==}
     dependencies:
       '@open-pioneer/chakra-integration': 0.1.3(@types/react@18.2.7)
-      '@open-pioneer/experimental-ol-map': 0.1.0(@types/react@18.2.7)(react-dom@18.2.0)(typescript@5.0.4)
+      '@open-pioneer/experimental-ol-map': 0.1.3(@types/react@18.2.7)(react-dom@18.2.0)(typescript@5.0.4)
       '@open-pioneer/runtime': 0.1.4(@types/react@18.2.7)(typescript@5.0.4)
       ol: 7.3.0
       react: 18.2.0
@@ -2060,9 +2069,10 @@ packages:
       - typescript
     dev: false
 
-  /@open-pioneer/experimental-ol-map@0.1.0(@types/react@18.2.7)(react-dom@18.2.0)(typescript@5.0.4):
-    resolution: {integrity: sha512-Q8l68pXSRF2EU1Qo/DAtdhpai6XphpOWODPMBF3LmjVMuyNJz/yHzIlNyD7eNQ98fSasAr5hsyXAP1Ge0jbOhA==}
+  /@open-pioneer/experimental-ol-map@0.1.3(@types/react@18.2.7)(react-dom@18.2.0)(typescript@5.0.4):
+    resolution: {integrity: sha512-vuyOzuzUiw9zVFYap+PtQLGw+PHrGf+fXI2nzf4An7ywXUTzKyJbnrunDIaJ2MnN6oBO8aXGvZvaWqZFJGzUxQ==}
     dependencies:
+      '@open-pioneer/--test-package': 0.0.3(@types/react@18.2.7)(typescript@5.0.4)
       '@open-pioneer/core': 0.1.3
       '@open-pioneer/runtime': 0.1.4(@types/react@18.2.7)(typescript@5.0.4)
       ol: 7.3.0
@@ -2125,8 +2135,8 @@ packages:
       - typescript
     dev: false
 
-  /@open-pioneer/vite-plugin-pioneer@0.8.5(@open-pioneer/runtime@0.1.4)(sass@1.62.1)(vite@4.3.9):
-    resolution: {integrity: sha512-5sJf8+AmY4o3YbMYdRWfa+pWaBp10HHs+uL5mQp2befzCRtFkJTWBsv3TDGgRZOPRNZPisgaYG1SVTK8+AOKQg==}
+  /@open-pioneer/vite-plugin-pioneer@0.8.6(@open-pioneer/runtime@0.1.4)(sass@1.62.1)(vite@4.3.9):
+    resolution: {integrity: sha512-bVXCkxaY5jB5OOTypMLaMI0B7gjB7br5eg5X6Eso/vaVPWGPn8QQtc98R3zsFs2dK/l9bZuqgOfi1FRoAfXUvQ==}
     engines: {node: '>= 16'}
     peerDependencies:
       '@open-pioneer/runtime': '*'
