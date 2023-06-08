@@ -3,7 +3,7 @@
     "private": true,
     "main": "index",
     "dependencies": {
-        "@open-pioneer/runtime": "^0.1.4",
-        "@open-pioneer/chakra-integration": "^0.1.3"
+        "@open-pioneer/chakra-integration": "^0.1.4",
+        "@open-pioneer/runtime": "^0.1.5"
     }
 }

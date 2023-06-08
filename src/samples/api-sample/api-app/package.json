@@ -2,10 +2,10 @@
     "name": "api-app",
     "private": true,
     "dependencies": {
-        "@open-pioneer/runtime": "^0.1.4",
-        "@open-pioneer/integration": "^0.1.3",
-        "@open-pioneer/core": "^0.1.3",
-        "@open-pioneer/chakra-integration": "^0.1.3",
-        "@open-pioneer/http": "^0.1.0"
+        "@open-pioneer/chakra-integration": "^0.1.4",
+        "@open-pioneer/core": "^0.1.4",
+        "@open-pioneer/http": "^0.1.1",
+        "@open-pioneer/integration": "^0.1.4",
+        "@open-pioneer/runtime": "^0.1.5"
     }
 }
