@@ -3,7 +3,7 @@
     "main": "index",
     "private": true,
     "dependencies": {
-        "@open-pioneer/ol-map": "workspace:^",
+        "@open-pioneer/experimental-ol-map": "^0.1.0",
         "ol": "^7.3.0"
     }
 }

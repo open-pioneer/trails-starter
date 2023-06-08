@@ -22,20 +22,12 @@ Point your browser at it and start programming!
 
 Additional in-depth information can be found in the [Documentation](./docs/README.md).
 
+## See also
+
+-   [Core packages](https://github.com/open-pioneer/core-packages): Contains the runtime package and other central packages.
+-   [OpenLayers base packages](https://github.com/open-pioneer/openlayers-base-packages): Contains packages using OpenLayers to render a map.
+-   [Build tools](https://github.com/open-pioneer/build-tools): Contains our build tooling such as the Vite plugin.
+
 ## License
 
-```text
-Copyright 2023 con terra GmbH and contributors
-
-Licensed under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License.
-You may obtain a copy of the License at
-
-    http://www.apache.org/licenses/LICENSE-2.0
-
-Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an "AS IS" BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-See the License for the specific language governing permissions and
-limitations under the License.
-```
+[Apache-2.0](https://www.apache.org/licenses/LICENSE-2.0)

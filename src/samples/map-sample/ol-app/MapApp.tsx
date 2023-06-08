@@ -1,9 +1,9 @@
 // SPDX-FileCopyrightText: con terra GmbH and contributors
 // SPDX-License-Identifier: Apache-2.0
 import { Box, Button, Flex } from "@open-pioneer/chakra-integration";
-import { Sidebar, SidebarItem } from "@open-pioneer/layout-sidebar";
-import { LayerControlComponent } from "@open-pioneer/ol-layer-control";
-import { MapContainer, MapPadding } from "@open-pioneer/ol-map";
+import { Sidebar, SidebarItem } from "@open-pioneer/experimental-layout-sidebar";
+import { LayerControlComponent } from "@open-pioneer/experimental-ol-layer-control";
+import { MapContainer, MapPadding } from "@open-pioneer/experimental-ol-map";
 import { ScaleComponent } from "map-sample-scale-component";
 import { ZoomComponent } from "map-sample-zoom-component";
 import { useService } from "open-pioneer:react-hooks";

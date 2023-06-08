@@ -1,6 +1,6 @@
 // SPDX-FileCopyrightText: con terra GmbH and contributors
 // SPDX-License-Identifier: Apache-2.0
-import { OlComponentProps, useMap } from "@open-pioneer/ol-map";
+import { OlComponentProps, useMap } from "@open-pioneer/experimental-ol-map";
 import { ScaleLine } from "ol/control";
 import { HTMLAttributes, useEffect, useRef } from "react";
 

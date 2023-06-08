@@ -70,8 +70,8 @@ importers:
         specifier: ^0.6.0
         version: 0.6.0
       '@open-pioneer/vite-plugin-pioneer':
-        specifier: ^0.8.4
-        version: 0.8.4(@open-pioneer/runtime@0.1.4)(sass@1.62.1)(vite@4.3.9)
+        specifier: ^0.8.5
+        version: 0.8.5(@open-pioneer/runtime@0.1.4)(sass@1.62.1)(vite@4.3.9)
       '@testing-library/dom':
         specifier: ^9.3.0
         version: 9.3.0
@@ -187,70 +187,6 @@ importers:
         specifier: ^0.1.4
         version: 0.1.4(@types/react@18.2.7)(typescript@5.0.4)
 
-  src/packages/framework/layout/sidebar:
-    dependencies:
-      '@chakra-ui/icons':
-        specifier: ^2.0.19
-        version: 2.0.19(@chakra-ui/system@2.5.7)(react@18.2.0)
-      '@chakra-ui/system':
-        specifier: ^2.5.7
-        version: 2.5.7(@emotion/react@11.11.0)(@emotion/styled@11.11.0)(react@18.2.0)
-      '@emotion/react':
-        specifier: ^11.11.0
-        version: 11.11.0(@types/react@18.2.7)(react@18.2.0)
-      '@emotion/styled':
-        specifier: ^11.11.0
-        version: 11.11.0(@emotion/react@11.11.0)(@types/react@18.2.7)(react@18.2.0)
-      '@open-pioneer/chakra-integration':
-        specifier: ^0.1.3
-        version: 0.1.3(@types/react@18.2.7)
-      '@open-pioneer/runtime':
-        specifier: ^0.1.4
-        version: 0.1.4(@types/react@18.2.7)(typescript@5.0.4)
-      react:
-        specifier: ^18.2.0
-        version: 18.2.0
-    publishDirectory: dist
-
-  src/packages/framework/open-layers/layer-control:
-    dependencies:
-      '@open-pioneer/chakra-integration':
-        specifier: ^0.1.3
-        version: 0.1.3(@types/react@18.2.7)
-      '@open-pioneer/ol-map':
-        specifier: workspace:^
-        version: link:../map
-      '@open-pioneer/runtime':
-        specifier: ^0.1.4
-        version: 0.1.4(@types/react@18.2.7)(typescript@5.0.4)
-      ol:
-        specifier: ^7.3.0
-        version: 7.3.0
-      react:
-        specifier: ^18.2.0
-        version: 18.2.0
-      react-use:
-        specifier: ^17.4.0
-        version: 17.4.0(react-dom@18.2.0)(react@18.2.0)
-    devDependencies:
-      '@open-pioneer/test-utils':
-        specifier: ^0.1.5
-        version: 0.1.5(@types/react@18.2.7)(typescript@5.0.4)
-    publishDirectory: dist
-
-  src/packages/framework/open-layers/map:
-    dependencies:
-      '@open-pioneer/core':
-        specifier: ^0.1.3
-        version: 0.1.3
-      ol:
-        specifier: ^7.3.0
-        version: 7.3.0
-    devDependencies:
-      '@open-pioneer/test-utils':
-        specifier: ^0.1.5
-        version: 0.1.5(@types/react@18.2.7)(typescript@5.0.4)
-
   src/samples/api-sample/api-app:
     dependencies:
       '@open-pioneer/chakra-integration':
@@ -321,9 +257,9 @@ importers:
 
   src/samples/map-sample/map-sample-scale-component:
     dependencies:
-      '@open-pioneer/ol-map':
-        specifier: workspace:^
-        version: link:../../../packages/framework/open-layers/map
+      '@open-pioneer/experimental-ol-map':
+        specifier: ^0.1.0
+        version: 0.1.0(@types/react@18.2.7)(react-dom@18.2.0)(typescript@5.0.4)
       ol:
         specifier: ^7.3.0
         version: 7.3.0
@@ -345,9 +281,9 @@ importers:
       '@open-pioneer/chakra-integration':
         specifier: ^0.1.3
         version: 0.1.3(@types/react@18.2.7)
-      '@open-pioneer/ol-map':
-        specifier: workspace:^
-        version: link:../../../packages/framework/open-layers/map
+      '@open-pioneer/experimental-ol-map':
+        specifier: ^0.1.0
+        version: 0.1.0(@types/react@18.2.7)(react-dom@18.2.0)(typescript@5.0.4)
       ol:
         specifier: ^7.3.0
         version: 7.3.0
@@ -372,15 +308,18 @@ importers:
       '@open-pioneer/chakra-integration':
         specifier: ^0.1.3
         version: 0.1.3(@types/react@18.2.7)
-      '@open-pioneer/layout-sidebar':
-        specifier: workspace:^
-        version: link:../../../packages/framework/layout/sidebar
-      '@open-pioneer/ol-layer-control':
-        specifier: workspace:^
-        version: link:../../../packages/framework/open-layers/layer-control
-      '@open-pioneer/ol-map':
-        specifier: workspace:^
-        version: link:../../../packages/framework/open-layers/map
+      '@open-pioneer/experimental-layout-sidebar':
+        specifier: ^0.1.0
+        version: 0.1.0(@types/react@18.2.7)(typescript@5.0.4)
+      '@open-pioneer/experimental-ol-layer-control':
+        specifier: ^0.1.0
+        version: 0.1.0(@types/react@18.2.7)(react-dom@18.2.0)(typescript@5.0.4)
+      '@open-pioneer/experimental-ol-map':
+        specifier: ^0.1.0
+        version: 0.1.0(@types/react@18.2.7)(react-dom@18.2.0)(typescript@5.0.4)
+      '@open-pioneer/http':
+        specifier: ^0.1.0
+        version: 0.1.0(@types/react@18.2.7)(typescript@5.0.4)
       '@open-pioneer/runtime':
         specifier: ^0.1.4
         version: 0.1.4(@types/react@18.2.7)(typescript@5.0.4)
@@ -1633,28 +1572,10 @@ packages:
   /@emotion/weak-memoize@0.3.1:
     resolution: {integrity: sha512-EsBwpc7hBUJWAsNPBmJy4hxWx12v6bshQsldrVmjxJoc3isbxhOrF2IcCpaXxfvq03NwkI7sbsOLXbYuqF/8Ww==}
 
-  /@esbuild/android-arm64@0.17.18:
-    resolution: {integrity: sha512-/iq0aK0eeHgSC3z55ucMAHO05OIqmQehiGay8eP5l/5l+iEr4EIbh4/MI8xD9qRFjqzgkc0JkX0LculNC9mXBw==}
-    engines: {node: '>=12'}
-    cpu: [arm64]
-    os: [android]
-    requiresBuild: true
-    dev: true
-    optional: true
-
   /@esbuild/android-arm64@0.17.19:
     resolution: {integrity: sha512-KBMWvEZooR7+kzY0BtbTQn0OAYY7CsiydT63pVEaPtVYF0hXbUaOyZog37DKxK7NF3XacBJOpYT4adIJh+avxA==}
     engines: {node: '>=12'}
     cpu: [arm64]
-    os: [android]
-    requiresBuild: true
-    dev: true
-    optional: true
-
-  /@esbuild/android-arm@0.17.18:
-    resolution: {integrity: sha512-EmwL+vUBZJ7mhFCs5lA4ZimpUH3WMAoqvOIYhVQwdIgSpHC8ImHdsRyhHAVxpDYUSm0lWvd63z0XH1IlImS2Qw==}
-    engines: {node: '>=12'}
-    cpu: [arm]
     os: [android]
     requiresBuild: true
     dev: true
@@ -1669,15 +1590,6 @@ packages:
     dev: true
     optional: true
 
-  /@esbuild/android-x64@0.17.18:
-    resolution: {integrity: sha512-x+0efYNBF3NPW2Xc5bFOSFW7tTXdAcpfEg2nXmxegm4mJuVeS+i109m/7HMiOQ6M12aVGGFlqJX3RhNdYM2lWg==}
-    engines: {node: '>=12'}
-    cpu: [x64]
-    os: [android]
-    requiresBuild: true
-    dev: true
-    optional: true
-
   /@esbuild/android-x64@0.17.19:
     resolution: {integrity: sha512-uUTTc4xGNDT7YSArp/zbtmbhO0uEEK9/ETW29Wk1thYUJBz3IVnvgEiEwEa9IeLyvnpKrWK64Utw2bgUmDveww==}
     engines: {node: '>=12'}
@@ -1687,28 +1599,10 @@ packages:
     dev: true
     optional: true
 
-  /@esbuild/darwin-arm64@0.17.18:
-    resolution: {integrity: sha512-6tY+djEAdF48M1ONWnQb1C+6LiXrKjmqjzPNPWXhu/GzOHTHX2nh8Mo2ZAmBFg0kIodHhciEgUBtcYCAIjGbjQ==}
-    engines: {node: '>=12'}
-    cpu: [arm64]
-    os: [darwin]
-    requiresBuild: true
-    dev: true
-    optional: true
-
   /@esbuild/darwin-arm64@0.17.19:
     resolution: {integrity: sha512-80wEoCfF/hFKM6WE1FyBHc9SfUblloAWx6FJkFWTWiCoht9Mc0ARGEM47e67W9rI09YoUxJL68WHfDRYEAvOhg==}
     engines: {node: '>=12'}
     cpu: [arm64]
-    os: [darwin]
-    requiresBuild: true
-    dev: true
-    optional: true
-
-  /@esbuild/darwin-x64@0.17.18:
-    resolution: {integrity: sha512-Qq84ykvLvya3dO49wVC9FFCNUfSrQJLbxhoQk/TE1r6MjHo3sFF2tlJCwMjhkBVq3/ahUisj7+EpRSz0/+8+9A==}
-    engines: {node: '>=12'}
-    cpu: [x64]
     os: [darwin]
     requiresBuild: true
     dev: true
@@ -1723,28 +1617,10 @@ packages:
     dev: true
     optional: true
 
-  /@esbuild/freebsd-arm64@0.17.18:
-    resolution: {integrity: sha512-fw/ZfxfAzuHfaQeMDhbzxp9mc+mHn1Y94VDHFHjGvt2Uxl10mT4CDavHm+/L9KG441t1QdABqkVYwakMUeyLRA==}
-    engines: {node: '>=12'}
-    cpu: [arm64]
-    os: [freebsd]
-    requiresBuild: true
-    dev: true
-    optional: true
-
   /@esbuild/freebsd-arm64@0.17.19:
     resolution: {integrity: sha512-pBwbc7DufluUeGdjSU5Si+P3SoMF5DQ/F/UmTSb8HXO80ZEAJmrykPyzo1IfNbAoaqw48YRpv8shwd1NoI0jcQ==}
     engines: {node: '>=12'}
     cpu: [arm64]
-    os: [freebsd]
-    requiresBuild: true
-    dev: true
-    optional: true
-
-  /@esbuild/freebsd-x64@0.17.18:
-    resolution: {integrity: sha512-FQFbRtTaEi8ZBi/A6kxOC0V0E9B/97vPdYjY9NdawyLd4Qk5VD5g2pbWN2VR1c0xhzcJm74HWpObPszWC+qTew==}
-    engines: {node: '>=12'}
-    cpu: [x64]
     os: [freebsd]
     requiresBuild: true
     dev: true
@@ -1759,28 +1635,10 @@ packages:
     dev: true
     optional: true
 
-  /@esbuild/linux-arm64@0.17.18:
-    resolution: {integrity: sha512-R7pZvQZFOY2sxUG8P6A21eq6q+eBv7JPQYIybHVf1XkQYC+lT7nDBdC7wWKTrbvMXKRaGudp/dzZCwL/863mZQ==}
-    engines: {node: '>=12'}
-    cpu: [arm64]
-    os: [linux]
-    requiresBuild: true
-    dev: true
-    optional: true
-
   /@esbuild/linux-arm64@0.17.19:
     resolution: {integrity: sha512-ct1Tg3WGwd3P+oZYqic+YZF4snNl2bsnMKRkb3ozHmnM0dGWuxcPTTntAF6bOP0Sp4x0PjSF+4uHQ1xvxfRKqg==}
     engines: {node: '>=12'}
     cpu: [arm64]
-    os: [linux]
-    requiresBuild: true
-    dev: true
-    optional: true
-
-  /@esbuild/linux-arm@0.17.18:
-    resolution: {integrity: sha512-jW+UCM40LzHcouIaqv3e/oRs0JM76JfhHjCavPxMUti7VAPh8CaGSlS7cmyrdpzSk7A+8f0hiedHqr/LMnfijg==}
-    engines: {node: '>=12'}
-    cpu: [arm]
     os: [linux]
     requiresBuild: true
     dev: true
@@ -1795,28 +1653,10 @@ packages:
     dev: true
     optional: true
 
-  /@esbuild/linux-ia32@0.17.18:
-    resolution: {integrity: sha512-ygIMc3I7wxgXIxk6j3V00VlABIjq260i967Cp9BNAk5pOOpIXmd1RFQJQX9Io7KRsthDrQYrtcx7QCof4o3ZoQ==}
-    engines: {node: '>=12'}
-    cpu: [ia32]
-    os: [linux]
-    requiresBuild: true
-    dev: true
-    optional: true
-
   /@esbuild/linux-ia32@0.17.19:
     resolution: {integrity: sha512-w4IRhSy1VbsNxHRQpeGCHEmibqdTUx61Vc38APcsRbuVgK0OPEnQ0YD39Brymn96mOx48Y2laBQGqgZ0j9w6SQ==}
     engines: {node: '>=12'}
     cpu: [ia32]
-    os: [linux]
-    requiresBuild: true
-    dev: true
-    optional: true
-
-  /@esbuild/linux-loong64@0.17.18:
-    resolution: {integrity: sha512-bvPG+MyFs5ZlwYclCG1D744oHk1Pv7j8psF5TfYx7otCVmcJsEXgFEhQkbhNW8otDHL1a2KDINW20cfCgnzgMQ==}
-    engines: {node: '>=12'}
-    cpu: [loong64]
     os: [linux]
     requiresBuild: true
     dev: true
@@ -1831,28 +1671,10 @@ packages:
     dev: true
     optional: true
 
-  /@esbuild/linux-mips64el@0.17.18:
-    resolution: {integrity: sha512-oVqckATOAGuiUOa6wr8TXaVPSa+6IwVJrGidmNZS1cZVx0HqkTMkqFGD2HIx9H1RvOwFeWYdaYbdY6B89KUMxA==}
-    engines: {node: '>=12'}
-    cpu: [mips64el]
-    os: [linux]
-    requiresBuild: true
-    dev: true
-    optional: true
-
   /@esbuild/linux-mips64el@0.17.19:
     resolution: {integrity: sha512-LKJltc4LVdMKHsrFe4MGNPp0hqDFA1Wpt3jE1gEyM3nKUvOiO//9PheZZHfYRfYl6AwdTH4aTcXSqBerX0ml4A==}
     engines: {node: '>=12'}
     cpu: [mips64el]
-    os: [linux]
-    requiresBuild: true
-    dev: true
-    optional: true
-
-  /@esbuild/linux-ppc64@0.17.18:
-    resolution: {integrity: sha512-3dLlQO+b/LnQNxgH4l9rqa2/IwRJVN9u/bK63FhOPB4xqiRqlQAU0qDU3JJuf0BmaH0yytTBdoSBHrb2jqc5qQ==}
-    engines: {node: '>=12'}
-    cpu: [ppc64]
     os: [linux]
     requiresBuild: true
     dev: true
@@ -1867,28 +1689,10 @@ packages:
     dev: true
     optional: true
 
-  /@esbuild/linux-riscv64@0.17.18:
-    resolution: {integrity: sha512-/x7leOyDPjZV3TcsdfrSI107zItVnsX1q2nho7hbbQoKnmoeUWjs+08rKKt4AUXju7+3aRZSsKrJtaRmsdL1xA==}
-    engines: {node: '>=12'}
-    cpu: [riscv64]
-    os: [linux]
-    requiresBuild: true
-    dev: true
-    optional: true
-
   /@esbuild/linux-riscv64@0.17.19:
     resolution: {integrity: sha512-FC3nUAWhvFoutlhAkgHf8f5HwFWUL6bYdvLc/TTuxKlvLi3+pPzdZiFKSWz/PF30TB1K19SuCxDTI5KcqASJqA==}
     engines: {node: '>=12'}
     cpu: [riscv64]
-    os: [linux]
-    requiresBuild: true
-    dev: true
-    optional: true
-
-  /@esbuild/linux-s390x@0.17.18:
-    resolution: {integrity: sha512-cX0I8Q9xQkL/6F5zWdYmVf5JSQt+ZfZD2bJudZrWD+4mnUvoZ3TDDXtDX2mUaq6upMFv9FlfIh4Gfun0tbGzuw==}
-    engines: {node: '>=12'}
-    cpu: [s390x]
     os: [linux]
     requiresBuild: true
     dev: true
@@ -1903,29 +1707,11 @@ packages:
     dev: true
     optional: true
 
-  /@esbuild/linux-x64@0.17.18:
-    resolution: {integrity: sha512-66RmRsPlYy4jFl0vG80GcNRdirx4nVWAzJmXkevgphP1qf4dsLQCpSKGM3DUQCojwU1hnepI63gNZdrr02wHUA==}
-    engines: {node: '>=12'}
-    cpu: [x64]
-    os: [linux]
-    requiresBuild: true
-    dev: true
-    optional: true
-
   /@esbuild/linux-x64@0.17.19:
     resolution: {integrity: sha512-68ngA9lg2H6zkZcyp22tsVt38mlhWde8l3eJLWkyLrp4HwMUr3c1s/M2t7+kHIhvMjglIBrFpncX1SzMckomGw==}
     engines: {node: '>=12'}
     cpu: [x64]
     os: [linux]
-    requiresBuild: true
-    dev: true
-    optional: true
-
-  /@esbuild/netbsd-x64@0.17.18:
-    resolution: {integrity: sha512-95IRY7mI2yrkLlTLb1gpDxdC5WLC5mZDi+kA9dmM5XAGxCME0F8i4bYH4jZreaJ6lIZ0B8hTrweqG1fUyW7jbg==}
-    engines: {node: '>=12'}
-    cpu: [x64]
-    os: [netbsd]
     requiresBuild: true
     dev: true
     optional: true
@@ -1939,29 +1725,11 @@ packages:
     dev: true
     optional: true
 
-  /@esbuild/openbsd-x64@0.17.18:
-    resolution: {integrity: sha512-WevVOgcng+8hSZ4Q3BKL3n1xTv5H6Nb53cBrtzzEjDbbnOmucEVcZeGCsCOi9bAOcDYEeBZbD2SJNBxlfP3qiA==}
-    engines: {node: '>=12'}
-    cpu: [x64]
-    os: [openbsd]
-    requiresBuild: true
-    dev: true
-    optional: true
-
   /@esbuild/openbsd-x64@0.17.19:
     resolution: {integrity: sha512-cnq5brJYrSZ2CF6c35eCmviIN3k3RczmHz8eYaVlNasVqsNY+JKohZU5MKmaOI+KkllCdzOKKdPs762VCPC20g==}
     engines: {node: '>=12'}
     cpu: [x64]
     os: [openbsd]
-    requiresBuild: true
-    dev: true
-    optional: true
-
-  /@esbuild/sunos-x64@0.17.18:
-    resolution: {integrity: sha512-Rzf4QfQagnwhQXVBS3BYUlxmEbcV7MY+BH5vfDZekU5eYpcffHSyjU8T0xucKVuOcdCsMo+Ur5wmgQJH2GfNrg==}
-    engines: {node: '>=12'}
-    cpu: [x64]
-    os: [sunos]
     requiresBuild: true
     dev: true
     optional: true
@@ -1975,15 +1743,6 @@ packages:
     dev: true
     optional: true
 
-  /@esbuild/win32-arm64@0.17.18:
-    resolution: {integrity: sha512-Kb3Ko/KKaWhjeAm2YoT/cNZaHaD1Yk/pa3FTsmqo9uFh1D1Rfco7BBLIPdDOozrObj2sahslFuAQGvWbgWldAg==}
-    engines: {node: '>=12'}
-    cpu: [arm64]
-    os: [win32]
-    requiresBuild: true
-    dev: true
-    optional: true
-
   /@esbuild/win32-arm64@0.17.19:
     resolution: {integrity: sha512-yYx+8jwowUstVdorcMdNlzklLYhPxjniHWFKgRqH7IFlUEa0Umu3KuYplf1HUZZ422e3NU9F4LGb+4O0Kdcaag==}
     engines: {node: '>=12'}
@@ -1993,28 +1752,10 @@ packages:
     dev: true
     optional: true
 
-  /@esbuild/win32-ia32@0.17.18:
-    resolution: {integrity: sha512-0/xUMIdkVHwkvxfbd5+lfG7mHOf2FRrxNbPiKWg9C4fFrB8H0guClmaM3BFiRUYrznVoyxTIyC/Ou2B7QQSwmw==}
-    engines: {node: '>=12'}
-    cpu: [ia32]
-    os: [win32]
-    requiresBuild: true
-    dev: true
-    optional: true
-
   /@esbuild/win32-ia32@0.17.19:
     resolution: {integrity: sha512-eggDKanJszUtCdlVs0RB+h35wNlb5v4TWEkq4vZcmVt5u/HiDZrTXe2bWFQUez3RgNHwx/x4sk5++4NSSicKkw==}
     engines: {node: '>=12'}
     cpu: [ia32]
-    os: [win32]
-    requiresBuild: true
-    dev: true
-    optional: true
-
-  /@esbuild/win32-x64@0.17.18:
-    resolution: {integrity: sha512-qU25Ma1I3NqTSHJUOKi9sAH1/Mzuvlke0ioMJRthLXKm7JiSKVwFghlGbDLOO2sARECGhja4xYfRAZNPAkooYg==}
-    engines: {node: '>=12'}
-    cpu: [x64]
     os: [win32]
     requiresBuild: true
     dev: true
@@ -2289,6 +2030,50 @@ packages:
   /@open-pioneer/core@0.1.3:
     resolution: {integrity: sha512-0GM2kcx14tXuNAroxVppDPzaOKGlTFdbmWp/0LyRF5nM7bKaHZ3JLDtmQQs7oLtl3tpzGA9UVXt4q68BbMW6Ig==}
 
+  /@open-pioneer/experimental-layout-sidebar@0.1.0(@types/react@18.2.7)(typescript@5.0.4):
+    resolution: {integrity: sha512-SMDlIPQh+lLapp6EIeEDXyMI3zCAvx/nQDA5JYghD+AmRRouMAjGxjlPelHXHoGkQTTYbkgSRPf2svpiOmmuXQ==}
+    dependencies:
+      '@chakra-ui/icons': 2.0.19(@chakra-ui/system@2.5.7)(react@18.2.0)
+      '@chakra-ui/system': 2.5.7(@emotion/react@11.11.0)(@emotion/styled@11.11.0)(react@18.2.0)
+      '@emotion/react': 11.11.0(@types/react@18.2.7)(react@18.2.0)
+      '@emotion/styled': 11.11.0(@emotion/react@11.11.0)(@types/react@18.2.7)(react@18.2.0)
+      '@open-pioneer/chakra-integration': 0.1.3(@types/react@18.2.7)
+      '@open-pioneer/runtime': 0.1.4(@types/react@18.2.7)(typescript@5.0.4)
+      react: 18.2.0
+    transitivePeerDependencies:
+      - '@types/react'
+      - typescript
+    dev: false
+
+  /@open-pioneer/experimental-ol-layer-control@0.1.0(@types/react@18.2.7)(react-dom@18.2.0)(typescript@5.0.4):
+    resolution: {integrity: sha512-+9eGcn4Uu2xvl7EW5MD2LodbhqJYSNiWXEGohElaLvzi8i7GQWlPfQ9W7YDMNKCed7I9204gLrEGeetbCi5Gug==}
+    dependencies:
+      '@open-pioneer/chakra-integration': 0.1.3(@types/react@18.2.7)
+      '@open-pioneer/experimental-ol-map': 0.1.0(@types/react@18.2.7)(react-dom@18.2.0)(typescript@5.0.4)
+      '@open-pioneer/runtime': 0.1.4(@types/react@18.2.7)(typescript@5.0.4)
+      ol: 7.3.0
+      react: 18.2.0
+      react-use: 17.4.0(react-dom@18.2.0)(react@18.2.0)
+    transitivePeerDependencies:
+      - '@types/react'
+      - react-dom
+      - typescript
+    dev: false
+
+  /@open-pioneer/experimental-ol-map@0.1.0(@types/react@18.2.7)(react-dom@18.2.0)(typescript@5.0.4):
+    resolution: {integrity: sha512-Q8l68pXSRF2EU1Qo/DAtdhpai6XphpOWODPMBF3LmjVMuyNJz/yHzIlNyD7eNQ98fSasAr5hsyXAP1Ge0jbOhA==}
+    dependencies:
+      '@open-pioneer/core': 0.1.3
+      '@open-pioneer/runtime': 0.1.4(@types/react@18.2.7)(typescript@5.0.4)
+      ol: 7.3.0
+      react: 18.2.0
+      react-use: 17.4.0(react-dom@18.2.0)(react@18.2.0)
+    transitivePeerDependencies:
+      - '@types/react'
+      - react-dom
+      - typescript
+    dev: false
+
   /@open-pioneer/http@0.1.0(@types/react@18.2.7)(typescript@5.0.4):
     resolution: {integrity: sha512-/h00wBYWDBkb3xeXYUEWqOcmNutXsoYu5uabpAkTr6qzVjKT8b1sD4H8AEtd/3ptHp08dor2rBA2EQJML/9+WQ==}
     dependencies:
@@ -2338,9 +2123,10 @@ packages:
     transitivePeerDependencies:
       - '@types/react'
       - typescript
+    dev: false
 
-  /@open-pioneer/vite-plugin-pioneer@0.8.4(@open-pioneer/runtime@0.1.4)(sass@1.62.1)(vite@4.3.9):
-    resolution: {integrity: sha512-tcnmX/T4YquYKHj7Dz9gn3+SfqzOIThmdO26V3/fZ6qvoPCB6Jw8mT774pWepJdxvqCUMg6CQzXZQK9g6GzQ4g==}
+  /@open-pioneer/vite-plugin-pioneer@0.8.5(@open-pioneer/runtime@0.1.4)(sass@1.62.1)(vite@4.3.9):
+    resolution: {integrity: sha512-5sJf8+AmY4o3YbMYdRWfa+pWaBp10HHs+uL5mQp2befzCRtFkJTWBsv3TDGgRZOPRNZPisgaYG1SVTK8+AOKQg==}
     engines: {node: '>= 16'}
     peerDependencies:
       '@open-pioneer/runtime': '*'
@@ -3577,36 +3363,6 @@ packages:
       is-callable: 1.2.7
       is-date-object: 1.0.5
       is-symbol: 1.0.4
-    dev: true
-
-  /esbuild@0.17.18:
-    resolution: {integrity: sha512-z1lix43jBs6UKjcZVKOw2xx69ffE2aG0PygLL5qJ9OS/gy0Ewd1gW/PUQIOIQGXBHWNywSc0floSKoMFF8aK2w==}
-    engines: {node: '>=12'}
-    hasBin: true
-    requiresBuild: true
-    optionalDependencies:
-      '@esbuild/android-arm': 0.17.18
-      '@esbuild/android-arm64': 0.17.18
-      '@esbuild/android-x64': 0.17.18
-      '@esbuild/darwin-arm64': 0.17.18
-      '@esbuild/darwin-x64': 0.17.18
-      '@esbuild/freebsd-arm64': 0.17.18
-      '@esbuild/freebsd-x64': 0.17.18
-      '@esbuild/linux-arm': 0.17.18
-      '@esbuild/linux-arm64': 0.17.18
-      '@esbuild/linux-ia32': 0.17.18
-      '@esbuild/linux-loong64': 0.17.18
-      '@esbuild/linux-mips64el': 0.17.18
-      '@esbuild/linux-ppc64': 0.17.18
-      '@esbuild/linux-riscv64': 0.17.18
-      '@esbuild/linux-s390x': 0.17.18
-      '@esbuild/linux-x64': 0.17.18
-      '@esbuild/netbsd-x64': 0.17.18
-      '@esbuild/openbsd-x64': 0.17.18
-      '@esbuild/sunos-x64': 0.17.18
-      '@esbuild/win32-arm64': 0.17.18
-      '@esbuild/win32-ia32': 0.17.18
-      '@esbuild/win32-x64': 0.17.18
     dev: true
 
   /esbuild@0.17.19:
@@ -4921,13 +4677,6 @@ packages:
       brace-expansion: 2.0.1
     dev: true
 
-  /minimatch@9.0.0:
-    resolution: {integrity: sha512-0jJj8AvgKqWN05mrwuqi8QYKx1WmYSUoKSxu5Qhs9prezTz10sxAHGNZe9J9cqIJzta8DWsleh2KaVaLl6Ru2w==}
-    engines: {node: '>=16 || 14 >=14.17'}
-    dependencies:
-      brace-expansion: 2.0.1
-    dev: true
-
   /minimatch@9.0.1:
     resolution: {integrity: sha512-0jWhJpD/MdhPXwPuiRkCbfYfSKp2qnn2eOc279qI7f+osl/l+prKSrvhg157zSYvx/1nmgn2NqdT6k2Z7zSH9w==}
     engines: {node: '>=16 || 14 >=14.17'}
@@ -5236,15 +4985,6 @@ packages:
 
   /postcss-value-parser@4.2.0:
     resolution: {integrity: sha512-1NNCs6uurfkVbeXG4S8JFT9t19m45ICnif8zWLd5oPSZ50QnwMfK+H3jv408d4jw/7Bttv5axS5IiHoLaVNHeQ==}
-    dev: true
-
-  /postcss@8.4.23:
-    resolution: {integrity: sha512-bQ3qMcpF6A/YjR55xtoTr0jGOlnPOKAIMdOWiv0EIT6HVPEaJiJB4NLljSbiHoC2RX7DN5Uvjtpbg1NPdwv1oA==}
-    engines: {node: ^10 || ^12 || >=14}
-    dependencies:
-      nanoid: 3.3.6
-      picocolors: 1.0.0
-      source-map-js: 1.0.2
     dev: true
 
   /postcss@8.4.24:
@@ -5610,14 +5350,6 @@ packages:
   /rollup@2.79.1:
     resolution: {integrity: sha512-uKxbd0IhMZOhjAiD5oAFp7BqvkA4Dv47qpOCtaNvng4HBwdbWtdOh8f5nZNuk2rp51PMGk3bzfWu5oayNEuYnw==}
     engines: {node: '>=10.0.0'}
-    hasBin: true
-    optionalDependencies:
-      fsevents: 2.3.2
-    dev: true
-
-  /rollup@3.21.0:
-    resolution: {integrity: sha512-ANPhVcyeHvYdQMUyCbczy33nbLzI7RzrBje4uvNiTDJGIMtlKoOStmympwr9OtS1LZxiDmE2wvxHyVhoLtf1KQ==}
-    engines: {node: '>=14.18.0', npm: '>=8.0.0'}
     hasBin: true
     optionalDependencies:
       fsevents: 2.3.2
@@ -6135,7 +5867,7 @@ packages:
     dependencies:
       lunr: 2.3.9
       marked: 4.3.0
-      minimatch: 9.0.0
+      minimatch: 9.0.1
       shiki: 0.14.1
       typescript: 5.0.4
     dev: true
@@ -6282,9 +6014,9 @@ packages:
         optional: true
     dependencies:
       '@types/node': 16.18.34
-      esbuild: 0.17.18
-      postcss: 8.4.23
-      rollup: 3.21.0
+      esbuild: 0.17.19
+      postcss: 8.4.24
+      rollup: 3.23.0
       sass: 1.62.1
     optionalDependencies:
       fsevents: 2.3.2
