@@ -186,6 +186,11 @@ importers:
       '@open-pioneer/runtime':
         specifier: ^0.1.4
         version: 0.1.4(@types/react@18.2.7)(typescript@5.0.4)
+      sample-package:
+        specifier: workspace:^
+        version: link:../../packages/sample-package
+
+  src/packages/sample-package: {}
 
   src/samples/api-sample/api-app:
     dependencies:

@@ -2,9 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 const documentedPackages = [
-    "framework/layout/sidebar",
-    "framework/open-layers/layer-control",
-    "framework/open-layers/map"
+    "sample-package"
 ];
 
 // See https://typedoc.org/options/
