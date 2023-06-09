@@ -325,6 +325,43 @@ export default defineBuildConfig({
 
 > Note: You cannot configure `required: true` for nested object properties at the moment.
 
+#### `overrides`
+
+An application package may override certain entities defined in its packages.
+Currently this only includes the authority to completely remove the implementation of a service, for example:
+
+```js
+// build.config.mjs
+// SPDX-FileCopyrightText: con terra GmbH and contributors
+// SPDX-License-Identifier: Apache-2.0
+import { defineBuildConfig } from "@open-pioneer/build-support";
+
+export default defineBuildConfig({
+    overrides: {
+        // (1)
+        "sample-package": {
+            services: {
+                // (2)
+                GreeterImpl: {
+                    // (3)
+                    enabled: false
+                }
+            }
+        }
+    }
+});
+```
+
+-   **(1)** The key in the `overrides` object is a package name.
+-   **(2)** The key in the `services` object is a service name within that package.
+-   **(3)** Disables the service (the default is always `true`).
+
+The snippet above completely _removes_ to service called `GreeterImpl` from the package `sample-package`.
+If that service provided any interfaces required by the rest of the application, the app would now be responsible
+to provide alternative implementations, making this an expert feature that should not be overused.
+
+> NOTE: It is forbidden to use `overrides` from a normal package.
+
 ## Service definition
 
 Read [Services](./Services.md) to see how services can be defined.
