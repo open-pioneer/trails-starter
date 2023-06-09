@@ -525,6 +525,44 @@ Your console should display a message just like this:
 
 ![Log message from extension](./HowToCreateAService_LogMessage.png)
 
+## A note on service start behavior
+
+By default the framework will only start services that are actually required to run the app.
+It does so by starting the services required by the user interface (`ui.references` in each package's `build.config.mjs`)
+or those required to implement the web component's API (`integration.ApiExtension`), their dependencies, _their_ dependencies and so on.
+An application may therefore contain services that are never required and thus never started (they might even be optimized out entirely in the future).
+
+### Service AutoStart
+
+Some services should start as soon as their package is part of an application, for example to perform some side effect in the service's constructor.
+
+The preferred way to achieve this is to provide the `runtime.AutoStart` interface:
+
+```js
+// build.config.mjs
+// SPDX-FileCopyrightText: con terra GmbH and contributors
+// SPDX-License-Identifier: Apache-2.0
+import { defineBuildConfig } from "@open-pioneer/build-support";
+
+export default defineBuildConfig({
+    services: {
+        YourService: {
+            provides: ["runtime.AutoStart"] // (1)
+        }
+    }
+});
+```
+
+By providing the interface in (1), the framework will automatically instantiate your service.
+Of course you can still provide any other interfaces just like usual.
+
+> NOTE: Services providing `runtime.AutoStart` are launched in arbitrary order.
+> If you need to enforce starting order, add a dependency to the service(s) that must start
+> before yours does.
+
+If you're curious: the framework still only starts referenced services.
+It just has an implicit dependency on all services implementing `runtime.AutoStart`, thus triggering their instantiation.
+
 ## Further reading
 
 Some service features have not been touched in this tutorial.

@@ -160,7 +160,7 @@ Services are started when the application launches, i.e. when the application's 
 All services used by an app are started before the UI is rendered for the first time.
 
 A service is considered "used" when it is needed by the UI (see `ui.references` in `build.config.mjs`),
-or when it defines an API on the application (provides `integration.ApiExtension`).
+, when it defines an API on the application (provides `integration.ApiExtension`) or if it provides `runtime.AutoStart`.
 The framework will take care to start all those services (and their dependencies) in the correct order.
 
 The service start algorithm for a service `S` that depends on (`references`) two other services `D1` and `D2`
