@@ -18,6 +18,7 @@
     -   [How to translate an App](./tutorials/HowToTranslateAnApp.md)
     -   [How to provide an API](./tutorials/HowToProvideAnAPI.md)
     -   [How to write tests](./tutorials/HowToWriteTests.md)
+    -   [How to publish a package](./tutorials/HowToPublishAPackage.md)
 
 -   [Best practices and common issues](./BestPractices.md)
 

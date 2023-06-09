@@ -362,6 +362,60 @@ to provide alternative implementations, making this an expert feature that shoul
 
 > NOTE: It is forbidden to use `overrides` from a normal package.
 
+#### `publishConfig`
+
+Additional options interpreted by the [`build-pioneer-package`](https://www.npmjs.com/package/@open-pioneer/build-package-cli) CLI when a package is built for publishing.
+
+#### `publishConfig.assets`
+
+A set of [micromatch patterns](https://github.com/micromatch/micromatch#matching-features) defining asset files.
+Matching files will be copied into the package's `dist` directory (using the same file name) and will therefore be available to the published package.
+
+By default, all files in `assets/**` will be included.
+
+> NOTE: File names starting with `.` are always ignored for security reasons.
+
+> NOTE: Directories cannot match by themselves, you must configure a pattern that matches the individual files
+> (e.g. `assets/**` instead of `assets/`).
+
+```js
+// build.config.mjs
+import { defineBuildConfig } from "@open-pioneer/build-support";
+
+export default defineBuildConfig({
+    publishConfig: {
+        assets: ["assets/**", "fonts/*.woff2"]
+    }
+});
+```
+
+#### `publishConfig.types`
+
+Whether to generate TypeScript declaration files (`.d.ts`) for the package under compilation.
+`true` by default if a TypeScript file is detected in the package, `false` otherwise.
+
+Generating `d.ts` files requires a `tsconfig.json` in the project (or, at least, in the package).
+
+#### `publishConfig.sourceMaps`
+
+Enables or disables generation of [source maps](https://web.dev/source-maps/). Defaults to `true`.
+
+Disable this option to keep your source code private.
+
+#### `publishConfig.strict`
+
+Enables or disables strict validation. Defaults to `true`.
+
+Strict validation makes style issues and other warnings (e.g. missing `README`, undeclared dependencies etc.) fatal.
+
+Disabling `strict` temporarily is helpful when starting to prepare a package for separate compilation:
+all errors will be shown as warnings instead of aborting on the first error.
+
+#### `publishConfig.validation`
+
+Fine tuning options for package validation.
+For example, this option can be used to make `CHANGELOG` and `LICENSE` optional (they are required by default).
+
 ## Service definition
 
 Read [Services](./Services.md) to see how services can be defined.
