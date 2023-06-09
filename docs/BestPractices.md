@@ -38,6 +38,81 @@ Hint: If you're using the logger instead of the browser's builtin console, the o
 However, in Chrome you can see the trace for error and warning messages by clicking on the message title.
 In Firefox this only seems to work for error messages.
 
+### HTTP requests
+
+Use the central `http.HttpService` (see [@open-pioneer/http](https://www.npmjs.com/package/@open-pioneer/http)) to perform HTTP requests.
+The service exposes the method `fetch()` which is compatible to (and implemented in terms of) the Browser's modern [`fetch()` function](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API).
+
+Using a central method is important for future proofing our development.
+We might add new features such as automatic authentication (e.g. tokens) or automatic proxy support which users of the `HttpService`
+can then automatically take advantage of.
+
+### Dependency management
+
+(p-)npm packages support multiple different kinds of dependencies in their `package.json`: `dependencies`, `peerDependencies`, `devDependencies` and `optionalDependencies` (although we will skip the latter one as it is only rarely used).
+
+When developing locally in the context of an app and "local" packages, you can often get away with being imprecise about your package's dependencies - things will often "just work".
+In this case, it is "just" a good practice to be precise in your dependency management.
+When you're developing shared packages (e.g. published on npmjs.com), good dependency management becomes critical, or you code will not work when used by other developers.
+
+When thinking about dependencies, follow these general guidelines:
+
+-   When referencing a tool used all over your repository (such as `prettier` or `@open-pioneer/vite-plugin-pioneer`),
+    declare it as a `devDependency` in your project's root `package.json`.
+    This way you don't have to duplicate the dependency in every package of your workspace.
+
+-   When requiring functionality at runtime (e.g. `import ...`) from a source file in an app or package,
+    add the other package in your own `package.json` as either `peerDependency` or `dependency`.
+    The `build-pioneer-package` tool enforces this rule.
+
+    Example:
+
+    ```jsonc
+    {
+        "name": "my-package",
+        "dependencies": {
+            "other-package": "^1.2.3"
+        }
+    }
+    ```
+
+#### dependencies vs peerDependencies
+
+[This post](https://indepth.dev/posts/1187/npm-peer-dependencies) is a great explainer for the differences between `dependencies` and `peerDependencies`.
+Both refer to packages required at runtime, but `dependencies` will be duplicated when incompatible versions are required, whereas `peerDependencies` will report an error should that be the case.
+
+We'll reuse the rules defined in that post. Use `peerDependencies` if at least _one_ of these conditions apply:
+
+-   Having multiple copies of a package would cause conflicts.
+    > This is especially the case for open pioneer packages as we do not support open pioneer packages in multiple versions.
+    > "plain" npm packages can often be duplicated though, if absolutely necessary.
+-   The dependency is visible in your interface
+-   You want the developer to decide which version to install
+
+> NOTE: `peerDependencies` are automatically installed by pnpm.
+> This is also today's default behavior in npm, but that wasn't the case for many years, making online documentation sometimes confusing.
+
+When using `peerDependencies`, prefer being permissive (i.e. general) with the version ranges you support.
+We recommend using the lowest possible version that has all features you rely on.
+You can use `devDependencies` to force a specific (e.g. very new) version to program against.
+
+The guidelines above only leave very few occasions where a "normal" dependency is appropriate.
+Use `dependencies` if _all_ of the following is true:
+
+-   The dependency in question is not an open pioneer package
+-   Having multiple versions will not introduce conflicts (e.g. react should be be present more than once)
+-   The usage of that package is entirely internal, i.e. not part of your package's interface.
+    This could be the case for internal helpers, parsers, etc.
+-   If you don't want to allow the user of your package to chose a common version.
+    In other words, duplicating code is okay for the sake of simpler dependency management.
+
+#### Useful helpers
+
+-   `pnpm why DEP` from an app's or package's directory can show why a certain version of a package is present in your dependency tree.
+-   `pnpm ls` can show the dependency tree of a package or app (see also the `--depth` option).
+-   `pnpm dedupe` works hard to de-duplicate packages wherever possible
+-   `pnpm update`, e.g. with the `-r` flag, is useful to update dependencies.
+
 ### Event handling
 
 We currently do not have a global event bus.
