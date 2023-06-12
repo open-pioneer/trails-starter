@@ -2932,7 +2932,7 @@ packages:
     peerDependencies:
       '@open-pioneer/runtime': ^0.1.5
     dependencies:
-      '@open-pioneer/runtime': 0.1.5(@formatjs/intl@2.7.2)(@open-pioneer/chakra-integration@0.1.4)(@open-pioneer/core@0.1.4)(@open-pioneer/runtime-react-support@0.1.2)(react-dom@18.2.0)(react@18.2.0)
+      '@open-pioneer/runtime': 0.1.5(@formatjs/intl@2.8.0)(@open-pioneer/chakra-integration@0.1.4)(@open-pioneer/core@0.1.4)(@open-pioneer/runtime-react-support@0.1.2)(react-dom@18.2.0)(react@18.2.0)
     dev: false
 
   /@open-pioneer/runtime-react-support@0.1.2(react@18.2.0):
