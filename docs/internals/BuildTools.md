@@ -7,14 +7,33 @@ They are developed in a separate repository: https://github.com/open-pioneer/bui
 
 ### @open-pioneer/build-support
 
+This is a public package used directly in used code (`import { defineBuildConfig } ...`).
+
 Defines the `defineBuildConfig` function used by the `build.config.mjs` configuration file.
 The provided types are the important bit here: they define the schema for configuration objects
 and support the developer with documentation.
 
 ### @open-pioneer/vite-plugin-pioneer
 
+This is a public package used directly in user code (in the `vite.config.ts`).
+
 The central vite plugin required by our framework.
 This plugin does most of the heavy lifting when it comes to code generation and application metadata.
+
+### @open-pioneer/build-package-cli
+
+Implements the `build-pioneer-package` CLI tool, which is used to compile a package into a publishable form.
+
+### @open-pioneer/build-package
+
+Internal implementation of `build-package`.
+This is a library that could - in theory - be used to script the build process.
+It is just an internal artifact fow now, however.
+
+### @open-pioneer/build-common
+
+Internal helpers used by the vite plugin and the build-package tool.
+Reading and validation of the `build.config.mjs` is implemented here, as is the metadata format used by `build-package`.
 
 ## Build process
 
