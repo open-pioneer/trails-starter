@@ -79,7 +79,9 @@ When thinking about dependencies, follow these general guidelines:
 #### dependencies vs peerDependencies
 
 [This post](https://indepth.dev/posts/1187/npm-peer-dependencies) is a great explainer for the differences between `dependencies` and `peerDependencies`.
-Both refer to packages required at runtime, but `dependencies` will be duplicated when incompatible versions are required, whereas `peerDependencies` will report an error should that be the case.
+See also npm's [reference documentation](https://docs.npmjs.com/cli/v9/configuring-npm/package-json#peerdependencies).
+
+Both `dependencies` and `peerDependencies` refer to packages required at runtime, but `dependencies` will be duplicated when incompatible versions are required, whereas `peerDependencies` will report an error should that be the case.
 
 We'll reuse the rules defined in that post. Use `peerDependencies` if at least _one_ of these conditions apply:
 
