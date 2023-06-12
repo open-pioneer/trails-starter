@@ -55,6 +55,7 @@ export default defineBuildConfig({});
 
 ```ts
 interface BuildConfig {
+    entryPoints?: string | string[];
     styles?: string;
     i18n?: string[];
     services?: Record<string, ServiceConfig>;
@@ -62,8 +63,35 @@ interface BuildConfig {
     ui?: UiConfig;
     properties?: Record<string, unknown>;
     propertiesMeta?: Record<string, PropertiesMeta>;
+    overrides?: Record<string, PackageOverridesConfig>;
+    publishConfig?: PublishConfig;
 }
 ```
+
+#### `entryPoints`
+
+Zero or more TypeScript (or JavaScript) entry point modules.
+An entry point module is a module that can be imported from other packages.
+Modules not listed here should be considered internal to the package.
+
+This option is required when building a package with `build-pioneer-package` and optional otherwise.
+
+Example:
+
+```js
+// build.config.mjs
+export default defineBuildConfig({
+    entryPoints: ["index"]
+});
+```
+
+The array can also be left empty if your package does not provide any importable entities.
+
+> NOTE: There is no need to list the [servicesModule](#servicesmodule) in here, that module automatically becomes an entry point if the package defines any services.
+
+> NOTE: Entry point modules are currently not enforced during development,
+> meaning that you can import arbitrary modules from other packages when using the vite dev server.
+> This is however considered a bad practice and may be enforced in a later version.
 
 #### `styles`
 
@@ -327,6 +355,16 @@ export default defineBuildConfig({
 
 #### `overrides`
 
+```ts
+export interface PackageOverridesConfig {
+    services?: Record<string, ServiceOverridesConfig>;
+}
+
+export interface ServiceOverridesConfig {
+    enabled?: boolean;
+}
+```
+
 An application package may override certain entities defined in its packages.
 Currently this only includes the authority to completely remove the implementation of a service, for example:
 
@@ -361,6 +399,22 @@ to provide alternative implementations, making this an expert feature that shoul
 > NOTE: It is forbidden to use `overrides` from a normal package.
 
 #### `publishConfig`
+
+```ts
+export interface PublishConfig {
+    assets?: string | string[];
+    types?: boolean;
+    sourceMaps?: boolean;
+    strict?: boolean;
+    validation?: ValidationOptions;
+}
+
+export interface ValidationOptions {
+    requireLicense?: boolean;
+    requireReadme?: boolean;
+    requireChangelog?: boolean;
+}
+```
 
 Additional options interpreted by the [`build-pioneer-package`](https://www.npmjs.com/package/@open-pioneer/build-package-cli) CLI when a package is built for publishing.
 
@@ -687,3 +741,7 @@ function ExampleComponent() {
     return <div>{messages}</div>;
 }
 ```
+
+## See also
+
+The [type declaration file](https://github.com/open-pioneer/build-tools/blob/main/packages/build-support/index.d.ts) of the `@open-pioneer/build-support` package contains additional documentation for the `defineBuildConfig(...)` function.
