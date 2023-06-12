@@ -184,6 +184,10 @@ Dependencies are destroyed after their dependents to ensure that their instances
 > This can often be worked around by fixing the design: common functionality needs to move to a shared service.
 > In the future, we could consider implementing lazy references (see [Internal Documentation](../internals/ServiceLayer.md)).
 
+## Overriding services
+
+Applications can override services from other packages, see [Reference](./Package.md#overrides).
+
 ## TypeScript Integration
 
 It is recommended, but not required, to author all services in TypeScript.

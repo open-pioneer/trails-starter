@@ -540,8 +540,6 @@ The preferred way to achieve this is to provide the `runtime.AutoStart` interfac
 
 ```js
 // build.config.mjs
-// SPDX-FileCopyrightText: con terra GmbH and contributors
-// SPDX-License-Identifier: Apache-2.0
 import { defineBuildConfig } from "@open-pioneer/build-support";
 
 export default defineBuildConfig({
