@@ -39,3 +39,8 @@ They are typically used to test apps with different configurations, but they may
 A service is an object implementing one or more interfaces.
 Services are registered with the system and may be referenced by other services (or the UI).
 References to services are handled by the system, which will inject appropriate service instances automatically.
+
+## Separate compilation
+
+Pioneer packages may be compiled (and distributed) independently from other packages or the context of a specific application.
+These packages can be linked together into an application using our build tooling.
