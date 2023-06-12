@@ -55,6 +55,47 @@ This can be changed by configuring `publishConfig.strict: false` in your package
 which is convenient when first preparing an existing package for publishing.
 `strict` should be `true` in production!
 
+For a properly configured package, the output of `build-pioneer-package` can look like this:
+
+```plain
+$ pnpm exec build-pioneer-package
+Building package at <...>
+Building JavaScript...
+Generating TypeScript declaration files...
+Building styles...
+Copying i18n files...
+Copying assets...
+Writing package metadata...
+Copying auxiliary files...
+Success
+```
+
+As an example, this is how the `dist` directory of the [`layout-sidebar`](https://github.com/open-pioneer/openlayers-base-packages/tree/09ff758d59c97d8ead9b76af6afb1c03f765ba50/src/experimental-packages/layout-sidebar) package looks at the time of this writing:
+
+<!-- tree -L 2 --gitignore --dirsfirst dist -->
+
+```plain
+dist
+├── i18n
+│   ├── de.yaml
+│   └── en.yaml
+├── _virtual
+│   ├── _virtual-pioneer-module_react-hooks.js
+│   └── _virtual-pioneer-module_react-hooks.js.map
+├── CHANGELOG.md
+├── index.d.ts
+├── index.js
+├── index.js.map
+├── LICENSE
+├── package.json
+├── README.md
+├── Sidebar.d.ts
+├── Sidebar.js
+├── Sidebar.js.map
+├── styles.css
+└── styles.css.map
+```
+
 Package compilation involves the following steps:
 
 -   **Compile all required TypeScript/JavaScript files to JavaScript.**
@@ -94,19 +135,6 @@ Package compilation involves the following steps:
     Files matching any of the glob patterns in `publishConfig.assets` are simply copied to the `dist` directory.
     By default, all files in your package's `assets` directory are copied (if it exists).
 
--   **Copy auxiliary files.**
-
-    By default, a package must contain the following text files:
-
-    -   `README`, `README.md` or `README.txt`
-    -   `LICENSE`, `LICENSE.md` or `LICENSE.txt`
-    -   `CHANGELOG`, `CHANGELOG.md` or `CHANGELOG.txt`
-
-    Additionally, a `NOTICE`, `NOTICE.md` or `NOTICE.txt` may be present.
-    All these files are copied into the compiled package.
-
-    You can configure `publishConfig.validation` to opt out of these required files.
-
 -   **Generate a package.json file.**
 
     `build-pioneer-package` generates a custom `package.json` file for your compiled package.
@@ -115,6 +143,19 @@ Package compilation involves the following steps:
     When generating the `package.json`, `build-pioneer-package` also takes into account your package's metadata from the `build.config.mjs`: it will make entry points public (via `exports`) and include
     information about services and other open pioneer features using the `openPioneerFramework` property.
 
+-   **Copy auxiliary files.**
+
+By default, a package must contain the following text files:
+
+-   `README`, `README.md` or `README.txt`
+-   `LICENSE`, `LICENSE.md` or `LICENSE.txt`
+-   `CHANGELOG`, `CHANGELOG.md` or `CHANGELOG.txt`
+
+Additionally, a `NOTICE`, `NOTICE.md` or `NOTICE.txt` may be present.
+All these files are copied into the compiled package.
+
+You can configure `publishConfig.validation` to opt out of these required files.
+
 ## Publishing to npmjs.com
 
 ## Using a different registry
@@ -122,6 +163,8 @@ Package compilation involves the following steps:
 ## Walkthrough
 
 ## Checklist
+
+TODO rule reserved "\_FILE"
 
 ## Automation
 
