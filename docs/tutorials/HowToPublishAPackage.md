@@ -156,9 +156,83 @@ All these files are copied into the compiled package.
 
 You can configure `publishConfig.validation` to opt out of these required files.
 
-## Publishing to npmjs.com
+## Publishing
 
-## Using a different registry
+Publishing an npm package has a few requirements:
+
+1.  The package must not be set to `private`.
+
+2.  The package must have a valid `version`.
+    Note that, when using the public registry at <https://npmjs.com>, you cannot overwrite an existing version.
+    You must always publish a new version instead.
+
+3.  The package _should_ have a valid `license` and a `LICENSE` file.
+    It should also contain a `README` and ideally a `CHANGELOG`.
+
+`build-pioneer-package` will by default check the last item, and `pnpm` will by itself refuse to publish a private package or a package with an invalid version.
+
+We're also using a pnpm-specific property called [`publishConfig.directory`](https://pnpm.io/package_json#publishconfigdirectory) for our packages.
+This option tells the package manager that it shall publish the contents of the configured directory, and _not_ the source directory from where it is invoked:
+
+```jsonc
+// package.json
+{
+    "name": "@open-pioneer/experimental-ol-map",
+    "version": "1.2.3",
+    "license": "Apache-2.0",
+    // ...
+    "publishConfig": {
+        // Tells pnpm to publish these contents instead
+        // https://pnpm.io/package_json#publishconfigdirectory
+        "directory": "dist",
+        // Recommended as default value to avoid confusion, see
+        // https://pnpm.io/package_json#publishconfiglinkdirectory
+        "linkDirectory": false
+    }
+}
+```
+
+After making the necessary changes to your `package.json`, build the package via `build-pioneer-package`.
+When that has completed successfully, the contents of the `dist` directory can be published:
+
+```bash
+# requires being logged in with the registry
+$ pnpm publish
+# or to explicitly make the package public (off by default for scoped packages):
+$ pnpm publish --access=public
+```
+
+`pnpm publish` also accepts a `--dry-run` option to simulate publishing.
+You can also execute `pnpm pack` instead to generate a `<PKG_NAME>.tgz` in the `dist` directory;
+this allows you to inspect what _would be_ published to the registry.
+
+### Using a different registry
+
+npm (and pnpm) will by default publish to the public registry at <https://npmjs.com>.
+It can sometimes be an advantage to use another registry, for example for performance reasons (e.g. for better caching)
+or to keep the code private within an organization.
+
+There are multiple options:
+
+-   Using a different global registry.
+
+    All your packages will be fetched from this registry.
+    The registry must therefore also act as a proxy for <https://npmjs.com>, since you still need access to all public packages.
+
+    This is the recommended operation mode by the developers of [Verdaccio](https://verdaccio.org).
+
+    See [here](https://verdaccio.org/docs/setup-npm) for setup instructions (which also apply to pnpm).
+
+-   Using a different registry for one or more specific scopes.
+
+    You will still use the default registry for all other packages, but packages from your scope (e.g. `@my-company/*`)
+    would be loaded from a custom registry.
+
+    See [here](https://docs.npmjs.com/cli/v9/using-npm/scope#associating-a-scope-with-a-registry) for setup instructions.
+
+Depending on your chosen scenario and the software you're using you will also have to consider authentication and permission management, but that is out of scope for this document.
+
+Neither option should have any impact on the framework itself, as long as all required packages can be downloaded.
 
 ## Walkthrough
 
