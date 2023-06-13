@@ -501,7 +501,7 @@ See also [Contributing packages to the registry](https://docs.npmjs.com/packages
 
 ## Checklist
 
--   General
+-   [ ] General
     -   [ ] Don't use file names starting with "\_" if it can be avoided.
             We may add additional (internal) files or directories using that prefix, for example `_chunks` or `_virtual`.
 -   [ ] package.json
