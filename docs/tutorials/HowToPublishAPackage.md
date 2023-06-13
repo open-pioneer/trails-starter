@@ -501,6 +501,9 @@ See also [Contributing packages to the registry](https://docs.npmjs.com/packages
 
 ## Checklist
 
+-   General
+    -   [ ] Don't use file names starting with "\_" if it can be avoided.
+            We may add additional (internal) files or directories using that prefix, for example `_chunks` or `_virtual`.
 -   [ ] package.json
 
     -   [ ] Choose a good package `name` and a `description`
@@ -524,3 +527,18 @@ See also [Contributing packages to the registry](https://docs.npmjs.com/packages
 -   [ ] Publish with `pnpm publish`
 
 ## Automation
+
+We recommend automating the process of releasing your packages (and your app) as much as possible.
+This has multiple advantages:
+
+-   It reduces the possibility of human errors.
+    Releases are usually complex and involve lots of small steps.
+    A script cannot forget to perform those steps.
+-   Automated releases are faster, making it easier to release often.
+-   If a release process has been automated well, any team member can trigger a release as it requires no expert knowledge anymore.
+
+For automatic management of your package's changelogs and versions we can recommend [Changesets](https://github.com/changesets/changesets/).
+You can use their CLI as parts of your release script.
+If you're using Github, they also provide an [Action](https://github.com/changesets/action).
+
+pnpm's website has [a section about changesets](https://pnpm.io/using-changesets) and we're using their action successfully in some of our repositories, see [here](https://github.com/open-pioneer/openlayers-base-packages/blob/3adb59c6f28e155e43a8ace3278089e04f70185c/.github/workflows/version.yml) for example.
