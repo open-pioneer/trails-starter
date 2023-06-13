@@ -102,7 +102,7 @@ The guidelines above only leave very few occasions where a "normal" dependency i
 Use `dependencies` if _all_ of the following is true:
 
 -   The dependency in question is not an open pioneer package
--   Having multiple versions will not introduce conflicts (e.g. react should be be present more than once)
+-   Having multiple versions will not introduce conflicts (e.g. react should never be present more than once)
 -   The usage of that package is entirely internal, i.e. not part of your package's interface.
     This could be the case for internal helpers, parsers, etc.
 -   If you don't want to allow the user of your package to chose a common version.
