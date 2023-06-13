@@ -64,14 +64,14 @@ importers:
         version: 17.4.0(react-dom@18.2.0)(react@18.2.0)
     devDependencies:
       '@open-pioneer/build-package-cli':
-        specifier: ^0.2.0
-        version: 0.2.0(sass@1.63.2)(typescript@5.0.4)
+        specifier: ^0.2.2
+        version: 0.2.2(sass@1.63.2)(typescript@5.0.4)
       '@open-pioneer/build-support':
-        specifier: ^0.6.0
-        version: 0.6.0
+        specifier: ^0.6.1
+        version: 0.6.1
       '@open-pioneer/vite-plugin-pioneer':
-        specifier: ^0.8.6
-        version: 0.8.6(@open-pioneer/runtime@0.1.5)(sass@1.63.2)(vite@4.3.9)
+        specifier: ^0.8.7
+        version: 0.8.7(@open-pioneer/runtime@0.1.5)(sass@1.63.2)(vite@4.3.9)
       '@testing-library/dom':
         specifier: ^9.3.0
         version: 9.3.0
@@ -152,7 +152,7 @@ importers:
         version: 5.0.1
       rollup-plugin-visualizer:
         specifier: ^5.9.0
-        version: 5.9.0(rollup@3.23.0)
+        version: 5.9.0(rollup@3.25.1)
       sass:
         specifier: ^1.63.2
         version: 1.63.2
@@ -185,7 +185,7 @@ importers:
         version: 0.1.4(@chakra-ui/react@2.7.0)(@emotion/cache@11.11.0)(@emotion/react@11.11.1)(@emotion/styled@11.11.0)(framer-motion@10.12.16)(react-dom@18.2.0)(react@18.2.0)
       '@open-pioneer/runtime':
         specifier: ^0.1.5
-        version: 0.1.5(@formatjs/intl@2.8.0)(@open-pioneer/chakra-integration@0.1.4)(@open-pioneer/core@0.1.4)(@open-pioneer/runtime-react-support@0.1.2)(react-dom@18.2.0)(react@18.2.0)
+        version: 0.1.5(@formatjs/intl@2.9.0)(@open-pioneer/chakra-integration@0.1.4)(@open-pioneer/core@0.1.4)(@open-pioneer/runtime-react-support@0.1.2)(react-dom@18.2.0)(react@18.2.0)
       sample-package:
         specifier: workspace:^
         version: link:../../packages/sample-package
@@ -208,7 +208,7 @@ importers:
         version: 0.1.4(@open-pioneer/runtime@0.1.5)
       '@open-pioneer/runtime':
         specifier: ^0.1.5
-        version: 0.1.5(@formatjs/intl@2.8.0)(@open-pioneer/chakra-integration@0.1.4)(@open-pioneer/core@0.1.4)(@open-pioneer/runtime-react-support@0.1.2)(react-dom@18.2.0)(react@18.2.0)
+        version: 0.1.5(@formatjs/intl@2.9.0)(@open-pioneer/chakra-integration@0.1.4)(@open-pioneer/core@0.1.4)(@open-pioneer/runtime-react-support@0.1.2)(react-dom@18.2.0)(react@18.2.0)
 
   src/samples/chakra-sample/chakra-app:
     dependencies:
@@ -217,7 +217,7 @@ importers:
         version: 0.1.4(@chakra-ui/react@2.7.0)(@emotion/cache@11.11.0)(@emotion/react@11.11.1)(@emotion/styled@11.11.0)(framer-motion@10.12.16)(react-dom@18.2.0)(react@18.2.0)
       '@open-pioneer/runtime':
         specifier: ^0.1.5
-        version: 0.1.5(@formatjs/intl@2.8.0)(@open-pioneer/chakra-integration@0.1.4)(@open-pioneer/core@0.1.4)(@open-pioneer/runtime-react-support@0.1.2)(react-dom@18.2.0)(react@18.2.0)
+        version: 0.1.5(@formatjs/intl@2.9.0)(@open-pioneer/chakra-integration@0.1.4)(@open-pioneer/core@0.1.4)(@open-pioneer/runtime-react-support@0.1.2)(react-dom@18.2.0)(react@18.2.0)
 
   src/samples/extension-sample/extension-app:
     dependencies:
@@ -226,7 +226,7 @@ importers:
         version: 0.1.4(@chakra-ui/react@2.7.0)(@emotion/cache@11.11.0)(@emotion/react@11.11.1)(@emotion/styled@11.11.0)(framer-motion@10.12.16)(react-dom@18.2.0)(react@18.2.0)
       '@open-pioneer/runtime':
         specifier: ^0.1.5
-        version: 0.1.5(@formatjs/intl@2.8.0)(@open-pioneer/chakra-integration@0.1.4)(@open-pioneer/core@0.1.4)(@open-pioneer/runtime-react-support@0.1.2)(react-dom@18.2.0)(react@18.2.0)
+        version: 0.1.5(@formatjs/intl@2.9.0)(@open-pioneer/chakra-integration@0.1.4)(@open-pioneer/core@0.1.4)(@open-pioneer/runtime-react-support@0.1.2)(react-dom@18.2.0)(react@18.2.0)
 
   src/samples/i18n-howto/app:
     dependencies:
@@ -235,7 +235,7 @@ importers:
         version: 0.1.4(@chakra-ui/react@2.7.0)(@emotion/cache@11.11.0)(@emotion/react@11.11.1)(@emotion/styled@11.11.0)(framer-motion@10.12.16)(react-dom@18.2.0)(react@18.2.0)
       '@open-pioneer/runtime':
         specifier: ^0.1.5
-        version: 0.1.5(@formatjs/intl@2.8.0)(@open-pioneer/chakra-integration@0.1.4)(@open-pioneer/core@0.1.4)(@open-pioneer/runtime-react-support@0.1.2)(react-dom@18.2.0)(react@18.2.0)
+        version: 0.1.5(@formatjs/intl@2.9.0)(@open-pioneer/chakra-integration@0.1.4)(@open-pioneer/core@0.1.4)(@open-pioneer/runtime-react-support@0.1.2)(react-dom@18.2.0)(react@18.2.0)
 
   src/samples/i18n-sample/i18n-app:
     dependencies:
@@ -247,7 +247,7 @@ importers:
         version: 0.1.4(@open-pioneer/runtime@0.1.5)
       '@open-pioneer/runtime':
         specifier: ^0.1.5
-        version: 0.1.5(@formatjs/intl@2.8.0)(@open-pioneer/chakra-integration@0.1.4)(@open-pioneer/core@0.1.4)(@open-pioneer/runtime-react-support@0.1.2)(react-dom@18.2.0)(react@18.2.0)
+        version: 0.1.5(@formatjs/intl@2.9.0)(@open-pioneer/chakra-integration@0.1.4)(@open-pioneer/core@0.1.4)(@open-pioneer/runtime-react-support@0.1.2)(react-dom@18.2.0)(react@18.2.0)
       i18n-sample-package:
         specifier: workspace:*
         version: link:../i18n-sample-package
@@ -258,7 +258,7 @@ importers:
     devDependencies:
       '@open-pioneer/runtime':
         specifier: ^0.1.5
-        version: 0.1.5(@formatjs/intl@2.8.0)(@open-pioneer/chakra-integration@0.1.4)(@open-pioneer/core@0.1.4)(@open-pioneer/runtime-react-support@0.1.2)(react-dom@18.2.0)(react@18.2.0)
+        version: 0.1.5(@formatjs/intl@2.9.0)(@open-pioneer/chakra-integration@0.1.4)(@open-pioneer/core@0.1.4)(@open-pioneer/runtime-react-support@0.1.2)(react-dom@18.2.0)(react@18.2.0)
 
   src/samples/map-sample/map-sample-scale-component:
     dependencies:
@@ -324,7 +324,7 @@ importers:
         version: 0.1.4(@open-pioneer/core@0.1.4)(@open-pioneer/runtime@0.1.5)(ol@7.3.0)(react-use@17.4.0)(react@18.2.0)
       '@open-pioneer/runtime':
         specifier: ^0.1.5
-        version: 0.1.5(@formatjs/intl@2.8.0)(@open-pioneer/chakra-integration@0.1.4)(@open-pioneer/core@0.1.4)(@open-pioneer/runtime-react-support@0.1.2)(react-dom@18.2.0)(react@18.2.0)
+        version: 0.1.5(@formatjs/intl@2.9.0)(@open-pioneer/chakra-integration@0.1.4)(@open-pioneer/core@0.1.4)(@open-pioneer/runtime-react-support@0.1.2)(react-dom@18.2.0)(react@18.2.0)
       map-sample-logging:
         specifier: workspace:^
         version: link:../map-sample-logging
@@ -360,7 +360,7 @@ importers:
         version: 0.1.4
       '@open-pioneer/runtime':
         specifier: ^0.1.5
-        version: 0.1.5(@formatjs/intl@2.8.0)(@open-pioneer/chakra-integration@0.1.4)(@open-pioneer/core@0.1.4)(@open-pioneer/runtime-react-support@0.1.2)(react-dom@18.2.0)(react@18.2.0)
+        version: 0.1.5(@formatjs/intl@2.9.0)(@open-pioneer/chakra-integration@0.1.4)(@open-pioneer/core@0.1.4)(@open-pioneer/runtime-react-support@0.1.2)(react-dom@18.2.0)(react@18.2.0)
       react:
         specifier: ^18.2.0
         version: 18.2.0
@@ -369,7 +369,7 @@ importers:
     dependencies:
       '@open-pioneer/runtime':
         specifier: ^0.1.5
-        version: 0.1.5(@formatjs/intl@2.8.0)(@open-pioneer/chakra-integration@0.1.4)(@open-pioneer/core@0.1.4)(@open-pioneer/runtime-react-support@0.1.2)(react-dom@18.2.0)(react@18.2.0)
+        version: 0.1.5(@formatjs/intl@2.9.0)(@open-pioneer/chakra-integration@0.1.4)(@open-pioneer/core@0.1.4)(@open-pioneer/runtime-react-support@0.1.2)(react-dom@18.2.0)(react@18.2.0)
       styling-sample-components:
         specifier: workspace:^
         version: link:../styling-sample-components
@@ -2536,10 +2536,10 @@ packages:
       '@formatjs/intl-localematcher': 0.2.32
       tslib: 2.5.3
 
-  /@formatjs/ecma402-abstract@1.16.0:
-    resolution: {integrity: sha512-qIH2cmG/oHGrVdApbqDf6/YR+B2A4NdkBjKLeq369OMVkqMFsC5oPSP1xpiyL1cAn+PbNEZHxwOVMYD/C76c6g==}
+  /@formatjs/ecma402-abstract@1.17.0:
+    resolution: {integrity: sha512-6ueQTeJZtwKjmh23bdkq/DMqH4l4bmfvtQH98blOSbiXv/OUiyijSW6jU22IT8BNM1ujCaEvJfTtyCYVH38EMQ==}
     dependencies:
-      '@formatjs/intl-localematcher': 0.3.0
+      '@formatjs/intl-localematcher': 0.4.0
       tslib: 2.5.3
 
   /@formatjs/fast-memoize@2.0.1:
@@ -2547,8 +2547,8 @@ packages:
     dependencies:
       tslib: 2.5.3
 
-  /@formatjs/fast-memoize@2.1.0:
-    resolution: {integrity: sha512-w7IzF6Okx2tQXRVlT/cXI4dfS0bvKHhWE5Kn7ajqDVYH4nksUFOMU21Yd4zDENxZ8mFb7IBu7bOopnB2VxZQeA==}
+  /@formatjs/fast-memoize@2.2.0:
+    resolution: {integrity: sha512-hnk/nY8FyrL5YxwP9e4r9dqeM6cAbo8PeU9UjyXojZMNvVad2Z06FAVHyR3Ecw6fza+0GH7vdJgiKIVXTMbSBA==}
     dependencies:
       tslib: 2.5.3
 
@@ -2559,11 +2559,11 @@ packages:
       '@formatjs/icu-skeleton-parser': 1.4.0
       tslib: 2.5.3
 
-  /@formatjs/icu-messageformat-parser@2.5.0:
-    resolution: {integrity: sha512-8AwKRkVIZzVlvZwio1TcLVvUbJw0up1joa8//JIxKVeflqKiZwfzCGAelZt/4hHCEQf9NECose//nODnmBEkNQ==}
+  /@formatjs/icu-messageformat-parser@2.6.0:
+    resolution: {integrity: sha512-yT6at0qc0DANw9qM/TU8RZaCtfDXtj4pZM/IC2WnVU80yAcliS3KVDiuUt4jSQAeFL9JS5bc2hARnFmjPdA6qw==}
     dependencies:
-      '@formatjs/ecma402-abstract': 1.16.0
-      '@formatjs/icu-skeleton-parser': 1.5.0
+      '@formatjs/ecma402-abstract': 1.17.0
+      '@formatjs/icu-skeleton-parser': 1.6.0
       tslib: 2.5.3
 
   /@formatjs/icu-skeleton-parser@1.4.0:
@@ -2572,10 +2572,10 @@ packages:
       '@formatjs/ecma402-abstract': 1.15.0
       tslib: 2.5.3
 
-  /@formatjs/icu-skeleton-parser@1.5.0:
-    resolution: {integrity: sha512-R/wOg/hxh3JWNB4LHYfNtIe8PC39mkzplh6gtrqCY33EqYeUFEGOYTWJrkXNcoRXlZWQtfrH6REch5r57tAyMQ==}
+  /@formatjs/icu-skeleton-parser@1.6.0:
+    resolution: {integrity: sha512-eMmxNpoX/J1IPUjPGSZwo0Wh+7CEvdEMddP2Jxg1gQJXfGfht/FdW2D5XDFj3VMbOTUQlDIdZJY7uC6O6gjPoA==}
     dependencies:
-      '@formatjs/ecma402-abstract': 1.16.0
+      '@formatjs/ecma402-abstract': 1.17.0
       tslib: 2.5.3
 
   /@formatjs/intl-displaynames@6.3.2:
@@ -2585,11 +2585,11 @@ packages:
       '@formatjs/intl-localematcher': 0.2.32
       tslib: 2.5.3
 
-  /@formatjs/intl-displaynames@6.4.0:
-    resolution: {integrity: sha512-5M4ok7tY5UI/Qzq2jULVrl17PZqyOgcSRW/7VXfVXyD0FG76TlmhuIKENiIYkFn5z3FlB+XMiQczvwqK+9ORJw==}
+  /@formatjs/intl-displaynames@6.5.0:
+    resolution: {integrity: sha512-sg/nR8ILEdUl+2sWu6jc1nQ5s04yucGlH1RVfatW8TSJ5uG3Yy3vgigi8NNC/BuhcncUNPWqSpTCSI1hA+rhiw==}
     dependencies:
-      '@formatjs/ecma402-abstract': 1.16.0
-      '@formatjs/intl-localematcher': 0.3.0
+      '@formatjs/ecma402-abstract': 1.17.0
+      '@formatjs/intl-localematcher': 0.4.0
       tslib: 2.5.3
 
   /@formatjs/intl-listformat@7.2.2:
@@ -2599,11 +2599,11 @@ packages:
       '@formatjs/intl-localematcher': 0.2.32
       tslib: 2.5.3
 
-  /@formatjs/intl-listformat@7.3.0:
-    resolution: {integrity: sha512-HWSST1TBcKi5frneeDi9O6YYp9NWb7HNrDSbCgnBLmz/9rpGycdp9c5bTKJqYFN6apw3E/kIo+kZHjVeiFITRQ==}
+  /@formatjs/intl-listformat@7.4.0:
+    resolution: {integrity: sha512-ifupb+balZUAF/Oh3QyGRqPRWGSKwWoMPR0cYZEG7r61SimD+m38oFQqVx/3Fp7LfQFF11m7IS+MlxOo2sKINA==}
     dependencies:
-      '@formatjs/ecma402-abstract': 1.16.0
-      '@formatjs/intl-localematcher': 0.3.0
+      '@formatjs/ecma402-abstract': 1.17.0
+      '@formatjs/intl-localematcher': 0.4.0
       tslib: 2.5.3
 
   /@formatjs/intl-localematcher@0.2.32:
@@ -2611,8 +2611,8 @@ packages:
     dependencies:
       tslib: 2.5.3
 
-  /@formatjs/intl-localematcher@0.3.0:
-    resolution: {integrity: sha512-NFoxXX3dtZ6B53NlCErq181NxN/noMZOWKHfcEPQRNfV0a19THxyjxu2RTSNS3532wGm6fOdid5qsBQWg0Rhtw==}
+  /@formatjs/intl-localematcher@0.4.0:
+    resolution: {integrity: sha512-bRTd+rKomvfdS4QDlVJ6TA/Jx1F2h/TBVO5LjvhQ7QPPHp19oPNMIum7W2CMEReq/zPxpmCeB31F9+5gl/qtvw==}
     dependencies:
       tslib: 2.5.3
 
@@ -2633,21 +2633,20 @@ packages:
       tslib: 2.5.3
       typescript: 5.0.4
 
-  /@formatjs/intl@2.8.0(typescript@5.0.4):
-    resolution: {integrity: sha512-RRp4BMG9v7vBegbX1UuDMfoBOQljDjcx1clY1XV8D5qn6m5w4gyJFCJ/iiG6eaBBRNAJrqGdszi0Ry6UNiWDsQ==}
-    deprecated: 'Broken ESM package exports. See issue #4126, #4127, #4128'
+  /@formatjs/intl@2.9.0(typescript@5.0.4):
+    resolution: {integrity: sha512-Ym0trUoC/VO6wQu4YHa0H1VR2tEixFRmwZgADkDLm7nD+vv1Ob+/88mUAoT0pwvirFqYKgUKEwp1tFepqyqvVA==}
     peerDependencies:
       typescript: ^4.7 || 5
     peerDependenciesMeta:
       typescript:
         optional: true
     dependencies:
-      '@formatjs/ecma402-abstract': 1.16.0
-      '@formatjs/fast-memoize': 2.1.0
-      '@formatjs/icu-messageformat-parser': 2.5.0
-      '@formatjs/intl-displaynames': 6.4.0
-      '@formatjs/intl-listformat': 7.3.0
-      intl-messageformat: 10.4.0
+      '@formatjs/ecma402-abstract': 1.17.0
+      '@formatjs/fast-memoize': 2.2.0
+      '@formatjs/icu-messageformat-parser': 2.6.0
+      '@formatjs/intl-displaynames': 6.5.0
+      '@formatjs/intl-listformat': 7.4.0
+      intl-messageformat: 10.5.0
       tslib: 2.5.3
       typescript: 5.0.4
 
@@ -2767,8 +2766,8 @@ packages:
       fastq: 1.15.0
     dev: true
 
-  /@open-pioneer/build-common@0.6.0:
-    resolution: {integrity: sha512-hE0CRnlQFLAUZ8URaQMilIBao6+BAXlbaG0xRAUPgGNETC+pU6oVwt/nSwhikH7fsOelH/PXOrXrI/P0zxQvyA==}
+  /@open-pioneer/build-common@0.6.1:
+    resolution: {integrity: sha512-tRpbTeqIFl2FKcXh004W+WL2fnCRRJ8R/dicTOth+Sp2w/GNm8itPccZyFKnxWnw338eGByaM+n4Gq+PPlFCnQ==}
     engines: {node: '>= 16'}
     dependencies:
       semver: 7.5.1
@@ -2776,12 +2775,12 @@ packages:
       zod-validation-error: 1.3.0(zod@3.21.4)
     dev: true
 
-  /@open-pioneer/build-package-cli@0.2.0(sass@1.63.2)(typescript@5.0.4):
-    resolution: {integrity: sha512-0xhenz7w3+0ElJnNvG3CbSOZsSjLJf6AchjPpKIQfRC9EMX7Eew3xpnySXfLJV4MXfM+otjFW4F1g+6EKuzBng==}
+  /@open-pioneer/build-package-cli@0.2.2(sass@1.63.2)(typescript@5.0.4):
+    resolution: {integrity: sha512-FUXL0QdNMEpdU/zsGMJDAQoP7o/xpE4mDyNxVqY/m0LgLP/F5zjo82Ehl7SjZBD1DkdtaSS0Q+7WENaeu6+06A==}
     engines: {node: '>= 16'}
     hasBin: true
     dependencies:
-      '@open-pioneer/build-package': 0.7.0(sass@1.63.2)(typescript@5.0.4)
+      '@open-pioneer/build-package': 0.7.2(sass@1.63.2)(typescript@5.0.4)
       chalk: 5.2.0
       commander: 10.0.1
     transitivePeerDependencies:
@@ -2790,8 +2789,8 @@ packages:
       - typescript
     dev: true
 
-  /@open-pioneer/build-package@0.7.0(sass@1.63.2)(typescript@5.0.4):
-    resolution: {integrity: sha512-bCU60ZXdbglzIFFTZMhat/ZLBxyrpYhVtxvI5dogOC/0Z72aJoDMXNNLdOVcovyQrltH1OmdTlvDo/XQKcql2w==}
+  /@open-pioneer/build-package@0.7.2(sass@1.63.2)(typescript@5.0.4):
+    resolution: {integrity: sha512-Ruy4Q937KS0M2Zvu/Vb/U3be2x37BV6LJP+CDqtccN/iwTbLXP9jkg+745Nca8sKOSEeMs8r2SyyE3BZ6ahtZg==}
     engines: {node: '>= 16'}
     peerDependencies:
       sass: '*'
@@ -2802,8 +2801,8 @@ packages:
       typescript:
         optional: true
     dependencies:
-      '@open-pioneer/build-common': 0.6.0
-      '@open-pioneer/build-support': 0.6.0
+      '@open-pioneer/build-common': 0.6.1
+      '@open-pioneer/build-support': 0.6.1
       chalk: 5.2.0
       debug: 4.3.4
       esbuild: 0.17.19
@@ -2811,16 +2810,16 @@ packages:
       fs-extra: 11.1.1
       postcss: 8.4.24
       postcss-import: 15.1.0(postcss@8.4.24)
-      rollup: 3.23.0
-      rollup-plugin-esbuild: 5.0.0(esbuild@0.17.19)(rollup@3.23.0)
+      rollup: 3.25.1
+      rollup-plugin-esbuild: 5.0.0(esbuild@0.17.19)(rollup@3.25.1)
       sass: 1.63.2
       typescript: 5.0.4
     transitivePeerDependencies:
       - supports-color
     dev: true
 
-  /@open-pioneer/build-support@0.6.0:
-    resolution: {integrity: sha512-3JV97gjkx4zWZKykFCm9zuQhc931au6HUNKW/knzXsuKnPHXCCkjTPJTAXw3cqvmQ/hJya6zOjW6A4tCxnmbTA==}
+  /@open-pioneer/build-support@0.6.1:
+    resolution: {integrity: sha512-Q1TpOuqhU8hWNM/U/vMDP6ayfAtxRXeCaRfMVzNtK/R8Qfwd6XTHqr9/IsdtZQ+eeyouK9LTOr5CQvfLVX2qUw==}
     engines: {node: '>= 16'}
     dev: true
 
@@ -2881,7 +2880,7 @@ packages:
       '@emotion/react': 11.11.1(@types/react@18.2.7)(react@18.2.0)
       '@emotion/styled': 11.11.0(@emotion/react@11.11.1)(@types/react@18.2.7)(react@18.2.0)
       '@open-pioneer/chakra-integration': 0.1.4(@chakra-ui/react@2.7.0)(@emotion/cache@11.11.0)(@emotion/react@11.11.1)(@emotion/styled@11.11.0)(framer-motion@10.12.16)(react-dom@18.2.0)(react@18.2.0)
-      '@open-pioneer/runtime': 0.1.5(@formatjs/intl@2.8.0)(@open-pioneer/chakra-integration@0.1.4)(@open-pioneer/core@0.1.4)(@open-pioneer/runtime-react-support@0.1.2)(react-dom@18.2.0)(react@18.2.0)
+      '@open-pioneer/runtime': 0.1.5(@formatjs/intl@2.9.0)(@open-pioneer/chakra-integration@0.1.4)(@open-pioneer/core@0.1.4)(@open-pioneer/runtime-react-support@0.1.2)(react-dom@18.2.0)(react@18.2.0)
       react: 18.2.0
     dev: false
 
@@ -2897,7 +2896,7 @@ packages:
     dependencies:
       '@open-pioneer/chakra-integration': 0.1.4(@chakra-ui/react@2.7.0)(@emotion/cache@11.11.0)(@emotion/react@11.11.1)(@emotion/styled@11.11.0)(framer-motion@10.12.16)(react-dom@18.2.0)(react@18.2.0)
       '@open-pioneer/experimental-ol-map': 0.1.4(@open-pioneer/core@0.1.4)(@open-pioneer/runtime@0.1.5)(ol@7.3.0)(react-use@17.4.0)(react@18.2.0)
-      '@open-pioneer/runtime': 0.1.5(@formatjs/intl@2.8.0)(@open-pioneer/chakra-integration@0.1.4)(@open-pioneer/core@0.1.4)(@open-pioneer/runtime-react-support@0.1.2)(react-dom@18.2.0)(react@18.2.0)
+      '@open-pioneer/runtime': 0.1.5(@formatjs/intl@2.9.0)(@open-pioneer/chakra-integration@0.1.4)(@open-pioneer/core@0.1.4)(@open-pioneer/runtime-react-support@0.1.2)(react-dom@18.2.0)(react@18.2.0)
       ol: 7.3.0
       react: 18.2.0
       react-use: 17.4.0(react-dom@18.2.0)(react@18.2.0)
@@ -2913,7 +2912,7 @@ packages:
       react-use: ^17.4.0
     dependencies:
       '@open-pioneer/core': 0.1.4
-      '@open-pioneer/runtime': 0.1.5(@formatjs/intl@2.8.0)(@open-pioneer/chakra-integration@0.1.4)(@open-pioneer/core@0.1.4)(@open-pioneer/runtime-react-support@0.1.2)(react-dom@18.2.0)(react@18.2.0)
+      '@open-pioneer/runtime': 0.1.5(@formatjs/intl@2.9.0)(@open-pioneer/chakra-integration@0.1.4)(@open-pioneer/core@0.1.4)(@open-pioneer/runtime-react-support@0.1.2)(react-dom@18.2.0)(react@18.2.0)
       ol: 7.3.0
       react: 18.2.0
       react-use: 17.4.0(react-dom@18.2.0)(react@18.2.0)
@@ -2924,7 +2923,7 @@ packages:
     peerDependencies:
       '@open-pioneer/runtime': ^0.1.5
     dependencies:
-      '@open-pioneer/runtime': 0.1.5(@formatjs/intl@2.8.0)(@open-pioneer/chakra-integration@0.1.4)(@open-pioneer/core@0.1.4)(@open-pioneer/runtime-react-support@0.1.2)(react-dom@18.2.0)(react@18.2.0)
+      '@open-pioneer/runtime': 0.1.5(@formatjs/intl@2.9.0)(@open-pioneer/chakra-integration@0.1.4)(@open-pioneer/core@0.1.4)(@open-pioneer/runtime-react-support@0.1.2)(react-dom@18.2.0)(react@18.2.0)
     dev: false
 
   /@open-pioneer/integration@0.1.4(@open-pioneer/runtime@0.1.5):
@@ -2932,7 +2931,7 @@ packages:
     peerDependencies:
       '@open-pioneer/runtime': ^0.1.5
     dependencies:
-      '@open-pioneer/runtime': 0.1.5(@formatjs/intl@2.8.0)(@open-pioneer/chakra-integration@0.1.4)(@open-pioneer/core@0.1.4)(@open-pioneer/runtime-react-support@0.1.2)(react-dom@18.2.0)(react@18.2.0)
+      '@open-pioneer/runtime': 0.1.5(@formatjs/intl@2.9.0)(@open-pioneer/chakra-integration@0.1.4)(@open-pioneer/core@0.1.4)(@open-pioneer/runtime-react-support@0.1.2)(react-dom@18.2.0)(react@18.2.0)
     dev: false
 
   /@open-pioneer/runtime-react-support@0.1.2(react@18.2.0):
@@ -2959,7 +2958,7 @@ packages:
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
 
-  /@open-pioneer/runtime@0.1.5(@formatjs/intl@2.8.0)(@open-pioneer/chakra-integration@0.1.4)(@open-pioneer/core@0.1.4)(@open-pioneer/runtime-react-support@0.1.2)(react-dom@18.2.0)(react@18.2.0):
+  /@open-pioneer/runtime@0.1.5(@formatjs/intl@2.9.0)(@open-pioneer/chakra-integration@0.1.4)(@open-pioneer/core@0.1.4)(@open-pioneer/runtime-react-support@0.1.2)(react-dom@18.2.0)(react@18.2.0):
     resolution: {integrity: sha512-sMScHq3iaFXi6YmvMzScEQXU2C+4pWEjOQNYNUwzX5cYZTgr77HX6B/7qQiXJTlzRJ8eVXpbVCL9SUba7LvcNA==}
     peerDependencies:
       '@formatjs/intl': ^2.7.2
@@ -2969,7 +2968,7 @@ packages:
       react: ^18.2.0
       react-dom: ^18.2.0
     dependencies:
-      '@formatjs/intl': 2.8.0(typescript@5.0.4)
+      '@formatjs/intl': 2.9.0(typescript@5.0.4)
       '@open-pioneer/chakra-integration': 0.1.4(@chakra-ui/react@2.7.0)(@emotion/cache@11.11.0)(@emotion/react@11.11.1)(@emotion/styled@11.11.0)(framer-motion@10.12.16)(react-dom@18.2.0)(react@18.2.0)
       '@open-pioneer/core': 0.1.4
       '@open-pioneer/runtime-react-support': 0.1.2(react@18.2.0)
@@ -2996,8 +2995,8 @@ packages:
       react-dom: 18.2.0(react@18.2.0)
     dev: false
 
-  /@open-pioneer/vite-plugin-pioneer@0.8.6(@open-pioneer/runtime@0.1.5)(sass@1.63.2)(vite@4.3.9):
-    resolution: {integrity: sha512-bVXCkxaY5jB5OOTypMLaMI0B7gjB7br5eg5X6Eso/vaVPWGPn8QQtc98R3zsFs2dK/l9bZuqgOfi1FRoAfXUvQ==}
+  /@open-pioneer/vite-plugin-pioneer@0.8.7(@open-pioneer/runtime@0.1.5)(sass@1.63.2)(vite@4.3.9):
+    resolution: {integrity: sha512-zgIWd5HN0moonVJtlkMOEBIYhzDZqLLW9wK8Vy7lEzNpDcwOWo4mVCXPIouG24Mh3OOinR2Kx/cn7PF0+LnnzQ==}
     engines: {node: '>= 16'}
     peerDependencies:
       '@open-pioneer/runtime': '*'
@@ -3007,7 +3006,7 @@ packages:
       '@babel/generator': 7.22.3
       '@babel/template': 7.21.9
       '@babel/types': 7.22.4
-      '@open-pioneer/build-common': 0.6.0
+      '@open-pioneer/build-common': 0.6.1
       '@open-pioneer/runtime': 0.1.5(@formatjs/intl@2.7.2)(@open-pioneer/chakra-integration@0.1.4)(@open-pioneer/core@0.1.4)(@open-pioneer/runtime-react-support@0.1.2)(react-dom@18.2.0)(react@18.2.0)
       debug: 4.3.4
       js-yaml: 4.1.0
@@ -3053,7 +3052,7 @@ packages:
       picomatch: 2.3.1
     dev: true
 
-  /@rollup/pluginutils@5.0.2(rollup@3.23.0):
+  /@rollup/pluginutils@5.0.2(rollup@3.25.1):
     resolution: {integrity: sha512-pTd9rIsP92h+B6wWwFbW8RkZv4hiR/xKsqre4SIuAOaOEQRxi0lqLke9k2/7WegC85GgUs9pjmOjCUi3In4vwA==}
     engines: {node: '>=14.0.0'}
     peerDependencies:
@@ -3062,10 +3061,10 @@ packages:
       rollup:
         optional: true
     dependencies:
-      '@types/estree': 1.0.0
+      '@types/estree': 1.0.1
       estree-walker: 2.0.2
       picomatch: 2.3.1
-      rollup: 3.23.0
+      rollup: 3.25.1
     dev: true
 
   /@sinclair/typebox@0.25.24:
@@ -3277,6 +3276,10 @@ packages:
 
   /@types/estree@1.0.0:
     resolution: {integrity: sha512-WulqXMDUTYAXCjZnk6JtIHPigp55cVtDgDrO2gHRwhyJto21+1zbVCtOYB2L1F9w4qCQ0rOGWBnBe0FNTiEJIQ==}
+    dev: true
+
+  /@types/estree@1.0.1:
+    resolution: {integrity: sha512-LG4opVs2ANWZ1TJoKc937iMmNstM/d0ae1vNbnBvBhqCSezgVUOzcLCqbI5elV8Vy6WKwKjaqR+zO9VKirBBCA==}
     dev: true
 
   /@types/istanbul-lib-coverage@2.0.4:
@@ -4222,8 +4225,8 @@ packages:
       isarray: 2.0.5
       stop-iteration-iterator: 1.0.0
 
-  /es-module-lexer@1.2.1:
-    resolution: {integrity: sha512-9978wrXM50Y4rTMmW5kXIC09ZdXQZqkE4mxhwkd8VbzsGkXGPgV4zWuqQJgCEzYngdo2dYDa0l8xhX4fkSwJSg==}
+  /es-module-lexer@1.3.0:
+    resolution: {integrity: sha512-vZK7T0N2CBmBOixhmjdqx2gWVbFZ4DXZ/NyRMZVlJXPa7CyFS+/a4QQsDGDQy9ZfEzxFuNEsMLeQJnKP2p5/JA==}
     dev: true
 
   /es-set-tostringtag@2.0.1:
@@ -5063,12 +5066,12 @@ packages:
       '@formatjs/icu-messageformat-parser': 2.4.0
       tslib: 2.5.3
 
-  /intl-messageformat@10.4.0:
-    resolution: {integrity: sha512-WKmvL2ATvsTJ0CMkO1Hs6f87QlOYZ10opvOJtj0+I3RAQCBxrY8xA3QvVJPJHTS2ru0B7q/kCDyJE1oiiElgyA==}
+  /intl-messageformat@10.5.0:
+    resolution: {integrity: sha512-AvojYuOaRb6r2veOKfTVpxH9TrmjSdc5iR9R5RgBwrDZYSmAAFVT+QLbW3C4V7Qsg0OguMp67Q/EoUkxZzXRGw==}
     dependencies:
-      '@formatjs/ecma402-abstract': 1.16.0
-      '@formatjs/fast-memoize': 2.1.0
-      '@formatjs/icu-messageformat-parser': 2.5.0
+      '@formatjs/ecma402-abstract': 1.17.0
+      '@formatjs/fast-memoize': 2.2.0
+      '@formatjs/icu-messageformat-parser': 2.6.0
       tslib: 2.5.3
 
   /invariant@2.2.4:
@@ -5120,6 +5123,12 @@ packages:
     resolution: {integrity: sha512-RRjxlvLDkD1YJwDbroBHMb+cukurkDWNyHx7D3oNB5x9rb5ogcksMC5wHCadcXoo67gVr/+3GFySh3134zi6rw==}
     dependencies:
       has: 1.0.3
+
+  /is-core-module@2.12.1:
+    resolution: {integrity: sha512-Q4ZuBAe2FUsKtyQJoQHlvP8OvBERxO3jEmy1I7hcRXcJBGGHFh/aJBswbXuS9sgrDH2QUO8ilkwNPHvHMd8clg==}
+    dependencies:
+      has: 1.0.3
+    dev: true
 
   /is-date-object@1.0.5:
     resolution: {integrity: sha512-9YQaSxsAiSwcvS33MBk3wTCVnWK+HhF8VZR2jRxehM16QcVOdHqPn4VPHmRK4lSr38n9JriurInLcP90xsYNfQ==}
@@ -5848,7 +5857,7 @@ packages:
       postcss: 8.4.24
       postcss-value-parser: 4.2.0
       read-cache: 1.0.0
-      resolve: 1.22.1
+      resolve: 1.22.2
     dev: true
 
   /postcss-value-parser@4.2.0:
@@ -6151,6 +6160,15 @@ packages:
       path-parse: 1.0.7
       supports-preserve-symlinks-flag: 1.0.0
 
+  /resolve@1.22.2:
+    resolution: {integrity: sha512-Sb+mjNHOULsBv818T40qSPeRiuWLyaGMa5ewydRLFimneixmVy2zdivRl+AF6jaYPC8ERxGDmFSiqui6SfPd+g==}
+    hasBin: true
+    dependencies:
+      is-core-module: 2.12.1
+      path-parse: 1.0.7
+      supports-preserve-symlinks-flag: 1.0.0
+    dev: true
+
   /resolve@2.0.0-next.4:
     resolution: {integrity: sha512-iMDbmAWtfU+MHpxt/I5iWI7cY6YVEZUQ3MBgPQ++XD1PELuJHIl82xBmObyP2KyQmkNB2dsqF7seoQQiAn5yDQ==}
     hasBin: true
@@ -6180,25 +6198,25 @@ packages:
       glob: 10.2.6
     dev: true
 
-  /rollup-plugin-esbuild@5.0.0(esbuild@0.17.19)(rollup@3.23.0):
+  /rollup-plugin-esbuild@5.0.0(esbuild@0.17.19)(rollup@3.25.1):
     resolution: {integrity: sha512-1cRIOHAPh8WQgdQQyyvFdeOdxuiyk+zB5zJ5+YOwrZP4cJ0MT3Fs48pQxrZeyZHcn+klFherytILVfE4aYrneg==}
     engines: {node: '>=14.18.0', npm: '>=8.0.0'}
     peerDependencies:
       esbuild: '>=0.10.1'
       rollup: ^1.20.0 || ^2.0.0 || ^3.0.0
     dependencies:
-      '@rollup/pluginutils': 5.0.2(rollup@3.23.0)
+      '@rollup/pluginutils': 5.0.2(rollup@3.25.1)
       debug: 4.3.4
-      es-module-lexer: 1.2.1
+      es-module-lexer: 1.3.0
       esbuild: 0.17.19
       joycon: 3.1.1
       jsonc-parser: 3.2.0
-      rollup: 3.23.0
+      rollup: 3.25.1
     transitivePeerDependencies:
       - supports-color
     dev: true
 
-  /rollup-plugin-visualizer@5.9.0(rollup@3.23.0):
+  /rollup-plugin-visualizer@5.9.0(rollup@3.25.1):
     resolution: {integrity: sha512-bbDOv47+Bw4C/cgs0czZqfm8L82xOZssk4ayZjG40y9zbXclNk7YikrZTDao6p7+HDiGxrN0b65SgZiVm9k1Cg==}
     engines: {node: '>=14'}
     hasBin: true
@@ -6210,7 +6228,7 @@ packages:
     dependencies:
       open: 8.4.2
       picomatch: 2.3.1
-      rollup: 3.23.0
+      rollup: 3.25.1
       source-map: 0.7.4
       yargs: 17.7.1
     dev: true
@@ -6225,6 +6243,14 @@ packages:
 
   /rollup@3.23.0:
     resolution: {integrity: sha512-h31UlwEi7FHihLe1zbk+3Q7z1k/84rb9BSwmBSr/XjOCEaBJ2YyedQDuM0t/kfOS0IxM+vk1/zI9XxYj9V+NJQ==}
+    engines: {node: '>=14.18.0', npm: '>=8.0.0'}
+    hasBin: true
+    optionalDependencies:
+      fsevents: 2.3.2
+    dev: true
+
+  /rollup@3.25.1:
+    resolution: {integrity: sha512-tywOR+rwIt5m2ZAWSe5AIJcTat8vGlnPFAv15ycCrw33t6iFsXZ6mzHVFh2psSjxQPmI+xgzMZZizUAukBI4aQ==}
     engines: {node: '>=14.18.0', npm: '>=8.0.0'}
     hasBin: true
     optionalDependencies:
