@@ -501,4 +501,26 @@ See also [Contributing packages to the registry](https://docs.npmjs.com/packages
 
 ## Checklist
 
+-   [ ] package.json
+
+    -   [ ] Choose a good package `name` and a `description`
+    -   [ ] Set `private` to `false`
+    -   [ ] Set a `version`
+    -   [ ] Set a `license`
+    -   [ ] Set `publishConfig.directory` to `dist`
+    -   [ ] Maintain your `dependencies` / `peerDependencies`, see [best practices](../BestPractices.md#dependency-management)
+    -   [ ] Optional: Maintain package metadata such as `keywords`, `repository`, `bugs`, `author`, `homepage` etc.
+
+-   [ ] build.config.mjs
+
+    -   [ ] Configure your package's entry points
+    -   [ ] Customize options if needed, see [`publishConfig`](../reference/Package.md#publishconfig)
+    -   [ ] Set `strict` to `true` (or remove the property to apply default)
+
+-   [ ] Include/Update README.md
+-   [ ] Include/Update CHANGELOG.md
+-   [ ] Include LICENSE
+-   [ ] Build with `build-pioneer-package`
+-   [ ] Publish with `pnpm publish`
+
 ## Automation
