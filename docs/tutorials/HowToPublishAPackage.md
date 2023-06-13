@@ -14,7 +14,7 @@ services of a package are automatically started when needed, styles are automati
 There are some things to consider and a few steps to follow when indenting to share a package with other developers.
 We will first discuss the underlying concepts and then work through a specific example.
 
-## Concepts overview
+## Concepts
 
 -   **Package Compilation**
 
@@ -37,7 +37,7 @@ We will first discuss the underlying concepts and then work through a specific e
     Our build tools automatically detect pioneer packages in an app's dependency graph.
     A package installed this way should work the same way _as if_ it were developed locally.
 
-## Package compilation
+### Package compilation
 
 Our CLI tool `build-pioneer-package` implements package compilation.
 It can be installed by adding [`@open-pioneer/build-package-cli`](https://www.npmjs.com/package/@open-pioneer/build-package-cli) as a (dev) dependency in your project's root `package.json`:
@@ -156,7 +156,7 @@ All these files are copied into the compiled package.
 
 You can configure `publishConfig.validation` to opt out of these required files.
 
-## Publishing
+### Publishing
 
 Publishing an npm package has a few requirements:
 
@@ -206,7 +206,7 @@ $ pnpm publish --access=public
 You can also execute `pnpm pack` instead to generate a `<PKG_NAME>.tgz` in the `dist` directory;
 this allows you to inspect what _would be_ published to the registry.
 
-### Using a different registry
+#### Using a different registry
 
 npm (and pnpm) will by default publish to the public registry at <https://npmjs.com>.
 It can sometimes be an advantage to use another registry, for example for performance reasons (e.g. for better caching)
@@ -236,10 +236,269 @@ Neither option should have any impact on the framework itself, as long as all re
 
 ## Walkthrough
 
+We will create a simple package, prepare it it for publishing and then build ilt.
+We skip the actual publish step as that cannot be undone (we use `--dry-run` instead).
+
+### Step 1: the test package
+
+We create a tiny package that provides a trivial `Greeter` class.
+For the sake of simplicity, we do not use any services or other advanced features in our package.
+
+We create two TypeScript files and the necessary `package.json` and `build.config.mjs` in `src/packages/test-package`.
+
+First, the (only) entry point. This file is intended to be used from the outside.
+
+```ts
+// src/packages/test-package/index.ts
+import { LOGGER } from "./logger";
+
+export class Greeter {
+    constructor() {
+        LOGGER.debug("Greeter constructed");
+    }
+
+    greet(name: string) {
+        return `Hello ${name}!`;
+    }
+}
+```
+
+An internal utility module:
+
+```ts
+// src/packages/test-package/logger.ts
+import { createLogger } from "@open-pioneer/core";
+export const LOGGER = createLogger("test-package");
+```
+
+The initial `package.json`:
+
+```jsonc
+// src/packages/test-package/package.json
+{
+    "name": "test-package",
+    "main": "index.ts",
+    "scripts": {
+        "build": "build-pioneer-package"
+    }
+}
+```
+
+And the initial `build.config.mjs`
+
+```js
+// src/packages/test-package/build.config.mjs
+import { defineBuildConfig } from "@open-pioneer/build-support";
+
+export default defineBuildConfig({
+    publishConfig: {
+        // Disable strict mode during initial setup to see more problems at the same time.
+        // This should be set to `true` when we're done.
+        strict: false
+    }
+});
+```
+
+### Step 2: Getting the package to build
+
+You can use the `build-pioneer-package` CLI to validate your package, it will notify you about problems with your package.
+
+To execute the command, point your terminal to the package's directory `src/packages/test-package` and then execute one of the two following commands:
+
+```bash
+$ pnpm build-pioneer-package # the manual way
+$ pnpm build                 # the prepared 'build' script in package's package.json
+```
+
+Because we have disabled strict validation in the `build.config.mjs`, `build-pioneer-package` will show a lot of warnings but it will also "succeed":
+
+```text
+$ pnpm build
+
+> test-package@ build /home/michael/projects/pioneer/starter/src/packages/test-package
+> build-pioneer-package
+
+Building package at /home/michael/projects/pioneer/starter/src/packages/test-package
+/home/michael/projects/pioneer/starter/src/packages/test-package/build.config.mjs must define the 'entryPoints' property in order to be built.
+Generating TypeScript declaration files...
+Copying assets...
+Writing package metadata...
+/home/michael/projects/pioneer/starter/src/packages/test-package/package.json should define a version.
+/home/michael/projects/pioneer/starter/src/packages/test-package/package.json should define a license.
+/home/michael/projects/pioneer/starter/src/packages/test-package/package.json should define 'publishConfig.directory' to point to the 'dist' directory (see https://pnpm.io/package_json#publishconfigdirectory).
+Copying auxiliary files...
+Failed to find LICENSE in /home/michael/projects/pioneer/starter/src/packages/test-package (attempted exact match and extensions .md, .txt).
+Failed to find README in /home/michael/projects/pioneer/starter/src/packages/test-package (attempted exact match and extensions .md, .txt).
+Failed to find CHANGELOG in /home/michael/projects/pioneer/starter/src/packages/test-package (attempted exact match and extensions .md, .txt).
+Success
+```
+
+#### Configuring entry points
+
+Only entry point modules and modules imported by them will be included in the build package (under `dist`).
+You will notice that right now, the package is empty aside from its `package.json`, because we have not configured any entry points yet.
+
+Here is how to add them:
+
+```diff
+import { defineBuildConfig } from "@open-pioneer/build-support";
+
+export default defineBuildConfig({
++   entryPoints: ["index"],
+    publishConfig: {
+        strict: false
+    }
+});
+```
+
+However, executing `build` now gives us a different problem:
+
+```text
+$ pnpm build
+
+> test-package@ build /home/michael/projects/pioneer/starter/src/packages/test-package
+> build-pioneer-package
+
+Building package at /home/michael/projects/pioneer/starter/src/packages/test-package
+Building JavaScript...
+[plugin check-imports] Failed to import '@open-pioneer/core', the package '@open-pioneer/core' must be configured either as a dependency or as a peerDependency in /home/michael/projects/pioneer/starter/src/packages/test-package/package.json
+... in logger.ts
+
+... SNIP ...
+```
+
+We're using `createLogger` from `@open-pioneer/core` at runtime but forgot to add a dependency.
+We will fix that in the next step, together with the other problems in the `package.json`.
+
+#### Updating package.json
+
+We're missing a `license`, a `version` and the correct `dependencies`.
+We have also been told by to configure `publishConfig.directory`:
+
+```diff
+// package.json
+{
+    "name": "test-package",
+    "main": "index.ts",
++   "version": "1.0.0",
++   "license": "Apache-2.0",
+    "scripts": {
+        "build": "build-pioneer-package"
+    },
++   "peerDependencies": {
++       "@open-pioneer/core": "^1.0.0"
++   },
++   "publishConfig": {
++       "directory": "dist",
++       "linkDirectory": false
++   }
+}
+```
+
+Because the core package is a pioneer package, we have added is a `peerDependency` (see [Best Practices](../BestPractices.md#dependency-management)).
+We also added `linkDirectory: false`, see [Publishing](#publishing).
+
+#### Adding required files
+
+By default, `build-pioneer-package` requires LICENSE, README and CHANGELOG.
+These requirements can be disabled by configuring `publishConfig.validation` in your package's `build.config.mjs`.
+
+For this example, we just add three minimal files:
+
+**README.md:**
+
+```md
+# test-package
+
+Here would be your README.
+```
+
+**LICENSE:**
+
+```plain
+... Copy of the Apache-2.0 license ...
+```
+
+**CHANGELOG.md:**
+
+```md
+# Changelog test-package
+
+## 1.0.0
+
+-   Initial release
+```
+
+Finally, we remove `strict: false` from our `build.config.mjs`:
+
+```diff
+import { defineBuildConfig } from "@open-pioneer/build-support";
+
+export default defineBuildConfig({
+    entryPoints: ["index"],
+    publishConfig: {
+-       strict: false
+    }
+});
+```
+
+#### Rebuilding the package
+
+Building the package after all these changes should now succeed:
+
+```bash
+$ pnpm build
+
+> test-package@1.0.0 build /home/michael/projects/pioneer/starter/src/packages/test-package
+> build-pioneer-package
+
+Building package at /home/michael/projects/pioneer/starter/src/packages/test-package
+...
+Success
+```
+
+### Step 3: Publishing the package
+
+Still from your package's source directory, execute:
+
+```bash
+$ pnpm publish --access=public --dry-run --no-git-checks
+npm notice
+npm notice 📦  test-package@1.0.0
+npm notice === Tarball Contents ===
+npm notice 56B    CHANGELOG.md
+npm notice 11.4kB LICENSE
+npm notice 43B    README.md
+npm notice 120B   index.d.ts
+npm notice 224B   index.js
+npm notice 610B   index.js.map
+npm notice 102B   logger.d.ts
+npm notice 152B   logger.js
+npm notice 347B   logger.js.map
+npm notice 494B   package.json
+npm notice === Tarball Details ===
+npm notice name:          test-package
+npm notice version:       1.0.0
+npm notice filename:      test-package-1.0.0.tgz
+npm notice package size:  5.3 kB
+npm notice unpacked size: 13.8 kB
+npm notice shasum:        38047b90f3983ef3414ce45de578b992efff8f9d
+npm notice integrity:     sha512-eLI0mBJ106sgE[...]5BNhucoTnwJYA==
+npm notice total files:   12
+npm notice
+npm notice Publishing to https://registry.npmjs.org/ (dry-run)
++ test-package@1.0.0
+```
+
+`--dry-run` makes (p-)npm stop just before uploading it to the actual registry.
+`--no-git-checks` allows us to use the command with a dirty working directory (this should not be used in production).
+
+Finally, when you're ready to publish, commit and tag your release and leave out the `--dry-run` flag.
+
+### Further reading
+
+See also [Contributing packages to the registry](https://docs.npmjs.com/packages-and-modules/contributing-packages-to-the-registry)
+
 ## Checklist
 
-TODO rule reserved "\_FILE"
-
 ## Automation
-
-## See also
