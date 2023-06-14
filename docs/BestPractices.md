@@ -76,6 +76,9 @@ When thinking about dependencies, follow these general guidelines:
     }
     ```
 
+-   Use "open" specifiers for dependencies like `^`.
+    Not depending on a fixed version avoid conflicts if multiple packages prefer slightly different versions.
+
 #### dependencies vs peerDependencies
 
 [This post](https://indepth.dev/posts/1187/npm-peer-dependencies) is a great explainer for the differences between `dependencies` and `peerDependencies`.
