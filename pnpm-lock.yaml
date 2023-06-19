@@ -64,14 +64,14 @@ importers:
         version: 17.4.0(react-dom@18.2.0)(react@18.2.0)
     devDependencies:
       '@open-pioneer/build-package-cli':
-        specifier: ^0.2.3
-        version: 0.2.3(sass@1.63.2)(typescript@5.0.4)
+        specifier: ^1.0.1
+        version: 1.0.1(sass@1.63.2)(typescript@5.0.4)
       '@open-pioneer/build-support':
-        specifier: ^0.6.1
-        version: 0.6.1
+        specifier: ^1.0.0
+        version: 1.0.0
       '@open-pioneer/vite-plugin-pioneer':
-        specifier: ^0.8.7
-        version: 0.8.7(@open-pioneer/runtime@0.1.5)(sass@1.63.2)(vite@4.3.9)
+        specifier: ^1.0.2
+        version: 1.0.2(@open-pioneer/runtime@0.1.5)(sass@1.63.2)(vite@4.3.9)
       '@testing-library/dom':
         specifier: ^9.3.0
         version: 9.3.0
@@ -2766,8 +2766,8 @@ packages:
       fastq: 1.15.0
     dev: true
 
-  /@open-pioneer/build-common@0.6.1:
-    resolution: {integrity: sha512-tRpbTeqIFl2FKcXh004W+WL2fnCRRJ8R/dicTOth+Sp2w/GNm8itPccZyFKnxWnw338eGByaM+n4Gq+PPlFCnQ==}
+  /@open-pioneer/build-common@1.0.1:
+    resolution: {integrity: sha512-34eljROLXEoIQXewU6OINK9/cIVO0sExULEmt0vaqRHED6YTDIdX6Q1iGUay8NUtKEH4vk9+tjKDy0TXaFl1dw==}
     engines: {node: '>= 16'}
     dependencies:
       semver: 7.5.1
@@ -2775,12 +2775,12 @@ packages:
       zod-validation-error: 1.3.0(zod@3.21.4)
     dev: true
 
-  /@open-pioneer/build-package-cli@0.2.3(sass@1.63.2)(typescript@5.0.4):
-    resolution: {integrity: sha512-Aql8uJrxBKRlYRj1PBpMf1AYPO0/VAnw5UppRSHAfLwjOdnBSUHvPHQK7G5yAns6LBDIfJeDuI8q432XAkaNow==}
+  /@open-pioneer/build-package-cli@1.0.1(sass@1.63.2)(typescript@5.0.4):
+    resolution: {integrity: sha512-vZGuW5ow/P6ClfUzHjk6OvZGCVbvcDFy2FVck8HAip5Nzf9J2a0x/V1cQdB2hErp/WwdEfL0r6s0duFbMOSFTQ==}
     engines: {node: '>= 16'}
     hasBin: true
     dependencies:
-      '@open-pioneer/build-package': 0.7.3(sass@1.63.2)(typescript@5.0.4)
+      '@open-pioneer/build-package': 1.0.1(sass@1.63.2)(typescript@5.0.4)
       chalk: 5.2.0
       commander: 10.0.1
     transitivePeerDependencies:
@@ -2789,8 +2789,8 @@ packages:
       - typescript
     dev: true
 
-  /@open-pioneer/build-package@0.7.3(sass@1.63.2)(typescript@5.0.4):
-    resolution: {integrity: sha512-rsR43W9XDCRVwk2t0WdkdS0otHek+zxuRwdYPGKWFVWnYOuHcoGIKgYDUkEWoAhzZeXg9FRAng2/GsebmRMeYQ==}
+  /@open-pioneer/build-package@1.0.1(sass@1.63.2)(typescript@5.0.4):
+    resolution: {integrity: sha512-al7xZ+jI88203jIIbudjh0BWawVh2rNqru+B6yfiVzy+aQsMZXpFmSIAQGJBrH/1a6f3fYLc6cNUxpFnEIxTeg==}
     engines: {node: '>= 16'}
     peerDependencies:
       sass: '*'
@@ -2801,8 +2801,8 @@ packages:
       typescript:
         optional: true
     dependencies:
-      '@open-pioneer/build-common': 0.6.1
-      '@open-pioneer/build-support': 0.6.1
+      '@open-pioneer/build-common': 1.0.1
+      '@open-pioneer/build-support': 1.0.0
       chalk: 5.2.0
       debug: 4.3.4
       esbuild: 0.17.19
@@ -2818,8 +2818,8 @@ packages:
       - supports-color
     dev: true
 
-  /@open-pioneer/build-support@0.6.1:
-    resolution: {integrity: sha512-Q1TpOuqhU8hWNM/U/vMDP6ayfAtxRXeCaRfMVzNtK/R8Qfwd6XTHqr9/IsdtZQ+eeyouK9LTOr5CQvfLVX2qUw==}
+  /@open-pioneer/build-support@1.0.0:
+    resolution: {integrity: sha512-ECnX4/7HrhMDldmw2So4LxNxFZGWOq/bnmJk/8ptOlAFDq/TXgbDhi4BMsvE8x9Y0nt9K33ehW16jYaRM7yOqw==}
     engines: {node: '>= 16'}
     dev: true
 
@@ -2995,8 +2995,8 @@ packages:
       react-dom: 18.2.0(react@18.2.0)
     dev: false
 
-  /@open-pioneer/vite-plugin-pioneer@0.8.7(@open-pioneer/runtime@0.1.5)(sass@1.63.2)(vite@4.3.9):
-    resolution: {integrity: sha512-zgIWd5HN0moonVJtlkMOEBIYhzDZqLLW9wK8Vy7lEzNpDcwOWo4mVCXPIouG24Mh3OOinR2Kx/cn7PF0+LnnzQ==}
+  /@open-pioneer/vite-plugin-pioneer@1.0.2(@open-pioneer/runtime@0.1.5)(sass@1.63.2)(vite@4.3.9):
+    resolution: {integrity: sha512-QGTGaaNVsx8aJG7zOJ6O0RwrpWNTTSeYb5T3Pxlom7oF9kyLdWZeXdMFiwc8hHnsPCzpPvwaAotQZaU3/BFkpw==}
     engines: {node: '>= 16'}
     peerDependencies:
       '@open-pioneer/runtime': '*'
@@ -3006,7 +3006,7 @@ packages:
       '@babel/generator': 7.22.3
       '@babel/template': 7.21.9
       '@babel/types': 7.22.4
-      '@open-pioneer/build-common': 0.6.1
+      '@open-pioneer/build-common': 1.0.1
       '@open-pioneer/runtime': 0.1.5(@formatjs/intl@2.7.2)(@open-pioneer/chakra-integration@0.1.4)(@open-pioneer/core@0.1.4)(@open-pioneer/runtime-react-support@0.1.2)(react-dom@18.2.0)(react@18.2.0)
       debug: 4.3.4
       js-yaml: 4.1.0
