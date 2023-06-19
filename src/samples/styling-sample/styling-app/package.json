@@ -2,7 +2,7 @@
     "name": "styling-app",
     "private": true,
     "dependencies": {
-        "@open-pioneer/runtime": "^0.1.5",
+        "@open-pioneer/runtime": "^1.0.0",
         "styling-sample-components": "workspace:^"
     }
 }

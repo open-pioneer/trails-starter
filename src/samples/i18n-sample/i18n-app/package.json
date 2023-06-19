@@ -2,9 +2,9 @@
     "name": "i18n-app",
     "private": true,
     "dependencies": {
-        "@open-pioneer/chakra-integration": "^0.1.4",
-        "@open-pioneer/integration": "^0.1.4",
-        "@open-pioneer/runtime": "^0.1.5",
+        "@open-pioneer/chakra-integration": "^1.0.0",
+        "@open-pioneer/integration": "^1.0.0",
+        "@open-pioneer/runtime": "^1.0.0",
         "i18n-sample-package": "workspace:*"
     }
 }
