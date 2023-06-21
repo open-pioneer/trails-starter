@@ -28,12 +28,12 @@ Implements the `build-pioneer-package` CLI tool, which is used to compile a pack
 
 Internal implementation of `build-package`.
 This is a library that could - in theory - be used to script the build process.
-It is just an internal artifact fow now, however.
+It is just an internal artifact for now, however.
 
 ### @open-pioneer/build-common
 
 Internal helpers used by the vite plugin and the build-package tool.
-Reading and validation of the `build.config.mjs` is implemented here, as is the metadata format used by `build-package`.
+Reading and validation of the `build.config.mjs` are implemented here, as well as the metadata format used by `build-package`.
 
 ## Build process
 

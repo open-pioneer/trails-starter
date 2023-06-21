@@ -8,7 +8,7 @@ The result of building an application is always a set of static files (.i.e. `.h
 This output is ideal for distributing a final application, but it is not suitable for sharing reusable parts of your application.
 
 One of the key advantages of the open pioneer client framework is the ability to scale up application development by sharing reusable application components as packages.
-Shared open pioneer packages are similar to "plain" node packages (in fact, they _are_ node packages), but they come with with the additional feature set you have learned already:
+Shared open pioneer packages are similar to "plain" node packages (in fact, they _are_ node packages), but they come with the additional feature set you have learned already:
 services of a package are automatically started when needed, styles are automatically applied, etc.
 
 There are some things to consider and a few steps to follow when indenting to share a package with other developers.
@@ -46,11 +46,11 @@ It can be installed by adding [`@open-pioneer/build-package-cli`](https://www.np
 $ pnpm add -w -D @open-pioneer/build-package-cli
 ```
 
-It it designed to be invoked from the source directory of a pioneer package and reads its configuration from that package's `package.json` and `build.config.mjs` (see [Reference](../reference/Package.md#publishconfig)).
-After successful execution, it will have assembled a compiled version of that package in the `dist` directory.
+It is designed to be invoked from the source directory of a pioneer package and reads its configuration from that package's `package.json` and `build.config.mjs` (see [Reference](../reference/Package.md#publishconfig)).
+After successful execution, it will have assembled a compiled version of that package in the `dist` directory (in that package's source directory).
 
 `build-pioneer-package` also performs some validation to enforce best practices and to catch common errors.
-By default this validation is strict: all validation errors are fatal.
+By default, this validation is strict: all validation errors are fatal.
 This can be changed by configuring `publishConfig.strict: false` in your package's `build.config.mjs`,
 which is convenient when first preparing an existing package for publishing.
 `strict` should be `true` in production!
@@ -105,19 +105,19 @@ Package compilation involves the following steps:
     This also gives us the (future) opportunity to apply optimizations (e.g. minify code).
 
     Files that are not needed will be skipped (such as `*.test.*`).
-    This step also ensures that packages used by your code are listed in the `package.json` as dependencies.
-
     To decide which files are actually needed, your _must_ configure your package's `entryPoints` in the `build.config.mjs`.
     All modules used by one of your entry points (transitively) will be included in the compiled package; other modules will not.
 
     Most packages will simply have a single entry point (e.g. `index`), or none at all.
     If your package defines services, your services module (usually `./services`) does _not_ need to be listed: it is always automatically an entry point.
 
+    This compilation step also ensures that packages used by your code are listed in the `package.json` as dependencies.
+
 -   **Create type declaration files (`.d.ts`) for TypeScript consumers.**
 
     This way users of your package can benefit from type hints if they're using TypeScript.
     This step is enabled by default if your package contains a TypeScript source file.
-    Your can also force enable or disable this step by configuring `publishConfig.types` in your `build.config.mjs`.
+    You can also force enable or disable this step by configuring `publishConfig.types` in your `build.config.mjs`.
 
 -   **Compile styles to CSS.**
 
@@ -158,7 +158,7 @@ You can configure `publishConfig.validation` to opt out of these required files.
 
 ### Publishing
 
-Publishing an npm package has a few requirements:
+Publishing a npm package has a few requirements:
 
 1.  The package must not be set to `private`.
 
@@ -239,7 +239,7 @@ Neither option should have any impact on the framework itself, as long as all re
 We will create a simple package, prepare it it for publishing and then build ilt.
 We skip the actual publish step as that cannot be undone (we use `--dry-run` instead).
 
-### Step 1: the test package
+### Step 1: Create the test package
 
 We create a tiny package that provides a trivial `Greeter` class.
 For the sake of simplicity, we do not use any services or other advanced features in our package.
@@ -373,7 +373,7 @@ We will fix that in the next step, together with the other problems in the `pack
 #### Updating package.json
 
 We're missing a `license`, a `version` and the correct `dependencies`.
-We have also been told by to configure `publishConfig.directory`:
+We have also been told to configure `publishConfig.directory`:
 
 ```diff
 // package.json
@@ -395,7 +395,7 @@ We have also been told by to configure `publishConfig.directory`:
 }
 ```
 
-Because the core package is a pioneer package, we have added is a `peerDependency` (see [Best Practices](../BestPractices.md#dependency-management)).
+Because the core package is a pioneer package, we have added it as a `peerDependency` (see [Best Practices](../BestPractices.md#dependency-management)).
 We also added `linkDirectory: false`, see [Publishing](#publishing).
 
 #### Adding required files
@@ -539,6 +539,6 @@ This has multiple advantages:
 
 For automatic management of your package's changelogs and versions we can recommend [Changesets](https://github.com/changesets/changesets/).
 You can use their CLI as parts of your release script.
-If you're using Github, they also provide an [Action](https://github.com/changesets/action).
+If you're using GitHub, they also provide an [Action](https://github.com/changesets/action).
 
 pnpm's website has [a section about changesets](https://pnpm.io/using-changesets) and we're using their action successfully in some of our repositories, see [here](https://github.com/open-pioneer/openlayers-base-packages/blob/3adb59c6f28e155e43a8ace3278089e04f70185c/.github/workflows/version.yml) for example.

@@ -142,7 +142,7 @@ handle.destroy(); // don't forget to unsubscribe during cleanup
 Only referenced services will be constructed.
 If a service does not provide any interfaces, or if the service is never referenced (either by the UI or by another service), the service will not be started.
 
-If absolutely necessary, you can force a service to start even if its not referenced by anyone by providing the `runtime.AutoStart` interface, see [how to create a service](./tutorials/HowToCreateAService.md#service-autostart).
+If absolutely necessary, you can force a service to start even if it's not referenced by anyone by providing the `runtime.AutoStart` interface, see [how to create a service](./tutorials/HowToCreateAService.md#service-autostart).
 
 ### Hot reloading with \[jt\]sx-Files and side effects
 

@@ -355,6 +355,8 @@ export default defineBuildConfig({
 
 #### `overrides`
 
+An _application_ package may override certain entities defined in its packages.
+
 ```ts
 export interface PackageOverridesConfig {
     services?: Record<string, ServiceOverridesConfig>;
@@ -365,8 +367,7 @@ export interface ServiceOverridesConfig {
 }
 ```
 
-An application package may override certain entities defined in its packages.
-Currently this only includes the authority to completely remove the implementation of a service, for example:
+Currently, it only provides the power to completely remove the implementation of a service, for example:
 
 ```js
 // build.config.mjs
@@ -396,9 +397,11 @@ The snippet above completely _removes_ to service called `GreeterImpl` from the 
 If that service provided any interfaces required by the rest of the application, the app would now be responsible
 to provide alternative implementations, making this an expert feature that should not be overused.
 
-> NOTE: It is forbidden to use `overrides` from a normal package.
+> NOTE: It is forbidden to use `overrides` from a normal (i.e. not "application") package.
 
 #### `publishConfig`
+
+Additional options interpreted by the [`build-pioneer-package`](https://www.npmjs.com/package/@open-pioneer/build-package-cli) CLI when a package is built for publishing.
 
 ```ts
 export interface PublishConfig {
@@ -408,15 +411,7 @@ export interface PublishConfig {
     strict?: boolean;
     validation?: ValidationOptions;
 }
-
-export interface ValidationOptions {
-    requireLicense?: boolean;
-    requireReadme?: boolean;
-    requireChangelog?: boolean;
-}
 ```
-
-Additional options interpreted by the [`build-pioneer-package`](https://www.npmjs.com/package/@open-pioneer/build-package-cli) CLI when a package is built for publishing.
 
 #### `publishConfig.assets`
 
@@ -429,6 +424,8 @@ By default, all files in `assets/**` will be included.
 
 > NOTE: Directories cannot match by themselves, you must configure a pattern that matches the individual files
 > (e.g. `assets/**` instead of `assets/`).
+
+Example:
 
 ```js
 // build.config.mjs
@@ -461,12 +458,20 @@ Enables or disables strict validation. Defaults to `true`.
 Strict validation makes style issues and other warnings (e.g. missing `README`, undeclared dependencies etc.) fatal.
 
 Disabling `strict` temporarily is helpful when starting to prepare a package for separate compilation:
-all errors will be shown as warnings instead of aborting on the first error.
+all errors will be shown as warnings instead of aborting at the first error.
 
 #### `publishConfig.validation`
 
-Fine tuning options for package validation.
+Fine-tuning options for package validation.
 For example, this option can be used to make `CHANGELOG` and `LICENSE` optional (they are required by default).
+
+```ts
+export interface ValidationOptions {
+    requireLicense?: boolean;
+    requireReadme?: boolean;
+    requireChangelog?: boolean;
+}
+```
 
 ## Service definition
 
