@@ -22,8 +22,11 @@
         "prepare": "husky install"
     },
     "pnpm": {
+        "//1": "semver: https://github.com/advisories/GHSA-c2qf-rxjj-qqgw",
+        "//2": "",
         "overrides": {
-            "ol-mapbox-style": "workspace:disabled-package@*"
+            "ol-mapbox-style": "workspace:disabled-package@*",
+            "semver@<7.5.2": ">=7.5.2"
         }
     },
     "dependencies": {
