@@ -106,9 +106,9 @@ In order to use the new package, it must be declared as a dependency in your app
 {
     "name": "empty",
     "private": true,
-    "dependencies": {
-        "@open-pioneer/runtime": "workspace:^",
-        "@open-pioneer/chakra-integration": "workspace:^",
+    "peerDependencies": {
+        "@open-pioneer/runtime": "^1.0.0",
+        "@open-pioneer/chakra-integration": "^1.0.0",
         // Add this line:
         "hello-world": "workspace:*"
     }

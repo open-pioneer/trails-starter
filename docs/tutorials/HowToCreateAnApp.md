@@ -20,7 +20,7 @@ Create a very simple [`package.json`](https://docs.npmjs.com/cli/v9/configuring-
     "name": "my-app",
     "private": true,
     "dependencies": {
-        "@open-pioneer/runtime": "workspace:^"
+        "@open-pioneer/runtime": "^1.0.0"
     }
 }
 ```

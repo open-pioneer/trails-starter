@@ -37,7 +37,7 @@ import { ApiExtension } from "@open-pioneer/integration";
 export class LogApiExtension implements ApiExtension {}
 ```
 
-Make sure to additionally add the `"@open-pioneer/integration": "workspace:^"` dependency in the package.json, then run `pnpm install`.
+Make sure to additionally add the `"@open-pioneer/integration": "^1.0.0"` dependency in the package.json, then run `pnpm install`.
 
 Now you should see an error similar to "Property 'getApiMethods' is missing" on the class.
 This is because the interface requires that a function `getApiMethods` must exist.
