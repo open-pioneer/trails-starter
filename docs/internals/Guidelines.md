@@ -37,3 +37,36 @@
         -   internals: for developers of the framework
         -   reference: cross-cutting concepts in detail
         -   Glossary: explanation of important terms
+
+## Local testing without publishing
+
+To test a new (development) version of a package `B` in package `A` without publishing, the recommended way is to use `pnpm pack`:
+
+In package `B`, first build the package, usually via `pnpm build` or a similar command.
+Then, run `pnpm pack`: this will generate a `.tgz` archive (in the package directory or its `dist` directory, depending on setup).
+This archive can then be installed in package `A` like any other package by executing `pnpm install <path/to/archive>`.
+
+Example:
+
+```sh
+# in package B
+$ pnpm build
+> @open-pioneer/experimental-ol-map@0.1.6 build /home/michael/projects/pioneer/openlayers-base-packages/src/experimental-packages/ol-map
+> build-pioneer-package
+....
+Success
+$ pnpm pack
+/home/michael/projects/pioneer/openlayers-base-packages/src/experimental-packages/ol-map/dist/open-pioneer-experimental-ol-map-0.1.6.tgz
+
+# in package A
+$ pnpm install /home/michael/projects/pioneer/openlayers-base-packages/src/experimental-packages/ol-map/dist/open-pioneer-experimental-ol-map-0.1.6.tgz
+```
+
+Another way is to use `pnpm link` or `pnpm install /path/to/package`, but those may run into edge cases related to peer dependencies etc.
+
+See also:
+
+-   https://pnpm.io/cli/pack
+-   https://docs.npmjs.com/cli/v9/commands/npm-pack?v=true
+-   https://rimdev.io/npm-packages-and-tgz-files/
+-   https://dev.to/scooperdev/use-npm-pack-to-test-your-packages-locally-486e
