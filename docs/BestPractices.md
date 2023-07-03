@@ -165,3 +165,8 @@ There are two recommendations to avoid problems:
 The package `ol-mapbox-style` has been disabled (see `pnpm.overrides` in root `package.json`) because of licensing reasons.
 It uses some dependencies from the @mapbox organization with unclear licenses.
 If mapbox styles are needed in a project, those dependencies should be vetted (by ensuring their licenses are declared correctly or contacting their authors).
+
+https://www.npmjs.com/package/@mapbox/mapbox-gl-style-spec is required by ol-mapbox-style but does not contain a license file.
+However, the package.json declares "LICENSE: ISC".
+The repository linked in the package.json contains a proprietary license referencing the mapbox TOS.
+This situation has to be resolved before the package can be used.
