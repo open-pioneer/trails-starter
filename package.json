@@ -22,11 +22,22 @@
         "prepare": "husky install"
     },
     "pnpm": {
-        "//1": "semver: https://github.com/advisories/GHSA-c2qf-rxjj-qqgw",
-        "//2": "",
+        "//": [
+            "overrides:",
+            "ol-mapbox-style: license issues",
+            "semver: https://github.com/advisories/GHSA-c2qf-rxjj-qqgw",
+            "",
+            "ignored cves:",
+            "CVE-2023-26115 (word-wrap): ReDoS does not affect us (running client side or at build time)"
+        ],
         "overrides": {
             "ol-mapbox-style": "workspace:disabled-package@*",
             "semver@<7.5.2": ">=7.5.2"
+        },
+        "auditConfig": {
+            "ignoreCves": [
+                "CVE-2023-26115"
+            ]
         }
     },
     "dependencies": {
