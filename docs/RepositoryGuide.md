@@ -135,6 +135,15 @@ $ pnpm update -r -i
 
 [`pnpm outdated`](https://pnpm.io/cli/outdated) can be used to show outdated packages.
 
+By default, `pnpm update` will touch both `package.json` and `pnpm-lock.yaml`.
+If you only want to install newer (matching) packages and update the lockfile, without modifying `package.json` files, use `--no-save`:
+
+```bash
+# Installs newer compatible packages (according to version ranges in package.json files) and updates the lockfile.
+# Does not modify the package.json files.
+$ pnpm update -r --no-save
+```
+
 ### Keeping dependency versions in sync
 
 We're using [Syncpack](https://jamiemason.github.io/syncpack/) to keep dependency versions in our `package.json` files in sync.
