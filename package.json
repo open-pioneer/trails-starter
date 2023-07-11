@@ -26,13 +26,15 @@
             "overrides:",
             "ol-mapbox-style: license issues",
             "semver: https://github.com/advisories/GHSA-c2qf-rxjj-qqgw",
+            "tough-cookie: https://github.com/advisories/GHSA-72xf-g2v4-qvf3",
             "",
             "ignored cves:",
             "CVE-2023-26115 (word-wrap): ReDoS does not affect us (running client side or at build time)"
         ],
         "overrides": {
             "ol-mapbox-style": "workspace:disabled-package@*",
-            "semver@<7.5.2": ">=7.5.2"
+            "semver@<7.5.2": ">=7.5.2",
+            "tough-cookie@<4.1.3": ">=4.1.3"
         },
         "auditConfig": {
             "ignoreCves": [
