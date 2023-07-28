@@ -70,7 +70,7 @@ Copying auxiliary files...
 Success
 ```
 
-As an example, this is how the `dist` directory of the [`layout-sidebar`](https://github.com/open-pioneer/openlayers-base-packages/tree/09ff758d59c97d8ead9b76af6afb1c03f765ba50/src/experimental-packages/layout-sidebar) package looks at the time of this writing:
+As an example, this is how the `dist` directory of the [`layout-sidebar`](https://github.com/open-pioneer/trails-openlayers-base-packages/tree/09ff758d59c97d8ead9b76af6afb1c03f765ba50/src/experimental-packages/layout-sidebar) package looks at the time of this writing:
 
 <!-- tree -L 2 --gitignore --dirsfirst dist -->
 
@@ -541,4 +541,4 @@ For automatic management of your package's changelogs and versions we can recomm
 You can use their CLI as parts of your release script.
 If you're using GitHub, they also provide an [Action](https://github.com/changesets/action).
 
-pnpm's website has [a section about changesets](https://pnpm.io/using-changesets) and we're using their action successfully in some of our repositories, see [here](https://github.com/open-pioneer/openlayers-base-packages/blob/3adb59c6f28e155e43a8ace3278089e04f70185c/.github/workflows/version.yml) for example.
+pnpm's website has [a section about changesets](https://pnpm.io/using-changesets) and we're using their action successfully in some of our repositories, see [here](https://github.com/open-pioneer/trails-openlayers-base-packages/blob/3adb59c6f28e155e43a8ace3278089e04f70185c/.github/workflows/version.yml) for example.

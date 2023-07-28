@@ -1,7 +1,7 @@
 # Build tools
 
 Our build tools support the development and publishing process.
-They are developed in a separate repository: https://github.com/open-pioneer/build-tools
+They are developed in a separate repository: https://github.com/open-pioneer/trails-build-tools
 
 ## Packages
 

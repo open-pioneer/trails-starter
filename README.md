@@ -1,8 +1,8 @@
 # Open Pioneer Starter
 
-![Build status](https://github.com/open-pioneer/starter/actions/workflows/test-and-build.yml/badge.svg) ![Dependency audit](https://github.com/open-pioneer/starter/actions/workflows/audit-dependencies.yml/badge.svg)
+![Build status](https://github.com/open-pioneer/trails-starter/actions/workflows/test-and-build.yml/badge.svg) ![Dependency audit](https://github.com/open-pioneer/trails-starter/actions/workflows/audit-dependencies.yml/badge.svg)
 
-[Samples](https://open-pioneer.github.io/demo/starter/) | [API Documentation](https://open-pioneer.github.io/demo/starter/docs/) | [User manual](https://github.com/open-pioneer/starter/tree/main/docs)
+[Samples](https://open-pioneer.github.io/trails-demo/starter/) | [API Documentation](https://open-pioneer.github.io/trails-demo/starter/docs/) | [User manual](https://github.com/open-pioneer/trails-starter/tree/main/docs)
 
 ## Quick start
 
@@ -11,10 +11,10 @@ Ensure that you have [Node](https://nodejs.org/en/) (Version 16 or later) and [p
 Then execute the following commands to get started:
 
 ```bash
-$ git clone https://github.com/open-pioneer/starter.git # Clone the repository
+$ git clone https://github.com/open-pioneer/trails-starter.git # Clone the repository
 $ cd starter
-$ pnpm install                                          # Install dependencies
-$ pnpm run dev                                          # Launch development server
+$ pnpm install                                                 # Install dependencies
+$ pnpm run dev                                                 # Launch development server
 ```
 
 Vite will print the project's local address (usually <http://localhost:5173/>).
@@ -24,9 +24,9 @@ Additional in-depth information can be found in the [Documentation](./docs/READM
 
 ## See also
 
--   [Core packages](https://github.com/open-pioneer/core-packages): Contains the runtime package and other central packages.
--   [OpenLayers base packages](https://github.com/open-pioneer/openlayers-base-packages): Contains packages using OpenLayers to render a map.
--   [Build tools](https://github.com/open-pioneer/build-tools): Contains our build tooling such as the Vite plugin.
+-   [Core packages](https://github.com/open-pioneer/trails-core-packages): Contains the runtime package and other central packages.
+-   [OpenLayers base packages](https://github.com/open-pioneer/trails-openlayers-base-packages): Contains packages using OpenLayers to render a map.
+-   [Build tools](https://github.com/open-pioneer/trails-build-tools): Contains our build tooling such as the Vite plugin.
 
 ## License
 

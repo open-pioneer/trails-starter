@@ -17,7 +17,7 @@ Other ways to install `pnpm` can be found in the [project's documentation](https
 Clone the repository from Github to get a copy of the code:
 
 ```bash
-$ git clone https://github.com/open-pioneer/starter.git PROJECT_NAME
+$ git clone https://github.com/open-pioneer/trails-starter.git PROJECT_NAME
 $ cd PROJECT_NAME
 ```
 

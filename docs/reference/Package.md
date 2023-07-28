@@ -749,4 +749,4 @@ function ExampleComponent() {
 
 ## See also
 
-The [type declaration file](https://github.com/open-pioneer/build-tools/blob/main/packages/build-support/index.d.ts) of the `@open-pioneer/build-support` package contains additional documentation for the `defineBuildConfig(...)` function.
+The [type declaration file](https://github.com/open-pioneer/trails-build-tools/blob/main/packages/build-support/index.d.ts) of the `@open-pioneer/build-support` package contains additional documentation for the `defineBuildConfig(...)` function.
