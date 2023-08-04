@@ -92,7 +92,7 @@
         "prettier": "^2.8.8",
         "rimraf": "^5.0.1",
         "rollup-plugin-visualizer": "^5.9.0",
-        "sass": "^1.63.2",
+        "sass": "^1.64.2",
         "syncpack": "^10.5.1",
         "ts-node": "^10.9.1",
         "typedoc": "^0.24.8",
