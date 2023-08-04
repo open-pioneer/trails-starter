@@ -62,9 +62,9 @@
         "react-use": "^17.4.0"
     },
     "devDependencies": {
-        "@open-pioneer/build-package-cli": "^1.0.1",
+        "@open-pioneer/build-package-cli": "^1.0.3",
         "@open-pioneer/build-support": "^1.0.0",
-        "@open-pioneer/vite-plugin-pioneer": "^1.0.2",
+        "@open-pioneer/vite-plugin-pioneer": "^1.1.1",
         "@testing-library/dom": "^9.3.0",
         "@testing-library/jest-dom": "^5.16.5",
         "@testing-library/react": "^14.0.0",
