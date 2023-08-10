@@ -233,7 +233,7 @@ This section is optional when you're mainly using JavaScript or if your service 
 If you plan to have your service used by others, providing good TypeScript integration is highly recommended.
 
 Back in the `math` package, we will define the public interface for `"math.MathService"`.
-Pure interface descriptions are conventionally placed into a file called `api.ts`, but they should also be exported from the package's `main` entry point for convenience.
+Pure interface descriptions are conventionally placed into a file called `api.ts`, but they should also be exported from the package's `main` entry point (usually `index.ts`) for convenience.
 
 Because we do not intend to export any classes, functions or constants, we'll just make `api.ts` our `main` for now:
 
