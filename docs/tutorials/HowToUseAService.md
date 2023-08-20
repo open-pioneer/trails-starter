@@ -151,7 +151,7 @@ interface References {
 
 const CLASS_NAME = "my-custom-class";
 
-export class CssClassService {
+export class AttributeService {
     private _ctx: ServiceType<"runtime.ApplicationContext">;
 
     // (1)
@@ -161,12 +161,9 @@ export class CssClassService {
     }
 
     // (3)
-    addClass() {
-        this._ctx.getApplicationContainer().classList.add(CLASS_NAME);
-    }
-
-    removeClass() {
-        this._ctx.getApplicationContainer().classList.remove(CLASS_NAME);
+    updateAttribute(count: number) {
+        const host = this._ctx.getHostElement();
+        host.setAttribute("data-clicked", String(newCount));
     }
 }
 ```
