@@ -46,7 +46,7 @@ If your browser locale is set to `de` you should see the values from `de.yaml`.
 
 To demonstrate the multi-language support and force a language of our choice, we need to modify the `app.ts`:
 
-```javascript
+```ts
 // src/apps/empty/app.ts
 import { createCustomElement } from "@open-pioneer/runtime";
 import * as appMetadata from "open-pioneer:app";

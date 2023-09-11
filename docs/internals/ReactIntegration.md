@@ -4,10 +4,10 @@ This framework currently requires all UI components to be written using [React](
 
 ## Application UI
 
-The application provides a react component to the `createCustomElement` function.
-The react component will be rendered in the web component produced by that function:
+The application provides a React component to the `createCustomElement` function.
+The React component will be rendered in the web component produced by that function:
 
-```jsx
+```ts
 // apps/test-app/app.ts
 import { createCustomElement } from "@open-pioneer/runtime";
 import * as appMetadata from "open-pioneer:app";
@@ -26,7 +26,7 @@ customElements.define("test-app", Element);
 UI Components written in React must be able to interact with the package system and the service layer.
 This means that services, package properties and package i18n must be accessible.
 
-In a react component, the developer can write:
+In a React component, the developer can write:
 
 ```jsx
 //  apps/test-app/TestComponent.jsx
@@ -53,7 +53,7 @@ Since (potentially) all react component require access to the service layer, we 
 
 When the UI is rendered (`Component` in the example), it is always surrounded by a `PackageContext.Provider`:
 
-```ts
+```tsx
 // @open-pioneer/runtime/react-integration/ReactIntegration.tsx
 // ...
 function render(Component: ComponentType, props: Record<string, unknown>) {
@@ -88,7 +88,7 @@ export function useIntlInternal(packageName: string): PackageIntl {
 ```
 
 `useIntlInternal` is the implementation of the `useIntl` hook.
-It retrieves the packageContext using react's Context API and then attempts to find a package with the given name
+It retrieves the packageContext using React's Context API and then attempts to find a package with the given name
 in the shared lookup structure, finally returning its `intl` value.
 
 `useIntlInternal` is not supposed to be called directly because the `packageName` can easily be mistyped or set to the name of a different package (violating encapsulation).

@@ -30,7 +30,7 @@
 -   Make sure to always create sufficient documentation.
     The type of documentation required depends on the type of contribution.
 -   Types of documentation:
-    -   README.md in packages (each package should contain a README.md with at least information about main )
+    -   README.md in packages (each package should contain a README.md with at least information about main functionality)
     -   API doc in Code
     -   markdown documentation in docs folder (with different purposes)
         -   tutorials: tutorials for developers of apps and packages
