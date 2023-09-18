@@ -1,6 +1,7 @@
 # Theming
 
-The open pioneer trails apps use Chakra UI as React can be used to create UI Components.
+When developing Open Pioneer Trails applications [React](https://reactjs.org/) can be
+used to create UI components.
 However, we can also use pre-defined components from the Chakra UI framework which might
 be the usual approach. Chakra UI comes with a theming mechanism that is re-used in tails
 to provide a theming mechanism.

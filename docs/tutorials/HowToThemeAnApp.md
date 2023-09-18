@@ -73,7 +73,7 @@ export const theme = {
             "error_hover": "red.600",
             "success": "green.500",
             "highlight": "yellow.300",
-            //oderride internal chakra themeing variables
+            //override internal chakra theming variables
             "chakra-body-bg": "background_primary",
             "chakra-subtle-bg": "background_secondary",
             "chakra-body-text": "font_primary",
