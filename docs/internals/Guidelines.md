@@ -23,7 +23,12 @@
 -   Always use UTF-8 text encoding
 -   Use Unix style newlines.
     When developing on windows, configure git to replace accidentally introduced Windows-style newlines on commit:
-    `git config --global core.autocrlf input` (see <https://git-scm.com/book/en/v2/Customizing-Git-Git-Configuration>)
+    `git config --global core.autocrlf input` (see <https://git-scm.com/book/en/v2/Customizing-Git-Git-Configuration>).
+    If you do not want to configure this globally, it is also possible to make the setting only for a single repository:
+    -   create a local folder for the project and create a new empty repository in that folder
+    -   apply the newline-config in the created local git config, e.g. by executing the following commands
+        using cmd in the new git folder: `git config core.eol lf`, `git config core.autocrlf input`
+    -   set the online repo as origin in the local git settings, fetch all and checkout the required branch as local tracking branch
 
 ## Documentation
 
