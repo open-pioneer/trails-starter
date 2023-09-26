@@ -89,7 +89,7 @@ If a reference cannot be satisfied, the application will refuse to start with a 
 
 ### Using a service from the UI
 
-Services can also be used directly from react components.
+Services can also be used directly from React components.
 Just like services, the UI must declare its dependencies before it can reference any service:
 
 ```js

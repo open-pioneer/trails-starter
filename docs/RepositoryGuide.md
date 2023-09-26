@@ -20,6 +20,7 @@ starter
 ├── .eslintignore           -- Lists files ignored by ESLint
 ├── .eslintrc               -- ESLint configuration file
 ├── .gitignore              -- Lists files ignored by git
+├── .npmrc                  -- pnpm configuration file
 ├── .prettierrc             -- Prettier configuration file
 ├── .syncpackrc.cjs         -- Syncpack configuration file
 ├── package.json            -- Dependencies of the root package (mostly development tools)
@@ -27,6 +28,8 @@ starter
 ├── pnpm-workspace.yaml     -- Workspaces configuration file for pnpm
 ├── tsconfig.json           -- Main TypeScript configuration file for code that runs in the browser
 ├── tsconfig.node.json      -- Additional TypeScript configuration file for files running in Node
+├── typedoc.base.json       -- TypeDoc configuration that is used as a base for the TypeDoc configuration in the packages
+├── typedoc.config.cjs      -- TypeDoc main configuration file
 └── vite.config.ts          -- Vite configuration file
 ```
 
@@ -63,7 +66,9 @@ The main configuration file for vite is `vite.config.ts`.
 ### `pnpm run build-docs`
 
 Builds the project's API documentation.
-Documentation is generated using [TypeDoc](https://typedoc.org/) and is configured in the main `tsconfig.json` (key `"typedocOptions"`).
+Documentation is generated using [TypeDoc](https://typedoc.org/). TypeDoc is configured in the main `typedoc.config.cjs`
+to specify what files TypeDoc reads. In the packages, a `typedoc.json` file specifies how the input is converted.
+The `typedoc.base.json` file is used as a base for the typedoc configuration specified in the single packages.
 The API documentation is written into `dist/docs`.
 
 ### `pnpm run build-license-report`
@@ -110,7 +115,7 @@ Installed node tools can be invoked by running `pnpm exec <TOOL_AND_OPTIONS>` (o
 
 ### Adding a dependency
 
-Do install a shared build dependency (a vite plugin for example), run `pnpm add -D -w <PACKAGE_NAME>`.
+To install a shared build dependency (a vite plugin for example), run `pnpm add -D -w <PACKAGE_NAME>`.
 `-D` will include the package as a devDependency, and `-w` will add it to the workspace root's `package.json`.
 
 To add a dependency to a workspace package or app, execute `pnpm add PACKAGE_NAME` from the package or app directory.

@@ -89,7 +89,7 @@ For this example, we will build upon the example from previous section.
 We will move the logic of updating the element's attribute into a service.
 The new service will reference `"runtime.ApplicationContext"`, and the UI will be changed to reference our new service instead.
 
-To define our new service - which we will call `AttributeService` - we create a `service.ts` file in our application package.
+To define our new service - which we will call `AttributeService` - we create a `services.ts` file in our application package.
 When searching for the implementation of a service, the framework will try to import it from a file called `<PACKAGE_NAME>/services.ts` (or `.js`) by default.
 If the file does not exist, or if it does not contain a matching `export`, an error will be generated.
 Thus, make sure to add an export in there.
@@ -163,7 +163,7 @@ export class AttributeService {
     // (3)
     updateAttribute(count: number) {
         const host = this._ctx.getHostElement();
-        host.setAttribute("data-clicked", String(newCount));
+        host.setAttribute("data-clicked", String(count));
     }
 }
 ```

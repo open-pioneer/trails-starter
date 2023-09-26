@@ -14,6 +14,7 @@
     -   [How to use a service](./tutorials/HowToUseAService.md)
     -   [How to create a service](./tutorials/HowToCreateAService.md)
     -   [How to create UI components](./tutorials/HowToCreateUiComponents.md)
+    -   [How to theme an app](./tutorials/HowToThemeAnApp.md)
     -   [How to add custom styles](./tutorials/HowToAddCustomStyles.md)
     -   [How to translate an App](./tutorials/HowToTranslateAnApp.md)
     -   [How to provide an API](./tutorials/HowToProvideAnAPI.md)
@@ -27,6 +28,7 @@
     -   [Package Reference](./reference/Package.md)
     -   [I18N format](./reference/I18nFormat.md)
     -   [Services](./reference/Services.md)
+    -   [Chakra Theming](./reference/Theming.md)
 
 -   Internal Documentation
 
