@@ -23,7 +23,7 @@ The second internal level is the Trails base theme which is part of the Trails C
 It defines common variables ([semantic tokens](https://chakra-ui.com/docs/styled-system/component-style))
 and basic styling and variants for Chakra components (e.g. button with multiple variants).
 This theme is active by default in Trails applications, but it is also designed to be extended.
-Most custom themes are expected to extend this Theme (via Chakra's `extendTheme()` function) while making only minor adjustments.
+Most custom themes are expected to extend this theme (via Chakra's `extendTheme()` function) while making only minor adjustments.
 The Trails base theme will be extended in future releases of the Trails Core Packages.
 
 The third level of theming is a custom theme that can be passed to a Trails app via the optional `theme` option in `createCustomElement`.
@@ -32,7 +32,7 @@ However, if the custom theme extends from the base theme (which is recommended),
 
 We recommend against making use of (inline) attribute definitions (especially colors) since it is not possible to override these definition with a custom theme.
 
-Chakra's theming mechanism allow _global_ changes to all components (within an application), or to single component [variants](https://chakra-ui.com/docs/styled-system/component-style).
+Chakra's theming mechanism allows _global_ changes to all components (within an application), or to single component [variants](https://chakra-ui.com/docs/styled-system/component-style).
 Changes to the theme will therefore always affect multiple component instances.
 To style _specific_ elements in a different way, the developer has to use CSS rules or inline styles.
 
