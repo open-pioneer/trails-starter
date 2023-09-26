@@ -1,5 +1,7 @@
 # How to theme an app
 
+> Note: The theming API is still _experimental_. The base theme is likely to move into a different package. Names of color schemes, variants and semantic tokens are not defined yet.
+
 This "how to" shows how to create a custom theme for an app. To learn more about the theming
 mechanism in Open Pioneer Trails apps, refer to [Theming](../reference/Theming.md).
 
@@ -18,11 +20,13 @@ required to be changed. Add the following content to your file:
 ```ts
 // src/apps/empty/theme/theme.ts
 // (1)
-import { extendTheme, theme as baseTheme } from "@open-pioneer/chakra-integration";
-
+import { extendTheme } from "@open-pioneer/chakra-integration";
 // (2)
+import { theme as baseTheme } from "@open-pioneer/base-theme";
+
+// (3)
 export const theme = extendTheme(
-    // (3)
+    // (3.1)
     {
         colors: {
             primary: {
@@ -90,13 +94,16 @@ export const theme = extendTheme(
             }
         }
     },
+    // (3.2)
     baseTheme
 );
 ```
 
--   **(1)** Import the `extendTheme` method and the trails base theme.
--   **(2)** Use `extendTheme` to create an own theme based on the trails base theme.
--   **(3)** Chakra UI theming object that defines the custom theme.
+-   **(1)** Import the `extendTheme` method.
+-   **(2)** Import the trails base theme from the "@open-pioneer/base-theme" package.
+-   **(3)** Use `extendTheme` to create an own theme based on the trails base theme.
+-   **(3.1)** Chakra UI theming object that defines the custom theme.
+-   **(3.2)** Specify the theme to extend (here the trails base theme).
 
 To make use of the custom theme in the app, we need to modify the `app.ts`:
 
