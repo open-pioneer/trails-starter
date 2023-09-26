@@ -1,6 +1,6 @@
 # How to theme an app
 
-> Note: The theming API is still _experimental_. The base theme is likely to move into a different package. Names of color schemes, variants and semantic tokens are not defined yet.
+> Note: The theming API is still _experimental_. Names of color schemes, variants and semantic tokens are not defined yet.
 
 This "how to" shows how to create a custom theme for an app. To learn more about the theming
 mechanism in Open Pioneer Trails apps, refer to [Theming](../reference/Theming.md).
@@ -11,11 +11,12 @@ To show how a custom theme for an app can be created, we will extend the empty a
 By default, the app is shown in a theme specified in the Trails Core packages.
 To overwrite some or all styles, a custom app-theme can be created.
 
-First, in your apps "empty" folder, create a new folder called "theme" and add a file
-called "theme.ts". This file will contain our theme which is a Chakra UI theming object.
+First, in your apps "empty" folder, create a new folder called "theme" and add a file called "theme.ts".
+This file will contain our theme which is a Chakra UI theming object.
 The structure of this object is described in the [Chakra documentation](https://chakra-ui.com/docs/styled-system/theme).
-The custom theme does not need to be a complete theme, but may only overwrite the values
-required to be changed. Add the following content to your file:
+The custom theme does not need to be a complete theme: we can just override specific theming properties.
+
+Add the following content to your file:
 
 ```ts
 // src/apps/empty/theme/theme.ts
@@ -103,7 +104,7 @@ export const theme = extendTheme(
 -   **(2)** Import the trails base theme from the "@open-pioneer/base-theme" package.
 -   **(3)** Use `extendTheme` to create an own theme based on the trails base theme.
 -   **(3.1)** Chakra UI theming object that defines the custom theme.
--   **(3.2)** Specify the theme to extend (here the trails base theme).
+-   **(3.2)** Specify the theme to extend (here: the trails base theme).
 
 To make use of the custom theme in the app, we need to modify the `app.ts`:
 
