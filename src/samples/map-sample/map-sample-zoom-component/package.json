@@ -9,7 +9,7 @@
         "@emotion/styled": "^11.11.0",
         "@open-pioneer/chakra-integration": "^1.1.0",
         "@open-pioneer/experimental-ol-map": "^0.1.6",
-        "ol": "^7.3.0",
+        "ol": "^8.2.0",
         "react": "^18.2.0"
     }
 }

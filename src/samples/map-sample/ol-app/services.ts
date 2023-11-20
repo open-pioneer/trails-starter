@@ -41,7 +41,7 @@ export class MainMapProvider implements MapConfigProvider {
                         source: new OSM(),
                         properties: { title: "OSM" }
                     })
-                }) 
+                })
             ]
         };
     }

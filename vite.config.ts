@@ -20,13 +20,7 @@ const targets = ["chrome92", "edge92", "firefox91", "safari14"];
 const visualize = false;
 
 const sampleSites = [
-    "samples/api-sample",
-    "samples/chakra-sample",
-    "samples/extension-sample",
     "samples/map-sample",
-    "samples/properties-sample",
-    "samples/styling-sample",
-    "samples/i18n-sample",
     "samples/i18n-howto"
 ];
 
