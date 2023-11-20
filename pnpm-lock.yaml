@@ -186,7 +186,7 @@ importers:
         specifier: ^1.1.0
         version: 1.1.0(@chakra-ui/react@2.8.2)(@emotion/cache@11.11.0)(@emotion/react@11.11.1)(@emotion/styled@11.11.0)(framer-motion@10.16.5)(react-dom@18.2.0)(react@18.2.0)
       '@open-pioneer/runtime':
-        specifier: ^1.0.0
+        specifier: ^1.1.0
         version: 1.1.0(@formatjs/intl@2.9.9)(@open-pioneer/base-theme@0.1.0)(@open-pioneer/chakra-integration@1.1.0)(@open-pioneer/core@1.1.0)(@open-pioneer/runtime-react-support@1.0.0)(react-dom@18.2.0)(react@18.2.0)
       sample-package:
         specifier: workspace:^
@@ -213,37 +213,10 @@ importers:
     dependencies:
       '@open-pioneer/experimental-ol-map':
         specifier: ^0.1.6
-        version: 0.1.6(@open-pioneer/core@1.1.0)(@open-pioneer/runtime@1.1.0)(ol@7.3.0)(react-use@17.4.0)(react@18.2.0)
+        version: 0.1.6(@open-pioneer/core@1.1.0)(@open-pioneer/runtime@1.1.0)(ol@8.2.0)(react-use@17.4.0)(react@18.2.0)
       ol:
-        specifier: ^7.3.0
-        version: 7.3.0
-
-  src/samples/map-sample/map-sample-zoom-component:
-    dependencies:
-      '@chakra-ui/icons':
-        specifier: ^2.0.19
-        version: 2.0.19(@chakra-ui/system@2.6.2)(react@18.2.0)
-      '@chakra-ui/system':
-        specifier: ^2.5.7
-        version: 2.6.2(@emotion/react@11.11.1)(@emotion/styled@11.11.0)(react@18.2.0)
-      '@emotion/react':
-        specifier: ^11.11.1
-        version: 11.11.1(@types/react@18.2.7)(react@18.2.0)
-      '@emotion/styled':
-        specifier: ^11.11.0
-        version: 11.11.0(@emotion/react@11.11.1)(@types/react@18.2.7)(react@18.2.0)
-      '@open-pioneer/chakra-integration':
-        specifier: ^1.1.0
-        version: 1.1.0(@chakra-ui/react@2.8.2)(@emotion/cache@11.11.0)(@emotion/react@11.11.1)(@emotion/styled@11.11.0)(framer-motion@10.16.5)(react-dom@18.2.0)(react@18.2.0)
-      '@open-pioneer/experimental-ol-map':
-        specifier: ^0.1.6
-        version: 0.1.6(@open-pioneer/core@1.1.0)(@open-pioneer/runtime@1.1.0)(ol@7.3.0)(react-use@17.4.0)(react@18.2.0)
-      ol:
-        specifier: ^7.3.0
-        version: 7.3.0
-      react:
-        specifier: ^18.2.0
-        version: 18.2.0
+        specifier: ^8.2.0
+        version: 8.2.0
 
   src/samples/map-sample/ol-app:
     dependencies:
@@ -277,9 +250,6 @@ importers:
       map-sample-scale-component:
         specifier: workspace:*
         version: link:../map-sample-scale-component
-      map-sample-zoom-component:
-        specifier: workspace:*
-        version: link:../map-sample-zoom-component
       ol:
         specifier: ^8.2.0
         version: 8.2.0
@@ -2232,7 +2202,7 @@ packages:
       react: 18.2.0
     dev: false
 
-  /@open-pioneer/experimental-ol-map@0.1.6(@open-pioneer/core@1.1.0)(@open-pioneer/runtime@1.1.0)(ol@7.3.0)(react-use@17.4.0)(react@18.2.0):
+  /@open-pioneer/experimental-ol-map@0.1.6(@open-pioneer/core@1.1.0)(@open-pioneer/runtime@1.1.0)(ol@8.2.0)(react-use@17.4.0)(react@18.2.0):
     resolution: {integrity: sha512-31VJjri/l76o/x+7yaCGW4Oe5S54SbvZyNQEMNjWFn2fyxCnKNJkCFiEchrXEMDnCc1peh/VtXbPrPBMDL4Mxw==}
     peerDependencies:
       '@open-pioneer/core': ^1.0.0
@@ -2243,7 +2213,7 @@ packages:
     dependencies:
       '@open-pioneer/core': 1.1.0
       '@open-pioneer/runtime': 1.1.0(@formatjs/intl@2.9.9)(@open-pioneer/base-theme@0.1.0)(@open-pioneer/chakra-integration@1.1.0)(@open-pioneer/core@1.1.0)(@open-pioneer/runtime-react-support@1.0.0)(react-dom@18.2.0)(react@18.2.0)
-      ol: 7.3.0
+      ol: 8.2.0
       react: 18.2.0
       react-use: 17.4.0(react-dom@18.2.0)(react@18.2.0)
     dev: false
@@ -5091,16 +5061,6 @@ packages:
       define-properties: 1.2.0
       es-abstract: 1.21.1
     dev: true
-
-  /ol@7.3.0:
-    resolution: {integrity: sha512-08vJE4xITKPazQ9qJjeqYjRngnM9s+1eSv219Pdlrjj3LpLqjEH386ncq+76Dw1oGPGR8eLVEePk7FEd9XqqMw==}
-    dependencies:
-      earcut: 2.2.4
-      geotiff: 2.0.7
-      ol-mapbox-style: link:support/disabled-package
-      pbf: 3.2.1
-      rbush: 3.0.1
-    dev: false
 
   /ol@8.2.0:
     resolution: {integrity: sha512-/m1ddd7Jsp4Kbg+l7+ozR5aKHAZNQOBAoNZ5pM9Jvh4Etkf0WGkXr9qXd7PnhmwiC1Hnc2Toz9XjCzBBvexfXw==}
