@@ -11,6 +11,6 @@ export default defineBuildConfig({
         }
     },
     ui: {
-        references: ["map-sample-logging.LogService", "ol-map.MapRegistry"]
+        references: ["map-sample-logging.LogService"]
     }
 });

@@ -209,15 +209,6 @@ importers:
         specifier: ^1.1.0
         version: 1.1.0(@formatjs/intl@2.9.9)(@open-pioneer/base-theme@0.1.0)(@open-pioneer/chakra-integration@1.1.0)(@open-pioneer/core@1.1.0)(@open-pioneer/runtime-react-support@1.0.0)(react-dom@18.2.0)(react@18.2.0)
 
-  src/samples/map-sample/map-sample-scale-component:
-    dependencies:
-      '@open-pioneer/experimental-ol-map':
-        specifier: ^0.1.6
-        version: 0.1.6(@open-pioneer/core@1.1.0)(@open-pioneer/runtime@1.1.0)(ol@8.2.0)(react-use@17.4.0)(react@18.2.0)
-      ol:
-        specifier: ^8.2.0
-        version: 8.2.0
-
   src/samples/map-sample/ol-app:
     dependencies:
       '@chakra-ui/icons':
@@ -235,21 +226,27 @@ importers:
       '@open-pioneer/chakra-integration':
         specifier: ^1.1.0
         version: 1.1.0(@chakra-ui/react@2.8.2)(@emotion/cache@11.11.0)(@emotion/react@11.11.1)(@emotion/styled@11.11.0)(framer-motion@10.16.5)(react-dom@18.2.0)(react@18.2.0)
-      '@open-pioneer/experimental-layout-sidebar':
-        specifier: ^0.1.3
-        version: 0.1.3(@chakra-ui/icons@2.0.19)(@chakra-ui/system@2.6.2)(@emotion/react@11.11.1)(@emotion/styled@11.11.0)(@open-pioneer/chakra-integration@1.1.0)(@open-pioneer/runtime@1.1.0)(react@18.2.0)
+      '@open-pioneer/coordinate-viewer':
+        specifier: ^0.1.0
+        version: 0.1.0(@open-pioneer/chakra-integration@1.1.0)(@open-pioneer/map@0.1.0)(@open-pioneer/react-utils@0.1.0)(@open-pioneer/runtime@1.1.0)(ol@8.2.0)(react@18.2.0)
       '@open-pioneer/map':
         specifier: ^0.1.0
         version: 0.1.0(@open-pioneer/chakra-integration@1.1.0)(@open-pioneer/core@1.1.0)(@open-pioneer/react-utils@0.1.0)(@open-pioneer/runtime@1.1.0)(@types/proj4@2.5.5)(ol@8.2.0)(proj4@2.9.2)(react-dom@18.2.0)(react-use@17.4.0)(react@18.2.0)
+      '@open-pioneer/map-navigation':
+        specifier: ^0.1.0
+        version: 0.1.0(@open-pioneer/chakra-integration@1.1.0)(@open-pioneer/map@0.1.0)(@open-pioneer/react-utils@0.1.0)(@open-pioneer/runtime@1.1.0)(classnames@2.3.2)(ol@8.2.0)(react-icons@4.8.0)(react@18.2.0)
       '@open-pioneer/runtime':
         specifier: ^1.1.0
         version: 1.1.0(@formatjs/intl@2.9.9)(@open-pioneer/base-theme@0.1.0)(@open-pioneer/chakra-integration@1.1.0)(@open-pioneer/core@1.1.0)(@open-pioneer/runtime-react-support@1.0.0)(react-dom@18.2.0)(react@18.2.0)
+      '@open-pioneer/scale-bar':
+        specifier: ^0.1.0
+        version: 0.1.0(@open-pioneer/chakra-integration@1.1.0)(@open-pioneer/map@0.1.0)(@open-pioneer/react-utils@0.1.0)(@open-pioneer/runtime@1.1.0)(ol@8.2.0)(react@18.2.0)
+      '@open-pioneer/scale-viewer':
+        specifier: ^0.1.0
+        version: 0.1.0(@open-pioneer/chakra-integration@1.1.0)(@open-pioneer/map@0.1.0)(@open-pioneer/react-utils@0.1.0)(@open-pioneer/runtime@1.1.0)(react@18.2.0)
       map-sample-logging:
         specifier: workspace:^
         version: link:../map-sample-logging
-      map-sample-scale-component:
-        specifier: workspace:*
-        version: link:../map-sample-scale-component
       ol:
         specifier: ^8.2.0
         version: 8.2.0
@@ -2179,44 +2176,26 @@ packages:
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
 
-  /@open-pioneer/core@1.1.0:
-    resolution: {integrity: sha512-z856f9oojH0nb3vSBp4jsay6YjL9K5g9yKgKfWywkWlfs4Lsw1dw7mEhdooRwbWVXFqQKyFneANqSflEvnVMyw==}
-
-  /@open-pioneer/experimental-layout-sidebar@0.1.3(@chakra-ui/icons@2.0.19)(@chakra-ui/system@2.6.2)(@emotion/react@11.11.1)(@emotion/styled@11.11.0)(@open-pioneer/chakra-integration@1.1.0)(@open-pioneer/runtime@1.1.0)(react@18.2.0):
-    resolution: {integrity: sha512-F+nCREaQitlYhd6787oEQ6MTeGlLOW59lG0uoXD8Nf5PYZsXfi9Tq2LL2tqphXcFYhIm3IRZCRLhq/dVfx/UWA==}
+  /@open-pioneer/coordinate-viewer@0.1.0(@open-pioneer/chakra-integration@1.1.0)(@open-pioneer/map@0.1.0)(@open-pioneer/react-utils@0.1.0)(@open-pioneer/runtime@1.1.0)(ol@8.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-AfwjXJqIsyZMEwQJUwYv12wyVvZo7flZtGbUEu46KXCW0CpCdqxbJAdKvVeQfilo3PazUzInwzwpesMKOdwayA==}
     peerDependencies:
-      '@chakra-ui/icons': ^2.0.19
-      '@chakra-ui/system': ^2.5.7
-      '@emotion/react': ^11.11.0
-      '@emotion/styled': ^11.11.0
-      '@open-pioneer/chakra-integration': ^1.0.0
-      '@open-pioneer/runtime': ^1.0.0
+      '@open-pioneer/chakra-integration': ^1.1.0
+      '@open-pioneer/map': ^0.1.0
+      '@open-pioneer/react-utils': ^0.1.0
+      '@open-pioneer/runtime': ^1.1.0
+      ol: ^8.2.0
       react: ^18.2.0
     dependencies:
-      '@chakra-ui/icons': 2.0.19(@chakra-ui/system@2.6.2)(react@18.2.0)
-      '@chakra-ui/system': 2.6.2(@emotion/react@11.11.1)(@emotion/styled@11.11.0)(react@18.2.0)
-      '@emotion/react': 11.11.1(@types/react@18.2.7)(react@18.2.0)
-      '@emotion/styled': 11.11.0(@emotion/react@11.11.1)(@types/react@18.2.7)(react@18.2.0)
       '@open-pioneer/chakra-integration': 1.1.0(@chakra-ui/react@2.8.2)(@emotion/cache@11.11.0)(@emotion/react@11.11.1)(@emotion/styled@11.11.0)(framer-motion@10.16.5)(react-dom@18.2.0)(react@18.2.0)
-      '@open-pioneer/runtime': 1.1.0(@formatjs/intl@2.9.9)(@open-pioneer/base-theme@0.1.0)(@open-pioneer/chakra-integration@1.1.0)(@open-pioneer/core@1.1.0)(@open-pioneer/runtime-react-support@1.0.0)(react-dom@18.2.0)(react@18.2.0)
-      react: 18.2.0
-    dev: false
-
-  /@open-pioneer/experimental-ol-map@0.1.6(@open-pioneer/core@1.1.0)(@open-pioneer/runtime@1.1.0)(ol@8.2.0)(react-use@17.4.0)(react@18.2.0):
-    resolution: {integrity: sha512-31VJjri/l76o/x+7yaCGW4Oe5S54SbvZyNQEMNjWFn2fyxCnKNJkCFiEchrXEMDnCc1peh/VtXbPrPBMDL4Mxw==}
-    peerDependencies:
-      '@open-pioneer/core': ^1.0.0
-      '@open-pioneer/runtime': ^1.0.0
-      ol: ^7.3.0
-      react: ^18.2.0
-      react-use: ^17.4.0
-    dependencies:
-      '@open-pioneer/core': 1.1.0
+      '@open-pioneer/map': 0.1.0(@open-pioneer/chakra-integration@1.1.0)(@open-pioneer/core@1.1.0)(@open-pioneer/react-utils@0.1.0)(@open-pioneer/runtime@1.1.0)(@types/proj4@2.5.5)(ol@8.2.0)(proj4@2.9.2)(react-dom@18.2.0)(react-use@17.4.0)(react@18.2.0)
+      '@open-pioneer/react-utils': 0.1.0(@open-pioneer/chakra-integration@1.1.0)(@open-pioneer/core@1.1.0)(classnames@2.3.2)(react@18.2.0)
       '@open-pioneer/runtime': 1.1.0(@formatjs/intl@2.9.9)(@open-pioneer/base-theme@0.1.0)(@open-pioneer/chakra-integration@1.1.0)(@open-pioneer/core@1.1.0)(@open-pioneer/runtime-react-support@1.0.0)(react-dom@18.2.0)(react@18.2.0)
       ol: 8.2.0
       react: 18.2.0
-      react-use: 17.4.0(react-dom@18.2.0)(react@18.2.0)
     dev: false
+
+  /@open-pioneer/core@1.1.0:
+    resolution: {integrity: sha512-z856f9oojH0nb3vSBp4jsay6YjL9K5g9yKgKfWywkWlfs4Lsw1dw7mEhdooRwbWVXFqQKyFneANqSflEvnVMyw==}
 
   /@open-pioneer/integration@1.0.0(@open-pioneer/runtime@1.1.0):
     resolution: {integrity: sha512-AfSidV6K+cOVCOg7TE2XY9jIloVYnW6Geg5QOHauuA/5CfIwxJkaNoDx5bu7gseeTvcJvHXAg7bNShbjnLTlgw==}
@@ -2224,6 +2203,28 @@ packages:
       '@open-pioneer/runtime': ^1.0.0
     dependencies:
       '@open-pioneer/runtime': 1.1.0(@formatjs/intl@2.9.9)(@open-pioneer/base-theme@0.1.0)(@open-pioneer/chakra-integration@1.1.0)(@open-pioneer/core@1.1.0)(@open-pioneer/runtime-react-support@1.0.0)(react-dom@18.2.0)(react@18.2.0)
+    dev: false
+
+  /@open-pioneer/map-navigation@0.1.0(@open-pioneer/chakra-integration@1.1.0)(@open-pioneer/map@0.1.0)(@open-pioneer/react-utils@0.1.0)(@open-pioneer/runtime@1.1.0)(classnames@2.3.2)(ol@8.2.0)(react-icons@4.8.0)(react@18.2.0):
+    resolution: {integrity: sha512-hK3yMGFet0tIR3vDa/9hWox70ywUU4+1N0OzvYz1W/pee8oB/GkqN1dUrjWa7ofe66fjFhQYkEN531iTT6BQWg==}
+    peerDependencies:
+      '@open-pioneer/chakra-integration': ^1.1.0
+      '@open-pioneer/map': ^0.1.0
+      '@open-pioneer/react-utils': ^0.1.0
+      '@open-pioneer/runtime': ^1.1.0
+      classnames: ^2.3.2
+      ol: ^8.2.0
+      react: ^18.2.0
+      react-icons: ^4.11.0
+    dependencies:
+      '@open-pioneer/chakra-integration': 1.1.0(@chakra-ui/react@2.8.2)(@emotion/cache@11.11.0)(@emotion/react@11.11.1)(@emotion/styled@11.11.0)(framer-motion@10.16.5)(react-dom@18.2.0)(react@18.2.0)
+      '@open-pioneer/map': 0.1.0(@open-pioneer/chakra-integration@1.1.0)(@open-pioneer/core@1.1.0)(@open-pioneer/react-utils@0.1.0)(@open-pioneer/runtime@1.1.0)(@types/proj4@2.5.5)(ol@8.2.0)(proj4@2.9.2)(react-dom@18.2.0)(react-use@17.4.0)(react@18.2.0)
+      '@open-pioneer/react-utils': 0.1.0(@open-pioneer/chakra-integration@1.1.0)(@open-pioneer/core@1.1.0)(classnames@2.3.2)(react@18.2.0)
+      '@open-pioneer/runtime': 1.1.0(@formatjs/intl@2.9.9)(@open-pioneer/base-theme@0.1.0)(@open-pioneer/chakra-integration@1.1.0)(@open-pioneer/core@1.1.0)(@open-pioneer/runtime-react-support@1.0.0)(react-dom@18.2.0)(react@18.2.0)
+      classnames: 2.3.2
+      ol: 8.2.0
+      react: 18.2.0
+      react-icons: 4.8.0(react@18.2.0)
     dev: false
 
   /@open-pioneer/map@0.1.0(@open-pioneer/chakra-integration@1.1.0)(@open-pioneer/core@1.1.0)(@open-pioneer/react-utils@0.1.0)(@open-pioneer/runtime@1.1.0)(@types/proj4@2.5.5)(ol@8.2.0)(proj4@2.9.2)(react-dom@18.2.0)(react-use@17.4.0)(react@18.2.0):
@@ -2292,6 +2293,40 @@ packages:
       '@open-pioneer/runtime-react-support': 1.0.0(react@18.2.0)
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
+
+  /@open-pioneer/scale-bar@0.1.0(@open-pioneer/chakra-integration@1.1.0)(@open-pioneer/map@0.1.0)(@open-pioneer/react-utils@0.1.0)(@open-pioneer/runtime@1.1.0)(ol@8.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-XPq/iCMls6JoDmugUSD9c9VLUNAQAJuBf8Vfr5DzNLYtWjsW0KbBkbqrsNqfW5/tHUPZyNZIFtnZ19nuTRIkxg==}
+    peerDependencies:
+      '@open-pioneer/chakra-integration': ^1.1.0
+      '@open-pioneer/map': ^0.1.0
+      '@open-pioneer/react-utils': ^0.1.0
+      '@open-pioneer/runtime': ^1.1.0
+      ol: ^8.2.0
+      react: ^18.2.0
+    dependencies:
+      '@open-pioneer/chakra-integration': 1.1.0(@chakra-ui/react@2.8.2)(@emotion/cache@11.11.0)(@emotion/react@11.11.1)(@emotion/styled@11.11.0)(framer-motion@10.16.5)(react-dom@18.2.0)(react@18.2.0)
+      '@open-pioneer/map': 0.1.0(@open-pioneer/chakra-integration@1.1.0)(@open-pioneer/core@1.1.0)(@open-pioneer/react-utils@0.1.0)(@open-pioneer/runtime@1.1.0)(@types/proj4@2.5.5)(ol@8.2.0)(proj4@2.9.2)(react-dom@18.2.0)(react-use@17.4.0)(react@18.2.0)
+      '@open-pioneer/react-utils': 0.1.0(@open-pioneer/chakra-integration@1.1.0)(@open-pioneer/core@1.1.0)(classnames@2.3.2)(react@18.2.0)
+      '@open-pioneer/runtime': 1.1.0(@formatjs/intl@2.9.9)(@open-pioneer/base-theme@0.1.0)(@open-pioneer/chakra-integration@1.1.0)(@open-pioneer/core@1.1.0)(@open-pioneer/runtime-react-support@1.0.0)(react-dom@18.2.0)(react@18.2.0)
+      ol: 8.2.0
+      react: 18.2.0
+    dev: false
+
+  /@open-pioneer/scale-viewer@0.1.0(@open-pioneer/chakra-integration@1.1.0)(@open-pioneer/map@0.1.0)(@open-pioneer/react-utils@0.1.0)(@open-pioneer/runtime@1.1.0)(react@18.2.0):
+    resolution: {integrity: sha512-wcQrkRXXJ7Bm3DQ6TUVBRdbnwJSRAKyVOZmAFF4DQreAgvJO5fQjG816UZUpqLArJqAYDcB9fhM43Nr3ia4w5A==}
+    peerDependencies:
+      '@open-pioneer/chakra-integration': ^1.1.0
+      '@open-pioneer/map': ^0.1.0
+      '@open-pioneer/react-utils': ^0.1.0
+      '@open-pioneer/runtime': ^1.1.0
+      react: ^18.2.0
+    dependencies:
+      '@open-pioneer/chakra-integration': 1.1.0(@chakra-ui/react@2.8.2)(@emotion/cache@11.11.0)(@emotion/react@11.11.1)(@emotion/styled@11.11.0)(framer-motion@10.16.5)(react-dom@18.2.0)(react@18.2.0)
+      '@open-pioneer/map': 0.1.0(@open-pioneer/chakra-integration@1.1.0)(@open-pioneer/core@1.1.0)(@open-pioneer/react-utils@0.1.0)(@open-pioneer/runtime@1.1.0)(@types/proj4@2.5.5)(ol@8.2.0)(proj4@2.9.2)(react-dom@18.2.0)(react-use@17.4.0)(react@18.2.0)
+      '@open-pioneer/react-utils': 0.1.0(@open-pioneer/chakra-integration@1.1.0)(@open-pioneer/core@1.1.0)(classnames@2.3.2)(react@18.2.0)
+      '@open-pioneer/runtime': 1.1.0(@formatjs/intl@2.9.9)(@open-pioneer/base-theme@0.1.0)(@open-pioneer/chakra-integration@1.1.0)(@open-pioneer/core@1.1.0)(@open-pioneer/runtime-react-support@1.0.0)(react-dom@18.2.0)(react@18.2.0)
+      react: 18.2.0
+    dev: false
 
   /@open-pioneer/test-utils@1.0.0(@formatjs/intl@2.9.9)(@open-pioneer/chakra-integration@1.1.0)(@open-pioneer/runtime-react-support@1.0.0)(@testing-library/dom@9.3.0)(@testing-library/react@14.0.0)(react-dom@18.2.0)(react@18.2.0):
     resolution: {integrity: sha512-NLKd8WP+CkmtDTaGyUi7AEUOcsz/zCw43BlY6mbUREdRyCKjlkEb2tijm4XPSI7/R36M6yWrllar6EpaXU06Qg==}
