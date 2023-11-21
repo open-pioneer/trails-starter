@@ -69,7 +69,7 @@ customElements.define("i18n-howto", Element);
 and the `index.html`:
 
 ```html
-<!DOCTYPE html>
+<!doctype html>
 <!-- src/sites/empty/index.html -->
 <html lang="en">
     <head>

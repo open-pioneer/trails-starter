@@ -98,7 +98,7 @@ It resolves to the app's API when the application has started.
 
 ```html
 <!-- src/sites/empty/index.html -->
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
     ...
     <body>
@@ -121,7 +121,7 @@ To do this, simply call the method on the returned API:
 
 ```html
 <!-- src/sites/empty/index.html -->
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
     ...
     <body>

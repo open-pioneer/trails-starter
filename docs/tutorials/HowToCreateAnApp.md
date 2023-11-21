@@ -108,7 +108,7 @@ We usually place sites into `src/sites/<SITE_NAME>/index.html`, but just like ap
 
 ```html
 <!-- src/sites/my-app-test/index.html -->
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
     <head>
         <meta charset="UTF-8" />

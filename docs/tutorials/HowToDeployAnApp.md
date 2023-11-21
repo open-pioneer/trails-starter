@@ -109,7 +109,7 @@ To embed your app in a host site, simply load the `empty.js` as a module:
 
 ```html
 <!-- Some host html site -->
-<!DOCTYPE html>
+<!doctype html>
 <html>
     <!-- ... -->
     <body>
