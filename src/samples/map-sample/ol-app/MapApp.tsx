@@ -3,7 +3,7 @@
 import { Box, Flex } from "@open-pioneer/chakra-integration";
 import { MapAnchor, MapContainer } from "@open-pioneer/map";
 import { ScaleBar } from "@open-pioneer/scale-bar";
-import {InitialExtent, ZoomIn, ZoomOut} from "@open-pioneer/map-navigation";
+import { InitialExtent, ZoomIn, ZoomOut } from "@open-pioneer/map-navigation";
 import { useIntl } from "open-pioneer:react-hooks";
 import { CoordinateViewer } from "@open-pioneer/coordinate-viewer";
 import { SectionHeading, TitledSection } from "@open-pioneer/react-utils";
@@ -23,9 +23,7 @@ export function MapApp() {
                         textAlign="center"
                         py={1}
                     >
-                        <SectionHeading size={"md"}>
-                            Open Pioneer - Map Sample
-                        </SectionHeading>
+                        <SectionHeading size={"md"}>Open Pioneer - Map Sample</SectionHeading>
                     </Box>
                 }
             >
@@ -35,8 +33,6 @@ export function MapApp() {
                         role="main"
                         aria-label={intl.formatMessage({ id: "ariaLabel.map" })}
                     >
-               
-                    
                         <MapAnchor position="bottom-right" horizontalGap={10} verticalGap={30}>
                             <Flex
                                 role="toolbar"
@@ -45,7 +41,6 @@ export function MapApp() {
                                 gap={1}
                                 padding={1}
                             >
-                              
                                 <InitialExtent mapId={MAP_ID} />
                                 <ZoomIn mapId={MAP_ID} />
                                 <ZoomOut mapId={MAP_ID} />
