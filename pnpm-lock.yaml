@@ -253,6 +253,9 @@ importers:
       '@open-pioneer/scale-viewer':
         specifier: ^0.1.0
         version: 0.1.0(@open-pioneer/chakra-integration@1.1.0)(@open-pioneer/map@0.1.0)(@open-pioneer/react-utils@0.1.0)(@open-pioneer/runtime@1.1.0)(react@18.2.0)
+      '@open-pioneer/theme':
+        specifier: ^0.1.0
+        version: 0.1.0(@open-pioneer/base-theme@0.1.0)(@open-pioneer/chakra-integration@1.1.0)(@open-pioneer/runtime@1.1.0)
       ol:
         specifier: ^8.2.0
         version: 8.2.0
@@ -2243,6 +2246,18 @@ packages:
       '@testing-library/react': 14.0.0(react-dom@18.2.0)(react@18.2.0)
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
+    dev: false
+
+  /@open-pioneer/theme@0.1.0(@open-pioneer/base-theme@0.1.0)(@open-pioneer/chakra-integration@1.1.0)(@open-pioneer/runtime@1.1.0):
+    resolution: {integrity: sha512-/iiM+YP9LOr+00aJjJ/JgbrSnVJvxwwZQcFmSUTTn5JmB1BTkiAUm1JeAPAmGFhyI9tM6b0+0rVQFFDuqBFnUQ==}
+    peerDependencies:
+      '@open-pioneer/base-theme': ^0.1.0
+      '@open-pioneer/chakra-integration': ^1.1.0
+      '@open-pioneer/runtime': ^1.1.0
+    dependencies:
+      '@open-pioneer/base-theme': 0.1.0(@open-pioneer/chakra-integration@1.1.0)
+      '@open-pioneer/chakra-integration': 1.1.0(@chakra-ui/react@2.8.2)(@emotion/cache@11.11.0)(@emotion/react@11.11.1)(@emotion/styled@11.11.0)(framer-motion@10.16.5)(react-dom@18.2.0)(react@18.2.0)
+      '@open-pioneer/runtime': 1.1.0(@formatjs/intl@2.9.9)(@open-pioneer/base-theme@0.1.0)(@open-pioneer/chakra-integration@1.1.0)(@open-pioneer/core@1.1.0)(@open-pioneer/runtime-react-support@1.0.0)(react-dom@18.2.0)(react@18.2.0)
     dev: false
 
   /@open-pioneer/vite-plugin-pioneer@1.1.2(@open-pioneer/runtime@1.1.0)(sass@1.69.5)(vite@4.5.0):
