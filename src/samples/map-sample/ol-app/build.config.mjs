@@ -9,8 +9,5 @@ export default defineBuildConfig({
         MainMapProvider: {
             provides: ["map.MapConfigProvider"]
         }
-    },
-    ui: {
-        references: ["map-sample-logging.LogService"]
     }
 });

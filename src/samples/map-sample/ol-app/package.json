@@ -18,7 +18,6 @@
         "@open-pioneer/runtime": "^1.1.0",
         "@open-pioneer/scale-bar": "^0.1.0",
         "@open-pioneer/scale-viewer": "^0.1.0",
-        "map-sample-logging": "workspace:^",
         "ol": "^8.2.0",
         "react": "^18.2.0",
         "react-dom": "^18.2.0",
