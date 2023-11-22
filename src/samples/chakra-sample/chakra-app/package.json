@@ -1,8 +1,0 @@
-{
-    "name": "chakra-app",
-    "private": true,
-    "dependencies": {
-        "@open-pioneer/chakra-integration": "^1.0.0",
-        "@open-pioneer/runtime": "^1.0.0"
-    }
-}

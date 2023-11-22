@@ -98,7 +98,7 @@ It resolves to the app's API when the application has started.
 
 ```html
 <!-- src/sites/empty/index.html -->
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
     ...
     <body>
@@ -121,7 +121,7 @@ To do this, simply call the method on the returned API:
 
 ```html
 <!-- src/sites/empty/index.html -->
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
     ...
     <body>
@@ -222,4 +222,4 @@ If you click this button, the event should be logged into the console.
 
 For more details see the package documentation of `@open-pioneer/integration`.
 
-An additional example is shown in the `api-sample` at `scr/samples`.
+An additional example is shown in the `api-sample` at `@open-pioneer/trails-core-packages`.

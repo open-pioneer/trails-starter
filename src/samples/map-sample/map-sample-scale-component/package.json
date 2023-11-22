@@ -1,9 +1,0 @@
-{
-    "name": "map-sample-scale-component",
-    "main": "index",
-    "private": true,
-    "dependencies": {
-        "@open-pioneer/experimental-ol-map": "^0.1.6",
-        "ol": "^7.3.0"
-    }
-}

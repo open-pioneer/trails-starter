@@ -72,3 +72,13 @@ overrideLicenses:
     version: "2.2.1"
     licenseFiles:
       - custom: "./licenses/react_style_singleton_mit"
+
+  # Missing license document in npm artifact.
+  # Licenses added after 3.0 release via pull request.
+  # License text downloaded on 2023-11-21.
+  #
+  # See https://github.com/colorjs/color-rgba/pull/6
+  - name: "color-rgba"
+    version: "3.0.0"
+    licenseFiles:
+      - custom: "./licenses/color_rgba_mit"

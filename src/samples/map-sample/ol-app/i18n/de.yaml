@@ -1,0 +1,10 @@
+messages:
+  ariaLabel:
+    header: "Kopfleiste"
+    footer: "Fussleiste mit Maßstabsangabe, Raumbezugssystem und Koordinatenanzeige"
+    map: "Karte. Mit den Pfeiltasten kannst du die Karte bewegen. Mit der Plus Taste hineinzoomen und mit der Minus Taste herauszoomen."
+    topLeft: "Messen"
+    topRight: "Übersichtskarte und Auswahl der Hintergrundkarte"
+    bottomRight: "Kartenwerkzeuge"
+  basemapLabel: "Hintergrundkarte auswählen:"
+  measurementTitle: "Messen"
