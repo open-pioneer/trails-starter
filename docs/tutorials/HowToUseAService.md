@@ -42,13 +42,14 @@ We extend the UI of the empty app to add our custom class:
 
 ```tsx
 // src/apps/empty/AppUI.tsx
+import { ApplicationContext } from "@open-pioneer/runtime";
 import { Button, Container, Text, VStack } from "@open-pioneer/chakra-integration";
 import { useService } from "open-pioneer:react-hooks";
 import { useState } from "react";
 
 export function AppUI() {
     // (1)
-    const appCtx = useService("runtime.ApplicationContext");
+    const appCtx = useService<ApplicationContext>("runtime.ApplicationContext");
 
     // (2)
     const [clickCount, setClickCount] = useState(0);
@@ -248,38 +249,7 @@ After following these steps, your application's external behavior will be unchan
 
 ## TypeScript integration
 
-Packages supporting TypeScript will usually contain snippets such as this to declare types of their interface names:
-
-```ts
-// taken from @open-pioneer/integration
-import "@open-pioneer/runtime";
-declare module "@open-pioneer/runtime" {
-    interface ServiceRegistry {
-        "integration.ApiExtension": ApiExtension;
-        "integration.ExternalEventService": ExternalEventService;
-    }
-}
-```
-
-The snippet associates the interface names (strings on the left) with the appropriate TypeScript types.
-When you write `useService("integration.ExternalEventService")`, the compiler will then know that an `ExternalEventService` will be returned.
-
-Sometimes these declarations will not be picked up automatically by the TypeScript compiler for "external" packages,
-for example if the package is never imported explicitly via TypeScript code.
-
-This will result - for example - in missing types or missing auto-completes when using the `useService` hook (`unknown` instead of the actual service type).
-
-To force TypeScript to read the declarations, you can simply import the package (either locally in your implementation file or in a shared `.d.ts` file):
-
-```ts
-// src/types/pioneer-env.d.ts
-
-// Add a line such as this with the package of your choice
-import "@open-pioneer/integration";
-```
-
-Since the import appears in a `d.ts` file, it has no impact on the runtime behavior of your application.
-It will however be read by the TypeScript compiler who can then check your code against the actual interfaces.
+See [TypeScript Integration](../reference/Services.md#typescript-integration) for how a package supporting TypeScript can associate service types with their interface names.
 
 ## Further reading
 

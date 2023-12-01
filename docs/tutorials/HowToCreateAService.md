@@ -253,31 +253,32 @@ The `api.ts` contains an interface definition and registers that interface with 
 
 ```ts
 // src/packages/math/api.ts
+import { DeclaredService } from "@open-pioneer/runtime";
+
 /**
  * Provides math operations.
  *
  * Use the interface `"math.MathService"` to inject an instance of this service.
  */
-export interface MathService {
+export interface MathService extends DeclaredService<"math.MathService"> {
+    // (1)
     /**
      * Multiplies the two numbers and returns the result.
      */
     multiply(a: number, b: number): number;
 }
-
-import "@open-pioneer/runtime";
-declare module "@open-pioneer/runtime" {
-    interface ServiceRegistry {
-        "math.MathService": MathService; // (1)
-    }
-}
 ```
 
 -   **(1)**  
-    This associates the interface name with the given type.
-    Whenever one writes `useService("math.MathService")` or `ServiceType<"math.MathService">`, one will now automatically receive the type `MathService` defined here.
+    This associates the type with the given interface name at compile time.
+    Whenever one writes `useService<MathService>("math.MathService")`, the compiler will automatically check that one has not accidentally mistyped the string argument.
 
-    This means that we can now also remove the `as any` cast in `AppUI.tsx`.
+    This means that we can now also remove the `as any` cast in `AppUI.tsx`:
+
+    ```diff
+    - const service = useService("math.MathService") as any;
+    + const service = useService<MathService>("math.MathService");
+    ```
 
 Finally, now that we have an interface, we'll also implement it in our service class:
 
@@ -316,17 +317,9 @@ In your `api.ts`, add another interface:
  *
  * Provide the interface `"math.MathServiceExtension"` to be called by the math service.
  */
-export interface MathServiceExtension {
+export interface MathServiceExtension extends DeclaredService<"math.MathServiceExtension"> {
     /** Called when `multiply` was called on the math service. */
     onMultiply(a: number, b: number, result: number): void;
-}
-
-import "@open-pioneer/runtime";
-declare module "@open-pioneer/runtime" {
-    interface ServiceRegistry {
-        // ...
-        "math.MathServiceExtension": MathServiceExtension;
-    }
 }
 ```
 
