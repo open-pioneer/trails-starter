@@ -1,5 +1,8 @@
 {
     "name": "sample-package",
     "version": "0.0.0",
-    "private": true
+    "private": true,
+    "peerDependencies": {
+        "@open-pioneer/runtime": "^2.0.2"
+    }
 }

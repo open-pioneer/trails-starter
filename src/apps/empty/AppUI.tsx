@@ -2,10 +2,11 @@
 // SPDX-License-Identifier: Apache-2.0
 import { Container, Heading, Text } from "@open-pioneer/chakra-integration";
 import { useIntl, useService } from "open-pioneer:react-hooks";
+import { Greeter } from "sample-package";
 
 export function AppUI() {
     const intl = useIntl();
-    const greeter = useService("sample-package.Greeter");
+    const greeter = useService<Greeter>("sample-package.Greeter");
     return (
         <Container>
             <Heading as="h1" size="lg">
