@@ -24,23 +24,34 @@
     },
     "pnpm": {
         "//": [
-            "overrides:",
-            "ol-mapbox-style: license issues",
+            "overrides",
+            "=========",
             "semver: https://github.com/advisories/GHSA-c2qf-rxjj-qqgw",
             "tough-cookie: https://github.com/advisories/GHSA-72xf-g2v4-qvf3",
+            "@mapbox/mapbox-gl-style-spec: license issues, see https://github.com/openlayers/ol-mapbox-style/pull/940",
             "",
-            "ignored cves:",
-            "CVE-2023-26115 (word-wrap): ReDoS does not affect us (running client side or at build time)"
+            "ignored cves",
+            "============",
+            "",
+            "patches",
+            "=======",
+            "react-select: patched to use composedPath() in event conditions; needed for web component integration (see https://github.com/JedWatson/react-select/issues/5824)",
+            "@chakra-ui/menu;react-use-outside-click;hooks: patched to fix menus in shadow dom (see https://github.com/open-pioneer/trails-openlayers-base-packages/issues/184)"
         ],
         "overrides": {
-            "ol-mapbox-style": "workspace:disabled-package@*",
             "semver@<7.5.2": ">=7.5.2",
-            "tough-cookie@<4.1.3": ">=4.1.3"
+            "tough-cookie@<4.1.3": ">=4.1.3",
+            "@mapbox/mapbox-gl-style-spec": "npm:@maplibre/maplibre-gl-style-spec@^19.3.3",
+            "chakra-react-select>react-select": "^5.8.0"
         },
         "auditConfig": {
-            "ignoreCves": [
-                "CVE-2023-26115"
-            ]
+            "ignoreCves": []
+        },
+        "patchedDependencies": {
+            "@chakra-ui/menu@2.2.1": "patches/@chakra-ui__menu@2.2.1.patch",
+            "@chakra-ui/react-use-outside-click@2.2.0": "patches/@chakra-ui__react-use-outside-click@2.2.0.patch",
+            "@chakra-ui/hooks@2.2.1": "patches/@chakra-ui__hooks@2.2.1.patch",
+            "react-select@5.8.0": "patches/react-select@5.8.0.patch"
         }
     },
     "dependencies": {
@@ -48,27 +59,28 @@
         "@chakra-ui/react": "^2.8.0",
         "@chakra-ui/system": "^2.6.0",
         "@emotion/cache": "^11.11.0",
-        "@emotion/react": "^11.11.1",
+        "@emotion/react": "^11.11.3",
         "@emotion/styled": "^11.11.0",
         "@formatjs/intl": "^2.9.0",
-        "@open-pioneer/chakra-integration": "^1.1.0",
-        "@open-pioneer/core": "^1.1.0",
-        "@open-pioneer/integration": "^1.0.3",
-        "@open-pioneer/runtime": "^1.1.0",
-        "@open-pioneer/test-utils": "^1.0.1",
-        "framer-motion": "^10.16.0",
+        "@maplibre/maplibre-gl-style-spec": "^19.3.3",
+        "@open-pioneer/chakra-integration": "^1.1.1",
+        "@open-pioneer/core": "^1.2.1",
+        "@open-pioneer/integration": "^2.0.2",
+        "@open-pioneer/runtime": "^2.0.2",
+        "@open-pioneer/test-utils": "^1.0.2",
+        "framer-motion": "^10.17.6",
         "ol": "^8.2.0",
         "react": "^18.2.0",
         "react-dom": "^18.2.0",
-        "react-use": "^17.4.0"
+        "react-use": "^17.4.2"
     },
     "devDependencies": {
-        "@open-pioneer/build-package-cli": "^1.0.4",
-        "@open-pioneer/build-support": "^1.0.0",
-        "@open-pioneer/vite-plugin-pioneer": "^1.1.2",
+        "@open-pioneer/build-package-cli": "^2.0.0",
+        "@open-pioneer/build-support": "^2.0.0",
+        "@open-pioneer/vite-plugin-pioneer": "^2.0.0",
         "@testing-library/dom": "^9.3.1",
         "@testing-library/jest-dom": "^6.0.0",
-        "@testing-library/react": "^14.0.0",
+        "@testing-library/react": "^14.1.2",
         "@testing-library/user-event": "^14.4.3",
         "@types/js-yaml": "^4.0.5",
         "@types/node": "^16.18.40",
@@ -82,6 +94,7 @@
         "eslint-import-resolver-typescript": "^3.6.0",
         "eslint-plugin-header": "^3.1.1",
         "eslint-plugin-import": "^2.28.0",
+        "eslint-plugin-jsx-a11y": "^6.8.0",
         "eslint-plugin-react": "^7.33.2",
         "eslint-plugin-react-hooks": "^4.6.0",
         "eslint-plugin-unused-imports": "^3.0.0",
@@ -92,7 +105,6 @@
         "jsdom": "^22.1.0",
         "prettier": "^3.0.2",
         "rimraf": "^5.0.1",
-        "rollup-plugin-visualizer": "^5.9.2",
         "sass": "^1.65.1",
         "syncpack": "10.5.1",
         "ts-node": "^10.9.1",
@@ -103,7 +115,7 @@
         "vitest": "^0.34.6"
     },
     "engines": {
-        "node": ">= 16",
-        "pnpm": "^7 || ^8"
+        "node": ">= 18",
+        "pnpm": "^8"
     }
 }

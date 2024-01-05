@@ -236,81 +236,85 @@ export class MyServiceImpl implements Service<MyService> {
 }
 ```
 
-### Registering service interfaces
+### Declaring the service's interface name
 
-An interface name can be associated with TypeScript interfaces, which greatly improves the developer experience when interacting with services.
+A Service's TypeScript interface can be associated with an interface name (a string constant), which greatly improves the developer experience when interacting with services.
 
-In order to provide a type for an interface name, extent the `ServiceRegistry` interface.
-This is usually done from a file called `api.ts` or `api/index.ts`:
+To link your TypeScript type with its associated interface name, make sure that your service's interface extends from `DeclaredService`.
+The `DeclaredService` type does not add any required properties or methods to your service; it simply transports the associated interface name at compile time.
 
 ```ts
 // somePackage/api.ts
+import { DeclaredService } from "@open-pioneer/runtime";
 
 /** All implementations of `"hello.HelloWorldService"` must conform to this interface. */
-export interface HelloWorldService {
+export interface HelloWorldService extends DeclaredService<"hello.HelloWorldService"> {
     /** Says hello. */
     sayHello(): void;
 }
+```
 
-// This uses a typescript feature called "declaration merging".
-// All packages can (optionally) associate interface names with their typescript types.
-// See also https://www.typescriptlang.org/docs/handbook/declaration-merging.html#merging-interfaces
-import "@open-pioneer/runtime";
-declare module "@open-pioneer/runtime" {
-    interface ServiceRegistry {
-        "hello.HelloWorldService": HelloWorldService;
-    }
+The declaration above tells the compiler that one must use the interface name `"hello.HelloWorldService"` whenever one requires the type `HelloWorldService`.
+
+That information can be used in React components using the interface via `useService`:
+
+```tsx
+// ExampleComponent.tsx
+function ExampleComponent() {
+    // Would report an error via TypeScript if we accidentally mistyped the string argument.
+    const service = useService<HelloWorldService>("hello.HelloWorldService");
 }
 ```
 
-The declaration above tells the compiler that whenever the interface `"hello.HelloWorldService"` is required, that the returned object conforms to the `interface HelloWorldService`.
+> NOTE: The mapping from type to interface name may be used in other places in the future, too.
+> For now, you have to make sure to use the correct interface in your service classes on your own.
 
-That information can be used like this:
+### Providing helpers for package properties
 
--   Using the `useService` hook:
+Package properties are essentially untyped JSON data.
+However, you can provide helper types and functions in your package to make configuration of your package in an app less error prone.
 
-    ```jsx
-    // ExampleComponent.tsx
-    function ExampleComponent() {
-        // Of type HelloWorldService, or `unknown` if no type has been registered.
-        const service = useService("hello.HelloWorldService");
-    }
-    ```
-
--   Using the `ServiceType` helper directly:
-
-    ```ts
-    // ExampleService.ts
-    import { Service, ServiceType } from "@open-pioneer/runtime";
-
-    interface References {
-        // Automatically resolves to the registered type
-        // or compilation fails if no type has been registered.
-        helloWorldService: ServiceType<"hello.HelloWorldService">;
-    }
-
-    class ExampleService implements Service {
-        constructor(options: ServiceOptions<References>) {}
-    }
-    ```
-
-### Registering package properties
-
-A similar machinery can be used to declare properties (and their) types of the current package:
+In your package:
 
 ```ts
-// some-package/api.ts
-
+// some-logger-package/api.ts
+/** Properties accepted by this package */
 export interface LoggingProperties {
     /** Log level for the shared logger. */
-    logLevel: "DEBUG" | "INFO" | "ERROR";
+    logLevel?: "DEBUG" | "INFO" | "ERROR";
 }
 
-import "@open-pioneer/runtime";
-declare module "@open-pioneer/runtime" {
-    interface PropertiesRegistry {
-        // Associates the package name with the given interface for its property types.
-        "some-package": Partial<LoggingProperties>;
-    }
+/**
+ * Helper function to construct type safe properties.
+ *
+ * Note: this function does nothing and returns the original `properties` object (see usage below).
+ */
+export function createLoggingProperties(properties: LoggingProperties): LoggingProperties {
+    return properties;
 }
+```
+
+In an app:
+
+```ts
+// your-app/app.ts
+import { createCustomElement } from "@open-pioneer/runtime";
+import { AppUI } from "./AppUI";
+import * as appMetadata from "open-pioneer:app";
+import { createLoggingProperties } from "some-logger-package";
+
+const element = createCustomElement({
+    component: AppUI,
+    appMetadata,
+    config: {
+        properties: {
+            // Contents of the object in `createLoggingProperties` have auto completion and will be type checked.
+            "some-logger-package": createLoggingProperties({
+                logLevel: "INFO"
+            })
+        }
+    }
+});
+
+customElements.define("your-app", element);
 ```

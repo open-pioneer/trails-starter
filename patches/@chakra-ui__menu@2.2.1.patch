@@ -1,0 +1,13 @@
+diff --git a/dist/chunk-SANI5SUM.mjs b/dist/chunk-SANI5SUM.mjs
+index 4cd8ab09dbb6a5c45fbf5d5630a32c8f6147805e..211fc6ae0907e9befa23cca9c9d6f3844ca69853 100644
+--- a/dist/chunk-SANI5SUM.mjs
++++ b/dist/chunk-SANI5SUM.mjs
+@@ -124,7 +124,7 @@ function useMenu(props = {}) {
+     ref: menuRef,
+     handler: (event) => {
+       var _a;
+-      if (!((_a = buttonRef.current) == null ? void 0 : _a.contains(event.target))) {
++      if (!((_a = buttonRef.current) == null ? void 0 : event.composedPath().includes(_a))) {
+         onClose();
+       }
+     }
