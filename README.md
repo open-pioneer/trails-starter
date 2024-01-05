@@ -6,7 +6,7 @@
 
 ## Quick start
 
-Ensure that you have [Node](https://nodejs.org/en/) (Version 16 or later) and [pnpm](https://pnpm.io/) (Version 8.x) installed.
+Ensure that you have [Node](https://nodejs.org/en/) (Version 18 or later) and [pnpm](https://pnpm.io/) (Version 8.x) installed.
 
 Then execute the following commands to get started:
 
