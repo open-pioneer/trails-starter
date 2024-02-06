@@ -68,7 +68,7 @@ export function MapApp() {
                                     role="top-left"
                                     aria-label={intl.formatMessage({ id: "ariaLabel.topLeft" })}
                                 >
-                                    <Box role="dialog" aria-labelledby={measurementTitleId} mt={5}>
+                                    <Box role="dialog" aria-labelledby={measurementTitleId}>
                                         <TitledSection
                                             title={
                                                 <SectionHeading
