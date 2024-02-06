@@ -9,6 +9,10 @@
         "prettier"
     ],
     "parser": "@typescript-eslint/parser",
+    "parserOptions": {
+        // Can be removed once https://github.com/jsx-eslint/eslint-plugin-react/issues/3602 is closed
+        "suppressDeprecatedPropertyWarnings": true
+    },
     "plugins": ["@typescript-eslint", "import", "unused-imports", "header", "react", "react-hooks"],
     "env": {
         "node": true,
