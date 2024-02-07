@@ -288,7 +288,7 @@ importers:
         specifier: ^18.2.0
         version: 18.2.0(react@18.2.0)
       react-icons:
-        specifier: 4.12.0
+        specifier: ^4.12.0
         version: 4.12.0(react@18.2.0)
       react-use:
         specifier: ^17.4.2
