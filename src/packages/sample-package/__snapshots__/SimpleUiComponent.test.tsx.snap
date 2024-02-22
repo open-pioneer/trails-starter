@@ -14,18 +14,3 @@ exports[`simple ui component is rendered 1`] = `
   </p>
 </div>
 `;
-
-exports[`simple ui test 1`] = `
-<div
-  class="simple-ui css-0"
-  data-testid="uiDiv"
-  data-theme="light"
->
-  <p
-    class="css-0"
-    data-theme="light"
-  >
-    rendered successfully
-  </p>
-</div>
-`;
