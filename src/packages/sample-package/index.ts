@@ -12,3 +12,5 @@ export interface Greeter extends DeclaredService<"sample-package.Greeter"> {
      */
     greet(): string;
 }
+
+export { SimpleUiComponent } from "./SimpleUiComponent";

@@ -2,7 +2,7 @@
 
 exports[`simple ui component is rendered 1`] = `
 <div
-  class="simple-ui css-0"
+  class="simple-ui css-1uwnsjd"
   data-testid="uiDiv"
   data-theme="light"
 >

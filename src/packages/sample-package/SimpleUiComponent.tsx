@@ -11,7 +11,7 @@ export const SimpleUiComponent: FC<SimpleUiComponentProps> = (props) => {
     const { textToShow } = props;
     const { containerProps } = useCommonComponentProps("simple-ui", props);
     return (
-        <Box {...containerProps}>
+        <Box {...containerProps} border="1.5px solid" textAlign={"center"}>
             <chakra.p>{textToShow}</chakra.p>
         </Box>
     );
