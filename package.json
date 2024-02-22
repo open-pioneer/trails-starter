@@ -100,6 +100,7 @@
         "eslint-plugin-unused-imports": "^3.0.0",
         "fast-glob": "^3.3.2",
         "handlebars": "^4.7.8",
+        "happy-dom": "^12.10.3",
         "husky": "^8.0.3",
         "js-yaml": "^4.1.0",
         "jsdom": "^22.1.0",

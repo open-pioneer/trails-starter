@@ -1,0 +1,16 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`simple ui component is rendered 1`] = `
+<div
+  class="simple-ui css-1uwnsjd"
+  data-testid="uiDiv"
+  data-theme="light"
+>
+  <p
+    class="css-0"
+    data-theme="light"
+  >
+    rendered successfully
+  </p>
+</div>
+`;
