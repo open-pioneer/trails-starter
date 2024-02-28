@@ -18,8 +18,9 @@ steps:
     displayName: Cache pnpm
 
   - script: |
+      set -eu;
       corepack enable
-      corepack prepare pnpm@latest-7 --activate
+      corepack prepare pnpm@latest-8 --activate
       pnpm config set store-dir $(pnpm_config_cache)
     displayName: Setup pnpm
 
@@ -28,11 +29,14 @@ steps:
     displayName: Install dependencies
 
   - script: |
+      set -eu;
       pnpm lint
+      pnpm check-types
       pnpm vitest run
     displayName: Run checks
 
   - script: |
+      set -eu;
       pnpm build
       pnpm build-docs
     displayName: Build app
