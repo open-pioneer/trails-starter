@@ -66,10 +66,24 @@ The main configuration file for vite is `vite.config.ts`.
 ### `pnpm run build-docs`
 
 Builds the project's API documentation.
-Documentation is generated using [TypeDoc](https://typedoc.org/). TypeDoc is configured in the main `typedoc.config.cjs`
-to specify what files TypeDoc reads. In the packages, a `typedoc.json` file specifies how the input is converted.
+Documentation is generated using [TypeDoc](https://typedoc.org/).
+
+TypeDoc is configured in the `typedoc.config.cjs` (this file contains the "global" TypeDoc configuration).
+Most importantly, it configures for which packages API documentation will be built.
+The default configuration file contained in this repository will build the documentation for all packages within `src/packages/**`.
+However, you can freely edit the `typedoc.config.cjs` to your liking.
+
+In the individual packages, a `typedoc.json` file specifies how the input is converted.
 The `typedoc.base.json` file is used as a base for the typedoc configuration specified in the single packages.
 The API documentation is written into `dist/docs`.
+
+You can serve the API documentation locally by executing:
+
+```sh
+$ pnpm install -g serve     # installs the 'serve' web server globally (needed only once)
+$ pnpm build-docs
+$ pnpm serve dist/docs
+```
 
 ### `pnpm run build-license-report`
 

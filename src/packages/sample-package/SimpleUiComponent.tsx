@@ -4,9 +4,10 @@ import { FC } from "react";
 import { useCommonComponentProps, CommonComponentProps } from "@open-pioneer/react-utils";
 import { Box, chakra } from "@open-pioneer/chakra-integration";
 
-interface SimpleUiComponentProps extends CommonComponentProps {
+export interface SimpleUiComponentProps extends CommonComponentProps {
     textToShow: string;
 }
+
 export const SimpleUiComponent: FC<SimpleUiComponentProps> = (props) => {
     const { textToShow } = props;
     const { containerProps } = useCommonComponentProps("simple-ui", props);

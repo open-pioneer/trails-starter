@@ -1,6 +1,5 @@
 // SPDX-FileCopyrightText: 2023 Open Pioneer project (https://github.com/open-pioneer)
 // SPDX-License-Identifier: Apache-2.0
-
 import { DeclaredService } from "@open-pioneer/runtime";
 
 /**
@@ -13,4 +12,4 @@ export interface Greeter extends DeclaredService<"sample-package.Greeter"> {
     greet(): string;
 }
 
-export { SimpleUiComponent } from "./SimpleUiComponent";
+export { SimpleUiComponent, type SimpleUiComponentProps } from "./SimpleUiComponent";
