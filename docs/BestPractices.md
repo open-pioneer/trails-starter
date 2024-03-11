@@ -105,10 +105,10 @@ The guidelines above only leave very few occasions where a "normal" dependency i
 Use `dependencies` if _all_ of the following is true:
 
 -   The dependency in question is not an open pioneer package
--   Having multiple versions will not introduce conflicts (e.g. react should never be present more than once)
+-   Having multiple versions will not introduce conflicts (e.g. React should never be present more than once)
 -   The usage of that package is entirely internal, i.e. not part of your package's interface.
     This could be the case for internal helpers, parsers, etc.
--   If you don't want to allow the user of your package to chose a common version.
+-   If you don't want to allow the user of your package to choose a common version.
     In other words, duplicating code is okay for the sake of simpler dependency management.
 
 #### Useful helpers
@@ -134,6 +134,28 @@ const handle = emitter.on("mouseClicked", (event) => observed.push(event));
 emitter.emit("mouseClicked", { x: 1, y: 2 });
 handle.destroy(); // don't forget to unsubscribe during cleanup
 ```
+
+## Development Setup
+
+### Debugging Vitest
+
+#### Intellij IDEA
+
+In Intellij IDEA the debugging of Vitest tests in monorepos may lead to problems.
+However, it is possible to define a custom run configuration to enable debugging:
+
+-   In Intellij open the "Run/Debug Configurations" dialog ("Run" --> "Edit Configurations").
+-   Create a new configuration by clicking the "+" icon in the upper left.
+-   Select "Node.js" from the new configuration list.
+-   Choose a name (e.g. "Vitest") and ensure that the node interpreter (node.exe) and working directory
+    (trails project root path) are selected reasonable.
+-   In the field "JavaScript file" add the path to vitest.mjs (e.g. `./node_modules/vitest/vitest.mjs`)
+-   In the field "Application parameters" add the following: `run --threads false --testTimeOut 30000 <Relative path to your test file>`. The `testTimeOut`is optional, however useful for long-running tests. Example: `run --threads false --testTimeout 30000 src/packages/legend/Legend.test.tsx`
+-   Click "save". Run the new configuration in debug mode zu start debugging.
+
+Official information for debugging Vitest in Intellij IDEA can be found in the Vitest documentation:
+https://vitest.dev/guide/debugging#intellij-idea  
+Note: the link references the newest version of vitest
 
 ## Common issues
 
