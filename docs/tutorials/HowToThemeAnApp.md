@@ -113,7 +113,7 @@ For information about which values are available, see the base-theme core packag
 
 ### Use a Chakra UI color scheme
 
-It is also possible to override the base-theme color scheme `trails` (or `trails_alt`) using a pre-defined Chakra UI
+It is also possible to override the base-theme color scheme `trails` using a pre-defined Chakra UI
 color scheme (for available values see Chakra UI documentation):
 
 ```jsx
