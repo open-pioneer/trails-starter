@@ -9,9 +9,12 @@ To show how a custom theme for an app can be created, we will extend the empty a
 (at `src/apps/empty`).
 
 By default, the app is shown in a theme specified in the Trails Core packages.
-To overwrite some or all styles, a custom app-theme can be created.
+To overwrite some or all styles (e.g. the "trails" color scheme), a custom app-theme can be created.
+
+## Create custom theme
 
 First, in your apps "empty" folder, create a new folder called "theme" and add a file called "theme.ts".
+
 This file will contain our theme which is a Chakra UI theming object.
 The structure of this object is described in the [Chakra documentation](https://chakra-ui.com/docs/styled-system/theme).
 The custom theme does not need to be a complete theme: we can just override specific theming properties.
@@ -73,10 +76,8 @@ export const theme = extendTheme(
         semanticTokens: {
             colors: {
                 "background_primary": "primary.300",
-                "background_secondary": "primary.500",
                 "placeholder": "primary.100",
                 "font_primary": "black",
-                "font_secondary": "grey.500",
                 "font_inverse": "white",
                 "font_link": "yellow.300",
                 "border": "black",
@@ -100,11 +101,36 @@ export const theme = extendTheme(
 );
 ```
 
--   **(1)** Import the `extendTheme` method.
+-   **(1)** Import the `extendTheme` helper function.
 -   **(2)** Import the trails base theme from the "@open-pioneer/base-theme" package.
 -   **(3)** Use `extendTheme` to create an own theme based on the trails base theme.
 -   **(3.1)** Chakra UI theming object that defines the custom theme.
+    (The object specified here is only used as an example.)
 -   **(3.2)** Specify the theme to extend (here: the trails base theme).
+
+Hint: The trails base-theme introduces some special semantic tokens.
+For information about which values are available, see the base-theme core package code.
+
+### Use a Chakra UI color scheme
+
+It is also possible to override the base-theme color scheme `trails` (or `trails_alt`) using a pre-defined Chakra UI
+color scheme (for available values see Chakra UI documentation):
+
+```jsx
+import { theme } from "@open-pioneer/base-theme";
+import { extendTheme } from "@open-pioneer/chakra-integration";
+
+const customTheme = extendTheme(
+    {
+        colors: {
+            trails: theme.colors.gray
+        }
+    },
+    theme
+);
+```
+
+## Use the created theme in an app
 
 To make use of the custom theme in the app, we need to modify the `app.ts`:
 

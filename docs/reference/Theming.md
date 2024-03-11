@@ -21,7 +21,7 @@ components and is part of Chakra UI.
 
 The second internal level is the Trails base theme which is part of the Trails Core Packages.
 It defines common variables ([semantic tokens](https://chakra-ui.com/docs/styled-system/component-style))
-and basic styling and variants for Chakra components (e.g. button with multiple variants).
+and a default color scheme that is used as a default color scheme for all Chakra UI components.
 This theme is active by default in Trails applications, but it is also designed to be extended.
 Most custom themes are expected to extend this theme (via Chakra's `extendTheme()` function) while making only minor adjustments.
 The Trails base theme will be extended in future releases of the Trails Core Packages.
