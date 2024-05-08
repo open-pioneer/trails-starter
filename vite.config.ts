@@ -66,7 +66,15 @@ export default defineConfig(({ mode }) => {
         test: {
             globals: true,
             environment: "happy-dom",
-            setupFiles: ["testing/global-setup.ts"]
+            setupFiles: ["testing/global-setup.ts"],
+         
+            server: {
+                deps: {
+                    // Workaround to fix some import issues, see 
+                    // https://github.com/open-pioneer/trails-openlayers-base-packages/issues/314
+                    inline: [/@open-pioneer[/\\]/]
+                }
+            }
         }
 
         // disable hot reloading
