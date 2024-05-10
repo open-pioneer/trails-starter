@@ -5,6 +5,7 @@
 -   [Introduction](./Introduction.md)
 -   [Getting started](./GettingStarted.md)
 -   [Repository guide](./RepositoryGuide.md)
+-   [Contribution guide](./Contributing.md)
 
 -   Tutorials
 
