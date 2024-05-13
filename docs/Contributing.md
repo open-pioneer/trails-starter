@@ -176,6 +176,8 @@ For more information, see [Vitest's CLI options](https://vitest.dev/guide/cli.ht
 
     When fixing bugs or implementing new features, make sure to include appropriate tests alongside your implementation.
 
+    In general, make sure that automated tests (Typescript checks, unit tests, ...) are successful, otherwise your changes will not be merged.
+
 -   Run `pnpm changeset` to create a description of your changes.
     This will create a file that will be used to generate a changelog entry and a future release.
     Your changeset file should list all packages that are affected by your change.
