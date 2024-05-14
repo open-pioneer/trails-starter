@@ -1,5 +1,11 @@
 # Changelog
 
+## 2024-05-14
+
+-   Update to Vite 5.1 and Vitest 1.6
+    - Major changes in Vitest 1: [Release Notes](https://github.com/vitest-dev/vitest/releases/tag/v1.0.0) (note that )
+    - Major changes in Vite 5: [Release Notes](https://vitejs.dev/blog/announcing-vite5)
+
 ## 2024-05-10
 
 -   Require pnpm >= 9.0, see [release notes](https://github.com/pnpm/pnpm/releases/tag/v9.0.0).

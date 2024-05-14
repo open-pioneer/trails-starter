@@ -75,15 +75,15 @@
         "react-use": "^17.4.2"
     },
     "devDependencies": {
-        "@open-pioneer/build-package-cli": "^2.0.1",
+        "@open-pioneer/build-package-cli": "^2.0.2",
         "@open-pioneer/build-support": "^2.0.1",
-        "@open-pioneer/vite-plugin-pioneer": "^2.0.1",
+        "@open-pioneer/vite-plugin-pioneer": "^3.0.0",
         "@testing-library/dom": "^9.3.3",
         "@testing-library/jest-dom": "^6.2.0",
         "@testing-library/react": "^14.1.2",
         "@testing-library/user-event": "^14.5.2",
         "@types/js-yaml": "^4.0.9",
-        "@types/node": "^16.18.68",
+        "@types/node": "^18.19.33",
         "@types/react": "^18.2.46",
         "@types/react-dom": "^18.2.18",
         "@typescript-eslint/eslint-plugin": "^6.17.0",
@@ -111,9 +111,9 @@
         "ts-node": "^10.9.2",
         "typedoc": "^0.25.6",
         "typescript": "~5.3.3",
-        "vite": "^4.5.3",
+        "vite": "^5.2.11",
         "vite-plugin-eslint": "^1.8.1",
-        "vitest": "^0.34.6"
+        "vitest": "^1.6.0"
     },
     "engines": {
         "node": ">= 18",
