@@ -172,7 +172,7 @@ For more information, see [Vitest's CLI options](https://vitest.dev/guide/cli.ht
 
 -   Make your changes in one or more commits.
     We do not have a strict commit message convention.
-    Most pull requests are merged by squashing there changes, so you can make as many commits as you like.
+    Most pull requests are merged by squashing all changes, so you can make as many commits as you like.
 
     When fixing bugs or implementing new features, make sure to include appropriate tests alongside your implementation.
 
