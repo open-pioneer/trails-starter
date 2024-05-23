@@ -93,7 +93,7 @@ Files that are named `*.test.ts[x]` (or `js[x]`) are automatically discovered an
 
  ✓ packages/local-storage/LocalStorageServiceImpl.test.ts (22)
 
- ... SNIP ....
+ ... SNIP ...
 
  Test Files  22 passed (22)
       Tests  152 passed (152)
@@ -119,8 +119,8 @@ For more information, see [Vitest's CLI options](https://vitest.dev/guide/cli.ht
 
 ### Git and IDE setup
 
--   All files must use UTF-8 encoding. This is usually the default.
--   All files must use Unix line endings (`\n`).
+-   All text files must use UTF-8 encoding. This is usually the default.
+-   All text files must use Unix line endings (`\n`).
     On windows, either configure your IDE to use Unix line endings or use git's [`autocrlf`](https://git-scm.com/book/en/v2/Customizing-Git-Git-Configuration) feature:
 
     ```bash
@@ -194,4 +194,7 @@ For more information, see [Vitest's CLI options](https://vitest.dev/guide/cli.ht
 
 ## Legal requirements
 
-TODO: CLA
+Contributing to the Open Pioneer project requires signing a Contributor License Agreement (CLA) before source code can be merged.
+This can be done by your employer or by yourself.
+
+To obtain a copy of the CLA, please email to [contact@openpioneer.dev](mailto:contact@openpioneer.dev) (We do not have an automated process in place at this time).
