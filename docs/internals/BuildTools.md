@@ -39,7 +39,7 @@ Reading and validation of the `build.config.mjs` are implemented here, as well a
 
 ### Overview
 
-Every local package in a pioneer application contains a `build.config.mjs` and a `package.json` file, together defining the package's metadata.
+Every local package in an Open Pioneer Trails application contains a `build.config.mjs` and a `package.json` file, together defining the package's metadata.
 Package metadata includes:
 
 -   The packages name, version, etc.

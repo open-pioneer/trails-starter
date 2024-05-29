@@ -1,6 +1,6 @@
 # How to create UI components
 
-When developing applications with the open pioneer client framework, [React](https://reactjs.org/) can be used to create UI components.
+When developing applications with the Open Pioneer Trails client framework, [React](https://reactjs.org/) can be used to create UI components.
 We can also use pre-defined components from the [Chakra UI](https://chakra-ui.com/) framework.
 
 ## Documentation

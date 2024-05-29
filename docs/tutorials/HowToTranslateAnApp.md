@@ -1,6 +1,6 @@
 # How to translate an app
 
-To show how we can use I18n in our pioneer apps, we will extend the empty app (at `src/apps/empty`).
+To show how we can use I18n in our Open Pioneer Trails apps, we will extend the empty app (at `src/apps/empty`).
 
 By default, the empty app is prepared to support I18n with locale `en`.
 We will add support for another language (locale `de`) and demonstrate advanced features of [FormatJS](https://formatjs.io/) Intl.
@@ -36,7 +36,7 @@ We need to create the file in the `i18n` folder. The naming schema of the file i
 # src/apps/empty/i18n/de.yaml
 messages:
     heading: I18n HowTo
-    text: Wie lässt sich I18n in Pioneer Apps nutzen?
+    text: Wie lässt sich I18n in Open Pioneer Trails Apps nutzen?
 ```
 
 By default, the app uses the browser settings or system default for determining the locale.
@@ -103,7 +103,7 @@ Now we are able to force the locale with `lang` parameter:
 [http://localhost:5173/sites/empty/?lang=de](http://localhost:5173/sites/empty/?lang=de) or [http://localhost:5173/sites/empty/?lang=en](http://localhost:5173/sites/empty/?lang=en)
 
 > **Note**
-> The integration of I18n works the same way for pioneer packages. We have to add the `i18n` configuration in `build.config.mjs` and matching yaml files for each language in the `i18n` folder. For each app/language combination, the build tool collects the YAML files of the app and the used packages and merges them into a flattened JSON structure.
+> The integration of I18n works the same way for Trails packages. We have to add the `i18n` configuration in `build.config.mjs` and matching yaml files for each language in the `i18n` folder. For each app/language combination, the build tool collects the YAML files of the app and the used packages and merges them into a flattened JSON structure.
 > As mentioned in [I18nFormat](../reference/I18nFormat.md) we can override yaml entries from packages in our app yaml. Please check the [`i18n-sample`](https://github.com/open-pioneer/trails-core-packages/tree/main/src/samples/i18n-sample) app as a practical example for this topic.
 
 ## Using advanced features of FormatJS Intl

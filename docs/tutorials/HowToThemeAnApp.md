@@ -8,7 +8,7 @@ mechanism in Open Pioneer Trails apps, refer to [Theming](../reference/Theming.m
 To show how a custom theme for an app can be created, we will extend the empty app
 (at `src/apps/empty`).
 
-By default, the app is shown in a theme specified in the Trails Core packages.
+By default, the app is shown in a theme specified in the Trails core packages.
 To overwrite some or all styles (e.g. the "trails" color scheme), a custom app-theme can be created.
 
 ## Create custom theme
@@ -102,13 +102,13 @@ export const theme = extendTheme(
 ```
 
 -   **(1)** Import the `extendTheme` helper function.
--   **(2)** Import the trails base theme from the "@open-pioneer/base-theme" package.
--   **(3)** Use `extendTheme` to create an own theme based on the trails base theme.
+-   **(2)** Import the Trails base theme from the "@open-pioneer/base-theme" package.
+-   **(3)** Use `extendTheme` to create an own theme based on the Trails base theme.
 -   **(3.1)** Chakra UI theming object that defines the custom theme.
     (The object specified here is only used as an example.)
--   **(3.2)** Specify the theme to extend (here: the trails base theme).
+-   **(3.2)** Specify the theme to extend (here: the Trails base theme).
 
-Hint: The trails base-theme introduces some special semantic tokens.
+Hint: The Trails base theme introduces some special semantic tokens.
 For information about which values are available, see the base-theme core package code.
 
 ### Use a Chakra UI color scheme

@@ -1,14 +1,14 @@
 # How to publish a package
 
-This tutorial describes how to share a pioneer package with other developers.
+This tutorial describes how to share a Open Pioneer Trails package with other developers.
 You can skip this document if you're just working in the context of a single application.
 
 Until now, this manual has only been concerned with building an _application_, possibly including a set of _local_ packages.
 The result of building an application is always a set of static files (.i.e. `.html`, `.js`, etc.) that can be interpreted by a browser.
 This output is ideal for distributing a final application, but it is not suitable for sharing reusable parts of your application.
 
-One of the key advantages of the open pioneer client framework is the ability to scale up application development by sharing reusable application components as packages.
-Shared open pioneer packages are similar to "plain" node packages (in fact, they _are_ node packages), but they come with the additional feature set you have learned already:
+One of the key advantages of the Open Pioneer Trails client framework is the ability to scale up application development by sharing reusable application components as packages.
+Shared Trails packages are similar to "plain" node packages (in fact, they _are_ node packages), but they come with the additional feature set you have learned already:
 services of a package are automatically started when needed, styles are automatically applied, etc.
 
 There are some things to consider and a few steps to follow when indenting to share a package with other developers.
@@ -34,7 +34,7 @@ We will first discuss the underlying concepts and then work through a specific e
 -   **Package installation**
 
     After a package has been published, it can simply be installed in any project, e.g. by executing `pnpm add`.
-    Our build tools automatically detect pioneer packages in an app's dependency graph.
+    Our build tools automatically detect Trails packages in an app's dependency graph.
     A package installed this way should work the same way _as if_ it were developed locally.
 
 ### Package compilation
@@ -46,7 +46,7 @@ It can be installed by adding [`@open-pioneer/build-package-cli`](https://www.np
 $ pnpm add -w -D @open-pioneer/build-package-cli
 ```
 
-It is designed to be invoked from the source directory of a pioneer package and reads its configuration from that package's `package.json` and `build.config.mjs` (see [Reference](../reference/Package.md#publishconfig)).
+It is designed to be invoked from the source directory of a Trails package and reads its configuration from that package's `package.json` and `build.config.mjs` (see [Reference](../reference/Package.md#publishconfig)).
 After successful execution, it will have assembled a compiled version of that package in the `dist` directory (in that package's source directory).
 
 `build-pioneer-package` also performs some validation to enforce best practices and to catch common errors.
@@ -141,7 +141,7 @@ Package compilation involves the following steps:
     Most properties from your package's source `package.json` will simply be copied into the generated `package.json` (such as `name`, `version` and many more).
 
     When generating the `package.json`, `build-pioneer-package` also takes into account your package's metadata from the `build.config.mjs`: it will make entry points public (via `exports`) and include
-    information about services and other open pioneer features using the `openPioneerFramework` property.
+    information about services and other Open Pioneer Trails features using the `openPioneerFramework` property.
 
 -   **Copy auxiliary files.**
 
@@ -395,7 +395,7 @@ We have also been told to configure `publishConfig.directory`:
 }
 ```
 
-Because the core package is a pioneer package, we have added it as a `peerDependency` (see [Best Practices](../BestPractices.md#dependency-management)).
+Because the core package is a Trails package, we have added it as a `peerDependency` (see [Best Practices](../BestPractices.md#dependency-management)).
 We also added `linkDirectory: false`, see [Publishing](#publishing).
 
 #### Adding required files

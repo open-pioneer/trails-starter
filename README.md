@@ -1,4 +1,4 @@
-# Open Pioneer Starter
+# Open Pioneer Trails Starter
 
 ![Build status](https://github.com/open-pioneer/trails-starter/actions/workflows/test-and-build.yml/badge.svg) ![Dependency audit](https://github.com/open-pioneer/trails-starter/actions/workflows/audit-dependencies.yml/badge.svg)
 

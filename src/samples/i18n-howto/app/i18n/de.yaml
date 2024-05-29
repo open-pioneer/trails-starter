@@ -2,7 +2,7 @@
 # (might be empty if all messages are defined in the packages used by this app)
 messages:
   heading: I18n HowTo
-  text: Wie lässt sich I18n in Pioneer Apps nutzen?
+  text: Wie lässt sich I18n in Open Pioneer Trails Apps nutzen?
   interpolation:
     heading: Beispiel für Interpolation (dynamische Werte)
     value: Hallo {name}

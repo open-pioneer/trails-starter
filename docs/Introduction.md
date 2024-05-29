@@ -1,6 +1,6 @@
 # Introduction
 
-The open pioneer client framework supports the creation of client side web applications.
+The Open Pioneer Trails framework supports the creation of client side web applications.
 It offers a simple architecture where an application can be assembled from a set of packages.
 Packages are reusable components that can be used in multiple applications and with different configuration.
 When an application is built, it can be deployed either as a single (or multi-) page application or as an easily embeddable Web Component.

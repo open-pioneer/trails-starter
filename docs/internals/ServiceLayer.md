@@ -1,6 +1,6 @@
 # Service Layer
 
-This document contains details about the implementation of the pioneer runtime's service layer.
+This document contains details about the implementation of the Open Pioneer Trails runtime's service layer.
 It should aid developers to gain an understanding of the implementation in order to maintain or extend it.
 
 The service layer provides a generic dependency injection mechanism in which services can be defined.
