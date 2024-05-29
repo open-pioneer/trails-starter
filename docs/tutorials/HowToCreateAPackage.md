@@ -34,7 +34,7 @@ We will create a package called `hello-world` that exports a simple function:
 import { defineBuildConfig } from "@open-pioneer/build-support";
 
 // The empty object is the minimal configuration.
-// We're not going to use any custom features from the pioneer framework for now.
+// We're not going to use any custom features from the Open Pioneer Trails framework for now.
 export default defineBuildConfig({});
 ```
 

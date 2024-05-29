@@ -1,4 +1,4 @@
-# Open Pioneer Documentation
+# Open Pioneer Trails documentation
 
 ## Table of contents
 

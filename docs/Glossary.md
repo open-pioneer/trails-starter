@@ -15,14 +15,7 @@ Apps are developed in application packages.
 ## Application package
 
 A package that provides an app (typically in `app.js` or `app.ts`).
-Application packages are also pioneer packages.
-
-## Pioneer package
-
-A special package type that serve as the building blocks of an app.
-Pioneer packages may define and use services and UI components.
-The packages used by an app are automatically linked into the application.
-The build system ensures that the code (and assets) required are automatically loaded.
+Application packages are also Trails packages.
 
 ## Package
 
@@ -44,3 +37,10 @@ References to services are handled by the system, which will inject appropriate 
 
 Pioneer packages may be compiled (and distributed) independently from other packages or the context of a specific application.
 These packages can be linked together into an application using our build tooling.
+
+## Trails package
+
+A special package type for the Open Pioneer Trails framework that serve as the building blocks of an app.
+Trails packages may define and use services and UI components.
+The packages used by an app are automatically linked into the application.
+The build system ensures that the code (and assets) required are automatically loaded.

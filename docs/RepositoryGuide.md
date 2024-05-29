@@ -262,7 +262,7 @@ function MyComponent() {
 ### Vite
 
 [Vite](https://vitejs.dev/) is our main build tool and development server.
-Custom functionalities (such as our specific pioneer-framework package support) are developed on top of Vite via plugins.
+Custom functionalities (such as our specific Open Pioneer Trails framework package support) are developed on top of Vite via plugins.
 
 Vite reads the configuration file `vite.config.ts` on start, which can be customized to your liking
 (see [docs](https://vitejs.dev/config/)).

@@ -1,6 +1,6 @@
 # How to use a service
 
-Services are one of the central mechanisms of code sharing in an open pioneer client application.
+Services are one of the central mechanisms of code sharing in an Open Pioneer Trails client application.
 Instead of using global variables (or singletons), services are started per-application instance.
 
 Builtin dependency injection support allows services to declare their dependencies on other services.
@@ -36,7 +36,7 @@ export default defineBuildConfig({
 The package providing the implementation of a service must be declared as a dependency in the `package.json`.
 Luckily, the empty app already depends on the `@open-pioneer/runtime` package, so we don't have to do anything in this case.
 
-React components can use [hooks](https://reactjs.org/docs/hooks-intro.html) to interact with the pioneer framework.
+React components can use [hooks](https://reactjs.org/docs/hooks-intro.html) to interact with the Open Pioneer Trails framework.
 One of which is the `useService` hook, we will use below.
 We extend the UI of the empty app to add our custom class:
 

@@ -89,7 +89,7 @@ Both `dependencies` and `peerDependencies` refer to packages required at runtime
 We'll reuse the rules defined in that post. Use `peerDependencies` if at least _one_ of these conditions apply:
 
 -   Having multiple copies of a package would cause conflicts.
-    > This is especially the case for open pioneer packages as we do not support open pioneer packages in multiple versions.
+    > This is especially the case for Trails packages as we do not support Trails packages in multiple versions.
     > "plain" npm packages can often be duplicated though, if absolutely necessary.
 -   The dependency is visible in your interface
 -   You want the developer to decide which version to install
@@ -104,7 +104,7 @@ You can use `devDependencies` to force a specific (e.g. very new) version to pro
 The guidelines above only leave very few occasions where a "normal" dependency is appropriate.
 Use `dependencies` if _all_ of the following is true:
 
--   The dependency in question is not an open pioneer package
+-   The dependency in question is not a Trails package
 -   Having multiple versions will not introduce conflicts (e.g. React should never be present more than once)
 -   The usage of that package is entirely internal, i.e. not part of your package's interface.
     This could be the case for internal helpers, parsers, etc.

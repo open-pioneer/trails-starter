@@ -203,7 +203,7 @@ Recommended libraries:
 
 ## Test utilities
 
-The package `@open-pioneer/test-utils` provides helpers to test components of a pioneer application:
+The package `@open-pioneer/test-utils` provides helpers to test components of an Open Pioneer Trails application:
 
 -   The application itself (that is, the web component).
     Web components can be mounted in the DOM and their children can be searched.

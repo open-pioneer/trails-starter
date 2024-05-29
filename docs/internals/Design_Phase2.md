@@ -2,9 +2,9 @@
 
 ## Introduction
 
-This document contains the design for the second implementation phase of the pioneer framework.
+This document contains the design for the second implementation phase of the Open Pioneer Trails framework.
 The goal of this phase is to enable development across multiple repositories, i.e. using non-local packages
-in an open pioneer app and sharing such packages with other developers.
+in an Open Pioneer Trails app and sharing such packages with other developers.
 
 Note that most aspects in this document are concerned with _packages_, not with _apps_.
 Building and distributing an application is a problem solved with phase 1, and only a few modifications
@@ -32,13 +32,13 @@ It may in fact be a disadvantage because it makes generated code harder to read 
 
 -   A build tool that compiles a single package, handling TypeScript/JavaScript/JSX, CSS and assets such as README or LICENSE files.
 -   A tool to publish such a compiled package to a registry
--   Existing build tools must be able to handle external packages with pioneer extensions
+-   Existing build tools must be able to handle external packages with Open Pioneer Trails extensions
 -   Configuration / Documentation: How to build and host api docs
 -   Documentation: How to use an external package
 
 ## Assumptions
 
--   All packages will ultimately be built using vite, with our pioneer vite plugin enabled.
+-   All packages will ultimately be built using vite, with our Open Pioneer Trails vite plugin enabled.
     Applications will always contain our matching runtime package.
     This gives us some leeway w.r.t. special vite imports (e.g. `?inline`) - we can just pass them through and not replace them at all.
 
@@ -112,22 +112,22 @@ It may in fact be a disadvantage because it makes generated code harder to read 
 
     It is easier and more performant to put metadata in the `package.json`.
     It does not have to be edited by hand and we have to open the `package.json` anyway during package discovery.
-    This makes the answer to the question "does this package use open pioneer features" very quick to answer.
+    This makes the answer to the question "does this package use Open Pioneer Trails features" very quick to answer.
 
 ## Build plugin
 
-The existing vite plugin must be extended to handle pioneer packages from `node_modules`.
+The existing vite plugin must be extended to handle Open Pioneer Trails packages from `node_modules`.
 Vite handles node packages from `node_modules` just fine on its own, but our own build plugin ignores them currently.
 
 They must not be be ignored in the future because the services, properties and styles from such a package must be linked into the application,
 which is the responsibility of our plugin.
 
-Vite build plugin will scan all dependencies (local and non-local) of an app to check whether they are either local or use pioneer extensions (check for presence of `openPioneer` in `package.json`).
+Vite build plugin will scan all dependencies (local and non-local) of an app to check whether they are either local or use Open Pioneer Trails extensions (check for presence of `openPioneer` in `package.json`).
 For local packages, the process stays as it is.
 For non-local packages (in `node_modules`) the recursive search continues until a "non-pioneer" package is found, which will then be ignored just as before.
 All services, properties etc. of discovered packages will then be linked into the application.
 
-Note that this search will not discover pioneer packages that are dependencies of "plain" packages, i.e.
+Note that this search will not discover Trails packages that are dependencies of "plain" packages, which means
 
     "app" -> "package without openPioneer" -> "package with openPioneer"
 

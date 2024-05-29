@@ -2,7 +2,7 @@
 
 ## Introduction
 
-This document specifies the structural requirements for an open pioneer package in the source directory.
+This document specifies the structural requirements for a Trails package in the source directory.
 
 > This specification applies to both apps and "normal" packages.
 > Apps are simply packages that expose a web component: they may use all package features such as services etc.

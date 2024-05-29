@@ -11,7 +11,7 @@ This repository comes prepared with an empty app in `src/apps/empty`, which is e
 To create the application package for an app, first initialize a `package.json` file in a new directory.
 Application packages should by convention be placed in `src/apps/<APP_NAME>`, but technically they may be placed anywhere in the `src` directory.
 
-All pioneer packages are node packages to benefit from (p-)npm's dependency management.
+All Trails packages are node packages to benefit from (p-)npm's dependency management.
 Create a very simple [`package.json`](https://docs.npmjs.com/cli/v9/configuring-npm/package-json) such as this:
 
 ```jsonc
@@ -66,11 +66,11 @@ const Element = createCustomElement({
 customElements.define("my-app-element", Element);
 ```
 
-This is the setup required for a minimal pioneer application:
+This is the setup required for a minimal Open Pioneer Trails application:
 
 -   **(1)**
     `createCustomElement` is the central framework function responsible for defining the actual web component.
-    It is exported by `@open-pioneer/runtime`, a package all pioneer applications must depend on.
+    It is exported by `@open-pioneer/runtime`, a package all Open Pioneer Trails applications must depend on.
 
 -   **(2)**
     The special `open-pioneer:app` module provides automatically gathered metadata about your application.

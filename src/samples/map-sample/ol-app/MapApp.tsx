@@ -47,7 +47,7 @@ export function MapApp() {
                         textAlign="center"
                         py={1}
                     >
-                        <SectionHeading size={"md"}>Open Pioneer - Map Sample</SectionHeading>
+                        <SectionHeading size={"md"}>Open Pioneer Trails - Map Sample</SectionHeading>
                     </Box>
                 }
             >
