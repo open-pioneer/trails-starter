@@ -130,7 +130,7 @@ $ pnpm dev
     When fixing bugs or implementing new features, make sure to include appropriate tests alongside your implementation.
 
     In general, make sure that automated tests (Typescript checks, unit tests, ...) are successful, otherwise your changes will not be merged.
-    Tests are executed automatically when creating a commit and also when creating a pull request via GitHub actions.
+    Tests are executed automatically when creating a commit and also when creating a pull request.
     For more details, see [Running tests](#running-tests).
 
 -   Run `pnpm changeset` to create a description of your changes.
