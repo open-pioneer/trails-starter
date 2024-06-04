@@ -27,6 +27,12 @@ making it more likely that your issue can actually be fixed.
 
 Our repositories are configured with issue templates that can help you write a good bug report.
 
+## Making a small change
+
+Very small changes (such as updates to the documentation) can be done without setting up the project for local development.
+Simply create a fork of the repository via GitHub's UI and apply your changes by editing the files in question in the browser.
+Then, follow the instructions in [Creating a pull request](#creating-a-pull-request) to contribute your changes.
+
 ## Setup the project
 
 To start with local development, take a look at [getting started](./GettingStarted.md).
@@ -63,59 +69,6 @@ $ pnpm dev
   ➜  press h to show help
 
 ```
-
-### Checking for TypeScript errors
-
-We use [TypeScript](https://www.typescriptlang.org/) to provide good interfaces and detect potential problems.
-We recommend running TypeScript alongside your code, so you are immediately aware of any issues.
-
-```bash
-# This command keeps running and shows errors (or not) after you save a file.
-$ pnpm watch-types
-
-# This command does a one-off check and exits.
-$ pnpm check-types
-```
-
-### Running tests
-
-We use [Vitest](https://vitest.dev/) to write our tests.
-Files that are named `*.test.ts[x]` (or `js[x]`) are automatically discovered and executed:
-
-```bash
-~/projects/pioneer/core-packages$ pnpm test
-
-> core-packages@0.0.1 test /home/michael/projects/pioneer/core-packages
-> vitest
-
-
- DEV  v0.34.6 /home/michael/projects/pioneer/core-packages/src
-
- ✓ packages/local-storage/LocalStorageServiceImpl.test.ts (22)
-
- ... SNIP ...
-
- Test Files  22 passed (22)
-      Tests  152 passed (152)
-   Start at  16:11:36
-   Duration  6.92s (transform 2.01s, setup 5.48s, collect 19.48s, tests 5.62s, environment 9.17s, prepare 3.87s)
-
-
- PASS  Waiting for file changes...
-       press h to show help, press q to quit
-```
-
-Vitest will keep running and will re-execute affected test cases when you change a source file.
-
-You can also run tests of certain directories (or files) only:
-
-```bash
-# Executes only the tests found in the given directory (or file)
-$ pnpm test src/packages/SOME_PACKAGE
-$ pnpm test src/packages/SOME_PACKAGE/some-file.test.ts
-```
-
-For more information, see [Vitest's CLI options](https://vitest.dev/guide/cli.html).
 
 ### Git and IDE setup
 
@@ -177,6 +130,8 @@ For more information, see [Vitest's CLI options](https://vitest.dev/guide/cli.ht
     When fixing bugs or implementing new features, make sure to include appropriate tests alongside your implementation.
 
     In general, make sure that automated tests (Typescript checks, unit tests, ...) are successful, otherwise your changes will not be merged.
+    Tests are executed automatically when creating a commit and also when creating a pull request via GitHub actions.
+    For more details, see [Running tests](#running-tests).
 
 -   Run `pnpm changeset` to create a description of your changes.
     This will create a file that will be used to generate a changelog entry and a future release.
@@ -198,3 +153,58 @@ Contributing to the Open Pioneer project requires signing a Contributor License 
 This can be done by your employer or by yourself.
 
 To obtain a copy of the CLA, please email to [contact@openpioneer.dev](mailto:contact@openpioneer.dev) (We do not have an automated process in place at this time).
+
+## Running tests
+
+### Checking for TypeScript errors
+
+We use [TypeScript](https://www.typescriptlang.org/) to provide good interfaces and detect potential problems.
+We recommend running TypeScript alongside your code, so you are immediately aware of any issues.
+
+```bash
+# This command keeps running and shows errors (or not) after you save a file.
+$ pnpm watch-types
+
+# This command does a one-off check and exits.
+$ pnpm check-types
+```
+
+### Unit tests
+
+We use [Vitest](https://vitest.dev/) to write our tests.
+Files that are named `*.test.ts[x]` (or `js[x]`) are automatically discovered and executed:
+
+```bash
+~/projects/pioneer/core-packages$ pnpm test
+
+> core-packages@0.0.1 test /home/michael/projects/pioneer/core-packages
+> vitest
+
+
+ DEV  v0.34.6 /home/michael/projects/pioneer/core-packages/src
+
+ ✓ packages/local-storage/LocalStorageServiceImpl.test.ts (22)
+
+ ... SNIP ...
+
+ Test Files  22 passed (22)
+      Tests  152 passed (152)
+   Start at  16:11:36
+   Duration  6.92s (transform 2.01s, setup 5.48s, collect 19.48s, tests 5.62s, environment 9.17s, prepare 3.87s)
+
+
+ PASS  Waiting for file changes...
+       press h to show help, press q to quit
+```
+
+Vitest will keep running and will re-execute affected test cases when you change a source file.
+
+You can also run tests of certain directories (or files) only:
+
+```bash
+# Executes only the tests found in the given directory (or file)
+$ pnpm test src/packages/SOME_PACKAGE
+$ pnpm test src/packages/SOME_PACKAGE/some-file.test.ts
+```
+
+For more information, see [Vitest's CLI options](https://vitest.dev/guide/cli.html).
