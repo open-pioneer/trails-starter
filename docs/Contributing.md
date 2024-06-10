@@ -3,7 +3,7 @@
 Thank you for your interest in contributing to our projects!
 Read our [Code of Conduct](https://github.com/open-pioneer/.github/blob/main/CODE_OF_CONDUCT.md) to keep our community approachable and respectable.
 
-This document contains a few notes to get you started on your contribution.
+This document contains a few notes to get you started with your contribution.
 
 ## Identify the correct repository
 
@@ -22,8 +22,12 @@ Our current set of repositories is:
 ## Report an issue
 
 If you found a bug, please open an issue in an appropriate repository and provide us with clear instructions to reproduce it.
-A minimal sample repository or a failing test case will often be the best way to demonstrate a problem,
-making it more likely that your issue can actually be fixed.
+Please attach a reproducible sample that demonstrates the problem.
+Good examples are:
+
+-   a failing test case
+-   a small code snippet
+-   a sample repository (e.g. a fork of the starter repository)
 
 Our repositories are configured with issue templates that can help you write a good bug report.
 
@@ -33,13 +37,18 @@ Very small changes (such as updates to the documentation) can be done without se
 Simply create a fork of the repository via GitHub's UI and apply your changes by editing the files in question in the browser.
 Then, follow the instructions in [Creating a pull request](#creating-a-pull-request) to contribute your changes.
 
-## Setup the project
+## Legal requirements
+
+Contributing to the Open Pioneer project requires signing a Contributor License Agreement (CLA) before source code can be merged.
+This can be done by your employer or by yourself.
+
+To obtain a copy of the CLA, please email to [contact@openpioneer.dev](mailto:contact@openpioneer.dev) (We do not have an automated process in place at this time).
+
+## Set up the project
 
 To start with local development, take a look at [getting started](./GettingStarted.md).
 Most repositories in our organization have a uniform layout, so the guide applies to them as well.
-For local differences, take a look at an repository's `README`.
-
-At the very minimum, you will need a recent version of Node (>= 18) and [pnpm](https://pnpm.io/) (>= 9).
+For local differences, take a look at a repository's `README`.
 
 To get you productive quickly, here are the most important commands (note: there may be local differences per repository).
 
@@ -146,13 +155,6 @@ $ pnpm dev
 -   Push your changes into your fork (or branch) and create a pull request via GitHubs UI.
     Please give your pull request a good title and a good description.
     If your pull request addresses an issue, you should link to it from your PR's description.
-
-## Legal requirements
-
-Contributing to the Open Pioneer project requires signing a Contributor License Agreement (CLA) before source code can be merged.
-This can be done by your employer or by yourself.
-
-To obtain a copy of the CLA, please email to [contact@openpioneer.dev](mailto:contact@openpioneer.dev) (We do not have an automated process in place at this time).
 
 ## Running tests
 
