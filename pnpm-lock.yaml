@@ -22,7 +22,7 @@ patchedDependencies:
     hash: uw4qsrve2rd7lemccfb44ornky
     path: patches/@chakra-ui__react-use-outside-click@2.2.0.patch
   react-select@5.8.0:
-    hash: 5qabpn4zzsogoweiwbsb3mxt7y
+    hash: rneijkapwfcysoicbqz3s5xl44
     path: patches/react-select@5.8.0.patch
 
 importers:
@@ -5972,7 +5972,7 @@ snapshots:
       '@emotion/react': 11.11.4(@types/react@18.2.65)(react@18.2.0)
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
-      react-select: 5.8.0(patch_hash=5qabpn4zzsogoweiwbsb3mxt7y)(@types/react@18.2.65)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
+      react-select: 5.8.0(patch_hash=rneijkapwfcysoicbqz3s5xl44)(@types/react@18.2.65)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
     transitivePeerDependencies:
       - '@types/react'
 
@@ -7492,7 +7492,7 @@ snapshots:
     optionalDependencies:
       '@types/react': 18.2.65
 
-  react-select@5.8.0(patch_hash=5qabpn4zzsogoweiwbsb3mxt7y)(@types/react@18.2.65)(react-dom@18.2.0(react@18.2.0))(react@18.2.0):
+  react-select@5.8.0(patch_hash=rneijkapwfcysoicbqz3s5xl44)(@types/react@18.2.65)(react-dom@18.2.0(react@18.2.0))(react@18.2.0):
     dependencies:
       '@babel/runtime': 7.24.0
       '@emotion/cache': 11.11.0

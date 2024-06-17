@@ -1,5 +1,5 @@
 diff --git a/dist/Select-49a62830.esm.js b/dist/Select-49a62830.esm.js
-index bed08498732b023f350d24a62728371af6a4dace..23a5fd969db4d0190cc4b6f05417c9594ddc2931 100644
+index bed08498732b023f350d24a62728371af6a4dace..dcc7713c39b9aa87cb92f3af33b97c02bc2071e4 100644
 --- a/dist/Select-49a62830.esm.js
 +++ b/dist/Select-49a62830.esm.js
 @@ -1498,7 +1498,7 @@ var Select = /*#__PURE__*/function (_Component) {
@@ -11,3 +11,12 @@ index bed08498732b023f350d24a62728371af6a4dace..23a5fd969db4d0190cc4b6f05417c959
          _this.blurInput();
        }
  
+@@ -2125,7 +2125,7 @@ var Select = /*#__PURE__*/function (_Component) {
+         'aria-labelledby': this.props['aria-labelledby'],
+         'aria-required': required,
+         role: 'combobox',
+-        'aria-activedescendant': this.isAppleDevice ? undefined : this.state.focusedOptionId || ''
++        'aria-activedescendant': this.isAppleDevice ? undefined : this.state.focusedOptionId || undefined
+       }, menuIsOpen && {
+         'aria-controls': this.getElementId('listbox')
+       }), !isSearchable && {

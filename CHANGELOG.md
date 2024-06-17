@@ -1,10 +1,15 @@
 # Changelog
 
+## 2024-06-24
+
+-   Update patch for `react-select`: only use valid values for `aria-activedescendant`.
+    This removes a warning in firefox when `aria-activedescendant` was set to an empty string.
+
 ## 2024-05-14
 
 -   Update to Vite 5.1 and Vitest 1.6
-    - Major changes in Vitest 1: [Release Notes](https://github.com/vitest-dev/vitest/releases/tag/v1.0.0)
-    - Major changes in Vite 5: [Release Notes](https://vitejs.dev/blog/announcing-vite5)
+    -   Major changes in Vitest 1: [Release Notes](https://github.com/vitest-dev/vitest/releases/tag/v1.0.0)
+    -   Major changes in Vite 5: [Release Notes](https://vitejs.dev/blog/announcing-vite5)
 
 ## 2024-05-10
 
