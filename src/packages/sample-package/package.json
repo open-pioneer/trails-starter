@@ -3,6 +3,6 @@
     "version": "0.0.0",
     "private": true,
     "peerDependencies": {
-        "@open-pioneer/runtime": "^2.1.3"
+        "@open-pioneer/runtime": "^2.1.5"
     }
 }
