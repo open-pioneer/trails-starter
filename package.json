@@ -38,7 +38,11 @@
             "patches",
             "=======",
             "react-select: patched to use composedPath() in event conditions; needed for web component integration (see https://github.com/JedWatson/react-select/issues/5824)",
-            "@chakra-ui/menu;react-use-outside-click;hooks: patched to fix menus in shadow dom (see https://github.com/open-pioneer/trails-openlayers-base-packages/issues/184)"
+            "@chakra-ui/menu;react-use-outside-click;hooks: patched to fix menus in shadow dom (see https://github.com/open-pioneer/trails-openlayers-base-packages/issues/184)",
+            "",
+            "peer dependency rules",
+            "=====================",
+            "@open-pioneer/test-utils: don't warn for newer testing library versions (these should be de-factory compatible)"
         ],
         "overrides": {
             "semver@<7.5.2": ">=7.5.2",
@@ -56,6 +60,12 @@
             "@chakra-ui/react-use-outside-click@2.2.0": "patches/@chakra-ui__react-use-outside-click@2.2.0.patch",
             "@chakra-ui/hooks@2.2.1": "patches/@chakra-ui__hooks@2.2.1.patch",
             "react-select@5.8.0": "patches/react-select@5.8.0.patch"
+        },
+        "peerDependencyRules": {
+            "allowedVersions": {
+                "@open-pioneer/test-utils>@testing-library/react": ">= 14.1.2",
+                "@open-pioneer/test-utils>@testing-library/dom": ">= 9.3.3"
+            }
         }
     },
     "dependencies": {
@@ -86,9 +96,9 @@
         "@open-pioneer/build-package-cli": "^2.0.3",
         "@open-pioneer/build-support": "^2.0.2",
         "@open-pioneer/vite-plugin-pioneer": "^3.0.2",
-        "@testing-library/dom": "^9.3.3",
-        "@testing-library/jest-dom": "^6.2.0",
-        "@testing-library/react": "^14.1.2",
+        "@testing-library/dom": "^10.2.0",
+        "@testing-library/jest-dom": "^6.4.6",
+        "@testing-library/react": "^16.0.0",
         "@testing-library/user-event": "^14.5.2",
         "@types/js-yaml": "^4.0.9",
         "@types/node": "^18.19.39",

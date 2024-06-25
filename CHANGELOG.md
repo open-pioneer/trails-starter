@@ -38,6 +38,30 @@
 
 -   Update `react` to 18.3.1
 -   Update `ol` to 9.2.4
+-   Update test packages:
+
+    -   "@testing-library/dom": "^10.2.0",
+    -   "@testing-library/jest-dom": "^6.4.6",
+    -   "@testing-library/react": "^16.0.0",
+
+    These versions resolve a deprecation warning with the new versions of react ("Warning: `ReactDOMTestUtils.act` is deprecated in favor of `React.act` ...").
+
+    They require patching the dependency declarations of `@open-pioneer/test-utils` to get rid of warnings, since there is no new release yet that declares compatibility
+    with the new major versions (although they will work in practice):
+
+    ```jsonc
+    // package.json
+    {
+        "pnpm": {
+            "peerDependencyRules": {
+                "allowedVersions": {
+                    "@open-pioneer/test-utils>@testing-library/react": ">= 14.1.2",
+                    "@open-pioneer/test-utils>@testing-library/dom": ">= 9.3.3"
+                }
+            }
+        }
+    }
+    ```
 
 ## 2024-06-17
 
