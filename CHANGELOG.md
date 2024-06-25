@@ -18,7 +18,7 @@
     └── ✕ unmet peer @open-pioneer/runtime-react-support@^1.0.2: found 1.0.1
     ```
 
-    As a workaround, you can temporality (or even permanently) list the packages and their desired version in a `package.json`, and then execute `pnpm install && pnpm dedupe`.
+    As a workaround, you can temporarily (or even permanently) list the packages and their desired version in a `package.json`, and then execute `pnpm update-shared-versions && pnpm install && pnpm dedupe`.
 
     For example:
 
