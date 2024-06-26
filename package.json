@@ -42,7 +42,7 @@
             "",
             "peer dependency rules",
             "=====================",
-            "@open-pioneer/test-utils: don't warn for newer testing library versions (these should be de-factory compatible)"
+            "@open-pioneer/test-utils: don't warn for newer testing library versions (these should be de-facto compatible)"
         ],
         "overrides": {
             "semver@<7.5.2": ">=7.5.2",
