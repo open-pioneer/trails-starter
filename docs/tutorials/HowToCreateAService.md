@@ -81,7 +81,7 @@ The test-utils package contains helpers for testing service classes:
     "name": "math",
     "private": true,
     "devDependencies": {
-        "@open-pioneer/test-utils": "^1.0.0"
+        "@open-pioneer/test-utils": "latest"
     }
 }
 ```
@@ -139,8 +139,8 @@ First, add the package `math` in the app's `package.json`:
     "name": "empty",
     "private": true,
     "peerDependencies": {
-        "@open-pioneer/runtime": "^1.0.0",
-        "@open-pioneer/chakra-integration": "^1.0.0",
+        "@open-pioneer/runtime": "latest",
+        "@open-pioneer/chakra-integration": "latest",
         "math": "workspace:^"
     }
 }
@@ -244,7 +244,7 @@ Because we do not intend to export any classes, functions or constants, we'll ju
     "private": true,
     "main": "api.ts",
     "devDependencies": {
-        "@open-pioneer/test-utils": "^1.0.0"
+        "@open-pioneer/test-utils": "latest"
     }
 }
 ```
@@ -469,9 +469,9 @@ We want to use its logger implementation:
     "name": "empty",
     "private": true,
     "peerDependencies": {
-        "@open-pioneer/chakra-integration": "^1.0.0",
-        "@open-pioneer/core": "^1.0.0",
-        "@open-pioneer/runtime": "^1.0.0",
+        "@open-pioneer/chakra-integration": "latest",
+        "@open-pioneer/core": "latest",
+        "@open-pioneer/runtime": "latest",
         "math": "workspace:^"
     }
 }

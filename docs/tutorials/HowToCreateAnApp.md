@@ -20,10 +20,14 @@ Create a very simple [`package.json`](https://docs.npmjs.com/cli/v9/configuring-
     "name": "my-app",
     "private": true,
     "dependencies": {
-        "@open-pioneer/runtime": "^1.0.0"
+        "@open-pioneer/runtime": "latest"
     }
 }
 ```
+
+> NOTE  
+> Dependencies in the preceding example snippet (and some other snippets in this documentation) use the version specifier `latest` to avoid being immediately outdated.
+> You should pick a recent version with the help of your IDE or the index at [npmjs.com](https://www.npmjs.com/), for example `"@open-pioneer/some-package": "^1.2.3"`.
 
 A `package.json` file should always contain at least a `name`, usually some `dependencies` and either `private: true` or a valid license (in case you intend to publish it).
 After creating a new package or modifying the dependencies of an existing package, you should run `pnpm install`:

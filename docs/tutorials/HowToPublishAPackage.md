@@ -386,7 +386,7 @@ We have also been told to configure `publishConfig.directory`:
         "build": "build-pioneer-package"
     },
 +   "peerDependencies": {
-+       "@open-pioneer/core": "^1.0.0"
++       "@open-pioneer/core": "<omitted from example>"
 +   },
 +   "publishConfig": {
 +       "directory": "dist",
@@ -396,6 +396,7 @@ We have also been told to configure `publishConfig.directory`:
 ```
 
 Because the core package is a Trails package, we have added it as a `peerDependency` (see [Best Practices](../BestPractices.md#dependency-management)).
+
 We also added `linkDirectory: false`, see [Publishing](#publishing).
 
 #### Adding required files
