@@ -28,3 +28,10 @@ messages:
     heading: Beispiel DateTimeFormat
     timelabel: "Der gewählte Zeitpunkt ist "
     relativetimelabel: "Relative Zeit zum gewählten Zeitpunkt: "
+  serviceI18n:
+    heading: "Beispiel für Service I18n"
+    placeholder: "Namen eintragen"
+    showGreeting: "Nachricht anzeigen"
+    serviceResponse: "Nachricht: "
+  greetingService:
+    greeting: Hallo {name}!

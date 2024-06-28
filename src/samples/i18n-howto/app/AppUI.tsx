@@ -1,23 +1,26 @@
 // SPDX-FileCopyrightText: 2023 Open Pioneer project (https://github.com/open-pioneer)
 // SPDX-License-Identifier: Apache-2.0
 import {
-    Container,
-    Heading,
-    Text,
-    Input,
     Box,
-    Stack,
-    StackDivider,
-    RadioGroup,
-    Radio,
+    Button,
+    Container,
+    HStack,
+    Heading,
+    Input,
+    NumberDecrementStepper,
+    NumberIncrementStepper,
     NumberInput,
     NumberInputField,
     NumberInputStepper,
-    NumberIncrementStepper,
-    NumberDecrementStepper
+    Radio,
+    RadioGroup,
+    Stack,
+    StackDivider,
+    Text
 } from "@open-pioneer/chakra-integration";
-import { useIntl } from "open-pioneer:react-hooks";
+import { useIntl, useService } from "open-pioneer:react-hooks";
 import { useState } from "react";
+import { GreetingService } from "./GreetingService";
 
 export function AppUI() {
     const intl = useIntl();
@@ -42,19 +45,22 @@ function ExampleStack() {
             align="stretch"
         >
             <Box bg="white" w="100%" p={4} color="black" borderWidth="1px" borderColor="black">
-                <InterpolationExample></InterpolationExample>
+                <InterpolationExample />
             </Box>
             <Box bg="white" w="100%" p={4} color="black" borderWidth="1px" borderColor="black">
-                <PluralsExample></PluralsExample>
+                <PluralsExample />
             </Box>
             <Box bg="white" w="100%" p={4} color="black" borderWidth="1px" borderColor="black">
-                <SelectionExample></SelectionExample>
+                <SelectionExample />
             </Box>
             <Box bg="white" w="100%" p={4} color="black" borderWidth="1px" borderColor="black">
-                <NumberFormatExample></NumberFormatExample>
+                <NumberFormatExample />
             </Box>
             <Box bg="white" w="100%" p={4} color="black" borderWidth="1px" borderColor="black">
-                <DateTimeFormatExample></DateTimeFormatExample>
+                <DateTimeFormatExample />
+            </Box>
+            <Box bg="white" w="100%" p={4} color="black" borderWidth="1px" borderColor="black">
+                <ServiceI18nExample />
             </Box>
         </Stack>
     );
@@ -218,6 +224,48 @@ function DateTimeFormatExample() {
                     style: "long"
                 })}
             </Text>
+        </>
+    );
+}
+
+function ServiceI18nExample() {
+    const intl = useIntl();
+    const greetingService = useService<GreetingService>("i18n-howto-app.GreetingService");
+    const [inputValue, setInputValue] = useState("");
+    const [greeting, setGreeting] = useState("");
+    return (
+        <>
+            <Heading as="h4" size="md">
+                {intl.formatMessage({ id: "serviceI18n.heading" })}
+            </Heading>
+            <HStack
+                as="form"
+                onSubmit={(e) => {
+                    e.preventDefault();
+
+                    const name = inputValue.trim();
+                    if (name) {
+                        setGreeting(greetingService.greet(name));
+                    } else {
+                        setGreeting("");
+                    }
+                }}
+            >
+                <Input
+                    placeholder={intl.formatMessage({ id: "serviceI18n.placeholder" })}
+                    value={inputValue}
+                    onChange={(evt) => setInputValue(evt.target.value)}
+                    size="md"
+                />
+                <Button type="submit" flexShrink={0}>
+                    {intl.formatMessage({ id: "serviceI18n.showGreeting" })}
+                </Button>
+            </HStack>
+            {greeting && (
+                <Text>
+                    {intl.formatMessage({ id: "serviceI18n.serviceResponse" })} {greeting}
+                </Text>
+            )}
         </>
     );
 }

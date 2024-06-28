@@ -28,3 +28,10 @@ messages:
     heading: DateTimeFormat Examples
     timelabel: "the chosen time is "
     relativetimelabel: "relative time to chosen time: "
+  serviceI18n:
+    heading: "Service I18n Example"
+    placeholder: "Enter name"
+    showGreeting: "Show message"
+    serviceResponse: "Message: "
+  greetingService:
+    greeting: Hello {name}!

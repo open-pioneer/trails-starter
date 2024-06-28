@@ -52,15 +52,20 @@ import { createCustomElement } from "@open-pioneer/runtime";
 import * as appMetadata from "open-pioneer:app";
 import { AppUI } from "./AppUI";
 
+// Reads the 'lang' parameter from the URL and, if set, uses it
+// for the application's locale.
+// This can be helpful during development, but its entirely optional.
+const URL_PARAMS = new URLSearchParams(window.location.search);
+const FORCED_LANG = URL_PARAMS.get("lang") || undefined;
+
 const Element = createCustomElement({
     component: AppUI,
     appMetadata,
-    async resolveConfig(ctx) {
-        const locale = ctx.getAttribute("forced-locale");
-        if (!locale) {
-            return undefined;
-        }
-        return { locale };
+    config: {
+        // Forces the locale if set to a string.
+        // 'undefined' choses an automatic locale based on the app and
+        // the user's preferred languages.
+        locale: FORCED_LANG
     }
 });
 customElements.define("i18n-howto", Element);
@@ -78,23 +83,8 @@ and the `index.html`:
         <title>Empty Site</title>
     </head>
     <body>
-        <div id="container"></div>
-        <script type="module">
-            import "./empty/app.ts";
-
-            const container = document.getElementById("container");
-            initApp();
-            function initApp() {
-                const queryString = window.location.search;
-                const urlParams = new URLSearchParams(queryString);
-                const lang = urlParams.get("lang");
-                const app = document.createElement("i18n-howto");
-                if (lang) {
-                    app.setAttribute("forced-locale", lang);
-                }
-                container.appendChild(app);
-            }
-        </script>
+        <i18n-howto></i18n-howto>
+        <script type="module" src="./app/app.ts"></script>
     </body>
 </html>
 ```
@@ -110,7 +100,7 @@ Now we are able to force the locale with `lang` parameter:
 
 In a first step we prepare our AppUI:
 
-```javascript
+```tsx
 // src/apps/empty/AppUI.tsx
 export function AppUI() {
     const intl = useIntl();
@@ -133,7 +123,7 @@ In addition, we define the `ExampleStack` as a container for our advanced exampl
 
 First we generate an entry in our `ExampleStack` for our `InterpolationExample`:
 
-```javascript
+```tsx
 // src/apps/empty/AppUI.tsx
 function ExampleStack() {
     return (
@@ -154,7 +144,7 @@ function ExampleStack() {
 
 Interpolation allows replacement with dynamic values. That's why we use a text input field in our interpolation example:
 
-```javascript
+```tsx
 // src/apps/empty/AppUI.tsx
 function InterpolationExample() {
     const intl = useIntl();
@@ -203,7 +193,7 @@ In the rendered text the passed value of `name` will replace the placeholder.
 
 We generate another entry in our `ExampleStack` for our `PluralsExample`:
 
-```javascript
+```tsx
 // src/apps/empty/AppUI.tsx
 function ExampleStack() {
     return (
@@ -228,7 +218,7 @@ function ExampleStack() {
 With plural support we can output different text depending on a count value (see [Link](https://formatjs.io/docs/core-concepts/icu-syntax/#plural-format)).
 We will use a RadioGroup to change the count value in our example:
 
-```javascript
+```tsx
 // src/apps/empty/AppUI.tsx
 function PluralsExample() {
     const intl = useIntl();
@@ -282,7 +272,7 @@ The `plurals.value` key defines a count parameter `n`. In result the passed valu
 
 Let's add an entry for `SelectionExample` in our `ExampleStack`:
 
-```javascript
+```tsx
 // src/apps/empty/AppUI.tsx
 function ExampleStack() {
     return (
@@ -311,7 +301,7 @@ With selection support we can output different text depending on a set of given 
 In our example we will change the title depending on a gender selection.
 We will use a text input for name and a RadioGroup for gender selection:
 
-```javascript
+```tsx
 // src/apps/empty/AppUI.tsx
 function SelectionExample() {
     const intl = useIntl();
@@ -379,7 +369,7 @@ In result the passed value of `gender` and `name` will be used to generate the m
 
 Now we add an entry for `NumberFormatExample` to our `ExampleStack` :
 
-```javascript
+```tsx
 // src/apps/empty/AppUI.tsx
 function ExampleStack() {
     return (
@@ -410,7 +400,7 @@ function ExampleStack() {
 With `formatNumber` we can not only format numbers locale specific, but also use units and currencies (see [Link](https://formatjs.io/docs/react-intl/api#formatnumber)).
 In our example we will have a number input and an output with different forms of unit and currency:
 
-```javascript
+```tsx
 // src/apps/empty/AppUI.tsx
 function NumberFormatExample() {
     const intl = useIntl();
@@ -487,7 +477,7 @@ We pass the `value` with different `NumberFormatOptions` to `intl.formatNumber`.
 
 Finally, we add an entry for the `DateTimeFormatExample` to our `ExampleStack` :
 
-```javascript
+```tsx
 // src/apps/empty/AppUI.tsx
 function ExampleStack() {
     return (
@@ -520,7 +510,7 @@ function ExampleStack() {
 
 In our example we will have a date time input:
 
-```javascript
+```tsx
 // src/apps/empty/AppUI.tsx
 function DateTimeFormatExample() {
     const intl = useIntl();
@@ -587,6 +577,106 @@ In result, we see our selected formatted datetime and the relative time between 
 > The used datetime input does not support a forced locale.
 > It always uses the defined browser locale or the system default. In our example, if your browser uses locale `de`
 > but your app uses url parameter `lang=en` the input will show values matching to locale `de`.
+
+### Using i18n in a service
+
+The `ServiceI18nExample` component displays a plain and simple react form using the `intl` API you have already seen.
+In addition to using i18n from within the React component, it also interacts with a service (`GreetingService`) to show a translated message.
+The form simply asks the user for a name and then calls the `greetingService.greet(name)` method to show a greeting:
+
+```tsx
+// src/apps/empty/AppUI.tsx
+function ServiceI18nExample() {
+    const intl = useIntl();
+    const greetingService = useService<GreetingService>("i18n-howto-app.GreetingService");
+    const [inputValue, setInputValue] = useState("");
+    const [greeting, setGreeting] = useState("");
+    return (
+        <>
+            <Heading as="h4" size="md">
+                {intl.formatMessage({ id: "serviceI18n.heading" })}
+            </Heading>
+            <HStack
+                as="form"
+                onSubmit={(e) => {
+                    e.preventDefault();
+
+                    const name = inputValue.trim();
+                    if (name) {
+                        setGreeting(greetingService.greet(name));
+                    } else {
+                        setGreeting("");
+                    }
+                }}
+            >
+                <Input
+                    placeholder={intl.formatMessage({ id: "serviceI18n.placeholder" })}
+                    value={inputValue}
+                    onChange={(evt) => setInputValue(evt.target.value)}
+                    size="md"
+                />
+                <Button type="submit" flexShrink={0}>
+                    {intl.formatMessage({ id: "serviceI18n.showGreeting" })}
+                </Button>
+            </HStack>
+            {greeting && (
+                <Text>
+                    {intl.formatMessage({ id: "serviceI18n.serviceResponse" })} {greeting}
+                </Text>
+            )}
+        </>
+    );
+}
+```
+
+The `GreetingService` uses the `serviceOptions` parameter (provided by the framework) to access the package's `intl` object.
+This object can be used in the same way as the `intl` object returned by `useIntl`:
+
+```ts
+// src/apps/empty/GreetingService.ts
+import { type DECLARE_SERVICE_INTERFACE, ServiceOptions, PackageIntl } from "@open-pioneer/runtime";
+
+export class GreetingService {
+    declare [DECLARE_SERVICE_INTERFACE]: "i18n-howto-app.GreetingService";
+
+    private _intl: PackageIntl;
+
+    constructor(serviceOptions: ServiceOptions) {
+        this._intl = serviceOptions.intl;
+    }
+
+    /**
+     * Greets the user in the current locale.
+     */
+    greet(name: string): string {
+        return this._intl.formatMessage({ id: "greetingService.greeting" }, { name });
+    }
+}
+```
+
+To make the service usable from the UI, we have to perform some necessary plumbing:
+
+```ts
+// src/apps/empty/services.ts
+export { GreetingService } from "./GreetingService";
+```
+
+```js
+// src/apps/empty/build.config.mjs
+import { defineBuildConfig } from "@open-pioneer/build-support";
+
+export default defineBuildConfig({
+    i18n: ["de", "en"],
+    services: {
+        GreetingService: {
+            provides: ["i18n-howto-app.GreetingService"]
+        }
+    },
+    ui: {
+        references: ["i18n-howto-app.GreetingService"]
+    }
+});
+```
 
 ## Demo App
 
