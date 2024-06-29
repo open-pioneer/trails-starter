@@ -23,6 +23,7 @@
     -   [How to publish a package](./tutorials/HowToPublishAPackage.md)
 
 -   [Best practices and common issues](./BestPractices.md)
+-   [Ways to patch a package](./WaysToPatchAPackage.md)
 
 -   Reference
 
