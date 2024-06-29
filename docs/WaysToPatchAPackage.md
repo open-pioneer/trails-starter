@@ -138,6 +138,8 @@ export class CustomNotificationService {
         console.log("Notification", options);
     }
 
+    closeAll() {}
+
     // This method is an internal API used by the <Notifier /> component,
     // used to register a handler (listener) for incoming notifications.
     // If this method wouldn't exist, we would get a runtime error in the Notifier component.
