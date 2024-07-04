@@ -8,6 +8,8 @@
     `"moduleResolution": "Bundler"` fixes some cases where the TypeScript compiler would not find the declarations for certain modern packages
     (e.g. those that only use `exports` in their package.json).
 
+-   Update workflow files (some actions were outdated).
+
 ## 2024-06-24
 
 -   Update trails dependencies.
