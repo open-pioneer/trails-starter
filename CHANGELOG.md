@@ -1,5 +1,13 @@
 # Changelog
 
+## 2024-07-04
+
+-   `tsconfig.json`: Switch to `"moduleResolution": "Bundler"`.
+    This is the appropriate resolution mode for TypeScript code when using a bundler such as Vite.
+
+    `"moduleResolution": "Bundler"` fixes some cases where the TypeScript compiler would not find the declarations for certain modern packages
+    (e.g. those that only use `exports` in their package.json).
+
 ## 2024-06-24
 
 -   Update trails dependencies.
