@@ -51,7 +51,7 @@ const Element = createCustomElement({
 
 For more details, see
 
--   [How to use properties](...) <!-- TODO -->
+-   [How to use properties](...) <!-- TODO: another PR: https://github.com/open-pioneer/trails-starter/pull/106 -->
 -   [Package reference](./reference/Package.md)
 
 ### I18n messages
@@ -266,3 +266,172 @@ You can then either re-implement the patch or drop it altogether.
 Note that you can also "augment" your patch if you need to; simply re-execute `pnpm patch` for that package.
 
 ### Overriding a dependency
+
+pnpm allows you to [override dependencies](https://pnpm.io/package_json#pnpmoverrides) using the `pnpm.override` object in your `package.json`.
+Note that this feature can only be used in the _top level_ `package.json` file, i.e. the `package.json` file at the root of your repository.
+
+The following example overrides all instances of a package with a different version of that package.
+This can be used to force updates if the package contains a security vulnerability.
+It can also be used to force a dependency to use the newer version, even if its original `package.json` only supports an older version.
+
+```jsonc
+// package.json
+{
+    "pnpm": {
+        "overrides": {
+            "semver@<7.5.2": ">=7.5.2"
+        }
+    }
+}
+```
+
+The following example only overrides a package version when used from _another_ package.
+In this case, the `chakra-react-select` package used an old version of `react-select`; the new version expression made it pick up an update:
+
+```jsonc
+// package.json
+{
+    "pnpm": {
+        "overrides": {
+            "chakra-react-select>react-select": "^5.8.0"
+        }
+    }
+}
+```
+
+This feature can also be used to change a package altogether.
+The following example replaces _all_ usages of the package `@mapbox/mapbox-gl-style-spec` with the (compatible) package `@maplibre/maplibre-gl-style-spec`:
+
+```jsonc
+// package.json
+{
+    "pnpm": {
+        "overrides": {
+            "@mapbox/mapbox-gl-style-spec": "npm:@maplibre/maplibre-gl-style-spec@^20.1.1"
+        }
+    }
+}
+```
+
+Note that you can also use other protocols than `npm`, for example `file` or `git`.
+
+Finally, you can also substitute a local package:
+
+```jsonc
+{
+    "pnpm": {
+        "overrides": {
+            "some-package-name": "workspace:your-local-package@*"
+        }
+    }
+}
+```
+
+Some versions of pnpm may report dependency issues when overriding a local package, for example:
+
+```text
+✕ unmet peer some-package-name@your-local-package@*: found x.y.z
+```
+
+In that case, you can also relax the [peer dependency rules](https://pnpm.io/package_json#pnpmpeerdependencyrulesallowedversions) by overriding them:
+
+```jsonc
+{
+    "pnpm": {
+        "overrides": {
+            "some-package-name": "workspace:your-local-package@*"
+        },
+        "peerDependencyRules": {
+            "allowedVersions": {
+                // '*' is the most permissive, which is fine in this case
+                // since we've completely replaced the package with our version anyway.
+                "some-package-name": "*"
+            }
+        }
+    }
+}
+```
+
+#### Walkthrough: replacing @open-pioneer/runtime
+
+In this short walkthrough, we will replace the package `@open-pioneer/runtime` with our own custom version.
+We will add a simple log message to the application start to demonstrate the replacement.
+
+To get started, copy the contents of `@open-pioneer/runtime` into a local package in your source directory, e.g. to `src/packages/custom-runtime`.
+Either the source code version (from [here](https://github.com/open-pioneer/trails-core-packages/tree/main/src/packages/runtime)) or the built sources (from `node_modules`) will work.
+
+To indicate that the package has been modified, we simply change the version a bit:
+
+```jsonc
+// src/packages/custom-runtime/package.json
+{
+    "name": "@open-pioneer/runtime",
+    "version": "2.1.5-custom.0"
+    // ...
+}
+```
+
+Now we make our change: we are basing this walkthrough on version `2.1.5`, so we have to edit `CustomElement.js`:
+
+```js
+// src/packages/custom-runtime/CustomElement.js
+// ...
+class PioneerApplication extends HTMLElement {
+    // ...
+    connectedCallback() {
+        LOG.debug("Launching application");
+        console.log("Custom log message during application start"); // Our change
+        // ...
+    }
+}
+```
+
+Next, we override the package `@open-pioneer/runtime` with our local version for _all_ packages in our applications:
+
+```jsonc
+// top level package.json
+{
+    // ...
+    "pnpm": {
+        "overrides": {
+            "@open-pioneer/runtime": "workspace:*"
+        },
+        "peerDependencyRules": {
+            "allowedVersions": {
+                "@open-pioneer/runtime": "*"
+            }
+        }
+    }
+}
+```
+
+After editing the `package.json` file, execute `pnpm install`.
+You can already verify that the changes have been applied: open an application or package
+that uses `@open-pioneer/runtime` and inspect the `node_modules`.
+You will see that it now uses the custom version.
+
+Running an app (both in development or production) will now print the new message into the console:
+
+![An additional message is printed to the console](./WaysToPatchAPackage_RuntimeLogMessage.png)
+
+NOTE:
+
+-   When you're patching a built package, it is probably best to remove source maps for files that you have edited.
+    These can be misleading, since they reflect the _old_ content of the file.
+    Source maps are either located at the end of the file (as a comment) or as a separate `.map` file.
+-   You may have to adjust your TypeScript or ESLint rules (e.g. update `.eslintignore` to ignore the patched package).
+-   When copying a built package into the source directory, our Vite plugin will print a warning:
+
+    ```text
+    [vite] warning: Using framework metadata from package.json instead of build.config.mjs in /home/michael/projects/pioneer/starter/src/packages/custom-runtime, make sure that this intended.
+    ```
+
+    You can safely ignore this warning if it is expected (which is the case here).
+    The warning is printed because this circumstance may also hint at a configuration problem.
+
+-   When you're patching another package in its source form (e.g. by copying it from its source repository), you might have to fix up its dependencies.
+    These might use the `workspace:...` protocol, and those packages are not available locally (just use real versions instead).
+-   When you're replacing a trails package, don't change the `name` in its `package.json` file: it is currently significant for the registration of services.
+    However, you can freely change the `version` or the directory name.
+-   All of this should be considered a hack.
+    Use this technique only when no other options are available to you.
