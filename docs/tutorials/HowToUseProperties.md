@@ -2,19 +2,19 @@
 
 Properties are configurable values associated with a [Package](../reference/Package.md).
 Packages can use their [build.config.mjs](../reference/Package.md#properties) to define which properties they support and assign some optional default values.
-Properties are often document as part of a package's public API.
+Properties are often documented as part of a package's public API.
 
-An app that uses a package can assign custom values to those properties, which may alter the behavior of the the package at runtime.
+An app that uses a package can assign custom values to those properties, which may alter the behavior of the package at runtime.
 
 It is best to think of package properties as _global_ configuration: given a property `prop` of a package `pkg`, all services and UI components implemented in that package will receive the _same_ value of `prop` when the application runs.
-They are therefore not suited for fine grained customization, for example to provide different values for each function call or UI component.
+They are therefore not suited for fine-grained customization, for example to provide different values for each function call or UI component.
 Use JavaScript function parameters or React props for those use cases instead.
 
 ## Using properties in a package
 
 We will implement a simple `search-service` package that "searches" for results using a backend service.
 The URL to that backend service shall be configurable as a property.
-We're going to develop the property configuration but we will skip the actual searching part of the implementation.
+We're going to develop the property configuration, but we will skip the actual searching part of the implementation.
 
 ### Setup
 
@@ -230,13 +230,13 @@ const Element = createCustomElement({
     The key must be the exact name of the package.
     The properties defined here should be supported by the package.
 
-Thats it. After reloading the application, pressing the button now prints:
+That's it. After reloading the application, pressing the button now prints:
 
 ![Console contains the property's custom value.](./HowToUseProperties_CustomBackendUrl.png)
 
 ## Providing TypeScript support
 
-Writing raw JSON objects as in **(2)** above can be error prone.
+Writing raw JSON objects as in **(2)** above can be error-prone.
 
 Consider exporting a TypeScript interface that matches the properties defined by your package:
 
@@ -248,7 +248,7 @@ export interface SearchServiceProperties {
 }
 ```
 
-Then your can use that interface in your `app.ts` to guard against typos and to provide suggestions:
+Then you can use that interface in your `app.ts` to guard against typos and to provide suggestions:
 
 ```ts
 // src/apps/empty/app.ts
@@ -272,7 +272,7 @@ const Element = createCustomElement({
 The shown way to define properties in your `app.ts` defines a _fixed_ value for all instances of your application.
 This is fine if you only have a single instance, and if that instance's configuration does not depend on any dynamic state.
 
-For example, if your application was used twice in the same `.html` file, both instances would use the same `backendUrl`:
+For example, if your application is used twice in the same `.html` file, both instances would use the same `backendUrl`:
 
 ```html
 <!-- ... -->
@@ -299,7 +299,7 @@ const Element = createCustomElement({
 
     // Provide dynamic property values.
     // In this case, we read an attribute from the host element (in the html file)
-    // and it to configure the backendUrl.
+    // and use it to configure the backendUrl.
     async resolveConfig(ctx) {
         const backendUrl = ctx.getAttribute("backend-url");
         if (!backendUrl) {
@@ -326,7 +326,7 @@ Now you can define the `backend-url` attribute on your web component:
 
 `resolveConfig` is the most powerful way to define properties or other configuration options.
 Since it supports promises you can also use it to load properties from other data sources, such as a rest service (possibly even dependant on the current user session via cookies).
-It should not be overused: a long running `resolveConfig` call will block the start of your application.
+It should not be overused: a long-running `resolveConfig` call will block the start of your application.
 
 ## Further reading
 
