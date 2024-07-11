@@ -18,13 +18,14 @@ Patching a package increases your maintenance burden, since you're often modifyi
 -   Updates may be more costly (or even impossible) because your changes need to be merged with the updated package
 -   Your changes may break randomly because the assumptions you made about the package's internals are no longer true
 
-Even if you patched a package, it is good practice (and in your own interest) to attempt to contribute your changes anyway.
+Even if you patched a package, it is good practice (and in your own interest) to attempt to contribute your changes anyway or
+at least to open an issue describing the bug or needed feature.
 A future version of the package that includes your changes would mean that you don't need to maintain your own version anymore.
 
 With those risks in mind, choose one of the following alternatives, depending on your requirements.
 When in doubt, choose the less powerful alternative, since it often comes with a smaller maintenance burden.
 
-## Using the trails framework
+## Using methods of the trails framework
 
 If the package you attempt to modify is a trails package, you have some builtin methods to achieve that.
 
@@ -51,7 +52,7 @@ const Element = createCustomElement({
 
 For more details, see
 
--   [How to use properties](...) <!-- TODO: another PR: https://github.com/open-pioneer/trails-starter/pull/106 -->
+-   [How to use properties](./tutorials/HowToUseProperties.md)
 -   [Package reference](./reference/Package.md)
 
 ### I18n messages
@@ -98,7 +99,7 @@ export default defineBuildConfig({
                 // Internal service name within the package.
                 // Can be learned by inspecting the package's source code (or its compiled package.json).
                 NotificationServiceImpl: {
-                    // Completely removes the class from the application.
+                    // Completely removes the service from the application.
                     enabled: false
                 }
             }
@@ -107,10 +108,11 @@ export default defineBuildConfig({
 });
 ```
 
-You can then implement a new version of the `NotificationService`, either in your app or in another package.
+You can then implement a new version of the `NotificationService`, either in your app or in another package. To do this, it is necessary to implement exactly the same interface as the old service; the name of the service can be chosen freely.
+
 Note that this replaces the `NotificationService` in the entire application, so all packages in that application
 will observe your new implementation.
-It its therefore important to provide an implementation that (roughly) conforms to the original API, to avoid runtime errors.
+It is therefore important to provide an implementation that (roughly) conforms to the original API, to avoid runtime errors.
 
 For this example, we can simply add a new service to our application:
 
@@ -151,7 +153,7 @@ export class CustomNotificationService {
 }
 ```
 
-You can expand on this pattern by using the original service implementation in your new code, for example to wrap the original service.
+Besides implementing a complete new service, it is also possible to reuse the original service in your new code. For example, the original service can be wrapped or extended to adjust its functionality.
 The original implementation can be retrieved by importing it from the patched package's service entry point.
 
 See also the [Service reference](./reference/Services.md) for more details.
@@ -166,7 +168,7 @@ Note that you can use either the package's source code or the published package 
 In both cases, make sure to conform to the package's license.
 Keep in mind that you may have to modify your build configuration (Vite, Linter, TypeScript, etc.) to work with the package's code (or to ignore it).
 
-This approach stops working when _other_ packages _also_ use that packages and you want to modify _them_ as well.
+This approach stops working when _other_ packages _also_ use that package and you want to modify _them_ as well.
 For example, you can copy and modify the `@open-pioneer/runtime` all you want; other packages will still use the original version.
 You need to use the package manager to achieve that (see below).
 
@@ -189,9 +191,9 @@ This section contains a few practical examples.
 In this example, we're going to modify the `BasemapSwitcher`'s implementation to always render layer titles in upper case.
 
 At the time of this writing, the current version of `@open-pioneer/basemap-switcher` is `0.4.2`.
-To create a patch, simply call use [pnpm patch](https://pnpm.io/cli/patch) from your terminal:
+To create a patch, simply call [pnpm patch](https://pnpm.io/cli/patch) from your terminal:
 
-```bash
+```
 $ pnpm patch @open-pioneer/basemap-switcher
 You can now edit the following folder: /tmp/f3661f760f6e544d6a19972fa9ed9132
 
@@ -259,11 +261,13 @@ It also creates a new entry in your `package.json`:
 ```
 
 Both changes should be committed to your project.
-`pnpm install` install will automatically apply the patch to the package whenever possible.
+`pnpm install` will automatically apply the patch to the package whenever possible.
 If that fails, for example if the package is updated and has diverged, pnpm will report an error.
 You can then either re-implement the patch or drop it altogether.
 
 Note that you can also "augment" your patch if you need to; simply re-execute `pnpm patch` for that package.
+
+You can also use `pnpm patch` to change arbitrary file in a package (not only source code), for example you can change a package's metadata by editing the `package.json` file.
 
 ### Overriding a dependency
 
