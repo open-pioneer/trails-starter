@@ -580,14 +580,64 @@ In result, we see our selected formatted datetime and the relative time between 
 
 ### Using i18n in a service
 
+The `intl` object is not only available in React components, it can also be used from any service.
+The `GreetingService` in the following example uses the `serviceOptions` parameter (provided by the framework) to access the package's `intl` object.
+This object can be used in the same way as the `intl` object returned by `useIntl`:
+
+```ts
+// src/apps/empty/GreetingService.ts
+import { type DECLARE_SERVICE_INTERFACE, ServiceOptions, PackageIntl } from "@open-pioneer/runtime";
+
+export class GreetingService {
+    declare [DECLARE_SERVICE_INTERFACE]: "i18n-howto-app.GreetingService";
+
+    private _intl: PackageIntl;
+
+    constructor(serviceOptions: ServiceOptions) {
+        this._intl = serviceOptions.intl;
+    }
+
+    // (1)
+    greet(name: string): string {
+        return this._intl.formatMessage({ id: "greetingService.greeting" }, { name });
+    }
+}
+```
+
+Our goal is to implement a UI component that calls the `greet()` (see **(1)**) method from above.
+To make the service usable from the UI, we have to perform some necessary plumbing:
+
+```ts
+// src/apps/empty/services.ts
+export { GreetingService } from "./GreetingService";
+```
+
+```js
+// src/apps/empty/build.config.mjs
+import { defineBuildConfig } from "@open-pioneer/build-support";
+
+export default defineBuildConfig({
+    i18n: ["de", "en"],
+    services: {
+        GreetingService: {
+            provides: ["i18n-howto-app.GreetingService"]
+        }
+    },
+    ui: {
+        references: ["i18n-howto-app.GreetingService"]
+    }
+});
+```
+
 The `ServiceI18nExample` component displays a plain and simple react form using the `intl` API you have already seen.
-In addition to using i18n from within the React component, it also interacts with a service (`GreetingService`) to show a translated message.
-The form simply asks the user for a name and then calls the `greetingService.greet(name)` method to show a greeting:
+In addition to using i18n from within the React component, it also interacts with a service (`GreetingService`, **(1)** in the example below) to show a translated message.
+The form simply asks the user for a name and then calls the `greetingService.greet(name)` method (see **(2)** below) to show a greeting:
 
 ```tsx
 // src/apps/empty/AppUI.tsx
 function ServiceI18nExample() {
     const intl = useIntl();
+    // (1)
     const greetingService = useService<GreetingService>("i18n-howto-app.GreetingService");
     const [inputValue, setInputValue] = useState("");
     const [greeting, setGreeting] = useState("");
@@ -603,6 +653,7 @@ function ServiceI18nExample() {
 
                     const name = inputValue.trim();
                     if (name) {
+                        // (2)
                         setGreeting(greetingService.greet(name));
                     } else {
                         setGreeting("");
@@ -627,55 +678,6 @@ function ServiceI18nExample() {
         </>
     );
 }
-```
-
-The `GreetingService` uses the `serviceOptions` parameter (provided by the framework) to access the package's `intl` object.
-This object can be used in the same way as the `intl` object returned by `useIntl`:
-
-```ts
-// src/apps/empty/GreetingService.ts
-import { type DECLARE_SERVICE_INTERFACE, ServiceOptions, PackageIntl } from "@open-pioneer/runtime";
-
-export class GreetingService {
-    declare [DECLARE_SERVICE_INTERFACE]: "i18n-howto-app.GreetingService";
-
-    private _intl: PackageIntl;
-
-    constructor(serviceOptions: ServiceOptions) {
-        this._intl = serviceOptions.intl;
-    }
-
-    /**
-     * Greets the user in the current locale.
-     */
-    greet(name: string): string {
-        return this._intl.formatMessage({ id: "greetingService.greeting" }, { name });
-    }
-}
-```
-
-To make the service usable from the UI, we have to perform some necessary plumbing:
-
-```ts
-// src/apps/empty/services.ts
-export { GreetingService } from "./GreetingService";
-```
-
-```js
-// src/apps/empty/build.config.mjs
-import { defineBuildConfig } from "@open-pioneer/build-support";
-
-export default defineBuildConfig({
-    i18n: ["de", "en"],
-    services: {
-        GreetingService: {
-            provides: ["i18n-howto-app.GreetingService"]
-        }
-    },
-    ui: {
-        references: ["i18n-howto-app.GreetingService"]
-    }
-});
 ```
 
 ## Demo App
