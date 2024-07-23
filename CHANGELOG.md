@@ -4,6 +4,8 @@
 
 -   Update the license report script. It can now handle dependency license information returned by pnpm 9.
     See also <https://github.com/open-pioneer/trails-openlayers-base-packages/pull/335>.
+-   Update the patch against `react-select`.
+-   Update development dependencies.
 
 ## 2024-07-04
 

@@ -20,3 +20,29 @@ index bed08498732b023f350d24a62728371af6a4dace..dcc7713c39b9aa87cb92f3af33b97c02
        }, menuIsOpen && {
          'aria-controls': this.getElementId('listbox')
        }), !isSearchable && {
+diff --git a/dist/Select-5dacb5ba.cjs.prod.js b/dist/Select-5dacb5ba.cjs.prod.js
+index ea9203fb889d23825493d63964aad8229e758517..c3e9774f8f5f7f5a02a96b8e76df484b226fe957 100644
+--- a/dist/Select-5dacb5ba.cjs.prod.js
++++ b/dist/Select-5dacb5ba.cjs.prod.js
+@@ -2130,7 +2130,7 @@ var Select = /*#__PURE__*/function (_Component) {
+         'aria-labelledby': this.props['aria-labelledby'],
+         'aria-required': required,
+         role: 'combobox',
+-        'aria-activedescendant': this.isAppleDevice ? undefined : this.state.focusedOptionId || ''
++        'aria-activedescendant': this.isAppleDevice ? undefined : this.state.focusedOptionId || undefined
+       }, menuIsOpen && {
+         'aria-controls': this.getElementId('listbox')
+       }), !isSearchable && {
+diff --git a/dist/Select-d63eed7b.cjs.dev.js b/dist/Select-d63eed7b.cjs.dev.js
+index b3858a3b953490f3089fd60e97e1e7555b22ec15..c22777a209e94c9affb61fd2b69fba0268b8abc1 100644
+--- a/dist/Select-d63eed7b.cjs.dev.js
++++ b/dist/Select-d63eed7b.cjs.dev.js
+@@ -2149,7 +2149,7 @@ var Select = /*#__PURE__*/function (_Component) {
+         'aria-labelledby': this.props['aria-labelledby'],
+         'aria-required': required,
+         role: 'combobox',
+-        'aria-activedescendant': this.isAppleDevice ? undefined : this.state.focusedOptionId || ''
++        'aria-activedescendant': this.isAppleDevice ? undefined : this.state.focusedOptionId || undefined
+       }, menuIsOpen && {
+         'aria-controls': this.getElementId('listbox')
+       }), !isSearchable && {
