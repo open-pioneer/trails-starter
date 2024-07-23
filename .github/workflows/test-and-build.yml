@@ -42,9 +42,8 @@ jobs:
       - name: Build API documentation
         run: pnpm build-docs
 
-      # TODO: errors are ignored right now
       - name: Create license report
-        run: pnpm build-license-report || true;
+        run: pnpm build-license-report;
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4

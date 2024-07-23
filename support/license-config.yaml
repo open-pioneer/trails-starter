@@ -9,6 +9,12 @@ allowedLicenses:
   - "CC0-1.0"
   - "WTFPL"
   - "Unlicense"
+  # zstddec
+  - MIT AND BSD-3-Clause
+
+  # Dependencies of jsPdf use this
+  - "(MIT OR Apache-2.0)"
+  - "(MPL-2.0 OR Apache-2.0)"
 
 # Some licenses are detected incorrectly.
 # Their information can be overwritten here.
@@ -107,7 +113,7 @@ overrideLicenses:
 
   # Missing license document in npm artifact.
   # Licenses added after 3.0 release via pull request.
-  # License text downloaded on 2023-11-21.
+  # License text downloaded on 2023-11-15.
   #
   # See https://github.com/colorjs/color-rgba/pull/6
   - name: "color-rgba"

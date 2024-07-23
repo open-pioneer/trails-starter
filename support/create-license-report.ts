@@ -74,77 +74,79 @@ function analyzeLicenses(
     };
 
     const reportProjects = Object.values(reportJson).flat();
-    const items = reportProjects.map((project, index) => {
+    const items: LicenseItem[] = [];
+    reportProjects.forEach((project, index) => {
         const name = project.name;
-        const version = project.version;
-        const overrideEntry = getOverrideEntry(name, version);
-        const dependencyInfo = `'${name}' (version ${version})`;
 
-        const licenses = overrideEntry?.license ?? project.license;
-        const licenseFiles = overrideEntry?.licenseFiles ?? findLicenseFiles(project.path);
-        const noticeFiles = overrideEntry?.noticeFiles ?? findNoticeFiles(project.path);
+        for (const { path, version } of walkProjectLocations(project)) {
+            const overrideEntry = getOverrideEntry(name, version);
+            const dependencyInfo = `'${name}' (version: ${version})`;
+            const licenses = overrideEntry?.license ?? project.license;
+            const licenseFiles = overrideEntry?.licenseFiles ?? findLicenseFiles(path);
+            const noticeFiles = overrideEntry?.noticeFiles ?? findNoticeFiles(path);
 
-        if (!overrideEntry?.license) {
-            if (!licenses || licenses === "Unknown") {
-                unknownLicenses = true;
-                console.warn(
-                    `Failed to detect licenses of dependency ${dependencyInfo} at ${project.path}`
-                );
-            } else if (!config.allowedLicenses.includes(licenses)) {
-                disallowedLicenses = true;
-                console.warn(
-                    `License '${licenses}' of dependency ${dependencyInfo} is not allowed by configuration.`
-                );
-            }
-        }
-
-        const readProjectFile = (file: FileSpec) => {
-            const basedir = ((file: FileSpec): string => {
-                switch (file.type) {
-                    case "custom":
-                        return THIS_DIR;
-                    case "package":
-                        return project.path;
+            if (!overrideEntry?.license) {
+                if (!licenses || licenses === "Unknown") {
+                    unknownLicenses = true;
+                    console.warn(
+                        `Failed to detect licenses of dependency ${dependencyInfo} at ${path}`
+                    );
+                } else if (!config.allowedLicenses.includes(licenses)) {
+                    disallowedLicenses = true;
+                    console.warn(
+                        `License '${licenses}' of dependency ${dependencyInfo} is not allowed by configuration.`
+                    );
                 }
-            })(file);
-            const path = resolve(basedir, file.path);
-            try {
-                return readFileSync(path, "utf-8");
-            } catch (e) {
-                throw new Error(
-                    `Failed to read license file for project ${dependencyInfo} at ${path}: ${e}`
-                );
             }
-        };
 
-        const licenseTexts = licenseFiles.map(readProjectFile);
-        if (licenseTexts.length === 0) {
-            console.warn(
-                `Failed to detect license text of dependency ${dependencyInfo} in ${project.path}`
-            );
-            missingLicenseText = true;
+            const readProjectFile = (file: FileSpec) => {
+                const basedir = ((file: FileSpec): string => {
+                    switch (file.type) {
+                        case "custom":
+                            return THIS_DIR;
+                        case "package":
+                            return path;
+                    }
+                })(file);
+                const projectFilePath = resolve(basedir, file.path);
+                try {
+                    return readFileSync(projectFilePath, "utf-8");
+                } catch (e) {
+                    throw new Error(
+                        `Failed to read license file for project ${dependencyInfo} at ${projectFilePath}: ${e}`
+                    );
+                }
+            };
+
+            const licenseTexts = licenseFiles.map(readProjectFile);
+            if (licenseTexts.length === 0) {
+                console.warn(
+                    `Failed to detect license text of dependency ${dependencyInfo} in ${path}`
+                );
+                missingLicenseText = true;
+            }
+
+            const noticeTexts = noticeFiles.map(readProjectFile);
+            const item: LicenseItem = {
+                id: `dep-${index}-${version}`,
+                name: name,
+                version: version,
+                license: licenses,
+                licenseText: licenseTexts.join("\n\n"),
+                noticeText: noticeTexts.join("\n\n")
+            };
+            items.push(item);
         }
-
-        const noticeTexts = noticeFiles.map(readProjectFile);
-        const item: LicenseItem = {
-            id: `dep-${index}`,
-            name: name,
-            version: version,
-            license: licenses,
-            licenseText: licenseTexts.join("\n\n"),
-            noticeText: noticeTexts.join("\n\n")
-        };
-        return item;
     });
 
     items.sort((a, b) => {
-        return a.name.localeCompare(b.name, "en-US");
+        return a!.name.localeCompare(b!.name, "en-US");
     });
 
     for (const overrideEntry of config.overrideLicenses) {
         if (!usedOverrides.has(overrideEntry)) {
             console.warn(
-                `License override for dependency '${overrideEntry.name}' (version ${overrideEntry.version}) was not used, it should either be updated or removed.`
+                `License override for dependency '${overrideEntry.name}' (version(s): ${overrideEntry.version}) was not used, it should either be updated or removed.`
             );
         }
     }
@@ -154,6 +156,33 @@ function analyzeLicenses(
         error,
         items
     };
+}
+
+/**
+ * Yields all (path, version) pairs for the given project.
+ */
+function* walkProjectLocations(
+    project: PnpmLicenseProject
+): Generator<{ path: string; version: string }> {
+    const versions = project.versions;
+    const paths = project.paths;
+    if (paths.length !== versions.length) {
+        //the indices of paths corresponds to that of versions (https://github.com/pnpm/pnpm/pull/7528)
+        throw new Error(
+            `Project paths and versions returned by PNPM do not have the same length for project ${project.name}), indices of paths must correspond to that of versions.`
+        );
+    }
+
+    for (let i = 0; i < versions.length; i++) {
+        const path = paths[i];
+        const version = versions[i];
+        if (!version || !path) {
+            throw new Error(
+                `Paths or versions contains undefined entry for project ${project.name}), indices of paths must correspond to that of versions.`
+            );
+        }
+        yield { path, version };
+    }
 }
 
 interface LicenseItem {
@@ -349,11 +378,11 @@ interface PnpmLicenseProject {
     /** Project name */
     name: string;
 
-    /** Project version */
-    version: string;
+    /** Project version(s), same order as paths */
+    versions: string[];
 
-    /** Location on disk */
-    path: string;
+    /** Location(s) on disk, same order as versions */
+    paths: string[];
 
     /** License (same as group key) in {@link PnpmLicensesReport} */
     license: string;
@@ -377,7 +406,7 @@ interface OverrideLicenseEntry {
     /** Project name */
     name: string;
 
-    /** Exact project version */
+    /** Exact project version(s) */
     version: string;
 
     /** Manual license name */
