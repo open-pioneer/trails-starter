@@ -3,18 +3,16 @@ if [ "$NO_VERIFY" ]; then
     exit 0
 fi
 
-
-echo '--- checking for consistent dependencies across packages'
+echo '--- checking for consistent dependencies across packages ---'
 pnpm lint-shared-versions
 
-echo '--- run linting --- '
-pnpm lint
-
-echo '--- run prettier ---'
-pnpm prettier-check
+echo '--- check code style ---'
+pnpm exec lint-staged
 
 echo '--- run typescript check ---'
 pnpm check-types
 
 echo '--- run tests ---'
-CI=1 pnpm test run # CI=1 disallows `.only` in tests
+# CI=1 disallows `.only` in tests
+# --changed only runs the tests affected by changed files
+CI=1 pnpm exec vitest run --changed --passWithNoTests

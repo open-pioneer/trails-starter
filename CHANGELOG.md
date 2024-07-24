@@ -1,5 +1,19 @@
 # Changelog
 
+## 2024-07-24
+
+-   Improve the commit hooks (`.husky/pre-commit`).
+    Commit hooks run during `git commit` to check the code style and run tests.
+    Previously, all files within the project were checked for style issues and all unit tests were run.
+
+    With this update, only changed files will be checked (via [lint-staged](https://www.npmjs.com/package/lint-staged)) and only tests affected by changed files will be re-executed (via `vitest --changed`).
+    Also, prettier will now format staged files automatically -- it is no longer necessary to run `prettier` manually in most cases.
+
+    This change significantly improves the time it takes to commit a change.
+    Unfortunately, TypeScript will still run type checks on the entire code base.
+
+-   Update `syncpack`.
+
 ## 2024-07-23
 
 -   Update the license report script. It can now handle dependency license information returned by pnpm 9.

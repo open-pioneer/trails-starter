@@ -3,7 +3,7 @@
     "tabWidth": 4,
     "trailingComma": "none",
     "singleQuote": false,
-    "quoteProps": "consistent",
+    "quoteProps": "preserve",
     "printWidth": 100,
     "overrides": [
         {
