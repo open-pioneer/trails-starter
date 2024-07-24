@@ -12,7 +12,7 @@
         "build-docs": "typedoc",
         "build-license-report": "tsx ./support/create-license-report.ts ",
         "preview": "vite preview",
-        "lint": "eslint ./src ./support --ext .js,.ts,.jsx,.tsx,.mjs,.mts,.cjs,.cts --cache --cache-location ./node_modules/.cache/.eslintcache",
+        "lint": "eslint ./src ./support --ext .js,.ts,.jsx,.tsx,.mjs,.mts,.cjs,.cts",
         "eslint": "pnpm run lint",
         "prettier-check": "pnpm prettier:common -c",
         "prettier": "pnpm prettier:common -w",
