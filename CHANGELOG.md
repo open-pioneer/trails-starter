@@ -1,5 +1,10 @@
 # Changelog
 
+## 2024-08-06
+
+-   Update to latest OpenLayers Trails Packages.
+    This also adapts to the breaking change in the react-utils package (see [Release notes](https://github.com/open-pioneer/trails-core-packages/releases/tag/%40open-pioneer%2Freact-utils%401.0.0)).
+
 ## 2024-07-24
 
 -   Improve the commit hooks (`.husky/pre-commit`).
