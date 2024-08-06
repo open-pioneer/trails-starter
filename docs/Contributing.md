@@ -120,6 +120,16 @@ $ pnpm dev
 
 ## Creating a pull request
 
+We are always happy to receive pull requests from the community.
+Small fixes or improvements to the documentation will usually be accepted right away.
+If you plan to make a larger contribution (new packages, new features, refactoring, etc.) consider reaching out to the maintainers first.
+This can be done, for example, by commenting on an existing issue or by creating a new one.
+
+This way, you can avoid unnecessary work and ensure that your contribution is in line with the project's goals.
+This will also reduce the risk of your PR being rejected.
+
+To create a pull request:
+
 -   First, fork the repository via GitHub's UI and clone your fork (if you have write permissions to the repository, you can skip this step).
 
 -   Then, create a branch with a sensible name.
