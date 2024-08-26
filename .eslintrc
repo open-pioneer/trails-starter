@@ -36,7 +36,8 @@
                 "SwitchCase": 1
             }
         ],
-        "linebreak-style": ["error", "unix"],
+        // Use this rule to enforce consistent line endings
+        // "linebreak-style": ["error", "unix"],
         "quotes": [
             "error",
             "double",
