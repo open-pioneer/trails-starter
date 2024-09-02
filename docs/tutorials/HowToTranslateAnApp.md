@@ -684,6 +684,25 @@ function ServiceI18nExample() {
 
 The complete app `i18n-howto` can be found in the `samples` folder.
 
+## Changing the application's locale
+
+It is possible to change the application's locale to a specific locale using the `setLocale` method on the `ApplicationContext`.
+
+Example:
+
+```ts
+import { ApplicationContext } from "@open-pioneer/runtime";
+
+const appCtx: ApplicationContext = ...; // injected
+appCtx.setLocale("en-US");
+```
+
+Limitation:
+Currently, this requires a full restart of the application.
+Please create an issue or PR if you need support for changing the locale without restart.
+
+For more information refer to the API of the `core-packages` `runtime` package.
+
 ## Further reading
 
 -   [FormatJS Documentation](https://formatjs.io/docs/getting-started/installation)
