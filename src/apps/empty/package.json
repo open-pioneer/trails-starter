@@ -2,8 +2,8 @@
     "name": "empty",
     "private": true,
     "dependencies": {
-        "@open-pioneer/chakra-integration": "^1.1.3",
-        "@open-pioneer/runtime": "^2.1.5",
+        "@open-pioneer/chakra-integration": "^1.1.4",
+        "@open-pioneer/runtime": "^2.1.7",
         "sample-package": "workspace:^"
     }
 }

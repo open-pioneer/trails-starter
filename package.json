@@ -43,8 +43,7 @@
             "@chakra-ui/menu;react-use-outside-click;hooks: patched to fix menus in shadow dom (see https://github.com/open-pioneer/trails-openlayers-base-packages/issues/184)",
             "",
             "peer dependency rules",
-            "=====================",
-            "@open-pioneer/test-utils: don't warn for newer testing library versions (these should be de-facto compatible)"
+            "====================="
         ],
         "overrides": {
             "semver@<7.5.2": ">=7.5.2",
@@ -65,12 +64,7 @@
             "@chakra-ui/hooks@2.2.1": "patches/@chakra-ui__hooks@2.2.1.patch",
             "react-select@5.8.0": "patches/react-select@5.8.0.patch"
         },
-        "peerDependencyRules": {
-            "allowedVersions": {
-                "@open-pioneer/test-utils>@testing-library/react": ">= 14.1.2",
-                "@open-pioneer/test-utils>@testing-library/dom": ">= 9.3.3"
-            }
-        }
+        "peerDependencyRules": {}
     },
     "dependencies": {
         "@chakra-ui/icons": "^2.1.1",
@@ -81,15 +75,15 @@
         "@emotion/styled": "^11.13.0",
         "@formatjs/intl": "^2.10.4",
         "@maplibre/maplibre-gl-style-spec": "^20.3.0",
-        "@open-pioneer/base-theme": "^0.3.2",
-        "@open-pioneer/chakra-integration": "^1.1.3",
-        "@open-pioneer/core": "^1.2.3",
-        "@open-pioneer/http": "^2.1.8",
-        "@open-pioneer/integration": "^2.0.9",
-        "@open-pioneer/react-utils": "^1.0.0",
-        "@open-pioneer/runtime": "^2.1.5",
+        "@open-pioneer/base-theme": "^0.3.3",
+        "@open-pioneer/chakra-integration": "^1.1.4",
+        "@open-pioneer/core": "^1.3.0",
+        "@open-pioneer/http": "^2.1.9",
+        "@open-pioneer/integration": "^2.0.10",
+        "@open-pioneer/react-utils": "^1.0.1",
+        "@open-pioneer/runtime": "^2.1.7",
         "@open-pioneer/runtime-react-support": "^1.0.2",
-        "@open-pioneer/test-utils": "^1.1.3",
+        "@open-pioneer/test-utils": "^1.1.4",
         "framer-motion": "^11.3.11",
         "ol": "^9.2.4",
         "react": "^18.3.1",
