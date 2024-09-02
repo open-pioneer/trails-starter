@@ -32,6 +32,7 @@
             "braces: https://github.com/advisories/GHSA-grv7-fg5c-xmjg",
             "ws: https://github.com/advisories/GHSA-3h5v-q93c-6h6q",
             "fast-loops: https://github.com/advisories/GHSA-3q56-9cc2-46j4",
+            "micromatch: https://github.com/advisories/GHSA-952p-6rrq-rcjv",
             "",
             "ignored cves",
             "============",
@@ -52,7 +53,8 @@
             "chakra-react-select>react-select": "^5.8.0",
             "braces@<3.0.3": ">=3.0.3",
             "ws@>=8.0.0 <8.17.1": ">=8.17.1",
-            "fast-loops@<1.1.4": ">=1.1.4"
+            "fast-loops@<1.1.4": ">=1.1.4",
+            "micromatch@<4.0.8": ">=4.0.8"
         },
         "auditConfig": {
             "ignoreCves": []
