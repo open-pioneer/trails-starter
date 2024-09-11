@@ -36,6 +36,9 @@ jobs:
       - name: Run tests
         run: pnpm vitest run
 
+      - name: Check types
+        run: pnpm check-types
+
       - name: Build app
         run: pnpm build
 
