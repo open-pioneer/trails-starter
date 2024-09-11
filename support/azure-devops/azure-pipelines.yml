@@ -19,8 +19,7 @@ steps:
 
   - script: |
       set -eu;
-      corepack enable
-      corepack prepare pnpm@latest-9 --activate
+      npm install -g pnpm@^9
       pnpm config set store-dir $(pnpm_config_cache)
     displayName: Setup pnpm
 
