@@ -132,7 +132,7 @@ Keep in mind to execute `pnpm install` to update the lockfile after you're done 
 
 ### Updating a dependency
 
-You can always update your dependencies by simply editing the `package.json` files directly, or by using syncpack (see below).
+You can always update your dependencies by simply editing the `package.json` files directly, or by using pnpm's catalog feature.
 Keep in mind to also execute `pnpm install` in that case, to make sure that your lockfile reflects the changes you made.
 
 pnpm has a helpful [`update`](https://pnpm.io/cli/update) command to update packages automatically or interactively.
@@ -158,13 +158,13 @@ $ pnpm update -r --no-save
 
 ### Keeping dependency versions in sync
 
-We're using [Syncpack](https://jamiemason.github.io/syncpack/) to keep dependency versions in our `package.json` files in sync.
+We're using [pnpm's catalog feature](https://pnpm.io/catalogs) to keep dependency versions in our `package.json` files in sync.
 
-`pnpm run update-shared-versions` will visit all `package.json` files in the workspace, and ensure that dependencies in there use the versions defined in `.syncpackrc.cjs`.
+Central management for shared dependencies (most of them) happens in the `pnpm-workspace.yaml`.
+In your `package.json`, it is usually sufficient to use `"catalog:"` as your "version".
+pnpm will then automatically resolve the correct version from your catalog.
 
-To manage a shared dependency (such as react), simply add or update an entry in the `VERSIONS` object in `.syncpackrc.cjs` and then run `pnpm run update-shared-versions` to rewrite the `package.json` files.
-
-Syncpack can also be executed directly, e.g. via `pnpm syncpack list-mismatches`.
+You only need to specify a version manually if you want to deviate from the catalog for some reason.
 
 ### Explaining a dependency
 
