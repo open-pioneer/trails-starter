@@ -1,5 +1,34 @@
 # Changelog
 
+## 2024-09-27
+
+-   Migrate to [pnpm catalogs](https://pnpm.io/catalogs) for central dependencies.
+
+    The catalog protocol allows central management of dependency versions from the root project in `pnpm-workspace.yaml`. Example:
+
+    ```yaml
+    # pnpm-workspace.yaml
+    catalog:
+        "@open-pioneer/basemap-switcher": ^0.4.4
+    ```
+
+    ```jsonc
+    // some-package/package.json
+    {
+        "dependencies": {
+            // uses version from catalog, the version number does not have to be repeated
+            "@open-pioneer/basemap-switcher": "catalog:"
+        }
+    }
+    ```
+
+    To migrate your project, you can use the codemod [`$ pnpx codemod pnpm/catalog`](https://codemod.com/registry/pnpm-catalog). It will automatically create the catalog and rewrite your package.json files. Note that it currently does _not_ handle `peerDependencies`, so a manual step is still required.
+
+    We hope that this change will make dependency management much simpler in the long run.
+    For more details, visit [pnpm's documentation](https://pnpm.io/catalogs).
+
+-   Remove the `syncpack` dependency and the pnpm scripts `update-shared-versions` and `lint-shared-versions`: they are no longer needed since we now use catalogs.
+
 ## 2024-08-06
 
 -   Update to latest OpenLayers Trails Packages.

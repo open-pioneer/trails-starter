@@ -3,9 +3,6 @@ if [ "$NO_VERIFY" ]; then
     exit 0
 fi
 
-echo '--- checking for consistent dependencies across packages ---'
-pnpm lint-shared-versions
-
 echo '--- check code style ---'
 pnpm exec lint-staged
 

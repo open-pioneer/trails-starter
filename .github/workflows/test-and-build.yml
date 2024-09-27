@@ -27,9 +27,6 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
-      - name: Lint dependencies
-        run: pnpm lint-shared-versions
-
       - name: Lint code
         run: pnpm lint
 

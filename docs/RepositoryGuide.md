@@ -22,10 +22,9 @@ starter
 ├── .gitignore              -- Lists files ignored by git
 ├── .npmrc                  -- pnpm configuration file
 ├── .prettierrc             -- Prettier configuration file
-├── .syncpackrc.cjs         -- Syncpack configuration file
 ├── package.json            -- Dependencies of the root package (mostly development tools)
 ├── pnpm-lock.yaml          -- Package manager lockfile
-├── pnpm-workspace.yaml     -- Workspaces configuration file for pnpm
+├── pnpm-workspace.yaml     -- Workspaces configuration file for pnpm, also includes the dependency catalog
 ├── tsconfig.json           -- Main TypeScript configuration file for code that runs in the browser
 ├── tsconfig.node.json      -- Additional TypeScript configuration file for files running in Node
 ├── typedoc.base.json       -- TypeDoc configuration that is used as a base for the TypeDoc configuration in the packages
@@ -114,12 +113,6 @@ Prettier and ESLint are integrated (see `.eslintrc`), so prettier rules are also
 ### `pnpm audit`
 
 Checks for known security issues with the installed packages. (Will also be checked with a nightly github action job)
-
-### `pnpm run update-shared-versions`
-
-Sets and updates shared dependency versions.
-This can be used to enforce consistent package versions for dependencies used by multiple packages (e.g. react).
-This uses [`syncpack`](https://jamiemason.github.io/syncpack/), which is configured by editing the `.syncpackrc.cjs`.
 
 ### Miscellaneous tools
 
