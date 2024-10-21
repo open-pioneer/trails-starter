@@ -10,7 +10,7 @@ import { fileURLToPath } from "url";
  * Generates SBOM (software bill of materials) using {@link https://github.com/aquasecurity/trivy Trivy}.
  * The output file adheres to the {@link https://github.com/CycloneDX/specification CycloneDX specification} with JSON encoding.
  *
- * Warning:
+ * Important:
  * This script relies on Trivy and can only be executed if Trivy is installed globally.
  */
 
@@ -86,7 +86,7 @@ function getGitRevision(): string {
 function enhanceSBOM(sbom: any, projectInfo: ProjectInfo, gitRevision: string) {
     const sbomProjectMetadata = sbom["metadata"]["component"];
 
-    //do not use type from package because value `module` is not allowed (https://cyclonedx.org/schema/bom-1.6.schema.json definitions->component->properties->type)
+    //do not use type from package.json because value `module` is not allowed (https://cyclonedx.org/schema/bom-1.6.schema.json definitions->component->properties->type)
     //sbomProjectMetadata["type"] = projectInfo.type;
     sbomProjectMetadata["name"] = projectInfo.name;
     if (projectInfo.version) {
@@ -117,7 +117,7 @@ interface ProjectInfo {
 
 /**
  * represents `property` type from CycloneDX specification
- * key value pair that can be used to add information that is officially supported in the standard
+ * key value pair that can be used to add information
  */
 interface SBOMProperty {
     name: string;
