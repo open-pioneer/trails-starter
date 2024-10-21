@@ -31,9 +31,8 @@ function main() {
     mkdirSync(dirname(OUTPUT_JSON_PATH), {
         recursive: true
     });
-    // Invoke pnpm to gather dependency information.
-    const sbom = createSBOM();
-    const projectInfo = readPackageJson();
+    const sbom = createSBOM(); // Invoke trivy to generate sbom.
+    const projectInfo = readPackageJson(); 
     const gitRevision = getGitRevision();
 
     //merge additional info into sbom
