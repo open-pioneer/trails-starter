@@ -25,7 +25,7 @@ First of all, create the `search-service` package:
 {
     "name": "search-service",
     "private": true,
-    "peerDependencies": {
+    "dependencies": {
         "@open-pioneer/runtime": "<omitted, use a recent version>"
     }
 }

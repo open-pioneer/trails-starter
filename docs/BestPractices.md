@@ -62,7 +62,7 @@ When thinking about dependencies, follow these general guidelines:
     This way you don't have to duplicate the dependency in every package of your workspace.
 
 -   When requiring functionality at runtime (e.g. `import ...`) from a source file in an app or package,
-    add the other package in your own `package.json` as either `peerDependency` or `dependency`.
+    add the other package in your own `package.json` as either `dependency` or `peerDependency`.
     The `build-pioneer-package` tool enforces this rule.
 
     Example:
@@ -85,37 +85,25 @@ When thinking about dependencies, follow these general guidelines:
 See also npm's [reference documentation](https://docs.npmjs.com/cli/v9/configuring-npm/package-json#peerdependencies).
 
 Both `dependencies` and `peerDependencies` refer to packages required at runtime, but `dependencies` will be duplicated when incompatible versions are required, whereas `peerDependencies` will report an error should that be the case.
+Although `peerDependencies` look like the correct solution on paper, they have some annoying limitations in current versions of pnpm.
+For example, transitive dependencies (peer dependencies of peer dependencies) are sometimes not updated correctly, even though all users of those packages request newer versions.
+**For this reason, we currently prefer to use `dependencies`.**
 
-We'll reuse the rules defined in that post. Use `peerDependencies` if at least _one_ of these conditions apply:
-
--   Having multiple copies of a package would cause conflicts.
-    > This is especially the case for Trails packages as we do not support Trails packages in multiple versions.
-    > "plain" npm packages can often be duplicated though, if absolutely necessary.
--   The dependency is visible in your interface
--   You want the developer to decide which version to install
-
-> NOTE: `peerDependencies` are automatically installed by pnpm.
-> This is also today's default behavior in npm, but that wasn't the case for many years, making online documentation sometimes confusing.
-
-When using `peerDependencies`, prefer being permissive (i.e. general) with the version ranges you support.
-We recommend using the lowest possible version that has all features you rely on.
-You can use `devDependencies` to force a specific (e.g. very new) version to program against.
-
-The guidelines above only leave very few occasions where a "normal" dependency is appropriate.
-Use `dependencies` if _all_ of the following is true:
-
--   The dependency in question is not a Trails package
--   Having multiple versions will not introduce conflicts (e.g. React should never be present more than once)
--   The usage of that package is entirely internal, i.e. not part of your package's interface.
-    This could be the case for internal helpers, parsers, etc.
--   If you don't want to allow the user of your package to choose a common version.
-    In other words, duplicating code is okay for the sake of simpler dependency management.
+To enforce that only a single version of a package is present (a builtin feature of peer dependencies), we use a custom CLI tool instead (see [`pnpm check-duplicates`](./RepositoryGuide.md#pnpm-check-duplicates)).
 
 #### Useful helpers
 
 -   `pnpm why DEP` from an app's or package's directory can show why a certain version of a package is present in your dependency tree.
+
+    For example:
+
+    ```bash
+    # Show why ol@^9 is present in the dependency tree (-r inspects all packages in the workspace)
+    $ pnpm why -r ol@^9
+    ```
+
 -   `pnpm ls` can show the dependency tree of a package or app (see also the `--depth` option).
--   `pnpm dedupe` works hard to de-duplicate packages wherever possible
+-   `pnpm dedupe` works hard to de-duplicate packages wherever possible.
 -   `pnpm update`, e.g. with the `-r` flag, is useful to update dependencies.
 
 ### Event handling

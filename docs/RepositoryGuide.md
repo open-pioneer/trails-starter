@@ -51,6 +51,17 @@ Runs the [TypeScript compiler](https://www.typescriptlang.org/) to detect proble
 Starts the [TypeScript compiler](https://www.typescriptlang.org/) in watch mode to detect problems during development.
 It is recommended to run this script alongside the `dev` server.
 
+### `pnpm check-duplicates`
+
+Runs the `check-pnpm-duplicates` CLI tool ([docs](https://www.npmjs.com/package/@open-pioneer/check-pnpm-duplicates)) to check for accidental duplicate packages.
+When it encounters a duplicate package (that has not been explicitly allowed), it will fail with an error message.
+To configure the tool (for example, to add expected duplicates), edit `support/duplicate-packages.yaml`.
+
+This script is used because we migrated away from `peerDependencies` due to some limitations of current pnpm versions.
+With the help of this script, we can ensure that we don't accidentally install the same package multiple times.
+
+The script runs automatically after `pnpm install` (see `prepare` script in `package.json`).
+
 ### `pnpm run test`
 
 Starts [Vitest](https://vitest.dev/) to run all automated tests.
@@ -135,7 +146,11 @@ Keep in mind to execute `pnpm install` to update the lockfile after you're done 
 You can always update your dependencies by simply editing the `package.json` files directly, or by using pnpm's catalog feature.
 Keep in mind to also execute `pnpm install` in that case, to make sure that your lockfile reflects the changes you made.
 
+[`pnpm outdated -r`](https://pnpm.io/cli/outdated) can be used to show outdated packages.
+
 pnpm has a helpful [`update`](https://pnpm.io/cli/update) command to update packages automatically or interactively.
+Unfortunately, `pnpm update` currently does not work in combination with the catalog feature.
+
 For example:
 
 ```bash
@@ -144,8 +159,6 @@ For example:
 # Use --latest to go the latest versions instead.
 $ pnpm update -r -i
 ```
-
-[`pnpm outdated`](https://pnpm.io/cli/outdated) can be used to show outdated packages.
 
 By default, `pnpm update` will touch both `package.json` and `pnpm-lock.yaml`.
 If you only want to install newer (matching) packages and update the lockfile, without modifying `package.json` files, use `--no-save`:
