@@ -141,12 +141,155 @@ To add a dependency to a workspace package or app, execute `pnpm add PACKAGE_NAM
 You can also add the dependency manually by editing the `package.json` file directory.
 Keep in mind to execute `pnpm install` to update the lockfile after you're done with editing.
 
-### Updating a dependency
+Note that we prefer to use `catalog:` as the version of the package. This way, the version can be managed centrally in the `pnpm-workspace.yaml` (see [Keeping dependency versions in sync](#keeping-dependency-versions-in-sync)).
+
+### Updating dependencies
 
 You can always update your dependencies by simply editing the `package.json` files directly, or by using pnpm's catalog feature.
-Keep in mind to also execute `pnpm install` in that case, to make sure that your lockfile reflects the changes you made.
+Keep in mind to also execute `pnpm install` after you updated a `package.json` file (or the `pnpm-workspace.yaml`) to install packages and to update your lockfile (`pnpm-lock.yaml`).
 
-[`pnpm outdated -r`](https://pnpm.io/cli/outdated) can be used to show outdated packages.
+#### Checking for outdated packages
+
+Use [`pnpm outdated -r`](https://pnpm.io/cli/outdated) to show which packages in your workspace are available in newer versions.
+Alternatively, you can check `npmjs.com`, use features of your IDE or use other tools (e.g. [Renovate](https://github.com/renovatebot/renovate)).
+
+Example:
+
+```bash
+$ pnpm outdated -r
+┌─────────────────────────────────┬──────────┬────────┬────────────┐
+│ Package                         │ Current  │ Latest │ Dependents │
+├─────────────────────────────────┼──────────┼────────┼────────────┤
+│ @types/node (dev)               │ 18.19.41 │ 22.7.8 │ starter    │
+├─────────────────────────────────┼──────────┼────────┼────────────┤
+...
+```
+
+Not all packages need to be updated immediately.
+For example, the `@types/node` package may be deliberately kept at a lower version for backwards compatibility reasons.
+
+#### Using a newer version
+
+In order to update the package version, either update the `package.json` of a certain package directly (if that package uses a specific version) or update your central catalog in `pnpm-workspace.yaml` (the default).
+The catalog in this repository has been prepared to make updating a package as easy as possible.
+For example, updating the openlayers-base-packages can only requires changing a single version number in the `pnpm-workspace.yaml`:
+
+```yaml
+# pnpm-workspace.yaml
+__versions:
+    # ...
+    - &ol_base_packages_version ^0.7.0
+
+# https://pnpm.io/catalogs
+catalog:
+    # Trails OpenLayers base packages
+    # https://github.com/open-pioneer/trails-openlayers-base-packages
+    "@open-pioneer/basemap-switcher": *ol_base_packages_version
+    "@open-pioneer/coordinate-viewer": *ol_base_packages_version
+    "@open-pioneer/geolocation": *ol_base_packages_version
+    "@open-pioneer/map-navigation": *ol_base_packages_version
+    "@open-pioneer/map-ui-components": *ol_base_packages_version
+    "@open-pioneer/map": *ol_base_packages_version
+    "@open-pioneer/measurement": *ol_base_packages_version
+    "@open-pioneer/overview-map": *ol_base_packages_version
+    "@open-pioneer/scale-bar": *ol_base_packages_version
+    "@open-pioneer/scale-viewer": *ol_base_packages_version
+    "@open-pioneer/theme": *ol_base_packages_version
+    # ...
+```
+
+After changing version numbers, run `pnpm install` to apply your changes.
+
+#### Handling version conflicts and duplicate packages
+
+When installing new dependencies or updating existing ones, you may run into version conflicts related to transitive dependencies.
+Oftentimes pnpm will be able to select a common version that satisfies all requirements (sometimes it needs a little help by running `pnpm dedupe`).
+For example, if package `a` requires `"react": "^18.0.0` and package `b` needs `"react": "^18.1.0"`, it will be able to install a shared version somewhere within the range `>= 18.1.0 < 19.0.0`.
+
+However, if the version ranges are incompatible, pnpm will resort to installing _both_ versions of the package (or generating an error for peer dependencies).
+Sometimes duplicate packages are not a problem, but for certain "central" packages (like `react`), there may only be a single version present in your application.
+Although one typically uses peer dependencies to solve this issue, that has proved to be impractical at the moment (see [dependencies vs peerDependencies](./BestPractices.md#dependencies-vs-peerdependencies)).
+We have configured a custom CLI tool to check for duplicate packages after `pnpm install`, so this error case cannot remain unnoticed (see [`pnpm check-duplicates`](#pnpm-check-duplicates)).
+
+When encountering a duplicate package, consider taking the following steps:
+
+-   Run `pnpm dedupe`. This can sometimes resolve the issue.
+-   Investigate why the package is duplicated.
+    Use `pnpm why -r PACKAGE_NAME` (optional: add `@SOME_VERSION` after the package name) to see why that package is present in your dependency tree.
+    Then, decide what to do next.
+-   Alternative 1:
+    Update other packages as well, so all of them use a shared version again.
+    This is only an option if those updates actually exist.
+-   Alternative 2:
+    Override the version for some packages (using pnpm overrides).
+    This is an option if the newer version is actually compatible to the older one.
+-   Alternative 3:
+    Allow the duplicates by adding the package name to the `support/duplicate-packages.yaml` file.
+    Some packages do not cause any problems when duplicated and can be safely listed there.
+    They will only increase your application's bundle size slightly.
+    _Central packages like `react`, `react-dom`, chakra packages or any trails packages **must not** be allowed as duplicates._
+
+Example: tslib is present twice
+
+```bash
+$ pnpm install
+# ...
+│ > pnpm check-pnpm-duplicates -c support/duplicate-packages.yaml
+│ Found unexpected duplicate packages:
+│   - "tslib" # (versions 2.4.0, 2.7.0)
+│ # ...
+└─ Failed in 940ms at /home/mbeckemeyer/projects/trails/trails-starter
+ ELIFECYCLE  Command failed with exit code 1.
+```
+
+The command tells us that `tslib` is present in versions `2.4.0` and `2.7.0`.
+We use `pnpm why` to investigate:
+
+```bash
+$ pnpm why -r tslib
+# ... lots of output ...
+└─┬ @open-pioneer/runtime 2.3.0 peer
+  ├─┬ @formatjs/intl 2.10.4
+  │ ├─┬ @formatjs/ecma402-abstract 2.0.0
+  │ │ ├─┬ @formatjs/intl-localematcher 0.5.4
+  │ │ │ └── tslib 2.7.0
+# ...
+  ├─┬ @open-pioneer/base-theme 2.3.0
+  │ └─┬ @open-pioneer/chakra-integration 2.3.0
+  │   ├─┬ @chakra-ui/react 2.8.2
+  │   │ ├─┬ @chakra-ui/accordion 2.3.1
+  │   │ │ ├─┬ @chakra-ui/icon 3.2.0
+  │   │ │ │ └─┬ @chakra-ui/system 2.6.2 peer
+  │   │ │ │   ├─┬ @chakra-ui/react-utils 2.0.12
+  │   │ │ │   │ └─┬ @chakra-ui/utils 2.0.15
+  │   │ │ │   │   └─┬ framesync 6.1.2
+  │   │ │ │   │     └── tslib 2.4.0
+# ...
+```
+
+This tells us that `tslib@2.7.0` is used by `@formatjs/intl-localematcher` and `tslib@2.4.0` is used by `framesync`. Inspecting the `package.json` of `framesync` reveals that it uses a fixed version of `"tslib": "2.4.0"`, so it cannot be unified with the newer version used by `@formatjs/intl-localematcher`.
+In this case, we can either update the version used by `framesync` (likely ok since `2.7.0` should be compatible to `2.4.0`), or we can just list the package as an allowed duplicate:
+
+```diff
+# support/duplicate-packages.yaml
+# ...
+allowed:
+   - "stylis"
++  - "tslib"
+```
+
+After making one of those changes, `pnpm install` will succeed:
+
+```bash
+$ pnpm i
+# ...
+│ > pnpm check-pnpm-duplicates -c support/duplicate-packages.yaml
+│ No unexpected duplicate packages found.
+└─ Done in 958ms
+Done in 2.3s
+```
+
+#### Interactive updates with pnpm
 
 pnpm has a helpful [`update`](https://pnpm.io/cli/update) command to update packages automatically or interactively.
 Unfortunately, `pnpm update` currently does not work in combination with the catalog feature.
