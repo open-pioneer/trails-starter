@@ -10,6 +10,7 @@
     -   Trails core packages to `2.3.0`
     -   TypeScript to `5.6.3`
     -   Minor updates of miscellaneous dependencies
+-   Update eslint rules after updating typescript-eslint (see `.eslintrc`)
 -   Hide deprecation warnings for some legacy SASS APIs used in vite (see `vite.config.ts`)
 
 ## 2024-09-27
