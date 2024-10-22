@@ -1,5 +1,17 @@
 # Changelog
 
+## 2024-10-22
+
+-   Use new CLI tool `check-pnpm-duplicates` ([Docs](https://www.npmjs.com/package/@open-pioneer/check-pnpm-duplicates)) to check for duplicate packages.
+    The tool will run automatically after every `pnpm install` (see `prepare` script in `package.json`) and can be triggered manually by running `pnpm check-duplicates`.
+    The configuration for `check-duplicates` is stored in `support/duplicate-packages.yaml`.
+-   Update dependencies:
+    -   OpenLayers base packages to `0.7.0`
+    -   Trails core packages to `2.3.0`
+    -   TypeScript to `5.6.3`
+    -   Minor updates of miscellaneous dependencies
+-   Hide deprecation warnings for some legacy SASS APIs used in vite (see `vite.config.ts`)
+
 ## 2024-09-27
 
 -   Migrate to [pnpm catalogs](https://pnpm.io/catalogs) for central dependencies.
