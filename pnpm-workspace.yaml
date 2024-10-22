@@ -63,28 +63,28 @@ catalog:
   "@open-pioneer/check-pnpm-duplicates": "^0.1.0"
   "@testing-library/dom": ^10.4.0
   "@testing-library/jest-dom": ^6.6.2
-  "@testing-library/react": ^16.0.0
+  "@testing-library/react": ^16.0.1
   "@testing-library/user-event": ^14.5.2
   "@types/js-yaml": ^4.0.9
   "@types/node": ^18.19.41
   "@types/react-dom": ^18.3.1
   "@types/react": ^18.3.11
-  "@typescript-eslint/eslint-plugin": ^7.17.0
-  "@typescript-eslint/parser": ^7.17.0
+  "@typescript-eslint/eslint-plugin": ^8.11.0
+  "@typescript-eslint/parser": ^8.11.0
   "@vitejs/plugin-react-swc": ^3.7.1
   eslint-config-prettier: ^9.1.0
-  eslint-import-resolver-typescript: ^3.6.1
+  eslint-import-resolver-typescript: ^3.6.3
   eslint-plugin-header: ^3.1.1
-  eslint-plugin-import: ^2.29.1
-  eslint-plugin-jsx-a11y: ^6.9.0
+  eslint-plugin-import: ^2.31.0
+  eslint-plugin-jsx-a11y: ^6.10.1
   eslint-plugin-react-hooks: ^4.6.2
-  eslint-plugin-react: ^7.35.0
-  eslint-plugin-unused-imports: ^3.2.0
+  eslint-plugin-react: ^7.37.1
+  eslint-plugin-unused-imports: ^4.1.4
   eslint: ^8.57.0
   fast-glob: ^3.3.2
   handlebars: ^4.7.8
   happy-dom: ^15.7.4
-  husky: ^9.1.1
+  husky: ^9.1.6
   js-yaml: ^4.1.0
   jsdom: ^25.0.1
   lint-staged: ^15.2.10
