@@ -2,6 +2,7 @@
 
 ## 2024-10-22
 
+-   Replace `peerDependencies` with normal `dependencies` due to limitations of pnpm.
 -   Use new CLI tool `check-pnpm-duplicates` ([Docs](https://www.npmjs.com/package/@open-pioneer/check-pnpm-duplicates)) to check for duplicate packages.
     The tool will run automatically after every `pnpm install` (see `prepare` script in `package.json`) and can be triggered manually by running `pnpm check-duplicates`.
     The configuration for `check-duplicates` is stored in `support/duplicate-packages.yaml`.
