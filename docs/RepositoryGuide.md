@@ -211,14 +211,14 @@ Sometimes duplicate packages are not a problem, but for certain "central" packag
 Although one typically uses peer dependencies to solve this issue, that has proved to be impractical at the moment (see [dependencies vs peerDependencies](./BestPractices.md#dependencies-vs-peerdependencies)).
 We have configured a custom CLI tool to check for duplicate packages after `pnpm install`, so this error case cannot remain unnoticed (see [`pnpm check-duplicates`](#pnpm-check-duplicates)).
 
-When encountering a duplicate package, consider taking the folling steps
+When encountering a duplicate package, consider taking the following steps:
 
 -   Run `pnpm dedupe`. This can sometimes resolve the issue.
 -   Investigate why the package is duplicated.
     Use `pnpm why -r PACKAGE_NAME` (optional: add `@SOME_VERSION` after the package name) to see why that package is present in your dependency tree.
     Then, decide what to do next.
 -   Alternative 1:
-    Update other packages as well, so all of them use a shared version.
+    Update other packages as well, so all of them use a shared version again.
     This is only an option if those updates actually exist.
 -   Alternative 2:
     Override the version for some packages (using pnpm overrides).
@@ -229,7 +229,7 @@ When encountering a duplicate package, consider taking the folling steps
     They will only increase your application's bundle size slightly.
     _Central packages like `react`, `react-dom`, chakra packages or any trails packages **must not** be allowed as duplicates._
 
-Example: ts-lib is present twice
+Example: tslib is present twice
 
 ```bash
 $ pnpm install
@@ -268,7 +268,7 @@ $ pnpm why -r tslib
 ```
 
 This tells us that `tslib@2.7.0` is used by `@formatjs/intl-localematcher` and `tslib@2.4.0` is used by `framesync`. Inspecting the `package.json` of `framesync` reveals that it uses a fixed version of `"tslib": "2.4.0"`, so it cannot be unified with the newer version used by `@formatjs/intl-localematcher`.
-In this case, we can either update override the version used by `framesync` (should be ok since `2.7.0` should be compatible to `2.4.0`), or we can just list the package as an allowed duplicate:
+In this case, we can either update the version used by `framesync` (likely ok since `2.7.0` should be compatible to `2.4.0`), or we can just list the package as an allowed duplicate:
 
 ```diff
 # support/duplicate-packages.yaml
