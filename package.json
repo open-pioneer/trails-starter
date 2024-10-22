@@ -10,7 +10,7 @@
         "watch-types": "pnpm check-types -w",
         "build": "vite build",
         "build-docs": "typedoc",
-        "build-license-report": "tsx ./support/create-license-report.ts ",
+        "build-license-report": "tsx ./support/create-license-report.ts",
         "preview": "vite preview",
         "lint": "eslint ./src ./support --ext .js,.ts,.jsx,.tsx,.mjs,.mts,.cjs,.cts",
         "eslint": "pnpm run lint",
