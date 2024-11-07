@@ -83,7 +83,7 @@ catalog:
   eslint: ^8.57.0
   fast-glob: ^3.3.2
   handlebars: ^4.7.8
-  happy-dom: ^15.10.1
+  happy-dom: ^15.10.2
   husky: ^9.1.6
   js-yaml: ^4.1.0
   jsdom: ^25.0.1

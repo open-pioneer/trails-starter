@@ -142,8 +142,8 @@ catalogs:
       specifier: ^4.7.8
       version: 4.7.8
     happy-dom:
-      specifier: ^15.10.1
-      version: 15.10.1
+      specifier: ^15.10.2
+      version: 15.11.0
     husky:
       specifier: ^9.1.6
       version: 9.1.6
@@ -308,7 +308,7 @@ importers:
         version: 4.7.8
       happy-dom:
         specifier: 'catalog:'
-        version: 15.10.1
+        version: 15.11.0
       husky:
         specifier: 'catalog:'
         version: 9.1.6
@@ -350,7 +350,7 @@ importers:
         version: 1.8.1(eslint@8.57.0)(vite@5.4.9(@types/node@18.19.41)(sass@1.80.3))
       vitest:
         specifier: 'catalog:'
-        version: 2.1.3(@types/node@18.19.41)(happy-dom@15.10.1)(jsdom@25.0.1)(sass@1.80.3)
+        version: 2.1.3(@types/node@18.19.41)(happy-dom@15.11.0)(jsdom@25.0.1)(sass@1.80.3)
 
   src/apps/empty:
     dependencies:
@@ -3130,8 +3130,8 @@ packages:
     engines: {node: '>=0.4.7'}
     hasBin: true
 
-  happy-dom@15.10.1:
-    resolution: {integrity: sha512-FuGnj/qIB4QnBL6fWmD7Wnh6STxevLgOVWB6+nopDGgWG1+t9CXkNB2ldZ+iqwD2UKxD2D0SU8el8A6AX6Q1+g==}
+  happy-dom@15.11.0:
+    resolution: {integrity: sha512-/zyxHbXriYJ8b9Urh43ILk/jd9tC07djURnJuAimJ3tJCOLOzOUp7dEHDwJOZyzROlrrooUhr/0INZIDBj1Bjw==}
     engines: {node: '>=18.0.0'}
 
   has-bigints@1.0.2:
@@ -7956,7 +7956,7 @@ snapshots:
     optionalDependencies:
       uglify-js: 3.17.4
 
-  happy-dom@15.10.1:
+  happy-dom@15.11.0:
     dependencies:
       entities: 4.5.0
       webidl-conversions: 7.0.0
@@ -9478,7 +9478,7 @@ snapshots:
     optionalDependencies:
       vite: 5.4.9(@types/node@18.19.41)(sass@1.80.3)
 
-  vitest@2.1.3(@types/node@18.19.41)(happy-dom@15.10.1)(jsdom@25.0.1)(sass@1.80.3):
+  vitest@2.1.3(@types/node@18.19.41)(happy-dom@15.11.0)(jsdom@25.0.1)(sass@1.80.3):
     dependencies:
       '@vitest/expect': 2.1.3
       '@vitest/mocker': 2.1.3(@vitest/spy@2.1.3)(vite@5.4.9(@types/node@18.19.41)(sass@1.80.3))
@@ -9501,7 +9501,7 @@ snapshots:
       why-is-node-running: 2.3.0
     optionalDependencies:
       '@types/node': 18.19.41
-      happy-dom: 15.10.1
+      happy-dom: 15.11.0
       jsdom: 25.0.1
     transitivePeerDependencies:
       - less
