@@ -98,6 +98,9 @@ The generated sbom file is written to `dist/sbom.json`.
 The source code for report generation is located in `support/create-cyclonedx-sbom.ts`.
 Currently only JSON encoding is supported. The generated SBOM lists all components excluding devDependencies.
 
+The script reads the project name (and, if present, the version) from the project root's `package.json` and embeds it into the SBOM.
+The current git revision (commit hash of `HEAD`) is also included.
+
 > [!IMPORTANT]
 > This command depends on [Trivy](https://github.com/aquasecurity/trivy) and can only be executed if Trivy is [installed](https://aquasecurity.github.io/trivy/latest/getting-started/installation/) globally.
 
