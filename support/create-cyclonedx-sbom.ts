@@ -1,6 +1,6 @@
 // SPDX-FileCopyrightText: 2023 Open Pioneer project (https://github.com/open-pioneer)
 // SPDX-License-Identifier: Apache-2.0
-import { execSync } from "child_process";
+import { execFileSync, execSync } from "child_process";
 import { mkdirSync, readFileSync, writeFileSync } from "fs";
 import { dirname, resolve } from "path";
 import { fileURLToPath } from "url";
@@ -47,7 +47,9 @@ function main() {
  */
 function createSBOM() {
     const tempSbom = resolve(TEMP_DIR, "trivy-sbom.json");
-    execSync(`trivy fs --format cyclonedx -o ${tempSbom} .`, { encoding: "utf-8" });
+    execFileSync("trivy", ["fs", "--format", "cyclonedx", "-o", tempSbom, "."], {
+        encoding: "utf-8"
+    });
     const sbomJson = JSON.parse(readFileSync(tempSbom, "utf-8"));
     return sbomJson;
 }
