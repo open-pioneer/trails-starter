@@ -6,6 +6,26 @@
     The script generates a software bill of materials (SBOM) for the project that includes all production dependencies.
     For more information, see the [relevant section in the Repository Guide](./docs/RepositoryGuide.md#pnpm-run-generate-sbom).
 
+## 2024-10-22
+
+-   Replace `peerDependencies` with normal `dependencies` due to limitations of pnpm.
+-   Use new CLI tool `check-pnpm-duplicates` ([Docs](https://www.npmjs.com/package/@open-pioneer/check-pnpm-duplicates)) to check for duplicate packages.
+    The tool will run automatically after every `pnpm install` (see `prepare` script in `package.json`) and can be triggered manually by running `pnpm check-duplicates`.
+    The configuration for `check-duplicates` is stored in `support/duplicate-packages.yaml`.
+-   Update dependencies:
+    -   OpenLayers base packages to `0.7.0`
+    -   Trails core packages to `2.3.0`
+    -   TypeScript to `5.6.3`
+    -   Minor updates of miscellaneous dependencies
+-   Update eslint rules after updating typescript-eslint (see `.eslintrc`)
+-   Hide deprecation warnings for some legacy SASS APIs used in vite (see `vite.config.ts`)
+
+## 2024-11-18
+
+-   Add a new script: `pnpm run generate-sbom`.
+    The script generates a software bill of materials (SBOM) for the project that includes all production dependencies.
+    For more information, see the [relevant section in the Repository Guide](./docs/RepositoryGuide.md#pnpm-run-generate-sbom).
+
 ## 2024-09-27
 
 -   Migrate to [pnpm catalogs](https://pnpm.io/catalogs) for central dependencies.

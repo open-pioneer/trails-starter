@@ -59,6 +59,17 @@ export default defineConfig(({ mode }) => {
             eslint()
         ],
 
+        // Ignore irrelevant deprecations.
+        // This can be likely be removed with a future version of Vite.
+        // https://github.com/vitejs/vite/issues/18164
+        css: {
+            preprocessorOptions: {
+                scss: {
+                    silenceDeprecations: ["legacy-js-api", "import"]
+                }
+            }
+        },
+
         // define global constants
         // See also: https://vitejs.dev/config/shared-options.html#define
         define: {
@@ -70,10 +81,10 @@ export default defineConfig(({ mode }) => {
             globals: true,
             environment: "happy-dom",
             setupFiles: ["testing/global-setup.ts"],
-         
+
             server: {
                 deps: {
-                    // Workaround to fix some import issues, see 
+                    // Workaround to fix some import issues, see
                     // https://github.com/open-pioneer/trails-openlayers-base-packages/issues/314
                     inline: [/@open-pioneer[/\\]/]
                 }

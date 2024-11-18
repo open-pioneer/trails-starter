@@ -2,7 +2,7 @@
     "name": "sample-package",
     "version": "0.0.0",
     "private": true,
-    "peerDependencies": {
+    "dependencies": {
         "@open-pioneer/runtime": "catalog:"
     },
     "devDependencies": {

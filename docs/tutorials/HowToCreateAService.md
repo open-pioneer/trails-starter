@@ -138,7 +138,7 @@ First, add the package `math` in the app's `package.json`:
 {
     "name": "empty",
     "private": true,
-    "peerDependencies": {
+    "dependencies": {
         "@open-pioneer/runtime": "latest",
         "@open-pioneer/chakra-integration": "latest",
         "math": "workspace:^"
@@ -468,7 +468,7 @@ We want to use its logger implementation:
 {
     "name": "empty",
     "private": true,
-    "peerDependencies": {
+    "dependencies": {
         "@open-pioneer/chakra-integration": "latest",
         "@open-pioneer/core": "latest",
         "@open-pioneer/runtime": "latest",
