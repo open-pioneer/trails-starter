@@ -34,6 +34,7 @@
             "fast-loops: https://github.com/advisories/GHSA-3q56-9cc2-46j4",
             "micromatch: https://github.com/advisories/GHSA-952p-6rrq-rcjv",
             "vite-plugin-eslint>rollup: https://github.com/advisories/GHSA-gcx4-mw62-g8wm",
+            "cross-spawn: https://github.com/advisories/GHSA-3xgq-45jj-v275",
             "",
             "ignored cves",
             "============",
@@ -55,7 +56,8 @@
             "ws@>=8.0.0 <8.17.1": ">=8.17.1",
             "fast-loops@<1.1.4": ">=1.1.4",
             "micromatch@<4.0.8": ">=4.0.8",
-            "vite-plugin-eslint>rollup": ">=3.29.5"
+            "vite-plugin-eslint>rollup": ">=3.29.5",
+            "cross-spawn@<7.0.5": ">=7.0.5"
         },
         "auditConfig": {
             "ignoreCves": []
@@ -71,8 +73,8 @@
     "devDependencies": {
         "@open-pioneer/build-package-cli": "catalog:",
         "@open-pioneer/build-support": "catalog:",
-        "@open-pioneer/vite-plugin-pioneer": "catalog:",
         "@open-pioneer/check-pnpm-duplicates": "catalog:",
+        "@open-pioneer/vite-plugin-pioneer": "catalog:",
         "@testing-library/dom": "catalog:",
         "@testing-library/jest-dom": "catalog:",
         "@testing-library/react": "catalog:",
