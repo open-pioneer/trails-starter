@@ -156,6 +156,7 @@ To create a pull request:
     This will create a file that will be used to generate a changelog entry and a future release.
     Your changeset file should list all packages that are affected by your change.
     Don't forget to include this file in your pull request.
+    Do **not** update versions of workspace packages manually.
 
     Go here to learn more about [Changesets](https://github.com/changesets/changesets).
 
