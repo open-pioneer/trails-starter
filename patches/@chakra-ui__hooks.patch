@@ -1,0 +1,22 @@
+diff --git a/dist/esm/use-outside-click.mjs b/dist/esm/use-outside-click.mjs
+index 005979a0b8919793aecb901ef269004716395c34..ecc3eaf8b6b7c558c5d204aa9de3b2f2b8afeca6 100644
+--- a/dist/esm/use-outside-click.mjs
++++ b/dist/esm/use-outside-click.mjs
+@@ -49,13 +49,15 @@ function useOutsideClick(props) {
+   }, [handler, ref, savedHandler, state, enabled]);
+ }
+ function isValidEvent(event, ref) {
+-  const target = event.composedPath?.()[0] ?? event.target;
++  // Perform document check on the top level target because a child in a shadow dom is not "contained" in its root document.
++  const target = event.target;
+   if (target) {
+     const doc = getOwnerDocument(target);
+     if (!doc.contains(target))
+       return false;
+   }
+-  return !ref.current?.contains(target);
++
++  return !ref.current?.contains(event.composedPath?.()[0] ?? target);
+ }
+ function getOwnerDocument(node) {
+   return node?.ownerDocument ?? document;

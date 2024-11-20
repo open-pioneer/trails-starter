@@ -8,8 +8,8 @@ packages:
 # This is a yaml feature and is not interpreted by pnpm directly.
 __versions:
   - &react_version ^18.3.1
-  - &core_packages_version ^2.3.0
-  - &ol_base_packages_version ^0.7.0
+  - &core_packages_version ^2.4.0-dev.20241120092632
+  - &ol_base_packages_version ^0.8.0-dev.20241120115147
 
 # https://pnpm.io/catalogs
 catalog:
@@ -48,9 +48,9 @@ catalog:
   "@emotion/react": ^11.13.0
   "@emotion/styled": ^11.13.0
   "@formatjs/intl": ^2.10.4
-  "@maplibre/maplibre-gl-style-spec": ^20.3.0
+  "@maplibre/maplibre-gl-style-spec": ^22.0.0
   framer-motion: ^11.3.11
-  ol: ^9.2.4
+  ol: ^10.2.1
   react-dom: *react_version
   react-icons: ^5.3.0
   react-use: ^17.5.1
