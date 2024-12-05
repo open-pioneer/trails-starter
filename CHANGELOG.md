@@ -1,5 +1,17 @@
 # Changelog
 
+## 2024-12-05
+
+-   Update Open Pioneer Trails dependencies to latest version.
+    -   Core packages: 2.4.0
+    -   OpenLayers base packages: 0.8.0
+-   Update OpenLayers to version 10.3.0.
+-   Update `chakra-react-select` to version 5.
+-   Update patch for chakra-ui's menu component (see patches in `package.json`).
+-   Remove obsolete chakra patches.
+-   Remove obsolete reference to `@chakra-ui/system`.
+    This dependency seems to be no longer required and may lead to duplicate packages in your dependency tree.
+
 ## 2024-11-18
 
 -   Add a new script: `pnpm run generate-sbom`.

@@ -50,8 +50,7 @@
         "overrides": {
             "semver@<7.5.2": ">=7.5.2",
             "tough-cookie@<4.1.3": ">=4.1.3",
-            "@mapbox/mapbox-gl-style-spec": "npm:@maplibre/maplibre-gl-style-spec@catalog:",
-            "chakra-react-select>react-select": "^5.8.0",
+            "@mapbox/mapbox-gl-style-spec": "npm:@maplibre/maplibre-gl-style-spec",
             "braces@<3.0.3": ">=3.0.3",
             "ws@>=8.0.0 <8.17.1": ">=8.17.1",
             "fast-loops@<1.1.4": ">=1.1.4",
@@ -63,10 +62,8 @@
             "ignoreCves": []
         },
         "patchedDependencies": {
-            "@chakra-ui/menu@2.2.1": "patches/@chakra-ui__menu@2.2.1.patch",
-            "@chakra-ui/react-use-outside-click@2.2.0": "patches/@chakra-ui__react-use-outside-click@2.2.0.patch",
-            "@chakra-ui/hooks@2.2.1": "patches/@chakra-ui__hooks@2.2.1.patch",
-            "react-select@5.8.0": "patches/react-select@5.8.0.patch"
+            "react-select@5.8.0": "patches/react-select@5.8.0.patch",
+            "@chakra-ui/hooks@2.4.3": "patches/@chakra-ui__hooks.patch"
         },
         "peerDependencyRules": {}
     },
