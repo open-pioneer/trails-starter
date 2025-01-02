@@ -223,6 +223,55 @@ That file can be directly imported (e.g. via `<script>` like in our test site ab
 
 For more details about our vite plugin, head over to its [Documentation](https://www.npmjs.com/package/@open-pioneer/vite-plugin-pioneer).
 
+### Clean application URLs
+
+The default file layout in this repository is designed for multiple applications and sites within the same project (for example, one or more productive sites and a few test sites).
+For this reason, the default root site is an overview page mainly aimed at developers.
+It links to other sites in the project:
+
+-   Overview site: <code>http[]()://example.com<b>**/**</b></code>
+-   Other sites: <code>http[]()://example.com<b>/sites/my-app/</b></code>
+
+If your project focuses on a single, central site, you may wish to invert this layout:
+
+-   Main site: <code>http[]()://example.com<b>/</b></code>
+-   (optional) Overview site: <code>http[]()://example.com<b>/app-overview/</b></code>
+-   (optional) Other apps: <code>http[]()://example.com<b>/test-app/</b></code>
+
+To achieve this, simply swap the corresponding `.html` files:
+
+-   Move `.html` files:
+    -   Move `src/index.html` to `src/app-overview/index.html` (or any other location in the source directory).
+    -   Move `src/sites/my-app/index.html` to `src/index.html`.
+    -   Relative links in your `.html` files may need adjusting!
+-   Update `vite.config.ts`:
+
+    -   Remove the reference to `my-app` and (optionally) include the new app overview site, if you want it built:
+
+        ```diff
+        // vite.config.ts
+        pioneer({
+            // Now points to the main site
+            rootSite: true,
+
+            sites: [
+        -       "my-app",
+        +       "app-overview",
+                // ...
+            ],
+            apps: []
+        }),
+        ```
+
+    -   To open the overview site when executing `pnpm dev`, configure:
+
+        ```diff
+        // vite.config.ts
+        +    server: {
+        +        open: "/app-overview/"
+        +    }
+        ```
+
 ## Next steps
 
 -   [How to deploy an app](./HowToDeployAnApp.md)
