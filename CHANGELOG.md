@@ -1,5 +1,9 @@
 # Changelog
 
+## 2025-01-22
+
+-   Update Vite to version 5.4.14 due to CVE-2025-24010 ([GHSA-vg6x-rcgg-rjx6](https://github.com/vitejs/vite/security/advisories/GHSA-vg6x-rcgg-rjx6))
+
 ## 2024-12-05
 
 -   Update Open Pioneer Trails dependencies to latest version.
