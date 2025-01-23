@@ -144,16 +144,16 @@ Next, we will fill in the implementation of `AttributeService`:
 
 ```ts
 // src/apps/empty-app/services.ts
-import { ServiceOptions, ServiceType } from "@open-pioneer/runtime";
+import { ServiceOptions, ApplicationContext } from "@open-pioneer/runtime";
 
 interface References {
-    ctx: ServiceType<"runtime.ApplicationContext">;
+    ctx: ApplicationContext;
 }
 
 const CLASS_NAME = "my-custom-class";
 
 export class AttributeService {
-    private _ctx: ServiceType<"runtime.ApplicationContext">;
+    private _ctx: ApplicationContext;
 
     // (1)
     constructor(options: ServiceOptions<References>) {
@@ -174,9 +174,8 @@ export class AttributeService {
 
     We use a `References` interface to declare which types (and names) to expect.
     This should match the configuration in your `build.config.mjs`.
-    Inside the `References` interface, you can either use the type `ApplicationContext` directly (from the runtime package) or use the `ServiceType<...>` helper, which retrieves the interface type when given an interface name.
-
-    > If you want to register your own interface names and types, see _TypeScript Integration_ in the [Services Reference](../reference/Services.md).
+    Inside the `References` interface, we use the `ApplicationContext` type directly from the runtime package.
+    You should consult the documentation of a package to find out which TypeScript type(s) correspond to the interfaces you want to reference.
 
     Note that this is only needed if you're using TypeScript. When you're using JavaScript, just use the `options` parameter directly.
 
