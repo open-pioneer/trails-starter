@@ -1,7 +1,7 @@
 // SPDX-FileCopyrightText: 2023 Open Pioneer project (https://github.com/open-pioneer)
 // SPDX-License-Identifier: Apache-2.0
 import { Box, Divider, Flex, FormControl, FormLabel, Text } from "@open-pioneer/chakra-integration";
-import { MapAnchor, MapContainer } from "@open-pioneer/map";
+import { DefaultMapProvider, MapAnchor, MapContainer } from "@open-pioneer/map";
 import { ScaleBar } from "@open-pioneer/scale-bar";
 import { InitialExtent, ZoomIn, ZoomOut } from "@open-pioneer/map-navigation";
 import { useIntl } from "open-pioneer:react-hooks";
@@ -54,96 +54,99 @@ export function MapApp() {
                     </Box>
                 }
             >
-                <Flex flex="1" direction="column" position="relative">
-                    <MapContainer
-                        mapId={MAP_ID}
-                        role="main"
-                        aria-label={intl.formatMessage({ id: "ariaLabel.map" })}
-                    >
-                        <MapAnchor position="top-left" horizontalGap={5} verticalGap={5}>
-                            {measurementIsActive && (
+                <DefaultMapProvider mapId={MAP_ID}>
+                    <Flex flex="1" direction="column" position="relative">
+                        <MapContainer
+                            role="main"
+                            aria-label={intl.formatMessage({ id: "ariaLabel.map" })}
+                        >
+                            <MapAnchor position="top-left" horizontalGap={5} verticalGap={5}>
+                                {measurementIsActive && (
+                                    <Box
+                                        backgroundColor="white"
+                                        borderWidth="1px"
+                                        borderRadius="lg"
+                                        padding={2}
+                                        boxShadow="lg"
+                                        role="top-left"
+                                        aria-label={intl.formatMessage({ id: "ariaLabel.topLeft" })}
+                                    >
+                                        <Box role="dialog" aria-labelledby={measurementTitleId}>
+                                            <TitledSection
+                                                title={
+                                                    <SectionHeading
+                                                        id={measurementTitleId}
+                                                        size="md"
+                                                        mb={2}
+                                                    >
+                                                        {intl.formatMessage({
+                                                            id: "measurementTitle"
+                                                        })}
+                                                    </SectionHeading>
+                                                }
+                                            >
+                                                <Measurement />
+                                            </TitledSection>
+                                        </Box>
+                                    </Box>
+                                )}
+                            </MapAnchor>
+                            <MapAnchor position="top-right" horizontalGap={5} verticalGap={5}>
                                 <Box
                                     backgroundColor="white"
                                     borderWidth="1px"
                                     borderRadius="lg"
                                     padding={2}
                                     boxShadow="lg"
-                                    role="top-left"
-                                    aria-label={intl.formatMessage({ id: "ariaLabel.topLeft" })}
+                                    role="top-right"
+                                    aria-label={intl.formatMessage({ id: "ariaLabel.topRight" })}
                                 >
-                                    <Box role="dialog" aria-labelledby={measurementTitleId}>
-                                        <TitledSection
-                                            title={
-                                                <SectionHeading
-                                                    id={measurementTitleId}
-                                                    size="md"
-                                                    mb={2}
-                                                >
-                                                    {intl.formatMessage({ id: "measurementTitle" })}
-                                                </SectionHeading>
-                                            }
-                                        >
-                                            <Measurement mapId={MAP_ID} />
-                                        </TitledSection>
-                                    </Box>
+                                    <OverviewMap olLayer={overviewMapLayer} />
+                                    <Divider mt={4} />
+                                    <FormControl>
+                                        <FormLabel mt={2}>
+                                            <Text as="b">
+                                                {intl.formatMessage({ id: "basemapLabel" })}
+                                            </Text>
+                                        </FormLabel>
+                                        <BasemapSwitcher allowSelectingEmptyBasemap />
+                                    </FormControl>
                                 </Box>
-                            )}
-                        </MapAnchor>
-                        <MapAnchor position="top-right" horizontalGap={5} verticalGap={5}>
-                            <Box
-                                backgroundColor="white"
-                                borderWidth="1px"
-                                borderRadius="lg"
-                                padding={2}
-                                boxShadow="lg"
-                                role="top-right"
-                                aria-label={intl.formatMessage({ id: "ariaLabel.topRight" })}
-                            >
-                                <OverviewMap mapId={MAP_ID} olLayer={overviewMapLayer} />
-                                <Divider mt={4} />
-                                <FormControl>
-                                    <FormLabel mt={2}>
-                                        <Text as="b">
-                                            {intl.formatMessage({ id: "basemapLabel" })}
-                                        </Text>
-                                    </FormLabel>
-                                    <BasemapSwitcher mapId={MAP_ID} allowSelectingEmptyBasemap />
-                                </FormControl>
-                            </Box>
-                        </MapAnchor>
-                        <MapAnchor position="bottom-right" horizontalGap={10} verticalGap={30}>
-                            <Flex
-                                role="bottom-right"
-                                aria-label={intl.formatMessage({ id: "ariaLabel.bottomRight" })}
-                                direction="column"
-                                gap={1}
-                                padding={1}
-                            >
-                                <ToolButton
-                                    label={intl.formatMessage({ id: "measurementTitle" })}
-                                    icon={<PiRulerLight />}
-                                    isActive={measurementIsActive}
-                                    onClick={toggleMeasurement}
-                                />
-                                <Geolocation mapId={MAP_ID} />
-                                <InitialExtent mapId={MAP_ID} />
-                                <ZoomIn mapId={MAP_ID} />
-                                <ZoomOut mapId={MAP_ID} />
-                            </Flex>
-                        </MapAnchor>
-                    </MapContainer>
-                </Flex>
-                <Flex
-                    role="region"
-                    aria-label={intl.formatMessage({ id: "ariaLabel.footer" })}
-                    gap={3}
-                    alignItems="center"
-                    justifyContent="center"
-                >
-                    <CoordinateViewer mapId={MAP_ID} precision={2} />
-                    <ScaleBar mapId={MAP_ID} />
-                    <ScaleViewer mapId={MAP_ID} />
-                </Flex>
+                            </MapAnchor>
+                            <MapAnchor position="bottom-right" horizontalGap={10} verticalGap={30}>
+                                <Flex
+                                    role="bottom-right"
+                                    aria-label={intl.formatMessage({ id: "ariaLabel.bottomRight" })}
+                                    direction="column"
+                                    gap={1}
+                                    padding={1}
+                                >
+                                    <ToolButton
+                                        label={intl.formatMessage({ id: "measurementTitle" })}
+                                        icon={<PiRulerLight />}
+                                        isActive={measurementIsActive}
+                                        onClick={toggleMeasurement}
+                                    />
+                                    <Geolocation />
+                                    <InitialExtent />
+                                    <ZoomIn />
+                                    <ZoomOut />
+                                </Flex>
+                            </MapAnchor>
+                        </MapContainer>
+                    </Flex>
+                    <Flex
+                        role="region"
+                        aria-label={intl.formatMessage({ id: "ariaLabel.footer" })}
+                        gap={3}
+                        alignItems="center"
+                        justifyContent="center"
+                    >
+                        <CoordinateViewer precision={2} />
+                        <ScaleBar />
+                        <ScaleViewer />
+                    </Flex>
+                </DefaultMapProvider>
             </TitledSection>
         </Flex>
     );
