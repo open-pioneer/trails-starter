@@ -42,7 +42,6 @@
             "",
             "patches",
             "=======",
-            "react-select: patched to use composedPath() in event conditions; needed for web component integration (see https://github.com/JedWatson/react-select/issues/5824)",
             "@chakra-ui/menu;react-use-outside-click;hooks: patched to fix menus in shadow dom (see https://github.com/open-pioneer/trails-openlayers-base-packages/issues/184)",
             "",
             "peer dependency rules",
@@ -64,7 +63,6 @@
             "ignoreCves": []
         },
         "patchedDependencies": {
-            "react-select@5.8.0": "patches/react-select@5.8.0.patch",
             "@chakra-ui/hooks@2.4.3": "patches/@chakra-ui__hooks.patch"
         },
         "peerDependencyRules": {}

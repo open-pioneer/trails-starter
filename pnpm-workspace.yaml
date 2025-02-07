@@ -36,6 +36,7 @@ catalog:
   "@open-pioneer/integration": *core_packages_version
   "@open-pioneer/notifier": *core_packages_version
   "@open-pioneer/react-utils": *core_packages_version
+  "@open-pioneer/reactivity": *core_packages_version
   "@open-pioneer/runtime-react-support": *core_packages_version
   "@open-pioneer/runtime": *core_packages_version
   "@open-pioneer/test-utils": *core_packages_version
@@ -96,3 +97,4 @@ catalog:
   vite-plugin-eslint: ^1.8.1
   vite: ^5.4.14
   vitest: ^2.1.9
+  wouter: ^3.5.1

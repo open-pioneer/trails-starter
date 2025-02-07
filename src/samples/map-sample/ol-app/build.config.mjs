@@ -9,5 +9,8 @@ export default defineBuildConfig({
         MainMapProvider: {
             provides: ["map.MapConfigProvider"]
         }
+    },
+    ui: {
+        references: ["notifier.NotificationService"]
     }
 });

@@ -15,9 +15,6 @@ catalogs:
     '@emotion/styled':
       specifier: ^11.13.0
       version: 11.13.0
-    '@open-pioneer/basemap-switcher':
-      specifier: ^0.8.0
-      version: 0.8.0
     '@open-pioneer/build-package-cli':
       specifier: ^2.1.1
       version: 2.1.1
@@ -33,9 +30,6 @@ catalogs:
     '@open-pioneer/coordinate-viewer':
       specifier: ^0.8.0
       version: 0.8.0
-    '@open-pioneer/geolocation':
-      specifier: ^0.8.0
-      version: 0.8.0
     '@open-pioneer/map':
       specifier: ^0.8.0
       version: 0.8.0
@@ -45,15 +39,15 @@ catalogs:
     '@open-pioneer/map-ui-components':
       specifier: ^0.8.0
       version: 0.8.0
-    '@open-pioneer/measurement':
-      specifier: ^0.8.0
-      version: 0.8.0
     '@open-pioneer/notifier':
       specifier: ^2.4.0
       version: 2.4.0
     '@open-pioneer/overview-map':
       specifier: ^0.8.0
       version: 0.8.0
+    '@open-pioneer/reactivity':
+      specifier: ^2.4.0
+      version: 2.4.0
     '@open-pioneer/runtime':
       specifier: ^2.4.0
       version: 2.4.0
@@ -195,6 +189,9 @@ catalogs:
     vitest:
       specifier: ^2.1.9
       version: 2.1.9
+    wouter:
+      specifier: ^3.5.1
+      version: 3.5.1
 
 overrides:
   semver@<7.5.2: '>=7.5.2'
@@ -212,9 +209,6 @@ patchedDependencies:
   '@chakra-ui/hooks@2.4.3':
     hash: mayfbuoknaogevz43ogq74es4q
     path: patches/@chakra-ui__hooks.patch
-  react-select@5.8.0:
-    hash: dmr4eel47u7r4xswxh72mgmyuq
-    path: patches/react-select@5.8.0.patch
 
 importers:
 
@@ -386,18 +380,12 @@ importers:
       '@emotion/styled':
         specifier: 'catalog:'
         version: 11.13.0(@emotion/react@11.13.3(@types/react@18.3.11)(react@18.3.1))(@types/react@18.3.11)(react@18.3.1)
-      '@open-pioneer/basemap-switcher':
-        specifier: 'catalog:'
-        version: 0.8.0(@chakra-ui/react@2.10.4(@emotion/react@11.13.3(@types/react@18.3.11)(react@18.3.1))(@emotion/styled@11.13.0(@emotion/react@11.13.3(@types/react@18.3.11)(react@18.3.1))(@types/react@18.3.11)(react@18.3.1))(@types/react@18.3.11)(framer-motion@11.3.31(@emotion/is-prop-valid@1.3.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(@emotion/is-prop-valid@1.3.0)(@emotion/react@11.13.3(@types/react@18.3.11)(react@18.3.1))(@types/react@18.3.11)(react-dom@18.3.1(react@18.3.1))(typescript@5.6.3)
       '@open-pioneer/chakra-integration':
         specifier: 'catalog:'
         version: 2.4.0(@emotion/is-prop-valid@1.3.0)(@types/react@18.3.11)
       '@open-pioneer/coordinate-viewer':
         specifier: 'catalog:'
         version: 0.8.0(@emotion/is-prop-valid@1.3.0)(@types/react@18.3.11)(typescript@5.6.3)
-      '@open-pioneer/geolocation':
-        specifier: 'catalog:'
-        version: 0.8.0(@chakra-ui/react@2.10.4(@emotion/react@11.13.3(@types/react@18.3.11)(react@18.3.1))(@emotion/styled@11.13.0(@emotion/react@11.13.3(@types/react@18.3.11)(react@18.3.1))(@types/react@18.3.11)(react@18.3.1))(@types/react@18.3.11)(framer-motion@11.3.31(@emotion/is-prop-valid@1.3.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(@emotion/is-prop-valid@1.3.0)(@types/react@18.3.11)(typescript@5.6.3)
       '@open-pioneer/map':
         specifier: 'catalog:'
         version: 0.8.0(@emotion/is-prop-valid@1.3.0)(@types/react@18.3.11)(typescript@5.6.3)
@@ -407,15 +395,15 @@ importers:
       '@open-pioneer/map-ui-components':
         specifier: 'catalog:'
         version: 0.8.0(@emotion/is-prop-valid@1.3.0)(@types/react@18.3.11)
-      '@open-pioneer/measurement':
-        specifier: 'catalog:'
-        version: 0.8.0(@emotion/is-prop-valid@1.3.0)(@types/react@18.3.11)(typescript@5.6.3)
       '@open-pioneer/notifier':
         specifier: 'catalog:'
         version: 2.4.0(@chakra-ui/react@2.10.4(@emotion/react@11.13.3(@types/react@18.3.11)(react@18.3.1))(@emotion/styled@11.13.0(@emotion/react@11.13.3(@types/react@18.3.11)(react@18.3.1))(@types/react@18.3.11)(react@18.3.1))(@types/react@18.3.11)(framer-motion@11.3.31(@emotion/is-prop-valid@1.3.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(@emotion/is-prop-valid@1.3.0)(@types/react@18.3.11)(typescript@5.6.3)
       '@open-pioneer/overview-map':
         specifier: 'catalog:'
         version: 0.8.0(@emotion/is-prop-valid@1.3.0)(@types/react@18.3.11)(typescript@5.6.3)
+      '@open-pioneer/reactivity':
+        specifier: 'catalog:'
+        version: 2.4.0
       '@open-pioneer/runtime':
         specifier: 'catalog:'
         version: 2.4.0(@emotion/is-prop-valid@1.3.0)(@types/react@18.3.11)(typescript@5.6.3)
@@ -443,6 +431,9 @@ importers:
       react-use:
         specifier: 'catalog:'
         version: 17.5.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      wouter:
+        specifier: 'catalog:'
+        version: 3.5.1(react@18.3.1)
 
   support/disabled-package: {}
 
@@ -1038,15 +1029,6 @@ packages:
     resolution: {integrity: sha512-Ys+3g2TaW7gADOJzPt83SJtCDhMjndcDMFVQ/Tj9iA1BfJzFKD9mAUXT3OenpuPHbI6P/myECxRJrofUsDx/5g==}
     engines: {node: ^12.22.0 || ^14.17.0 || >=16.0.0}
 
-  '@floating-ui/core@1.6.7':
-    resolution: {integrity: sha512-yDzVT/Lm101nQ5TCVeK65LtdN7Tj4Qpr9RTXJ2vPFLqtLxwOrpoxAHAJI8J3yYWUc40J0BDBheaitK5SJmno2g==}
-
-  '@floating-ui/dom@1.6.10':
-    resolution: {integrity: sha512-fskgCFv8J8OamCmyun8MfjB1Olfn+uZKjOKZ0vhYF3gRmEUXcGOjxWL8bBr7i4kIuPZ2KD2S3EUIOxnjC8kl2A==}
-
-  '@floating-ui/utils@0.2.7':
-    resolution: {integrity: sha512-X8R8Oj771YRl/w+c1HqAC1szL8zWQRwFvgDwT129k9ACdBoud/+/rX9V0qiMl6LWUdP9voC2nDVZYPMQQsb6eA==}
-
   '@formatjs/ecma402-abstract@2.2.4':
     resolution: {integrity: sha512-lFyiQDVvSbQOpU+WFd//ILolGj4UgA/qXrKeZxdV14uKiAUiPAtX6XAn7WBCRi7Mx6I7EybM9E5yYn4BIpZWYg==}
 
@@ -1130,9 +1112,6 @@ packages:
   '@open-pioneer/base-theme@2.4.0':
     resolution: {integrity: sha512-MxvgHSW1nyw09DM46IDGzYspJphdcTlv8YwDuqxvApp5IoY4wm8LPTO7pQXxNLQ0houlffNBYgSxGGzMIqusRg==}
 
-  '@open-pioneer/basemap-switcher@0.8.0':
-    resolution: {integrity: sha512-5EM8F89iddoFstHRq1S6V62+WDK0s9ptgZtp3WHPzRqz/22QkIgq5gAMm14vNUMsQQ4gmsBtOCtsqhXBfR1MiQ==}
-
   '@open-pioneer/build-common@2.0.5':
     resolution: {integrity: sha512-RtCVsPp6FrVTUgkWb7S2xO8CbpruY/M9i1JGDdqgyRGDPQjmZSZJQevS4a2aaucZSB3Klfa/xHee8xI82HKcbw==}
     engines: {node: '>= 18'}
@@ -1172,9 +1151,6 @@ packages:
   '@open-pioneer/core@2.4.0':
     resolution: {integrity: sha512-Z8zAqyZT7qNldPmZj7s5uZA1Hy2UmQgdTvvwRcRnfr+M0WMHDQoPyLQX1gViuzrK6KqmkfNM9GsJ8ENO6EqSTg==}
 
-  '@open-pioneer/geolocation@0.8.0':
-    resolution: {integrity: sha512-9gAX1bvrrtcvi6YYqWnI6Vc5Fo6dtt9jUcXfd8XPwM50JoWyiolg4+GLx5v3L6KfEGYHflE0wv0IHNGi9n14hw==}
-
   '@open-pioneer/http@2.4.0':
     resolution: {integrity: sha512-RSPRQrs41qYRakskxdrYlyFPUWZr+G83akiSNaikFZvSriibTXeKya2tPXm9MRuJa7e1xrMhIyFD4FQEWnouWw==}
 
@@ -1186,9 +1162,6 @@ packages:
 
   '@open-pioneer/map@0.8.0':
     resolution: {integrity: sha512-wkxr0kvQ40/g6FeIN2sRpZWLos0QpbQVsWl/W6xIuOBhiWUqaYe76XxXJJ8BzU8qzkomjrs6ze6n+AEhjBa8Ww==}
-
-  '@open-pioneer/measurement@0.8.0':
-    resolution: {integrity: sha512-hUeeBynqsju9I5VcrTl6lUda6xvtg3SvDPYX1kvhXB8n7CVj3qSukQwNrfNhneLZUIy+AL2fQWzkJejA4gxAeg==}
 
   '@open-pioneer/notifier@2.4.0':
     resolution: {integrity: sha512-6p8yI3Ai05rH5jc/OCfsYKGVftlbvO9JnEjxrDgnUeEyEr48XQzPSLrj/G/sbgi7AStUx4uEgTm8zYFf75/ngQ==}
@@ -1725,9 +1698,6 @@ packages:
   '@types/react-dom@18.3.1':
     resolution: {integrity: sha512-qW1Mfv8taImTthu4KoXgDfLuk4bydU6Q/TkADnDWWHwi4NX4BR+LWfTp2sVmTqRrsHvyDDTelgelxJ+SsejKKQ==}
 
-  '@types/react-transition-group@4.4.11':
-    resolution: {integrity: sha512-RM05tAniPZ5DZPzzNFP+DmrcOdD0efDUxMy3145oljWSl3x9ZV5vhme98gTxFrj2lhXvmGNnUiuDyJgY9IKkNA==}
-
   '@types/react@18.3.11':
     resolution: {integrity: sha512-r6QZ069rFTjrEYgFdOck1gK7FLVsgJE7tTz0pQBczlBNUhBNk0MQH4UbnFSwjpQLMkLzgqvBBa+qGpLje16eTQ==}
 
@@ -2020,14 +1990,6 @@ packages:
     resolution: {integrity: sha512-aGtmf24DW6MLHHG5gCx4zaI3uBq3KRtxeVs0DjFH6Z0rDNbsvTxFASFvdj79pxjxZ8/5u3PIiN3IwEIQkiiuPw==}
     engines: {node: '>=12'}
 
-  chakra-react-select@5.0.2:
-    resolution: {integrity: sha512-DI82ICGya/yu99Np8Uk8rW14o4NIt45i4qHDm/h0eRFVTHsRJqE+My99A9cPGJ72V5tM/WK1EeWxYUxWxhzxkA==}
-    peerDependencies:
-      '@chakra-ui/react': 2.x
-      '@emotion/react': ^11.8.1
-      react: ^18.0.0
-      react-dom: ^18.0.0
-
   chalk@2.4.2:
     resolution: {integrity: sha512-Mti+f9lpJNcwF4tWV8/OrTTtF1gZi+f8FqlyAdouralcFWFQWF2+NgCHShjkCb+IFBLq9buZwE1xckQU4peSuQ==}
     engines: {node: '>=4'}
@@ -2244,9 +2206,6 @@ packages:
 
   dom-accessibility-api@0.6.3:
     resolution: {integrity: sha512-7ZgogeTnjuHbo+ct10G9Ffp0mif17idi0IyWNVA/wcwcm7NPOD/WEHVP3n7n3MhXqxoIYm8d6MuZohYWIZ4T3w==}
-
-  dom-helpers@5.2.1:
-    resolution: {integrity: sha512-nRCa7CK3VTrM2NmGkIy4cbK7IZlgBE/PYMn55rrXefr5xXDP0LdtfPnblFDoVdcAfslJ7or6iqAUnx0CCGIWQA==}
 
   earcut@3.0.0:
     resolution: {integrity: sha512-41Fs7Q/PLq1SDbqjsgcY7GA42T0jvaCNGXgGtsNdvg+Yv8eIu06bxv4/PoREkZ9nMDNwnUSG9OFB9+yv8eKhDg==}
@@ -3107,9 +3066,6 @@ packages:
   mdurl@2.0.0:
     resolution: {integrity: sha512-Lf+9+2r+Tdp5wXDXC4PcIBjTDtq4UKjCPMQhKIuzpJNW0b96kVqSwW0bT7FhRSfmAiFYgP+SCRvdrDozfh0U5w==}
 
-  memoize-one@6.0.0:
-    resolution: {integrity: sha512-rkpe71W0N0c0Xz6QD0eJETuWAJGnJ9afsl1srmwPrI+yBCkge5EycXXbYRyvL29zZVUWQCY7InPRCv3GDXuZNw==}
-
   merge-stream@2.0.0:
     resolution: {integrity: sha512-abv/qOcuPfk3URPfDzmZU1LKmuw8kT+0nIHvKrKgFrwifol/doWcdA4ZqsWQ8ENrFKkd67Mfpo/LovbIUsbt3w==}
 
@@ -3176,6 +3132,9 @@ packages:
   minipass@6.0.2:
     resolution: {integrity: sha512-MzWSV5nYVT7mVyWCwn2o7JH13w2TBRmmSqSRCKzTw+lmft9X4z+3wjvs06Tzijo5z4W/kahUCDpRXTF+ZrmF/w==}
     engines: {node: '>=16 || 14 >=14.17'}
+
+  mitt@3.0.1:
+    resolution: {integrity: sha512-vKivATfr97l2/QBCYAkXYDbrIWPM2IIKEl7YPhjCvKlG3kE2gm+uBo6nEXK3M5/Ffh/FLpKExzOQ3JJoJGFKBw==}
 
   mlly@1.4.2:
     resolution: {integrity: sha512-i/Ykufi2t1EZ6NaPLdfnZk2AX8cs0d+mTzVKuPfqPKPatxLApaBoxJQ9x1/uckXtrS/U5oisPMDkNs0yQTaBRg==}
@@ -3483,12 +3442,6 @@ packages:
       '@types/react':
         optional: true
 
-  react-select@5.8.0:
-    resolution: {integrity: sha512-TfjLDo58XrhP6VG5M/Mi56Us0Yt8X7xD6cDybC7yoRMUNm7BGO7qk8J0TLQOua/prb8vUOtsfnXZwfm30HGsAA==}
-    peerDependencies:
-      react: ^16.8.0 || ^17.0.0 || ^18.0.0
-      react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0
-
   react-style-singleton@2.2.1:
     resolution: {integrity: sha512-ZWj0fHEMyWkHzKYUr2Bs/4zU6XLmq9HsgBURm7g5pAVfyn49DgUiNgY2d4lXRlYSiCif9YBGpQleewkcqddc7g==}
     engines: {node: '>=10'}
@@ -3498,12 +3451,6 @@ packages:
     peerDependenciesMeta:
       '@types/react':
         optional: true
-
-  react-transition-group@4.4.5:
-    resolution: {integrity: sha512-pZcd1MCJoiKiBR2NRxeCRg13uCXbydPnmB4EOeRrY7480qNWO8IIgQG6zlDkm6uRMsURXPuKq0GWtiM59a5Q6g==}
-    peerDependencies:
-      react: '>=16.6.0'
-      react-dom: '>=16.6.0'
 
   react-universal-interface@0.6.2:
     resolution: {integrity: sha512-dg8yXdcQmvgR13RIlZbTRQOoUrDciFVoSBZILwjE2LFISxZZ8loVJKAkuzswl5js8BHda79bIb2b84ehU8IjXw==}
@@ -3549,6 +3496,10 @@ packages:
   regexp.prototype.flags@1.5.2:
     resolution: {integrity: sha512-NcDiDkTLuPR+++OCKB0nWafEmhg/Da8aUPLPMQbK+bxKKCm1/S5he+AqYa4PlMCVBalb4/yxIRub6qkEx5yJbw==}
     engines: {node: '>= 0.4'}
+
+  regexparam@3.0.0:
+    resolution: {integrity: sha512-RSYAtP31mvYLkAHrOlh25pCNQ5hWnT106VukGaaFfuJrZFkGRX5GhUAdPqpSDXxOhA2c4akmRuplv1mRqnBn6Q==}
+    engines: {node: '>=8'}
 
   resize-observer-polyfill@1.5.1:
     resolution: {integrity: sha512-LwZrotdHOo12nQuZlHEmtuXdqGoOD0OhaxopaNFxWzInpEgaLWoVuAMbTzixuosCx2nEG58ngzW3vxdWoxIgdg==}
@@ -4033,15 +3984,6 @@ packages:
       '@types/react':
         optional: true
 
-  use-isomorphic-layout-effect@1.1.2:
-    resolution: {integrity: sha512-49L8yCO3iGT/ZF9QttjwLF/ZD9Iwto5LnH5LmEdk/6cFmXddqi2ulF0edxTwjj+7mqvpVVGQWvbXZdn32wRSHA==}
-    peerDependencies:
-      '@types/react': '*'
-      react: ^16.8.0 || ^17.0.0 || ^18.0.0
-    peerDependenciesMeta:
-      '@types/react':
-        optional: true
-
   use-sidecar@1.1.2:
     resolution: {integrity: sha512-epTbsLuzZ7lPClpz2TyryBfztm7m+28DlEv2ZCQ3MDr5ssiwyOwGH/e5F9CkfWjJ1t4clvI58yF822/GUkjjhw==}
     engines: {node: '>=10'}
@@ -4051,6 +3993,11 @@ packages:
     peerDependenciesMeta:
       '@types/react':
         optional: true
+
+  use-sync-external-store@1.4.0:
+    resolution: {integrity: sha512-9WXSPC5fMv61vaupRkCKCxsPxBocVnwakBEkMIHHpkTTg6icbJtg6jzgtLDm4bl3cSHAca52rYWih0k4K3PfHw==}
+    peerDependencies:
+      react: ^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0
 
   util-deprecate@1.0.2:
     resolution: {integrity: sha512-EPD5q1uXyFxJpCrLnCc1nHnq3gOa6DZBocAIiI2TaSCA7VCJ1UJDMagCzIkXNsUYfD1daK//LTEQ8xiIbrHtcw==}
@@ -4196,6 +4143,11 @@ packages:
 
   wordwrap@1.0.0:
     resolution: {integrity: sha512-gvVzJFlPycKc5dZN4yPkP8w7Dc37BtP1yczEneOb4uq34pXZcvrtRTmWV8W+Ume+XCxKgbjM+nevkyFPMybd4Q==}
+
+  wouter@3.5.1:
+    resolution: {integrity: sha512-CCmd9qOJnQBO8Ja6kUuTr3/MvS8t+YCDQqlvVcuu8sG9L+FxP/Dv75s1UfjdSO0ahvewo+KBpMN+yTL1Q0BrtA==}
+    peerDependencies:
+      react: '>=16.8.0'
 
   wrap-ansi@7.0.0:
     resolution: {integrity: sha512-YVGIj2kamLSTxw6NsZjoBxfSwsn0ycdesmc4p+Q21c5zPuZ1pl+NfxVdxPtdHvmNVOQ6XSYG4AUtyt/Fi7D16Q==}
@@ -4710,17 +4662,6 @@ snapshots:
 
   '@eslint/js@8.57.0': {}
 
-  '@floating-ui/core@1.6.7':
-    dependencies:
-      '@floating-ui/utils': 0.2.7
-
-  '@floating-ui/dom@1.6.10':
-    dependencies:
-      '@floating-ui/core': 1.6.7
-      '@floating-ui/utils': 0.2.7
-
-  '@floating-ui/utils@0.2.7': {}
-
   '@formatjs/ecma402-abstract@2.2.4':
     dependencies:
       '@formatjs/fast-memoize': 2.2.3
@@ -4829,26 +4770,6 @@ snapshots:
       - '@emotion/is-prop-valid'
       - '@types/react'
 
-  '@open-pioneer/basemap-switcher@0.8.0(@chakra-ui/react@2.10.4(@emotion/react@11.13.3(@types/react@18.3.11)(react@18.3.1))(@emotion/styled@11.13.0(@emotion/react@11.13.3(@types/react@18.3.11)(react@18.3.1))(@types/react@18.3.11)(react@18.3.1))(@types/react@18.3.11)(framer-motion@11.3.31(@emotion/is-prop-valid@1.3.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(@emotion/is-prop-valid@1.3.0)(@emotion/react@11.13.3(@types/react@18.3.11)(react@18.3.1))(@types/react@18.3.11)(react-dom@18.3.1(react@18.3.1))(typescript@5.6.3)':
-    dependencies:
-      '@conterra/reactivity-core': 0.4.3
-      '@open-pioneer/chakra-integration': 2.4.0(@emotion/is-prop-valid@1.3.0)(@types/react@18.3.11)
-      '@open-pioneer/map': 0.8.0(@emotion/is-prop-valid@1.3.0)(@types/react@18.3.11)(typescript@5.6.3)
-      '@open-pioneer/react-utils': 2.4.0(@emotion/is-prop-valid@1.3.0)(@types/react@18.3.11)
-      '@open-pioneer/reactivity': 2.4.0
-      '@open-pioneer/runtime': 2.4.0(@emotion/is-prop-valid@1.3.0)(@types/react@18.3.11)(typescript@5.6.3)
-      chakra-react-select: 5.0.2(@chakra-ui/react@2.10.4(@emotion/react@11.13.3(@types/react@18.3.11)(react@18.3.1))(@emotion/styled@11.13.0(@emotion/react@11.13.3(@types/react@18.3.11)(react@18.3.1))(@types/react@18.3.11)(react@18.3.1))(@types/react@18.3.11)(framer-motion@11.3.31(@emotion/is-prop-valid@1.3.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(@emotion/react@11.13.3(@types/react@18.3.11)(react@18.3.1))(@types/react@18.3.11)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
-      ol: 10.3.1
-      react: 18.3.1
-      react-icons: 5.3.0(react@18.3.1)
-    transitivePeerDependencies:
-      - '@chakra-ui/react'
-      - '@emotion/is-prop-valid'
-      - '@emotion/react'
-      - '@types/react'
-      - react-dom
-      - typescript
-
   '@open-pioneer/build-common@2.0.5':
     dependencies:
       semver: 7.6.3
@@ -4934,26 +4855,6 @@ snapshots:
 
   '@open-pioneer/core@2.4.0': {}
 
-  '@open-pioneer/geolocation@0.8.0(@chakra-ui/react@2.10.4(@emotion/react@11.13.3(@types/react@18.3.11)(react@18.3.1))(@emotion/styled@11.13.0(@emotion/react@11.13.3(@types/react@18.3.11)(react@18.3.1))(@types/react@18.3.11)(react@18.3.1))(@types/react@18.3.11)(framer-motion@11.3.31(@emotion/is-prop-valid@1.3.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(@emotion/is-prop-valid@1.3.0)(@types/react@18.3.11)(typescript@5.6.3)':
-    dependencies:
-      '@conterra/reactivity-core': 0.4.3
-      '@open-pioneer/chakra-integration': 2.4.0(@emotion/is-prop-valid@1.3.0)(@types/react@18.3.11)
-      '@open-pioneer/core': 2.4.0
-      '@open-pioneer/map': 0.8.0(@emotion/is-prop-valid@1.3.0)(@types/react@18.3.11)(typescript@5.6.3)
-      '@open-pioneer/map-ui-components': 0.8.0(@emotion/is-prop-valid@1.3.0)(@types/react@18.3.11)
-      '@open-pioneer/notifier': 2.4.0(@chakra-ui/react@2.10.4(@emotion/react@11.13.3(@types/react@18.3.11)(react@18.3.1))(@emotion/styled@11.13.0(@emotion/react@11.13.3(@types/react@18.3.11)(react@18.3.1))(@types/react@18.3.11)(react@18.3.1))(@types/react@18.3.11)(framer-motion@11.3.31(@emotion/is-prop-valid@1.3.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(@emotion/is-prop-valid@1.3.0)(@types/react@18.3.11)(typescript@5.6.3)
-      '@open-pioneer/react-utils': 2.4.0(@emotion/is-prop-valid@1.3.0)(@types/react@18.3.11)
-      '@open-pioneer/reactivity': 2.4.0
-      '@open-pioneer/runtime': 2.4.0(@emotion/is-prop-valid@1.3.0)(@types/react@18.3.11)(typescript@5.6.3)
-      ol: 10.3.1
-      react: 18.3.1
-      react-icons: 5.3.0(react@18.3.1)
-    transitivePeerDependencies:
-      - '@chakra-ui/react'
-      - '@emotion/is-prop-valid'
-      - '@types/react'
-      - typescript
-
   '@open-pioneer/http@2.4.0(@emotion/is-prop-valid@1.3.0)(@types/react@18.3.11)(typescript@5.6.3)':
     dependencies:
       '@open-pioneer/core': 2.4.0
@@ -5006,21 +4907,6 @@ snapshots:
       react-dom: 18.3.1(react@18.3.1)
       react-use: 17.5.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       uuid: 10.0.0
-    transitivePeerDependencies:
-      - '@emotion/is-prop-valid'
-      - '@types/react'
-      - typescript
-
-  '@open-pioneer/measurement@0.8.0(@emotion/is-prop-valid@1.3.0)(@types/react@18.3.11)(typescript@5.6.3)':
-    dependencies:
-      '@open-pioneer/chakra-integration': 2.4.0(@emotion/is-prop-valid@1.3.0)(@types/react@18.3.11)
-      '@open-pioneer/core': 2.4.0
-      '@open-pioneer/map': 0.8.0(@emotion/is-prop-valid@1.3.0)(@types/react@18.3.11)(typescript@5.6.3)
-      '@open-pioneer/react-utils': 2.4.0(@emotion/is-prop-valid@1.3.0)(@types/react@18.3.11)
-      '@open-pioneer/runtime': 2.4.0(@emotion/is-prop-valid@1.3.0)(@types/react@18.3.11)(typescript@5.6.3)
-      classnames: 2.5.1
-      ol: 10.3.1
-      react: 18.3.1
     transitivePeerDependencies:
       - '@emotion/is-prop-valid'
       - '@types/react'
@@ -5646,10 +5532,6 @@ snapshots:
     dependencies:
       '@types/react': 18.3.11
 
-  '@types/react-transition-group@4.4.11':
-    dependencies:
-      '@types/react': 18.3.11
-
   '@types/react@18.3.11':
     dependencies:
       '@types/prop-types': 15.7.12
@@ -6003,16 +5885,6 @@ snapshots:
       loupe: 3.1.1
       pathval: 2.0.0
 
-  chakra-react-select@5.0.2(@chakra-ui/react@2.10.4(@emotion/react@11.13.3(@types/react@18.3.11)(react@18.3.1))(@emotion/styled@11.13.0(@emotion/react@11.13.3(@types/react@18.3.11)(react@18.3.1))(@types/react@18.3.11)(react@18.3.1))(@types/react@18.3.11)(framer-motion@11.3.31(@emotion/is-prop-valid@1.3.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(@emotion/react@11.13.3(@types/react@18.3.11)(react@18.3.1))(@types/react@18.3.11)(react-dom@18.3.1(react@18.3.1))(react@18.3.1):
-    dependencies:
-      '@chakra-ui/react': 2.10.4(@emotion/react@11.13.3(@types/react@18.3.11)(react@18.3.1))(@emotion/styled@11.13.0(@emotion/react@11.13.3(@types/react@18.3.11)(react@18.3.1))(@types/react@18.3.11)(react@18.3.1))(@types/react@18.3.11)(framer-motion@11.3.31(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
-      '@emotion/react': 11.13.3(@types/react@18.3.11)(react@18.3.1)
-      react: 18.3.1
-      react-dom: 18.3.1(react@18.3.1)
-      react-select: 5.8.0(patch_hash=dmr4eel47u7r4xswxh72mgmyuq)(@types/react@18.3.11)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
-    transitivePeerDependencies:
-      - '@types/react'
-
   chalk@2.4.2:
     dependencies:
       ansi-styles: 3.2.1
@@ -6208,11 +6080,6 @@ snapshots:
   dom-accessibility-api@0.5.16: {}
 
   dom-accessibility-api@0.6.3: {}
-
-  dom-helpers@5.2.1:
-    dependencies:
-      '@babel/runtime': 7.25.6
-      csstype: 3.1.3
 
   earcut@3.0.0: {}
 
@@ -7320,8 +7187,6 @@ snapshots:
 
   mdurl@2.0.0: {}
 
-  memoize-one@6.0.0: {}
-
   merge-stream@2.0.0: {}
 
   merge2@1.4.1: {}
@@ -7375,6 +7240,8 @@ snapshots:
   minimist@1.2.8: {}
 
   minipass@6.0.2: {}
+
+  mitt@3.0.1: {}
 
   mlly@1.4.2:
     dependencies:
@@ -7681,22 +7548,6 @@ snapshots:
     optionalDependencies:
       '@types/react': 18.3.11
 
-  react-select@5.8.0(patch_hash=dmr4eel47u7r4xswxh72mgmyuq)(@types/react@18.3.11)(react-dom@18.3.1(react@18.3.1))(react@18.3.1):
-    dependencies:
-      '@babel/runtime': 7.25.6
-      '@emotion/cache': 11.13.1
-      '@emotion/react': 11.13.3(@types/react@18.3.11)(react@18.3.1)
-      '@floating-ui/dom': 1.6.10
-      '@types/react-transition-group': 4.4.11
-      memoize-one: 6.0.0
-      prop-types: 15.8.1
-      react: 18.3.1
-      react-dom: 18.3.1(react@18.3.1)
-      react-transition-group: 4.4.5(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
-      use-isomorphic-layout-effect: 1.1.2(@types/react@18.3.11)(react@18.3.1)
-    transitivePeerDependencies:
-      - '@types/react'
-
   react-style-singleton@2.2.1(@types/react@18.3.11)(react@18.3.1):
     dependencies:
       get-nonce: 1.0.1
@@ -7705,15 +7556,6 @@ snapshots:
       tslib: 2.7.0
     optionalDependencies:
       '@types/react': 18.3.11
-
-  react-transition-group@4.4.5(react-dom@18.3.1(react@18.3.1))(react@18.3.1):
-    dependencies:
-      '@babel/runtime': 7.25.6
-      dom-helpers: 5.2.1
-      loose-envify: 1.4.0
-      prop-types: 15.8.1
-      react: 18.3.1
-      react-dom: 18.3.1(react@18.3.1)
 
   react-universal-interface@0.6.2(react@18.3.1)(tslib@2.7.0):
     dependencies:
@@ -7779,6 +7621,8 @@ snapshots:
       define-properties: 1.2.1
       es-errors: 1.3.0
       set-function-name: 2.0.2
+
+  regexparam@3.0.0: {}
 
   resize-observer-polyfill@1.5.1: {}
 
@@ -8307,12 +8151,6 @@ snapshots:
     optionalDependencies:
       '@types/react': 18.3.11
 
-  use-isomorphic-layout-effect@1.1.2(@types/react@18.3.11)(react@18.3.1):
-    dependencies:
-      react: 18.3.1
-    optionalDependencies:
-      '@types/react': 18.3.11
-
   use-sidecar@1.1.2(@types/react@18.3.11)(react@18.3.1):
     dependencies:
       detect-node-es: 1.1.0
@@ -8320,6 +8158,10 @@ snapshots:
       tslib: 2.7.0
     optionalDependencies:
       '@types/react': 18.3.11
+
+  use-sync-external-store@1.4.0(react@18.3.1):
+    dependencies:
+      react: 18.3.1
 
   util-deprecate@1.0.2: {}
 
@@ -8483,6 +8325,13 @@ snapshots:
   wkt-parser@1.3.3: {}
 
   wordwrap@1.0.0: {}
+
+  wouter@3.5.1(react@18.3.1):
+    dependencies:
+      mitt: 3.0.1
+      react: 18.3.1
+      regexparam: 3.0.0
+      use-sync-external-store: 1.4.0(react@18.3.1)
 
   wrap-ansi@7.0.0:
     dependencies:
