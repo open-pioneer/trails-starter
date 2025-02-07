@@ -49,30 +49,30 @@ export function MapApp() {
     ));
 
     return (
-        <Flex height="100%" direction="column" overflow="hidden">
+        <Router {...useRouterOptions()}>
             <Notifier position="top-right" />
-            <TitledSection
-                title={
-                    <Box
-                        role="region"
-                        aria-label={intl.formatMessage({ id: "ariaLabel.header" })}
-                        textAlign="center"
-                        py={1}
-                    >
-                        <SectionHeading size={"md"}>
-                            Open Pioneer Trails - Map with routing
-                        </SectionHeading>
-                    </Box>
-                }
-            >
-                <Router {...useRouterOptions()}>
+            <Flex height="100%" direction="column" overflow="hidden">
+                <TitledSection
+                    title={
+                        <Box
+                            role="region"
+                            aria-label={intl.formatMessage({ id: "ariaLabel.header" })}
+                            textAlign="center"
+                            py={1}
+                        >
+                            <SectionHeading size={"md"}>
+                                Open Pioneer Trails - Map with routing
+                            </SectionHeading>
+                        </Box>
+                    }
+                >
                     <HStack alignSelf="center" gap={4} my={2}>
                         {links}
                     </HStack>
                     {map && <AppContent map={map} />}
-                </Router>
-            </TitledSection>
-        </Flex>
+                </TitledSection>
+            </Flex>
+        </Router>
     );
 }
 
@@ -145,9 +145,9 @@ function AppContent(props: { map: MapModel }) {
  * If the feature cannot be found, a notification is emitted (and no drawer content is returned).
  */
 function useFeatureSelection(map: MapModel): ReactNode {
+    const notifier = useService<NotificationService>("notifier.NotificationService");
     const selectedFeatureId = useCurrentFeatureId();
     const selectedFeature = selectedFeatureId != null ? FEATURES[selectedFeatureId] : undefined;
-    const notifier = useService<NotificationService>("notifier.NotificationService");
     const mapIsReady = useReactiveSnapshot(() => !!map.container, [map]);
 
     // Emit a notification if the feature cannot be found.
