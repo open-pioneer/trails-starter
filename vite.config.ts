@@ -14,8 +14,6 @@ import eslint from "vite-plugin-eslint";
 // - https://esbuild.github.io/api/#target
 const targets = ["chrome92", "edge92", "firefox91", "safari14"];
 
-const sampleSites = ["samples/map-sample", "samples/i18n-howto"];
-
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => {
     const devMode = mode === "development";
@@ -39,6 +37,10 @@ export default defineConfig(({ mode }) => {
             target: targets
         },
 
+        esbuild: {
+            target: "es2022"
+        },
+
         plugins: [
             pioneer({
                 // Whether to include src/index.html in the built output
@@ -47,15 +49,17 @@ export default defineConfig(({ mode }) => {
                 // Additional directories to include as html (must contain index.html files)
                 sites: [
                     "sites/empty",
-
-                    // Include sample sites in the build
-                    ...sampleSites
                 ],
 
                 // Apps to distribute as .js files for embedded use cases
                 apps: []
             }),
-            react(),
+            react({
+                // useAtYourOwnRisk_mutateSwcOptions(options) {
+                //     options.jsc.parser.decorators = true;
+                //     options.jsc.transform.decoratorVersion = "2022-03";
+                // },
+            }),
             eslint()
         ],
 
