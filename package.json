@@ -36,6 +36,7 @@
             "vite-plugin-eslint>rollup: https://github.com/advisories/GHSA-gcx4-mw62-g8wm",
             "cross-spawn: https://github.com/advisories/GHSA-3xgq-45jj-v275",
             "nanoid: https://github.com/advisories/GHSA-mwcw-c2x4-8c55",
+            "esbuild: https://github.com/advisories/GHSA-67mh-4wv8-2f99",
             "",
             "ignored cves",
             "============",
@@ -58,7 +59,8 @@
             "micromatch@<4.0.8": ">=4.0.8",
             "vite-plugin-eslint>rollup": ">=3.29.5",
             "cross-spawn@<7.0.5": ">=7.0.5",
-            "nanoid@<3.3.8": "^3.3.8"
+            "nanoid@<3.3.8": "^3.3.8",
+            "esbuild@<0.25.0": ">=0.25.0"
         },
         "auditConfig": {
             "ignoreCves": []
