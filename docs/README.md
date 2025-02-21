@@ -19,6 +19,7 @@
     -   [How to add custom styles](./tutorials/HowToAddCustomStyles.md)
     -   [How to translate an App](./tutorials/HowToTranslateAnApp.md)
     -   [How to use properties](./tutorials/HowToUseProperties.md)
+    -   [How to support dynamic configuration](./tutorials/HowToSupportDynamicConfig.md)
     -   [How to provide an API](./tutorials/HowToProvideAnAPI.md)
     -   [How to write tests](./tutorials/HowToWriteTests.md)
     -   [How to publish a package](./tutorials/HowToPublishAPackage.md)
