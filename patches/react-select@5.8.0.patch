@@ -1,8 +1,8 @@
-diff --git a/dist/Select-49a62830.esm.js b/dist/Select-49a62830.esm.js
-index bed08498732b023f350d24a62728371af6a4dace..dcc7713c39b9aa87cb92f3af33b97c02bc2071e4 100644
---- a/dist/Select-49a62830.esm.js
-+++ b/dist/Select-49a62830.esm.js
-@@ -1498,7 +1498,7 @@ var Select = /*#__PURE__*/function (_Component) {
+diff --git a/dist/Select-36d15f93.cjs.prod.js b/dist/Select-36d15f93.cjs.prod.js
+index e2326a0bf776ab9f9a54005fa7fea9e6aaa7b100..1489a720aa2917ce98cb3fd1c28e9f46e73e060e 100644
+--- a/dist/Select-36d15f93.cjs.prod.js
++++ b/dist/Select-36d15f93.cjs.prod.js
+@@ -1505,7 +1505,7 @@ var Select = /*#__PURE__*/function (_Component) {
        // close the menu if the user taps outside
        // we're checking on event.target here instead of event.currentTarget, because we want to assert information
        // on events on child elements, not the document (which we've attached this handler to).
@@ -11,7 +11,7 @@ index bed08498732b023f350d24a62728371af6a4dace..dcc7713c39b9aa87cb92f3af33b97c02
          _this.blurInput();
        }
  
-@@ -2125,7 +2125,7 @@ var Select = /*#__PURE__*/function (_Component) {
+@@ -2132,7 +2132,7 @@ var Select = /*#__PURE__*/function (_Component) {
          'aria-labelledby': this.props['aria-labelledby'],
          'aria-required': required,
          role: 'combobox',
@@ -20,11 +20,20 @@ index bed08498732b023f350d24a62728371af6a4dace..dcc7713c39b9aa87cb92f3af33b97c02
        }, menuIsOpen && {
          'aria-controls': this.getElementId('listbox')
        }), !isSearchable && {
-diff --git a/dist/Select-5dacb5ba.cjs.prod.js b/dist/Select-5dacb5ba.cjs.prod.js
-index ea9203fb889d23825493d63964aad8229e758517..c3e9774f8f5f7f5a02a96b8e76df484b226fe957 100644
---- a/dist/Select-5dacb5ba.cjs.prod.js
-+++ b/dist/Select-5dacb5ba.cjs.prod.js
-@@ -2130,7 +2130,7 @@ var Select = /*#__PURE__*/function (_Component) {
+diff --git a/dist/Select-7eb2ef56.cjs.dev.js b/dist/Select-7eb2ef56.cjs.dev.js
+index 58d420040577220d34ea9aae0f7fe757dc86e162..44a68d566a8374931077b707a42d7f93f139afe8 100644
+--- a/dist/Select-7eb2ef56.cjs.dev.js
++++ b/dist/Select-7eb2ef56.cjs.dev.js
+@@ -1524,7 +1524,7 @@ var Select = /*#__PURE__*/function (_Component) {
+       // close the menu if the user taps outside
+       // we're checking on event.target here instead of event.currentTarget, because we want to assert information
+       // on events on child elements, not the document (which we've attached this handler to).
+-      if (_this.controlRef && !_this.controlRef.contains(event.target) && _this.menuListRef && !_this.menuListRef.contains(event.target)) {
++      if (_this.controlRef && !event.composedPath().includes(_this.controlRef) && _this.menuListRef && !event.composedPath().includes(_this.menuListRef)) {
+         _this.blurInput();
+       }
+ 
+@@ -2151,7 +2151,7 @@ var Select = /*#__PURE__*/function (_Component) {
          'aria-labelledby': this.props['aria-labelledby'],
          'aria-required': required,
          role: 'combobox',
@@ -33,11 +42,23 @@ index ea9203fb889d23825493d63964aad8229e758517..c3e9774f8f5f7f5a02a96b8e76df484b
        }, menuIsOpen && {
          'aria-controls': this.getElementId('listbox')
        }), !isSearchable && {
-diff --git a/dist/Select-d63eed7b.cjs.dev.js b/dist/Select-d63eed7b.cjs.dev.js
-index b3858a3b953490f3089fd60e97e1e7555b22ec15..c22777a209e94c9affb61fd2b69fba0268b8abc1 100644
---- a/dist/Select-d63eed7b.cjs.dev.js
-+++ b/dist/Select-d63eed7b.cjs.dev.js
-@@ -2149,7 +2149,7 @@ var Select = /*#__PURE__*/function (_Component) {
+diff --git a/dist/Select-aab027f3.esm.js b/dist/Select-aab027f3.esm.js
+index fd5726b720a2fed0e4ad5d80407a801d9e319966..6f647de4fa9cd08512bdc4a388731871790f7554 100644
+--- a/dist/Select-aab027f3.esm.js
++++ b/dist/Select-aab027f3.esm.js
+@@ -1500,7 +1500,10 @@ var Select = /*#__PURE__*/function (_Component) {
+       // close the menu if the user taps outside
+       // we're checking on event.target here instead of event.currentTarget, because we want to assert information
+       // on events on child elements, not the document (which we've attached this handler to).
+-      if (_this.controlRef && !_this.controlRef.contains(event.target) && _this.menuListRef && !_this.menuListRef.contains(event.target)) {
++      // ---
++      // PATCH: Fix event handling in shadow DOM + Touch input. Use Chrome Dev Tools with touch emulation and 
++      // attempt to use the input element + dropdown menu to verify this patch.
++      if (_this.controlRef && !event.composedPath().includes(_this.controlRef) && _this.menuListRef && !event.composedPath().includes(_this.menuListRef)) {
+         _this.blurInput();
+       }
+ 
+@@ -2127,7 +2130,7 @@ var Select = /*#__PURE__*/function (_Component) {
          'aria-labelledby': this.props['aria-labelledby'],
          'aria-required': required,
          role: 'combobox',
