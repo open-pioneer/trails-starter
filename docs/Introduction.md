@@ -11,12 +11,12 @@ To get started developing an application, head over to [Getting Started](./Getti
 
 This project is built on various high quality projects from the open source community:
 
--   [Vite](https://vitejs.dev/) is used as the development environment and application bundler.
--   [Vitest](https://vitest.dev/) runs our tests.
--   [React](https://reactjs.org/) provides the foundation of our UI.
--   We use accessible UI Components from [Chakra UI](https://chakra-ui.com/).
--   Applications can support multiple languages by using [FormatJS](https://formatjs.io/).
--   Framework Code is written in [TypeScript](https://www.typescriptlang.org/).
-    We recommend, but do not require, TypeScript for application code as well.
--   [PNPM](https://pnpm.io/) is our package manager.
--   Finally, applications are shipped as [Web Components](https://developer.mozilla.org/en-US/docs/Web/Web_Components).
+- [Vite](https://vitejs.dev/) is used as the development environment and application bundler.
+- [Vitest](https://vitest.dev/) runs our tests.
+- [React](https://reactjs.org/) provides the foundation of our UI.
+- We use accessible UI Components from [Chakra UI](https://chakra-ui.com/).
+- Applications can support multiple languages by using [FormatJS](https://formatjs.io/).
+- Framework Code is written in [TypeScript](https://www.typescriptlang.org/).
+  We recommend, but do not require, TypeScript for application code as well.
+- [PNPM](https://pnpm.io/) is our package manager.
+- Finally, applications are shipped as [Web Components](https://developer.mozilla.org/en-US/docs/Web/Web_Components).

@@ -13,11 +13,11 @@ For example, the [@open-pioneer/map](https://www.npmjs.com/package/@open-pioneer
 
 Our current set of repositories is:
 
--   [Starter repo](https://github.com/open-pioneer/trails-starter/): Serves as a baseline for new trails projects.
-    This repository also hosts the [Documentation](https://github.com/open-pioneer/trails-starter/tree/main/docs).
--   [Core packages](https://github.com/open-pioneer/trails-core-packages): Contains the runtime package and other central packages.
--   [OpenLayers base packages](https://github.com/open-pioneer/trails-openlayers-base-packages): Contains packages using OpenLayers to render a map.
--   [Build tools](https://github.com/open-pioneer/trails-build-tools): Contains our build tooling such as the Vite plugin.
+- [Starter repo](https://github.com/open-pioneer/trails-starter/): Serves as a baseline for new trails projects.
+  This repository also hosts the [Documentation](https://github.com/open-pioneer/trails-starter/tree/main/docs).
+- [Core packages](https://github.com/open-pioneer/trails-core-packages): Contains the runtime package and other central packages.
+- [OpenLayers base packages](https://github.com/open-pioneer/trails-openlayers-base-packages): Contains packages using OpenLayers to render a map.
+- [Build tools](https://github.com/open-pioneer/trails-build-tools): Contains our build tooling such as the Vite plugin.
 
 ## Report an issue
 
@@ -25,9 +25,9 @@ If you found a bug, please open an issue in an appropriate repository and provid
 Please attach a reproducible sample that demonstrates the problem.
 Good examples are:
 
--   a failing test case
--   a small code snippet
--   a sample repository (e.g. a fork of the starter repository)
+- a failing test case
+- a small code snippet
+- a sample repository (e.g. a fork of the starter repository)
 
 Our repositories are configured with issue templates that can help you write a good bug report.
 
@@ -81,25 +81,25 @@ $ pnpm dev
 
 ### Git and IDE setup
 
--   All text files must use UTF-8 encoding. This is usually the default.
--   All text files must use Unix line endings (`\n`).
-    On windows, either configure your IDE to use Unix line endings or use git's [`autocrlf`](https://git-scm.com/book/en/v2/Customizing-Git-Git-Configuration) feature:
+- All text files must use UTF-8 encoding. This is usually the default.
+- All text files must use Unix line endings (`\n`).
+  On windows, either configure your IDE to use Unix line endings or use git's [`autocrlf`](https://git-scm.com/book/en/v2/Customizing-Git-Git-Configuration) feature:
 
     ```bash
     $ git config --global core.autocrlf input
     ```
 
--   We keep a linear history in our public branches.
-    You can make `rebase` the default (instead of merge) to avoid accidental merge commits.
-    Note: this can also be done on a per-repository basis.
+- We keep a linear history in our public branches.
+  You can make `rebase` the default (instead of merge) to avoid accidental merge commits.
+  Note: this can also be done on a per-repository basis.
 
     ```bash
     $ git config --global pull.rebase true
     ```
 
--   Paths to JavaScript modules can get rather long on windows in combination with PNPM. If you see weird errors (I/O errors, file not found, etc.) when you're trying to install dependencies or run the development server, try moving the git repository to a shorter path on disk (less nesting, shorter name).
+- Paths to JavaScript modules can get rather long on windows in combination with PNPM. If you see weird errors (I/O errors, file not found, etc.) when you're trying to install dependencies or run the development server, try moving the git repository to a shorter path on disk (less nesting, shorter name).
 
--   Either use eslint's autofix feature or your IDE to ensure that your files contain license headers.
+- Either use eslint's autofix feature or your IDE to ensure that your files contain license headers.
 
     The following snippet can be used in VSCode.
     Create a snippet via "Ctrl+Shift+P --> Configure User Snippets" (either globally or in this project).
@@ -130,21 +130,21 @@ This will also reduce the risk of your PR being rejected.
 
 To create a pull request:
 
--   First, fork the repository via GitHub's UI and clone your fork (if you have write permissions to the repository, you can skip this step).
+- First, fork the repository via GitHub's UI and clone your fork (if you have write permissions to the repository, you can skip this step).
 
--   Then, create a branch with a sensible name.
-    We use simple branch prefixes to keep some order:
+- Then, create a branch with a sensible name.
+  We use simple branch prefixes to keep some order:
 
-    -   `feature/SCOPE`
-    -   `fix/SCOPE`
-    -   `chore/SCOPE`
-    -   `docs/SCOPE`
+    - `feature/SCOPE`
+    - `fix/SCOPE`
+    - `chore/SCOPE`
+    - `docs/SCOPE`
 
     where `SCOPE` is up to you, but it should be a short and descriptive identifier.
 
--   Make your changes in one or more commits.
-    We do not have a strict commit message convention.
-    Most pull requests are merged by squashing all changes, so you can make as many commits as you like.
+- Make your changes in one or more commits.
+  We do not have a strict commit message convention.
+  Most pull requests are merged by squashing all changes, so you can make as many commits as you like.
 
     When fixing bugs or implementing new features, make sure to include appropriate tests alongside your implementation.
 
@@ -152,20 +152,20 @@ To create a pull request:
     Tests are executed automatically when creating a commit and also when creating a pull request.
     For more details, see [Running tests](#running-tests).
 
--   Run `pnpm changeset` to create a description of your changes.
-    This will create a file that will be used to generate a changelog entry and a future release.
-    Your changeset file should list all packages that are affected by your change.
-    Don't forget to include this file in your pull request.
-    Do **not** update versions of workspace packages manually.
+- Run `pnpm changeset` to create a description of your changes.
+  This will create a file that will be used to generate a changelog entry and a future release.
+  Your changeset file should list all packages that are affected by your change.
+  Don't forget to include this file in your pull request.
+  Do **not** update versions of workspace packages manually.
 
     Go here to learn more about [Changesets](https://github.com/changesets/changesets).
 
     > Some changes (e.g. in configuration files) don't need a real changeset file.
     > You can generate an empty one by running `pnpm changeset add --empty` instead.
 
--   Push your changes into your fork (or branch) and create a pull request via GitHubs UI.
-    Please give your pull request a good title and a good description.
-    If your pull request addresses an issue, you should link to it from your PR's description.
+- Push your changes into your fork (or branch) and create a pull request via GitHubs UI.
+  Please give your pull request a good title and a good description.
+  If your pull request addresses an issue, you should link to it from your PR's description.
 
 ## Running tests
 

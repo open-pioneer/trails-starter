@@ -16,7 +16,7 @@ We will first discuss the underlying concepts and then work through a specific e
 
 ## Concepts
 
--   **Package Compilation**
+- **Package Compilation**
 
     To prepare a package for publishing, it must be built first.
     Building a package produces a `dist` directory in that package's source directory containing a compiled version of that package.
@@ -24,14 +24,14 @@ We will first discuss the underlying concepts and then work through a specific e
 
     This step is also called _separate (package) compilation_ since packages are compiled independently before being _linked_ into an application at a later point in time.
 
--   **Publishing**
+- **Publishing**
 
     We use our node package manager to publish the contents of the `dist` directory.
     Ultimately this means executing [`pnpm publish`](https://pnpm.io/cli/publish) or something equivalent.
 
     The package manager will upload the compiled version of our package to the _registry_, which is the public registry of [npmjs.com](https://npmjs.com) by default (private registries such as [Nexus](https://www.sonatype.com/products/sonatype-nexus-repository) or [Verdaccio](https://verdaccio.org/) can also be used).
 
--   **Package installation**
+- **Package installation**
 
     After a package has been published, it can simply be installed in any project, e.g. by executing `pnpm add`.
     Our build tools automatically detect Trails packages in an app's dependency graph.
@@ -98,7 +98,7 @@ dist
 
 Package compilation involves the following steps:
 
--   **Compile all required TypeScript/JavaScript files to JavaScript.**
+- **Compile all required TypeScript/JavaScript files to JavaScript.**
 
     We compile everything down to JavaScript for a stable distribution format.
     This way we do not depend on a certain version of TypeScript or specifics in the `JSX` syntax.
@@ -113,29 +113,29 @@ Package compilation involves the following steps:
 
     This compilation step also ensures that packages used by your code are listed in the `package.json` as dependencies.
 
--   **Create type declaration files (`.d.ts`) for TypeScript consumers.**
+- **Create type declaration files (`.d.ts`) for TypeScript consumers.**
 
     This way users of your package can benefit from type hints if they're using TypeScript.
     This step is enabled by default if your package contains a TypeScript source file.
     You can also force enable or disable this step by configuring `publishConfig.types` in your `build.config.mjs`.
 
--   **Compile styles to CSS.**
+- **Compile styles to CSS.**
 
     We compile all styles (CSS or SCSS) into a single CSS file.
     This step is skipped if your package does not define any styles.
 
--   **Copy i18n files.**
+- **Copy i18n files.**
 
     I18N files for supported locales (e.g. `i18n/en.yaml`) are copied to `dist`.
 
--   **Copy assets.**
+- **Copy assets.**
 
     Assets are "normal" files that are distributed alongside your code, for example images or fonts.
     These can be configured via `publishConfig.assets`.
     Files matching any of the glob patterns in `publishConfig.assets` are simply copied to the `dist` directory.
     By default, all files in your package's `assets` directory are copied (if it exists).
 
--   **Generate a package.json file.**
+- **Generate a package.json file.**
 
     `build-pioneer-package` generates a custom `package.json` file for your compiled package.
     Most properties from your package's source `package.json` will simply be copied into the generated `package.json` (such as `name`, `version` and many more).
@@ -143,13 +143,13 @@ Package compilation involves the following steps:
     When generating the `package.json`, `build-pioneer-package` also takes into account your package's metadata from the `build.config.mjs`: it will make entry points public (via `exports`) and include
     information about services and other Open Pioneer Trails features using the `openPioneerFramework` property.
 
--   **Copy auxiliary files.**
+- **Copy auxiliary files.**
 
 By default, a package must contain the following text files:
 
--   `README`, `README.md` or `README.txt`
--   `LICENSE`, `LICENSE.md` or `LICENSE.txt`
--   `CHANGELOG`, `CHANGELOG.md` or `CHANGELOG.txt`
+- `README`, `README.md` or `README.txt`
+- `LICENSE`, `LICENSE.md` or `LICENSE.txt`
+- `CHANGELOG`, `CHANGELOG.md` or `CHANGELOG.txt`
 
 Additionally, a `NOTICE`, `NOTICE.md` or `NOTICE.txt` may be present.
 All these files are copied into the compiled package.
@@ -214,7 +214,7 @@ or to keep the code private within an organization.
 
 There are multiple options:
 
--   Using a different global registry.
+- Using a different global registry.
 
     All your packages will be fetched from this registry.
     The registry must therefore also act as a proxy for <https://npmjs.com>, since you still need access to all public packages.
@@ -223,7 +223,7 @@ There are multiple options:
 
     See [here](https://verdaccio.org/docs/setup-npm) for setup instructions (which also apply to pnpm).
 
--   Using a different registry for one or more specific scopes.
+- Using a different registry for one or more specific scopes.
 
     You will still use the default registry for all other packages, but packages from your scope (e.g. `@my-company/*`)
     would be loaded from a custom registry.
@@ -425,7 +425,7 @@ Here would be your README.
 
 ## 1.0.0
 
--   Initial release
+- Initial release
 ```
 
 Finally, we remove `strict: false` from our `build.config.mjs`:
@@ -500,41 +500,41 @@ See also [Contributing packages to the registry](https://docs.npmjs.com/packages
 
 ## Checklist
 
--   [ ] General
-    -   [ ] Don't use file names starting with "\_" if it can be avoided.
-            We may add additional (internal) files or directories using that prefix, for example `_chunks` or `_virtual`.
--   [ ] package.json
+- [ ] General
+    - [ ] Don't use file names starting with "\_" if it can be avoided.
+          We may add additional (internal) files or directories using that prefix, for example `_chunks` or `_virtual`.
+- [ ] package.json
 
-    -   [ ] Choose a good package `name` and a `description`
-    -   [ ] Set `private` to `false`
-    -   [ ] Set a `version`
-    -   [ ] Set a `license`
-    -   [ ] Set `publishConfig.directory` to `dist`
-    -   [ ] Maintain your `dependencies` / `peerDependencies`, see [best practices](../BestPractices.md#dependency-management)
-    -   [ ] Optional: Maintain package metadata such as `keywords`, `repository`, `bugs`, `author`, `homepage` etc.
+    - [ ] Choose a good package `name` and a `description`
+    - [ ] Set `private` to `false`
+    - [ ] Set a `version`
+    - [ ] Set a `license`
+    - [ ] Set `publishConfig.directory` to `dist`
+    - [ ] Maintain your `dependencies` / `peerDependencies`, see [best practices](../BestPractices.md#dependency-management)
+    - [ ] Optional: Maintain package metadata such as `keywords`, `repository`, `bugs`, `author`, `homepage` etc.
 
--   [ ] build.config.mjs
+- [ ] build.config.mjs
 
-    -   [ ] Configure your package's entry points
-    -   [ ] Customize options if needed, see [`publishConfig`](../reference/Package.md#publishconfig)
-    -   [ ] Set `strict` to `true` (or remove the property to apply default)
+    - [ ] Configure your package's entry points
+    - [ ] Customize options if needed, see [`publishConfig`](../reference/Package.md#publishconfig)
+    - [ ] Set `strict` to `true` (or remove the property to apply default)
 
--   [ ] Include/Update README.md
--   [ ] Include/Update CHANGELOG.md
--   [ ] Include LICENSE
--   [ ] Build with `build-pioneer-package`
--   [ ] Publish with `pnpm publish`
+- [ ] Include/Update README.md
+- [ ] Include/Update CHANGELOG.md
+- [ ] Include LICENSE
+- [ ] Build with `build-pioneer-package`
+- [ ] Publish with `pnpm publish`
 
 ## Automation
 
 We recommend automating the process of releasing your packages (and your app) as much as possible.
 This has multiple advantages:
 
--   It reduces the possibility of human errors.
-    Releases are usually complex and involve lots of small steps.
-    A script cannot forget to perform those steps.
--   Automated releases are faster, making it easier to release often.
--   If a release process has been automated well, any team member can trigger a release as it requires no expert knowledge anymore.
+- It reduces the possibility of human errors.
+  Releases are usually complex and involve lots of small steps.
+  A script cannot forget to perform those steps.
+- Automated releases are faster, making it easier to release often.
+- If a release process has been automated well, any team member can trigger a release as it requires no expert knowledge anymore.
 
 For automatic management of your package's changelogs and versions we can recommend [Changesets](https://github.com/changesets/changesets/).
 You can use their CLI as parts of your release script.

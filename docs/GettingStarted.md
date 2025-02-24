@@ -100,8 +100,8 @@ For example, you can provide additional environment variables (e.g. backend URLs
 
 More information:
 
--   [Vite's configuration reference](https://vitejs.dev/config/)
--   [Env files](https://vitejs.dev/guide/env-and-mode.html#env-files)
+- [Vite's configuration reference](https://vitejs.dev/config/)
+- [Env files](https://vitejs.dev/guide/env-and-mode.html#env-files)
 
 ## Next steps
 
@@ -111,6 +111,6 @@ If you start the development server and open the app in your browser, changes to
 
 Recommended further reading:
 
--   [Guide to the repository](./RepositoryGuide.md)
--   [How to create an app](./tutorials/HowToCreateAnApp.md)
--   [How to deploy an app](./tutorials/HowToDeployAnApp.md)
+- [Guide to the repository](./RepositoryGuide.md)
+- [How to create an app](./tutorials/HowToCreateAnApp.md)
+- [How to deploy an app](./tutorials/HowToDeployAnApp.md)

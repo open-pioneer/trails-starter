@@ -15,12 +15,12 @@ It is heavily inspired by the Spring framework.
 
 The most important classes and modules are:
 
--   `class ServiceLayer`
+- `class ServiceLayer`
 
     Responsible for maintaining the service lifecycle.
     This involves starting all required services, connecting them via references and destroying them again when the system shuts down.
 
--   `function verifyDependencies`
+- `function verifyDependencies`
 
     The service layer will verify the services' dependency graph before starting them by calling this function.
     It will visit all services to ensure that their dependencies can be fulfilled and that no cycles occur.
@@ -34,14 +34,14 @@ The most important classes and modules are:
     The service layer will use the index to support dynamic service lookups (e.g. for the UI)
     and the dependency information during service construction to setup service references.
 
--   `class PackageRepr` / `ServiceRepr`
+- `class PackageRepr` / `ServiceRepr`
 
     Represents a package / service at runtime.
     It must be noted that these classes are stateful: their state will reflect the changes made by the service layer.
     For example, a `ServiceRepr`'s `instance` attribute will hold the actual service instance once it has been created.
     As a consequence, they cannot be reused or shared between multiple application instances.
 
--   `function createPackages`
+- `function createPackages`
 
     Parses metadata into instances of `PackageRepr` and `ServiceRepr`.
     This transforms the well defined metadata format (input to the service layer) into the internal runtime representation.
@@ -119,8 +119,8 @@ This also means that an interface can be implemented by multiple services at the
 The service layer throws an error when the reference cannot be resolved to an exact service.
 The error conditions are:
 
--   The interface is not implemented at all
--   The interface is implemented multiple times but the reference is not qualified
+- The interface is not implemented at all
+- The interface is implemented multiple times but the reference is not qualified
 
 A "qualifier" (a simple string tag in its current form) can be used to disambiguate the reference.
 

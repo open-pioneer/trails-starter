@@ -82,14 +82,14 @@ it("multiplies two numbers", () => {
 });
 ```
 
--   **(1)**  
-    Imports test helpers from `vitest`.
-    `it` (or `test`) define a new test.
-    `describe` can be used to group tests together, to share common setup code for example.
+- **(1)**  
+  Imports test helpers from `vitest`.
+  `it` (or `test`) define a new test.
+  `describe` can be used to group tests together, to share common setup code for example.
 
--   **(2)**
-    `assert` is used to check the result of the multiplication.
-    `assert` and `expect` are available from `vitest` to write assertions.
+- **(2)**
+  `assert` is used to check the result of the multiplication.
+  `assert` and `expect` are available from `vitest` to write assertions.
 
 For more details, visit [Vitest's API reference](https://vitest.dev/api/).
 
@@ -197,18 +197,18 @@ You can take a look at the UI tests of the runtime package (`@open-pioneer/runti
 
 Recommended libraries:
 
--   `@testing-library/react` (or `/dom`): <https://testing-library.com/>
--   `react-dom/test-utils`: <https://reactjs.org/docs/test-utils.html>
--   Our own test utils in `@open-pioneer/test-utils`
+- `@testing-library/react` (or `/dom`): <https://testing-library.com/>
+- `react-dom/test-utils`: <https://reactjs.org/docs/test-utils.html>
+- Our own test utils in `@open-pioneer/test-utils`
 
 ## Test utilities
 
 The package `@open-pioneer/test-utils` provides helpers to test components of an Open Pioneer Trails application:
 
--   The application itself (that is, the web component).
-    Web components can be mounted in the DOM and their children can be searched.
--   React components with dependencies to services, properties etc.
-    Test dependencies and data can be provided in such a way that the component renders into the DOM without any changes to the component's implementation.
--   Service instances can be created with test references and properties.
+- The application itself (that is, the web component).
+  Web components can be mounted in the DOM and their children can be searched.
+- React components with dependencies to services, properties etc.
+  Test dependencies and data can be provided in such a way that the component renders into the DOM without any changes to the component's implementation.
+- Service instances can be created with test references and properties.
 
 For more details, take a look at that package's `README` and its own tests.

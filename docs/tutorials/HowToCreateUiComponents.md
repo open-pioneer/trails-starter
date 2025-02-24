@@ -5,9 +5,9 @@ We can also use pre-defined components from the [Chakra UI](https://chakra-ui.co
 
 ## Documentation
 
--   [React's official documentation](https://reactjs.org/docs/getting-started.html)
--   [React's new beta documentation](https://beta.reactjs.org/learn) (which is already excellent)
--   [Chakra's component overview](https://chakra-ui.com/docs/components) (with lots of examples)
+- [React's official documentation](https://reactjs.org/docs/getting-started.html)
+- [React's new beta documentation](https://beta.reactjs.org/learn) (which is already excellent)
+- [Chakra's component overview](https://chakra-ui.com/docs/components) (with lots of examples)
 
 ## Getting started
 
@@ -31,10 +31,10 @@ const Element = createCustomElement({
 customElements.define("empty-app", Element);
 ```
 
--   **(1)**
-    Imports `AppUI` (a React component) from the given module.
--   **(2)**
-    Specifies `AppUI` as the application's UI. Any kind of react component can be used in this place.
+- **(1)**
+  Imports `AppUI` (a React component) from the given module.
+- **(2)**
+  Specifies `AppUI` as the application's UI. Any kind of react component can be used in this place.
 
 When the application is instantiated, the `AppUI` component will be rendered automatically.
 
@@ -62,22 +62,22 @@ export function AppUI() {
 }
 ```
 
--   **(1)**
-    Imports Chakra components used by the app's UI.
+- **(1)**
+  Imports Chakra components used by the app's UI.
 
     > **Note**  
     > Remember to use `@open-pioneer/chakra-integration` for imports instead of `@chakra-ui/react`.
     > The `chakra-integration` package ensures a common version of the Chakra framework and also contains a few fixes we had to make for web component support.
     > All chakra components are available from `@open-pioneer/chakra-integration`.
 
--   **(2)**
-    Defines a React component called `AppUI`.
-    (Almost) all React components should be defined as functions (either `function ComponentName ...` or `const ComponentName = ...`);
+- **(2)**
+  Defines a React component called `AppUI`.
+  (Almost) all React components should be defined as functions (either `function ComponentName ...` or `const ComponentName = ...`);
 
--   **(3)**
-    This defines the content of the component.
-    In this case, Chakra components (e.g. `Container`, `Text`) are used.
-    You can also use plain html elements, like `div` or `p`.
+- **(3)**
+  This defines the content of the component.
+  In this case, Chakra components (e.g. `Container`, `Text`) are used.
+  You can also use plain html elements, like `div` or `p`.
 
     The `intl` object here is used to translate messages into multiple languages (see [How to translate an App](./HowToTranslateAnApp.md)). We will not dive into internationalization (i18n) in this tutorial and use static strings instead.
 
@@ -115,19 +115,19 @@ function ClickableButton({ label }: ClickableButtonProps) {
 }
 ```
 
--   **(1)**
-    Defines the new component.
-    React components should start with an uppercase letter and take a single parameter (called `props`); in this case `props` can contain a `label` property.
+- **(1)**
+  Defines the new component.
+  React components should start with an uppercase letter and take a single parameter (called `props`); in this case `props` can contain a `label` property.
 
     > **Note**
     > In simple (local) components like this, you could also inline the type definition of `ClickableButtonProps`.
     > If you have many properties, or intend to share your components across modules or packages, using a separate type is strongly recommended.
 
--   **(2)**
-    Uses the [`useState`](https://beta.reactjs.org/reference/react/useState) hook to remember the number of types the button has been clicked.
+- **(2)**
+  Uses the [`useState`](https://beta.reactjs.org/reference/react/useState) hook to remember the number of types the button has been clicked.
 
--   **(3)**
-    Renders the button with the appropriate text and wires up the `onClick` handler.
+- **(3)**
+  Renders the button with the appropriate text and wires up the `onClick` handler.
 
 Now, use the new button from the `AppUI` component:
 
