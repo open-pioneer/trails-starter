@@ -331,5 +331,6 @@ It should not be overused: a long-running `resolveConfig` call will block the st
 ## Further reading
 
 - [How to create a service](./HowToCreateAService.md)
+- [How to support dynamic configuration](./HowToSupportDynamicConfig.md)
 - [Package reference](../reference/Package.md)
 - [Services Reference](../reference/Services.md)
