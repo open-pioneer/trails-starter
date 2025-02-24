@@ -73,12 +73,12 @@ export function AppUI() {
 }
 ```
 
--   **(1)**
-    Fetches a reference to the service using the `useService` hook from `"open-pioneer:react-hooks"`.
--   **(2)**
-    React's [`useState`](https://reactjs.org/docs/hooks-state.html) is used to manage the component's click count.
--   **(3)**
-    Applies the new click count to the application's host element.
+- **(1)**
+  Fetches a reference to the service using the `useService` hook from `"open-pioneer:react-hooks"`.
+- **(2)**
+  React's [`useState`](https://reactjs.org/docs/hooks-state.html) is used to manage the component's click count.
+- **(3)**
+  Applies the new click count to the application's host element.
 
 The custom attribute will now be present when you inspect your app after pressing the button:
 
@@ -128,17 +128,17 @@ export default defineBuildConfig({
 });
 ```
 
--   **(1)**  
-    Declares the new service. The name here (left to the `":"`) must match the `export` from the `services.ts`.
+- **(1)**  
+  Declares the new service. The name here (left to the `":"`) must match the `export` from the `services.ts`.
 
--   **(2)**  
-    Declares the interfaces provided by the new service.
-    Interface names can be chosen arbitrarily, but they should not collide.
-    It is a good practice to choose a prefix similar (or equal) to the package name.
+- **(2)**  
+  Declares the interfaces provided by the new service.
+  Interface names can be chosen arbitrarily, but they should not collide.
+  It is a good practice to choose a prefix similar (or equal) to the package name.
 
--   **(3)**  
-    References the interface `"runtime.ApplicationContext"`.
-    The service object will be injected by the framework into the class' constructor as `ctx` (the name can be freely chosen).
+- **(3)**  
+  References the interface `"runtime.ApplicationContext"`.
+  The service object will be injected by the framework into the class' constructor as `ctx` (the name can be freely chosen).
 
 Next, we will fill in the implementation of `AttributeService`:
 
@@ -169,8 +169,8 @@ export class AttributeService {
 }
 ```
 
--   **(1)**  
-    The framework uses the `options` parameter to inject all service options, including the `references`.
+- **(1)**  
+  The framework uses the `options` parameter to inject all service options, including the `references`.
 
     We use a `References` interface to declare which types (and names) to expect.
     This should match the configuration in your `build.config.mjs`.
@@ -179,12 +179,12 @@ export class AttributeService {
 
     Note that this is only needed if you're using TypeScript. When you're using JavaScript, just use the `options` parameter directly.
 
--   **(2)**  
-    This stores the injected service instance into a property of our own service instance.
-    The name `ctx` is the same as the name of the reference in the `build.config.mjs`.
+- **(2)**  
+  This stores the injected service instance into a property of our own service instance.
+  The name `ctx` is the same as the name of the reference in the `build.config.mjs`.
 
--   **(3)**
-    The implementation of `updateAttribute()` was moved from the React component.
+- **(3)**
+  The implementation of `updateAttribute()` was moved from the React component.
 
 Finally, we will update our UI to use our new service.
 In the `build.config.mjs`, the UI now requires the interface `"empty.AttributeService"`:
@@ -232,8 +232,8 @@ export function AppUI() {
 }
 ```
 
--   **(1)**  
-    We updated the interface name.
+- **(1)**  
+  We updated the interface name.
 
     The return value from `useService` has to be casted manually to the expected type in this case, otherwise we would receive `unknown`.
     This is because we have not registered the interface type with the framework (which can be okay for internal services and simple examples).
@@ -241,8 +241,8 @@ export function AppUI() {
 
     Note that this is only needed if you're using TypeScript.
 
--   **(2)**  
-    The body of the click handler now calls our service.
+- **(2)**  
+  The body of the click handler now calls our service.
 
 After following these steps, your application's external behavior will be unchanged: the attribute will still be updated.
 
@@ -252,6 +252,6 @@ See [TypeScript Integration](../reference/Services.md#typescript-integration) fo
 
 ## Further reading
 
--   [How to create a service](./HowToCreateAService.md)
--   [Package reference](../reference/Package.md)
--   [Services Reference](../reference/Services.md)
+- [How to create a service](./HowToCreateAService.md)
+- [Package reference](../reference/Package.md)
+- [Services Reference](../reference/Services.md)

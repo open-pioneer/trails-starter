@@ -19,9 +19,9 @@ In order to be "publishable", packages must be prepared as individual artifacts.
 For better stability, compatibility and performance it is desirable to restrict files types within published
 packages to a certain subset of "simple" types:
 
--   `.js` for code (optionally including `.map` and `.d.ts` files)
--   `.css` for styles (optionally including `.map`)
--   `.json` for i18n (TODO: reuse yaml?)
+- `.js` for code (optionally including `.map` and `.d.ts` files)
+- `.css` for styles (optionally including `.map`)
+- `.json` for i18n (TODO: reuse yaml?)
 
 This means that a package's source code must be pre-compiled with appropriate compilers (transpile typescript, jsx etc, sass etc.).
 
@@ -30,23 +30,23 @@ It may in fact be a disadvantage because it makes generated code harder to read 
 
 ## Requirements
 
--   A build tool that compiles a single package, handling TypeScript/JavaScript/JSX, CSS and assets such as README or LICENSE files.
--   A tool to publish such a compiled package to a registry
--   Existing build tools must be able to handle external packages with Open Pioneer Trails extensions
--   Configuration / Documentation: How to build and host api docs
--   Documentation: How to use an external package
+- A build tool that compiles a single package, handling TypeScript/JavaScript/JSX, CSS and assets such as README or LICENSE files.
+- A tool to publish such a compiled package to a registry
+- Existing build tools must be able to handle external packages with Open Pioneer Trails extensions
+- Configuration / Documentation: How to build and host api docs
+- Documentation: How to use an external package
 
 ## Assumptions
 
--   All packages will ultimately be built using vite, with our Open Pioneer Trails vite plugin enabled.
-    Applications will always contain our matching runtime package.
-    This gives us some leeway w.r.t. special vite imports (e.g. `?inline`) - we can just pass them through and not replace them at all.
+- All packages will ultimately be built using vite, with our Open Pioneer Trails vite plugin enabled.
+  Applications will always contain our matching runtime package.
+  This gives us some leeway w.r.t. special vite imports (e.g. `?inline`) - we can just pass them through and not replace them at all.
 
 ## Package format
 
--   The `build.config.mjs` format will be extended with the `entryPoints` option.
-    Listed entry points are TypeScript/JavaScript files that will be made available to importers.
-    _All other files are not guaranteed to be present and can not be directly imported at all._
+- The `build.config.mjs` format will be extended with the `entryPoints` option.
+  Listed entry points are TypeScript/JavaScript files that will be made available to importers.
+  _All other files are not guaranteed to be present and can not be directly imported at all._
 
     Example:
 
@@ -81,16 +81,16 @@ It may in fact be a disadvantage because it makes generated code harder to read 
     }
     ```
 
--   Other extensions to the `build.config.mjs`:
+- Other extensions to the `build.config.mjs`:
 
-    -   Which assets to copy
-    -   Which readme content to include
-    -   Which license to include
-    -   `package.json` overwrites (most values will be taken from the source `package.json`)
-    -   ...
+    - Which assets to copy
+    - Which readme content to include
+    - Which license to include
+    - `package.json` overwrites (most values will be taken from the source `package.json`)
+    - ...
 
--   The build tool will place additional metadata into the generated `package.json`.
-    Metadata is taken mostly from the source package's `build.config.mjs` (which will not be present in the compiled package):
+- The build tool will place additional metadata into the generated `package.json`.
+  Metadata is taken mostly from the source package's `build.config.mjs` (which will not be present in the compiled package):
 
     ```jsonc
     {
@@ -144,36 +144,36 @@ A new build tool will compile a package from its source representation into a pa
 
 The phases to be implemented are as follows:
 
--   Transpile TypeScript/JavaScript (and JSX/TSX) to .js (with .map, .d.ts when enabled).
+- Transpile TypeScript/JavaScript (and JSX/TSX) to .js (with .map, .d.ts when enabled).
 
     Notes:
 
-    -   Use rollup (with preserveModules) to strip test files etc. Use `entryPoints` as input.
-        Bundling is not necessary.
-    -   Mark everything as external that is not a local file
-    -   Use rollup-plugin-dts for .d.ts files
-    -   Transpile JSX with swc or esbuild (as rollup plugins)
-    -   Handle vite-style imports (i.e. `foo.js?worker` -> resolve to `foo.js` so it gets included in the build)
+    - Use rollup (with preserveModules) to strip test files etc. Use `entryPoints` as input.
+      Bundling is not necessary.
+    - Mark everything as external that is not a local file
+    - Use rollup-plugin-dts for .d.ts files
+    - Transpile JSX with swc or esbuild (as rollup plugins)
+    - Handle vite-style imports (i.e. `foo.js?worker` -> resolve to `foo.js` so it gets included in the build)
 
--   Transpile scss to css, bundle css
+- Transpile scss to css, bundle css
 
-    -   sass / postcss
-    -   see vite source
-    -   do not include node_modules during bundle (css would be copied multiple times if multiple packages use it)
+    - sass / postcss
+    - see vite source
+    - do not include node_modules during bundle (css would be copied multiple times if multiple packages use it)
 
--   Optional: Transpile i18n yaml to json
+- Optional: Transpile i18n yaml to json
 
--   Copy assets:
+- Copy assets:
 
-    -   README
-    -   LICENSE
-    -   assets/\*
+    - README
+    - LICENSE
+    - assets/\*
 
--   Assemble a `package.json` with metadata
+- Assemble a `package.json` with metadata
 
 ## Proof of Concept
 
--   Extract framework/\* packages into their own repository
--   Put open-layers and base components into their own repository
--   The existing starter repository should then be almost empty (with dependencies and sample apps ofc.).
-    Everything should work like it used to.
+- Extract framework/\* packages into their own repository
+- Put open-layers and base components into their own repository
+- The existing starter repository should then be almost empty (with dependencies and sample apps ofc.).
+  Everything should work like it used to.

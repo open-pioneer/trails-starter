@@ -2,15 +2,15 @@
 
 ## Criteria
 
--   Complex plural support
--   Localized number and date formatting
--   [ICU Message Format](https://phrase.com/blog/posts/guide-to-the-icu-message-format/) support (?)
--   light weight
--   support for package concept
--   on runtime language detection
--   one translation file per language / page
--   active development / community
--   license
+- Complex plural support
+- Localized number and date formatting
+- [ICU Message Format](https://phrase.com/blog/posts/guide-to-the-icu-message-format/) support (?)
+- light weight
+- support for package concept
+- on runtime language detection
+- one translation file per language / page
+- active development / community
+- license
 
 ## Overview
 
@@ -26,94 +26,94 @@
 
 ### Out of focus
 
--   Globalize
--   jQuery.I18n
--   vue-i18n
--   i18n-js
--   Jed (gettext style)
--   FBT
--   Fluent
--   Lisan
--   ttag
--   schummar-translate
--   Rosetta
--   Talkr
--   Nano Stores I18n
+- Globalize
+- jQuery.I18n
+- vue-i18n
+- i18n-js
+- Jed (gettext style)
+- FBT
+- Fluent
+- Lisan
+- ttag
+- schummar-translate
+- Rosetta
+- Talkr
+- Nano Stores I18n
 
 ## Details
 
 ### i18next
 
--   most complete i18n solution with many third-party plugins ([https://www.i18next.com/overview/plugins-and-utils](https://www.i18next.com/overview/plugins-and-utils))
--   support / first-party integration for a wide range of frameworks, e.g. [react-i18n](https://react.i18next.com/)
--   support for translation file loading and user language detection
--   support for interpolation, nesting, plurals, context, gender, built-in formatting functions (Date, Number, Currency, Units..) based on the [Intl API](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl).
--   can be complicated if using more than basic features
--   [JSON Format](https://www.i18next.com/misc/json-format) for messages
--   well established community
+- most complete i18n solution with many third-party plugins ([https://www.i18next.com/overview/plugins-and-utils](https://www.i18next.com/overview/plugins-and-utils))
+- support / first-party integration for a wide range of frameworks, e.g. [react-i18n](https://react.i18next.com/)
+- support for translation file loading and user language detection
+- support for interpolation, nesting, plurals, context, gender, built-in formatting functions (Date, Number, Currency, Units..) based on the [Intl API](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl).
+- can be complicated if using more than basic features
+- [JSON Format](https://www.i18next.com/misc/json-format) for messages
+- well established community
 
 ### FormatJS
 
--   first-party React integration, [react-intl](https://formatjs.io/docs/react-intl/)
--   first-class ICU Message Format support
--   no build-in translation file loading and user language detection
--   good tooling ([CLI](https://formatjs.io/docs/tooling/cli),[eslint-plugin](https://https://formatjs.io/docs/tooling/linter),...)
--   good [TMS integration](https://formatjs.io/docs/getting-started/message-extraction/#translation-management-system-tms-integration)
--   support for [pre-compiled messages](https://formatjs.io/docs/guides/advanced-usage) into AST, reduced react-intl without parser (40% smaller)
--   react-intl: Internationalizing can be applied only in view layer such as React.Component -> [react-intl-universal](https://github.com/alibaba/react-intl-universal) for Vanilla JS
--   well established community
+- first-party React integration, [react-intl](https://formatjs.io/docs/react-intl/)
+- first-class ICU Message Format support
+- no build-in translation file loading and user language detection
+- good tooling ([CLI](https://formatjs.io/docs/tooling/cli),[eslint-plugin](https://https://formatjs.io/docs/tooling/linter),...)
+- good [TMS integration](https://formatjs.io/docs/getting-started/message-extraction/#translation-management-system-tms-integration)
+- support for [pre-compiled messages](https://formatjs.io/docs/guides/advanced-usage) into AST, reduced react-intl without parser (40% smaller)
+- react-intl: Internationalizing can be applied only in view layer such as React.Component -> [react-intl-universal](https://github.com/alibaba/react-intl-universal) for Vanilla JS
+- well established community
 
 ### Polyglot
 
--   light weight with minimum feature set
--   simple solutions for translation, interpolation and pluralization
--   no external dependencies
--   support for nested phrase objects
--   React integration with [Wrapper](https://github.com/nayaabkhan/react-polyglot)
+- light weight with minimum feature set
+- simple solutions for translation, interpolation and pluralization
+- no external dependencies
+- support for nested phrase objects
+- React integration with [Wrapper](https://github.com/nayaabkhan/react-polyglot)
 
 ### LinguiJS
 
--   small, robust, intuitive syntax
--   support for interpolation, plurals, date/number formats
--   uses ICU message format
--   CLI for extracting messages
--   no build-in translation loader
--   support for JS and React
--   newer smaller community, but active and helpful
--   well documented
--   TypeScript support
--   monorepo support
+- small, robust, intuitive syntax
+- support for interpolation, plurals, date/number formats
+- uses ICU message format
+- CLI for extracting messages
+- no build-in translation loader
+- support for JS and React
+- newer smaller community, but active and helpful
+- well documented
+- TypeScript support
+- monorepo support
 
 ### eo-locale
 
--   support for Vanilla JS and React
--   really tiny, but small documentation, too
--   message format strictly implemented by ICU standards
--   TypeScript support
--   optimized for tree shaking
--   built with hooks and functional components only
--   support for dates, nummeric values and plurals
--   nested support
+- support for Vanilla JS and React
+- really tiny, but small documentation, too
+- message format strictly implemented by ICU standards
+- TypeScript support
+- optimized for tree shaking
+- built with hooks and functional components only
+- support for dates, nummeric values and plurals
+- nested support
 
 ### messageformat
 
--   collection of packages for
-    -   transpile MessageFormat strings to JS functions
-    -   loader for JSON, YAML & .properties message files
-    -   parser for MessageFormat strings to AST
-    -   supporting date and number formatting
-    -   React hooks
-    -   rollup-plugin
+- collection of packages for
+    - transpile MessageFormat strings to JS functions
+    - loader for JSON, YAML & .properties message files
+    - parser for MessageFormat strings to AST
+    - supporting date and number formatting
+    - React hooks
+    - rollup-plugin
 
 ### typesafe-i18n
 
--   fully type-safe and lightweight internationalization library for all your TypeScript and JavaScript projects
--   lightweight and easy to use
--   support for plurals, switch-case statements, number and date formatting
--   locale-detection
--   optimized for performance
--   generator for boilerplate code
--   official Vite support removed since 5.0 but https://stackoverflow.com/questions/72033015/how-to-integrate-typesafe-i18n-with-vite-bundler
+- fully type-safe and lightweight internationalization library for all your TypeScript and JavaScript projects
+- lightweight and easy to use
+- support for plurals, switch-case statements, number and date formatting
+- locale-detection
+- optimized for performance
+- generator for boilerplate code
+- official Vite support removed since 5.0 but https://stackoverflow.com/questions/72033015/how-to-integrate-typesafe-i18n-with-vite-bundler
 
 ## Links
 

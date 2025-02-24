@@ -160,12 +160,12 @@ export class SearchService {
 }
 ```
 
--   **(1)**
-    The `serviceOptions` parameter is provided by the framework.
--   **(2)**
-    `serviceOptions.properties.backendUrl` contains the value of the property.
--   **(3)**
-    Triggers a "search" and prints the current value of the backend url, for inspection.
+- **(1)**
+  The `serviceOptions` parameter is provided by the framework.
+- **(2)**
+  `serviceOptions.properties.backendUrl` contains the value of the property.
+- **(3)**
+  Triggers a "search" and prints the current value of the backend url, for inspection.
 
 We will quickly update the application's UI to try the new method:
 
@@ -223,12 +223,12 @@ const Element = createCustomElement({
 });
 ```
 
--   **(1)**
-    The `properties` object can define (or override) properties for every package in the application.
--   **(2)**
-    Property values for the `search-service` package.
-    The key must be the exact name of the package.
-    The properties defined here should be supported by the package.
+- **(1)**
+  The `properties` object can define (or override) properties for every package in the application.
+- **(2)**
+  Property values for the `search-service` package.
+  The key must be the exact name of the package.
+  The properties defined here should be supported by the package.
 
 That's it. After reloading the application, pressing the button now prints:
 
@@ -330,6 +330,6 @@ It should not be overused: a long-running `resolveConfig` call will block the st
 
 ## Further reading
 
--   [How to create a service](./HowToCreateAService.md)
--   [Package reference](../reference/Package.md)
--   [Services Reference](../reference/Services.md)
+- [How to create a service](./HowToCreateAService.md)
+- [Package reference](../reference/Package.md)
+- [Services Reference](../reference/Services.md)

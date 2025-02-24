@@ -212,16 +212,16 @@ export function AppUI() {
 }
 ```
 
--   **(1)**
-    Retrieves the reference to our math service. Note that we are currently casting to `any` here: this is because the interface name has not been associated with a type yet. We will do that later.
+- **(1)**
+  Retrieves the reference to our math service. Note that we are currently casting to `any` here: this is because the interface name has not been associated with a type yet. We will do that later.
 
     _Do not_ use the actual class name (`MathServiceImpl`) here, since that is private to the package and may contain additional implementation details.
     When using a private service (e.g. inside the same package), using that class would be okay.
 
--   **(2)**
-    Calls the `multiply` method on the service.
-    This callback is triggered by the `<Button>` element.
-    The result is stored into the component's state via `setResult()` and will be displayed by the bottommost `<Text>` element.
+- **(2)**
+  Calls the `multiply` method on the service.
+  This callback is triggered by the `<Button>` element.
+  The result is stored into the component's state via `setResult()` and will be displayed by the bottommost `<Text>` element.
 
 Your UI should look like this:
 
@@ -269,9 +269,9 @@ export interface MathService extends DeclaredService<"math.MathService"> {
 }
 ```
 
--   **(1)**  
-    This associates the type with the given interface name at compile time.
-    Whenever one writes `useService<MathService>("math.MathService")`, the compiler will automatically check that one has not accidentally mistyped the string argument.
+- **(1)**  
+  This associates the type with the given interface name at compile time.
+  Whenever one writes `useService<MathService>("math.MathService")`, the compiler will automatically check that one has not accidentally mistyped the string argument.
 
     This means that we can now also remove the `as any` cast in `AppUI.tsx`:
 
@@ -377,8 +377,8 @@ export class MathServiceImpl implements MathService {
 }
 ```
 
--   **(1)** Saves the array of references in our service instance.
--   **(2)** Forwards the arguments and the result to each extension.
+- **(1)** Saves the array of references in our service instance.
+- **(2)** Forwards the arguments and the result to each extension.
 
 ### Updating the tests
 
@@ -449,12 +449,12 @@ it("invokes the extensions when a multiplication is triggered", async () => {
 });
 ```
 
--   **(1)**
-    Our original test now receives an empty array for `extensions`.
--   **(2)**
-    Our new test contains two mocked extensions that simply write their arguments into a shared array.
--   **(3)**
-    We call `multiply` and check that our extensions have been invoked by asserting the contents of the `events` array.
+- **(1)**
+  Our original test now receives an empty array for `extensions`.
+- **(2)**
+  Our new test contains two mocked extensions that simply write their arguments into a shared array.
+- **(3)**
+  We call `multiply` and check that our extensions have been invoked by asserting the contents of the `events` array.
 
 #### Implementing an actual service providing the interface
 

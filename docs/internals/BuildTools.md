@@ -42,12 +42,12 @@ Reading and validation of the `build.config.mjs` are implemented here, as well a
 Every local package in an Open Pioneer Trails application contains a `build.config.mjs` and a `package.json` file, together defining the package's metadata.
 Package metadata includes:
 
--   The packages name, version, etc.
--   Service(s) defined by the package
--   Service(s) required by the package
--   Supported languages and the location of the translation files
--   Associated css styles
--   ...
+- The packages name, version, etc.
+- Service(s) defined by the package
+- Service(s) required by the package
+- Supported languages and the location of the translation files
+- Associated css styles
+- ...
 
 All these data points (for every package!) are required by the framework at runtime in one way or another.
 
@@ -240,6 +240,6 @@ The build plugin is organized into two important subdirectories:
 
 ## Further reading
 
--   [Rollup's plugin API](https://rollupjs.org/plugin-development/)
--   [Vite's plugin API](https://vitejs.dev/guide/api-plugin.html)
--   [Vite's HMR API](https://vitejs.dev/guide/api-hmr.html)
+- [Rollup's plugin API](https://rollupjs.org/plugin-development/)
+- [Vite's plugin API](https://vitejs.dev/guide/api-plugin.html)
+- [Vite's HMR API](https://vitejs.dev/guide/api-hmr.html)

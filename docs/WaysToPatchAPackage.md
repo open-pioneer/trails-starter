@@ -8,15 +8,15 @@ It is sometimes necessary to modify a package in a project without the ability t
 
 Some possible reasons are:
 
--   The package contains a bug and a release that includes the fix is not (yet) available
--   An intended behavior change will not be accepted upstream but is required for the application to work
--   The package is unmaintained
+- The package contains a bug and a release that includes the fix is not (yet) available
+- An intended behavior change will not be accepted upstream but is required for the application to work
+- The package is unmaintained
 
 Before patching a package, consider working with the upstream maintainers and send them a feature request or ask them to include your intended behavior change as a contribution.
 Patching a package increases your maintenance burden, since you're often modifying internal behavior:
 
--   Updates may be more costly (or even impossible) because your changes need to be merged with the updated package
--   Your changes may break randomly because the assumptions you made about the package's internals are no longer true
+- Updates may be more costly (or even impossible) because your changes need to be merged with the updated package
+- Your changes may break randomly because the assumptions you made about the package's internals are no longer true
 
 Even if you patched a package, it is good practice (and in your own interest) to attempt to contribute your changes anyway or
 at least to open an issue describing the bug or needed feature.
@@ -52,8 +52,8 @@ const Element = createCustomElement({
 
 For more details, see
 
--   [How to use properties](./tutorials/HowToUseProperties.md)
--   [Package reference](./reference/Package.md)
+- [How to use properties](./tutorials/HowToUseProperties.md)
+- [Package reference](./reference/Package.md)
 
 ### I18n messages
 
@@ -177,11 +177,11 @@ You need to use the package manager to achieve that (see below).
 You can use pnpm to make complex changes to your packages.
 pnpm's capabilities include:
 
--   A workflow for simple patches to another package (by applying a patch/diff file).
-    This is a great alternative if you only need to change a few lines of code.
--   Changing a package's metadata, for example the `dependencies` or `peerDependencies`
--   Overriding packages and their dependencies.
-    You can change packages at will in your application's entire dependency graph.
+- A workflow for simple patches to another package (by applying a patch/diff file).
+  This is a great alternative if you only need to change a few lines of code.
+- Changing a package's metadata, for example the `dependencies` or `peerDependencies`
+- Overriding packages and their dependencies.
+  You can change packages at will in your application's entire dependency graph.
 
 All of those features are described in [pnpm's Documentation](https://pnpm.io/).
 This section contains a few practical examples.
@@ -420,11 +420,11 @@ Running an app (both in development or production) will now print the new messag
 
 NOTE:
 
--   When you're patching a built package, it is probably best to remove source maps for files that you have edited.
-    These can be misleading, since they reflect the _old_ content of the file.
-    Source maps are either located at the end of the file (as a comment) or as a separate `.map` file.
--   You may have to adjust your TypeScript or ESLint rules (e.g. update `.eslintignore` to ignore the patched package).
--   When copying a built package into the source directory, our Vite plugin will print a warning:
+- When you're patching a built package, it is probably best to remove source maps for files that you have edited.
+  These can be misleading, since they reflect the _old_ content of the file.
+  Source maps are either located at the end of the file (as a comment) or as a separate `.map` file.
+- You may have to adjust your TypeScript or ESLint rules (e.g. update `.eslintignore` to ignore the patched package).
+- When copying a built package into the source directory, our Vite plugin will print a warning:
 
     ```text
     [vite] warning: Using framework metadata from package.json instead of build.config.mjs in /home/michael/projects/pioneer/starter/src/packages/custom-runtime, make sure that this intended.
@@ -433,9 +433,9 @@ NOTE:
     You can safely ignore this warning if it is expected (which is the case here).
     The warning is printed because this circumstance may also hint at a configuration problem.
 
--   When you're patching another package in its source form (e.g. by copying it from its source repository), you might have to fix up its dependencies.
-    These might use the `workspace:...` protocol, and those packages are not available locally (just use real versions instead).
--   When you're replacing a trails package, don't change the `name` in its `package.json` file: it is currently significant for the registration of services.
-    However, you can freely change the `version` or the directory name.
--   All of this should be considered a hack.
-    Use this technique only when no other options are available to you.
+- When you're patching another package in its source form (e.g. by copying it from its source repository), you might have to fix up its dependencies.
+  These might use the `workspace:...` protocol, and those packages are not available locally (just use real versions instead).
+- When you're replacing a trails package, don't change the `name` in its `package.json` file: it is currently significant for the registration of services.
+  However, you can freely change the `version` or the directory name.
+- All of this should be considered a hack.
+  Use this technique only when no other options are available to you.

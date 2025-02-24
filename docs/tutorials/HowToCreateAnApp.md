@@ -72,26 +72,26 @@ customElements.define("my-app-element", Element);
 
 This is the setup required for a minimal Open Pioneer Trails application:
 
--   **(1)**
-    `createCustomElement` is the central framework function responsible for defining the actual web component.
-    It is exported by `@open-pioneer/runtime`, a package all Open Pioneer Trails applications must depend on.
+- **(1)**
+  `createCustomElement` is the central framework function responsible for defining the actual web component.
+  It is exported by `@open-pioneer/runtime`, a package all Open Pioneer Trails applications must depend on.
 
--   **(2)**
-    The special `open-pioneer:app` module provides automatically gathered metadata about your application.
-    This module is implemented in the build system: it automatically scans your app and its dependencies.
+- **(2)**
+  The special `open-pioneer:app` module provides automatically gathered metadata about your application.
+  This module is implemented in the build system: it automatically scans your app and its dependencies.
 
--   **(3)**
-    The application's UI is a simple react component.
-    We will define it in the next step.
+- **(3)**
+  The application's UI is a simple react component.
+  We will define it in the next step.
 
--   **(4)**
-    We call `createCustomElement()`, passing a reference to the UI and the application's metadata.
-    This will create an `Element` class, inheriting from `HTMLElement`, that provides a [Web Component](https://developer.mozilla.org/en-US/docs/Web/Web_Components).
+- **(4)**
+  We call `createCustomElement()`, passing a reference to the UI and the application's metadata.
+  This will create an `Element` class, inheriting from `HTMLElement`, that provides a [Web Component](https://developer.mozilla.org/en-US/docs/Web/Web_Components).
 
--   **(5)**
-    `customElements.define()` registers our element class as a custom element.
-    It can now be used, for example, from HTML: `<my-app-element></my-app-element>`.
-    NOTE: custom element names must always contain a `-` so they don't collide with builtin HTML tags.
+- **(5)**
+  `customElements.define()` registers our element class as a custom element.
+  It can now be used, for example, from HTML: `<my-app-element></my-app-element>`.
+  NOTE: custom element names must always contain a `-` so they don't collide with builtin HTML tags.
 
 Finally, we define the application's UI as a [React](https://reactjs.org) component.
 This example uses [JSX Syntax](https://reactjs.org/docs/introducing-jsx.html) in a `.tsx` file.
@@ -229,24 +229,24 @@ The default file layout in this repository is designed for multiple applications
 For this reason, the default root site is an overview page mainly aimed at developers.
 It links to other sites in the project:
 
--   Overview site: <code>http[]()://example.com<b>**/**</b></code>
--   Other sites: <code>http[]()://example.com<b>/sites/my-app/</b></code>
+- Overview site: <code>http[]()://example.com<b>**/**</b></code>
+- Other sites: <code>http[]()://example.com<b>/sites/my-app/</b></code>
 
 If your project focuses on a single, central site, you may wish to invert this layout:
 
--   Main site: <code>http[]()://example.com<b>/</b></code>
--   (optional) Overview site: <code>http[]()://example.com<b>/app-overview/</b></code>
--   (optional) Other apps: <code>http[]()://example.com<b>/test-app/</b></code>
+- Main site: <code>http[]()://example.com<b>/</b></code>
+- (optional) Overview site: <code>http[]()://example.com<b>/app-overview/</b></code>
+- (optional) Other apps: <code>http[]()://example.com<b>/test-app/</b></code>
 
 To achieve this, simply swap the corresponding `.html` files:
 
--   Move `.html` files:
-    -   Move `src/index.html` to `src/app-overview/index.html` (or any other location in the source directory).
-    -   Move `src/sites/my-app/index.html` to `src/index.html`.
-    -   Relative links in your `.html` files may need adjusting!
--   Update `vite.config.ts`:
+- Move `.html` files:
+    - Move `src/index.html` to `src/app-overview/index.html` (or any other location in the source directory).
+    - Move `src/sites/my-app/index.html` to `src/index.html`.
+    - Relative links in your `.html` files may need adjusting!
+- Update `vite.config.ts`:
 
-    -   Remove the reference to `my-app` and (optionally) include the new app overview site, if you want it built:
+    - Remove the reference to `my-app` and (optionally) include the new app overview site, if you want it built:
 
         ```diff
         // vite.config.ts
@@ -263,7 +263,7 @@ To achieve this, simply swap the corresponding `.html` files:
         }),
         ```
 
-    -   To open the overview site when executing `pnpm dev`, configure:
+    - To open the overview site when executing `pnpm dev`, configure:
 
         ```diff
         // vite.config.ts
@@ -274,5 +274,5 @@ To achieve this, simply swap the corresponding `.html` files:
 
 ## Next steps
 
--   [How to deploy an app](./HowToDeployAnApp.md)
--   [How to create UI components](./HowToCreateUiComponents.md)
+- [How to deploy an app](./HowToDeployAnApp.md)
+- [How to create UI components](./HowToCreateUiComponents.md)

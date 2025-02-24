@@ -705,6 +705,6 @@ For more information refer to the API of the `core-packages` `runtime` package.
 
 ## Further reading
 
--   [FormatJS Documentation](https://formatjs.io/docs/getting-started/installation)
--   [Message syntax](https://formatjs.io/docs/core-concepts/icu-syntax)
--   [Intl Reference](https://formatjs.io/docs/react-intl/api#intlshape) (interface `IntlFormatters`)
+- [FormatJS Documentation](https://formatjs.io/docs/getting-started/installation)
+- [Message syntax](https://formatjs.io/docs/core-concepts/icu-syntax)
+- [Intl Reference](https://formatjs.io/docs/react-intl/api#intlshape) (interface `IntlFormatters`)
