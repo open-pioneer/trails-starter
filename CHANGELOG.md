@@ -1,5 +1,27 @@
 # Changelog
 
+## 2025-02-24
+
+-   Update Open Pioneer Trails dependencies to latest version.
+    -   Core packages: 3.0.0 ([Changes](https://github.com/open-pioneer/trails-core-packages/pull/82#issue-2868735924))
+    -   OpenLayers base packages: 0.9.0 ([Changes](https://github.com/open-pioneer/trails-openlayers-base-packages/pull/382#issue-2730813021))
+    -   Build tools ([Changes](https://github.com/open-pioneer/trails-build-tools/pull/76#issue-2604552132))
+-   Update to React 19 ([Migration Guide](https://react.dev/blog/2024/04/25/react-19-upgrade-guide))
+    -   `useRef` always requires an argument now (e.g. `useRef(undefined)` to initialize).
+    -   `JSX.Element` has been removed.
+        Use `ReactNode` or `ReactElement` instead (see [Stackoverflow](https://stackoverflow.com/a/58123882)).
+        Chakra components (e.g. `IconButton`) need `ReactElement` in props.
+    -   If you hide react act warnings in your tests, update your helper.
+        The message format changed slightly, see [`disableReactActWarnings()`](https://github.com/open-pioneer/trails-openlayers-base-packages/blob/cb94c752b1e30293d23b0b865e51ff56570255f7/src/testing/test-utils/disable-act-warnings.ts#L29).
+-   Vite 6 ([Migration](https://vite.dev/guide/migration), should be zero or low effort)
+-   Vitest 3 ([Migration](https://vitest.dev/guide/migration), likewise)
+-   Other dependencies:
+    -   FormatJS 3
+    -   OpenLayers 10.4.0
+    -   TypeScript 5.7.3
+    -   Minor updates of miscellaneous dependencies
+-   Require Node 20 or newer (was: 18).
+
 ## 2025-01-22
 
 -   Update Vite to version 5.4.14 due to CVE-2025-24010 ([GHSA-vg6x-rcgg-rjx6](https://github.com/vitejs/vite/security/advisories/GHSA-vg6x-rcgg-rjx6))
