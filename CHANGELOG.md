@@ -2,73 +2,73 @@
 
 ## 2025-02-24
 
--   Update Open Pioneer Trails dependencies to latest version.
-    -   Core packages: 3.0.0 ([Changes](https://github.com/open-pioneer/trails-core-packages/pull/82#issue-2868735924))
-    -   OpenLayers base packages: 0.9.0 ([Changes](https://github.com/open-pioneer/trails-openlayers-base-packages/pull/382#issue-2730813021))
-    -   Build tools ([Changes](https://github.com/open-pioneer/trails-build-tools/pull/76#issue-2604552132))
--   Update to React 19 ([Migration Guide](https://react.dev/blog/2024/04/25/react-19-upgrade-guide))
-    -   `useRef` always requires an argument now (e.g. `useRef(undefined)` to initialize).
-    -   `JSX.Element` has been removed.
-        Use `ReactNode` or `ReactElement` instead (see [Stackoverflow](https://stackoverflow.com/a/58123882)).
-        Chakra components (e.g. `IconButton`) need `ReactElement` in props.
-    -   If you hide react act warnings in your tests, update your helper.
-        The message format changed slightly, see [`disableReactActWarnings()`](https://github.com/open-pioneer/trails-openlayers-base-packages/blob/cb94c752b1e30293d23b0b865e51ff56570255f7/src/testing/test-utils/disable-act-warnings.ts#L29).
--   Vite 6 ([Migration](https://vite.dev/guide/migration), should be zero or low effort)
--   Vitest 3 ([Migration](https://vitest.dev/guide/migration), likewise)
--   Other dependencies:
-    -   FormatJS 3
-    -   OpenLayers 10.4.0
-    -   TypeScript 5.7.3
-    -   Minor updates of miscellaneous dependencies
--   Require Node 20 or newer (was: 18).
--   Migrate TypeDoc configuration to ESM (`typedoc.config.mjs`).
+- Update Open Pioneer Trails dependencies to latest version.
+    - Core packages: 3.0.0 ([Changes](https://github.com/open-pioneer/trails-core-packages/pull/82#issue-2868735924))
+    - OpenLayers base packages: 0.9.0 ([Changes](https://github.com/open-pioneer/trails-openlayers-base-packages/pull/382#issue-2730813021))
+    - Build tools ([Changes](https://github.com/open-pioneer/trails-build-tools/pull/76#issue-2604552132))
+- Update to React 19 ([Migration Guide](https://react.dev/blog/2024/04/25/react-19-upgrade-guide))
+    - `useRef` always requires an argument now (e.g. `useRef(undefined)` to initialize).
+    - `JSX.Element` has been removed.
+      Use `ReactNode` or `ReactElement` instead (see [Stackoverflow](https://stackoverflow.com/a/58123882)).
+      Chakra components (e.g. `IconButton`) need `ReactElement` in props.
+    - If you hide react act warnings in your tests, update your helper.
+      The message format changed slightly, see [`disableReactActWarnings()`](https://github.com/open-pioneer/trails-openlayers-base-packages/blob/cb94c752b1e30293d23b0b865e51ff56570255f7/src/testing/test-utils/disable-act-warnings.ts#L29).
+- Vite 6 ([Migration](https://vite.dev/guide/migration), should be zero or low effort)
+- Vitest 3 ([Migration](https://vitest.dev/guide/migration), likewise)
+- Other dependencies:
+    - FormatJS 3
+    - OpenLayers 10.4.0
+    - TypeScript 5.7.3
+    - Minor updates of miscellaneous dependencies
+- Require Node 20 or newer (was: 18).
+- Migrate TypeDoc configuration to ESM (`typedoc.config.mjs`).
 
 ## 2025-01-22
 
--   Update Vite to version 5.4.14 due to CVE-2025-24010 ([GHSA-vg6x-rcgg-rjx6](https://github.com/vitejs/vite/security/advisories/GHSA-vg6x-rcgg-rjx6))
+- Update Vite to version 5.4.14 due to CVE-2025-24010 ([GHSA-vg6x-rcgg-rjx6](https://github.com/vitejs/vite/security/advisories/GHSA-vg6x-rcgg-rjx6))
 
 ## 2024-12-05
 
--   Update Open Pioneer Trails dependencies to latest version.
-    -   Core packages: 2.4.0 ([Changes](https://github.com/open-pioneer/trails-core-packages/pull/70#issue-2602612673))
-    -   OpenLayers base packages: 0.8.0 ([Changes](https://github.com/open-pioneer/trails-openlayers-base-packages/pull/370#issue-2610669421))
--   Update OpenLayers to version 10.3.0.
--   Slightly update patch setup with mocks needed by OpenLayers 10.3.0 (see `src/testing/global-setup.ts`).
--   Update `chakra-react-select` to version 5.
--   Update patch for chakra-ui's menu component (see patches in `package.json`).
--   Remove obsolete chakra patches.
--   Remove obsolete reference to `@chakra-ui/system`.
-    This dependency seems to be no longer required and may lead to duplicate packages in your dependency tree.
+- Update Open Pioneer Trails dependencies to latest version.
+    - Core packages: 2.4.0 ([Changes](https://github.com/open-pioneer/trails-core-packages/pull/70#issue-2602612673))
+    - OpenLayers base packages: 0.8.0 ([Changes](https://github.com/open-pioneer/trails-openlayers-base-packages/pull/370#issue-2610669421))
+- Update OpenLayers to version 10.3.0.
+- Slightly update patch setup with mocks needed by OpenLayers 10.3.0 (see `src/testing/global-setup.ts`).
+- Update `chakra-react-select` to version 5.
+- Update patch for chakra-ui's menu component (see patches in `package.json`).
+- Remove obsolete chakra patches.
+- Remove obsolete reference to `@chakra-ui/system`.
+  This dependency seems to be no longer required and may lead to duplicate packages in your dependency tree.
 
 ## 2024-11-18
 
--   Add a new script: `pnpm run generate-sbom`.
-    The script generates a software bill of materials (SBOM) for the project that includes all production dependencies.
-    For more information, see the [relevant section in the Repository Guide](./docs/RepositoryGuide.md#pnpm-run-generate-sbom).
+- Add a new script: `pnpm run generate-sbom`.
+  The script generates a software bill of materials (SBOM) for the project that includes all production dependencies.
+  For more information, see the [relevant section in the Repository Guide](./docs/RepositoryGuide.md#pnpm-run-generate-sbom).
 
 ## 2024-10-22
 
--   Replace `peerDependencies` with normal `dependencies` due to limitations of pnpm.
--   Use new CLI tool `check-pnpm-duplicates` ([Docs](https://www.npmjs.com/package/@open-pioneer/check-pnpm-duplicates)) to check for duplicate packages.
-    The tool will run automatically after every `pnpm install` (see `prepare` script in `package.json`) and can be triggered manually by running `pnpm check-duplicates`.
-    The configuration for `check-duplicates` is stored in `support/duplicate-packages.yaml`.
--   Update dependencies:
-    -   OpenLayers base packages to `0.7.0`
-    -   Trails core packages to `2.3.0`
-    -   TypeScript to `5.6.3`
-    -   Minor updates of miscellaneous dependencies
--   Update eslint rules after updating typescript-eslint (see `.eslintrc`)
--   Hide deprecation warnings for some legacy SASS APIs used in vite (see `vite.config.ts`)
+- Replace `peerDependencies` with normal `dependencies` due to limitations of pnpm.
+- Use new CLI tool `check-pnpm-duplicates` ([Docs](https://www.npmjs.com/package/@open-pioneer/check-pnpm-duplicates)) to check for duplicate packages.
+  The tool will run automatically after every `pnpm install` (see `prepare` script in `package.json`) and can be triggered manually by running `pnpm check-duplicates`.
+  The configuration for `check-duplicates` is stored in `support/duplicate-packages.yaml`.
+- Update dependencies:
+    - OpenLayers base packages to `0.7.0`
+    - Trails core packages to `2.3.0`
+    - TypeScript to `5.6.3`
+    - Minor updates of miscellaneous dependencies
+- Update eslint rules after updating typescript-eslint (see `.eslintrc`)
+- Hide deprecation warnings for some legacy SASS APIs used in vite (see `vite.config.ts`)
 
 ## 2024-11-18
 
--   Add a new script: `pnpm run generate-sbom`.
-    The script generates a software bill of materials (SBOM) for the project that includes all production dependencies.
-    For more information, see the [relevant section in the Repository Guide](./docs/RepositoryGuide.md#pnpm-run-generate-sbom).
+- Add a new script: `pnpm run generate-sbom`.
+  The script generates a software bill of materials (SBOM) for the project that includes all production dependencies.
+  For more information, see the [relevant section in the Repository Guide](./docs/RepositoryGuide.md#pnpm-run-generate-sbom).
 
 ## 2024-09-27
 
--   Migrate to [pnpm catalogs](https://pnpm.io/catalogs) for central dependencies.
+- Migrate to [pnpm catalogs](https://pnpm.io/catalogs) for central dependencies.
 
     The catalog protocol allows central management of dependency versions from the root project in `pnpm-workspace.yaml`. Example:
 
@@ -93,18 +93,18 @@
     We hope that this change will make dependency management much simpler in the long run.
     For more details, visit [pnpm's documentation](https://pnpm.io/catalogs).
 
--   Remove the `syncpack` dependency and the pnpm scripts `update-shared-versions` and `lint-shared-versions`: they are no longer needed since we now use catalogs.
+- Remove the `syncpack` dependency and the pnpm scripts `update-shared-versions` and `lint-shared-versions`: they are no longer needed since we now use catalogs.
 
 ## 2024-08-06
 
--   Update to latest OpenLayers Trails Packages.
-    This also adapts to the breaking change in the react-utils package (see [Release notes](https://github.com/open-pioneer/trails-core-packages/releases/tag/%40open-pioneer%2Freact-utils%401.0.0)).
+- Update to latest OpenLayers Trails Packages.
+  This also adapts to the breaking change in the react-utils package (see [Release notes](https://github.com/open-pioneer/trails-core-packages/releases/tag/%40open-pioneer%2Freact-utils%401.0.0)).
 
 ## 2024-07-24
 
--   Improve the commit hooks (`.husky/pre-commit`).
-    Commit hooks run during `git commit` to check the code style and run tests.
-    Previously, all files within the project were checked for style issues and all unit tests were run.
+- Improve the commit hooks (`.husky/pre-commit`).
+  Commit hooks run during `git commit` to check the code style and run tests.
+  Previously, all files within the project were checked for style issues and all unit tests were run.
 
     With this update, only changed files will be checked (via [lint-staged](https://www.npmjs.com/package/lint-staged)) and only tests affected by changed files will be re-executed (via `vitest --changed`).
     Also, prettier will now format staged files automatically -- it is no longer necessary to run `prettier` manually in most cases.
@@ -112,33 +112,33 @@
     This change significantly improves the time it takes to commit a change.
     Unfortunately, TypeScript will still run type checks on the entire code base.
 
--   Update `syncpack`.
+- Update `syncpack`.
 
 ## 2024-07-23
 
--   Update the license report script. It can now handle dependency license information returned by pnpm 9.
-    See also <https://github.com/open-pioneer/trails-openlayers-base-packages/pull/335>.
--   Configure `virtual-store-dir-max-length=60` in `.npmrc`.
+- Update the license report script. It can now handle dependency license information returned by pnpm 9.
+  See also <https://github.com/open-pioneer/trails-openlayers-base-packages/pull/335>.
+- Configure `virtual-store-dir-max-length=60` in `.npmrc`.
 
     This limits the paths generated by `pnpm` to the given length, which helps on windows where "long" paths can trigger weird errors.
     See also <https://pnpm.io/npmrc#virtual-store-dir-max-length> for more information.
 
--   Update the patch against `react-select`.
--   Update development dependencies.
+- Update the patch against `react-select`.
+- Update development dependencies.
 
 ## 2024-07-04
 
--   `tsconfig.json`: Switch to `"moduleResolution": "Bundler"`.
-    This is the appropriate resolution mode for TypeScript code when using a bundler such as Vite.
+- `tsconfig.json`: Switch to `"moduleResolution": "Bundler"`.
+  This is the appropriate resolution mode for TypeScript code when using a bundler such as Vite.
 
     `"moduleResolution": "Bundler"` fixes some cases where the TypeScript compiler would not find the declarations for certain modern packages
     (e.g. those that only use `exports` in their package.json).
 
--   Update workflow files (some actions were outdated).
+- Update workflow files (some actions were outdated).
 
 ## 2024-06-24
 
--   Update trails dependencies.
+- Update trails dependencies.
 
     It appears that recent versions of pnpm will sometimes not update peer dependencies when using `pnpm update` (https://github.com/pnpm/pnpm/issues/8081).
     This mostly seems to affect _indirectly_ required packages which are not explicitly listed in a `package.json` file.
@@ -172,13 +172,13 @@
     }
     ```
 
--   Update `react` to 18.3.1
--   Update `ol` to 9.2.4
--   Update test packages:
+- Update `react` to 18.3.1
+- Update `ol` to 9.2.4
+- Update test packages:
 
-    -   "@testing-library/dom": "^10.2.0",
-    -   "@testing-library/jest-dom": "^6.4.6",
-    -   "@testing-library/react": "^16.0.0",
+    - "@testing-library/dom": "^10.2.0",
+    - "@testing-library/jest-dom": "^6.4.6",
+    - "@testing-library/react": "^16.0.0",
 
     These versions resolve a deprecation warning with the new versions of react ("Warning: `ReactDOMTestUtils.act` is deprecated in favor of `React.act` ...").
 
@@ -201,22 +201,22 @@
 
 ## 2024-06-17
 
--   Update patch for `react-select`: only use valid values for `aria-activedescendant`.
-    This removes a warning in firefox when `aria-activedescendant` was set to an empty string.
+- Update patch for `react-select`: only use valid values for `aria-activedescendant`.
+  This removes a warning in firefox when `aria-activedescendant` was set to an empty string.
 
 ## 2024-05-14
 
--   Update to Vite 5.1 and Vitest 1.6
-    -   Major changes in Vitest 1: [Release Notes](https://github.com/vitest-dev/vitest/releases/tag/v1.0.0)
-    -   Major changes in Vite 5: [Release Notes](https://vitejs.dev/blog/announcing-vite5)
+- Update to Vite 5.1 and Vitest 1.6
+    - Major changes in Vitest 1: [Release Notes](https://github.com/vitest-dev/vitest/releases/tag/v1.0.0)
+    - Major changes in Vite 5: [Release Notes](https://vitejs.dev/blog/announcing-vite5)
 
 ## 2024-05-10
 
--   Require pnpm >= 9.0, see [release notes](https://github.com/pnpm/pnpm/releases/tag/v9.0.0).
-    This also updates the lockfile to `lockfileVersion: 9.0`
--   Configure `envDir: __dirname` in `vite.config.ts` to load `.env` files from the root of the repository instead of `src`.
+- Require pnpm >= 9.0, see [release notes](https://github.com/pnpm/pnpm/releases/tag/v9.0.0).
+  This also updates the lockfile to `lockfileVersion: 9.0`
+- Configure `envDir: __dirname` in `vite.config.ts` to load `.env` files from the root of the repository instead of `src`.
 
 ## 2024-03-14
 
--   Update to latest Open Pioneer Trails packages
--   Update to OpenLayers 9
+- Update to latest Open Pioneer Trails packages
+- Update to OpenLayers 9

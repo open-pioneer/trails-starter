@@ -1,6 +1,6 @@
 # How to publish a package
 
-This tutorial describes how to share a Open Pioneer Trails package with other developers.
+This tutorial describes how to share an Open Pioneer Trails package with other developers.
 You can skip this document if you're just working in the context of a single application.
 
 Until now, this manual has only been concerned with building an _application_, possibly including a set of _local_ packages.
