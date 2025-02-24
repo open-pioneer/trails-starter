@@ -28,7 +28,6 @@
             "=========",
             "semver: https://github.com/advisories/GHSA-c2qf-rxjj-qqgw",
             "tough-cookie: https://github.com/advisories/GHSA-72xf-g2v4-qvf3",
-            "@mapbox/mapbox-gl-style-spec: license issues, see https://github.com/openlayers/ol-mapbox-style/pull/940",
             "braces: https://github.com/advisories/GHSA-grv7-fg5c-xmjg",
             "ws: https://github.com/advisories/GHSA-3h5v-q93c-6h6q",
             "fast-loops: https://github.com/advisories/GHSA-3q56-9cc2-46j4",
@@ -52,7 +51,6 @@
         "overrides": {
             "semver@<7.5.2": ">=7.5.2",
             "tough-cookie@<4.1.3": ">=4.1.3",
-            "@mapbox/mapbox-gl-style-spec": "npm:@maplibre/maplibre-gl-style-spec",
             "braces@<3.0.3": ">=3.0.3",
             "ws@>=8.0.0 <8.17.1": ">=8.17.1",
             "fast-loops@<1.1.4": ">=1.1.4",
@@ -66,8 +64,8 @@
             "ignoreCves": []
         },
         "patchedDependencies": {
-            "react-select@5.8.0": "patches/react-select@5.8.0.patch",
-            "@chakra-ui/hooks@2.4.3": "patches/@chakra-ui__hooks.patch"
+            "react-select": "patches/react-select@5.8.0.patch",
+            "@chakra-ui/hooks": "patches/@chakra-ui__hooks.patch"
         },
         "peerDependencyRules": {}
     },
@@ -115,7 +113,7 @@
         "vitest": "catalog:"
     },
     "engines": {
-        "node": ">= 18",
+        "node": ">= 20",
         "pnpm": "^9"
     }
 }

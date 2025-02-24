@@ -170,7 +170,8 @@ export class MainMapProvider implements MapConfigProvider {
 So far we have only worked in the development environment.
 Run `pnpm build` to build the application for production.
 Vite will copy the configuration file (and all other files in `src/public`) into the output directory at `dist/www` alongside the rest of your application.
-Note that, other than JavaScript assets or assets imported from directories different than `src/public`, the name of the configuration file is not hashed or modified in any other way:
+Note that the name of the configuration file is not hashed or modified in any way.
+This is different from Vite's "normal" import behavior for any other directory.
 
 ```text
 dist/www

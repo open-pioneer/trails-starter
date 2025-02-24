@@ -147,10 +147,10 @@ export class MyService {
 
 The following values are available as properties of `serviceOptions`:
 
--   `references`: An object containing references to other services (as defined in the `build.config.mjs`).
--   `referencesMeta`: Metadata about references, uses the same names as `references`.
--   `properties`: An object containing the current package's properties (default values from `build.config.mjs`, possibly modified/overwritten by the application).
--   `intl`: The current package's `intl` object to support translations and formatting in the user's locale (see [I18N Format](./I18nFormat.md)).
+- `references`: An object containing references to other services (as defined in the `build.config.mjs`).
+- `referencesMeta`: Metadata about references, uses the same names as `references`.
+- `properties`: An object containing the current package's properties (default values from `build.config.mjs`, possibly modified/overwritten by the application).
+- `intl`: The current package's `intl` object to support translations and formatting in the user's locale (see [I18N Format](./I18nFormat.md)).
 
 <!-- TODO: Link to hosted api documentation ?? -->
 

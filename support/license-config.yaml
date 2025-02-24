@@ -31,7 +31,6 @@ allowedLicenses:
 #      - custom: "./licenses/some-package-license.txt"
 #
 # `custom` makes the path relative to this directory instead of the package's directory.
-
 overrideLicenses:
   # 'license' missing in package.json but LICENSE file exists:
   - name: "react-universal-interface"
@@ -51,7 +50,7 @@ overrideLicenses:
 
   # readme contains license text
   - name: "react-remove-scroll-bar"
-    version: "2.3.4"
+    version: "2.3.8"
     licenseFiles:
       - "./README.md"
 
@@ -71,43 +70,12 @@ overrideLicenses:
     licenseFiles:
       - custom: "./licenses/toggle_selection_mit"
 
-  # Declares 'license': 'MIT' in package.json but does not contain a license file.
-  # Author merged our pull request and confirmed the license (no new release yet):
-  # https://github.com/theKashey/react-style-singleton/pull/7
-  - name: "react-style-singleton"
-    version: "2.2.1"
-    licenseFiles:
-      - custom: "./licenses/react_style_singleton_mit"
-
-  # Readme contains original MIT license which got lost during fork / development at some point
-  # Retrieved on 2023-09-27 from https://github.com/mapbox/jsonlint
-  # See also commit: https://github.com/mapbox/jsonlint/commit/21c821af6c176bc0b8d240d715d416223d1deb7b
-  - name: "@mapbox/jsonlint-lines-primitives"
-    version: "2.0.2"
-    license: "MIT"
-    licenseFiles:
-      - custom: "./licenses/mapbox_jsonlint_readme_mit.md"
-
-  # Readme only contains link to http://deanlandolt.mit-license.org/
-  # The full text was retrieved on 2023-10-27
-  - name: "bytewise"
-    version: "1.1.0"
-    licenseFiles:
-      - custom: "./licenses/bytewise_mit"
-
-  # Readme only contains link to http://deanlandolt.mit-license.org/
-  # The full text was retrieved on 2023-10-27
-  - name: "typewise"
-    version: "1.0.3"
-    licenseFiles:
-      - custom: "./licenses/typewise_mit"
-
   # NPM artifact does not ship with a license; github repository tagged with the released version
   # does contain it however:
   # https://github.com/JedWatson/react-select/blob/17ab36ec89e6e2b05071cdafecb44421f1e91334/LICENSE
   # The full license text was retrieved on 2024-01-04
   - name: "react-select"
-    version: "5.8.0"
+    version: "5.10.0"
     licenseFiles:
       - custom: "./licenses/react_select_mit"
 

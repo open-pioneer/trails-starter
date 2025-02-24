@@ -101,12 +101,12 @@ export const theme = extendTheme(
 );
 ```
 
--   **(1)** Import the `extendTheme` helper function.
--   **(2)** Import the Trails base theme from the "@open-pioneer/base-theme" package.
--   **(3)** Use `extendTheme` to create an own theme based on the Trails base theme.
--   **(3.1)** Chakra UI theming object that defines the custom theme.
-    (The object specified here is only used as an example.)
--   **(3.2)** Specify the theme to extend (here: the Trails base theme).
+- **(1)** Import the `extendTheme` helper function.
+- **(2)** Import the Trails base theme from the "@open-pioneer/base-theme" package.
+- **(3)** Use `extendTheme` to create an own theme based on the Trails base theme.
+- **(3.1)** Chakra UI theming object that defines the custom theme.
+  (The object specified here is only used as an example.)
+- **(3.2)** Specify the theme to extend (here: the Trails base theme).
 
 Hint: The Trails base theme introduces some special semantic tokens.
 For information about which values are available, see the base-theme core package code.
@@ -152,5 +152,5 @@ const Element = createCustomElement({
 customElements.define("empty-app", Element);
 ```
 
--   **(1)** Imports the theme.
--   **(2)** Specifies `theme` as the application's theme.
+- **(1)** Imports the theme.
+- **(2)** Specifies `theme` as the application's theme.

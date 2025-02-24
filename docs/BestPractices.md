@@ -57,13 +57,13 @@ When you're developing shared packages (e.g. published on npmjs.com), good depen
 
 When thinking about dependencies, follow these general guidelines:
 
--   When referencing a tool used all over your repository (such as `prettier` or `@open-pioneer/vite-plugin-pioneer`),
-    declare it as a `devDependency` in your project's root `package.json`.
-    This way you don't have to duplicate the dependency in every package of your workspace.
+- When referencing a tool used all over your repository (such as `prettier` or `@open-pioneer/vite-plugin-pioneer`),
+  declare it as a `devDependency` in your project's root `package.json`.
+  This way you don't have to duplicate the dependency in every package of your workspace.
 
--   When requiring functionality at runtime (e.g. `import ...`) from a source file in an app or package,
-    add the other package in your own `package.json` as either `dependency` or `peerDependency`.
-    The `build-pioneer-package` tool enforces this rule.
+- When requiring functionality at runtime (e.g. `import ...`) from a source file in an app or package,
+  add the other package in your own `package.json` as either `dependency` or `peerDependency`.
+  The `build-pioneer-package` tool enforces this rule.
 
     Example:
 
@@ -76,8 +76,8 @@ When thinking about dependencies, follow these general guidelines:
     }
     ```
 
--   Use "open" specifiers for dependencies like `^`.
-    Not depending on a fixed version avoid conflicts if multiple packages prefer slightly different versions.
+- Use "open" specifiers for dependencies like `^`.
+  Not depending on a fixed version avoid conflicts if multiple packages prefer slightly different versions.
 
 #### dependencies vs peerDependencies
 
@@ -93,7 +93,7 @@ To enforce that only a single version of a package is present (a builtin feature
 
 #### Useful helpers
 
--   `pnpm why DEP` from an app's or package's directory can show why a certain version of a package is present in your dependency tree.
+- `pnpm why DEP` from an app's or package's directory can show why a certain version of a package is present in your dependency tree.
 
     For example:
 
@@ -102,9 +102,9 @@ To enforce that only a single version of a package is present (a builtin feature
     $ pnpm why -r ol@^9
     ```
 
--   `pnpm ls` can show the dependency tree of a package or app (see also the `--depth` option).
--   `pnpm dedupe` works hard to de-duplicate packages wherever possible.
--   `pnpm update`, e.g. with the `-r` flag, is useful to update dependencies.
+- `pnpm ls` can show the dependency tree of a package or app (see also the `--depth` option).
+- `pnpm dedupe` works hard to de-duplicate packages wherever possible.
+- `pnpm update`, e.g. with the `-r` flag, is useful to update dependencies.
 
 ### Event handling
 
@@ -132,14 +132,14 @@ handle.destroy(); // don't forget to unsubscribe during cleanup
 In Intellij IDEA the debugging of Vitest tests in monorepos may lead to problems.
 However, it is possible to define a custom run configuration to enable debugging:
 
--   In Intellij open the "Run/Debug Configurations" dialog ("Run" --> "Edit Configurations").
--   Create a new configuration by clicking the "+" icon in the upper left.
--   Select "Node.js" from the new configuration list.
--   Choose a name (e.g. "Vitest") and ensure that the node interpreter (node.exe) and working directory
-    (trails project root path) are selected reasonable.
--   In the field "JavaScript file" add the path to vitest.mjs (e.g. `./node_modules/vitest/vitest.mjs`)
--   In the field "Application parameters" add the following: `run --threads false --testTimeOut 30000 <Relative path to your test file>`. The `testTimeOut`is optional, however useful for long-running tests. Example: `run --threads false --testTimeout 30000 src/packages/legend/Legend.test.tsx`
--   Click "save". Run the new configuration in debug mode zu start debugging.
+- In Intellij open the "Run/Debug Configurations" dialog ("Run" --> "Edit Configurations").
+- Create a new configuration by clicking the "+" icon in the upper left.
+- Select "Node.js" from the new configuration list.
+- Choose a name (e.g. "Vitest") and ensure that the node interpreter (node.exe) and working directory
+  (trails project root path) are selected reasonable.
+- In the field "JavaScript file" add the path to vitest.mjs (e.g. `./node_modules/vitest/vitest.mjs`)
+- In the field "Application parameters" add the following: `run --threads false --testTimeOut 30000 <Relative path to your test file>`. The `testTimeOut`is optional, however useful for long-running tests. Example: `run --threads false --testTimeout 30000 src/packages/legend/Legend.test.tsx`
+- Click "save". Run the new configuration in debug mode zu start debugging.
 
 Official information for debugging Vitest in Intellij IDEA can be found in the Vitest documentation:
 https://vitest.dev/guide/debugging#intellij-idea  

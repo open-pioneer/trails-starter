@@ -226,21 +226,21 @@ We have configured a custom CLI tool to check for duplicate packages after `pnpm
 
 When encountering a duplicate package, consider taking the following steps:
 
--   Run `pnpm dedupe`. This can sometimes resolve the issue.
--   Investigate why the package is duplicated.
-    Use `pnpm why -r PACKAGE_NAME` (optional: add `@SOME_VERSION` after the package name) to see why that package is present in your dependency tree.
-    Then, decide what to do next.
--   Alternative 1:
-    Update other packages as well, so all of them use a shared version again.
-    This is only an option if those updates actually exist.
--   Alternative 2:
-    Override the version for some packages (using pnpm overrides).
-    This is an option if the newer version is actually compatible to the older one.
--   Alternative 3:
-    Allow the duplicates by adding the package name to the `support/duplicate-packages.yaml` file.
-    Some packages do not cause any problems when duplicated and can be safely listed there.
-    They will only increase your application's bundle size slightly.
-    _Central packages like `react`, `react-dom`, chakra packages or any trails packages **must not** be allowed as duplicates._
+- Run `pnpm dedupe`. This can sometimes resolve the issue.
+- Investigate why the package is duplicated.
+  Use `pnpm why -r PACKAGE_NAME` (optional: add `@SOME_VERSION` after the package name) to see why that package is present in your dependency tree.
+  Then, decide what to do next.
+- Alternative 1:
+  Update other packages as well, so all of them use a shared version again.
+  This is only an option if those updates actually exist.
+- Alternative 2:
+  Override the version for some packages (using pnpm overrides).
+  This is an option if the newer version is actually compatible to the older one.
+- Alternative 3:
+  Allow the duplicates by adding the package name to the `support/duplicate-packages.yaml` file.
+  Some packages do not cause any problems when duplicated and can be safely listed there.
+  They will only increase your application's bundle size slightly.
+  _Central packages like `react`, `react-dom`, chakra packages or any trails packages **must not** be allowed as duplicates._
 
 Example: tslib is present twice
 
@@ -367,13 +367,13 @@ Please use [`pnpm`](https://pnpm.io) instead of `npm` to manage dependencies in 
 
 Here is a list of some common commands you are likely to need:
 
--   `pnpm install`: Install local dependencies, for example after versions changed or a new local package has been created.
--   In a package directory: `pnpm add <DEP>`.
-    Adds the dependency to the package and installs it. Use `-D` for devDependencies.
-    `pnpm remove` removes a dependency again.
--   `pnpm -w <COMMAND>`: run the command in the workspace root instead of the local package.
--   `pnpm run <SCRIPT>`: runs the script from the `package.json`.
--   `pnpm exec <COMMAND>`: runs the CLI command (should be installed in node_modules), e.g. `pnpm exec -w tsc --noEmit`.
+- `pnpm install`: Install local dependencies, for example after versions changed or a new local package has been created.
+- In a package directory: `pnpm add <DEP>`.
+  Adds the dependency to the package and installs it. Use `-D` for devDependencies.
+  `pnpm remove` removes a dependency again.
+- `pnpm -w <COMMAND>`: run the command in the workspace root instead of the local package.
+- `pnpm run <SCRIPT>`: runs the script from the `package.json`.
+- `pnpm exec <COMMAND>`: runs the CLI command (should be installed in node_modules), e.g. `pnpm exec -w tsc --noEmit`.
 
 ### Monorepo
 

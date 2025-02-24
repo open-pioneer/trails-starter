@@ -4,41 +4,41 @@ The purpose of this project is building web applications from a set of composabl
 
 ## Requirements
 
--   Web applications must be embeddable into host websites without causing much friction (such as JS/CSS conflicts).
-    The final artifact(s) shall be static files (.js, .html, etc.) that can be deployed easily on common http servers.
+- Web applications must be embeddable into host websites without causing much friction (such as JS/CSS conflicts).
+  The final artifact(s) shall be static files (.js, .html, etc.) that can be deployed easily on common http servers.
 
--   Web applications shall be able to expose an API to their host site (e.g. methods, events)
+- Web applications shall be able to expose an API to their host site (e.g. methods, events)
 
--   It should also be possible to easily implement and deploy "classic" single page application, both
-    for testing/demonstration and for projects where the application does not need to be embedded anywhere else
+- It should also be possible to easily implement and deploy "classic" single page application, both
+  for testing/demonstration and for projects where the application does not need to be embedded anywhere else
 
--   Applications should be composed of smaller packages that may be developed separately.
-    Those building blocks ("bundles") should support
+- Applications should be composed of smaller packages that may be developed separately.
+  Those building blocks ("bundles") should support
 
-    -   Development across multiple repositories with separate compilation
-    -   Reusing common building blocks between applications and teams
-    -   Mixed licensing (e.g. open source foundation with proprietary features implemented "on top")
-    -   Easy dependency/package management (integrates with NPM, supports CVE audits and license compliance scans)
+    - Development across multiple repositories with separate compilation
+    - Reusing common building blocks between applications and teams
+    - Mixed licensing (e.g. open source foundation with proprietary features implemented "on top")
+    - Easy dependency/package management (integrates with NPM, supports CVE audits and license compliance scans)
 
--   For the developers of web applications, the system should offer
+- For the developers of web applications, the system should offer
 
-    -   Support for modern technologies such as TypeScript, SCSS and UI-Libraries such as React and/or Vue
-    -   Dependency injection for class instances that depend on services provided by other classes
-    -   Enforcement of/support for clear interfaces between application components
-    -   Support for extension / configuration of existing application components
-    -   Automatic handling of i18n / translations
-    -   Automatic loading of styles
-    -   Automatic inclusion of misc. assets (such as images)
-    -   A productive development experience (including hot module reloading and good debugger support)
+    - Support for modern technologies such as TypeScript, SCSS and UI-Libraries such as React and/or Vue
+    - Dependency injection for class instances that depend on services provided by other classes
+    - Enforcement of/support for clear interfaces between application components
+    - Support for extension / configuration of existing application components
+    - Automatic handling of i18n / translations
+    - Automatic loading of styles
+    - Automatic inclusion of misc. assets (such as images)
+    - A productive development experience (including hot module reloading and good debugger support)
 
--   The user interface framework(s) must support accessibility
+- The user interface framework(s) must support accessibility
 
--   The system should use well known open source standard technology wherever possible to reduce friction, onboarding time
+- The system should use well known open source standard technology wherever possible to reduce friction, onboarding time
 
--   A development starter/template project should enforce a common project structure with examples and preexisting scripts
-    for common tasks, such as building, publishing, testing, etc.
+- A development starter/template project should enforce a common project structure with examples and preexisting scripts
+  for common tasks, such as building, publishing, testing, etc.
 
--   All routine tasks shall be automated.
+- All routine tasks shall be automated.
 
 ## Technology choices
 
@@ -53,17 +53,17 @@ and by installing existing plugins (e.g. SCSS, React support).
 
 Missing functionality can be implemented on top of Vite using its plugin API:
 
--   Support for simple multi page applications (many .html files)
--   Deployment as a web component
--   Automatic discovery and linking of application building blocks ("bundles")
+- Support for simple multi page applications (many .html files)
+- Deployment as a web component
+- Automatic discovery and linking of application building blocks ("bundles")
 
 Further links:
 
--   Vite plugins: https://github.com/vitejs/awesome-vite
--   Rollup plugins (usually compatible with vite): https://github.com/rollup/awesome
--   Vite features: https://vitejs.dev/guide/features.html
--   Vite plugin API (extension of Rollup's plugin API): https://vitejs.dev/guide/api-plugin.html
--   Rollup plugin API: https://rollupjs.org/guide/en/#plugin-development
+- Vite plugins: https://github.com/vitejs/awesome-vite
+- Rollup plugins (usually compatible with vite): https://github.com/rollup/awesome
+- Vite features: https://vitejs.dev/guide/features.html
+- Vite plugin API (extension of Rollup's plugin API): https://vitejs.dev/guide/api-plugin.html
+- Rollup plugin API: https://rollupjs.org/guide/en/#plugin-development
 
 ### Web Components
 
@@ -115,11 +115,11 @@ Ultimately, we expect the integration with the UI layer to be relatively simple,
 [Chakra UI](https://chakra-ui.com/) was chosen as the main React component framework after a in-depth evaluation of alternatives (including MUI, Fluent UI and Mantine).
 Reasons for that choice include:
 
--   Very good support for a11y
--   Good support for customization / themes
--   Large set of builtin components (although no rich table by default)
--   Well maintained
--   Can integrate (with some complexity) into the shadow dom technology
+- Very good support for a11y
+- Good support for customization / themes
+- Large set of builtin components (although no rich table by default)
+- Well maintained
+- Can integrate (with some complexity) into the shadow dom technology
 
 [Material UI](https://mui.com/core/) was the second contender.
 
@@ -137,10 +137,10 @@ PNPM's workspaces make it easy to develop an application as a collection of inte
 
 Some additions must be developed on top of these technologies to support the remaining requirements:
 
--   The service layer, including dependency injection and configuration
--   Automatic discovery and loading of application building blocks (including services, i18n files, styles, etc.)
--   Integration as a web component
--   Deployment as a multi page application
+- The service layer, including dependency injection and configuration
+- Automatic discovery and loading of application building blocks (including services, i18n files, styles, etc.)
+- Integration as a web component
+- Deployment as a multi page application
 
 The following sections describe the process by which apps are built and started.
 

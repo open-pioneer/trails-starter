@@ -141,8 +141,8 @@ messages:
 
 Services and UI components will automatically receive appropriate `intl` objects from the framework for the current application locale:
 
--   The service constructor's `options` parameter contains `options.intl`
--   The react hook `useIntl()` (see below) provides the same `intl` object.
+- The service constructor's `options` parameter contains `options.intl`
+- The react hook `useIntl()` (see below) provides the same `intl` object.
 
 See [I18N Format](./I18nFormat.md) for more details.
 
@@ -389,9 +389,9 @@ export default defineBuildConfig({
 });
 ```
 
--   **(1)** The key in the `overrides` object is a package name.
--   **(2)** The key in the `services` object is a service name within that package.
--   **(3)** Disables the service (the default is always `true`).
+- **(1)** The key in the `overrides` object is a package name.
+- **(2)** The key in the `services` object is a service name within that package.
+- **(3)** Disables the service (the default is always `true`).
 
 The snippet above completely _removes_ to service called `GreeterImpl` from the package `sample-package`.
 If that service provided any interfaces required by the rest of the application, the app would now be responsible

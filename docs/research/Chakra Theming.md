@@ -2,8 +2,8 @@
 
 (applies to Chakra UI version `2.8.0`)
 
--   Chakra use a few (internal) semantic tokes that can be overridden to quickly change the default colors
--   these values are not applied to components that define a color scheme by default (e.g. Button uses color scheme _gray_ by default)
+- Chakra use a few (internal) semantic tokes that can be overridden to quickly change the default colors
+- these values are not applied to components that define a color scheme by default (e.g. Button uses color scheme _gray_ by default)
 
 ```json
 {
@@ -17,16 +17,16 @@
 }
 ```
 
--   it is preferable to use color schemes instead of values for background color, color...
-    -   hover color and existing variants work automatically
--   color scheme can only be set in the defaultProps, not for each variant
-    -   variants have to define background color, color...
--   Chakra's predefined semantic tokens (see above) are not applied if variants are used
-    -   a variant has to specify every applicable property
--   baseStyle is only applied to variants (it is not applied if the component has no `variant` attribute)
-    -   a default variant can be specified in the defaultProps
--   only `colorScheme`, `variant`, `size` can be specified in defaultProps
-    -   everything else has to be defined in the baseStyle or a variant
+- it is preferable to use color schemes instead of values for background color, color...
+    - hover color and existing variants work automatically
+- color scheme can only be set in the defaultProps, not for each variant
+    - variants have to define background color, color...
+- Chakra's predefined semantic tokens (see above) are not applied if variants are used
+    - a variant has to specify every applicable property
+- baseStyle is only applied to variants (it is not applied if the component has no `variant` attribute)
+    - a default variant can be specified in the defaultProps
+- only `colorScheme`, `variant`, `size` can be specified in defaultProps
+    - everything else has to be defined in the baseStyle or a variant
 
 ```js
 {
