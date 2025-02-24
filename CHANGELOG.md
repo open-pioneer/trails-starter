@@ -21,6 +21,7 @@
     -   TypeScript 5.7.3
     -   Minor updates of miscellaneous dependencies
 -   Require Node 20 or newer (was: 18).
+-   Migrate TypeDoc configuration to ESM (`typedoc.config.mjs`).
 
 ## 2025-01-22
 
