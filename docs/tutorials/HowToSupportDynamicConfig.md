@@ -5,22 +5,23 @@ This tutorial describes how to support dynamic configuration in your app.
 Usually, configuration is done in the `build.config.mjs` file of a package(see
 [How to use properties](./HowToUseProperties.md)).
 However, this configuration can not be easily changed after building an app.
-This tutorial describes how it is possible to move configuration to an extra file that can easily be
-changed after building an app. This is useful if you want to change the behavior of your app based
-on the environment or user preferences.
+This tutorial describes how you can move configuration to a separate file that can easily be
+accessed and changed after building an app. This is useful if you want to change the
+behavior of your app based on the environment or user preferences.
 
-In this tutorial we will use a value of a configuration file to set the title of the layer in the
-map-sample app.
+In this tutorial we will create a configuration file and use a value derived from the file
+to set the title of a layer in the map-sample app.
 
 ## Create a configuration file
 
-First, we create a configuration file that will hold the configuration in the public vite directory.
+First, we create a configuration file in the public vite directory.
 
-The configuration file will be copied as is during the build process to allow the admin
-to find the file and change the configuration. The file can be of any format (e.g., JSON, XML, YAML, etc.).
+The configuration file will be copied as is during the build process to allow the admin to find
+the file and change the configuration. The file can be of any format you prefer
+(e.g., JSON, XML, YAML, etc.).
 
-As an example, we create a simple JSON file holding the configuration. Therefore, we create the directory
-`src/public` and add a file `config.json` with the following content:
+As an example, we will create a simple JSON file holding the configuration. Therefore, we create
+the directory `src/public` and add a file `config.json` with the following content:
 
 ```json
 // src/public/config.json
@@ -29,16 +30,17 @@ As an example, we create a simple JSON file holding the configuration. Therefore
 }
 ```
 
-The file always needs to be placed in the `src/public` directory. However, it is possible to change the public
-directory configuration in the vite config (see [vite documentation](https://vite.dev/config/shared-options.html#publicdir))
+The configuration file always needs to be placed in the `src/public` directory (or in a subdirectory
+of this directory). However, it is possible to change the public directory configuration in the vite
+config (see [vite documentation](https://vite.dev/config/shared-options.html#publicdir)).
 
 ## Specify the configuration object in the app
 
-Next, we need to specify a configuration object in the app that will be used to hold the configuration loaded
-from the configuration file.
+Next, we need to specify a configuration object in the app that will be used to hold the configuration
+loaded from the configuration file.
 
-Therefore, we add a properties configuration to the `build.config.mjs` file in the`src/samples/map-sample/ol-app`
-directory:
+Therefore, we add a properties configuration to the `build.config.mjs` file in the
+`src/samples/map-sample/ol-app` directory:
 
 ```js
 // src/samples/map-sample/ol-app/build.config.mjs
@@ -52,15 +54,15 @@ export default defineBuildConfig({
             provides: ["map.MapConfigProvider"]
         }
     },
+    // (1)
     properties: {
-        // (1)
         userConfig: null
     }
 });
 ```
 
--   **(1)** Add a `properties` object to the build configuration. The `userConfig` (name is just e) property
-    will hold the configuration loaded from the configuration file.
+-   **(1)** Add a `properties` object to the build configuration. The `userConfig` (name is just
+    exemplary) property will hold the configuration loaded from the configuration file.
 
 ## Load the configuration file and pass the config to the app
 
@@ -93,7 +95,7 @@ const element = createCustomElement({
         return {
             properties: {
                 "ol-app": {
-                    "userConfig": config // (2.2)
+                    "userConfig": config // (2.3)
                 }
             }
         };
@@ -164,5 +166,5 @@ export class MainMapProvider implements MapConfigProvider {
 ```
 
 -   **(1)** Create a constructor to receive the configuration using the `ServiceOptions`. We
-    pass the value of the layerTitle from the configuration to the classes `layerTitle` property.
--   **(2)** Use the `layerTitle` property to set the title of the layer in the map.
+    pass the value of the layerTitle from the configuration to the `layerTitle` class variable.
+-   **(2)** Use the value of the `layerTitle` property to set the title of the map's layer.
