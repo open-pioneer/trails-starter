@@ -188,7 +188,7 @@ pnpm preview
 ```
 
 Your application will load the configuration file at startup.
-Changing the content of `dist/www/config.json` will be reflected after a reload.
+Changes to the content of `dist/www/config.json` will be reflected after a reload.
 
 ## Further reading
 
