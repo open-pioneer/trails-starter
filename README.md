@@ -8,7 +8,7 @@ See [See also](#see-also) for API docs of other trails packages.
 
 ## Quick start
 
-Ensure that you have [Node](https://nodejs.org/en/) (Version 18 or later) and [pnpm](https://pnpm.io/) (Version 9.x) installed.
+Ensure that you have [Node](https://nodejs.org/en/) (Version 20 or later) and [pnpm](https://pnpm.io/) (Version 9.x) installed.
 
 Then execute the following commands to get started:
 
@@ -26,9 +26,9 @@ Additional in-depth information can be found in the [Documentation](./docs/READM
 
 ## See also
 
--   [Core packages](https://github.com/open-pioneer/trails-core-packages): Contains the runtime package and other central packages.
--   [OpenLayers base packages](https://github.com/open-pioneer/trails-openlayers-base-packages): Contains packages using OpenLayers to render a map.
--   [Build tools](https://github.com/open-pioneer/trails-build-tools): Contains our build tooling such as the Vite plugin.
+- [Core packages](https://github.com/open-pioneer/trails-core-packages): Contains the runtime package and other central packages.
+- [OpenLayers base packages](https://github.com/open-pioneer/trails-openlayers-base-packages): Contains packages using OpenLayers to render a map.
+- [Build tools](https://github.com/open-pioneer/trails-build-tools): Contains our build tooling such as the Vite plugin.
 
 ## License
 
