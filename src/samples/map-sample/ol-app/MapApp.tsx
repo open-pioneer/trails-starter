@@ -33,21 +33,13 @@ import { ScaleViewer } from "@open-pioneer/scale-viewer";
 import { Point, Polygon } from "ol/geom";
 import { useIntl, useService } from "open-pioneer:react-hooks";
 import { ReactNode, useEffect, useMemo } from "react";
-import { Link as WouterLink, Router, useLocation } from "wouter";
+import { Router, useLocation, Link as WouterLink } from "wouter";
 import { getFeatureUrl, useCurrentFeatureId, useRouterOptions } from "./routes";
 import { MAP_ID } from "./services";
 
 export function MapApp() {
     const intl = useIntl();
     const { map } = useMapModel(MAP_ID);
-
-    const linkIds = ["1", "2", "123", undefined];
-    const links = linkIds.map((id) => (
-        <WouterLink key={String(id)} href={getFeatureUrl(id)} asChild>
-            <Link>{id ? `Select ${id}` : "Reset"}</Link>
-        </WouterLink>
-    ));
-
     return (
         <Router {...useRouterOptions()}>
             <Notifier position="top-right" />
@@ -66,9 +58,7 @@ export function MapApp() {
                         </Box>
                     }
                 >
-                    <HStack alignSelf="center" gap={4} my={2}>
-                        {links}
-                    </HStack>
+                    <TestLinks />
                     {map && <AppContent map={map} />}
                 </TitledSection>
             </Flex>
@@ -80,7 +70,6 @@ const DRAWER_WIDTH = 400; // pixels
 
 function AppContent(props: { map: MapModel }) {
     const { map } = props;
-    const intl = useIntl();
     const [, navigate] = useLocation();
     const drawerContent = useFeatureSelection(map);
 
@@ -101,39 +90,68 @@ function AppContent(props: { map: MapModel }) {
                     {drawerContent}
                 </Drawer>
             )}
-            <Flex flex="1" direction="column" position="relative">
-                <MapContainer
-                    role="main"
-                    aria-label={intl.formatMessage({ id: "ariaLabel.map" })}
-                    viewPadding={drawerContent ? { left: DRAWER_WIDTH } : undefined}
-                >
-                    <MapAnchor position="bottom-right" horizontalGap={10} verticalGap={30}>
-                        <Flex
-                            role="bottom-right"
-                            aria-label={intl.formatMessage({ id: "ariaLabel.bottomRight" })}
-                            direction="column"
-                            gap={1}
-                            padding={1}
-                        >
-                            <InitialExtent />
-                            <ZoomIn />
-                            <ZoomOut />
-                        </Flex>
-                    </MapAnchor>
-                </MapContainer>
-            </Flex>
-            <Flex
-                role="region"
-                aria-label={intl.formatMessage({ id: "ariaLabel.footer" })}
-                gap={3}
-                alignItems="center"
-                justifyContent="center"
-            >
-                <CoordinateViewer precision={2} />
-                <ScaleBar />
-                <ScaleViewer />
-            </Flex>
+            <MapContent drawerIsOpen={drawerContent != null} />
+            <FooterContent />
         </DefaultMapProvider>
+    );
+}
+
+function MapContent(props: { drawerIsOpen: boolean }) {
+    const intl = useIntl();
+    return (
+        <Flex flex="1" direction="column" position="relative">
+            <MapContainer
+                role="main"
+                aria-label={intl.formatMessage({ id: "ariaLabel.map" })}
+                viewPadding={props.drawerIsOpen ? { left: DRAWER_WIDTH } : undefined}
+            >
+                <MapAnchor position="bottom-right" horizontalGap={10} verticalGap={30}>
+                    <Flex
+                        role="bottom-right"
+                        aria-label={intl.formatMessage({ id: "ariaLabel.bottomRight" })}
+                        direction="column"
+                        gap={1}
+                        padding={1}
+                    >
+                        <InitialExtent />
+                        <ZoomIn />
+                        <ZoomOut />
+                    </Flex>
+                </MapAnchor>
+            </MapContainer>
+        </Flex>
+    );
+}
+
+function FooterContent() {
+    const intl = useIntl();
+    return (
+        <Flex
+            role="region"
+            aria-label={intl.formatMessage({ id: "ariaLabel.footer" })}
+            gap={3}
+            alignItems="center"
+            justifyContent="center"
+        >
+            <CoordinateViewer precision={2} />
+            <ScaleBar />
+            <ScaleViewer />
+        </Flex>
+    );
+}
+
+function TestLinks() {
+    const linkIds = ["1", "2", "123", undefined];
+    const links = linkIds.map((id) => (
+        <WouterLink key={String(id)} href={getFeatureUrl(id)} asChild>
+            <Link>{id ? `Select ${id}` : "Reset"}</Link>
+        </WouterLink>
+    ));
+
+    return (
+        <HStack alignSelf="center" gap={4} my={2}>
+            {links}
+        </HStack>
     );
 }
 
