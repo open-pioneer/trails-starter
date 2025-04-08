@@ -59,7 +59,17 @@
             "cross-spawn@<7.0.5": ">=7.0.5",
             "nanoid@<3.3.8": "^3.3.8",
             "esbuild@<0.25.0": ">=0.25.0",
-            "@babel/runtime": ">=7.26.10"
+            "@babel/runtime": ">=7.26.10",
+            "@open-pioneer/base-theme": "catalog:",
+            "@open-pioneer/chakra-integration": "catalog:",
+            "@open-pioneer/core": "catalog:",
+            "@open-pioneer/http": "catalog:",
+            "@open-pioneer/integration": "catalog:",
+            "@open-pioneer/notifier": "catalog:",
+            "@open-pioneer/react-utils": "catalog:",
+            "@open-pioneer/runtime-react-support": "catalog:",
+            "@open-pioneer/runtime": "catalog:",
+            "@open-pioneer/test-utils": "catalog:"
         },
         "auditConfig": {
             "ignoreCves": []

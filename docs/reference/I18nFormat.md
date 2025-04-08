@@ -55,4 +55,10 @@ const header = intl.formatMessage({ id: "content.header" }); // "A header"
 const greeting = intl.formatMessage({ id: "greeting" }, { name: "User" }); // "Hello User"
 ```
 
+As an extension, it also possible to format React nodes using the `formatRichMessage` method:
+
+```js
+const message = intl.formatRichMessage({ id: "greeting" }, { name: <UserName /> });
+```
+
 FormatJS also provides facilities to format numbers, dates etc. in the appropriate locale, see also [Documentation](https://formatjs.io/docs/intl#intlshape).

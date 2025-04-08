@@ -16,7 +16,9 @@ import {
     RadioGroup,
     Stack,
     StackDivider,
-    Text
+    Tag,
+    Text,
+    VStack
 } from "@open-pioneer/chakra-integration";
 import { useIntl, useService } from "open-pioneer:react-hooks";
 import { useState } from "react";
@@ -45,19 +47,22 @@ function ExampleStack() {
             align="stretch"
         >
             <Box bg="white" w="100%" p={4} color="black" borderWidth="1px" borderColor="black">
-                <InterpolationExample />
+                <InterpolationExample></InterpolationExample>
             </Box>
             <Box bg="white" w="100%" p={4} color="black" borderWidth="1px" borderColor="black">
-                <PluralsExample />
+                <PluralsExample></PluralsExample>
             </Box>
             <Box bg="white" w="100%" p={4} color="black" borderWidth="1px" borderColor="black">
-                <SelectionExample />
+                <SelectionExample></SelectionExample>
             </Box>
             <Box bg="white" w="100%" p={4} color="black" borderWidth="1px" borderColor="black">
-                <NumberFormatExample />
+                <NumberFormatExample></NumberFormatExample>
             </Box>
             <Box bg="white" w="100%" p={4} color="black" borderWidth="1px" borderColor="black">
-                <DateTimeFormatExample />
+                <DateTimeFormatExample></DateTimeFormatExample>
+            </Box>
+            <Box bg="white" w="100%" p={4} color="black" borderWidth="1px" borderColor="black">
+                <RichTextExample></RichTextExample>
             </Box>
             <Box bg="white" w="100%" p={4} color="black" borderWidth="1px" borderColor="black">
                 <ServiceI18nExample />
@@ -224,6 +229,47 @@ function DateTimeFormatExample() {
                     style: "long"
                 })}
             </Text>
+        </>
+    );
+}
+
+function RichTextExample() {
+    const intl = useIntl();
+
+    return (
+        <>
+            <Heading as="h4" size="md">
+                {intl.formatMessage({ id: "richtext.heading" })}
+            </Heading>
+            <VStack spacing={2} align="start">
+                <Box>
+                    {intl.formatRichMessage(
+                        { id: "richtext.messageWithReactNode" },
+                        {
+                            element: <Tag>Hi</Tag>
+                        }
+                    )}
+                </Box>
+                <Box>
+                    {intl.formatRichMessage({
+                        id: "richtext.messageWithInlineCode"
+                    })}
+                </Box>
+                <Box>
+                    {intl.formatRichMessage(
+                        {
+                            id: "richtext.messageWithReactTag"
+                        },
+                        {
+                            customTag: (parts) => (
+                                <Box display="inline-block" background="trails.200">
+                                    {parts}
+                                </Box>
+                            )
+                        }
+                    )}
+                </Box>
+            </VStack>
         </>
     );
 }
