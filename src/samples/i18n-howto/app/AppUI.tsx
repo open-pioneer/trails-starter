@@ -47,22 +47,22 @@ function ExampleStack() {
             align="stretch"
         >
             <Box bg="white" w="100%" p={4} color="black" borderWidth="1px" borderColor="black">
-                <InterpolationExample></InterpolationExample>
+                <InterpolationExample />
             </Box>
             <Box bg="white" w="100%" p={4} color="black" borderWidth="1px" borderColor="black">
-                <PluralsExample></PluralsExample>
+                <PluralsExample />
             </Box>
             <Box bg="white" w="100%" p={4} color="black" borderWidth="1px" borderColor="black">
-                <SelectionExample></SelectionExample>
+                <SelectionExample />
             </Box>
             <Box bg="white" w="100%" p={4} color="black" borderWidth="1px" borderColor="black">
-                <NumberFormatExample></NumberFormatExample>
+                <NumberFormatExample />
             </Box>
             <Box bg="white" w="100%" p={4} color="black" borderWidth="1px" borderColor="black">
-                <DateTimeFormatExample></DateTimeFormatExample>
+                <DateTimeFormatExample />
             </Box>
             <Box bg="white" w="100%" p={4} color="black" borderWidth="1px" borderColor="black">
-                <RichTextExample></RichTextExample>
+                <RichTextExample />
             </Box>
             <Box bg="white" w="100%" p={4} color="black" borderWidth="1px" borderColor="black">
                 <ServiceI18nExample />

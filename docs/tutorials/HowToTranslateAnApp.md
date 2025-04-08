@@ -581,7 +581,7 @@ In result, we see our selected formatted datetime and the relative time between 
 ### Formatting rich text
 
 So far, we have used the `intl.formatMessage` method to format _strings_.
-Using this function, _primitive values_ (such as strings, numbers, etc.) can be used as values to in placeholders such as `{name}`.
+Using this function, _primitive values_ (such as strings, numbers, etc.) can be used as values in placeholders such as `{name}`.
 For rich user interfaces, this way of rendering messages can be limiting in practice.
 
 To render _rich_ text with _React_ components for your user interface, use `intl.formatRichMessage()` instead.
