@@ -660,6 +660,10 @@ function RichTextExample() {
 }
 ```
 
+The code above is rendered like this:
+
+![rich text example](./HowToTranslateAnApp_RichText.png)
+
 ### Using i18n in a service
 
 The `intl` object is not only available in React components, it can also be used from any service.
