@@ -578,6 +578,92 @@ In result, we see our selected formatted datetime and the relative time between 
 > It always uses the defined browser locale or the system default. In our example, if your browser uses locale `de`
 > but your app uses url parameter `lang=en` the input will show values matching to locale `de`.
 
+### Formatting rich text
+
+So far, we have used the `intl.formatMessage` method to format _strings_.
+Using this function, _primitive values_ (such as strings, numbers, etc.) can be used as values in placeholders such as `{name}`.
+For rich user interfaces, this way of rendering messages can be limiting in practice.
+
+To render _rich_ text with _React_ components for your user interface, use `intl.formatRichMessage()` instead.
+This functions follows the same principles as `intl.formatMessage()`, but is different in a few key ways:
+
+- It always returns a React node. This makes it very powerful, but this also means that it can only be used in combination with React components.
+- It supports React nodes as _values_. You can still use placeholders in your messages (like `{name}`) but you can substitute arbitrary React nodes instead of only primitive values.
+- It supports defining custom tags in terms of React nodes, using functions as _values_.
+- It provides a few basic formatting tags out of the box.
+
+**Examples:**
+
+Our messages look similar to the earlier examples:
+
+```yaml
+# src/apps/empty/i18n/de.yaml
+messages:
+    # ...
+    richtext:
+        heading: Beispiel für Rich Text
+        messageWithReactNode: "Dieser Text enthält (hier: {element}) ein beliebiges React-Element."
+        messageWithInlineCode: "Dieser Text enthält <code>inline code</code>."
+        messageWithReactTag: "Dieser Text verwendet <customTag>einen Tag, der über React-Elemente definiert ist.</customTag>"
+```
+
+It is the rendering part that differs:
+
+```tsx
+function RichTextExample() {
+    const intl = useIntl();
+
+    return (
+        <>
+            <Heading as="h4" size="md">
+                {intl.formatMessage({ id: "richtext.heading" })}
+            </Heading>
+            <VStack spacing={2} align="start">
+                <Box>
+                    {intl.formatRichMessage(
+                        { id: "richtext.messageWithReactNode" },
+                        {
+                            // We can use any react node as value.
+                            // In this case, we use a chakra `Tag`.
+                            element: <Tag>Hi</Tag>
+                        }
+                    )}
+                </Box>
+                <Box>
+                    {intl.formatRichMessage({
+                        // This message uses a <code> tag, which is defined out of the box and will
+                        // be rendered like a HTML code tag.
+                        // If <code> were not predefined, you could define it yourself (see next example).
+                        id: "richtext.messageWithInlineCode"
+                    })}
+                </Box>
+                <Box>
+                    {intl.formatRichMessage(
+                        {
+                            id: "richtext.messageWithReactTag"
+                        },
+                        {
+                            // This defines the <customTag> used by the message.
+                            // `parts` is the content of the tag from the message.
+                            // You can return any kind of react node here to implement the tag.
+                            customTag: (parts) => (
+                                <Box display="inline-block" background="trails.200">
+                                    {parts}
+                                </Box>
+                            )
+                        }
+                    )}
+                </Box>
+            </VStack>
+        </>
+    );
+}
+```
+
+The code above is rendered like this:
+
+![rich text example](./HowToTranslateAnApp_RichText.png)
+
 ### Using i18n in a service
 
 The `intl` object is not only available in React components, it can also be used from any service.
