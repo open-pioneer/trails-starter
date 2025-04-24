@@ -209,10 +209,10 @@ overrides:
 
 patchedDependencies:
   '@chakra-ui/hooks':
-    hash: mayfbuoknaogevz43ogq74es4q
+    hash: 0425e59e5963f540970162a0320f192637dd4f5e74c54014680d4dd4f2e5c16b
     path: patches/@chakra-ui__hooks.patch
   react-select:
-    hash: benwgmj73vuqed6j4bcic264ha
+    hash: 76074e6c05936addacb06b7e4bf08d0f5101ba64a00cae84d8c9ed60c62254de
     path: patches/react-select@5.8.0.patch
 
 importers:
@@ -230,7 +230,7 @@ importers:
         version: 0.2.0(@pnpm/logger@1000.0.0)
       '@open-pioneer/vite-plugin-pioneer':
         specifier: 'catalog:'
-        version: 4.0.0(@open-pioneer/runtime@3.1.0-dev-rich-text.20250408112706(@types/react@19.0.10)(typescript@5.7.3))(sass@1.85.0)(vite@6.2.5(@types/node@20.17.19)(sass@1.85.0)(tsx@4.19.3)(yaml@2.7.0))
+        version: 4.0.0(@open-pioneer/runtime@3.1.0-dev-rich-text.20250408112706(@emotion/is-prop-valid@1.3.1)(@types/react@19.0.10)(typescript@5.7.3))(sass@1.85.0)(vite@6.2.5(@types/node@20.17.19)(sass@1.85.0)(tsx@4.19.3)(yaml@2.7.0))
       '@testing-library/dom':
         specifier: 'catalog:'
         version: 10.4.0
@@ -363,7 +363,7 @@ importers:
     devDependencies:
       '@open-pioneer/test-utils':
         specifier: 3.1.0-dev-rich-text.20250408112706
-        version: 3.1.0-dev-rich-text.20250408112706(@types/react-dom@19.0.4(@types/react@19.0.10))(@types/react@19.0.10)(typescript@5.7.3)
+        version: 3.1.0-dev-rich-text.20250408112706(@emotion/is-prop-valid@1.3.1)(@types/react-dom@19.0.4(@types/react@19.0.10))(@types/react@19.0.10)(typescript@5.7.3)
 
   src/samples/i18n-howto/app:
     dependencies:
@@ -3937,7 +3937,7 @@ snapshots:
 
   '@chakra-ui/anatomy@2.3.6': {}
 
-  '@chakra-ui/hooks@2.4.4(patch_hash=mayfbuoknaogevz43ogq74es4q)(react@19.0.0)':
+  '@chakra-ui/hooks@2.4.4(patch_hash=0425e59e5963f540970162a0320f192637dd4f5e74c54014680d4dd4f2e5c16b)(react@19.0.0)':
     dependencies:
       '@chakra-ui/utils': 2.2.4(react@19.0.0)
       '@zag-js/element-size': 0.31.1
@@ -3952,7 +3952,7 @@ snapshots:
 
   '@chakra-ui/react@2.10.6(@emotion/react@11.14.0(@types/react@19.0.10)(react@19.0.0))(@emotion/styled@11.14.0(@emotion/react@11.14.0(@types/react@19.0.10)(react@19.0.0))(@types/react@19.0.10)(react@19.0.0))(@types/react@19.0.10)(framer-motion@12.4.7(@emotion/is-prop-valid@1.3.1)(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(react-dom@19.0.0(react@19.0.0))(react@19.0.0)':
     dependencies:
-      '@chakra-ui/hooks': 2.4.4(patch_hash=mayfbuoknaogevz43ogq74es4q)(react@19.0.0)
+      '@chakra-ui/hooks': 2.4.4(patch_hash=0425e59e5963f540970162a0320f192637dd4f5e74c54014680d4dd4f2e5c16b)(react@19.0.0)
       '@chakra-ui/styled-system': 2.12.2(react@19.0.0)
       '@chakra-ui/theme': 3.4.8(@chakra-ui/styled-system@2.12.2(react@19.0.0))(react@19.0.0)
       '@chakra-ui/utils': 2.2.4(react@19.0.0)
@@ -4614,7 +4614,7 @@ snapshots:
       - supports-color
       - typescript
 
-  '@open-pioneer/test-utils@3.1.0-dev-rich-text.20250408112706(@types/react-dom@19.0.4(@types/react@19.0.10))(@types/react@19.0.10)(typescript@5.7.3)':
+  '@open-pioneer/test-utils@3.1.0-dev-rich-text.20250408112706(@emotion/is-prop-valid@1.3.1)(@types/react-dom@19.0.4(@types/react@19.0.10))(@types/react@19.0.10)(typescript@5.7.3)':
     dependencies:
       '@formatjs/intl': 3.1.4(typescript@5.7.3)
       '@open-pioneer/chakra-integration': 3.1.0-dev-rich-text.20250408112706(@emotion/is-prop-valid@1.3.1)(@types/react@19.0.10)
@@ -4642,7 +4642,7 @@ snapshots:
       - supports-color
       - typescript
 
-  '@open-pioneer/vite-plugin-pioneer@4.0.0(@open-pioneer/runtime@3.1.0-dev-rich-text.20250408112706(@types/react@19.0.10)(typescript@5.7.3))(sass@1.85.0)(vite@6.2.5(@types/node@20.17.19)(sass@1.85.0)(tsx@4.19.3)(yaml@2.7.0))':
+  '@open-pioneer/vite-plugin-pioneer@4.0.0(@open-pioneer/runtime@3.1.0-dev-rich-text.20250408112706(@emotion/is-prop-valid@1.3.1)(@types/react@19.0.10)(typescript@5.7.3))(sass@1.85.0)(vite@6.2.5(@types/node@20.17.19)(sass@1.85.0)(tsx@4.19.3)(yaml@2.7.0))':
     dependencies:
       '@babel/generator': 7.26.9
       '@babel/template': 7.26.9
@@ -5386,7 +5386,7 @@ snapshots:
       '@emotion/react': 11.14.0(@types/react@19.0.10)(react@19.0.0)
       react: 19.0.0
       react-dom: 19.0.0(react@19.0.0)
-      react-select: 5.10.0(patch_hash=benwgmj73vuqed6j4bcic264ha)(@types/react@19.0.10)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
+      react-select: 5.10.0(patch_hash=76074e6c05936addacb06b7e4bf08d0f5101ba64a00cae84d8c9ed60c62254de)(@types/react@19.0.10)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
     transitivePeerDependencies:
       - '@types/react'
       - supports-color
@@ -6953,7 +6953,7 @@ snapshots:
     optionalDependencies:
       '@types/react': 19.0.10
 
-  react-select@5.10.0(patch_hash=benwgmj73vuqed6j4bcic264ha)(@types/react@19.0.10)(react-dom@19.0.0(react@19.0.0))(react@19.0.0):
+  react-select@5.10.0(patch_hash=76074e6c05936addacb06b7e4bf08d0f5101ba64a00cae84d8c9ed60c62254de)(@types/react@19.0.10)(react-dom@19.0.0(react@19.0.0))(react@19.0.0):
     dependencies:
       '@babel/runtime': 7.26.10
       '@emotion/cache': 11.14.0
