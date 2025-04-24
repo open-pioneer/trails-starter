@@ -2,7 +2,7 @@
 
 ## System requirements
 
-Ensure that you have [Node](https://nodejs.org/en/) (Version 20 or later) and [pnpm](https://pnpm.io/) (Version 9.x) installed.
+Ensure that you have [Node](https://nodejs.org/en/) (Version 20 or later) and [pnpm](https://pnpm.io/) (Version 10.x) installed.
 
 Assuming Node has been installed, `pnpm` can simply be installed via `npm`:
 

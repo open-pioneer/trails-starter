@@ -1,5 +1,12 @@
 # Changelog
 
+## TODO: Unreleased
+
+- Update pnpm to version 10.9.0
+    - The `package.json` now lists `"packageManager": "pnpm@$version"`, which makes `pnpm` automatically use the correct version.
+      `pnpm self-update` will also update the `package.json` for you.
+    - All pnpm-related configuration has moved to the `pnpm-workspace.yaml` file (from `.npmrc`, `package.json`).
+
 ## 2025-02-24
 
 - Update Open Pioneer Trails dependencies to latest version.

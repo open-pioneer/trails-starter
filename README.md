@@ -8,7 +8,7 @@ See [See also](#see-also) for API docs of other trails packages.
 
 ## Quick start
 
-Ensure that you have [Node](https://nodejs.org/en/) (Version 20 or later) and [pnpm](https://pnpm.io/) (Version 9.x) installed.
+Ensure that you have [Node](https://nodejs.org/en/) (Version 20 or later) and [pnpm](https://pnpm.io/) (Version 10.x) installed.
 
 Then execute the following commands to get started:
 
