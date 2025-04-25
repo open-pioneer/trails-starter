@@ -1,11 +1,20 @@
 # Changelog
 
-## TODO: Unreleased
+## 2025-04-25
 
+- Update Open Pioneer Trails dependencies to latest version.
+    - Core packages: 3.1.0 ([Changes](https://github.com/open-pioneer/trails-openlayers-base-packages/pull/407))
+    - OpenLayers base packages: 0.10.0 ([Changes](https://github.com/open-pioneer/trails-core-packages/pull/88))
+    - Build tools ([Changes](https://github.com/open-pioneer/trails-build-tools/pull/78))
+- Other dependencies:
+    - Update OpenLayers to 10.5.0
+    - Update React to 19.1.0
+    - Minor updates of miscellaneous dependencies
 - Update pnpm to version 10.9.0
     - The `package.json` now lists `"packageManager": "pnpm@$version"`, which makes `pnpm` automatically use the correct version.
       `pnpm self-update` will also update the `package.json` for you.
     - All pnpm-related configuration has moved to the `pnpm-workspace.yaml` file (from `.npmrc`, `package.json`).
+- Remove obsolete `disabled-package` directory from directory `support`.
 
 ## 2025-02-24
 

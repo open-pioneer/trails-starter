@@ -1,15 +1,14 @@
 packages:
   - src/**
-  - support/disabled-package
   - "!**/test-data/**"
   - "!**/dist/**"
 
 # Shared version expressions (yaml anchors).
 # This is a yaml feature and is not interpreted by pnpm directly.
 __versions:
-  - &react_version ^19.0.0
-  - &core_packages_version 3.1.0-dev-rich-text.20250408112706
-  - &ol_base_packages_version ^0.9.0
+  - &react_version ^19.1.0
+  - &core_packages_version ^3.1.0
+  - &ol_base_packages_version ^0.10.0
 
 # https://pnpm.io/catalogs
 catalog:
@@ -43,58 +42,59 @@ catalog:
   # Other dependencies
   "@chakra-ui/icons": ^2.2.4
   "@chakra-ui/react": ^2.10.6
-  "@emotion/cache": ^11.13.0
-  "@emotion/react": ^11.13.0
+  "@conterra/reactivity-core": ^0.5.0
+  "@emotion/cache": ^11.13.1
+  "@emotion/react": ^11.13.3
   "@emotion/styled": ^11.13.0
-  "@formatjs/intl": ^3.1.4
-  framer-motion: ^12.4.7
-  ol: ^10.4.0
+  "@formatjs/intl": ^3.1.6
+  framer-motion: ^12.9.1
+  ol: ^10.5.0
   react-dom: *react_version
   react-icons: ^5.3.0
   react-use: ^17.5.1
   react: *react_version
 
   # Devtools
-  "@open-pioneer/build-package-cli": ^3.0.0
-  "@open-pioneer/build-support": ^3.0.0
-  "@open-pioneer/vite-plugin-pioneer": ^4.0.0
-  "@open-pioneer/check-pnpm-duplicates": "^0.2.0"
+  "@open-pioneer/build-package-cli": ^3.0.1
+  "@open-pioneer/build-support": ^3.0.1
+  "@open-pioneer/check-pnpm-duplicates": ^0.2.1
+  "@open-pioneer/vite-plugin-pioneer": ^4.0.1
   "@testing-library/dom": ^10.4.0
   "@testing-library/jest-dom": ^6.6.2
-  "@testing-library/react": ^16.2.0
+  "@testing-library/react": ^16.3.0
   "@testing-library/user-event": ^14.5.2
   "@types/js-yaml": ^4.0.9
   "@types/node": ^20.14.8
-  "@types/react": ^19.0.10
-  "@types/react-dom": ^19.0.4
-  "@typescript-eslint/eslint-plugin": ^8.11.0
-  "@typescript-eslint/parser": ^8.11.0
-  "@vitejs/plugin-react-swc": ^3.7.1
-  eslint-config-prettier: ^10.0.1
-  eslint-import-resolver-typescript: ^3.6.3
+  "@types/react-dom": ^19.1.2
+  "@types/react": ^19.1.2
+  "@typescript-eslint/eslint-plugin": ^8.31.0
+  "@typescript-eslint/parser": ^8.31.0
+  "@vitejs/plugin-react-swc": ^3.9.0
+  eslint: ^8.57.1
+  eslint-config-prettier: ^10.0.2
+  eslint-import-resolver-typescript: ^4.3.4
   eslint-plugin-header: ^3.1.1
   eslint-plugin-import: ^2.31.0
   eslint-plugin-jsx-a11y: ^6.10.1
-  eslint-plugin-react-hooks: ^5.1.0
-  eslint-plugin-react: ^7.37.1
+  eslint-plugin-react: ^7.37.5
+  eslint-plugin-react-hooks: ^5.2.0
   eslint-plugin-unused-imports: ^4.1.4
-  eslint: ^8.57.1
   fast-glob: ^3.3.3
   handlebars: ^4.7.8
-  happy-dom: ^17.1.1
+  happy-dom: ^17.4.4
   husky: ^9.1.6
   js-yaml: ^4.1.0
   jsdom: ^26.0.0
-  lint-staged: ^15.2.10
-  prettier: ^3.3.3
+  lint-staged: ^15.5.1
+  prettier: ^3.5.3
   rimraf: ^6.0.1
-  sass: ^1.85.0
+  sass: ^1.87.0
   tsx: ^4.19.1
-  typedoc: ^0.27.7
-  typescript: ^5.7.3
+  typedoc: ^0.28.3
+  typescript: ^5.8.3
+  vite: ^6.3.3
   vite-plugin-eslint: ^1.8.1
-  vite: ^6.2.6
-  vitest: ^3.0.6
+  vitest: ^3.1.2
 
 overrides:
   # https://github.com/advisories/GHSA-c2qf-rxjj-qqgw
@@ -120,18 +120,6 @@ overrides:
   # https://github.com/advisories/GHSA-968p-4wvh-cqc8
   "@babel/runtime": ">=7.26.10"
 
-  # TODO: Dev stuff, remove when no longer needed
-  "@open-pioneer/base-theme": "catalog:"
-  "@open-pioneer/chakra-integration": "catalog:"
-  "@open-pioneer/core": "catalog:"
-  "@open-pioneer/http": "catalog:"
-  "@open-pioneer/integration": "catalog:"
-  "@open-pioneer/notifier": "catalog:"
-  "@open-pioneer/react-utils": "catalog:"
-  "@open-pioneer/runtime-react-support": "catalog:"
-  "@open-pioneer/runtime": "catalog:"
-  "@open-pioneer/test-utils": "catalog:"
-
 auditConfig:
   ignoreCves: []
 
@@ -149,6 +137,11 @@ onlyBuiltDependencies:
   - "@parcel/watcher"
   - "@swc/core"
   - esbuild
+
+ignoredBuiltDependencies:
+  # Seems to work fine without build script
+  - unrs-resolver
+
 
 # Don't automatically link to workspace packages (use e.g. "workspace:^" instead).
 linkWorkspacePackages: false
