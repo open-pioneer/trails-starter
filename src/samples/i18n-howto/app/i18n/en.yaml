@@ -35,3 +35,8 @@ messages:
     serviceResponse: "Message: "
   greetingService:
     greeting: Hello {name}!
+  richtext:
+    heading: Example For Rich Text
+    messageWithReactNode: "This text contains (here: {element}) an arbitrary React element."
+    messageWithInlineCode: "This text contains <code>inline code</code>."
+    messageWithReactTag: "This text uses <customTag>a tag defined via React elements.</customTag>"

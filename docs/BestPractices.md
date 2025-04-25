@@ -169,7 +169,3 @@ There are two recommendations to avoid problems:
 1. As a general rule, try to keep your `.jsx` and `.tsx` modules free of side effects.
 2. Don't use `app.tsx` or `app.jsx` during development.
    Instead, use a plain `app.ts` or `app.js` and put the React UI in a different file.
-
-### Licensing: ol-mapbox-style
-
-The package `ol-mapbox-style` uses `@mapbox/mapbox-gl-style-spec`. Because of licensing reasons `@mapbox/mapbox-gl-style-spec` is overwritten by `maplibre-gl-style-spec` (see `pnpm.overrides` in root `package.json` and https://github.com/openlayers/ol-mapbox-style/pull/940).
