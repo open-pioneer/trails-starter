@@ -152,6 +152,5 @@ strictPeerDependencies: true
 # Workaround for current problems regarding our vite plugin + vite's optimizeDeps feature
 shamefullyHoist: true
 
-# Workspace root itself depends on runtime, and all packages (including runtime) have a dev dependency on workspace root
-# for shared scripts.
+# Cyclic dependencies are a code smell but should not trigger hard errors in pnpm.
 ignoreWorkspaceCycles: true
