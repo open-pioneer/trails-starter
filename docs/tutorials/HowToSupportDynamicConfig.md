@@ -20,7 +20,7 @@ The file can be of any format you prefer (e.g., JSON, XML, YAML, etc.).
 As an example, we will use a simple JSON file to hold the configuration.
 We create the directory `src/public` and add a file `config.json` with the following content:
 
-```json
+```jsonc
 // src/public/config.json
 {
     "layerTitle": "My own layer name"
