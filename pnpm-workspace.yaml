@@ -7,8 +7,8 @@ packages:
 # This is a yaml feature and is not interpreted by pnpm directly.
 __versions:
   - &react_version ^19.1.0
-  - &core_packages_version ^3.1.0
-  - &ol_base_packages_version ^0.10.0
+  - &core_packages_version 4.0.0-dev.20250512105016
+  - &ol_base_packages_version 0.10.1-dev-chakra-v3.20250512110627
 
 # https://pnpm.io/catalogs
 catalog:
@@ -24,35 +24,33 @@ catalog:
   "@open-pioneer/overview-map": *ol_base_packages_version
   "@open-pioneer/scale-bar": *ol_base_packages_version
   "@open-pioneer/scale-viewer": *ol_base_packages_version
-  "@open-pioneer/theme": *ol_base_packages_version
 
   # Trails core packages
   # https://github.com/open-pioneer/trails-core-packages
   "@open-pioneer/base-theme": *core_packages_version
-  "@open-pioneer/chakra-integration": *core_packages_version
   "@open-pioneer/core": *core_packages_version
+  "@open-pioneer/chakra-snippets": *core_packages_version
   "@open-pioneer/http": *core_packages_version
   "@open-pioneer/integration": *core_packages_version
   "@open-pioneer/notifier": *core_packages_version
   "@open-pioneer/react-utils": *core_packages_version
-  "@open-pioneer/runtime-react-support": *core_packages_version
+  "@open-pioneer/reactivity": *core_packages_version
   "@open-pioneer/runtime": *core_packages_version
   "@open-pioneer/test-utils": *core_packages_version
 
   # Other dependencies
-  "@chakra-ui/icons": ^2.2.4
-  "@chakra-ui/react": ^2.10.6
-  "@conterra/reactivity-core": ^0.5.0
-  "@emotion/cache": ^11.13.1
-  "@emotion/react": ^11.13.3
+  "@chakra-ui/react": ^3.17.0
+  "@chakra-ui/cli": ^3.17.0
+  "@conterra/reactivity-core": ^0.6.0
+  "@emotion/cache": ^11.13.0
+  "@emotion/react": ^11.13.0
   "@emotion/styled": ^11.13.0
   "@formatjs/intl": ^3.1.6
-  framer-motion: ^12.9.1
   ol: ^10.5.0
-  react-dom: *react_version
   react-icons: ^5.3.0
   react-use: ^17.5.1
   react: *react_version
+  react-dom: *react_version
 
   # Devtools
   "@open-pioneer/build-package-cli": ^3.0.1
@@ -123,11 +121,15 @@ overrides:
 auditConfig:
   ignoreCves: []
 
+allowUnusedPatches: true
+ignorePatchFailures: false
 patchedDependencies:
-  # Ensure valids ids for aria-activedescendant and fix touch events in shadow DOM
-  "react-select": "patches/react-select@5.8.0.patch"
-  # Outside click detection for menus and other popovers
-  "@chakra-ui/hooks": "patches/@chakra-ui__hooks.patch"
+  # Ensure valids ids for aria-activedescendant and fix touch events in shadow DOM (see https://github.com/JedWatson/react-select/issues/5824)
+  "react-select": "patches/react-select.patch"
+  
+  # - Ensure all portals are mounted under `.pioneer-root` div
+  # - Fix rendering of toasts in shadow root: https://github.com/chakra-ui/ark/issues/3455
+  "@ark-ui/react@*": "patches/@ark-ui__react.patch"
 
 peerDependencyRules:
 
@@ -140,8 +142,8 @@ onlyBuiltDependencies:
 
 ignoredBuiltDependencies:
   # Seems to work fine without build script
+  - core-js
   - unrs-resolver
-
 
 # Don't automatically link to workspace packages (use e.g. "workspace:^" instead).
 linkWorkspacePackages: false

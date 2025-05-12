@@ -1,24 +1,24 @@
 // SPDX-FileCopyrightText: 2023-2025 Open Pioneer project (https://github.com/open-pioneer)
 // SPDX-License-Identifier: Apache-2.0
-import { Box, Divider, Flex, FormControl, FormLabel, Text } from "@open-pioneer/chakra-integration";
-import { DefaultMapProvider, MapAnchor, MapContainer } from "@open-pioneer/map";
-import { ScaleBar } from "@open-pioneer/scale-bar";
-import { InitialExtent, ZoomIn, ZoomOut } from "@open-pioneer/map-navigation";
-import { useIntl } from "open-pioneer:react-hooks";
+import { Box, Field, Flex, Separator, Text } from "@chakra-ui/react";
+import { BasemapSwitcher } from "@open-pioneer/basemap-switcher";
 import { CoordinateViewer } from "@open-pioneer/coordinate-viewer";
-import { SectionHeading, TitledSection } from "@open-pioneer/react-utils";
-import { ToolButton } from "@open-pioneer/map-ui-components";
-import { ScaleViewer } from "@open-pioneer/scale-viewer";
 import { Geolocation } from "@open-pioneer/geolocation";
+import { DefaultMapProvider, MapAnchor, MapContainer } from "@open-pioneer/map";
+import { InitialExtent, ZoomIn, ZoomOut } from "@open-pioneer/map-navigation";
+import { ToolButton } from "@open-pioneer/map-ui-components";
+import { Measurement } from "@open-pioneer/measurement";
 import { Notifier } from "@open-pioneer/notifier";
 import { OverviewMap } from "@open-pioneer/overview-map";
-import { MAP_ID } from "./services";
-import { useId, useMemo, useState } from "react";
+import { SectionHeading, TitledSection } from "@open-pioneer/react-utils";
+import { ScaleBar } from "@open-pioneer/scale-bar";
+import { ScaleViewer } from "@open-pioneer/scale-viewer";
 import TileLayer from "ol/layer/Tile";
-import { Measurement } from "@open-pioneer/measurement";
 import OSM from "ol/source/OSM";
+import { useIntl } from "open-pioneer:react-hooks";
+import { useId, useMemo, useState } from "react";
 import { PiRulerLight } from "react-icons/pi";
-import { BasemapSwitcher } from "@open-pioneer/basemap-switcher";
+import { MAP_ID } from "./services";
 
 export function MapApp() {
     const intl = useIntl();
@@ -39,7 +39,7 @@ export function MapApp() {
 
     return (
         <Flex height="100%" direction="column" overflow="hidden">
-            <Notifier position="bottom" />
+            <Notifier />
             <TitledSection
                 title={
                     <Box
@@ -102,15 +102,15 @@ export function MapApp() {
                                     aria-label={intl.formatMessage({ id: "ariaLabel.topRight" })}
                                 >
                                     <OverviewMap olLayer={overviewMapLayer} />
-                                    <Divider mt={4} />
-                                    <FormControl>
-                                        <FormLabel mt={2}>
+                                    <Separator mt={4} />
+                                    <Field.Root>
+                                        <Field.Label mt={2}>
                                             <Text as="b">
                                                 {intl.formatMessage({ id: "basemapLabel" })}
                                             </Text>
-                                        </FormLabel>
+                                        </Field.Label>
                                         <BasemapSwitcher allowSelectingEmptyBasemap />
-                                    </FormControl>
+                                    </Field.Root>
                                 </Box>
                             </MapAnchor>
                             <MapAnchor position="bottom-right" horizontalGap={10} verticalGap={30}>
@@ -124,7 +124,7 @@ export function MapApp() {
                                     <ToolButton
                                         label={intl.formatMessage({ id: "measurementTitle" })}
                                         icon={<PiRulerLight />}
-                                        isActive={measurementIsActive}
+                                        active={measurementIsActive}
                                         onClick={toggleMeasurement}
                                     />
                                     <Geolocation />

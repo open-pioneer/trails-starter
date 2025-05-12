@@ -142,10 +142,10 @@ export const themeConfig = mergeConfigs(
 );
 ```
 
--   **(1)** Import the `mergeConfigs` helper function.
--   **(2)** Import the Trails base theme config from the "@open-pioneer/base-theme" package.
--   **(3)** Use `mergeConfigs` to create an own style system configuration. Use the `defaultTrailsConfig` as first parameter so that the custom theme configuration is based on the Trails' base theme configuration.
--   **(3.1)** Chakra UI style system configuration object that holds the custom configuration.
+- **(1)** Import the `mergeConfigs` helper function.
+- **(2)** Import the Trails base theme config from the "@open-pioneer/base-theme" package.
+- **(3)** Use `mergeConfigs` to create an own style system configuration. Use the `defaultTrailsConfig` as first parameter so that the custom theme configuration is based on the Trails' base theme configuration.
+- **(3.1)** Chakra UI style system configuration object that holds the custom configuration.
 
 Hint: The Trails base theme introduces some special semantic tokens.
 For information about which values are available, see the base-theme core package code.
@@ -191,5 +191,5 @@ const Element = createCustomElement({
 customElements.define("empty-app", Element);
 ```
 
--   **(1)** Imports the custom theme config.
--   **(2)** Specifies `themeConfig` as the application's theme configuration.
+- **(1)** Imports the custom theme config.
+- **(2)** Specifies `themeConfig` as the application's theme configuration.

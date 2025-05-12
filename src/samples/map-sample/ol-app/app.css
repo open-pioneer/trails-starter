@@ -24,3 +24,8 @@
     left: unset;
     right: 0.5em;
 }
+
+/* TODO: Update default styles? */
+.basemap-switcher {
+    width: 100%;
+}

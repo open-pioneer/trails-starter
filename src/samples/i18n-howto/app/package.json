@@ -2,7 +2,7 @@
     "name": "i18n-howto-app",
     "private": true,
     "dependencies": {
-        "@open-pioneer/chakra-integration": "catalog:",
+        "@chakra-ui/react": "catalog:",
         "@open-pioneer/runtime": "catalog:"
     }
 }
