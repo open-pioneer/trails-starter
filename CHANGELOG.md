@@ -1,5 +1,12 @@
 # Changelog
 
+## TODO
+
+- Update to Chakra v3
+- Update Open Pioneer Trails dependencies to latest version.
+    - TODO
+- Remove eslint rules from `.eslintrc` that are better enforced by prettier (indent, linebreak-style).
+
 ## 2025-04-25
 
 - Update Open Pioneer Trails dependencies to latest version.
