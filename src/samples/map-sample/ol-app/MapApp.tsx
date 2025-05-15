@@ -1,6 +1,6 @@
 // SPDX-FileCopyrightText: 2023-2025 Open Pioneer project (https://github.com/open-pioneer)
 // SPDX-License-Identifier: Apache-2.0
-import { Box, Field, Flex, Separator, Text } from "@chakra-ui/react";
+import { Box, Flex, HStack, Separator, Text, VStack } from "@chakra-ui/react";
 import { BasemapSwitcher } from "@open-pioneer/basemap-switcher";
 import { CoordinateViewer } from "@open-pioneer/coordinate-viewer";
 import { Geolocation } from "@open-pioneer/geolocation";
@@ -103,14 +103,7 @@ export function MapApp() {
                                 >
                                     <OverviewMap olLayer={overviewMapLayer} />
                                     <Separator mt={4} />
-                                    <Field.Root>
-                                        <Field.Label mt={2}>
-                                            <Text as="b">
-                                                {intl.formatMessage({ id: "basemapLabel" })}
-                                            </Text>
-                                        </Field.Label>
-                                        <BasemapSwitcher allowSelectingEmptyBasemap />
-                                    </Field.Root>
+                                    <BasemapSwitcherComponent />
                                 </Box>
                             </MapAnchor>
                             <MapAnchor position="bottom-right" horizontalGap={10} verticalGap={30}>
@@ -149,5 +142,18 @@ export function MapApp() {
                 </DefaultMapProvider>
             </TitledSection>
         </Flex>
+    );
+}
+
+function BasemapSwitcherComponent() {
+    const intl = useIntl();
+    const labelId = useId();
+    return (
+        <VStack align="start" mt={2} gap={1}>
+            <Text id={labelId} as="b" mb={1}>
+                {intl.formatMessage({ id: "basemapLabel" })}
+            </Text>
+            <BasemapSwitcher aria-labelledby={labelId} allowSelectingEmptyBasemap />
+        </VStack>
     );
 }

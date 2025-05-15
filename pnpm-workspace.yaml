@@ -8,7 +8,7 @@ packages:
 __versions:
   - &react_version ^19.1.0
   - &core_packages_version 4.0.0-dev.20250512105016
-  - &ol_base_packages_version 0.10.1-dev-chakra-v3.20250512110627
+  - &ol_base_packages_version 0.11.0-dev.20250515143825
 
 # https://pnpm.io/catalogs
 catalog:
@@ -130,6 +130,10 @@ patchedDependencies:
   # - Ensure all portals are mounted under `.pioneer-root` div
   # - Fix rendering of toasts in shadow root: https://github.com/chakra-ui/ark/issues/3455
   "@ark-ui/react@*": "patches/@ark-ui__react.patch"
+  
+  # For tests: overwrite focus() function using defineProperty instead of raw assignment
+  # See https://github.com/chakra-ui/zag/pull/2461
+  "@zag-js/focus-visible@*": "patches/@zag-js__focus-visible.patch"
 
 peerDependencyRules:
 
