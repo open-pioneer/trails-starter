@@ -42,7 +42,7 @@ messages:
 By default, the app uses the browser settings or system default for determining the locale.
 If your browser locale is set to `de` you should see the values from `de.yaml`.
 
-![i18n howto app](./HowToTranslateAnApp_App.png)
+<img src="./HowToTranslateAnApp_App.png" alt="i18n howto app" style="border: 1px solid black;" />
 
 To demonstrate the multi-language support and force a language of our choice, we need to modify the `app.ts`:
 
@@ -54,7 +54,7 @@ import { AppUI } from "./AppUI";
 
 // Reads the 'lang' parameter from the URL and, if set, uses it
 // for the application's locale.
-// This can be helpful during development, but its entirely optional.
+// This can be helpful during development, but it is entirely optional.
 const URL_PARAMS = new URLSearchParams(window.location.search);
 const FORCED_LANG = URL_PARAMS.get("lang") || undefined;
 
@@ -68,25 +68,7 @@ const Element = createCustomElement({
         locale: FORCED_LANG
     }
 });
-customElements.define("i18n-howto", Element);
-```
-
-and the `index.html`:
-
-```html
-<!doctype html>
-<!-- src/sites/empty/index.html -->
-<html lang="en">
-    <head>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Empty Site</title>
-    </head>
-    <body>
-        <i18n-howto></i18n-howto>
-        <script type="module" src="./app/app.ts"></script>
-    </body>
-</html>
+customElements.define("empty-app", Element);
 ```
 
 Now we are able to force the locale with `lang` parameter:
@@ -127,13 +109,8 @@ First we generate an entry in our `ExampleStack` for our `InterpolationExample`:
 // src/apps/empty/AppUI.tsx
 function ExampleStack() {
     return (
-        <Stack
-            mb={5}
-            mt={5}
-            divider={<StackDivider borderColor="gray.200" />}
-            spacing="24px"
-            align="stretch"
-        >
+        <Stack mb={5} mt={5} gap="24px" align="stretch">
+            <StackSeparator borderColor="gray.200" />
             <Box bg="white" w="100%" p={4} color="black" borderWidth="1px" borderColor="black">
                 <InterpolationExample></InterpolationExample>
             </Box>
@@ -200,8 +177,8 @@ function ExampleStack() {
         <Stack
             mb={5}
             mt={5}
-            divider={<StackDivider borderColor="gray.200" />}
-            spacing="24px"
+            separator={<StackSeparator borderColor="gray.200" />}
+            gap="24px"
             align="stretch"
         >
             <Box bg="white" w="100%" p={4} color="black" borderWidth="1px" borderColor="black">
@@ -222,26 +199,19 @@ We will use a RadioGroup to change the count value in our example:
 // src/apps/empty/AppUI.tsx
 function PluralsExample() {
     const intl = useIntl();
-    const [value, setValue] = useState("1");
+    const [value, setValue] = useState<string | null>("1");
     return (
         <>
             <Heading as="h4" size="md">
                 {intl.formatMessage({ id: "plurals.heading" })}
             </Heading>
-            <RadioGroup onChange={setValue} value={value}>
-                <Stack spacing={4} direction="row">
-                    <Radio size="md" value="0">
-                        0
-                    </Radio>
-                    <Radio size="md" value="1">
-                        1
-                    </Radio>
-                    <Radio size="md" value="42">
-                        42
-                    </Radio>
-                    <Radio size="md" value="99">
-                        99
-                    </Radio>
+            {/*import { Radio, RadioGroup } from "@open-pioneer/chakra-snippets/radio";*/}
+            <RadioGroup onValueChange={(e) => setValue(e.value)} value={value}>
+                <Stack gap={4} direction="row">
+                    <Radio value="0">0</Radio>
+                    <Radio value="1">1</Radio>
+                    <Radio value="42">42</Radio>
+                    <Radio value="99">99</Radio>
                 </Stack>
             </RadioGroup>
             <Text mb="8px">{intl.formatMessage({ id: "plurals.value" }, { n: value })}</Text>
@@ -279,8 +249,8 @@ function ExampleStack() {
         <Stack
             mb={5}
             mt={5}
-            divider={<StackDivider borderColor="gray.200" />}
-            spacing="24px"
+            separator={<StackSeparator borderColor="gray.200" />}
+            gap="24px"
             align="stretch"
         >
             <Box bg="white" w="100%" p={4} color="black" borderWidth="1px" borderColor="black">
@@ -306,7 +276,7 @@ We will use a text input for name and a RadioGroup for gender selection:
 function SelectionExample() {
     const intl = useIntl();
     const [value1, setValue1] = useState("");
-    const [value2, setValue2] = useState("male");
+    const [value2, setValue2] = useState<string | null>("male");
     return (
         <>
             <Heading as="h4" size="md">
@@ -318,15 +288,15 @@ function SelectionExample() {
                 placeholder={intl.formatMessage({ id: "interpolation.placeholder" })}
                 size="sm"
             />
-            <RadioGroup onChange={setValue2} value={value2}>
-                <Stack spacing={4} direction="row">
-                    <Radio size="md" value="female">
+            <RadioGroup onValueChange={(e) => setValue2(e.value)} value={value2}>
+                <Stack gap={4} direction="row">
+                    <Radio value="female">
                         {intl.formatMessage({ id: "selection.gender.female" })}
                     </Radio>
-                    <Radio size="md" value="male">
+                    <Radio value="male">
                         {intl.formatMessage({ id: "selection.gender.male" })}
                     </Radio>
-                    <Radio size="md" value="other">
+                    <Radio value="other">
                         {intl.formatMessage({ id: "selection.gender.other" })}
                     </Radio>
                 </Stack>
@@ -376,8 +346,8 @@ function ExampleStack() {
         <Stack
             mb={5}
             mt={5}
-            divider={<StackDivider borderColor="gray.200" />}
-            spacing="24px"
+            separator={<StackSeparator borderColor="gray.200" />}
+            gap="24px"
             align="stretch"
         >
             <Box bg="white" w="100%" p={4} color="black" borderWidth="1px" borderColor="black">
@@ -410,18 +380,21 @@ function NumberFormatExample() {
             <Heading as="h4" size="md">
                 {intl.formatMessage({ id: "numberformat.heading" })}
             </Heading>
-            <NumberInput
-                onChange={(valueString) => setValue(valueString)}
+            {/*import { NumberInputField, NumberInputRoot } from "@open-pioneer/chakra-snippets/number-input";*/}
+            <NumberInputRoot
+                onValueChange={(valueChangeDetails) => {
+                    setValue(valueChangeDetails.value);
+                }}
                 value={value}
-                precision={2}
                 step={0.25}
+                formatOptions={{
+                    minimumFractionDigits: 2,
+                    maximumFractionDigits: 2,
+                    useGrouping: false
+                }}
             >
                 <NumberInputField />
-                <NumberInputStepper>
-                    <NumberIncrementStepper />
-                    <NumberDecrementStepper />
-                </NumberInputStepper>
-            </NumberInput>
+            </NumberInputRoot>
             <Text mb="8px">
                 {intl.formatMessage({ id: "numberformat.example.currency1" })}
                 {intl.formatNumber(+value, { style: "currency", currency: "EUR" })}
@@ -484,8 +457,8 @@ function ExampleStack() {
         <Stack
             mb={5}
             mt={5}
-            divider={<StackDivider borderColor="gray.200" />}
-            spacing="24px"
+            separator={<StackSeparator borderColor="gray.200" />}
+            gap="24px"
             align="stretch"
         >
             <Box bg="white" w="100%" p={4} color="black" borderWidth="1px" borderColor="black">
@@ -618,22 +591,21 @@ function RichTextExample() {
             <Heading as="h4" size="md">
                 {intl.formatMessage({ id: "richtext.heading" })}
             </Heading>
-            <VStack spacing={2} align="start">
+            <VStack gap={2} align="start">
                 <Box>
                     {intl.formatRichMessage(
                         { id: "richtext.messageWithReactNode" },
                         {
-                            // We can use any react node as value.
-                            // In this case, we use a chakra `Tag`.
-                            element: <Tag>Hi</Tag>
+                            element: (
+                                <Tag.Root>
+                                    <Tag.Label>Hi</Tag.Label>
+                                </Tag.Root>
+                            )
                         }
                     )}
                 </Box>
                 <Box>
                     {intl.formatRichMessage({
-                        // This message uses a <code> tag, which is defined out of the box and will
-                        // be rendered like a HTML code tag.
-                        // If <code> were not predefined, you could define it yourself (see next example).
                         id: "richtext.messageWithInlineCode"
                     })}
                 </Box>
@@ -643,11 +615,8 @@ function RichTextExample() {
                             id: "richtext.messageWithReactTag"
                         },
                         {
-                            // This defines the <customTag> used by the message.
-                            // `parts` is the content of the tag from the message.
-                            // You can return any kind of react node here to implement the tag.
                             customTag: (parts) => (
-                                <Box display="inline-block" background="trails.200">
+                                <Box display="inline-block" background="trails.200" px={1}>
                                     {parts}
                                 </Box>
                             )
@@ -723,7 +692,6 @@ The form simply asks the user for a name and then calls the `greetingService.gre
 // src/apps/empty/AppUI.tsx
 function ServiceI18nExample() {
     const intl = useIntl();
-    // (1)
     const greetingService = useService<GreetingService>("i18n-howto-app.GreetingService");
     const [inputValue, setInputValue] = useState("");
     const [greeting, setGreeting] = useState("");
@@ -739,7 +707,6 @@ function ServiceI18nExample() {
 
                     const name = inputValue.trim();
                     if (name) {
-                        // (2)
                         setGreeting(greetingService.greet(name));
                     } else {
                         setGreeting("");

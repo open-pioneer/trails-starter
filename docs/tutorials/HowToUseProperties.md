@@ -94,7 +94,7 @@ Execute `pnpm install` again so the application can find the package.
 The user interface our of application access the service, but doesn't do anything with it yet:
 
 ```tsx
-import { Button, Container } from "@open-pioneer/chakra-integration";
+import { Button, Container } from "@chakra-ui/react";
 import { useService } from "open-pioneer:react-hooks";
 
 export function AppUI() {
@@ -170,7 +170,7 @@ export class SearchService {
 We will quickly update the application's UI to try the new method:
 
 ```diff
-import { Button, Container } from "@open-pioneer/chakra-integration";
+import { Button, Container } from "@chakra-ui/react";
 import { useService } from "open-pioneer:react-hooks";
 
 export function AppUI() {
@@ -325,7 +325,7 @@ Now you can define the `backend-url` attribute on your web component:
 ```
 
 `resolveConfig` is the most powerful way to define properties or other configuration options.
-Since it supports promises you can also use it to load properties from other data sources, such as a rest service (possibly even dependant on the current user session via cookies).
+Since it supports promises you can also use it to load properties from other data sources, such as a rest service (possibly even dependent on the current user session via cookies).
 It should not be overused: a long-running `resolveConfig` call will block the start of your application.
 
 ## Further reading

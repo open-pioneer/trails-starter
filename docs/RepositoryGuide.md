@@ -415,6 +415,7 @@ These snippets cannot be imported from `@chakra-ui/react` directly, but need to 
 However, these snippets are not versioned and thus may be incompatible with the chakra version used in the project.
 Thus, trails provides a package `@open-pioneer/chakra-snippets` that contains the most important Chakra snippets for the Chakra UI Version used in the respective trails version.
 It is recommended to use the snippets from `@open-pioneer/chakra-snippets` instead of the ones from `@chakra-ui/react`.
+For a list of exported snippets, see the packages README.md.
 
 Example:
 

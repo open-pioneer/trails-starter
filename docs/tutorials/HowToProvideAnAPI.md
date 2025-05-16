@@ -167,8 +167,9 @@ Now we can use the event service in the UI and call its `emitEvent`method when a
 
 ```tsx
 // src/apps/empty/AppUI.tsx
-import { Button, Container, Heading, Text } from "@open-pioneer/chakra-integration";
+import { Button, Container, Heading, Text, chakra } from "@chakra-ui/react";
 import { useIntl, useService } from "open-pioneer:react-hooks";
+import { Greeter, SimpleUiComponent } from "sample-package";
 
 export function AppUI() {
     // ...

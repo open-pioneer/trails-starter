@@ -1,7 +1,5 @@
 # How to theme an app
 
-> Note: The theming API is still _experimental_. Names of color schemes, variants and semantic tokens are not defined yet.
-
 This "how to" shows how to create a custom theme for an app. To learn more about the theming
 mechanism in Open Pioneer Trails apps, refer to [Theming](../reference/Theming.md).
 

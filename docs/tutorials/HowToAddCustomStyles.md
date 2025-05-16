@@ -44,7 +44,7 @@ However, since the class isn't being used, your UI still looks the same.
 Setting the css class of a React element is done via the `className` prop:
 
 ```tsx
-import { Container, Heading, Text } from "@open-pioneer/chakra-integration";
+import { Container, Heading, Text } from "@chakra-ui/react";
 
 export function AppUI() {
     return (
@@ -118,10 +118,48 @@ This section contains a few hints and examples for different ways to style your 
 
 #### Chakra UI
 
-Chakra UI already comes with a very large set of properties to customize single components: [Documentation](https://chakra-ui.com/docs/styled-system/style-props).
+Chakra UI already provides different concepts for styling (see [styling documentation](https://chakra-ui.com/docs/styling/overview)).
 
-Chakra also provides extensive support theming ([Documentation](https://chakra-ui.com/docs/styled-system/theme)).
-The theme of the entire application does not support configuration at this time (please submit a feature request!), but it can be customized by directly editing the chakra provider in `@open-pioneer/chakra-integration/Provider.tsx`.
+Especially useful is the very large set of style properties to customize single components: [Style props documentation](https://chakra-ui.com/docs/styling/overview#style-props).
+
+Helpful is also the `css` prop which allows to apply css rules directly to a component. Examples:
+
+```tsx
+import { Box, Text } from "@chakra-ui/react";
+
+export function AppUI() {
+    return (
+        <Box>
+            // Simple example: increase font size of a text element
+            <Text css={{ "font-size": "25px" }}>This is an text.</Text>
+        </Box>
+    );
+}
+```
+
+```tsx
+import { Box, Text } from "@chakra-ui/react";
+
+export function AppUI() {
+    return (
+        <Box
+            css={{
+                // match against data attributes (or other html attributes)
+                "&[data-open='true']": {
+                    fontSize: "25px"
+                },
+                // you can also style children of this element
+                "& .some-class": {
+                    fontSize: "50px"
+                }
+            }}
+        ></Box>
+    );
+}
+```
+
+Additionally, Chakra provides extensive theming support ([Documentation](https://chakra-ui.com/docs/theming/overview)).
+It is possible to create a custom theme for an app. For details see [How To Theme An App](./HowToThemeAnApp.md).
 
 #### React classes
 
@@ -142,36 +180,6 @@ export function AppUI() {
 ```
 
 The `div` will have the css classes `foo`, `bar` and `qux` but not `baz`, because it has been set to false.
-
-#### Emotion
-
-Chakra UI is based on [Emotion](https://emotion.sh/docs/introduction), a library that allows you to define css styles from JavaScript.
-Using inline styles can be a powerful tool for ad-hoc styling or complex dynamic styles, however they can have some negative impact on performance.
-
-For example:
-
-```tsx
-import { Container, Heading, Text } from "@open-pioneer/chakra-integration";
-import { css } from "@emotion/react";
-
-export function AppUI() {
-    return (
-        <Container
-            css={css`
-                background-color: hotpink;
-                font-size: 200%;
-            `}
-        >
-            <Heading as="h1" size="lg">
-                Empty App
-            </Heading>
-            <Text>This is an empty app.</Text>
-        </Container>
-    );
-}
-```
-
-See also the [Documentation of `@emotion/react`](https://emotion.sh/docs/@emotion/react).
 
 #### React inline styles
 
