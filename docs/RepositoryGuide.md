@@ -408,16 +408,33 @@ However, usage of JavaScript _is_ supported.
 ### UI Component Framework
 
 We are using [Chakra UI](https://chakra-ui.com/) as our base framework to develop user interfaces.
-Please import all chakra components from the `@open-pioneer/chakra-integration` package (instead of `@chakra-ui/*`).
-This gives us the opportunity to set sensible defaults for some advanced use cases (such as shadow dom support).
+In general, chakra components can be directly imported from `@chakra-ui/react`.
+
+Up from Chakra UI version 3, the Chakra components are more fine-grained and thus chakra provides `snippets` from some components to allow simpler usage.
+These snippets cannot be imported from `@chakra-ui/react` directly, but need to be added to the project by using a CLI.
+However, these snippets are not versioned and thus may be incompatible with the chakra version used in the project.
+Thus, trails provides a package `@open-pioneer/chakra-snippets` that contains the most important Chakra snippets for the Chakra UI Version used in the respective trails version.
+It is recommended to use the snippets from `@open-pioneer/chakra-snippets` instead of the ones from `@chakra-ui/react`.
 
 Example:
 
 ```jsx
-import { Button } from "@open-pioneer/chakra-integration";
+import { Button } from "@chakra-ui/react";
+import { Tooltip } from "@open-pioneer/chakra-snippets/tooltip";
 
 function MyComponent() {
-    return <Button>Hello World</Button>;
+    return (
+        <Container>
+            <Tooltip
+                showArrow
+                content="Button Tooltip"
+                aria-label="A tooltip"
+                positioning={{ placement: "top" }}
+            >
+                <Button>Button with a tooltip</Button>
+            </Tooltip>
+        </Container>
+    );
 }
 ```
 

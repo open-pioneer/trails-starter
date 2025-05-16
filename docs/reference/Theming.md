@@ -23,9 +23,8 @@ The second internal level is the Trails base theme which is part of the Trails c
 It defines common variables ([semantic tokens](https://chakra-ui.com/docs/theming/semantic-tokens)), a default color palette that is used as a default color scheme for all Chakra UI components and brings some theme specific component adjustments.
 This theme is active by default in Trails applications, but it is also designed to be extended.
 Most custom themes are expected to extend this theme (via Chakra's `mergeConfigs()` function) while making only minor adjustments.
-The Trails base theme will be extended in future releases of the Trails core packages.
 
-The third level of theming is a custom theme that can be passed as additional configuration to a Trails app via the optional `chakraConfig` option in `createCustomElement`.
+The third level of theming is a custom theme that can be passed as additional configuration to a Trails app via the optional `chakraSystemConfig` option in `createCustomElement`.
 If specified, the custom theme replaces the Trails base theme as the application's active theme configuration.
 However, if the custom theme config extends from the base theme config (which is recommended), the parts of the base theme that were not overridden will still be active.
 
