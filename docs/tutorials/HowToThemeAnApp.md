@@ -152,12 +152,12 @@ For additional information about which values are available, see the base-theme 
 
 The dependency of the `@open-pioneer/base-theme` package needs to be added in the `package.json` of the app:
 
-```json
+```jsonc
 // src/apps/empty/package.json
 {
-    ...
+    // ...
     "dependencies": {
-        ...
+        // ...
         "@open-pioneer/base-theme": "catalog:"
     }
 }
