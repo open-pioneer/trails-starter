@@ -1,5 +1,14 @@
 # Changelog
 
+## TODO
+
+- Update to Chakra v3
+- Update Open Pioneer Trails dependencies to latest version.
+    - TODO
+- Remove eslint rules from `.eslintrc` that are better enforced by prettier (indent, linebreak-style).
+- The `pre-commit` hook now checks whether the `pnpm-lock.yaml` is up-to-date.
+  This should prevent developers from accidentally forgetting to run `pnpm install` before committing.
+
 ## 2025-04-25
 
 - Update Open Pioneer Trails dependencies to latest version.

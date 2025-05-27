@@ -4,30 +4,25 @@ import {
     Box,
     Button,
     Container,
-    HStack,
     Heading,
+    HStack,
     Input,
-    NumberDecrementStepper,
-    NumberIncrementStepper,
-    NumberInput,
-    NumberInputField,
-    NumberInputStepper,
-    Radio,
-    RadioGroup,
     Stack,
-    StackDivider,
+    StackSeparator,
     Tag,
     Text,
     VStack
-} from "@open-pioneer/chakra-integration";
+} from "@chakra-ui/react";
 import { useIntl, useService } from "open-pioneer:react-hooks";
 import { useState } from "react";
+import { Radio, RadioGroup } from "@open-pioneer/chakra-snippets/radio";
+import { NumberInputField, NumberInputRoot } from "@open-pioneer/chakra-snippets/number-input";
 import { GreetingService } from "./GreetingService";
 
 export function AppUI() {
     const intl = useIntl();
     return (
-        <Container>
+        <Container maxWidth="xl">
             <Heading as="h1" size="lg">
                 {intl.formatMessage({ id: "heading" })}
             </Heading>
@@ -42,27 +37,27 @@ function ExampleStack() {
         <Stack
             mb={5}
             mt={5}
-            divider={<StackDivider borderColor="gray.200" />}
-            spacing="24px"
+            separator={<StackSeparator borderColor="gray.200" />}
+            gap="24px"
             align="stretch"
         >
             <Box bg="white" w="100%" p={4} color="black" borderWidth="1px" borderColor="black">
-                <InterpolationExample />
+                <InterpolationExample></InterpolationExample>
             </Box>
             <Box bg="white" w="100%" p={4} color="black" borderWidth="1px" borderColor="black">
-                <PluralsExample />
+                <PluralsExample></PluralsExample>
             </Box>
             <Box bg="white" w="100%" p={4} color="black" borderWidth="1px" borderColor="black">
-                <SelectionExample />
+                <SelectionExample></SelectionExample>
             </Box>
             <Box bg="white" w="100%" p={4} color="black" borderWidth="1px" borderColor="black">
-                <NumberFormatExample />
+                <NumberFormatExample></NumberFormatExample>
             </Box>
             <Box bg="white" w="100%" p={4} color="black" borderWidth="1px" borderColor="black">
-                <DateTimeFormatExample />
+                <DateTimeFormatExample></DateTimeFormatExample>
             </Box>
             <Box bg="white" w="100%" p={4} color="black" borderWidth="1px" borderColor="black">
-                <RichTextExample />
+                <RichTextExample></RichTextExample>
             </Box>
             <Box bg="white" w="100%" p={4} color="black" borderWidth="1px" borderColor="black">
                 <ServiceI18nExample />
@@ -94,26 +89,18 @@ function InterpolationExample() {
 
 function PluralsExample() {
     const intl = useIntl();
-    const [value, setValue] = useState("1");
+    const [value, setValue] = useState<string | null>("1");
     return (
         <>
             <Heading as="h4" size="md">
                 {intl.formatMessage({ id: "plurals.heading" })}
             </Heading>
-            <RadioGroup onChange={setValue} value={value}>
-                <Stack spacing={4} direction="row">
-                    <Radio size="md" value="0">
-                        0
-                    </Radio>
-                    <Radio size="md" value="1">
-                        1
-                    </Radio>
-                    <Radio size="md" value="42">
-                        42
-                    </Radio>
-                    <Radio size="md" value="99">
-                        99
-                    </Radio>
+            <RadioGroup onValueChange={(e) => setValue(e.value)} value={value}>
+                <Stack gap={4} direction="row">
+                    <Radio value="0">0</Radio>
+                    <Radio value="1">1</Radio>
+                    <Radio value="42">42</Radio>
+                    <Radio value="99">99</Radio>
                 </Stack>
             </RadioGroup>
             <Text mb="8px">{intl.formatMessage({ id: "plurals.value" }, { n: value })}</Text>
@@ -124,7 +111,7 @@ function PluralsExample() {
 function SelectionExample() {
     const intl = useIntl();
     const [value1, setValue1] = useState("");
-    const [value2, setValue2] = useState("male");
+    const [value2, setValue2] = useState<string | null>("male");
     return (
         <>
             <Heading as="h4" size="md">
@@ -135,16 +122,17 @@ function SelectionExample() {
                 onChange={(evt) => setValue1(evt.target.value)}
                 placeholder={intl.formatMessage({ id: "interpolation.placeholder" })}
                 size="sm"
+                mb={"5px"}
             />
-            <RadioGroup onChange={setValue2} value={value2}>
-                <Stack spacing={4} direction="row">
-                    <Radio size="md" value="female">
+            <RadioGroup onValueChange={(e) => setValue2(e.value)} value={value2}>
+                <Stack gap={4} direction="row">
+                    <Radio value="female">
                         {intl.formatMessage({ id: "selection.gender.female" })}
                     </Radio>
-                    <Radio size="md" value="male">
+                    <Radio value="male">
                         {intl.formatMessage({ id: "selection.gender.male" })}
                     </Radio>
-                    <Radio size="md" value="other">
+                    <Radio value="other">
                         {intl.formatMessage({ id: "selection.gender.other" })}
                     </Radio>
                 </Stack>
@@ -158,24 +146,26 @@ function SelectionExample() {
 
 function NumberFormatExample() {
     const intl = useIntl();
-    const [value, setValue] = useState("424224.24");
+    const [value, setValue] = useState("2334232.24");
     return (
         <>
             <Heading as="h4" size="md">
                 {intl.formatMessage({ id: "numberformat.heading" })}
             </Heading>
-            <NumberInput
-                onChange={(valueString) => setValue(valueString)}
+            <NumberInputRoot
+                onValueChange={(valueChangeDetails) => {
+                    setValue(valueChangeDetails.value);
+                }}
                 value={value}
-                precision={2}
                 step={0.25}
+                formatOptions={{
+                    minimumFractionDigits: 2,
+                    maximumFractionDigits: 2,
+                    useGrouping: false
+                }}
             >
                 <NumberInputField />
-                <NumberInputStepper>
-                    <NumberIncrementStepper />
-                    <NumberDecrementStepper />
-                </NumberInputStepper>
-            </NumberInput>
+            </NumberInputRoot>
             <Text mb="8px">
                 {intl.formatMessage({ id: "numberformat.example.currency1" })}
                 {intl.formatNumber(+value, { style: "currency", currency: "EUR" })}
@@ -241,12 +231,16 @@ function RichTextExample() {
             <Heading as="h4" size="md">
                 {intl.formatMessage({ id: "richtext.heading" })}
             </Heading>
-            <VStack spacing={2} align="start">
+            <VStack gap={2} align="start">
                 <Box>
                     {intl.formatRichMessage(
                         { id: "richtext.messageWithReactNode" },
                         {
-                            element: <Tag>Hi</Tag>
+                            element: (
+                                <Tag.Root>
+                                    <Tag.Label>Hi</Tag.Label>
+                                </Tag.Root>
+                            )
                         }
                     )}
                 </Box>
@@ -262,7 +256,7 @@ function RichTextExample() {
                         },
                         {
                             customTag: (parts) => (
-                                <Box display="inline-block" background="trails.200">
+                                <Box display="inline-block" background="trails.200" px={1}>
                                     {parts}
                                 </Box>
                             )

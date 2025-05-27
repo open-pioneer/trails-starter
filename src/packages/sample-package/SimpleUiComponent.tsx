@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 import { FC } from "react";
 import { useCommonComponentProps, CommonComponentProps } from "@open-pioneer/react-utils";
-import { Box, chakra } from "@open-pioneer/chakra-integration";
+import { Box, chakra } from "@chakra-ui/react";
 
 export interface SimpleUiComponentProps extends CommonComponentProps {
     textToShow: string;

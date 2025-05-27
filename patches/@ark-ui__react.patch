@@ -1,0 +1,13 @@
+diff --git a/dist/components/portal/portal.js b/dist/components/portal/portal.js
+index d814522e0061ff100e70452db158747fb629697c..cd12acd7b667a63ef43cc2d454f6b99d340533f2 100644
+--- a/dist/components/portal/portal.js
++++ b/dist/components/portal/portal.js
+@@ -24,7 +24,7 @@ const Portal = (props) => {
+ const getPortalNode = (cb) => {
+   const node = cb?.();
+   const rootNode = node.getRootNode();
+-  if (isShadowRoot(rootNode)) return rootNode;
++  if (isShadowRoot(rootNode)) return rootNode.querySelector(".pioneer-root");
+   return getDocument(node).body;
+ };
+ const subscribe = () => () => {

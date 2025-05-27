@@ -131,7 +131,7 @@ $ pnpm test  src/packages/math
 
 We will also add our first 'real' use of the service by editing the `empty` app.
 
-First, add the package `math` in the app's `package.json`:
+First, add the packages `math` and `@open-pioneer/chakra-snippets` in the app's `package.json`:
 
 ```jsonc
 // src/apps/empty/package.json
@@ -140,7 +140,7 @@ First, add the package `math` in the app's `package.json`:
     "private": true,
     "dependencies": {
         "@open-pioneer/runtime": "latest",
-        "@open-pioneer/chakra-integration": "latest",
+        "@open-pioneer/chakra-snippets": "latest",
         "math": "workspace:^"
     }
 }
@@ -164,21 +164,14 @@ export default defineBuildConfig({
 In the app's UI, we call the service when a button is pressed by the user:
 
 ```tsx
-import {
-    Button,
-    Container,
-    HStack,
-    NumberInput,
-    NumberInputField,
-    Text,
-    VStack
-} from "@open-pioneer/chakra-integration";
+import { Button, Container, HStack, Text, VStack } from "@chakra-ui/react";
+import { NumberInputRoot, NumberInputField } from "@open-pioneer/chakra-snippets/number-input";
 import { useService } from "open-pioneer:react-hooks";
 import { useState } from "react";
 
 export function AppUI() {
-    const [leftValue, setLeftValue] = useState(3);
-    const [rightValue, setRightValue] = useState(4);
+    const [leftValue, setLeftValue] = useState("3");
+    const [rightValue, setRightValue] = useState("4");
     const [result, setResult] = useState<number | undefined>();
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const service = useService("math.MathService") as any; // (1)
@@ -191,18 +184,15 @@ export function AppUI() {
             <VStack>
                 <Text>Multiply two numbers:</Text>
                 <HStack>
-                    <NumberInput
-                        value={leftValue}
-                        onChange={(_, valueAsNumber) => setLeftValue(valueAsNumber)}
-                    >
+                    <NumberInputRoot value={leftValue} onValueChange={(e) => setLeftValue(e.value)}>
                         <NumberInputField />
-                    </NumberInput>
-                    <NumberInput
+                    </NumberInputRoot>
+                    <NumberInputRoot
                         value={rightValue}
-                        onChange={(_, valueAsNumber) => setRightValue(valueAsNumber)}
+                        onValueChange={(e) => setRightValue(e.value)}
                     >
                         <NumberInputField />
-                    </NumberInput>
+                    </NumberInputRoot>
                     <Button onClick={onMultiplyClicked}>Multiply!</Button>
                 </HStack>
                 <Text>The result is: {result}</Text>
@@ -469,9 +459,9 @@ We want to use its logger implementation:
     "name": "empty",
     "private": true,
     "dependencies": {
-        "@open-pioneer/chakra-integration": "latest",
         "@open-pioneer/core": "latest",
         "@open-pioneer/runtime": "latest",
+        "@open-pioneer/chakra-snippets": "latest",
         "math": "workspace:^"
     }
 }

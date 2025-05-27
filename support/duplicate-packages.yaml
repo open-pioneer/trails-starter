@@ -11,4 +11,3 @@ skipDevDependencies: true
 allowed:
   - "source-map"
   - "stylis"
-  - "tslib"

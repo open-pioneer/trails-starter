@@ -7,7 +7,7 @@ We can also use pre-defined components from the [Chakra UI](https://chakra-ui.co
 
 - [React's official documentation](https://reactjs.org/docs/getting-started.html)
 - [React's new beta documentation](https://beta.reactjs.org/learn) (which is already excellent)
-- [Chakra's component overview](https://chakra-ui.com/docs/components) (with lots of examples)
+- [Chakra's component overview](https://chakra-ui.com/docs/components/concepts/overview) (with lots of examples)
 
 ## Getting started
 
@@ -34,7 +34,7 @@ customElements.define("empty-app", Element);
 - **(1)**
   Imports `AppUI` (a React component) from the given module.
 - **(2)**
-  Specifies `AppUI` as the application's UI. Any kind of react component can be used in this place.
+  Specifies `AppUI` as the application's UI. Any kind of React component can be used in this place.
 
 When the application is instantiated, the `AppUI` component will be rendered automatically.
 
@@ -44,19 +44,27 @@ In this case, the app's entire UI is defined in `AppUI.tsx`:
 ```tsx
 // src/apps/empty/AppUI.tsx
 // (1)
-import { Container, Heading, Text } from "@open-pioneer/chakra-integration";
-import { useIntl } from "open-pioneer:react-hooks";
+import { Container, Heading, Text, chakra } from "@chakra-ui/react";
+import { useIntl, useService } from "open-pioneer:react-hooks";
+import { Greeter, SimpleUiComponent } from "sample-package";
 
 // (2)
 export function AppUI() {
     const intl = useIntl();
+    const greeter = useService<Greeter>("sample-package.Greeter");
     // (3)
     return (
         <Container>
             <Heading as="h1" size="lg">
                 {intl.formatMessage({ id: "heading" })}
             </Heading>
-            <Text>{intl.formatMessage({ id: "text" })}</Text>
+            <Text pt={5}>{intl.formatMessage({ id: "text" })}</Text>
+            <Text pt={5}>
+                This messages comes from the sample package{"'"}s greeter service: {greeter.greet()}
+            </Text>
+            <chakra.div mt={5}>
+                <SimpleUiComponent textToShow="This text is rendered inside the sample UI-Component 'SimpleUiComponent'"></SimpleUiComponent>
+            </chakra.div>
         </Container>
     );
 }
@@ -64,11 +72,7 @@ export function AppUI() {
 
 - **(1)**
   Imports Chakra components used by the app's UI.
-
-    > **Note**  
-    > Remember to use `@open-pioneer/chakra-integration` for imports instead of `@chakra-ui/react`.
-    > The `chakra-integration` package ensures a common version of the Chakra framework and also contains a few fixes we had to make for web component support.
-    > All chakra components are available from `@open-pioneer/chakra-integration`.
+  Remember to use `@open-pioneer/chakra-snippets` for imports of chakra snippets (not used in this example).
 
 - **(2)**
   Defines a React component called `AppUI`.
@@ -83,12 +87,12 @@ export function AppUI() {
 
 ## Defining new UI components
 
-Defining a new react component is as simple as creating a new function.
+Defining a new React component is as simple as creating a new function.
 For this example, we will create a button that has a `label` and tracks the number of times it has been clicked:
 
 ```tsx
 // src/apps/empty/AppUI.tsx
-import { Button, Container, VStack } from "@open-pioneer/chakra-integration";
+import { Button, Container, VStack } from "@chakra-ui/react";
 import { useState } from "react";
 
 // function AppUI ...
@@ -133,7 +137,7 @@ Now, use the new button from the `AppUI` component:
 
 ```tsx
 // src/apps/empty/AppUI.tsx
-import { Button, Container, VStack } from "@open-pioneer/chakra-integration";
+import { Container, Button, VStack } from "@chakra-ui/react";
 import { useState } from "react";
 
 export function AppUI() {
@@ -168,7 +172,7 @@ However, props work only from parent to child, which can be tedious with deeply 
 React has a second system (the [`Context API`](https://beta.reactjs.org/reference/react/useContext)) that can be used to inherit values into all children (and their children etc.) of a certain component.
 This can be extremely powerful but also makes components harder to understand.
 
-We have implemented hooks such as `useService` and `useIntl` (built on top of the context API) to allow react components to interact with the rest of the framework (see [How to use a service](./HowToUseAService.md) and [How to translate an app](./HowToTranslateAnApp.md)).
+We have implemented hooks such as `useService` and `useIntl` (built on top of the context API) to allow React components to interact with the rest of the framework (see [How to use a service](./HowToUseAService.md) and [How to translate an app](./HowToTranslateAnApp.md)).
 
 It is best to compose a UI from a set of simple, reusable React components that mostly rely on `props` and hooks.
 This makes them easier to understand, to reuse and to test in isolation.

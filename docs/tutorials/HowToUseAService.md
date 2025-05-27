@@ -43,7 +43,7 @@ We extend the UI of the empty app to add our custom class:
 ```tsx
 // src/apps/empty/AppUI.tsx
 import { ApplicationContext } from "@open-pioneer/runtime";
-import { Button, Container, Text, VStack } from "@open-pioneer/chakra-integration";
+import { Button, Container, Text, VStack } from "@chakra-ui/react";
 import { useService } from "open-pioneer:react-hooks";
 import { useState } from "react";
 
@@ -204,7 +204,7 @@ export default defineBuildConfig({
 And our UI will now call the methods of our `AttributeService`:
 
 ```tsx
-import { Button, Container, Text, VStack } from "@open-pioneer/chakra-integration";
+import { Button, Container, Text, VStack } from "@chakra-ui/react";
 import { useService } from "open-pioneer:react-hooks";
 import { useState } from "react";
 import { type AttributeService } from "./services";
