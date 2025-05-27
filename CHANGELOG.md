@@ -8,6 +8,7 @@
 - Remove eslint rules from `.eslintrc` that are better enforced by prettier (indent, linebreak-style).
 - The `pre-commit` hook now checks whether the `pnpm-lock.yaml` is up-to-date.
   This should prevent developers from accidentally forgetting to run `pnpm install` before committing.
+- Run `prettier` on yaml files during commit hooks.
 
 ## 2025-04-25
 
