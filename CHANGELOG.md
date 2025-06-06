@@ -3,6 +3,7 @@
 ## 2025-06-06
 
 - Update to Chakra v3
+    - A small migration guide was added to the documentation (in `docs/internals/ChakraV3Migration.md`).
 - Update Open Pioneer Trails dependencies to latest version.
     - Core packages: 4.0.0 ([Changes](https://github.com/open-pioneer/trails-core-packages/pull/91))
     - OpenLayers base packages: 0.11.0 ([Changes](https://github.com/open-pioneer/trails-openlayers-base-packages/pull/424))
