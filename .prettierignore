@@ -1,0 +1,6 @@
+dist
+node_modules
+temp
+test-data
+support/licenses
+pnpm-lock.yaml
