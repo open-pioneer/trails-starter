@@ -7,8 +7,8 @@ packages:
 # This is a yaml feature and is not interpreted by pnpm directly.
 __versions:
   - &react_version ^19.1.0
-  - &core_packages_version 4.0.0-dev.20250512105016
-  - &ol_base_packages_version 0.11.0-dev.20250515143825
+  - &core_packages_version ^4.0.0
+  - &ol_base_packages_version ^0.11.0
 
 # https://pnpm.io/catalogs
 catalog:
@@ -39,60 +39,61 @@ catalog:
   "@open-pioneer/test-utils": *core_packages_version
 
   # Other dependencies
-  "@chakra-ui/react": ^3.17.0
-  "@chakra-ui/cli": ^3.17.0
-  "@conterra/reactivity-core": ^0.6.0
-  "@emotion/cache": ^11.13.0
-  "@emotion/react": ^11.13.0
-  "@emotion/styled": ^11.13.0
+  "@chakra-ui/react": ^3.19.2
+  "@chakra-ui/cli": ^3.19.2
+  "@conterra/reactivity-core": ^0.7.0
+  "@emotion/cache": ^11.14.0
+  "@emotion/react": ^11.14.0
+  "@emotion/styled": ^11.14.0
   "@formatjs/intl": ^3.1.6
   ol: ^10.5.0
-  react-icons: ^5.3.0
-  react-use: ^17.5.1
-  react: *react_version
   react-dom: *react_version
+  react-icons: ^5.5.0
+  react-use: ^17.6.0
+  react: *react_version
+  uuid: ^11.1.0
 
   # Devtools
-  "@open-pioneer/build-package-cli": ^3.0.1
-  "@open-pioneer/build-support": ^3.0.1
-  "@open-pioneer/check-pnpm-duplicates": ^0.2.1
-  "@open-pioneer/vite-plugin-pioneer": ^4.0.1
+  "@open-pioneer/build-package-cli": ^3.0.2
+  "@open-pioneer/build-support": ^3.0.2
+  "@open-pioneer/check-pnpm-duplicates": ^0.2.2
+  "@open-pioneer/vite-plugin-pioneer": ^4.0.2
   "@testing-library/dom": ^10.4.0
-  "@testing-library/jest-dom": ^6.6.2
+  "@testing-library/jest-dom": ^6.6.3
   "@testing-library/react": ^16.3.0
-  "@testing-library/user-event": ^14.5.2
+  "@testing-library/user-event": ^14.6.1
   "@types/js-yaml": ^4.0.9
-  "@types/node": ^20.14.8
-  "@types/react-dom": ^19.1.2
-  "@types/react": ^19.1.2
-  "@typescript-eslint/eslint-plugin": ^8.31.0
-  "@typescript-eslint/parser": ^8.31.0
-  "@vitejs/plugin-react-swc": ^3.9.0
+  "@types/node": ^20.19.0
+  "@types/react-dom": ^19.1.6
+  "@types/react": ^19.1.6
+  "@typescript-eslint/eslint-plugin": ^8.33.1
+  "@typescript-eslint/parser": ^8.33.1
+  "@vitejs/plugin-react-swc": ^3.10.1
   eslint: ^8.57.1
-  eslint-config-prettier: ^10.0.2
-  eslint-import-resolver-typescript: ^4.3.4
+  eslint-config-prettier: ^10.1.5
+  eslint-import-resolver-typescript: ^4.4.3
   eslint-plugin-header: ^3.1.1
   eslint-plugin-import: ^2.31.0
-  eslint-plugin-jsx-a11y: ^6.10.1
+  eslint-plugin-jsx-a11y: ^6.10.2
   eslint-plugin-react: ^7.37.5
   eslint-plugin-react-hooks: ^5.2.0
   eslint-plugin-unused-imports: ^4.1.4
   fast-glob: ^3.3.3
   handlebars: ^4.7.8
-  happy-dom: ^17.4.4
-  husky: ^9.1.6
+  happy-dom: ^17.6.3
+  husky: ^9.1.7
   js-yaml: ^4.1.0
-  jsdom: ^26.0.0
-  lint-staged: ^15.5.1
+  jsdom: ^26.1.0
+  lint-staged: ^16.1.0
   prettier: ^3.5.3
   rimraf: ^6.0.1
-  sass: ^1.87.0
-  tsx: ^4.19.1
-  typedoc: ^0.28.3
+  sass: ^1.89.1
+  tsx: ^4.19.4
+  typedoc: ^0.28.5
   typescript: ^5.8.3
-  vite: ^6.3.4
+  vite: ^6.3.5
   vite-plugin-eslint: ^1.8.1
-  vitest: ^3.1.2
+  vitest: ^3.2.2
 
 overrides:
   # https://github.com/advisories/GHSA-c2qf-rxjj-qqgw
@@ -126,11 +127,10 @@ ignorePatchFailures: false
 patchedDependencies:
   # Ensure valids ids for aria-activedescendant and fix touch events in shadow DOM (see https://github.com/JedWatson/react-select/issues/5824)
   "react-select": "patches/react-select.patch"
-  
+
   # - Ensure all portals are mounted under `.pioneer-root` div
-  # - Fix rendering of toasts in shadow root: https://github.com/chakra-ui/ark/issues/3455
   "@ark-ui/react@*": "patches/@ark-ui__react.patch"
-  
+
   # For tests: overwrite focus() function using defineProperty instead of raw assignment
   # See https://github.com/chakra-ui/zag/pull/2461
   "@zag-js/focus-visible@*": "patches/@zag-js__focus-visible.patch"
