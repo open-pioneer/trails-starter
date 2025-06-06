@@ -1,13 +1,93 @@
 diff --git a/dist/components/portal/portal.js b/dist/components/portal/portal.js
-index d814522e0061ff100e70452db158747fb629697c..cd12acd7b667a63ef43cc2d454f6b99d340533f2 100644
+index d814522e0061ff100e70452db158747fb629697c..3254ca2b97fbd5285344606c9d9258cca4e79ff8 100644
 --- a/dist/components/portal/portal.js
 +++ b/dist/components/portal/portal.js
-@@ -24,7 +24,7 @@ const Portal = (props) => {
- const getPortalNode = (cb) => {
-   const node = cb?.();
-   const rootNode = node.getRootNode();
--  if (isShadowRoot(rootNode)) return rootNode;
-+  if (isShadowRoot(rootNode)) return rootNode.querySelector(".pioneer-root");
-   return getDocument(node).body;
+@@ -13,16 +13,21 @@ const Portal = (props) => {
+     () => false,
+     () => true
+   );
+-  const { getRootNode } = useEnvironmentContext();
++  const { getRootNode, getPortalNode } = useEnvironmentContext();
+   useEffect(() => {
+     setContainer(() => props.container?.current);
+   }, [props.container]);
+   if (isServer || disabled) return /* @__PURE__ */ jsx(Fragment, { children });
+-  const mountNode = container ?? getPortalNode(getRootNode);
++  const mountNode = container ?? getContainer(getRootNode, getPortalNode);
+   return /* @__PURE__ */ jsx(Fragment, { children: Children.map(children, (child) => createPortal(child, mountNode)) });
  };
- const subscribe = () => () => {
+-const getPortalNode = (cb) => {
+-  const node = cb?.();
++const getContainer = (getRootNode, getPortalNode) => {
++  const portalNode = getPortalNode?.();
++  if (portalNode) {
++    return portalNode;
++  }
++
++  const node = getRootNode?.();
+   const rootNode = node.getRootNode();
+   if (isShadowRoot(rootNode)) return rootNode;
+   return getDocument(node).body;
+diff --git a/dist/providers/environment/environment-provider.d.ts b/dist/providers/environment/environment-provider.d.ts
+index 2e5fb0b8cc413380509acb2a8b6cfd3298647c54..bab870768b293348eb312b8ae4ba18178489fb57 100644
+--- a/dist/providers/environment/environment-provider.d.ts
++++ b/dist/providers/environment/environment-provider.d.ts
+@@ -3,5 +3,6 @@ import { RootNode } from './use-environment-context';
+ export interface EnvironmentProviderProps {
+     children?: ReactNode;
+     value?: RootNode | (() => RootNode);
++    portalNode?: Node;
+ }
+ export declare const EnvironmentProvider: (props: EnvironmentProviderProps) => import("react/jsx-runtime").JSX.Element;
+diff --git a/dist/providers/environment/environment-provider.js b/dist/providers/environment/environment-provider.js
+index d83c54d302485c36758c338aa533caf06b34c411..bdd44d8f4488f3e195ea1cee16f91ae3e2d5c44a 100644
+--- a/dist/providers/environment/environment-provider.js
++++ b/dist/providers/environment/environment-provider.js
+@@ -6,7 +6,7 @@ import { runIfFn } from '../../utils/run-if-fn.js';
+ import { EnvironmentContextProvider } from './use-environment-context.js';
+ 
+ const EnvironmentProvider = (props) => {
+-  const { value, children } = props;
++  const { value, portalNode, children } = props;
+   const [spanRef, setSpanRef] = useState();
+   const getRootNode = useMemo(() => {
+     return () => runIfFn(value) ?? spanRef?.ownerDocument ?? document;
+@@ -14,6 +14,7 @@ const EnvironmentProvider = (props) => {
+   const environment = useMemo(
+     () => ({
+       getRootNode,
++      getPortalNode: () => portalNode || undefined,
+       getWindow: () => getWindow(getRootNode()),
+       getDocument: () => getDocument(getRootNode())
+     }),
+diff --git a/dist/providers/environment/use-environment-context.d.ts b/dist/providers/environment/use-environment-context.d.ts
+index 67b730775a75bbab8d8f8d16699ace93d3378c5e..e42dc57167fa727c771321c42856d51cee827bd2 100644
+--- a/dist/providers/environment/use-environment-context.d.ts
++++ b/dist/providers/environment/use-environment-context.d.ts
+@@ -6,6 +6,12 @@ export interface UseEnvironmentContext {
+      * This is used to determine the window and document objects.
+      */
+     getRootNode(): RootNode;
++
++    /**
++     * Default target for portal content.
++     */
++    getPortalNode(): Node | undefined;
++
+     /**
+      * The document context for the root node.
+      */
+diff --git a/dist/providers/environment/use-environment-context.js b/dist/providers/environment/use-environment-context.js
+index 25e42253b06a366e318329042c63fa6652c57143..b7fec5d563bbac0ac94d686aacbee2e3a6248513 100644
+--- a/dist/providers/environment/use-environment-context.js
++++ b/dist/providers/environment/use-environment-context.js
+@@ -9,7 +9,8 @@ const [EnvironmentContextProvider, useEnvironmentContext] = createContext({
+   defaultValue: {
+     getRootNode: () => document,
+     getDocument: () => document,
+-    getWindow: () => window
++    getWindow: () => window,
++    getPortalNode: () => document,
+   }
+ });
+ 
