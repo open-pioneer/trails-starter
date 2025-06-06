@@ -1,5 +1,25 @@
 # Changelog
 
+## 2025-06-06
+
+- Update to Chakra v3
+    - A small migration guide was added to the documentation (in `docs/internals/ChakraV3Migration.md`).
+- Update Open Pioneer Trails dependencies to latest version.
+    - Core packages: 4.0.0 ([Changes](https://github.com/open-pioneer/trails-core-packages/pull/91))
+    - OpenLayers base packages: 0.11.0 ([Changes](https://github.com/open-pioneer/trails-openlayers-base-packages/pull/424))
+    - Build tools: maintenance release ([Changes](https://github.com/open-pioneer/trails-build-tools/pull/90))
+- The `pre-commit` hook now checks whether the `pnpm-lock.yaml` is up-to-date.
+  This should prevent developers from accidentally forgetting to run `pnpm install` before committing.
+- Remove eslint rules from `.eslintrc` that are better enforced by prettier (indent, linebreak-style).
+- Create a separate `.prettierignore` file.
+  Previous, the `.eslintignore` file was reused for prettier as well.
+  You can either:
+
+    a. Use the same file, but make sure to use `--ignore-path <PATH>` wherever prettier is used, or
+    b. Use separate files.
+
+- Run `prettier` on yaml files during commit hooks.
+
 ## 2025-04-25
 
 - Update Open Pioneer Trails dependencies to latest version.

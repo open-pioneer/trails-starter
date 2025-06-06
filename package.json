@@ -18,7 +18,7 @@
         "eslint": "pnpm run lint",
         "prettier-check": "pnpm prettier:common -c",
         "prettier": "pnpm prettier:common -w",
-        "prettier:common": "prettier ./src ./support ./docs --ignore-path .eslintignore --cache",
+        "prettier:common": "prettier ./src ./support ./docs --cache",
         "test": "vitest",
         "prepare": "husky && pnpm check-duplicates"
     },
@@ -69,5 +69,5 @@
         "node": ">= 20",
         "pnpm": ">= 10"
     },
-    "packageManager": "pnpm@10.9.0"
+    "packageManager": "pnpm@10.11.1"
 }

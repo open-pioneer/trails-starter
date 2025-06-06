@@ -59,9 +59,15 @@ When the UI is rendered (`Component` in the example), it is always surrounded by
 function render(Component: ComponentType, props: Record<string, unknown>) {
     this.root.render(
         <StrictMode>
-            <CustomChakraProvider container={this.containerNode}>
+            <CustomChakraProvider
+                rootNode={this.rootNode}
+                appRoot={this.appRoot}
+                config={this.chakraConfig}
+                locale={this.locale}
+                styles={this.styles}
+            >
                 <PackageContext.Provider value={this.packageContext}>
-                    <Component {...props} />
+                    {contentNode}
                 </PackageContext.Provider>
             </CustomChakraProvider>
         </StrictMode>

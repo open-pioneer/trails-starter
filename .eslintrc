@@ -29,15 +29,6 @@
         }
     },
     "rules": {
-        "indent": [
-            "error",
-            4,
-            {
-                "SwitchCase": 1
-            }
-        ],
-        // Use this rule to enforce consistent line endings
-        // "linebreak-style": ["error", "unix"],
         "quotes": [
             "error",
             "double",

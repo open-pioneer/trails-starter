@@ -3,6 +3,16 @@ if [ "$NO_VERIFY" ]; then
     exit 0
 fi
 
+echo '--- check lockfile ---'
+
+# Note: there are bugs related to this and pnpm-workspace files, see
+# - https://github.com/pnpm/pnpm/issues/9369
+# - https://github.com/pnpm/pnpm/issues/8795
+pnpm install --frozen-lockfile --lockfile-only 1>/dev/null || (
+    echo 'pnpm-lock.yaml seems to be out of date. Run `pnpm install` before committing.'
+    exit 1;
+);
+
 echo '--- check code style ---'
 pnpm exec lint-staged
 

@@ -42,5 +42,6 @@
     - [Build tools](./internals/BuildTools.md)
     - [React integration](./internals/ReactIntegration.md)
     - [Development Guidelines](./internals/Guidelines.md)
+    - [Chakra V3 Migration](./internals/ChakraV3Migration.md)
 
 - [Glossary](./Glossary.md)
