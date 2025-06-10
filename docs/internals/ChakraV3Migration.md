@@ -19,7 +19,7 @@ The code of every component was directly available in the Chakra UI package.
 With version 3, the Chakra team has separated their package into multiple layers:
 
 - [Zag](https://zagjs.com/overview/introduction).
-  A low level, platform agnostic component library that implements in the core logic of the UI components.
+  A low level, platform agnostic component library that implements the core logic of the UI components.
   It handles state and events, manages focus etc., but it does not render any UI.
   You will likely not use Zag directly, but you should keep in mind that (pretty much) every Chakra UI component is built on top of Zag.
   You may thus encounter it during debugging sessions.
