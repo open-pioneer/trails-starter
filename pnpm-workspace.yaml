@@ -120,7 +120,11 @@ overrides:
   "@babel/runtime": ">=7.26.10"
 
 auditConfig:
-  ignoreCves: []
+  ignoreCves:
+    # brace-expansion is a dev dependency that runs on trusted input (source code).
+    # There is currently no patch available.
+    # See https://github.com/advisories/GHSA-v6h2-p8h4-qcjw
+    - "CVE-2025-5889"
 
 allowUnusedPatches: true
 ignorePatchFailures: false
