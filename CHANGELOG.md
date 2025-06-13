@@ -1,5 +1,11 @@
 # Changelog
 
+## 2ß25-06-13
+
+- Bump Chakra to v3.21.0
+    - The patch for `zag-js` could be removed, since the underlying issue was fixed
+    - The patch for `@ark-ui/react` needed a slight update
+
 ## 2025-06-06
 
 - Update to Chakra v3

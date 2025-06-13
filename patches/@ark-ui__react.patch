@@ -40,7 +40,7 @@ index 2e5fb0b8cc413380509acb2a8b6cfd3298647c54..bab870768b293348eb312b8ae4ba1817
  }
  export declare const EnvironmentProvider: (props: EnvironmentProviderProps) => import("react/jsx-runtime").JSX.Element;
 diff --git a/dist/providers/environment/environment-provider.js b/dist/providers/environment/environment-provider.js
-index d83c54d302485c36758c338aa533caf06b34c411..bdd44d8f4488f3e195ea1cee16f91ae3e2d5c44a 100644
+index c48a822955be1aaa3fb364cc4f77d5c940d32fc5..ee70291a0aa9cbf0fa7e460951fa89e1c300623c 100644
 --- a/dist/providers/environment/environment-provider.js
 +++ b/dist/providers/environment/environment-provider.js
 @@ -6,7 +6,7 @@ import { runIfFn } from '../../utils/run-if-fn.js';
@@ -51,7 +51,7 @@ index d83c54d302485c36758c338aa533caf06b34c411..bdd44d8f4488f3e195ea1cee16f91ae3
 +  const { value, portalNode, children } = props;
    const [spanRef, setSpanRef] = useState();
    const getRootNode = useMemo(() => {
-     return () => runIfFn(value) ?? spanRef?.ownerDocument ?? document;
+     return () => runIfFn(value) ?? spanRef?.getRootNode() ?? document;
 @@ -14,6 +14,7 @@ const EnvironmentProvider = (props) => {
    const environment = useMemo(
      () => ({
