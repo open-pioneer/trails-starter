@@ -35,8 +35,8 @@ We need to create the file in the `i18n` folder. The naming schema of the file i
 ```yaml
 # src/apps/empty/i18n/de.yaml
 messages:
-    heading: I18n HowTo
-    text: Wie lässt sich I18n in Open Pioneer Trails Apps nutzen?
+    heading: "I18n HowTo"
+    text: "Wie lässt sich I18n in Open Pioneer Trails Apps nutzen?"
 ```
 
 By default, the app uses the browser settings or system default for determining the locale.
@@ -153,9 +153,9 @@ Add the keys and values to the yaml configuration:
 messages:
     #....
     interpolation:
-        heading: Beispiel für Interpolation (dynamische Werte)
-        value: Hallo {name}
-        placeholder: Geben Sie Ihren Namen ein...
+        heading: "Beispiel für Interpolation (dynamische Werte)"
+        value: "Hallo {name}"
+        placeholder: "Geben Sie Ihren Namen ein..."
 #....
 ```
 
@@ -227,7 +227,7 @@ The bound value `value` is passed to the `intl.formatMessage` function with the 
 messages:
     #....
     plurals:
-        heading: Beispiel für Plural
+        heading: "Beispiel für Plural"
         value: "Wir trinken {n, plural, =0 {kein Bier} one {ein Bier} other {# Biere} =99 {zu viel Bier}}"
 #....
 ```
@@ -317,12 +317,12 @@ Here is the yaml configuration:
 messages:
     #....
     selection:
-        heading: Beispiel für Selektion
+        heading: "Beispiel für Selektion"
         value: "{gender, select, male {Herr} female {Frau} other {}} {name}"
         gender:
-            male: männlich
-            female: weiblich
-            other: divers
+            male: "männlich"
+            female: "weiblich"
+            other: "divers"
 #....
 ```
 
@@ -431,7 +431,7 @@ Here is the yaml configuration:
 messages:
     #....
     numberformat:
-        heading: Beispiele für NumberFormat
+        heading: "Beispiele für NumberFormat"
         example:
             currency1: "Währung (Symbol): "
             currency2: "Währung (lang): "
@@ -531,7 +531,7 @@ Here is the yaml configuration:
 messages:
     #....
     datetimeformat:
-        heading: Beispiel DateTimeFormat
+        heading: "Beispiel DateTimeFormat"
         timelabel: "Der gewählte Zeitpunkt ist "
         relativetimelabel: "Relative Zeit zum gewählten Zeitpunkt: "
 #....
@@ -574,7 +574,7 @@ Our messages look similar to the earlier examples:
 messages:
     # ...
     richtext:
-        heading: Beispiel für Rich Text
+        heading: "Beispiel für Rich Text"
         messageWithReactNode: "Dieser Text enthält (hier: {element}) ein beliebiges React-Element."
         messageWithInlineCode: "Dieser Text enthält <code>inline code</code>."
         messageWithReactTag: "Dieser Text verwendet <customTag>einen Tag, der über React-Elemente definiert ist.</customTag>"
