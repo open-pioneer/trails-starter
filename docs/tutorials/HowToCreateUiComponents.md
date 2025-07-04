@@ -158,6 +158,29 @@ The final result looks like this (after a clicking a few times):
 
 ![Buttons with click count](./HowToCreateUiComponents_Buttons.png)
 
+## Embedding images
+
+Images or other static resources from your app or package can usually be imported directly into your source code.
+For example, to embed an image called `my-image.png` from the same directory as your React component:
+
+```tsx
+import { Image } from "@chakra-ui/react";
+
+// Import image as URL
+import myImageUrl from "./my-image.png";
+
+// Later, use the URL in your code
+<Image src={myImageUrl} />;
+```
+
+This works because Vite supports [importing static asserts](https://vite.dev/guide/assets).
+It will support the import during development and automatically bundle your assets when building your app.
+
+Notes:
+
+- Depending on your Vite configuration, small files may be embedded as base64 strings. In this case, no actual assets will be emitted.
+- If you intend to publish your code as a trails package, you should also list your files as assets (see [`publishConfig.assets`](../reference/Package.md#publishconfigassets)).
+
 ## Defining a UI Component in a different module
 
 Since react components are simple functions (or sometimes classes), they can be simply be moved into another file in combination with the usual `import` and `export` keywords.
@@ -184,7 +207,13 @@ Like mentioned above, simple state can often be managed through props and compon
 
 Plain services (together with events) can be used to keep state that is used in multiple places (components, services) of the application.
 
-To manage more complex state, React developers usually reach for a state management library (e.g. Redux).
-[Zustand](https://github.com/pmndrs/zustand), [Jotai](https://jotai.org/) or [Valtio](https://github.com/pmndrs/valtio) appear to be rather simple to integrate but we have not used them yet.
-A service could create a central "store" instance to be shared with other services and the UI.
-Let us know if you need this feature.
+To manage more complex state, React developers usually reach for a state management library (e.g. Redux or Zustand).
+We have implemented a custom state management solution based on signals (see [Reactivity-API](https://github.com/conterra/reactivity/), [Trails bindings for React](https://github.com/open-pioneer/trails-core-packages/tree/main/src/packages/reactivity)).
+This API is used for reactive interfaces provided by Trails packages and will probably fit your needs as well.
+A relatively complete example is available [here](https://github.com/open-pioneer/trails-openlayers-base-packages/blob/main/src/samples/map-sample/ol-app/README.md#state-management).
+
+Other third party libraries that work well, too:
+
+- [Zustand](https://github.com/pmndrs/zustand)
+- [Jotai](https://jotai.org/)
+- [Valtio](https://github.com/pmndrs/valtio)
