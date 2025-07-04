@@ -267,7 +267,7 @@ You can then either re-implement the patch or drop it altogether.
 
 Note that you can also "augment" your patch if you need to; simply re-execute `pnpm patch` for that package.
 
-You can also use `pnpm patch` to change arbitrary file in a package (not only source code), for example you can change a package's metadata by editing the `package.json` file.
+You can also use `pnpm patch` to change arbitrary files in a package (not only source code), for example you can change a package's metadata by editing the `package.json` file.
 
 ### Overriding a dependency
 
@@ -355,6 +355,97 @@ In that case, you can also relax the [peer dependency rules](https://pnpm.io/pac
     }
 }
 ```
+
+#### Walkthrough: forking a package and building it yourself
+
+In this walkthrough, we will fork an existing package, extend it and build it ourselves to test the changes.
+This can be helpful if you intend to contribute a new feature or fix a bug to some upstream package, but need to use the changed version in your application immediately.
+
+Fist, fork the source repository (or create a branch in the original repository) and make your changes.
+In this example, we will make a very simple change the `@open-pioneer/basemap-switcher` package ([v0.11.0](https://github.com/open-pioneer/trails-openlayers-base-packages/tree/%40open-pioneer/basemap-switcher%400.11.0/src/packages/basemap-switcher)).
+
+```bash
+$ git checkout -b feature/my-basemap-switcher-changes
+Switched to a new branch 'feature/my-basemap-switcher-changes'
+```
+
+We update the `BasemapItem` component to render all labels in upper case:
+
+```diff
+function BasemapItem(props: { item: SelectOption }) {
+    const intl = useIntl();
+    const notAvailableLabel = intl.formatMessage({ id: "layerNotAvailable" });
+    const item = props.item;
+    return (
+        <Select.Item
+            item={item}
+            key={item.value}
+            justifyContent="flex-start"
+            // Override pointer-events: none rule for disabled items; we want to show the tooltip on hover
+            pointerEvents="auto"
+            className="basemap-switcher-option"
+        >
+-           {item.label}
++           {item.label.toUpperCase()}
+```
+
+Then (not shown), you can commit your changes and initiate a pull request to the source repository.
+
+To try the changed package in your own application, you can build the package yourself.
+Trails packages typically use a `build` script in their `package.json` file.
+The script builds the package and places the output into the `dist` directory:
+
+```bash
+$ cd src/packages/basemap-switcher
+$ pnpm build
+```
+
+Next, we can simulate "publishing" the package by running `pnpm pack`:
+
+```bash
+$ pnpm pack
+...
+/path/to/project/trails-openlayers-base-packages/src/packages/basemap-switcher/dist/open-pioneer-basemap-switcher-0.11.0.tgz
+```
+
+`pnpm pack` creates a tarball that contains the build package.
+This is the format that you would download via your package manager when installing a package from `npmjs.com`.
+
+Next, you can copy the tar file to your project (for example, into the `patches` directory) and override
+the existing basemap switcher package:
+
+```jsonc
+// top level package.json
+{
+    // ...
+    "pnpm": {
+        "overrides": {
+            "@open-pioneer/basemap-switcher": "file:./patches/open-pioneer-basemap-switcher-0.11.0.tgz"
+        }
+    }
+}
+```
+
+Run `pnpm install` to apply the changes, then run `pnpm dev`.
+The application will now use the modified version of the package:
+
+![Map sample app with upper case basemap titles](./WaysToPatchAPackage_BasemapsUppercase_TarballOverride.png)
+
+##### Notes:
+
+- The override replaces the package in your entire application.
+  This works best if the modified version of the package is close to (or compatible with) the original version.
+- You can commit the tarball to your git repository.
+  Other developers will automatically apply the override when they run `pnpm install`.
+- PNPM will currently not detect changes (file modifications) in the tarball itself.
+  If you need to update it, simply change the file name as well.
+- This process can also be used for multiple packages:
+    ```bash
+    # Runs pack on every package and places the output into the specified directory.
+    $ pnpm recursive pack --filter='@open-pioneer/*' --pack-destination=/path/to/output/directory
+    ```
+    However, this may become too cumbersome in the long run.
+    If you need custom development versions of trails packages, you can also contact the maintenance team to publish a custom development snapshot.
 
 #### Walkthrough: replacing @open-pioneer/runtime
 
