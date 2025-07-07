@@ -102,6 +102,8 @@ The report is written to `dist/license-report.html`.
 The source code for report generation is located in `support/create-license-report.ts`.
 Configuration happens via `support/license-config.yaml`.
 
+By default, devDependencies are not included in the report. If you need them to be included, you can change the source code in `support/create-license-report.ts`: Remove the "-P" from the following command in the source code: `pnpm licenses list --json --long -P`.
+
 ### `pnpm run generate-sbom`
 
 Generate a [CycloneDX](https://github.com/CycloneDX) SBOM (Software Bill of Materials) for the project.
