@@ -81,7 +81,7 @@ The test-utils package contains helpers for testing service classes:
     "name": "math",
     "private": true,
     "devDependencies": {
-        "@open-pioneer/test-utils": "latest"
+        "@open-pioneer/test-utils": "catalog:"
     }
 }
 ```
@@ -139,8 +139,8 @@ First, add the packages `math` and `@open-pioneer/chakra-snippets` in the app's 
     "name": "empty",
     "private": true,
     "dependencies": {
-        "@open-pioneer/runtime": "latest",
-        "@open-pioneer/chakra-snippets": "latest",
+        "@open-pioneer/runtime": "catalog:",
+        "@open-pioneer/chakra-snippets": "catalog:",
         "math": "workspace:^"
     }
 }
@@ -234,7 +234,7 @@ Because we do not intend to export any classes, functions or constants, we'll ju
     "private": true,
     "main": "api.ts",
     "devDependencies": {
-        "@open-pioneer/test-utils": "latest"
+        "@open-pioneer/test-utils": "catalog:"
     }
 }
 ```
@@ -459,9 +459,9 @@ We want to use its logger implementation:
     "name": "empty",
     "private": true,
     "dependencies": {
-        "@open-pioneer/core": "latest",
-        "@open-pioneer/runtime": "latest",
-        "@open-pioneer/chakra-snippets": "latest",
+        "@open-pioneer/core": "catalog:",
+        "@open-pioneer/runtime": "catalog:",
+        "@open-pioneer/chakra-snippets": "catalog:",
         "math": "workspace:^"
     }
 }
