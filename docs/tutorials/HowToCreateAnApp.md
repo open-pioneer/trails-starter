@@ -20,14 +20,14 @@ Create a very simple [`package.json`](https://docs.npmjs.com/cli/v9/configuring-
     "name": "my-app",
     "private": true,
     "dependencies": {
-        "@open-pioneer/runtime": "latest"
+        "@open-pioneer/runtime": "catalog:"
     }
 }
 ```
 
 > NOTE  
-> Dependencies in the preceding example snippet (and some other snippets in this documentation) use the version specifier `latest` to avoid being immediately outdated.
-> You should pick a recent version with the help of your IDE or the index at [npmjs.com](https://www.npmjs.com/), for example `"@open-pioneer/some-package": "^1.2.3"`.
+> Dependencies in the preceding example snippet (and some other snippets in this documentation) use the version specifier `catalog:` to avoid being immediately outdated.
+> The actual version is maintained in `pnpm-workspace.yaml` (see [documentation](https://pnpm.io/catalogs)).
 
 A `package.json` file should always contain at least a `name`, usually some `dependencies` and either `private: true` or a valid license (in case you intend to publish it).
 After creating a new package or modifying the dependencies of an existing package, you should run `pnpm install`:
@@ -146,6 +146,54 @@ $ pnpm run dev
 Vite derives the site's URL from the `index.html` file's path in the source directory, so it will serve your site at <http://localhost:5173/sites/my-app-test/>:
 
 ![my-app rendered in a Browser](./HowToCreateAnApp_Rendered.png)
+
+## Including static assets
+
+Vite has out of the box support for two ways to include static assets:
+
+- **Importing static assets**: You can `import` images, fonts, or other files directly into your source code. Vite will handle them automatically.
+
+    For example:
+
+    ```ts
+    // src/apps/my-app/someFile.ts
+    import myImage from "./my-image.png"; // (1)
+    import someFile from "./some-asset.pdf?url"; // (2)
+    ```
+
+    - **(1)** Imports an image file as an URL (`myImage` will be string URL that points to the image).
+      Vite has direct support for image file extensions.
+    - **(2)** Explicitly imports a file as an URL.
+      Very similar to the previous example, but useful for cases where the file extension is not immediately supported by Vite.
+
+    The imported files will be bundled by Vite (e.g. as `dist/www/assets/my-image-123456.png`).
+    Small assets may also be inlined as base64 strings, depending on your Vite configuration.
+    For more details, see [Vite's documentation on assets](https://vite.dev/guide/assets).
+
+- **Referencing public assets**: You can place files into Vite's public directory (at `src/public` by default).
+  These files will be copied to the output directory without any modification.
+  This is useful for files that must be present at a specific location (instead of `assert-12345.ext`):
+
+    - `favicon.ico`
+    - `robots.txt`
+    - `my-config-file.json`
+
+    Once again, you can import these files to get a valid URL:
+
+    ```ts
+    // src/apps/my-app/someFile.ts
+    import configUrl from "/my-config-file.json?url"; // (1)
+
+    // (2)
+    const response = await fetch(configUrl);
+    const config = await response.json();
+    ```
+
+    - **(1)** Imports the file `src/public/my-config-file.json` as an URL (note the leading `/`).
+      For production builds, the URL will point to the file in the output directory, e.g. `dist/www/my-config-file.json`.
+    - **(2)** Fetches the file and parses it as JSON. This works in both development and production, since Vite generates the correct URL for the in both cases.
+
+    For more details, see [Vite's documentation on public assets](https://vite.dev/guide/assets.html#the-public-directory).
 
 ## Building the site
 

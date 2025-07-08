@@ -84,7 +84,7 @@ jobs:
         uses: JamesIves/github-pages-deploy-action@v4
         with:
           repository-name: open-pioneer/trails-demo
-          token: ${{ secrets.DEPLOY_TOKEN }}
+          token: ${{ secrets.DEMO_DEPLOY_TOKEN }}
           git-config-name: "github-actions[bot]"
           git-config-email: "41898282+github-actions[bot]@users.noreply.github.com"
           folder: site
