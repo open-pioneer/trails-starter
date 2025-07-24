@@ -173,13 +173,10 @@ import myImageUrl from "./my-image.png";
 <Image src={myImageUrl} />;
 ```
 
-This works because Vite supports [importing static asserts](https://vite.dev/guide/assets).
-It will support the import during development and automatically bundle your assets when building your app.
+This approach works well if you only care about the assets data, and not its file name or location.
+It relies on Vite's [support for static assets](https://vite.dev/guide/assets), which will automatically bundle the referenced files as assets of your application.
 
-Notes:
-
-- Depending on your Vite configuration, small files may be embedded as base64 strings. In this case, no actual assets will be emitted.
-- If you intend to publish your code as a trails package, you should also list your files as assets (see [`publishConfig.assets`](../reference/Package.md#publishconfigassets)).
+For different approaches and more details, see [Including static assets](./HowToCreateAnApp.md#including-static-assets).
 
 ## Defining a UI Component in a different module
 
