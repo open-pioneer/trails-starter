@@ -26,7 +26,8 @@ Create a very simple [`package.json`](https://docs.npmjs.com/cli/v9/configuring-
 ```
 
 > NOTE  
-> Dependencies in the preceding example snippet (and some other snippets in this documentation) use the version specifier `catalog:` to avoid being immediately outdated.
+> Dependencies in the preceding example snippet (and some other snippets in this documentation) use the version specifier `catalog:`.
+> We use catalogs to manage the versions of our dependencies at a central location.
 > The actual version is maintained in `pnpm-workspace.yaml` (see [documentation](https://pnpm.io/catalogs)).
 
 A `package.json` file should always contain at least a `name`, usually some `dependencies` and either `private: true` or a valid license (in case you intend to publish it).
