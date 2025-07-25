@@ -54,12 +54,12 @@
 
 ### FormatJS
 
-- first-party React integration, [react-intl](https://formatjs.io/docs/react-intl/)
+- first-party React integration, [react-intl](https://formatjs.github.io/docs/react-intl/)
 - first-class ICU Message Format support
 - no build-in translation file loading and user language detection
-- good tooling ([CLI](https://formatjs.io/docs/tooling/cli),[eslint-plugin](https://https://formatjs.io/docs/tooling/linter),...)
-- good [TMS integration](https://formatjs.io/docs/getting-started/message-extraction/#translation-management-system-tms-integration)
-- support for [pre-compiled messages](https://formatjs.io/docs/guides/advanced-usage) into AST, reduced react-intl without parser (40% smaller)
+- good tooling ([CLI](https://formatjs.github.io/docs/tooling/cli/),[eslint-plugin](https://formatjs.github.io/docs/tooling/linter),...)
+- good [TMS integration](https://formatjs.github.io/docs/getting-started/message-extraction/#translation-management-system-tms-integration)
+- support for [pre-compiled messages](https://formatjs.github.io/docs/guides/advanced-usage/) into AST, reduced react-intl without parser (40% smaller)
 - react-intl: Internationalizing can be applied only in view layer such as React.Component -> [react-intl-universal](https://github.com/alibaba/react-intl-universal) for Vanilla JS
 - well established community
 
