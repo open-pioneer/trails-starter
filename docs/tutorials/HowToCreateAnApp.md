@@ -152,7 +152,7 @@ Vite derives the site's URL from the `index.html` file's path in the source dire
 
 Vite has out of the box support for two ways to include static assets:
 
-- **Importing static assets**: You can import the content (or URLs _to_ the content) into your source code. Vite will handle them automatically.
+- **Importing static assets**: You can import the content of files (or URLs _to_ the content) into your source code.
 
     For example:
 
@@ -163,9 +163,9 @@ Vite has out of the box support for two ways to include static assets:
     import jsonContent from "./my-json-data.json"; // (3)
     ```
 
-    - **(1)** Imports an image file as an URL (`myImage` will be string URL that points to the image).
+    - **(1)** Imports an image file as a URL (`myImage` will be string URL that points to the image).
       Vite has direct support for image file extensions.
-    - **(2)** Explicitly imports a file as an URL.
+    - **(2)** Explicitly imports a file as a URL.
       Very similar to the previous example, but useful for cases where the file extension is not immediately supported by Vite.
     - **(3)** Imports the data in the referenced JSON file directly as a JavaScript object.
 
@@ -176,7 +176,7 @@ Vite has out of the box support for two ways to include static assets:
     - Small images or file contents may be embedded as a string (text content, or Base64 URL, etc.)
     - Imported data (such as JSON) may be directly embedded into the source code
 
-For more details, see [Vite's documentation on assets](https://vite.dev/guide/assets).
+    For more details, see [Vite's documentation on assets](https://vite.dev/guide/assets).
 
 - **Referencing public assets**: You can place files into Vite's public directory (at `src/public` by default).
   These files will be copied to the output directory without any modification.
@@ -195,7 +195,7 @@ For more details, see [Vite's documentation on assets](https://vite.dev/guide/as
     ```
 
     - **(1)**
-      Imports the file `/my-config-file.json` as an URL.
+      Imports the file `/my-config-file.json` as a URL.
       The leading `/` is important: it references the root of the public directory.
 
         During development, Vite's dev server will serve the current file content from `src/public/my-config-file.json`.
@@ -205,18 +205,18 @@ For more details, see [Vite's documentation on assets](https://vite.dev/guide/as
       Fetches the file and parses it as JSON.
       This works in both development and production, since Vite generates a correct URL for both cases.
 
-        Edits made after building the app will be visible because we always fetch the current content of the file.
-        This is different from the previous approach, which always uses the file content _at build time_.
+    Edits made after building the app will be visible because we always fetch the current content of the file.
+    This is different from the previous approach, which always uses the file content _at build time_.
 
-        For more details, see [Vite's documentation on public assets](https://vite.dev/guide/assets.html#the-public-directory).
+    For more details, see [Vite's documentation on public assets](https://vite.dev/guide/assets.html#the-public-directory).
 
 ### When to use which approach
 
 - Use static assets if you only need the static data at build time. This should be the most common case.
-- Use public assets if you care about the file's location on your web server
+- Use public assets if you care about the file's location on your web server.
 - Use public assets if the file is meant to be edited to change the behavior of the application without rebuilding it.
 
-> NOTE: Static assets work everywhere, even when as part of a published package.
+> NOTE: Static assets work everywhere, even as part of a published package.
 > Note that you may have to configure `assets` in your package's `build.config.mjs`, see [`publishConfig.assets](../reference/Package.md#publishconfigassets).
 
 > NOTE: A published package cannot provide public assets at this time (Vite's mechanism only works for _apps_).
