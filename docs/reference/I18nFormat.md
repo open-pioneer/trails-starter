@@ -46,7 +46,7 @@ overrides:
 ## FormatJS
 
 At runtime, all messages are made available on an `intl` object provided by the [FormatJS Library](https://formatjs.io/).
-Message templates can use the [message syntax](https://formatjs.io/docs/core-concepts/icu-syntax) supported by FormatJS.
+Message templates can use the [message syntax](https://formatjs.github.io/docs/core-concepts/icu-syntax) supported by FormatJS.
 
 Use the `formatMessage` method on an `intl` object to format an i18n message:
 
@@ -61,4 +61,4 @@ As an extension, it also possible to format React nodes using the `formatRichMes
 const message = intl.formatRichMessage({ id: "greeting" }, { name: <UserName /> });
 ```
 
-FormatJS also provides facilities to format numbers, dates etc. in the appropriate locale, see also [Documentation](https://formatjs.io/docs/intl#intlshape).
+FormatJS also provides facilities to format numbers, dates etc. in the appropriate locale, see also [Documentation](https://formatjs.github.io/docs/intl/#intlshape).

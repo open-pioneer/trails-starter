@@ -192,7 +192,7 @@ function ExampleStack() {
 }
 ```
 
-With plural support we can output different text depending on a count value (see [Link](https://formatjs.io/docs/core-concepts/icu-syntax/#plural-format)).
+With plural support we can output different text depending on a count value (see [Link](https://formatjs.github.io/docs/core-concepts/icu-syntax/#plural-format)).
 We will use a RadioGroup to change the count value in our example:
 
 ```tsx
@@ -267,7 +267,7 @@ function ExampleStack() {
 }
 ```
 
-With selection support we can output different text depending on a set of given values (see [Link](https://formatjs.io/docs/core-concepts/icu-syntax/#select-format)).
+With selection support we can output different text depending on a set of given values (see [Link](https://formatjs.github.io/docs/core-concepts/icu-syntax/#select-format)).
 In our example we will change the title depending on a gender selection.
 We will use a text input for name and a RadioGroup for gender selection:
 
@@ -367,7 +367,7 @@ function ExampleStack() {
 }
 ```
 
-With `formatNumber` we can not only format numbers locale specific, but also use units and currencies (see [Link](https://formatjs.io/docs/react-intl/api#formatnumber)).
+With `formatNumber` we can not only format numbers locale specific, but also use units and currencies (see [Link](https://formatjs.github.io/docs/react-intl/api/#formatnumber)).
 In our example we will have a number input and an output with different forms of unit and currency:
 
 ```tsx
@@ -539,8 +539,8 @@ messages:
 
 Add the defined keys to all yaml files.
 
-We pass the `value` with `DateTimeFormatOptions` to `intl.formatDate` (see [Link](https://formatjs.io/docs/react-intl/api#formatdate))
-and with `RelativeTimeFormatOptions` to `intl.formatRelativeTime` (see [Link](https://formatjs.io/docs/react-intl/api#formatrelativetime))
+We pass the `value` with `DateTimeFormatOptions` to `intl.formatDate` (see [Link](https://formatjs.github.io/docs/react-intl/api/#formatdate))
+and with `RelativeTimeFormatOptions` to `intl.formatRelativeTime` (see [Link](https://formatjs.github.io/docs/react-intl/api/#formatrelativetime))
 
 In result, we see our selected formatted datetime and the relative time between now and the selected datetime.
 
@@ -758,6 +758,6 @@ For more information refer to the API of the `core-packages` `runtime` package.
 
 ## Further reading
 
-- [FormatJS Documentation](https://formatjs.io/docs/getting-started/installation)
-- [Message syntax](https://formatjs.io/docs/core-concepts/icu-syntax)
-- [Intl Reference](https://formatjs.io/docs/react-intl/api#intlshape) (interface `IntlFormatters`)
+- [FormatJS Documentation](https://formatjs.github.io/docs/getting-started/installation/)
+- [Message syntax](https://formatjs.github.io/docs/core-concepts/icu-syntax/)
+- [Intl Reference](https://formatjs.github.io/docs/react-intl/api/#intlshape) (interface `IntlFormatters`)
