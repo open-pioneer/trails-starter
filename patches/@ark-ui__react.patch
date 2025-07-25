@@ -29,14 +29,14 @@ index d814522e0061ff100e70452db158747fb629697c..3254ca2b97fbd5285344606c9d9258cc
    if (isShadowRoot(rootNode)) return rootNode;
    return getDocument(node).body;
 diff --git a/dist/providers/environment/environment-provider.d.ts b/dist/providers/environment/environment-provider.d.ts
-index 2e5fb0b8cc413380509acb2a8b6cfd3298647c54..bab870768b293348eb312b8ae4ba18178489fb57 100644
+index 335d2668b745d6a6765024b0602507408f0c08fa..50084351aea837c54b427e7a0f717b56d10c490d 100644
 --- a/dist/providers/environment/environment-provider.d.ts
 +++ b/dist/providers/environment/environment-provider.d.ts
 @@ -3,5 +3,6 @@ import { RootNode } from './use-environment-context';
  export interface EnvironmentProviderProps {
-     children?: ReactNode;
-     value?: RootNode | (() => RootNode);
-+    portalNode?: Node;
+     children?: ReactNode | undefined;
+     value?: RootNode | (() => RootNode) | undefined;
++    portalNode?: Node | undefined;
  }
  export declare const EnvironmentProvider: (props: EnvironmentProviderProps) => import("react/jsx-runtime").JSX.Element;
 diff --git a/dist/providers/environment/environment-provider.js b/dist/providers/environment/environment-provider.js
