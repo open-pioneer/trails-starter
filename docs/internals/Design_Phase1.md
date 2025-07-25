@@ -127,7 +127,7 @@ Reasons for that choice include:
 
 [FormatJS](https://formatjs.io/) was chosen as the i18n framework for our technology stack.
 It it well maintained, used by a large number of projects and has a well designed API.
-The central interface exposed by FormatJS is the `intl` object (see [API](https://formatjs.io/docs/react-intl/api/#intlshape)).
+The central interface exposed by FormatJS is the `intl` object (see [API](https://formatjs.github.io/docs/react-intl/api/#intlshape)).
 
 ## Implementation strategy
 

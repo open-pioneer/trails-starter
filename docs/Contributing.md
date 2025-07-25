@@ -17,6 +17,7 @@ Our current set of repositories is:
   This repository also hosts the [Documentation](https://github.com/open-pioneer/trails-starter/tree/main/docs).
 - [Core packages](https://github.com/open-pioneer/trails-core-packages): Contains the runtime package and other central packages.
 - [OpenLayers base packages](https://github.com/open-pioneer/trails-openlayers-base-packages): Contains packages using OpenLayers to render a map.
+- [Community packages](https://github.com/open-pioneer/trails-community): Contains specialized packages maintained by the community.
 - [Build tools](https://github.com/open-pioneer/trails-build-tools): Contains our build tooling such as the Vite plugin.
 
 ## Report an issue
