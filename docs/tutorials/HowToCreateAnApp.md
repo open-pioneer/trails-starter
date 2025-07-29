@@ -181,7 +181,7 @@ Vite has out of the box support for two ways to include static assets:
 - **Referencing public assets**: You can place files into Vite's public directory (at `src/public` by default).
   These files will be copied to the output directory without any modification.
   This is useful for files that must be present at a specific location (instead of `assert-12345.ext`).
-  Use cases are well known file names like `favicon.ico` or `robots.txt`, or files that are designed to be edited by an administrator (e.g. `my-config-file.json).
+  Use cases are well known file names like `favicon.ico` or `robots.txt`, or files that are designed to be edited by an administrator (e.g. `my-config-file.json`).
 
     Public files can be imported, too:
 
