@@ -1,5 +1,16 @@
 # Changelog
 
+## 2025-08-07
+
+- Update OpenLayers to 10.6.1
+- Update Chakra to v3.24.2
+    - Patch for `@ark-ui/react` needed a slight update
+- Update Vite to 7.1.0
+- Update Open Pioneer Trails build tools
+- Update React to 19.1.1
+- Update TypeScript to 5.9.2
+- Various other minor updates
+
 ## 2025-06-13
 
 - Bump Chakra to v3.21.0
@@ -217,7 +228,6 @@
 - Update `react` to 18.3.1
 - Update `ol` to 9.2.4
 - Update test packages:
-
     - "@testing-library/dom": "^10.2.0",
     - "@testing-library/jest-dom": "^6.4.6",
     - "@testing-library/react": "^16.0.0",

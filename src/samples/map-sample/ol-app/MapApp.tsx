@@ -17,7 +17,7 @@ import TileLayer from "ol/layer/Tile";
 import OSM from "ol/source/OSM";
 import { useIntl } from "open-pioneer:react-hooks";
 import { useId, useMemo, useState } from "react";
-import { PiRulerLight } from "react-icons/pi";
+import { LuRuler } from "react-icons/lu";
 import { MAP_ID } from "./services";
 
 export function MapApp() {
@@ -116,7 +116,7 @@ export function MapApp() {
                                 >
                                     <ToolButton
                                         label={intl.formatMessage({ id: "measurementTitle" })}
-                                        icon={<PiRulerLight />}
+                                        icon={<LuRuler />}
                                         active={measurementIsActive}
                                         onClick={toggleMeasurement}
                                     />
