@@ -1,12 +1,14 @@
 # Changelog
 
-## TBD
+## 2025-08-07
 
 - Update OpenLayers to 10.6.1
-- Update Chakra to v3.22.0
+- Update Chakra to v3.24.2
     - Patch for `@ark-ui/react` needed a slight update
-- Update Vite to v7
+- Update Vite to 7.1.0
 - Update Open Pioneer Trails build tools
+- Update React to 19.1.1
+- Update TypeScript to 5.9.2
 - Various other minor updates
 
 ## 2025-06-13
