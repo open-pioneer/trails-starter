@@ -1,5 +1,14 @@
 # Changelog
 
+## TBD
+
+- Update `vite.config.ts`:
+    - Update Vite's transpile targets to `"baseline-widely-available"`.
+      These are widely available browser versions maintained by vite (at the time of this writing, Chrome 107+, Edge 107+, Firefox 104+, Safari 16+).
+      For more details, see [Vite docs](https://vite.dev/config/build-options.html#build-target).
+    - Update react plugin's `devTarget` to `es2024`
+    - Remove obsolete configuration related to deprecation warnings
+
 ## 2025-08-07
 
 - Update OpenLayers to 10.6.1
