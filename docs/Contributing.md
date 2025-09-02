@@ -124,10 +124,10 @@ $ pnpm dev
 We are always happy to receive pull requests from the community.
 Small fixes or improvements to the documentation will usually be accepted right away.
 If you plan to make a larger contribution (new packages, new features, refactoring, etc.) consider reaching out to the maintainers first.
-This can be done, for example, by commenting on an existing issue or by creating a new one.
+This can be done, for example, by commenting on an existing issue or by creating a new one. The [contributions board](https://github.com/orgs/open-pioneer/projects/7/views/1) contains a list of new, desired features for Open Pioneer - Trails. Contributions are very welcome here!
 
 This way, you can avoid unnecessary work and ensure that your contribution is in line with the project's goals.
-This will also reduce the risk of your PR being rejected.
+This will also reduce the risk of your PR being rejected. If you want to share your own ideas and more specialized functionalities with the community, you can also consider creating a pull request in the [community repository](#identify-the-correct-repository).
 
 To create a pull request:
 
@@ -135,7 +135,6 @@ To create a pull request:
 
 - Then, create a branch with a sensible name.
   We use simple branch prefixes to keep some order:
-
     - `feature/SCOPE`
     - `fix/SCOPE`
     - `chore/SCOPE`
