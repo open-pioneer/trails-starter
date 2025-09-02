@@ -135,7 +135,6 @@ To create a pull request:
 
 - Then, create a branch with a sensible name.
   We use simple branch prefixes to keep some order:
-
     - `feature/SCOPE`
     - `fix/SCOPE`
     - `chore/SCOPE`
