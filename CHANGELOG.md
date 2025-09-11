@@ -12,6 +12,8 @@
       For more details, see [Vite docs](https://vite.dev/config/build-options.html#build-target).
     - Update react plugin's `devTarget` to `es2024`
     - Remove obsolete configuration related to deprecation warnings
+- Update `pnpm-workspace.yaml`
+    - Remove obsolete `overrides` for old CVEs
 
 ## 2025-08-07
 
