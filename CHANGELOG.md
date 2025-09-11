@@ -12,8 +12,11 @@
       For more details, see [Vite docs](https://vite.dev/config/build-options.html#build-target).
     - Update react plugin's `devTarget` to `es2024`
     - Remove obsolete configuration related to deprecation warnings
-- Update `pnpm-workspace.yaml`
-    - Remove obsolete `overrides` for old CVEs
+- Update `pnpm-workspace.yaml`:
+    - Remove obsolete `overrides` for old CVEs.
+    - Remove emotion's dependencies `@emotion/babel-plugin` and `@babel/runtime`.
+      These aren't actually being used.
+      Removing these dependencies removes unnecessary packages from the license report.
 
 ## 2025-08-07
 

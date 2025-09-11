@@ -101,6 +101,18 @@ overrides:
   "brace-expansion@>=1.0.0 <=1.1.11": "^1.1.12"
   "brace-expansion@>=2.0.0 <=2.0.1": "^2.0.2"
 
+  # We don't actually use the babel plugin.
+  # The babel runtime is also not used as a production dependency.
+  # See e.g. https://github.com/emotion-js/emotion/issues/2371
+  "@emotion/react>@emotion/babel-plugin": "-"
+  "@emotion/styled>@emotion/babel-plugin": "-"
+  "@emotion/react>@babel/runtime": "-"
+  "@emotion/styled>@babel/runtime": "-"
+
+  # Resolve duplicate packages
+  "stylis@4.2.0": "^4.3.6"
+  "source-map@0.5.6": "^0.6.1"
+
 auditConfig:
   ignoreCves:
 
