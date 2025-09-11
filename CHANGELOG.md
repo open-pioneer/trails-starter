@@ -2,6 +2,9 @@
 
 ## TBD
 
+- Update core packages to 4.1.0
+- Update Chakra UI to 3.26.0
+- Update various dev dependencies
 - Update `vite.config.ts`:
     - Update Vite's transpile targets to `"baseline-widely-available"`.
       These are widely available browser versions maintained by vite (at the time of this writing, Chrome 107+, Edge 107+, Firefox 104+, Safari 16+).

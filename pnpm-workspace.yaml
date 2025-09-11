@@ -7,7 +7,7 @@ packages:
 # This is a yaml feature and is not interpreted by pnpm directly.
 __versions:
   - &react_version ^19.1.1
-  - &core_packages_version ^4.0.0
+  - &core_packages_version ^4.1.0
   - &ol_base_packages_version ^0.11.0
 
 # https://pnpm.io/catalogs
@@ -39,8 +39,8 @@ catalog:
   "@open-pioneer/test-utils": *core_packages_version
 
   # Other dependencies
-  "@chakra-ui/react": ^3.24.2
-  "@chakra-ui/cli": ^3.24.2
+  "@chakra-ui/react": ^3.26.0
+  "@chakra-ui/cli": ^3.26.0
   "@conterra/reactivity-core": ^0.7.0
   "@emotion/cache": ^11.14.0
   "@emotion/react": ^11.14.0
@@ -59,16 +59,16 @@ catalog:
   "@open-pioneer/check-pnpm-duplicates": ^0.2.3
   "@open-pioneer/vite-plugin-pioneer": ^5.0.0
   "@testing-library/dom": ^10.4.1
-  "@testing-library/jest-dom": ^6.6.4
+  "@testing-library/jest-dom": ^6.8.0
   "@testing-library/react": ^16.3.0
   "@testing-library/user-event": ^14.6.1
   "@types/js-yaml": ^4.0.9
   "@types/node": ^20.19.0
-  "@types/react-dom": ^19.1.7
-  "@types/react": ^19.1.9
-  "@typescript-eslint/eslint-plugin": ^8.39.0
-  "@typescript-eslint/parser": ^8.39.0
-  "@vitejs/plugin-react-swc": ^3.11.0
+  "@types/react-dom": ^19.1.9
+  "@types/react": ^19.1.12
+  "@typescript-eslint/eslint-plugin": ^8.43.0
+  "@typescript-eslint/parser": ^8.43.0
+  "@vitejs/plugin-react-swc": ^4.0.1
   eslint: ^8.57.1
   eslint-config-prettier: ^10.1.8
   eslint-import-resolver-typescript: ^4.4.4
@@ -77,19 +77,19 @@ catalog:
   eslint-plugin-jsx-a11y: ^6.10.2
   eslint-plugin-react: ^7.37.5
   eslint-plugin-react-hooks: ^5.2.0
-  eslint-plugin-unused-imports: ^4.1.4
+  eslint-plugin-unused-imports: ^4.2.0
   fast-glob: ^3.3.3
   handlebars: ^4.7.8
   happy-dom: ^18.0.1
   husky: ^9.1.7
   js-yaml: ^4.1.0
   jsdom: ^26.1.0
-  lint-staged: ^16.1.4
+  lint-staged: ^16.1.6
   prettier: ^3.6.2
   rimraf: ^6.0.1
-  sass: ^1.90.0
-  tsx: ^4.20.3
-  typedoc: ^0.28.9
+  sass: ^1.92.1
+  tsx: ^4.20.5
+  typedoc: ^0.28.12
   typescript: ^5.9.2
   vite: ^7.1.5
   vite-plugin-eslint: ^1.8.1
