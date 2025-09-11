@@ -68,7 +68,6 @@ export function MapApp() {
                                         borderRadius="lg"
                                         padding={2}
                                         boxShadow="lg"
-                                        role="top-left"
                                         aria-label={intl.formatMessage({ id: "ariaLabel.topLeft" })}
                                     >
                                         <Box role="dialog" aria-labelledby={measurementTitleId}>
@@ -98,7 +97,6 @@ export function MapApp() {
                                     borderRadius="lg"
                                     padding={2}
                                     boxShadow="lg"
-                                    role="top-right"
                                     aria-label={intl.formatMessage({ id: "ariaLabel.topRight" })}
                                 >
                                     <OverviewMap olLayer={overviewMapLayer} />
@@ -108,7 +106,6 @@ export function MapApp() {
                             </MapAnchor>
                             <MapAnchor position="bottom-right" horizontalGap={10} verticalGap={30}>
                                 <Flex
-                                    role="bottom-right"
                                     aria-label={intl.formatMessage({ id: "ariaLabel.bottomRight" })}
                                     direction="column"
                                     gap={1}
