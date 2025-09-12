@@ -23,13 +23,13 @@ catalogs:
       version: 0.11.0
     '@open-pioneer/build-package-cli':
       specifier: ^3.0.3
-      version: 3.0.3
+      version: 3.0.4
     '@open-pioneer/build-support':
       specifier: ^3.0.3
       version: 3.0.3
     '@open-pioneer/check-pnpm-duplicates':
       specifier: ^0.2.3
-      version: 0.2.3
+      version: 0.2.4
     '@open-pioneer/coordinate-viewer':
       specifier: ^0.11.0
       version: 0.11.0
@@ -68,7 +68,7 @@ catalogs:
       version: 4.1.0
     '@open-pioneer/vite-plugin-pioneer':
       specifier: ^5.0.0
-      version: 5.0.0
+      version: 5.0.1
     '@testing-library/dom':
       specifier: ^10.4.1
       version: 10.4.1
@@ -197,11 +197,12 @@ overrides:
   brace-expansion@>=1.0.0 <=1.1.11: ^1.1.12
   brace-expansion@>=2.0.0 <=2.0.1: ^2.0.2
   '@emotion/react>@emotion/babel-plugin': '-'
-  '@emotion/react>@babel/runtime': '-'
   '@emotion/styled>@emotion/babel-plugin': '-'
+  '@emotion/react>@babel/runtime': '-'
   '@emotion/styled>@babel/runtime': '-'
   stylis@4.2.0: ^4.3.6
   source-map@0.5.6: ^0.6.1
+  '@ark-ui/react': 5.23.0
 
 patchedDependencies:
   '@ark-ui/react@*':
@@ -220,16 +221,16 @@ importers:
         version: 9.35.0
       '@open-pioneer/build-package-cli':
         specifier: 'catalog:'
-        version: 3.0.3(sass@1.92.1)(typescript@5.9.2)
+        version: 3.0.4(sass@1.92.1)(typescript@5.9.2)
       '@open-pioneer/build-support':
         specifier: 'catalog:'
         version: 3.0.3
       '@open-pioneer/check-pnpm-duplicates':
         specifier: 'catalog:'
-        version: 0.2.3
+        version: 0.2.4
       '@open-pioneer/vite-plugin-pioneer':
         specifier: 'catalog:'
-        version: 5.0.0(@open-pioneer/runtime@4.1.0(@types/react@19.1.12)(typescript@5.9.2))(sass@1.92.1)(vite@7.1.5(@types/node@20.19.13)(sass@1.92.1)(tsx@4.20.5)(yaml@2.8.1))
+        version: 5.0.1(@open-pioneer/runtime@4.1.0(@types/react@19.1.12)(typescript@5.9.2))(sass@1.92.1)(vite@7.1.5(@types/node@20.19.13)(sass@1.92.1)(tsx@4.20.5)(yaml@2.8.1))
       '@testing-library/dom':
         specifier: 'catalog:'
         version: 10.4.1
@@ -882,13 +883,13 @@ packages:
     resolution: {integrity: sha512-YcLgVRW/Dn+FllZWWOap8bZC018/ehfp6Deslil4nFIfhhwIzuzIoQXgIFj11eSU2UBziQ5TQrNYEnj37skqbw==}
     engines: {node: '>= 20'}
 
-  '@open-pioneer/build-package-cli@3.0.3':
-    resolution: {integrity: sha512-pI95qWjG+WceE2w+cRZhHygchZCgXFD3npQt8wDuU5tPdydcS6bu6qY++xfQNVtl+tcllVG9rHO1yqdkRu0zgg==}
+  '@open-pioneer/build-package-cli@3.0.4':
+    resolution: {integrity: sha512-elJHTUyIDXOO0AE/aSduDY+QUdNcRTS795V3Vi/N6Sgt8MrfYktnIPB/er21Hc7MlqpwxcuucTAGk1DRb3LOLA==}
     engines: {node: '>= 20'}
     hasBin: true
 
-  '@open-pioneer/build-package@4.0.3':
-    resolution: {integrity: sha512-MHEZl8RtveK+gA5K7rb3Saee2foI3iPP2prs4kCnARNIwsYICd7JEarg35/e8xjB7nzhiKYyThzss59IAgZISQ==}
+  '@open-pioneer/build-package@4.0.4':
+    resolution: {integrity: sha512-jTfUc6LT/aZZogqkWTDKRhkt1UQbduErps1jTm5U7I8UTukm304EY5Kk5N77Tv3mCXXwHeAoUy9azJ13e9c3DQ==}
     engines: {node: '>= 20'}
     peerDependencies:
       sass: '*'
@@ -906,8 +907,8 @@ packages:
   '@open-pioneer/chakra-snippets@4.1.0':
     resolution: {integrity: sha512-tyBMSfYoR4K3gmmlaXEdzVq2RWN7VseaWzDxHmOQA7pV15JKzkfUeq07M3Qgser6mlfGFPVNsB6ivQVGvBnRRw==}
 
-  '@open-pioneer/check-pnpm-duplicates@0.2.3':
-    resolution: {integrity: sha512-A8SL8gfJY8n/CciLKAJY0qCwnUbw42Griy2XQ5+6qTwKLb6PASnOrD/+m4UjVu7OmTLmxnDq1+EWBQEZJBzAtg==}
+  '@open-pioneer/check-pnpm-duplicates@0.2.4':
+    resolution: {integrity: sha512-s5bQUAtGdBxSC5eyx3jp9gPiZnNtmR/zMaDS+uvmBTQfa6KGccMFjlibGeVFQ7s2uz2UMriKwr9laFKLPDAwVA==}
     engines: {node: '>= 20'}
     hasBin: true
 
@@ -959,8 +960,8 @@ packages:
   '@open-pioneer/test-utils@4.1.0':
     resolution: {integrity: sha512-bHz72drMXOrBqrEXhDbltV7rDN6ARuQbq4TgBIu45NSa5tvk9zQJGiWTiq1k3ZAUcXRvTxjUkkDEwKhyJ3E2xw==}
 
-  '@open-pioneer/vite-plugin-pioneer@5.0.0':
-    resolution: {integrity: sha512-a5BH9jIu00opGAmoKe9nHCbFRP7TfUZcgoKuRfR07jOQ9IGtXgUTcCdDwlsigUH1QF9a9eDai8lgxvlOG9yGdA==}
+  '@open-pioneer/vite-plugin-pioneer@5.0.1':
+    resolution: {integrity: sha512-znhyx+o7RwcX2GJ3DhTnr8U84FBpLF8xSXAF4wTQ05wF/0B+M/dhel7NDRj1+/yxcSr96aW8WJid54a3uAGHzg==}
     engines: {node: '>= 20'}
     peerDependencies:
       '@open-pioneer/runtime': '*'
@@ -1067,10 +1068,6 @@ packages:
     resolution: {integrity: sha512-tNe7a6U4rCpxLMBaR0SIYTdjxGdL0Vwb3G1zY8++sPtHSvy7qd54u8CIB0Z+Y6t5tc9pNYMYCMwhE/wdSY7ltg==}
     engines: {node: '>=18.12'}
 
-  '@pnpm/dependency-path@1001.0.2':
-    resolution: {integrity: sha512-sDIoqytKuNqff89tRY7yMzAkHONuOBRgEGUnqT3FDlnkVLrtpq9y7nTtcmskuD2U4t7Cyzn6I6GaUdidP4cHNA==}
-    engines: {node: '>=18.12'}
-
   '@pnpm/dependency-path@1001.1.0':
     resolution: {integrity: sha512-hOVNtEu25HTNOdi0PkvDd27AQHXBke18njbGSYJ02J4GbyoufazqP8+YDiC/wQ+28rKOpgUylT7pVlZoTmdUsg==}
     engines: {node: '>=18.12'}
@@ -1097,16 +1094,8 @@ packages:
     resolution: {integrity: sha512-SHaBzhigjoVIVJ2ho5nAIqmlyfDitaPfSCu+hyWSmUMSB2OEOd5lIiWvRoN4Yii7ZQqgJEeN2lRIr4+SoBTG2Q==}
     engines: {node: '>=18.12'}
 
-  '@pnpm/lockfile.types@1001.1.0':
-    resolution: {integrity: sha512-/rfDUV8M9iMm0QXahHPv6SD6eKNkrMXlhECJVhDkdL4NIifcv6/HZwYtxd0PIndExz04+OE+iV9K8zKG9i/OEA==}
-    engines: {node: '>=18.12'}
-
   '@pnpm/lockfile.types@1002.0.0':
     resolution: {integrity: sha512-Y1UZAFKviKGmftMF3hk2jxRTWymctSG+x+5XjOAuNAV6mwtdPdrjUVM8zTbLW+om7GoYhaSszyicO7Qn9InRfg==}
-    engines: {node: '>=18.12'}
-
-  '@pnpm/lockfile.utils@1002.1.0':
-    resolution: {integrity: sha512-6GFtAxzYv1sADCq4DP4vANfSpAR/gXSOCXd0RVhA/l+7rJWYy39cNoCWCnNWgGKOHnN9r26eoTEoQddnSqA+rQ==}
     engines: {node: '>=18.12'}
 
   '@pnpm/lockfile.utils@1003.0.0':
@@ -1129,20 +1118,12 @@ packages:
     resolution: {integrity: sha512-Zib2ysLctRnWM4KXXlljR44qSKwyEqYmLk+8VPBDBEK3l5Gp5mT3N4ix9E4qjYynvFqahumsxzOfxOYQhUGMGw==}
     engines: {node: '>=18.12'}
 
-  '@pnpm/pick-fetcher@1000.1.0':
-    resolution: {integrity: sha512-eoZk7uB37QC9V3yroMzAQ/jKN7/yRvQhCr15GBmUy0Nm3Q9IWBG5WNlcpdNL/joLEoSkRnx7DfX1+667kuKqHw==}
-    engines: {node: '>=18.12'}
-
   '@pnpm/pick-fetcher@1001.0.0':
     resolution: {integrity: sha512-Zl8npMjFSS1gSGM27KkbmfmeOuwU2MCxRFIofAUo/PkqOE2IzzXr0yzB1XYJM8Ml1nUXt9BHfwAlUQKC5MdBLA==}
     engines: {node: '>=18.12'}
 
   '@pnpm/ramda@0.28.1':
     resolution: {integrity: sha512-zcAG+lvU0fMziNeGXpPyCyCJYp5ZVrPElEE4t14jAmViaihohocZ+dDkcRIyAomox8pQsuZnv1EyHR+pOhmUWw==}
-
-  '@pnpm/resolver-base@1004.1.0':
-    resolution: {integrity: sha512-sG9ePMQDdsb3ofyCWbKzopzaeeDsSjic3EZISDiqCFC77kyHYnmv1Yqep8/dSltQSXkawy+PPfzPa26QbLMxzQ==}
-    engines: {node: '>=18.12'}
 
   '@pnpm/resolver-base@1005.0.0':
     resolution: {integrity: sha512-EGrQzH913uCHtkjIIR06JOUog0x0VlXS4dAD4unTrX6kPpRSPdISKn+LWRujoEJc8i0JBW6KIfUXcNmI0W5q+Q==}
@@ -1414,8 +1395,8 @@ packages:
     peerDependencies:
       '@testing-library/dom': '>=7.21.4'
 
-  '@tybys/wasm-util@0.10.0':
-    resolution: {integrity: sha512-VyyPYFlOMNylG45GoAe0xDoLwWuowvf92F9kySqzYh8vmYm7D2u4iUJKa1tOUpS70Ku13ASrOkS4ScXFsTaCNQ==}
+  '@tybys/wasm-util@0.10.1':
+    resolution: {integrity: sha512-9tTaPJLSiejZKx+Bmog4uSubteqTvFrVrURwkmHixBo0G4seD0zUxp98E1DzUBJxLQ3NPwXrGKDiVjwx/DpPsg==}
 
   '@types/aria-query@5.0.4':
     resolution: {integrity: sha512-rfT93uj5s0PRL7EzccGMs3brplhcrghnDoV26NqKhCAS1hVo+WdNsPvE/yb6ilfr5hi2MEk6d5EWJTKdxg8jVw==}
@@ -3962,8 +3943,8 @@ packages:
     peerDependencies:
       zod: ^3.25.0 || ^4.0.0
 
-  zod@4.1.7:
-    resolution: {integrity: sha512-6qi6UYyzAl7W9uV29KvcSFXqK4QCYNYUz2YASPNBWpJE1RY6R1nArmmFPgGY/CBYWzpeMw3EOER+DR9a05O4IA==}
+  zod@4.1.8:
+    resolution: {integrity: sha512-5R1P+WwQqmmMIEACyzSvo4JXHY5WiAFHRMg+zBZKgKS+Q1viRa0C1hmUKtHltoIFKtIdki3pRxkmpP74jnNYHQ==}
 
   zstddec@0.1.0:
     resolution: {integrity: sha512-w2NTI8+3l3eeltKAdK8QpiLo/flRAr2p8AGeakfMZOXBxOg9HIu4LVDxBi81sYgVhFhdJjv1OrB5ssI8uFPoLg==}
@@ -4423,7 +4404,7 @@ snapshots:
     dependencies:
       '@emnapi/core': 1.5.0
       '@emnapi/runtime': 1.5.0
-      '@tybys/wasm-util': 0.10.0
+      '@tybys/wasm-util': 0.10.1
     optional: true
 
   '@nodelib/fs.scandir@2.1.5':
@@ -4467,12 +4448,12 @@ snapshots:
   '@open-pioneer/build-common@3.1.0':
     dependencies:
       semver: 7.7.2
-      zod: 4.1.7
-      zod-validation-error: 4.0.1(zod@4.1.7)
+      zod: 4.1.8
+      zod-validation-error: 4.0.1(zod@4.1.8)
 
-  '@open-pioneer/build-package-cli@3.0.3(sass@1.92.1)(typescript@5.9.2)':
+  '@open-pioneer/build-package-cli@3.0.4(sass@1.92.1)(typescript@5.9.2)':
     dependencies:
-      '@open-pioneer/build-package': 4.0.3(sass@1.92.1)(typescript@5.9.2)
+      '@open-pioneer/build-package': 4.0.4(sass@1.92.1)(typescript@5.9.2)
       chalk: 5.6.2
       commander: 14.0.0
     transitivePeerDependencies:
@@ -4480,7 +4461,7 @@ snapshots:
       - supports-color
       - typescript
 
-  '@open-pioneer/build-package@4.0.3(sass@1.92.1)(typescript@5.9.2)':
+  '@open-pioneer/build-package@4.0.4(sass@1.92.1)(typescript@5.9.2)':
     dependencies:
       '@open-pioneer/build-common': 3.1.0
       '@open-pioneer/build-support': 3.0.3
@@ -4518,10 +4499,10 @@ snapshots:
       - react-dom
       - typescript
 
-  '@open-pioneer/check-pnpm-duplicates@0.2.3':
+  '@open-pioneer/check-pnpm-duplicates@0.2.4':
     dependencies:
       '@pnpm/lockfile.fs': 1001.1.17(@pnpm/logger@1001.0.0)
-      '@pnpm/lockfile.utils': 1002.1.0
+      '@pnpm/lockfile.utils': 1003.0.0
       '@pnpm/lockfile.walker': 1001.0.13
       '@pnpm/logger': 1001.0.0
       '@pnpm/types': 1000.7.0
@@ -4743,7 +4724,7 @@ snapshots:
       - '@types/react-dom'
       - typescript
 
-  '@open-pioneer/vite-plugin-pioneer@5.0.0(@open-pioneer/runtime@4.1.0(@types/react@19.1.12)(typescript@5.9.2))(sass@1.92.1)(vite@7.1.5(@types/node@20.19.13)(sass@1.92.1)(tsx@4.20.5)(yaml@2.8.1))':
+  '@open-pioneer/vite-plugin-pioneer@5.0.1(@open-pioneer/runtime@4.1.0(@types/react@19.1.12)(typescript@5.9.2))(sass@1.92.1)(vite@7.1.5(@types/node@20.19.13)(sass@1.92.1)(tsx@4.20.5)(yaml@2.8.1))':
     dependencies:
       '@babel/generator': 7.28.3
       '@babel/template': 7.27.2
@@ -4755,8 +4736,8 @@ snapshots:
       sass: 1.92.1
       vite: 7.1.5(@types/node@20.19.13)(sass@1.92.1)(tsx@4.20.5)(yaml@2.8.1)
       vitefu: 1.1.1(vite@7.1.5(@types/node@20.19.13)(sass@1.92.1)(tsx@4.20.5)(yaml@2.8.1))
-      zod: 4.1.7
-      zod-validation-error: 4.0.1(zod@4.1.7)
+      zod: 4.1.8
+      zod-validation-error: 4.0.1(zod@4.1.8)
     transitivePeerDependencies:
       - supports-color
 
@@ -4835,12 +4816,6 @@ snapshots:
 
   '@pnpm/crypto.polyfill@1000.1.0': {}
 
-  '@pnpm/dependency-path@1001.0.2':
-    dependencies:
-      '@pnpm/crypto.hash': 1000.2.0
-      '@pnpm/types': 1000.7.0
-      semver: 7.7.2
-
   '@pnpm/dependency-path@1001.1.0':
     dependencies:
       '@pnpm/crypto.hash': 1000.2.0
@@ -4888,26 +4863,11 @@ snapshots:
       ramda: '@pnpm/ramda@0.28.1'
       semver: 7.7.2
 
-  '@pnpm/lockfile.types@1001.1.0':
-    dependencies:
-      '@pnpm/patching.types': 1000.1.0
-      '@pnpm/types': 1000.7.0
-
   '@pnpm/lockfile.types@1002.0.0':
     dependencies:
       '@pnpm/patching.types': 1000.1.0
       '@pnpm/resolver-base': 1005.0.0
       '@pnpm/types': 1000.7.0
-
-  '@pnpm/lockfile.utils@1002.1.0':
-    dependencies:
-      '@pnpm/dependency-path': 1001.0.2
-      '@pnpm/lockfile.types': 1001.1.0
-      '@pnpm/pick-fetcher': 1000.1.0
-      '@pnpm/resolver-base': 1004.1.0
-      '@pnpm/types': 1000.7.0
-      get-npm-tarball-url: 2.1.0
-      ramda: '@pnpm/ramda@0.28.1'
 
   '@pnpm/lockfile.utils@1003.0.0':
     dependencies:
@@ -4937,15 +4897,9 @@ snapshots:
 
   '@pnpm/patching.types@1000.1.0': {}
 
-  '@pnpm/pick-fetcher@1000.1.0': {}
-
   '@pnpm/pick-fetcher@1001.0.0': {}
 
   '@pnpm/ramda@0.28.1': {}
-
-  '@pnpm/resolver-base@1004.1.0':
-    dependencies:
-      '@pnpm/types': 1000.7.0
 
   '@pnpm/resolver-base@1005.0.0':
     dependencies:
@@ -5158,7 +5112,7 @@ snapshots:
     dependencies:
       '@testing-library/dom': 10.4.1
 
-  '@tybys/wasm-util@0.10.0':
+  '@tybys/wasm-util@0.10.1':
     dependencies:
       tslib: 2.8.1
     optional: true
@@ -8292,10 +8246,10 @@ snapshots:
 
   yocto-queue@0.1.0: {}
 
-  zod-validation-error@4.0.1(zod@4.1.7):
+  zod-validation-error@4.0.1(zod@4.1.8):
     dependencies:
-      zod: 4.1.7
+      zod: 4.1.8
 
-  zod@4.1.7: {}
+  zod@4.1.8: {}
 
   zstddec@0.1.0: {}

@@ -113,6 +113,9 @@ overrides:
   "stylis@4.2.0": "^4.3.6"
   "source-map@0.5.6": "^0.6.1"
 
+  # Ensure patched packages have the expected version (patch was tested with this version):
+  "@ark-ui/react": "5.23.0"
+
 auditConfig:
   ignoreCves:
 
