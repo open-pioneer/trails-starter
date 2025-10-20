@@ -115,6 +115,7 @@ overrides:
 
   # Ensure patched packages have the expected version (patch was tested with this version):
   "@ark-ui/react": "5.26.2"
+  "react-select": "5.10.2"
 
 auditConfig:
   ignoreCves:

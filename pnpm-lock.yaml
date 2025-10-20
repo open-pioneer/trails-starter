@@ -203,13 +203,14 @@ overrides:
   stylis@<4.3.5: '>= 4.3.5'
   source-map@<0.6.1: '>=0.6.1'
   '@ark-ui/react': 5.26.2
+  react-select: 5.10.2
 
 patchedDependencies:
   '@ark-ui/react@*':
     hash: 6c7ccdc3ae257d66f6007fd0e7de6405701490cd678ce8c7f1570d5a4bef79eb
     path: patches/@ark-ui__react.patch
   react-select:
-    hash: 76074e6c05936addacb06b7e4bf08d0f5101ba64a00cae84d8c9ed60c62254de
+    hash: 446dc70e7c5be1fa3a74bf9037c714221b54333a36f58f6f5c196e42fafff68f
     path: patches/react-select.patch
 
 importers:
