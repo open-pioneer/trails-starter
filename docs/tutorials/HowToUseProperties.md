@@ -26,7 +26,7 @@ First of all, create the `search-service` package:
     "name": "search-service",
     "private": true,
     "dependencies": {
-        "@open-pioneer/runtime": "<omitted, use a recent version>"
+        "@open-pioneer/runtime": "catalog:"
     }
 }
 ```
@@ -67,12 +67,13 @@ export { SearchService } from "./SearchService";
 Finally, we will also "use" the new service in our app:
 
 ```jsonc
-// src/apps/empty
+// src/apps/empty/package.json
 {
     // ...
     "dependencies": {
         // Add the dependency
         "search-service": "workspace:^"
+        // ...
     }
 }
 ```

@@ -17,8 +17,7 @@ starter
 │   ├── sites               -- Additional .html sites
 │   └── index.html          -- Main HTML entry point
 ├── .editorconfig           -- Common text file settings (encoding, line length)
-├── .eslintignore           -- Lists files ignored by ESLint
-├── .eslintrc               -- ESLint configuration file
+├── .eslint.config.mjs      -- ESLint configuration file
 ├── .gitignore              -- Lists files ignored by git
 ├── .npmrc                  -- pnpm configuration file
 ├── .prettierrc             -- Prettier configuration file

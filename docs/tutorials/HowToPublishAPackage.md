@@ -236,7 +236,7 @@ Neither option should have any impact on the framework itself, as long as all re
 
 ## Walkthrough
 
-We will create a simple package, prepare it it for publishing and then build ilt.
+We will create a simple package, prepare it for publishing and then build it.
 We skip the actual publish step as that cannot be undone (we use `--dry-run` instead).
 
 ### Step 1: Create the test package
@@ -504,7 +504,6 @@ See also [Contributing packages to the registry](https://docs.npmjs.com/packages
     - [ ] Don't use file names starting with "\_" if it can be avoided.
           We may add additional (internal) files or directories using that prefix, for example `_chunks` or `_virtual`.
 - [ ] package.json
-
     - [ ] Choose a good package `name` and a `description`
     - [ ] Set `private` to `false`
     - [ ] Set a `version`
@@ -514,7 +513,6 @@ See also [Contributing packages to the registry](https://docs.npmjs.com/packages
     - [ ] Optional: Maintain package metadata such as `keywords`, `repository`, `bugs`, `author`, `homepage` etc.
 
 - [ ] build.config.mjs
-
     - [ ] Configure your package's entry points
     - [ ] Customize options if needed, see [`publishConfig`](../reference/Package.md#publishconfig)
     - [ ] Set `strict` to `true` (or remove the property to apply default)

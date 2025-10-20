@@ -21,7 +21,11 @@ Open the `build.config.mjs` and declare the `styles` property:
 import { defineBuildConfig } from "@open-pioneer/build-support";
 
 export default defineBuildConfig({
-    styles: "./styles.css"
+    i18n: ["en"],
+    styles: "./styles.css",
+    ui: {
+        references: ["sample-package.Greeter"]
+    }
 });
 ```
 
@@ -47,12 +51,20 @@ Setting the css class of a React element is done via the `className` prop:
 import { Container, Heading, Text } from "@chakra-ui/react";
 
 export function AppUI() {
+    const intl = useIntl();
+    const greeter = useService<Greeter>("sample-package.Greeter");
     return (
         <Container className="empty-app-container">
             <Heading as="h1" size="lg">
-                Empty App
+                {intl.formatMessage({ id: "heading" })}
             </Heading>
-            <Text>This is an empty app.</Text>
+            <Text pt={5}>{intl.formatMessage({ id: "text" })}</Text>
+            <Text pt={5}>
+                This messages comes from the sample package{"'"}s greeter service: {greeter.greet()}
+            </Text>
+            <chakra.div mt={5}>
+                <SimpleUiComponent textToShow="This text is rendered inside the sample UI-Component 'SimpleUiComponent'"></SimpleUiComponent>
+            </chakra.div>
         </Container>
     );
 }
@@ -74,7 +86,11 @@ For example:
 import { defineBuildConfig } from "@open-pioneer/build-support";
 
 export default defineBuildConfig({
-    styles: "./styles.scss" // Note the .scss extension
+    i18n: ["en"],
+    styles: "./styles.scss", // Note the .scss extension
+    ui: {
+        references: ["sample-package.Greeter"]
+    }
 });
 ```
 
@@ -130,7 +146,7 @@ import { Box, Text } from "@chakra-ui/react";
 export function AppUI() {
     return (
         <Box>
-            // Simple example: increase font size of a text element
+            {/* Simple example: increase font size of a text element*/}
             <Text css={{ "font-size": "25px" }}>This is an text.</Text>
         </Box>
     );
@@ -138,7 +154,7 @@ export function AppUI() {
 ```
 
 ```tsx
-import { Box, Text } from "@chakra-ui/react";
+import { Box } from "@chakra-ui/react";
 
 export function AppUI() {
     return (

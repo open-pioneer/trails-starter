@@ -27,8 +27,9 @@ Thus, we edit our app's `build.config.mjs` to state that the UI requires a refer
 import { defineBuildConfig } from "@open-pioneer/build-support";
 
 export default defineBuildConfig({
+    i18n: ["en"],
     ui: {
-        references: ["runtime.ApplicationContext"]
+        references: ["sample-package.Greeter", "runtime.ApplicationContext"]
     }
 });
 ```
@@ -42,12 +43,15 @@ We extend the UI of the empty app to add our custom class:
 
 ```tsx
 // src/apps/empty/AppUI.tsx
+import { Container, Heading, Text, chakra, Button, VStack } from "@chakra-ui/react";
+import { useIntl, useService } from "open-pioneer:react-hooks";
+import { Greeter, SimpleUiComponent } from "sample-package";
 import { ApplicationContext } from "@open-pioneer/runtime";
-import { Button, Container, Text, VStack } from "@chakra-ui/react";
-import { useService } from "open-pioneer:react-hooks";
 import { useState } from "react";
 
 export function AppUI() {
+    const intl = useIntl();
+    const greeter = useService<Greeter>("sample-package.Greeter");
     // (1)
     const appCtx = useService<ApplicationContext>("runtime.ApplicationContext");
 
@@ -64,7 +68,17 @@ export function AppUI() {
 
     return (
         <Container>
-            <VStack>
+            <Heading as="h1" size="lg">
+                {intl.formatMessage({ id: "heading" })}
+            </Heading>
+            <Text pt={5}>{intl.formatMessage({ id: "text" })}</Text>
+            <Text pt={5}>
+                This messages comes from the sample package{"'"}s greeter service: {greeter.greet()}
+            </Text>
+            <chakra.div mt={5}>
+                <SimpleUiComponent textToShow="This text is rendered inside the sample UI-Component 'SimpleUiComponent'"></SimpleUiComponent>
+            </chakra.div>
+            <VStack pt={2}>
                 <Button onClick={onButtonClicked}>Click me</Button>
                 <Text>I have been clicked {clickCount} times.</Text>
             </VStack>
@@ -111,6 +125,7 @@ To register the service with the framework, we must edit the `build.config.mjs`:
 import { defineBuildConfig } from "@open-pioneer/build-support";
 
 export default defineBuildConfig({
+    i18n: ["en"],
     services: {
         // (1)
         AttributeService: {
@@ -123,7 +138,7 @@ export default defineBuildConfig({
         }
     },
     ui: {
-        references: ["runtime.ApplicationContext"]
+        references: ["sample-package.Greeter", "runtime.ApplicationContext"]
     }
 });
 ```
@@ -196,7 +211,7 @@ import { defineBuildConfig } from "@open-pioneer/build-support";
 export default defineBuildConfig({
     // ... services ...
     ui: {
-        references: ["empty.AttributeService"]
+        references: ["sample-package.Greeter", "empty.AttributeService"]
     }
 });
 ```
@@ -204,12 +219,15 @@ export default defineBuildConfig({
 And our UI will now call the methods of our `AttributeService`:
 
 ```tsx
-import { Button, Container, Text, VStack } from "@chakra-ui/react";
-import { useService } from "open-pioneer:react-hooks";
+import { Container, Heading, Text, chakra, Button, VStack } from "@chakra-ui/react";
+import { useIntl, useService } from "open-pioneer:react-hooks";
+import { Greeter, SimpleUiComponent } from "sample-package";
 import { useState } from "react";
-import { type AttributeService } from "./services";
+import { AttributeService } from "./services";
 
 export function AppUI() {
+    const intl = useIntl();
+    const greeter = useService<Greeter>("sample-package.Greeter");
     // (1)
     const attributeService = useService("empty.AttributeService") as AttributeService;
 
@@ -223,7 +241,17 @@ export function AppUI() {
 
     return (
         <Container>
-            <VStack>
+            <Heading as="h1" size="lg">
+                {intl.formatMessage({ id: "heading" })}
+            </Heading>
+            <Text pt={5}>{intl.formatMessage({ id: "text" })}</Text>
+            <Text pt={5}>
+                This messages comes from the sample package{"'"}s greeter service: {greeter.greet()}
+            </Text>
+            <chakra.div mt={5}>
+                <SimpleUiComponent textToShow="This text is rendered inside the sample UI-Component 'SimpleUiComponent'"></SimpleUiComponent>
+            </chakra.div>
+            <VStack pt={2}>
                 <Button onClick={onButtonClicked}>Click me</Button>
                 <Text>I have been clicked {clickCount} times.</Text>
             </VStack>
