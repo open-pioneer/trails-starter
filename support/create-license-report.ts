@@ -9,7 +9,7 @@ import { basename, dirname, resolve } from "path";
 import { fileURLToPath } from "url";
 
 /**
- * Generates a license report from the dependencies of this repository.
+ * Generates a license report from the production dependencies of this repository.
  * Should be invoked via `pnpm build-license-report` (or manually from the project root).
  *
  * The project name is read from the root `package.json` file.
