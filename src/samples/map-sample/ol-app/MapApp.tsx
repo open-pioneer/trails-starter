@@ -4,7 +4,7 @@ import { Box, Flex, Separator, Text, VStack } from "@chakra-ui/react";
 import { BasemapSwitcher } from "@open-pioneer/basemap-switcher";
 import { CoordinateViewer } from "@open-pioneer/coordinate-viewer";
 import { Geolocation } from "@open-pioneer/geolocation";
-import { DefaultMapProvider, MapAnchor, MapContainer } from "@open-pioneer/map";
+import { DefaultMapProvider, MapAnchor, MapContainer, useMapModel } from "@open-pioneer/map";
 import { InitialExtent, ZoomIn, ZoomOut } from "@open-pioneer/map-navigation";
 import { ToolButton } from "@open-pioneer/map-ui-components";
 import { Measurement } from "@open-pioneer/measurement";
@@ -23,6 +23,7 @@ import { MAP_ID } from "./services";
 export function MapApp() {
     const intl = useIntl();
     const measurementTitleId = useId();
+    const { map } = useMapModel(MAP_ID);
 
     const [measurementIsActive, setMeasurementIsActive] = useState<boolean>(false);
     function toggleMeasurement() {
@@ -54,89 +55,101 @@ export function MapApp() {
                     </Box>
                 }
             >
-                <DefaultMapProvider mapId={MAP_ID}>
-                    <Flex flex="1" direction="column" position="relative">
-                        <MapContainer
-                            role="main"
-                            aria-label={intl.formatMessage({ id: "ariaLabel.map" })}
-                        >
-                            <MapAnchor position="top-left" horizontalGap={5} verticalGap={5}>
-                                {measurementIsActive && (
+                {map && (
+                    <DefaultMapProvider map={map}>
+                        <Flex flex="1" direction="column" position="relative">
+                            <MapContainer
+                                role="main"
+                                aria-label={intl.formatMessage({ id: "ariaLabel.map" })}
+                            >
+                                <MapAnchor position="top-left" horizontalGap={5} verticalGap={5}>
+                                    {measurementIsActive && (
+                                        <Box
+                                            backgroundColor="white"
+                                            borderWidth="1px"
+                                            borderRadius="lg"
+                                            padding={2}
+                                            boxShadow="lg"
+                                            aria-label={intl.formatMessage({
+                                                id: "ariaLabel.topLeft"
+                                            })}
+                                        >
+                                            <Box role="dialog" aria-labelledby={measurementTitleId}>
+                                                <TitledSection
+                                                    title={
+                                                        <SectionHeading
+                                                            id={measurementTitleId}
+                                                            size="md"
+                                                            mb={2}
+                                                        >
+                                                            {intl.formatMessage({
+                                                                id: "measurementTitle"
+                                                            })}
+                                                        </SectionHeading>
+                                                    }
+                                                >
+                                                    <Measurement />
+                                                </TitledSection>
+                                            </Box>
+                                        </Box>
+                                    )}
+                                </MapAnchor>
+                                <MapAnchor position="top-right" horizontalGap={5} verticalGap={5}>
                                     <Box
                                         backgroundColor="white"
                                         borderWidth="1px"
                                         borderRadius="lg"
                                         padding={2}
                                         boxShadow="lg"
-                                        aria-label={intl.formatMessage({ id: "ariaLabel.topLeft" })}
+                                        aria-label={intl.formatMessage({
+                                            id: "ariaLabel.topRight"
+                                        })}
                                     >
-                                        <Box role="dialog" aria-labelledby={measurementTitleId}>
-                                            <TitledSection
-                                                title={
-                                                    <SectionHeading
-                                                        id={measurementTitleId}
-                                                        size="md"
-                                                        mb={2}
-                                                    >
-                                                        {intl.formatMessage({
-                                                            id: "measurementTitle"
-                                                        })}
-                                                    </SectionHeading>
-                                                }
-                                            >
-                                                <Measurement />
-                                            </TitledSection>
-                                        </Box>
+                                        <OverviewMap olLayer={overviewMapLayer} />
+                                        <Separator mt={4} />
+                                        <BasemapSwitcherComponent />
                                     </Box>
-                                )}
-                            </MapAnchor>
-                            <MapAnchor position="top-right" horizontalGap={5} verticalGap={5}>
-                                <Box
-                                    backgroundColor="white"
-                                    borderWidth="1px"
-                                    borderRadius="lg"
-                                    padding={2}
-                                    boxShadow="lg"
-                                    aria-label={intl.formatMessage({ id: "ariaLabel.topRight" })}
+                                </MapAnchor>
+                                <MapAnchor
+                                    position="bottom-right"
+                                    horizontalGap={10}
+                                    verticalGap={30}
                                 >
-                                    <OverviewMap olLayer={overviewMapLayer} />
-                                    <Separator mt={4} />
-                                    <BasemapSwitcherComponent />
-                                </Box>
-                            </MapAnchor>
-                            <MapAnchor position="bottom-right" horizontalGap={10} verticalGap={30}>
-                                <Flex
-                                    aria-label={intl.formatMessage({ id: "ariaLabel.bottomRight" })}
-                                    direction="column"
-                                    gap={1}
-                                    padding={1}
-                                >
-                                    <ToolButton
-                                        label={intl.formatMessage({ id: "measurementTitle" })}
-                                        icon={<LuRuler />}
-                                        active={measurementIsActive}
-                                        onClick={toggleMeasurement}
-                                    />
-                                    <Geolocation />
-                                    <InitialExtent />
-                                    <ZoomIn />
-                                    <ZoomOut />
-                                </Flex>
-                            </MapAnchor>
-                        </MapContainer>
-                    </Flex>
-                    <Flex
-                        role="region"
-                        aria-label={intl.formatMessage({ id: "ariaLabel.footer" })}
-                        gap={3}
-                        alignItems="center"
-                        justifyContent="center"
-                    >
-                        <CoordinateViewer precision={2} />
-                        <ScaleBar />
-                        <ScaleViewer />
-                    </Flex>
-                </DefaultMapProvider>
+                                    <Flex
+                                        aria-label={intl.formatMessage({
+                                            id: "ariaLabel.bottomRight"
+                                        })}
+                                        direction="column"
+                                        gap={1}
+                                        padding={1}
+                                    >
+                                        <ToolButton
+                                            label={intl.formatMessage({ id: "measurementTitle" })}
+                                            icon={<LuRuler />}
+                                            active={measurementIsActive}
+                                            onClick={toggleMeasurement}
+                                        />
+                                        <Geolocation />
+                                        <InitialExtent />
+                                        <ZoomIn />
+                                        <ZoomOut />
+                                    </Flex>
+                                </MapAnchor>
+                            </MapContainer>
+                        </Flex>
+                        <Flex
+                            role="region"
+                            aria-label={intl.formatMessage({ id: "ariaLabel.footer" })}
+                            gap={3}
+                            alignItems="center"
+                            justifyContent="center"
+                        >
+                            <CoordinateViewer precision={2} />
+                            <ScaleBar />
+                            <ScaleViewer />
+                        </Flex>
+                    </DefaultMapProvider>
+                )}
             </TitledSection>
         </Flex>
     );
