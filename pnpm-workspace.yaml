@@ -7,8 +7,8 @@ packages:
 # This is a yaml feature and is not interpreted by pnpm directly.
 __versions:
   - &react_version ^19.2.0
-  - &core_packages_version ^4.2.0-dev.20251017113502
-  - &ol_base_packages_version ^1.0.0-dev.20251020091932
+  - &core_packages_version ^4.2.0-dev.20251021072202
+  - &ol_base_packages_version ^1.0.0-dev.20251021074813
 
 # https://pnpm.io/catalogs
 catalog:
@@ -39,8 +39,8 @@ catalog:
   "@open-pioneer/test-utils": *core_packages_version
 
   # Other dependencies
-  "@chakra-ui/react": ^3.27.1
-  "@chakra-ui/cli": ^3.27.1
+  "@chakra-ui/react": ^3.28.0
+  "@chakra-ui/cli": ^3.28.0
   "@conterra/reactivity-core": ^0.8.0
   "@emotion/cache": ^11.14.0
   "@emotion/react": ^11.14.0

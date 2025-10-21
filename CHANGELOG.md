@@ -2,8 +2,9 @@
 
 ## TBD
 
+- Update OpenLayers base packages to 1.0.0
 - Update core packages to 4.1.0
-- Update Chakra UI to 3.26.0
+- Update Chakra UI to 3.28.0
 - Update ESLint to v9
 - Update various dev dependencies
 - Update `vite.config.ts`:
@@ -17,6 +18,7 @@
     - Remove emotion's dependencies `@emotion/babel-plugin` and `@babel/runtime`.
       These aren't actually being used.
       Removing these dependencies removes unnecessary packages from the license report.
+    - Pin patched packages (`@ark-ui/react` and `react-select`) to the specific versions that the patch has been implemented for.
 
 ## 2025-08-07
 
