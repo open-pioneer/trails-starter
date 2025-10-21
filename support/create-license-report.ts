@@ -39,7 +39,7 @@ function main() {
     const allError = error || additionalError;
 
     allItems.sort((a, b) => {
-        return a!.name.localeCompare(b!.name, "en-US");
+        return a.name.localeCompare(b.name, "en-US");
     });
 
     // Ensure directory exists, then write the report
