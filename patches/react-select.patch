@@ -1,69 +1,84 @@
-diff --git a/dist/Select-36d15f93.cjs.prod.js b/dist/Select-36d15f93.cjs.prod.js
-index e2326a0bf776ab9f9a54005fa7fea9e6aaa7b100..1489a720aa2917ce98cb3fd1c28e9f46e73e060e 100644
---- a/dist/Select-36d15f93.cjs.prod.js
-+++ b/dist/Select-36d15f93.cjs.prod.js
-@@ -1505,7 +1505,7 @@ var Select = /*#__PURE__*/function (_Component) {
+diff --git a/dist/Select-1b9abbe3.cjs.dev.js b/dist/Select-1b9abbe3.cjs.dev.js
+index d7ba84c3a2ee46188b6542ec1a33032ecb5e87ff..94e89a6c6d51561d89613e9bc3a3636d2559ac2d 100644
+--- a/dist/Select-1b9abbe3.cjs.dev.js
++++ b/dist/Select-1b9abbe3.cjs.dev.js
+@@ -1524,8 +1524,11 @@ var Select = /*#__PURE__*/function (_Component) {
        // close the menu if the user taps outside
        // we're checking on event.target here instead of event.currentTarget, because we want to assert information
        // on events on child elements, not the document (which we've attached this handler to).
 -      if (_this.controlRef && !_this.controlRef.contains(event.target) && _this.menuListRef && !_this.menuListRef.contains(event.target)) {
-+      if (_this.controlRef && !event.composedPath().includes(_this.controlRef) && _this.menuListRef && !event.composedPath().includes(_this.menuListRef)) {
-         _this.blurInput();
-       }
- 
-@@ -2132,7 +2132,7 @@ var Select = /*#__PURE__*/function (_Component) {
-         'aria-labelledby': this.props['aria-labelledby'],
-         'aria-required': required,
-         role: 'combobox',
--        'aria-activedescendant': this.isAppleDevice ? undefined : this.state.focusedOptionId || ''
-+        'aria-activedescendant': this.isAppleDevice ? undefined : this.state.focusedOptionId || undefined
-       }, menuIsOpen && {
-         'aria-controls': this.getElementId('listbox')
-       }), !isSearchable && {
-diff --git a/dist/Select-7eb2ef56.cjs.dev.js b/dist/Select-7eb2ef56.cjs.dev.js
-index 58d420040577220d34ea9aae0f7fe757dc86e162..44a68d566a8374931077b707a42d7f93f139afe8 100644
---- a/dist/Select-7eb2ef56.cjs.dev.js
-+++ b/dist/Select-7eb2ef56.cjs.dev.js
-@@ -1524,7 +1524,7 @@ var Select = /*#__PURE__*/function (_Component) {
-       // close the menu if the user taps outside
-       // we're checking on event.target here instead of event.currentTarget, because we want to assert information
-       // on events on child elements, not the document (which we've attached this handler to).
--      if (_this.controlRef && !_this.controlRef.contains(event.target) && _this.menuListRef && !_this.menuListRef.contains(event.target)) {
-+      if (_this.controlRef && !event.composedPath().includes(_this.controlRef) && _this.menuListRef && !event.composedPath().includes(_this.menuListRef)) {
-         _this.blurInput();
-       }
- 
-@@ -2151,7 +2151,7 @@ var Select = /*#__PURE__*/function (_Component) {
-         'aria-labelledby': this.props['aria-labelledby'],
-         'aria-required': required,
-         role: 'combobox',
--        'aria-activedescendant': this.isAppleDevice ? undefined : this.state.focusedOptionId || ''
-+        'aria-activedescendant': this.isAppleDevice ? undefined : this.state.focusedOptionId || undefined
-       }, menuIsOpen && {
-         'aria-controls': this.getElementId('listbox')
-       }), !isSearchable && {
-diff --git a/dist/Select-aab027f3.esm.js b/dist/Select-aab027f3.esm.js
-index fd5726b720a2fed0e4ad5d80407a801d9e319966..6f647de4fa9cd08512bdc4a388731871790f7554 100644
---- a/dist/Select-aab027f3.esm.js
-+++ b/dist/Select-aab027f3.esm.js
-@@ -1500,7 +1500,10 @@ var Select = /*#__PURE__*/function (_Component) {
-       // close the menu if the user taps outside
-       // we're checking on event.target here instead of event.currentTarget, because we want to assert information
-       // on events on child elements, not the document (which we've attached this handler to).
--      if (_this.controlRef && !_this.controlRef.contains(event.target) && _this.menuListRef && !_this.menuListRef.contains(event.target)) {
+-        _this.blurInput();
 +      // ---
 +      // PATCH: Fix event handling in shadow DOM + Touch input. Use Chrome Dev Tools with touch emulation and 
 +      // attempt to use the input element + dropdown menu to verify this patch.
 +      if (_this.controlRef && !event.composedPath().includes(_this.controlRef) && _this.menuListRef && !event.composedPath().includes(_this.menuListRef)) {
-         _this.blurInput();
++         _this.blurInput();
        }
  
-@@ -2127,7 +2130,7 @@ var Select = /*#__PURE__*/function (_Component) {
+       // reset move vars
+@@ -2157,7 +2160,8 @@ var Select = /*#__PURE__*/function (_Component) {
          'aria-labelledby': this.props['aria-labelledby'],
          'aria-required': required,
          role: 'combobox',
--        'aria-activedescendant': this.isAppleDevice ? undefined : this.state.focusedOptionId || ''
-+        'aria-activedescendant': this.isAppleDevice ? undefined : this.state.focusedOptionId || undefined
+-        'aria-activedescendant': this.state.isAppleDevice ? undefined : this.state.focusedOptionId || ''
++        // PATCH: Firefox warns if this is the empty string
++        'aria-activedescendant': this.state.isAppleDevice ? undefined : this.state.focusedOptionId || undefined
+       }, menuIsOpen && {
+         'aria-controls': this.getElementId('listbox')
+       }), !isSearchable && {
+diff --git a/dist/Select-8685a2b1.cjs.prod.js b/dist/Select-8685a2b1.cjs.prod.js
+index 528cc2efd0eed39a5d032a8183dbc6d9ca1b1e5a..d6bf0be316cc87453111bd9c5b534864613e04e7 100644
+--- a/dist/Select-8685a2b1.cjs.prod.js
++++ b/dist/Select-8685a2b1.cjs.prod.js
+@@ -1505,8 +1505,11 @@ var Select = /*#__PURE__*/function (_Component) {
+       // close the menu if the user taps outside
+       // we're checking on event.target here instead of event.currentTarget, because we want to assert information
+       // on events on child elements, not the document (which we've attached this handler to).
+-      if (_this.controlRef && !_this.controlRef.contains(event.target) && _this.menuListRef && !_this.menuListRef.contains(event.target)) {
+-        _this.blurInput();
++      // ---
++      // PATCH: Fix event handling in shadow DOM + Touch input. Use Chrome Dev Tools with touch emulation and 
++      // attempt to use the input element + dropdown menu to verify this patch.
++      if (_this.controlRef && !event.composedPath().includes(_this.controlRef) && _this.menuListRef && !event.composedPath().includes(_this.menuListRef)) {
++         _this.blurInput();
+       }
+ 
+       // reset move vars
+@@ -2138,7 +2141,8 @@ var Select = /*#__PURE__*/function (_Component) {
+         'aria-labelledby': this.props['aria-labelledby'],
+         'aria-required': required,
+         role: 'combobox',
+-        'aria-activedescendant': this.state.isAppleDevice ? undefined : this.state.focusedOptionId || ''
++        // PATCH: Firefox warns if this is the empty string
++        'aria-activedescendant': this.state.isAppleDevice ? undefined : this.state.focusedOptionId || undefined
+       }, menuIsOpen && {
+         'aria-controls': this.getElementId('listbox')
+       }), !isSearchable && {
+diff --git a/dist/Select-ef7c0426.esm.js b/dist/Select-ef7c0426.esm.js
+index 1a01efb57d48e84665aca3117c9219d76525e654..56c8e19647fb3582da7d2ae620868e2dd1bb523f 100644
+--- a/dist/Select-ef7c0426.esm.js
++++ b/dist/Select-ef7c0426.esm.js
+@@ -1500,8 +1500,11 @@ var Select = /*#__PURE__*/function (_Component) {
+       // close the menu if the user taps outside
+       // we're checking on event.target here instead of event.currentTarget, because we want to assert information
+       // on events on child elements, not the document (which we've attached this handler to).
+-      if (_this.controlRef && !_this.controlRef.contains(event.target) && _this.menuListRef && !_this.menuListRef.contains(event.target)) {
+-        _this.blurInput();
++      // ---
++      // PATCH: Fix event handling in shadow DOM + Touch input. Use Chrome Dev Tools with touch emulation and 
++      // attempt to use the input element + dropdown menu to verify this patch.
++      if (_this.controlRef && !event.composedPath().includes(_this.controlRef) && _this.menuListRef && !event.composedPath().includes(_this.menuListRef)) {
++         _this.blurInput();
+       }
+ 
+       // reset move vars
+@@ -2133,7 +2136,8 @@ var Select = /*#__PURE__*/function (_Component) {
+         'aria-labelledby': this.props['aria-labelledby'],
+         'aria-required': required,
+         role: 'combobox',
+-        'aria-activedescendant': this.state.isAppleDevice ? undefined : this.state.focusedOptionId || ''
++        // PATCH: Firefox warns if this is the empty string
++        'aria-activedescendant': this.state.isAppleDevice ? undefined : this.state.focusedOptionId || undefined
        }, menuIsOpen && {
          'aria-controls': this.getElementId('listbox')
        }), !isSearchable && {

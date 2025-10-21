@@ -9,7 +9,7 @@ import { basename, dirname, resolve } from "path";
 import { fileURLToPath } from "url";
 
 /**
- * Generates a license report from the dependencies of this repository.
+ * Generates a license report from the production dependencies of this repository.
  * Should be invoked via `pnpm build-license-report` (or manually from the project root).
  *
  * The project name is read from the root `package.json` file.
@@ -39,7 +39,7 @@ function main() {
     const allError = error || additionalError;
 
     allItems.sort((a, b) => {
-        return a!.name.localeCompare(b!.name, "en-US");
+        return a.name.localeCompare(b.name, "en-US");
     });
 
     // Ensure directory exists, then write the report

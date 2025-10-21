@@ -40,7 +40,7 @@ messages:
 ```
 
 By default, the app uses the browser settings or system default for determining the locale.
-If your browser locale is set to `de` you should see the values from `de.yaml`.
+If your browser locale is set to `de` you should see the values from `de.yaml` (maybe you will need to restart the dev server).
 
 <img src="./HowToTranslateAnApp_App.png" alt="i18n howto app" style="border: 1px solid black;" />
 
@@ -682,6 +682,22 @@ export default defineBuildConfig({
         references: ["i18n-howto-app.GreetingService"]
     }
 });
+```
+
+Here is the yaml configuration:
+
+```yaml
+# src/apps/empty/i18n/de.yaml
+messages:
+    #....
+    serviceI18n:
+        heading: "Beispiel für Service I18n"
+        placeholder: "Namen eintragen"
+        showGreeting: "Nachricht anzeigen"
+        serviceResponse: "Nachricht: "
+    greetingService:
+        greeting: Hallo {name}!
+#....
 ```
 
 The `ServiceI18nExample` component displays a plain and simple react form using the `intl` API you have already seen.

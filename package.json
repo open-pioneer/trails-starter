@@ -14,7 +14,7 @@
         "build-license-report": "tsx ./support/create-license-report.ts",
         "generate-sbom": "tsx ./support/create-cyclonedx-sbom.ts",
         "preview": "vite preview",
-        "lint": "eslint ./src ./support --ext .js,.ts,.jsx,.tsx,.mjs,.mts,.cjs,.cts",
+        "lint": "eslint ./src ./support",
         "eslint": "pnpm run lint",
         "prettier-check": "pnpm prettier:common -c",
         "prettier": "pnpm prettier:common -w",
@@ -35,13 +35,14 @@
         "@types/node": "catalog:",
         "@types/react": "catalog:",
         "@types/react-dom": "catalog:",
-        "@typescript-eslint/eslint-plugin": "catalog:",
         "@typescript-eslint/parser": "catalog:",
         "@vitejs/plugin-react-swc": "catalog:",
         "eslint": "catalog:",
+        "@eslint/js": "catalog:",
+        "typescript-eslint": "catalog:",
         "eslint-config-prettier": "catalog:",
         "eslint-import-resolver-typescript": "catalog:",
-        "eslint-plugin-header": "catalog:",
+        "eslint-plugin-headers": "catalog:",
         "eslint-plugin-import": "catalog:",
         "eslint-plugin-jsx-a11y": "catalog:",
         "eslint-plugin-react": "catalog:",
@@ -69,5 +70,5 @@
         "node": ">= 20",
         "pnpm": ">= 10"
     },
-    "packageManager": "pnpm@10.11.1"
+    "packageManager": "pnpm@10.18.3"
 }

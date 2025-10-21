@@ -127,6 +127,7 @@ Finally, we can use `greet` function from the `hello-world` package.
 We'll simply edit the `app.ts`:
 
 ```ts
+// src/apps/empty/app.ts
 import { createCustomElement } from "@open-pioneer/runtime";
 import * as appMetadata from "open-pioneer:app";
 import { AppUI } from "./AppUI";

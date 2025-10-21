@@ -247,17 +247,12 @@ index e1b45ef281a5a670a9137b85b0f0ea81c916776f..869e78329fcbf863199669508f1c7ab2
      isAvailable,
 ```
 
-It also creates a new entry in your `package.json`:
+It also creates a new entry in your `pnpm-workspace.yaml`:
 
-```jsonc
-{
-    // ...
-    "pnpm": {
-        "patchedDependencies": {
-            "@open-pioneer/basemap-switcher@0.4.2": "patches/@open-pioneer__basemap-switcher@0.4.2.patch"
-        }
-    }
-}
+```yaml
+# pnpm-workspace.yaml
+patchedDependencies:
+    "@open-pioneer/basemap-switcher@0.4.2": "patches/@open-pioneer__basemap-switcher@0.4.2.patch"
 ```
 
 Both changes should be committed to your project.
@@ -271,64 +266,44 @@ You can also use `pnpm patch` to change arbitrary files in a package (not only s
 
 ### Overriding a dependency
 
-pnpm allows you to [override dependencies](https://pnpm.io/package_json#pnpmoverrides) using the `pnpm.override` object in your `package.json`.
-Note that this feature can only be used in the _top level_ `package.json` file, i.e. the `package.json` file at the root of your repository.
+pnpm allows you to [override dependencies](https://pnpm.io/package_json#pnpmoverrides) using the `overrides` object in your `pnpm-workspace.yaml`.
 
 The following example overrides all instances of a package with a different version of that package.
 This can be used to force updates if the package contains a security vulnerability.
 It can also be used to force a dependency to use the newer version, even if its original `package.json` only supports an older version.
 
-```jsonc
-// package.json
-{
-    "pnpm": {
-        "overrides": {
-            "semver@<7.5.2": ">=7.5.2"
-        }
-    }
-}
+```yaml
+# pnpm-workspace.yaml
+overrides:
+    "semver@<7.5.2": ">=7.5.2"
 ```
 
 The following example only overrides a package version when used from _another_ package.
 In this case, the `chakra-react-select` package used an old version of `react-select`; the new version expression made it pick up an update:
 
-```jsonc
-// package.json
-{
-    "pnpm": {
-        "overrides": {
-            "chakra-react-select>react-select": "^5.8.0"
-        }
-    }
-}
+```yaml
+# pnpm-workspace.yaml
+overrides:
+    "chakra-react-select>react-select": "^5.8.0"
 ```
 
 This feature can also be used to change a package altogether.
 The following example replaces _all_ usages of the package `@mapbox/mapbox-gl-style-spec` with the (compatible) package `@maplibre/maplibre-gl-style-spec`:
 
-```jsonc
-// package.json
-{
-    "pnpm": {
-        "overrides": {
-            "@mapbox/mapbox-gl-style-spec": "npm:@maplibre/maplibre-gl-style-spec@^20.1.1"
-        }
-    }
-}
+```yaml
+# pnpm-workspace.yaml
+overrides:
+    "@mapbox/mapbox-gl-style-spec": "npm:@maplibre/maplibre-gl-style-spec@^20.1.1"
 ```
 
 Note that you can also use other protocols than `npm`, for example `file` or `git`.
 
 Finally, you can also substitute a local package:
 
-```jsonc
-{
-    "pnpm": {
-        "overrides": {
-            "some-package-name": "workspace:your-local-package@*"
-        }
-    }
-}
+```yaml
+# pnpm-workspace.yaml
+overrides:
+    "some-package-name": "workspace:your-local-package@*"
 ```
 
 Some versions of pnpm may report dependency issues when overriding a local package, for example:
@@ -339,21 +314,16 @@ Some versions of pnpm may report dependency issues when overriding a local packa
 
 In that case, you can also relax the [peer dependency rules](https://pnpm.io/package_json#pnpmpeerdependencyrulesallowedversions) by overriding them:
 
-```jsonc
-{
-    "pnpm": {
-        "overrides": {
-            "some-package-name": "workspace:your-local-package@*"
-        },
-        "peerDependencyRules": {
-            "allowedVersions": {
-                // '*' is the most permissive, which is fine in this case
-                // since we've completely replaced the package with our version anyway.
-                "some-package-name": "*"
-            }
-        }
-    }
-}
+```yaml
+# pnpm-workspace.yaml
+overrides:
+    "some-package-name": "workspace:your-local-package@*"
+
+peerDependencyRules:
+    allowedVersions:
+        # '*' is the most permissive, which is fine in this case
+        # since we've completely replaced the package with our version anyway.
+        "some-package-name": "*"
 ```
 
 #### Walkthrough: forking a package and building it yourself
@@ -414,16 +384,10 @@ This is the format that you would download via your package manager when install
 Next, you can copy the tar file to your project (for example, into the `patches` directory) and override
 the existing basemap switcher package:
 
-```jsonc
-// top level package.json
-{
-    // ...
-    "pnpm": {
-        "overrides": {
-            "@open-pioneer/basemap-switcher": "file:./patches/open-pioneer-basemap-switcher-0.11.0.tgz"
-        }
-    }
-}
+```yaml
+# pnpm-workspace.yaml
+overrides:
+    "@open-pioneer/basemap-switcher": "file:./patches/open-pioneer-basemap-switcher-0.11.0.tgz"
 ```
 
 Run `pnpm install` to apply the changes, then run `pnpm dev`.
@@ -483,21 +447,14 @@ class PioneerApplication extends HTMLElement {
 
 Next, we override the package `@open-pioneer/runtime` with our local version for _all_ packages in our applications:
 
-```jsonc
-// top level package.json
-{
-    // ...
-    "pnpm": {
-        "overrides": {
-            "@open-pioneer/runtime": "workspace:*"
-        },
-        "peerDependencyRules": {
-            "allowedVersions": {
-                "@open-pioneer/runtime": "*"
-            }
-        }
-    }
-}
+```yaml
+# pnpm-workspace.yaml
+overrides:
+    "@open-pioneer/runtime": "workspace:*"
+
+peerDependencyRules:
+    allowedVersions:
+        "@open-pioneer/runtime": "*"
 ```
 
 After editing the `package.json` file, execute `pnpm install`.

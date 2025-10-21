@@ -92,10 +92,10 @@ For this example, we will create a button that has a `label` and tracks the numb
 
 ```tsx
 // src/apps/empty/AppUI.tsx
-import { Button, Container, VStack } from "@chakra-ui/react";
+import { Container, Heading, Text, chakra, Button } from "@chakra-ui/react";
 import { useState } from "react";
 
-// function AppUI ...
+// export function AppUI ...
 
 interface ClickableButtonProps {
     label: string;

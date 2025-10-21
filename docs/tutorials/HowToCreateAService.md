@@ -139,7 +139,9 @@ First, add the packages `math` and `@open-pioneer/chakra-snippets` in the app's 
     "name": "empty",
     "private": true,
     "dependencies": {
+        "@chakra-ui/react": "catalog:",
         "@open-pioneer/runtime": "catalog:",
+        "sample-package": "workspace:^",
         "@open-pioneer/chakra-snippets": "catalog:",
         "math": "workspace:^"
     }
@@ -358,7 +360,7 @@ export class MathServiceImpl implements MathService {
     }
 
     multiply(a: number, b: number): number {
-        const result = a + b;
+        const result = a * b;
         for (const ext of this.extensions) {
             ext.onMultiply(a, b, result); // (2)
         }
@@ -450,7 +452,7 @@ it("invokes the extensions when a multiplication is triggered", async () => {
 
 Now we will implement an extension class that simply logs all arguments to demonstrate that the system works as expected. Like before, we'll use the empty app to do this.
 
-In your `package.json`, add a dependency to `@open-pioneer/core`.
+In your app's `package.json`, add a dependency to `@open-pioneer/core`.
 We want to use its logger implementation:
 
 ```jsonc
@@ -460,7 +462,9 @@ We want to use its logger implementation:
     "private": true,
     "dependencies": {
         "@open-pioneer/core": "catalog:",
+        "@chakra-ui/react": "catalog:",
         "@open-pioneer/runtime": "catalog:",
+        "sample-package": "workspace:^",
         "@open-pioneer/chakra-snippets": "catalog:",
         "math": "workspace:^"
     }
@@ -476,6 +480,7 @@ In the `build.config.mjs`, declare a new service providing `"math.MathServiceExt
 import { defineBuildConfig } from "@open-pioneer/build-support";
 
 export default defineBuildConfig({
+    i18n: ["en"],
     ui: {
         references: ["math.MathService"]
     },
@@ -510,7 +515,7 @@ Your console should display a message just like this:
 
 ## A note on service start behavior
 
-By default the framework will only start services that are actually required to run the app.
+By default, the framework will only start services that are actually required to run the app.
 It does so by starting the services required by the user interface (`ui.references` in each package's `build.config.mjs`)
 or those required to implement the web component's API (`integration.ApiExtension`), their dependencies, _their_ dependencies and so on.
 An application may therefore contain services that are never required and thus never started (they might even be optimized out entirely in the future).
@@ -535,7 +540,7 @@ export default defineBuildConfig({
 ```
 
 By providing the interface in (1), the framework will automatically instantiate your service.
-Of course you can still provide any other interfaces just like usual.
+Of course, you can still provide any other interfaces just like usual.
 
 > NOTE: Services providing `runtime.AutoStart` are launched in arbitrary order.
 > If you need to enforce starting order, add a dependency to the service(s) that must start

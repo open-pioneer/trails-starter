@@ -63,7 +63,7 @@ export default defineBuildConfig({
 Next, we will load the configuration file and pass the configuration to the app.
 
 We need to edit the `app.ts` file in the `src/samples/map-sample/ol-app` directory.
-We first receive an URL to the configuration file and then (as an example) implement the `resolveConfig` function to load the configuration and pass it to the app.
+We first receive a URL to the configuration file and then (as an example) implement the `resolveConfig` function to load the configuration and pass it to the app.
 
 The edited `app.ts` file should look like this:
 
@@ -77,7 +77,6 @@ import configUrl from "/config.json?url"; // (1)
 
 const element = createCustomElement({
     component: MapApp,
-    theme,
     appMetadata,
     async resolveConfig(): Promise<ApplicationConfig> {
         // (2)

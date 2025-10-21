@@ -1,5 +1,30 @@
 # Changelog
 
+## 2025-10-21
+
+- Update OpenLayers base packages to 1.0.0
+- Update core packages to 4.2.0
+- Update Chakra UI to 3.28.0
+- Update React to 19.2.0
+- Update PNPM to 10.18.3
+- Update ESLint to v9
+    - Configuration format has changed (see `eslint.config.mjs`)
+    - Switch from `eslint-plugin-header` to `eslint-plugin-headers`
+- Update various smaller dependencies
+- Update `vite.config.ts`:
+    - Update Vite's transpile targets to `"baseline-widely-available"`.
+      These are widely available browser versions maintained by vite (at the time of this writing, Chrome 107+, Edge 107+, Firefox 104+, Safari 16+).
+      For more details, see [Vite docs](https://vite.dev/config/build-options.html#build-target).
+    - Update react plugin's `devTarget` to `es2024`
+    - Remove obsolete configuration related to deprecation warnings
+- Update patch for `react-select@5.10.2`
+- Update `pnpm-workspace.yaml`:
+    - Remove obsolete `overrides` for old CVEs.
+    - Remove emotion's dependencies `@emotion/babel-plugin` and `@babel/runtime`.
+      These aren't actually being used.
+      Removing these dependencies removes unnecessary packages from the license report.
+    - Pin patched packages (`@ark-ui/react` and `react-select`) to the specific versions that the patch has been implemented for.
+
 ## 2025-08-07
 
 - Update OpenLayers to 10.6.1

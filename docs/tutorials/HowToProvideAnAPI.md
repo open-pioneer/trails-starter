@@ -77,6 +77,7 @@ It is important that it provides the interface `"integration.ApiExtension"`: the
 import { defineBuildConfig } from "@open-pioneer/build-support";
 
 export default defineBuildConfig({
+    // ...
     services: {
         LogApiExtension: {
             provides: "integration.ApiExtension"
@@ -158,7 +159,7 @@ Therefore, edit the `build.config.mjs`:
 export default defineBuildConfig({
     ...
     ui: {
-        references: ["integration.ExternalEventService"]
+        references: ["sample-package.Greeter", "integration.ExternalEventService"]
     }
 });
 ```
