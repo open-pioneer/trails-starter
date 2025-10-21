@@ -92,8 +92,8 @@ catalog:
   tsx: ^4.20.6
   typedoc: ^0.28.14
   typescript: ^5.9.3
+  vite: ^7.1.11
   vite-plugin-eslint: ^1.8.1
-  vite: ^7.1.10
   vitest: ^3.2.4
 
 overrides:

@@ -184,7 +184,7 @@ catalogs:
       specifier: ^8.46.2
       version: 8.46.2
     vite:
-      specifier: ^7.1.10
+      specifier: ^7.1.11
       version: 7.1.11
     vite-plugin-eslint:
       specifier: ^1.8.1
