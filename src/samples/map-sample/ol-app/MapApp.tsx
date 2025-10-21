@@ -58,10 +58,7 @@ export function MapApp() {
                 {map && (
                     <DefaultMapProvider map={map}>
                         <Flex flex="1" direction="column" position="relative">
-                            <MapContainer
-                                role="main"
-                                aria-label={intl.formatMessage({ id: "ariaLabel.map" })}
-                            >
+                            <MapContainer aria-label={intl.formatMessage({ id: "ariaLabel.map" })}>
                                 <MapAnchor position="top-left" horizontalGap={5} verticalGap={5}>
                                     {measurementIsActive && (
                                         <Box
