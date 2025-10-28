@@ -1,0 +1,19 @@
+name: Add new issues to maintenance board
+
+on:
+  issues:
+    types:
+      - opened
+      - reopened
+      - transferred
+
+jobs:
+  add-to-board:
+    name: Add issue to board
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Assign to board
+        uses: open-pioneer/trails-repo-automation/.github/actions/add-to-maintenance-board@main
+        with:
+          github-token: ${{ secrets.ISSUE_AUTOMATION_TOKEN }}
