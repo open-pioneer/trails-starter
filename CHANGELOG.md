@@ -1,5 +1,17 @@
 # Changelog
 
+## 2025-11-TBD
+
+- Update OpenLayers base packages to ...
+- Update core packages to ...
+- Update OpenLayers to 10.7.0
+- Update Vitest to v4
+    - Migration should be straight forward, see [this PR](https://github.com/open-pioneer/trails-openlayers-base-packages/pull/531/files) for example
+    - See also [Migration Guide](https://vitest.dev/guide/migration.html#vitest-4)
+- Update Chakra to 3.29.0
+- Update PNPM to 10.22.0
+- Update various smaller dependencies
+
 ## 2025-10-21
 
 - Update OpenLayers base packages to 1.0.0
