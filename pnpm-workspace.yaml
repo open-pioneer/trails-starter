@@ -101,6 +101,9 @@ overrides:
   "brace-expansion@>=1.0.0 <=1.1.11": "^1.1.12"
   "brace-expansion@>=2.0.0 <=2.0.1": "^2.0.2"
 
+  # https://github.com/advisories/GHSA-5j98-mcp5-4vw2
+  "glob@>=10.x <= 11.0.3": "^11.1.0"
+
   # We don't actually use the babel plugin.
   # The babel runtime is also not used as a production dependency.
   # See e.g. https://github.com/emotion-js/emotion/issues/2371
