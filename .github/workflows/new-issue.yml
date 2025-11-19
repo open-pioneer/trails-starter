@@ -12,6 +12,7 @@ jobs:
     name: Add issue to board
     runs-on: ubuntu-latest
     timeout-minutes: 5
+    if: github.repository == 'open-pioneer/trails-starter'
     steps:
       - name: Assign to board
         uses: open-pioneer/trails-repo-automation/.github/actions/add-to-maintenance-board@main
