@@ -5,8 +5,7 @@ We can also use pre-defined components from the [Chakra UI](https://chakra-ui.co
 
 ## Documentation
 
-- [React's official documentation](https://reactjs.org/docs/getting-started.html)
-- [React's new beta documentation](https://beta.reactjs.org/learn) (which is already excellent)
+- [React's official documentation](https://react.dev/learn)
 - [Chakra's component overview](https://chakra-ui.com/docs/components/concepts/overview) (with lots of examples)
 
 ## Getting started
