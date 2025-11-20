@@ -1,9 +1,9 @@
 # Changelog
 
-## 2025-11-TBD
+## 2025-11-20
 
-- Update OpenLayers base packages to ...
-- Update core packages to ...
+- Update OpenLayers base packages to 1.1.0
+- Update core packages to 4.3.0
 - Update OpenLayers to 10.7.0
 - Update Vitest to v4
     - Migration should be straight forward, see [this PR](https://github.com/open-pioneer/trails-openlayers-base-packages/pull/531/files) for example

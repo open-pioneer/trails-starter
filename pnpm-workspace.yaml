@@ -7,8 +7,8 @@ packages:
 # This is a yaml feature and is not interpreted by pnpm directly.
 __versions:
   - &react_version ^19.2.0
-  - &core_packages_version ^4.2.0
-  - &ol_base_packages_version ^1.0.0
+  - &core_packages_version ^4.3.0
+  - &ol_base_packages_version ^1.1.0
 
 # https://pnpm.io/catalogs
 catalog:
@@ -66,10 +66,10 @@ catalog:
   "@types/js-yaml": ^4.0.9
   "@types/node": ^20.19.22
   "@types/react-dom": ^19.2.3
-  "@types/react": ^19.2.4
-  "@typescript-eslint/parser": ^8.46.4
+  "@types/react": ^19.2.6
+  "@typescript-eslint/parser": ^8.47.0
   "@vitejs/plugin-react-swc": ^4.2.0
-  "typescript-eslint": ^8.46.4
+  "typescript-eslint": ^8.47.0
   eslint-config-prettier: ^10.1.8
   eslint-import-resolver-typescript: ^4.4.4
   eslint-plugin-headers: ^1.3.3
@@ -85,16 +85,16 @@ catalog:
   husky: ^9.1.7
   js-yaml: ^4.1.1
   jsdom: ^27.2.0
-  lint-staged: ^16.2.6
+  lint-staged: ^16.2.7
   prettier: ^3.6.2
-  rimraf: ^6.1.0
-  sass: ^1.94.0
+  rimraf: ^6.1.2
+  sass: ^1.94.2
   tsx: ^4.20.6
   typedoc: ^0.28.14
   typescript: ^5.9.3
-  vite: ^7.2.2
+  vite: ^7.2.4
   vite-plugin-eslint: ^1.8.1
-  vitest: ^4.0.8
+  vitest: ^4.0.12
 
 overrides:
   # https://github.com/advisories/GHSA-v6h2-p8h4-qcjw
