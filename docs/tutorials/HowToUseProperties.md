@@ -72,7 +72,7 @@ Finally, we will also "use" the new service in our app:
     // ...
     "dependencies": {
         // Add the dependency
-        "search-service": "workspace:^"
+        "search-service": "workspace:*"
         // ...
     }
 }

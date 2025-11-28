@@ -4,6 +4,6 @@
     "dependencies": {
         "@chakra-ui/react": "catalog:",
         "@open-pioneer/runtime": "catalog:",
-        "sample-package": "workspace:^"
+        "sample-package": "workspace:*"
     }
 }

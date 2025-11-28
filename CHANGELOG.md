@@ -10,6 +10,9 @@
     - For a full list of enforced options, see the package's [README](https://www.npmjs.com/package/@open-pioneer/pnpm-plugin-defaults).
     - Obsolete settings were removed from the `pnpm-workspace.yaml`
 - Update build tools (patch releases)
+- Use `workspace:*` instead of `workspace:^` for local package references as default.
+  This ensures that local packages are always referenced with their exact version to avoid potential issues with version mismatches.
+  You can still use open version specifiers (e.g. `workspace:^`) if it is more appropriate for your packages, e.g. if they are released independently of each other.
 
 ## 2025-11-20
 

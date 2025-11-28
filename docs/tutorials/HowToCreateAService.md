@@ -141,9 +141,9 @@ First, add the packages `math` and `@open-pioneer/chakra-snippets` in the app's 
     "dependencies": {
         "@chakra-ui/react": "catalog:",
         "@open-pioneer/runtime": "catalog:",
-        "sample-package": "workspace:^",
+        "sample-package": "workspace:*",
         "@open-pioneer/chakra-snippets": "catalog:",
-        "math": "workspace:^"
+        "math": "workspace:*"
     }
 }
 ```
@@ -464,9 +464,9 @@ We want to use its logger implementation:
         "@open-pioneer/core": "catalog:",
         "@chakra-ui/react": "catalog:",
         "@open-pioneer/runtime": "catalog:",
-        "sample-package": "workspace:^",
+        "sample-package": "workspace:*",
         "@open-pioneer/chakra-snippets": "catalog:",
-        "math": "workspace:^"
+        "math": "workspace:*"
     }
 }
 ```

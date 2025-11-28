@@ -389,7 +389,7 @@ For example, the following `package-a` will be able to use `package-b`:
 {
     "name": "package-a",
     "dependencies": {
-        "package-b": "workspace:^"
+        "package-b": "workspace:*"
     }
 }
 ```

@@ -109,7 +109,7 @@ In order to use the new package, it must be declared as a dependency in your app
     "dependencies": {
         "@chakra-ui/react": "catalog:",
         "@open-pioneer/runtime": "catalog:",
-        "sample-package": "workspace:^",
+        "sample-package": "workspace:*",
         // Add this line:
         "hello-world": "workspace:*"
     }
