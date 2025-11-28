@@ -1,24 +1,60 @@
 // SPDX-FileCopyrightText: 2023-2025 Open Pioneer project (https://github.com/open-pioneer)
 // SPDX-License-Identifier: Apache-2.0
-import { Container, Heading, Text, chakra } from "@chakra-ui/react";
-import { useIntl, useService } from "open-pioneer:react-hooks";
-import { Greeter, SimpleUiComponent } from "sample-package";
+
+import { Box } from "@chakra-ui/react";
+import { Chart, useChart } from "@chakra-ui/charts";
+import { LineChart, CartesianGrid, XAxis, YAxis, Line, Tooltip } from "recharts";
 
 export function AppUI() {
-    const intl = useIntl();
-    const greeter = useService<Greeter>("sample-package.Greeter");
-    return (
-        <Container>
-            <Heading as="h1" size="lg">
-                {intl.formatMessage({ id: "heading" })}
-            </Heading>
-            <Text pt={5}>{intl.formatMessage({ id: "text" })}</Text>
-            <Text pt={5}>
-                This messages comes from the sample package{"'"}s greeter service: {greeter.greet()}
-            </Text>
-            <chakra.div mt={5}>
-                <SimpleUiComponent textToShow="This text is rendered inside the sample UI-Component 'SimpleUiComponent'"></SimpleUiComponent>
-            </chakra.div>
-        </Container>
+    const chart = useChart({
+        data: [
+            { sale: 10, month: "January" },
+            { sale: 95, month: "February" },
+            { sale: 87, month: "March" },
+            { sale: 88, month: "May" },
+            { sale: 65, month: "June" },
+            { sale: 90, month: "August" }
+        ],
+        series: [{ name: "sale", color: "teal.solid" }]
+    });
+
+
+    return (<Box  bg={"blue"} >
+        
+                    <Chart.Root  chart={chart} height="500px" width={"500px"}>
+                        <LineChart data={chart.data}>
+                            <CartesianGrid stroke={chart.color("border")} vertical={false} />
+                            <XAxis
+                                axisLine={false}
+                                dataKey={chart.key("month")}
+                                tickFormatter={(value) => value.slice(0, 3)}
+                                stroke={chart.color("border")}
+                            />
+                            <YAxis
+                                axisLine={false}
+                                tickLine={false}
+                                tickMargin={10}
+                                stroke={chart.color("border")}
+                            />
+                            <Tooltip
+                                animationDuration={100}
+                                cursor={false}
+                                content={<Chart.Tooltip />}
+                            />
+                            {chart.series.map((item) => (
+                                <Line
+                                    key={item.name}
+                                    isAnimationActive={false}
+                                    dataKey={chart.key(item.name)}
+                                    stroke={chart.color(item.color)}
+                                    strokeWidth={2}
+                                    dot={false}
+                                />
+                            ))}
+                        </LineChart>
+                    </Chart.Root>
+
+    </Box>
+
     );
 }

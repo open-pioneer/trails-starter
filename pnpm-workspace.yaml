@@ -116,6 +116,12 @@ overrides:
   "stylis@<4.3.5": ">= 4.3.5"
   "source-map@<0.6.1": ">=0.6.1"
   "csstype@<3.2.3": ">=3.2.3"
+  "@chakra-ui/react": "3.22.0"
+  "@chakra-ui/cli": "3.22.0"
+  "@chakra-ui/charts": "3.22.0"
+  "rechart": 3.1.0
+  "@emotion/is-prop-valid": 1.4.0
+
 
   # Ensure patched packages have the expected version (patch was tested with this version):
   "@ark-ui/react": "5.27.1"

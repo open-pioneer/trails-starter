@@ -4,6 +4,8 @@
     "dependencies": {
         "@chakra-ui/react": "catalog:",
         "@open-pioneer/runtime": "catalog:",
-        "sample-package": "workspace:^"
+        "sample-package": "workspace:^",
+        "recharts": "3.1.0",
+        "@chakra-ui/charts": "3.22.0"
     }
 }
