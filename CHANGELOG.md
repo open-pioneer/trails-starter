@@ -1,5 +1,16 @@
 # Changelog
 
+## 2025-11-28
+
+- Configure the package `@open-pioneer/pnpm-plugin-defaults` as a `configDependency` in `pnpm-workspace.yaml`.
+  The package enforces certain global pnpm settings:
+    - `resolutionMode: "time-based"` for a more conservative version resolution algorithm
+    - `minimumReleaseAge` to only install new package versions after a certain time (3 days at this time). Packages from `@conterra/*` and `@open-pioneer/*` are excluded from this rule.
+    - Both options can help against supply chain attacks
+    - For a full list of enforced options, see the package's [README](https://www.npmjs.com/package/@open-pioneer/pnpm-plugin-defaults).
+    - Obsolete settings were removed from the `pnpm-workspace.yaml`
+- Update build tools (patch releases)
+
 ## 2025-11-20
 
 - Update OpenLayers base packages to 1.1.0

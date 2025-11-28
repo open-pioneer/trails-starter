@@ -1,3 +1,6 @@
+configDependencies:
+  "@open-pioneer/pnpm-plugin-defaults": 0.1.0+sha512-+m/wk7B8hZPfiFzM82JBYTD6TbrMHPdgPUITBMHzjlqzCo8YfPHc5NAsURCz/YcMBN5tNANDQDfclYhrsjmClQ==
+
 packages:
   - src/**
   - "!**/test-data/**"
@@ -55,10 +58,10 @@ catalog:
 
   # Devtools
   "@eslint/js": ^9.39.1
-  "@open-pioneer/build-package-cli": ^3.0.4
-  "@open-pioneer/build-support": ^3.0.3
-  "@open-pioneer/check-pnpm-duplicates": ^0.2.4
-  "@open-pioneer/vite-plugin-pioneer": ^5.0.1
+  "@open-pioneer/build-package-cli": ^3.0.5
+  "@open-pioneer/build-support": ^3.0.4
+  "@open-pioneer/check-pnpm-duplicates": ^0.2.5
+  "@open-pioneer/vite-plugin-pioneer": ^5.0.2
   "@testing-library/dom": ^10.4.1
   "@testing-library/jest-dom": ^6.9.1
   "@testing-library/react": ^16.3.0
@@ -122,36 +125,25 @@ overrides:
   "react-select": "5.10.2"
 
 auditConfig:
-  ignoreCves:
+  ignoreCves: []
 
-allowUnusedPatches: true
-ignorePatchFailures: false
 patchedDependencies:
   # Ensure valids ids for aria-activedescendant and fix touch events in shadow DOM (see https://github.com/JedWatson/react-select/issues/5824)
   "react-select": "patches/react-select.patch"
 
-  # - Ensure all portals are mounted under `.pioneer-root` div
+  # Ensure all portals are mounted under `.pioneer-root` div
   "@ark-ui/react@*": "patches/@ark-ui__react.patch"
 
-peerDependencyRules:
-
 # Only run build scripts for allowed packages.
-dangerouslyAllowAllBuilds: false
 onlyBuiltDependencies:
   - "@parcel/watcher"
   - "@swc/core"
   - esbuild
 
+# Packages that we don't need to build (even though they have install scripts).
 ignoredBuiltDependencies:
-  # Seems to work fine without build script
   - core-js
   - unrs-resolver
-
-# Don't automatically link to workspace packages (use e.g. "workspace:^" instead).
-linkWorkspacePackages: false
-autoInstallPeers: true
-dedupePeerDependents: true
-strictPeerDependencies: true
 
 # Workaround for current problems regarding our vite plugin + vite's optimizeDeps feature
 shamefullyHoist: true

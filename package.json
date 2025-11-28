@@ -23,6 +23,7 @@
         "prepare": "husky && pnpm check-duplicates"
     },
     "devDependencies": {
+        "@eslint/js": "catalog:",
         "@open-pioneer/build-package-cli": "catalog:",
         "@open-pioneer/build-support": "catalog:",
         "@open-pioneer/check-pnpm-duplicates": "catalog:",
@@ -38,8 +39,6 @@
         "@typescript-eslint/parser": "catalog:",
         "@vitejs/plugin-react-swc": "catalog:",
         "eslint": "catalog:",
-        "@eslint/js": "catalog:",
-        "typescript-eslint": "catalog:",
         "eslint-config-prettier": "catalog:",
         "eslint-import-resolver-typescript": "catalog:",
         "eslint-plugin-headers": "catalog:",
@@ -62,6 +61,7 @@
         "tsx": "catalog:",
         "typedoc": "catalog:",
         "typescript": "catalog:",
+        "typescript-eslint": "catalog:",
         "vite": "catalog:",
         "vite-plugin-eslint": "catalog:",
         "vitest": "catalog:"
@@ -70,5 +70,5 @@
         "node": ">= 20",
         "pnpm": ">= 10"
     },
-    "packageManager": "pnpm@10.22.0"
+    "packageManager": "pnpm@10.24.0"
 }
