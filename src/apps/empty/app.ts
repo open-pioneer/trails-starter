@@ -6,7 +6,10 @@ import { AppUI } from "./AppUI";
 
 const Element = createCustomElement({
     component: AppUI,
-    appMetadata
+    appMetadata,
+    advanced: {
+        enableShadowRoot: true
+    }
 });
 
 customElements.define("empty-app", Element);

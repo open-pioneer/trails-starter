@@ -1,0 +1,19 @@
+diff --git a/es6/zIndex/ZIndexLayer.js b/es6/zIndex/ZIndexLayer.js
+index 5e31d1d03ffb47857c0954a8a9b85e6b86a1941f..ca686515f4778bdc254154590741c7f80c692dcc 100644
+--- a/es6/zIndex/ZIndexLayer.js
++++ b/es6/zIndex/ZIndexLayer.js
+@@ -73,7 +73,13 @@ export function ZIndexLayer(_ref) {
+      */
+     return null;
+   }
+-  var zIndexPortal = document.getElementById(portalId);
++
++  // HACK: Can't lookup elements on document when inside a shadow root.
++  // Options:
++  // - Transport shadow root explicitly (available, for example, via chakra context)
++  // - Use the wrapper div (`recharts-wrapper`). One can get the surrounding shadow root or document via `div.getRootNode()`, see 
++  //   MDN documentation at https://developer.mozilla.org/en-US/docs/Web/API/Node/getRootNode (i.e. `wrapperDiv.getRootNode().getElementById(...)).
++  var zIndexPortal = document.getElementsByTagName("empty-app")[0].shadowRoot.getElementById(portalId);
+   if (zIndexPortal) {
+     return /*#__PURE__*/createPortal(children, zIndexPortal);
+   }

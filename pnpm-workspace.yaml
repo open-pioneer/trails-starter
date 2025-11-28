@@ -39,8 +39,9 @@ catalog:
   "@open-pioneer/test-utils": *core_packages_version
 
   # Other dependencies
-  "@chakra-ui/react": ^3.29.0
-  "@chakra-ui/cli": ^3.29.0
+  "@chakra-ui/react": "3.29.0"
+  "@chakra-ui/charts": "3.29.0"
+  "@chakra-ui/cli": "3.29.0"
   "@conterra/reactivity-core": ^0.8.0
   "@emotion/cache": ^11.14.0
   "@emotion/react": ^11.14.0
@@ -52,8 +53,7 @@ catalog:
   react-use: ^17.6.0
   react: *react_version
   uuid: ^13.0.0
-  recharts: ^3.1.0
-  "@chakra-ui/charts": ^3.29.0
+  recharts: ^3.5.1
 
   # Devtools
   "@eslint/js": ^9.39.1
@@ -118,12 +118,6 @@ overrides:
   "stylis@<4.3.5": ">= 4.3.5"
   "source-map@<0.6.1": ">=0.6.1"
   "csstype@<3.2.3": ">=3.2.3"
-  "@chakra-ui/react": "3.22.0"
-  "@chakra-ui/cli": "3.22.0"
-  "@chakra-ui/charts": "3.22.0"
-  "rechart": 3.1.0
-  "@emotion/is-prop-valid": 1.4.0
-
 
   # Ensure patched packages have the expected version (patch was tested with this version):
   "@ark-ui/react": "5.27.1"
@@ -140,6 +134,9 @@ patchedDependencies:
 
   # - Ensure all portals are mounted under `.pioneer-root` div
   "@ark-ui/react@*": "patches/@ark-ui__react.patch"
+
+  # Ugly hack to render correctly in a shadow root (just as a proof of concept, bug needs to be fixed in recharts)
+  "recharts@*": patches/recharts.patch
 
 peerDependencyRules:
 
