@@ -52,6 +52,8 @@ catalog:
   react-use: ^17.6.0
   react: *react_version
   uuid: ^13.0.0
+  recharts: ^3.1.0
+  "@chakra-ui/charts": ^3.29.0
 
   # Devtools
   "@eslint/js": ^9.39.1
