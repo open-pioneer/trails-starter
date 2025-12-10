@@ -190,7 +190,7 @@ catalogs:
       specifier: ^1.8.1
       version: 1.8.1
     vitest:
-      specifier: ^4.0.12
+      specifier: ^4.0.10
       version: 4.0.12
 
 overrides:
@@ -206,8 +206,6 @@ overrides:
   csstype@<3.2.3: '>=3.2.3'
   '@ark-ui/react': 5.27.1
   react-select: 5.10.2
-
-pnpmfileChecksum: sha256-FAQ+ylJChk4moYBCl+iwvCnDgmyWSUpwlv3NBRm9xrs=
 
 patchedDependencies:
   '@ark-ui/react@*':

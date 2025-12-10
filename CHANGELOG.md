@@ -1,5 +1,11 @@
 # Changelog
 
+## 2025-12-10
+
+- Remove the `configDependency` again due to issues with Renovate.
+    - The global settings mentioned in the previous entry are applied directly in `pnpm-workspace.yaml`
+    - `resolutionMode` has changed to `time-based` due to issues in PNPM
+
 ## 2025-11-28
 
 - Configure the package `@open-pioneer/pnpm-plugin-defaults` as a `configDependency` in `pnpm-workspace.yaml`.

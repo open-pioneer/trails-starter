@@ -1,6 +1,3 @@
-configDependencies:
-  "@open-pioneer/pnpm-plugin-defaults": 0.1.0+sha512-+m/wk7B8hZPfiFzM82JBYTD6TbrMHPdgPUITBMHzjlqzCo8YfPHc5NAsURCz/YcMBN5tNANDQDfclYhrsjmClQ==
-
 packages:
   - src/**
   - "!**/test-data/**"
@@ -97,7 +94,20 @@ catalog:
   typescript: ^5.9.3
   vite: ^7.2.4
   vite-plugin-eslint: ^1.8.1
-  vitest: ^4.0.12
+  vitest: ^4.0.10
+  zx: ^8.8.5
+
+auditConfig:
+  ignoreCves: []
+
+# Install older versions by default
+resolutionMode: "lowest-direct"
+
+# Configure a release cooldown
+minimumReleaseAge: 4320 # 3 days in minutes
+minimumReleaseAgeExclude:
+  - "@open-pioneer/*"
+  - "@conterra/*"
 
 overrides:
   # https://github.com/advisories/GHSA-v6h2-p8h4-qcjw
@@ -124,9 +134,8 @@ overrides:
   "@ark-ui/react": "5.27.1"
   "react-select": "5.10.2"
 
-auditConfig:
-  ignoreCves: []
-
+allowUnusedPatches: true
+ignorePatchFailures: false
 patchedDependencies:
   # Ensure valids ids for aria-activedescendant and fix touch events in shadow DOM (see https://github.com/JedWatson/react-select/issues/5824)
   "react-select": "patches/react-select.patch"
@@ -150,3 +159,6 @@ shamefullyHoist: true
 
 # Cyclic dependencies are a code smell but should not trigger hard errors in pnpm.
 ignoreWorkspaceCycles: true
+
+linkWorkspacePackages: false
+strictPeerDependencies: true
