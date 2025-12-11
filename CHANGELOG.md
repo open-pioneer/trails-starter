@@ -4,7 +4,9 @@
 
 - Remove the `configDependency` again due to issues with Renovate.
     - The global settings mentioned in the previous entry are applied directly in `pnpm-workspace.yaml`
-    - `resolutionMode` has changed to `time-based` due to issues in PNPM
+    - `resolutionMode` has changed from `time-based` to `lowest-direct` due to issues in PNPM
+    - NOTE: Some obsolete configuration options have been removed:
+      - `autoInstallPeers: true`,  `dedupePeerDependents: true` and `dangerouslyAllowAllBuilds: false` are set by default in PNPM and don't need to be defined explicitly
 
 ## 2025-11-28
 
