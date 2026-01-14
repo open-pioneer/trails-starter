@@ -133,6 +133,7 @@ overrides:
   # Ensure patched packages have the expected version (patch was tested with this version):
   "@ark-ui/react": "5.27.1"
   "react-select": "5.10.2"
+  "@zag-js/toast": "1.27.0"
 
 allowUnusedPatches: true
 ignorePatchFailures: false
@@ -142,6 +143,10 @@ patchedDependencies:
 
   # Ensure all portals are mounted under `.pioneer-root` div
   "@ark-ui/react@*": "patches/@ark-ui__react.patch"
+
+  # Fix display of toasts that are created before the Notifier UI is mounted
+  # See https://github.com/chakra-ui/zag/issues/2922
+  "@zag-js/toast": patches/@zag-js__toast.patch
 
 # Only run build scripts for allowed packages.
 onlyBuiltDependencies:

@@ -206,11 +206,15 @@ overrides:
   csstype@<3.2.3: '>=3.2.3'
   '@ark-ui/react': 5.27.1
   react-select: 5.10.2
+  '@zag-js/toast': 1.27.0
 
 patchedDependencies:
   '@ark-ui/react@*':
     hash: 6c7ccdc3ae257d66f6007fd0e7de6405701490cd678ce8c7f1570d5a4bef79eb
     path: patches/@ark-ui__react.patch
+  '@zag-js/toast':
+    hash: 5abc5d0928ab6ee9ce1741a23aedaa5c0e20d69ff6e137f4a9184f6c352b4faf
+    path: patches/@zag-js__toast.patch
   react-select:
     hash: 446dc70e7c5be1fa3a74bf9037c714221b54333a36f58f6f5c196e42fafff68f
     path: patches/react-select.patch
@@ -4122,7 +4126,7 @@ snapshots:
       '@zag-js/tabs': 1.27.0
       '@zag-js/tags-input': 1.27.0
       '@zag-js/timer': 1.27.0
-      '@zag-js/toast': 1.27.0
+      '@zag-js/toast': 1.27.0(patch_hash=5abc5d0928ab6ee9ce1741a23aedaa5c0e20d69ff6e137f4a9184f6c352b4faf)
       '@zag-js/toggle': 1.27.0
       '@zag-js/toggle-group': 1.27.0
       '@zag-js/tooltip': 1.27.0
@@ -6036,7 +6040,7 @@ snapshots:
       '@zag-js/types': 1.27.0
       '@zag-js/utils': 1.27.0
 
-  '@zag-js/toast@1.27.0':
+  '@zag-js/toast@1.27.0(patch_hash=5abc5d0928ab6ee9ce1741a23aedaa5c0e20d69ff6e137f4a9184f6c352b4faf)':
     dependencies:
       '@zag-js/anatomy': 1.27.0
       '@zag-js/core': 1.27.0

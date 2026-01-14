@@ -1,5 +1,12 @@
 # Changelog
 
+## 2026-01-14
+
+- Fix an issue with the `<Notifier />` not showing notifications that are created
+  before the Notifier is being rendered.
+  This requires a new patch against a `zag-js` package for as long as the upstream issue persists.
+  For more details, see [this issue](https://github.com/open-pioneer/trails-core-packages/issues/174#issue-3812397738).
+
 ## 2025-12-10
 
 - Remove the `configDependency` again due to issues with Renovate.
