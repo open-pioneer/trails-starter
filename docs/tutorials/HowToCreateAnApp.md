@@ -171,7 +171,6 @@ Vite has out of the box support for two ways to include static assets:
 
     Vite will automatically bundle the file with your application.
     The mechanism depends on the file's type and the way it has been imported, for example:
-
     - An asset file may be created for larger images (e.g. `dist/www/assets/my-image-123456.png`)
     - Small images or file contents may be embedded as a string (text content, or Base64 URL, etc.)
     - Imported data (such as JSON) may be directly embedded into the source code
@@ -320,7 +319,6 @@ To achieve this, simply swap the corresponding `.html` files:
     - Move `src/sites/my-app/index.html` to `src/index.html`.
     - Relative links in your `.html` files may need adjusting!
 - Update `vite.config.ts`:
-
     - Remove the reference to `my-app` and (optionally) include the new app overview site, if you want it built:
 
         ```diff

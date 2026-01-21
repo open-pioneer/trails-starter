@@ -79,7 +79,6 @@ When the metadata format is altered, the build tooling will (most likely) have t
     `createService` is recursive: a service's dependencies must be created before the service itself can be created.
 
     The process to construct a service `s` is as follows:
-
     1. Has `s` already been constructed? Return `s.instance` and increment its reference count.
     2. Is the service in any other state than `not-constructed`? Throw an error (this is a sanity check, since `verifyDependency` should have caught the issue).
     3. Call `createService(d)` for every service `d` required by `s` and store the instance reference.
@@ -100,7 +99,6 @@ When the metadata format is altered, the build tooling will (most likely) have t
     Destruction reverses the process in `start()`.
 
     `destroyService(s)` is called for every service:
-
     1. Is the service already destroyed? Do nothing and return.
     2. Remove a reference from `s`.
        It is no longer used and can be safely destroyed if the count reaches zero.
