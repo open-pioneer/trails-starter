@@ -13,26 +13,20 @@ replaced with a new implementation later on.
 
 To create a logger instance, call the `createLogger` method.
 It takes a prefix (string) to prepend to each message.
-The prefix should always contain the package name and if applicable additionally the service/class name (separated with ':').
-
-The logger provides log methods for the following log levels with the following order: DEBUG < INFO < WARN < ERROR.
-
-For example:
+In most cases, you can simply generate the log prefix using the `open-pioneer:source-info` module:
 
 ```ts
-import { createLogger, Logger } from "@open-pioneer/core";
+// packageName/foo.ts
+import { sourceId } from "open-pioneer:source-info";
 
-export class LoggerTestExample {
-    private logger: Logger;
-    constructor() {
-        this.logger = createLogger("example-package:LoggerTestExample");
-    }
-
-    testMethod() {
-        this.logger.warn("example message", { testLog: 123, text: "this is a text" });
-    }
-}
+const LOG = createLogger(sourceId);
+LOG.warn("example message", { testLog: 123, text: "this is a text" });
 ```
+
+The `sourceId` is derived from the current file (`packageName/foo` in this case).
+You can also define a custom logging prefix instead of `sourceId`.
+
+The logger provides log methods for the following log levels with the following order: DEBUG < INFO < WARN < ERROR.
 
 Hint: If you're using the logger instead of the browser's builtin console, the original trace is usually lost.
 However, in Chrome you can see the trace for error and warning messages by clicking on the message title.

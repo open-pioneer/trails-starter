@@ -268,7 +268,9 @@ An internal utility module:
 ```ts
 // src/packages/test-package/logger.ts
 import { createLogger } from "@open-pioneer/core";
-export const LOGGER = createLogger("test-package");
+import { sourceId } from "open-pioneer:source-info";
+
+export const LOGGER = createLogger(sourceId);
 ```
 
 The initial `package.json`:
