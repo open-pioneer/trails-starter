@@ -498,8 +498,9 @@ For this example, we'll implement the class directly in the `services.ts`:
 // src/apps/empty/services.ts
 import { MathServiceExtension } from "math";
 import { createLogger } from "@open-pioneer/core";
+import { sourceId } from "open-pioneer:source-info";
 
-const LOG = createLogger("empty-app");
+const LOG = createLogger(sourceId);
 
 export class LoggingMathExtension implements MathServiceExtension {
     onMultiply(a: number, b: number, result: number): void {

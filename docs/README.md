@@ -8,7 +8,6 @@
 - [Contribution guide](./Contributing.md)
 
 - Tutorials
-
     - [How to create an app](./tutorials/HowToCreateAnApp.md)
     - [How to deploy an app](./tutorials/HowToDeployAnApp.md)
     - [How to create a package](./tutorials/HowToCreateAPackage.md)
@@ -28,14 +27,12 @@
 - [Ways to patch a package](./WaysToPatchAPackage.md)
 
 - Reference
-
     - [Package Reference](./reference/Package.md)
     - [I18N format](./reference/I18nFormat.md)
     - [Services](./reference/Services.md)
     - [Chakra Theming](./reference/Theming.md)
 
 - Internal Documentation
-
     - [Design (Phase 1)](./internals/Design_Phase1.md)
     - [Design (Phase 2)](./internals/Design_Phase2.md)
     - [Service layer](./internals/ServiceLayer.md)

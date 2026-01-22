@@ -1,5 +1,15 @@
 # Changelog
 
+## 2026-01-22
+
+- Update OpenLayers base packages to 1.2.0
+- Update core packages to 4.4.0
+- Update Open Pioneer build tools
+- Update Chakra UI to 3.31.0 (Ark UI 5.30.0, see overrides)
+    - Existing patches were not modified
+- Update pnpm to 10.28.0
+- Update various smaller dependencies
+
 ## 2026-01-14
 
 - Fix an issue with the `<Notifier />` not showing notifications that are created
@@ -13,7 +23,7 @@
     - The global settings mentioned in the previous entry are applied directly in `pnpm-workspace.yaml`
     - `resolutionMode` has changed from `time-based` to `lowest-direct` due to issues in PNPM
     - NOTE: Some obsolete configuration options have been removed:
-      - `autoInstallPeers: true`,  `dedupePeerDependents: true` and `dangerouslyAllowAllBuilds: false` are set by default in PNPM and don't need to be defined explicitly
+        - `autoInstallPeers: true`, `dedupePeerDependents: true` and `dangerouslyAllowAllBuilds: false` are set by default in PNPM and don't need to be defined explicitly
 
 ## 2025-11-28
 

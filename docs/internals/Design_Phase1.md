@@ -14,14 +14,12 @@ The purpose of this project is building web applications from a set of composabl
 
 - Applications should be composed of smaller packages that may be developed separately.
   Those building blocks ("bundles") should support
-
     - Development across multiple repositories with separate compilation
     - Reusing common building blocks between applications and teams
     - Mixed licensing (e.g. open source foundation with proprietary features implemented "on top")
     - Easy dependency/package management (integrates with NPM, supports CVE audits and license compliance scans)
 
 - For the developers of web applications, the system should offer
-
     - Support for modern technologies such as TypeScript, SCSS and UI-Libraries such as React and/or Vue
     - Dependency injection for class instances that depend on services provided by other classes
     - Enforcement of/support for clear interfaces between application components
@@ -159,7 +157,6 @@ The process works as follows:
 2. Generate code and data structures based on metadata within the building blocks.
    Every building block contains a configuration file that informs the system about its contents.
    This includes:
-
     - Services implemented by the building block
     - Services required by the building block
     - Supported languages and translation files

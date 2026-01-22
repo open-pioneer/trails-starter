@@ -82,7 +82,6 @@ It may in fact be a disadvantage because it makes generated code harder to read 
     ```
 
 - Other extensions to the `build.config.mjs`:
-
     - Which assets to copy
     - Which readme content to include
     - Which license to include
@@ -147,7 +146,6 @@ The phases to be implemented are as follows:
 - Transpile TypeScript/JavaScript (and JSX/TSX) to .js (with .map, .d.ts when enabled).
 
     Notes:
-
     - Use rollup (with preserveModules) to strip test files etc. Use `entryPoints` as input.
       Bundling is not necessary.
     - Mark everything as external that is not a local file
@@ -156,7 +154,6 @@ The phases to be implemented are as follows:
     - Handle vite-style imports (i.e. `foo.js?worker` -> resolve to `foo.js` so it gets included in the build)
 
 - Transpile scss to css, bundle css
-
     - sass / postcss
     - see vite source
     - do not include node_modules during bundle (css would be copied multiple times if multiple packages use it)
@@ -164,7 +161,6 @@ The phases to be implemented are as follows:
 - Optional: Transpile i18n yaml to json
 
 - Copy assets:
-
     - README
     - LICENSE
     - assets/\*
