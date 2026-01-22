@@ -1,6 +1,6 @@
 # Changelog
 
-## 2026-01-XX
+## 2026-01-22
 
 - Update OpenLayers base packages to 1.2.0
 - Update core packages to 4.4.0
