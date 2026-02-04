@@ -97,25 +97,12 @@ catalog:
   vitest: ^4.0.17
   zx: ^8.8.5
 
-auditConfig:
-  ignoreCves: []
-
-# Install older versions by default
-resolutionMode: "lowest-direct"
-
-# Configure a release cooldown
-minimumReleaseAge: 4320 # 3 days in minutes
-minimumReleaseAgeExclude:
-  - "@open-pioneer/*"
-  - "@conterra/*"
-
 overrides:
-  # https://github.com/advisories/GHSA-v6h2-p8h4-qcjw
-  "brace-expansion@>=1.0.0 <=1.1.11": "^1.1.12"
-  "brace-expansion@>=2.0.0 <=2.0.1": "^2.0.2"
-
   # https://github.com/advisories/GHSA-5j98-mcp5-4vw2
   "glob@>=10.x <= 11.0.3": "^11.1.0"
+
+  # https://github.com/advisories/GHSA-7h2j-956f-4vf2
+  "@isaacs/brace-expansion@<=5.0.0": "^5.0.1"
 
   # We don't actually use the babel plugin.
   # The babel runtime is also not used as a production dependency.
@@ -147,6 +134,19 @@ patchedDependencies:
   # Fix display of toasts that are created before the Notifier UI is mounted
   # See https://github.com/chakra-ui/zag/issues/2922
   "@zag-js/toast": patches/@zag-js__toast.patch
+
+# Install older versions by default
+resolutionMode: "lowest-direct"
+
+# Configure a release cooldown
+minimumReleaseAge: 4320 # 3 days in minutes
+minimumReleaseAgeExclude:
+  - "@open-pioneer/*"
+  - "@conterra/*"
+  - "@isaacs/brace-expansion@5.0.1" # see overrides
+
+auditConfig:
+  ignoreCves: []
 
 # Only run build scripts for allowed packages.
 onlyBuiltDependencies:
