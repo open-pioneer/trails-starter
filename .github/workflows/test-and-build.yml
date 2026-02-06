@@ -1,13 +1,16 @@
 name: Build and deploy
+
 on:
   workflow_dispatch:
   push:
   pull_request:
+
+permissions:
+  contents: read
+
 jobs:
   test-and-build:
     runs-on: ubuntu-latest
-    permissions:
-      contents: write
     steps:
       - name: Checkout
         uses: actions/checkout@v4
