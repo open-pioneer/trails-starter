@@ -90,7 +90,7 @@ catalog:
   rimraf: ^6.1.2
   sass: ^1.97.2
   tsx: ^4.21.0
-  typedoc: ^0.28.16
+  typedoc: ^0.28.17
   typescript: ^5.9.3
   vite: ^7.3.1
   vite-plugin-eslint: ^1.8.1
@@ -103,6 +103,9 @@ overrides:
 
   # https://github.com/advisories/GHSA-7h2j-956f-4vf2
   "@isaacs/brace-expansion@<=5.0.0": "^5.0.1"
+
+  # https://github.com/advisories/GHSA-38c4-r59v-3vqw
+  "markdown-it@>=13.0.0 <14.1.1": "^14.1.1"
 
   # We don't actually use the babel plugin.
   # The babel runtime is also not used as a production dependency.
@@ -146,7 +149,12 @@ minimumReleaseAgeExclude:
   - "@isaacs/brace-expansion@5.0.1" # see overrides
 
 auditConfig:
-  ignoreCves: []
+  ignoreCves:
+    # This affects ajv, which is a transitive dependency of eslint.
+    # Eslint depends on ajv@v6, and an update to v8 might not be trivial.
+    # Only dev dependencies are (potentially) affected.
+    # https://github.com/advisories/GHSA-2g4f-4pwh-qvx6
+    - CVE-2025-69873
 
 # Only run build scripts for allowed packages.
 onlyBuiltDependencies:
