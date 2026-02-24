@@ -189,12 +189,6 @@
 - Update eslint rules after updating typescript-eslint (see `.eslintrc`)
 - Hide deprecation warnings for some legacy SASS APIs used in vite (see `vite.config.ts`)
 
-## 2024-11-18
-
-- Add a new script: `pnpm run generate-sbom`.
-  The script generates a software bill of materials (SBOM) for the project that includes all production dependencies.
-  For more information, see the [relevant section in the Repository Guide](./docs/RepositoryGuide.md#pnpm-run-generate-sbom).
-
 ## 2024-09-27
 
 - Migrate to [pnpm catalogs](https://pnpm.io/catalogs) for central dependencies.
