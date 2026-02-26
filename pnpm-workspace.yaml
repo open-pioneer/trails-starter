@@ -107,6 +107,10 @@ overrides:
   # https://github.com/advisories/GHSA-38c4-r59v-3vqw
   "markdown-it@>=13.0.0 <14.1.1": "^14.1.1"
 
+  # https://github.com/advisories/GHSA-mw96-cpmx-2vgc
+  "rollup@>=4.0.0 <4.59.0": "^4.59.0"
+  "rollup@>=2.0.0 <2.80.0": "^2.80.0"
+
   # We don't actually use the babel plugin.
   # The babel runtime is also not used as a production dependency.
   # See e.g. https://github.com/emotion-js/emotion/issues/2371
