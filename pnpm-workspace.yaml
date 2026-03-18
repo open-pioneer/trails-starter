@@ -113,6 +113,7 @@ overrides:
 
   # https://github.com/advisories/GHSA-7r86-cg39-jmmj
   # https://github.com/advisories/GHSA-23c5-xmqv-rm74
+  # https://github.com/advisories/GHSA-3ppc-4f35-3m26
   "minimatch@>=3.0.0 <3.1.4": "^3.1.4"
   "minimatch@>=9.0.0 <9.0.7": "^9.0.9"
   "minimatch@>=10.0.0 <10.2.3": "^10.2.3"
