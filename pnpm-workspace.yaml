@@ -139,16 +139,20 @@ overrides:
 
   # Ensure patched packages have the expected version (patch was tested with this version):
   "@ark-ui/react": "5.34.1"
+  "@zag-js/splitter": "1.35.3"
   "react-select": "5.10.2"
 
 allowUnusedPatches: true
 ignorePatchFailures: false
 patchedDependencies:
-  # Ensure valids ids for aria-activedescendant and fix touch events in shadow DOM (see https://github.com/JedWatson/react-select/issues/5824)
+  # Ensure valid ids for aria-activedescendant and fix touch events in shadow DOM (see https://github.com/JedWatson/react-select/issues/5824)
   "react-select": "patches/react-select.patch"
 
   # Ensure all portals are mounted under `.pioneer-root` div
   "@ark-ui/react@*": "patches/@ark-ui__react.patch"
+
+  # Fixes cursor when using chakra's splitter (see https://github.com/chakra-ui/zag/pull/3045)
+  "@zag-js/splitter@*": "patches/@zag-js__splitter.patch"
 
 # Install older versions by default
 resolutionMode: "lowest-direct"

@@ -1,0 +1,31 @@
+diff --git a/dist/splitter.dom.mjs b/dist/splitter.dom.mjs
+index 1a0b774876b3117a7ce0e223e8fa86d49c92d4f6..51fcddd329dd844d6057268b5ad3143555dba821 100644
+--- a/dist/splitter.dom.mjs
++++ b/dist/splitter.dom.mjs
+@@ -18,8 +18,11 @@ var getCursor = (state, x) => {
+ var getResizeTriggerEls = (ctx) => {
+   return queryAll(getRootEl(ctx), `[role=separator][data-ownedby='${CSS.escape(getRootId(ctx))}']`);
+ };
++var getGlobalCursorEl = (ctx) => {
++  return ctx.getDoc().getElementById(getGlobalCursorId(ctx));
++};
+ var setupGlobalCursor = (ctx, state, x, nonce) => {
+-  const styleEl = ctx.getById(getGlobalCursorId(ctx));
++  const styleEl = getGlobalCursorEl(ctx);
+   const textContent = `* { cursor: ${getCursor(state, x)} !important; }`;
+   if (styleEl) {
+     styleEl.textContent = textContent;
+@@ -32,11 +35,12 @@ var setupGlobalCursor = (ctx, state, x, nonce) => {
+   }
+ };
+ var removeGlobalCursor = (ctx) => {
+-  const styleEl = ctx.getById(getGlobalCursorId(ctx));
++  const styleEl = getGlobalCursorEl(ctx);
+   styleEl?.remove();
+ };
+ export {
+   getCursor,
++  getGlobalCursorEl,
+   getGlobalCursorId,
+   getLabelId,
+   getPanelEl,

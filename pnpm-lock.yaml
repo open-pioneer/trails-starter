@@ -212,12 +212,16 @@ overrides:
   source-map@<0.6.1: '>=0.6.1'
   csstype@<3.2.3: '>=3.2.3'
   '@ark-ui/react': 5.34.1
+  '@zag-js/splitter': 1.35.3
   react-select: 5.10.2
 
 patchedDependencies:
   '@ark-ui/react@*':
     hash: 6c7ccdc3ae257d66f6007fd0e7de6405701490cd678ce8c7f1570d5a4bef79eb
     path: patches/@ark-ui__react.patch
+  '@zag-js/splitter@*':
+    hash: 075d08c3b1dc7858e4c6cc6b336042f36f1ee6c6f2d5e054747a872f1b58f9cb
+    path: patches/@zag-js__splitter.patch
   react-select:
     hash: 446dc70e7c5be1fa3a74bf9037c714221b54333a36f58f6f5c196e42fafff68f
     path: patches/react-select.patch
@@ -4223,7 +4227,7 @@ snapshots:
       '@zag-js/select': 1.35.3
       '@zag-js/signature-pad': 1.35.3
       '@zag-js/slider': 1.35.3
-      '@zag-js/splitter': 1.35.3
+      '@zag-js/splitter': 1.35.3(patch_hash=075d08c3b1dc7858e4c6cc6b336042f36f1ee6c6f2d5e054747a872f1b58f9cb)
       '@zag-js/steps': 1.35.3
       '@zag-js/switch': 1.35.3
       '@zag-js/tabs': 1.35.3
@@ -6200,7 +6204,7 @@ snapshots:
       '@zag-js/types': 1.35.3
       '@zag-js/utils': 1.35.3
 
-  '@zag-js/splitter@1.35.3':
+  '@zag-js/splitter@1.35.3(patch_hash=075d08c3b1dc7858e4c6cc6b336042f36f1ee6c6f2d5e054747a872f1b58f9cb)':
     dependencies:
       '@zag-js/anatomy': 1.35.3
       '@zag-js/core': 1.35.3
