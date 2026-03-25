@@ -10,6 +10,7 @@
 - Update Chakra UI to 3.34.0 (Ark UI 5.34.1)
     - Remove patch for @zag-js/toast
     - Add a new patch for @zag-js/splitter (fixes this problem: [PR](https://github.com/chakra-ui/zag/pull/3045))
+- Update OpenLayers to 10.8.0
 - Update pnpm to 10.32.1
 - Update eslint-plugin-react-hooks to 7.0.1
     - Some rules were disabled because they are very pedantic, see `eslint.config.mjs`
