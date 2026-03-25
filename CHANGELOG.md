@@ -5,7 +5,7 @@
 [Show all changes](https://github.com/open-pioneer/trails-starter/compare/2026-01-22...2026-03-25)
 
 - Update core packages to 4.5.0
-    - Note: OpenLayers base packages 1.2.0 are compatible with this version
+    - Note: OpenLayers base packages 1.2.0 are compatible with this version. You might need to add overrides to the pnpm-workspace.yaml to ensure that the base packages use the newer core packages version (e.g. "@open-pioneer/runtime": "4.5.0")
 - Update Open Pioneer build tools
 - Update Chakra UI to 3.34.0 (Ark UI 5.34.1)
     - Remove patch for @zag-js/toast
