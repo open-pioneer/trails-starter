@@ -31,7 +31,7 @@ export default tseslint.config(
             jsxA11y.flatConfigs.recommended,
             react.configs.flat.recommended,
             react.configs.flat["jsx-runtime"],
-            reactHooks.configs["recommended-latest"],
+            reactHooks.configs.flat.recommended,
             eslintConfigPrettier
         ],
         plugins: { "unused-imports": unusedImports, headers },
@@ -103,7 +103,12 @@ export default tseslint.config(
                 {
                     additionalHooks: "(useReactiveSnapshot|useComputed)"
                 }
-            ]
+            ],
+
+            // These are very pedantic in practice
+            "react-hooks/set-state-in-effect": "off",
+            "react-hooks/immutability": "off",
+            "react-hooks/refs": "off"
         }
     },
     {
