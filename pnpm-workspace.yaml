@@ -7,7 +7,7 @@ packages:
 # This is a yaml feature and is not interpreted by pnpm directly.
 __versions:
   - &react_version ^19.2.3
-  - &core_packages_version ^4.4.0
+  - &core_packages_version 4.5.0-dev.20260325074159 # TODO update to stable version
   - &ol_base_packages_version ^1.2.0
 
 # https://pnpm.io/catalogs
@@ -39,8 +39,8 @@ catalog:
   "@open-pioneer/test-utils": *core_packages_version
 
   # Other dependencies
-  "@chakra-ui/react": ^3.31.0
-  "@chakra-ui/cli": ^3.31.0
+  "@chakra-ui/react": ^3.34.0
+  "@chakra-ui/cli": ^3.34.0
   "@conterra/reactivity-core": ^0.8.0
   "@emotion/cache": ^11.14.0
   "@emotion/react": ^11.14.0
@@ -138,9 +138,15 @@ overrides:
   "csstype@<3.2.3": ">=3.2.3"
 
   # Ensure patched packages have the expected version (patch was tested with this version):
-  "@ark-ui/react": "5.30.0"
+  "@ark-ui/react": "5.34.1"
   "react-select": "5.10.2"
-  "@zag-js/toast": "1.31.1"
+
+  "@open-pioneer/base-them": *core_packages_version
+  "@open-pioneer/core": *core_packages_version
+  "@open-pioneer/notifier": *core_packages_version
+  "@open-pioneer/react-utils": *core_packages_version
+  "@open-pioneer/reactivity": *core_packages_version
+  "@open-pioneer/runtime": *core_packages_version
 
 allowUnusedPatches: true
 ignorePatchFailures: false
@@ -150,10 +156,6 @@ patchedDependencies:
 
   # Ensure all portals are mounted under `.pioneer-root` div
   "@ark-ui/react@*": "patches/@ark-ui__react.patch"
-
-  # Fix display of toasts that are created before the Notifier UI is mounted
-  # See https://github.com/chakra-ui/zag/issues/2922
-  "@zag-js/toast": patches/@zag-js__toast.patch
 
 # Install older versions by default
 resolutionMode: "lowest-direct"
