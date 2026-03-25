@@ -1,5 +1,21 @@
 # Changelog
 
+## 2026-03-25
+
+[Show all changes](https://github.com/open-pioneer/trails-starter/compare/2026-01-22...2026-03-25)
+
+- Update core packages to 4.5.0
+    - Note: OpenLayers base packages 1.2.0 are compatible with this version. You might need to add overrides to the pnpm-workspace.yaml to ensure that the base packages use the newer core packages version (e.g. "@open-pioneer/runtime": "4.5.0")
+- Update Open Pioneer build tools
+- Update Chakra UI to 3.34.0 (Ark UI 5.34.1)
+    - Remove patch for @zag-js/toast
+    - Add a new patch for @zag-js/splitter (fixes this problem: [PR](https://github.com/chakra-ui/zag/pull/3045))
+- Update OpenLayers to 10.8.0
+- Update pnpm to 10.32.1
+- Update eslint-plugin-react-hooks to 7.0.1
+    - Some rules were disabled because they are very pedantic, see `eslint.config.mjs`
+- Update various smaller dependencies
+
 ## 2026-01-22
 
 [Show all changes](https://github.com/open-pioneer/trails-starter/compare/2026-01-14...2026-01-22)

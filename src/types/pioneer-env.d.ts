@@ -2,3 +2,4 @@
 // SPDX-License-Identifier: Apache-2.0
 
 /// <reference types="@open-pioneer/vite-plugin-pioneer/client" />
+void 0; // work around for linter issue ("No header found"; file cannot be empty at this time)
