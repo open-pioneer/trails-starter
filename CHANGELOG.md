@@ -1,5 +1,16 @@
 # Changelog
 
+## 2026-03-25
+
+[Show all changes](https://github.com/open-pioneer/trails-starter/compare/2026-01-14...2026-01-22)
+
+- Update core packages to 4.5.0
+- Update Open Pioneer build tools
+- Update Chakra UI to 3.34.0 (Ark UI 5.34.1)
+    - Remove patch for @zag-js/toast
+    - Add a new patch for @zag-js/splitter (TODO: Link to PR)
+- Update pnpm to 10.32.1
+
 ## 2026-01-22
 
 [Show all changes](https://github.com/open-pioneer/trails-starter/compare/2026-01-14...2026-01-22)
