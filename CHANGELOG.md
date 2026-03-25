@@ -2,6 +2,8 @@
 
 ## 2026-01-22
 
+[Show all changes](https://github.com/open-pioneer/trails-starter/compare/2026-01-14...2026-01-22)
+
 - Update OpenLayers base packages to 1.2.0
 - Update core packages to 4.4.0
 - Update Open Pioneer build tools
@@ -12,12 +14,16 @@
 
 ## 2026-01-14
 
+[Show all changes](https://github.com/open-pioneer/trails-starter/compare/2025-12-10...2026-01-14)
+
 - Fix an issue with the `<Notifier />` not showing notifications that are created
   before the Notifier is being rendered.
   This requires a new patch against a `zag-js` package for as long as the upstream issue persists.
   For more details, see [this issue](https://github.com/open-pioneer/trails-core-packages/issues/174#issue-3812397738).
 
 ## 2025-12-10
+
+[Show all changes](https://github.com/open-pioneer/trails-starter/compare/2025-11-28...2025-12-10)
 
 - Remove the `configDependency` again due to issues with Renovate.
     - The global settings mentioned in the previous entry are applied directly in `pnpm-workspace.yaml`
@@ -26,6 +32,8 @@
         - `autoInstallPeers: true`, `dedupePeerDependents: true` and `dangerouslyAllowAllBuilds: false` are set by default in PNPM and don't need to be defined explicitly
 
 ## 2025-11-28
+
+[Show all changes](https://github.com/open-pioneer/trails-starter/compare/2025-11-20...2025-11-28)
 
 - Configure the package `@open-pioneer/pnpm-plugin-defaults` as a `configDependency` in `pnpm-workspace.yaml`.
   The package enforces certain global pnpm settings:
@@ -41,6 +49,8 @@
 
 ## 2025-11-20
 
+[Show all changes](https://github.com/open-pioneer/trails-starter/compare/2025-10-21...2025-11-20)
+
 - Update OpenLayers base packages to 1.1.0
 - Update core packages to 4.3.0
 - Update OpenLayers to 10.7.0
@@ -52,6 +62,8 @@
 - Update various smaller dependencies
 
 ## 2025-10-21
+
+[Show all changes](https://github.com/open-pioneer/trails-starter/compare/2025-08-07...2025-10-21)
 
 - Update OpenLayers base packages to 1.0.0
 - Update core packages to 4.2.0
@@ -78,6 +90,8 @@
 
 ## 2025-08-07
 
+[Show all changes](https://github.com/open-pioneer/trails-starter/compare/2025-06-13...2025-08-07)
+
 - Update OpenLayers to 10.6.1
 - Update Chakra to v3.24.2
     - Patch for `@ark-ui/react` needed a slight update
@@ -89,11 +103,15 @@
 
 ## 2025-06-13
 
+[Show all changes](https://github.com/open-pioneer/trails-starter/compare/2025-06-06...2025-06-13)
+
 - Bump Chakra to v3.21.0
     - The patch for `zag-js` could be removed, since the underlying issue was fixed
     - The patch for `@ark-ui/react` needed a slight update
 
 ## 2025-06-06
+
+[Show all changes](https://github.com/open-pioneer/trails-starter/compare/2025-04-25...2025-06-06)
 
 - Update to Chakra v3
     - A small migration guide was added to the documentation (in `docs/internals/ChakraV3Migration.md`).
@@ -115,6 +133,8 @@
 
 ## 2025-04-25
 
+[Show all changes](https://github.com/open-pioneer/trails-starter/compare/2025-02-24...2025-04-25)
+
 - Update Open Pioneer Trails dependencies to latest version.
     - Core packages: 3.1.0 ([Changes](https://github.com/open-pioneer/trails-openlayers-base-packages/pull/407))
     - OpenLayers base packages: 0.10.0 ([Changes](https://github.com/open-pioneer/trails-core-packages/pull/88))
@@ -130,6 +150,8 @@
 - Remove obsolete `disabled-package` directory from directory `support`.
 
 ## 2025-02-24
+
+[Show all changes](https://github.com/open-pioneer/trails-starter/compare/2025-01-22...2025-02-24)
 
 - Update Open Pioneer Trails dependencies to latest version.
     - Core packages: 3.0.0 ([Changes](https://github.com/open-pioneer/trails-core-packages/pull/82#issue-2868735924))
@@ -154,9 +176,13 @@
 
 ## 2025-01-22
 
+[Show all changes](https://github.com/open-pioneer/trails-starter/compare/2024-12-05...2025-01-22)
+
 - Update Vite to version 5.4.14 due to CVE-2025-24010 ([GHSA-vg6x-rcgg-rjx6](https://github.com/vitejs/vite/security/advisories/GHSA-vg6x-rcgg-rjx6))
 
 ## 2024-12-05
+
+[Show all changes](https://github.com/open-pioneer/trails-starter/compare/2024-11-18...2024-12-05)
 
 - Update Open Pioneer Trails dependencies to latest version.
     - Core packages: 2.4.0 ([Changes](https://github.com/open-pioneer/trails-core-packages/pull/70#issue-2602612673))
@@ -171,11 +197,15 @@
 
 ## 2024-11-18
 
+[Show all changes](https://github.com/open-pioneer/trails-starter/compare/2024-10-22...2024-11-18)
+
 - Add a new script: `pnpm run generate-sbom`.
   The script generates a software bill of materials (SBOM) for the project that includes all production dependencies.
   For more information, see the [relevant section in the Repository Guide](./docs/RepositoryGuide.md#pnpm-run-generate-sbom).
 
 ## 2024-10-22
+
+[Show all changes](https://github.com/open-pioneer/trails-starter/compare/2024-09-27...2024-10-22)
 
 - Replace `peerDependencies` with normal `dependencies` due to limitations of pnpm.
 - Use new CLI tool `check-pnpm-duplicates` ([Docs](https://www.npmjs.com/package/@open-pioneer/check-pnpm-duplicates)) to check for duplicate packages.
@@ -190,6 +220,8 @@
 - Hide deprecation warnings for some legacy SASS APIs used in vite (see `vite.config.ts`)
 
 ## 2024-09-27
+
+[Show all changes](https://github.com/open-pioneer/trails-starter/compare/2024-08-06...2024-09-27)
 
 - Migrate to [pnpm catalogs](https://pnpm.io/catalogs) for central dependencies.
 
@@ -220,10 +252,14 @@
 
 ## 2024-08-06
 
+[Show all changes](https://github.com/open-pioneer/trails-starter/compare/2024-07-24...2024-08-06)
+
 - Update to latest OpenLayers Trails Packages.
   This also adapts to the breaking change in the react-utils package (see [Release notes](https://github.com/open-pioneer/trails-core-packages/releases/tag/%40open-pioneer%2Freact-utils%401.0.0)).
 
 ## 2024-07-24
+
+[Show all changes](https://github.com/open-pioneer/trails-starter/compare/2024-07-23...2024-07-24)
 
 - Improve the commit hooks (`.husky/pre-commit`).
   Commit hooks run during `git commit` to check the code style and run tests.
@@ -239,6 +275,8 @@
 
 ## 2024-07-23
 
+[Show all changes](https://github.com/open-pioneer/trails-starter/compare/2024-07-04...2024-07-23)
+
 - Update the license report script. It can now handle dependency license information returned by pnpm 9.
   See also <https://github.com/open-pioneer/trails-openlayers-base-packages/pull/335>.
 - Configure `virtual-store-dir-max-length=60` in `.npmrc`.
@@ -251,6 +289,8 @@
 
 ## 2024-07-04
 
+[Show all changes](https://github.com/open-pioneer/trails-starter/compare/2024-06-24...2024-07-04)
+
 - `tsconfig.json`: Switch to `"moduleResolution": "Bundler"`.
   This is the appropriate resolution mode for TypeScript code when using a bundler such as Vite.
 
@@ -260,6 +300,8 @@
 - Update workflow files (some actions were outdated).
 
 ## 2024-06-24
+
+[Show all changes](https://github.com/open-pioneer/trails-starter/compare/2024-06-17...2024-06-24)
 
 - Update trails dependencies.
 
@@ -323,16 +365,22 @@
 
 ## 2024-06-17
 
+[Show all changes](https://github.com/open-pioneer/trails-starter/compare/2024-05-14...2024-06-17)
+
 - Update patch for `react-select`: only use valid values for `aria-activedescendant`.
   This removes a warning in firefox when `aria-activedescendant` was set to an empty string.
 
 ## 2024-05-14
+
+[Show all changes](https://github.com/open-pioneer/trails-starter/compare/2024-05-10...2024-05-14)
 
 - Update to Vite 5.1 and Vitest 1.6
     - Major changes in Vitest 1: [Release Notes](https://github.com/vitest-dev/vitest/releases/tag/v1.0.0)
     - Major changes in Vite 5: [Release Notes](https://vitejs.dev/blog/announcing-vite5)
 
 ## 2024-05-10
+
+[Show all changes](https://github.com/open-pioneer/trails-starter/compare/2024-03-14...2024-05-10)
 
 - Require pnpm >= 9.0, see [release notes](https://github.com/pnpm/pnpm/releases/tag/v9.0.0).
   This also updates the lockfile to `lockfileVersion: 9.0`
