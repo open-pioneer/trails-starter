@@ -22,8 +22,8 @@ catalogs:
       specifier: ^1.2.0
       version: 1.2.0
     '@open-pioneer/build-package-cli':
-      specifier: ^3.0.8
-      version: 3.0.8
+      specifier: ^3.0.9
+      version: 3.0.9
     '@open-pioneer/build-support':
       specifier: ^3.0.6
       version: 3.0.6
@@ -67,8 +67,8 @@ catalogs:
       specifier: ^4.5.0
       version: 4.5.0
     '@open-pioneer/vite-plugin-pioneer':
-      specifier: ^5.1.1
-      version: 5.1.1
+      specifier: ^5.1.2
+      version: 5.1.2
     '@testing-library/dom':
       specifier: ^10.4.1
       version: 10.4.1
@@ -235,7 +235,7 @@ importers:
         version: 9.39.2
       '@open-pioneer/build-package-cli':
         specifier: 'catalog:'
-        version: 3.0.8(sass@1.98.0)(typescript@5.9.3)
+        version: 3.0.9(sass@1.98.0)(typescript@5.9.3)
       '@open-pioneer/build-support':
         specifier: 'catalog:'
         version: 3.0.6
@@ -244,7 +244,7 @@ importers:
         version: 0.3.1
       '@open-pioneer/vite-plugin-pioneer':
         specifier: 'catalog:'
-        version: 5.1.1(@open-pioneer/runtime@4.5.0(@types/react@19.2.14)(typescript@5.9.3))(rollup@4.60.0)(sass@1.98.0)(vite@7.3.1(@types/node@20.19.22)(sass@1.98.0)(tsx@4.21.0)(yaml@2.8.3))
+        version: 5.1.2(@open-pioneer/runtime@4.5.0(@types/react@19.2.14)(typescript@5.9.3))(rollup@4.60.0)(sass@1.98.0)(vite@7.3.1(@types/node@20.19.22)(sass@1.98.0)(tsx@4.21.0)(yaml@2.8.3))
       '@testing-library/dom':
         specifier: 'catalog:'
         version: 10.4.1
@@ -960,17 +960,17 @@ packages:
   '@open-pioneer/basemap-switcher@1.2.0':
     resolution: {integrity: sha512-VSKCk2kADW+otKOY+WDoi+JPDthidmPguLruLSIWQpWh4ryTLy/kP0sJcqF7BFF5hz0gD4vnfOd7h0U8eeWE9A==}
 
-  '@open-pioneer/build-common@3.2.1':
-    resolution: {integrity: sha512-H/phhnKQkXjOZx1m3ANCRu8FaHXTFE15CiIMfWvEy/rpgpWaL4azfVswpdG5YNJfDiBXuQGrB3iou+mkcQ4dKQ==}
+  '@open-pioneer/build-common@3.2.2':
+    resolution: {integrity: sha512-RXn3vRH4N9jStz6K/+CqlfmJSmoA4tkaPE+2+dfmWNzvz0IG02zYS67NVyJxcbzmY/26SBczJYTnkTMQv10iqA==}
     engines: {node: '>= 20'}
 
-  '@open-pioneer/build-package-cli@3.0.8':
-    resolution: {integrity: sha512-4jwJqvK25BwbxvZ7pZmuehss0i1Vx12Vuh4ldAF19i4Q7Q+Rkr9aOz1XO2kyTXgILVEY5SOiAU9KJvTpgbFoxg==}
+  '@open-pioneer/build-package-cli@3.0.9':
+    resolution: {integrity: sha512-joCDl+oqTs0TQ9UD7jOJCfZTECFJDoxID8Q6jl8nmmh8+BTVIhpQRHHjEZ+Z54i4Fue1/87QLuFJQQDhfOqwIg==}
     engines: {node: '>= 20'}
     hasBin: true
 
-  '@open-pioneer/build-package@4.1.1':
-    resolution: {integrity: sha512-v+cBq7eehv/X5sUJ40WYxyc+YisAvrjOWjD5tHpDU6tvkc3ifCQh0oSAb3ajf/eHtBN/ZYe11+9ySfG0wNtMAQ==}
+  '@open-pioneer/build-package@4.1.2':
+    resolution: {integrity: sha512-5lM/WjlZHiJX21R8YKrgPH2RrrJGaC9w/xalojgxYKvBjdZWP+j/wykOb+CDJ2IVu8CDSuiV6uSbSIQJ/PAiVw==}
     engines: {node: '>= 20'}
     peerDependencies:
       sass: '*'
@@ -1041,8 +1041,8 @@ packages:
   '@open-pioneer/test-utils@4.5.0':
     resolution: {integrity: sha512-JeKp8KEdWSPvdPZ9DUIs70gVymZ9CfYzqLjwIhXPEi7+DyPmA0ZXeSeTcaeq73xDbPOzS3Jv6bWIuC8+Cn+9kA==}
 
-  '@open-pioneer/vite-plugin-pioneer@5.1.1':
-    resolution: {integrity: sha512-F64AHQAq6nDJ29oRll19lkcDPBlr/e471bExaa6UHX315Ll9U90iX3Hi2PKxJu13JI0xE4jiadUvS2EAYTIMEg==}
+  '@open-pioneer/vite-plugin-pioneer@5.1.2':
+    resolution: {integrity: sha512-t+hD/JXgCVDmuesIY7ogVF2XpCg8gHrCjxJIkeDoF9gAJXYi3HuSYk1Ke8L+GJfnQG69CwgKcBtNLif3KNLIHQ==}
     engines: {node: '>= 20'}
     peerDependencies:
       '@open-pioneer/runtime': '*'
@@ -4755,7 +4755,7 @@ snapshots:
       - react-dom
       - typescript
 
-  '@open-pioneer/build-common@3.2.1(rollup@4.60.0)':
+  '@open-pioneer/build-common@3.2.2(rollup@4.60.0)':
     dependencies:
       '@rollup/pluginutils': 5.3.0(rollup@4.60.0)
       semver: 7.7.4
@@ -4764,9 +4764,9 @@ snapshots:
     transitivePeerDependencies:
       - rollup
 
-  '@open-pioneer/build-package-cli@3.0.8(sass@1.98.0)(typescript@5.9.3)':
+  '@open-pioneer/build-package-cli@3.0.9(sass@1.98.0)(typescript@5.9.3)':
     dependencies:
-      '@open-pioneer/build-package': 4.1.1(sass@1.98.0)(typescript@5.9.3)
+      '@open-pioneer/build-package': 4.1.2(sass@1.98.0)(typescript@5.9.3)
       chalk: 5.6.2
       commander: 14.0.3
     transitivePeerDependencies:
@@ -4774,9 +4774,9 @@ snapshots:
       - supports-color
       - typescript
 
-  '@open-pioneer/build-package@4.1.1(sass@1.98.0)(typescript@5.9.3)':
+  '@open-pioneer/build-package@4.1.2(sass@1.98.0)(typescript@5.9.3)':
     dependencies:
-      '@open-pioneer/build-common': 3.2.1(rollup@4.60.0)
+      '@open-pioneer/build-common': 3.2.2(rollup@4.60.0)
       '@open-pioneer/build-support': 3.0.6
       '@rollup/plugin-node-resolve': 16.0.3(rollup@4.60.0)
       chalk: 5.6.2
@@ -5043,12 +5043,12 @@ snapshots:
       - '@types/react-dom'
       - typescript
 
-  '@open-pioneer/vite-plugin-pioneer@5.1.1(@open-pioneer/runtime@4.5.0(@types/react@19.2.14)(typescript@5.9.3))(rollup@4.60.0)(sass@1.98.0)(vite@7.3.1(@types/node@20.19.22)(sass@1.98.0)(tsx@4.21.0)(yaml@2.8.3))':
+  '@open-pioneer/vite-plugin-pioneer@5.1.2(@open-pioneer/runtime@4.5.0(@types/react@19.2.14)(typescript@5.9.3))(rollup@4.60.0)(sass@1.98.0)(vite@7.3.1(@types/node@20.19.22)(sass@1.98.0)(tsx@4.21.0)(yaml@2.8.3))':
     dependencies:
       '@babel/generator': 7.29.1
       '@babel/template': 7.28.6
       '@babel/types': 7.29.0
-      '@open-pioneer/build-common': 3.2.1(rollup@4.60.0)
+      '@open-pioneer/build-common': 3.2.2(rollup@4.60.0)
       '@open-pioneer/runtime': 4.5.0(@types/react@19.2.14)(typescript@5.9.3)
       debug: 4.4.3
       js-yaml: 4.1.1
