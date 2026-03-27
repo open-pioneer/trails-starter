@@ -187,6 +187,9 @@ auditConfig:
     # See CVE CVE-2025-69873
     - CVE-2026-26996
 
+    # https://github.com/advisories/GHSA-f886-m6hf-6m8v
+    - CVE-2026-33750 
+
 # Only run build scripts for allowed packages.
 onlyBuiltDependencies:
   - "@parcel/watcher"
