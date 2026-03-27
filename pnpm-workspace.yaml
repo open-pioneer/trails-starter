@@ -81,7 +81,7 @@ catalog:
   eslint: ^9.39.2
   fast-glob: ^3.3.3
   handlebars: ^4.7.8
-  happy-dom: ^20.8.4
+  happy-dom: ^20.8.8
   husky: ^9.1.7
   js-yaml: ^4.1.1
   jsdom: ^29.0.1
@@ -169,6 +169,7 @@ minimumReleaseAgeExclude:
   - "@open-pioneer/*"
   - "@conterra/*"
   - "picomatch" # See overrides
+  - "happy-dom@20.8.8" # https://github.com/advisories/GHSA-6q6h-j7hj-3r64
 
 peerDependencyRules:
   allowedVersions:
