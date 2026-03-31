@@ -81,7 +81,7 @@ catalog:
   eslint: ^9.39.2
   fast-glob: ^3.3.3
   handlebars: ^4.7.9
-  happy-dom: ^20.8.8
+  happy-dom: ^20.8.9
   husky: ^9.1.7
   js-yaml: ^4.1.1
   jsdom: ^29.0.1
@@ -169,7 +169,7 @@ minimumReleaseAgeExclude:
   - "@open-pioneer/*"
   - "@conterra/*"
   - "picomatch" # See overrides
-  - "happy-dom@20.8.8" # https://github.com/advisories/GHSA-6q6h-j7hj-3r64
+  - "happy-dom@20.8.9" # https://github.com/advisories/GHSA-w4gp-fjgq-3q4g
   - "handlebars@4.7.9" # https://github.com/advisories/GHSA-2qvq-rjwj-gvw9
 
 peerDependencyRules:
@@ -190,7 +190,7 @@ auditConfig:
     - CVE-2026-26996
 
     # https://github.com/advisories/GHSA-f886-m6hf-6m8v
-    - CVE-2026-33750 
+    - CVE-2026-33750
 
 # Only run build scripts for allowed packages.
 onlyBuiltDependencies:
