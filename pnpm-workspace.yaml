@@ -40,18 +40,16 @@ catalog:
 
   # Other dependencies
   "@chakra-ui/react": ^3.34.0
-  "@chakra-ui/cli": ^3.34.0
   "@conterra/reactivity-core": ^0.8.0
   "@emotion/cache": ^11.14.0
   "@emotion/react": ^11.14.0
   "@emotion/styled": ^11.14.1
-  "@formatjs/intl": ^3.1.8
+  "@formatjs/intl": ^4.1.4
   ol: ^10.8.0
   react-dom: *react_version
   react-icons: ^5.5.0
   react-use: ^17.6.0
   react: *react_version
-  uuid: ^13.0.0
 
   # Devtools
   "@eslint/js": ^9.39.2
@@ -95,7 +93,6 @@ catalog:
   vite: ^7.3.2
   vite-plugin-eslint: ^1.8.1
   vitest: ^4.1.0
-  zx: ^8.8.5
 
 overrides:
   # https://github.com/advisories/GHSA-5j98-mcp5-4vw2

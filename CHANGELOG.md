@@ -7,6 +7,7 @@
 - Add a new patch for `@zag-js/interact-outside`.
   The patch ensures that Popovers, Menus, etc. are closed properly when the focus moves to an element outside the component.
   See https://github.com/chakra-ui/zag/issues/3088 for more details.
+- Update outdated dependency version of `@formatjs/intl` and remove unused package versions from pnpm-workspace.yaml.
 
 ## 2026-03-25
 
