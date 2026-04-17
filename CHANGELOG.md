@@ -1,5 +1,13 @@
 # Changelog
 
+## 2026-04-17
+
+[Show all changes](https://github.com/open-pioneer/trails-starter/compare/2026-03-25...2026-04-17)
+
+- Add a new patch for `@zag-js/interact-outside`.
+  The patch ensures that Popovers, Menus, etc. are closed properly when the focus moves to an element outside the component.
+  See https://github.com/chakra-ui/zag/issues/3088 for more details.
+
 ## 2026-03-25
 
 [Show all changes](https://github.com/open-pioneer/trails-starter/compare/2026-01-22...2026-03-25)

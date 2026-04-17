@@ -146,6 +146,7 @@ overrides:
   # Ensure patched packages have the expected version (patch was tested with this version):
   "@ark-ui/react": "5.34.1"
   "@zag-js/splitter": "1.35.3"
+  "@zag-js/interact-outside": "1.35.3"
   "react-select": "5.10.2"
 
 allowUnusedPatches: true
@@ -159,6 +160,10 @@ patchedDependencies:
 
   # Fixes cursor when using chakra's splitter (see https://github.com/chakra-ui/zag/pull/3045)
   "@zag-js/splitter@*": "patches/@zag-js__splitter.patch"
+
+  # Fixes 'interact-outside' logic not tabbing between elements within the same shadow dom.
+  # Can be removed if https://github.com/chakra-ui/zag/issues/3088 is fixed.
+  "@zag-js/interact-outside": patches/@zag-js__interact-outside.patch
 
 # Install older versions by default
 resolutionMode: "lowest-direct"

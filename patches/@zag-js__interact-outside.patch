@@ -1,0 +1,22 @@
+diff --git a/dist/index.mjs b/dist/index.mjs
+index 31c63ae79fd927a8edd7bb1e535acf5f74ff29cc..b2f3c88aac4c8075427e9ba855694b75d1b1f4b9 100644
+--- a/dist/index.mjs
++++ b/dist/index.mjs
+@@ -122,8 +122,8 @@ function trackInteractOutsideImpl(node, options) {
+   }, 0);
+   function onFocusin(event) {
+     const func = defer ? raf : (v) => v();
++    const composedPath = event?.composedPath?.() ?? [event?.target];
+     func(() => {
+-      const composedPath = event?.composedPath?.() ?? [event?.target];
+       const target = isInShadowRoot ? composedPath[0] : getEventTarget(event);
+       if (!node || !isEventOutside(event, target)) return;
+       if (onFocusOutside || onInteractOutside) {
+@@ -146,6 +146,7 @@ function trackInteractOutsideImpl(node, options) {
+     cleanups.add(addDomEvent(doc, "focusin", onFocusin, true));
+     cleanups.add(parentWin.addEventListener("focusin", onFocusin, true));
+     cleanups.add(frames.addEventListener("focusin", onFocusin, true));
++    isInShadowRoot && cleanups.add(addDomEvent(node?.getRootNode(), "focusin", onFocusin, true));
+   }
+   return () => {
+     clearTimeout(timer);
