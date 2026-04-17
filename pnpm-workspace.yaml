@@ -130,6 +130,9 @@ overrides:
   "picomatch@>=3.0.0 <3.0.2": "^3.0.2"
   "picomatch@>=4.0.0 <4.0.4": "^4.0.4"
 
+  # https://github.com/advisories/GHSA-j452-xhg8-qg39
+  "protocol-buffers-schema@<3.6.1": "^3.6.1"
+
   # We don't actually use the babel plugin.
   # The babel runtime is also not used as a production dependency.
   # See e.g. https://github.com/emotion-js/emotion/issues/2371
