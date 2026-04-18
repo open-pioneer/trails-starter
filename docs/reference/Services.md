@@ -43,6 +43,51 @@ The framework will try to import the class from that file:
 export { HelloWorldService } from "./HelloWorldService";
 ```
 
+## Creating a service via a ServiceFactory (advanced)
+
+Instead of exporting a plain class, you can use a `ServiceFactory` to control how a service is created.
+This is useful when you need custom initialization logic or want full control over the service lifecycle.
+
+A factory is declared as a class that implements `ServiceFactory` and is wrapped with `defineServiceFactory`:
+
+```ts
+// some-package/HelloWorldServiceFactory.ts
+import { defineServiceFactory, DeclaredService, ServiceFactory, ServiceOptions } from "@open-pioneer/runtime";
+
+interface HelloWorldService extends DeclaredService<"hello.HelloWorldService"> {
+    sayHello(): void;
+}
+
+class HelloWorldServiceFactoryImpl implements ServiceFactory<HelloWorldService> {
+    constructor(options: ServiceOptions) {
+        // ...
+    }
+
+    createService() {
+        const myServ = new MyHelloWorldService({ /* ... */ });
+        return myServ;
+    }
+
+    // optional
+    destroyService(srv: HelloWorldService) {
+        // cleanup
+        // NOTE: the service's own `destroy()` method will NOT be called automatically when using a factory.
+    }
+}
+
+export const HelloWorldServiceFactory = defineServiceFactory(HelloWorldServiceFactoryImpl);
+```
+
+The rules for the `build.config.mjs` and `services.ts` are exactly the same as with normal services.
+It is recommended to export the factory using the service name (not the factory name) in `services.ts`:
+
+```js
+// some-package/services.ts
+export { HelloWorldServiceFactory as HelloWorldService } from "./HelloWorldServiceFactory";
+```
+
+This keeps the configuration identical to a normal service, so that the use of a factory remains a local implementation detail.
+
 ## Configuring a service
 
 Services accept configuration options such as the interfaces they provide and the references they require.
@@ -180,6 +225,11 @@ It reverses the construction algorithm:
 2. Recursively destroy `D1` and `D2`.
 
 Dependencies are destroyed after their dependents to ensure that their instances are still valid in the `destroy()` method of `S`.
+
+> NOTE:
+> If a service is created by a `ServiceFactory`, the service's own `destroy()` method is **not** called automatically.
+> Instead, the optional `destroyService()` method on the factory is invoked.
+> The factory takes full responsibility for the service lifecycle.
 
 > NOTE:
 > Reference cycles between services are forbidden: the app will refuse to launch.
