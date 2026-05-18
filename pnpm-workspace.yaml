@@ -7,7 +7,7 @@ packages:
 # This is a yaml feature and is not interpreted by pnpm directly.
 __versions:
   - &react_version ^19.2.3
-  - &core_packages_version ^4.5.0
+  - &core_packages_version ^4.6.0-dev-i18n.20260518080633
   - &ol_base_packages_version ^1.2.0
 
 # https://pnpm.io/catalogs
@@ -54,9 +54,10 @@ catalog:
   # Devtools
   "@eslint/js": ^9.39.2
   "@open-pioneer/build-package-cli": ^3.0.9
-  "@open-pioneer/build-support": ^3.0.6
+  "@open-pioneer/build-common": 4.0.0-dev-i18n.20260416113643
+  "@open-pioneer/build-support": 3.1.0-dev-i18n.20260416113643
   "@open-pioneer/check-pnpm-duplicates": ^0.3.1
-  "@open-pioneer/vite-plugin-pioneer": ^5.1.2
+  "@open-pioneer/vite-plugin-pioneer": 5.2.0-dev-i18n.20260416113643
   "@testing-library/dom": ^10.4.1
   "@testing-library/jest-dom": ^6.9.1
   "@testing-library/react": ^16.3.0
@@ -154,6 +155,15 @@ overrides:
   "@zag-js/splitter": "1.35.3"
   "@zag-js/interact-outside": "1.35.3"
   "react-select": "5.10.2"
+
+  "@open-pioneer/runtime": 4.6.0-dev-i18n.20260518080633
+  "@open-pioneer/core": 4.6.0-dev-i18n.20260518080633
+  "@open-pioneer/notifier": 4.6.0-dev-i18n.20260518080633
+  "@open-pioneer/react-utils": 4.6.0-dev-i18n.20260518080633
+  "@open-pioneer/reactivity": 4.6.0-dev-i18n.20260518080633
+  "@open-pioneer/vite-plugin-pioneer": 5.2.0-dev-i18n.20260416113643
+  "@open-pioneer/build-support": 3.1.0-dev-i18n.20260416113643
+  "@open-pioneer/build-common": 4.0.0-dev-i18n.20260416113643
 
 allowUnusedPatches: true
 ignorePatchFailures: false
