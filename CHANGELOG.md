@@ -9,6 +9,9 @@
 - Update Open Pioneer build tools
 - Update to Vite 8
     - Note: the react plugin was changed as well, from `@vitejs/plugin-react-swc` to `@vitejs/plugin-react`
+- Update to pnpm v11
+- Configure pnpm option `trustPolicy` to `no-downgrade`. If you want to install old versions of packages that are not signed but are published after other versions of the same package that are trusted, you need to list them under `trustPolicyExclude`.
+- Bump minimum node version to 24
 - Update to OpenLayers 10.9.0
 - Update TypeScript to 6.0.3
     - Note: configurations were split into `tsconfig.browser.json` (for `src/\*\*/`) and `tsconfig.node.json`.

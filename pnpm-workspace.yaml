@@ -149,7 +149,6 @@ overrides:
   "@open-pioneer/chakra-snippets": 4.6.0-dev.20260518102806
 
 allowUnusedPatches: true
-ignorePatchFailures: false
 patchedDependencies:
   # Ensure valid ids for aria-activedescendant and fix touch events in shadow DOM (see https://github.com/JedWatson/react-select/issues/5824)
   "react-select": "patches/react-select.patch"
@@ -172,7 +171,6 @@ minimumReleaseAge: 4320 # 3 days in minutes
 minimumReleaseAgeExclude:
   - "@open-pioneer/*"
   - "@conterra/*"
-  - "vite@7.3.2"
 
 peerDependencyRules:
   allowedVersions:
@@ -181,29 +179,33 @@ peerDependencyRules:
     "rollup": "*"
 
 auditConfig:
-  ignoreCves:
-    # This affects ajv, which is a transitive dependency of eslint.
-    # Eslint depends on ajv@v6, and an update to v8 might not be trivial.
-    # Only dev dependencies are (potentially) affected.
-    # https://github.com/advisories/GHSA-2g4f-4pwh-qvx6
-    - CVE-2025-69873
-
-    # See CVE CVE-2025-69873
-    - CVE-2026-26996
-
-    # https://github.com/advisories/GHSA-f886-m6hf-6m8v
-    - CVE-2026-33750
+  ignoreGhsas:
+    # https://github.com/advisories/GHSA-f886-m6hf-6m8v CVE-2026-33750
+    - GHSA-f886-m6hf-6m8v
 
 # Only run build scripts for allowed packages.
-onlyBuiltDependencies:
-  - "@parcel/watcher"
-  - "@swc/core"
-  - esbuild
+allowBuilds:
+  "@parcel/watcher": true
+  "@swc/core": true
+  esbuild: true
+  # Packages that we don't need to build (even though they have install scripts).
+  core-js: false
+  unrs-resolver: false
 
-# Packages that we don't need to build (even though they have install scripts).
-ignoredBuiltDependencies:
-  - core-js
-  - unrs-resolver
+# Do not allow to install packages which trust level has decreased
+# (e.g. older version was signed but the version to be installed is not signed)
+trustPolicy: no-downgrade
+# Exclude packages from trustPolicy that are used in an old (major) version that was published after another signed version
+trustPolicyExclude:
+  - "@pnpm/lockfile.utils@1004.0.4"
+  - "@pnpm/lockfile.fs@1001.1.33"
+  - "@pnpm/lockfile.walker@1001.0.27"
+  - "@pnpm/lockfile.types@1002.1.1"
+  - "@pnpm/lockfile.merger@1001.0.21"
+  - "undici-types@6.21.0"
+  - "semver@6.3.1"
+  - "chokidar@4.0.3"
+  - "rollup@2.80.0"
 
 # Workaround for current problems regarding our vite plugin + vite's optimizeDeps feature
 shamefullyHoist: true
