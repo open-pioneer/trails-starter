@@ -6,7 +6,7 @@
     "scripts": {
         "clean": "rimraf dist && pnpm recursive exec rimraf dist",
         "dev": "vite",
-        "check-types": "tsc --noEmit",
+        "check-types": "tsc --build --noEmit",
         "watch-types": "pnpm check-types -w",
         "check-duplicates": "pnpm check-pnpm-duplicates -c support/duplicate-packages.yaml",
         "build": "vite build",

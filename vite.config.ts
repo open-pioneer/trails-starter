@@ -6,6 +6,8 @@ import { pioneer } from "@open-pioneer/vite-plugin-pioneer";
 import react from "@vitejs/plugin-react";
 import { resolve } from "node:path";
 import { defineConfig } from "vite";
+
+// @ts-expect-error Invalid typings
 import eslint from "vite-plugin-eslint";
 
 const sampleSites = ["samples/map-sample", "samples/i18n-howto"];

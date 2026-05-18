@@ -10,6 +10,10 @@
 - Update to Vite 8
     - Note: the react plugin was changed as well, from `@vitejs/plugin-react-swc` to `@vitejs/plugin-react`
 - Update to OpenLayers 10.9.0
+- Update TypeScript to 6.0.3
+    - Note: configurations were split into `tsconfig.browser.json` (for `src/\*\*/`) and `tsconfig.node.json`.
+    - The main `tsconfig.json` file references them both
+    - `pnpm` scripts use `tsc --build` now, but are otherwise unchanged
 - Bump various smaller dependencies
 
 ## 2026-04-17

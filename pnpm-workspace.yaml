@@ -91,7 +91,7 @@ catalog:
   sass: ^1.99.0
   tsx: ^4.22.0
   typedoc: ^0.28.19
-  typescript: ^5.9.3
+  typescript: ^6.0.3
   vite-plugin-eslint: ^1.8.1
   vite: ^8.0.13
   vitest: ^4.1.6
