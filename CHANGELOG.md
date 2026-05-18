@@ -1,5 +1,15 @@
 # Changelog
 
+## 2026-05-XX
+
+[Show all changes](https://github.com/open-pioneer/trails-starter/compare/2026-04-17...2026-05-XX)
+
+- Update core packages to 4.6.0
+- Update Openlayers base packages to 1.3.0
+- Update Open Pioneer build tools
+- Update to Vite 8
+    - Note: the react plugin was changed as well, from `@vitejs/plugin-react-swc` to `@vitejs/plugin-react`
+
 ## 2026-04-17
 
 [Show all changes](https://github.com/open-pioneer/trails-starter/compare/2026-03-25...2026-04-17)
