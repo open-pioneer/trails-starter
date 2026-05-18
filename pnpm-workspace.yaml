@@ -53,11 +53,11 @@ catalog:
 
   # Devtools
   "@eslint/js": ^9.39.2
-  "@open-pioneer/build-package-cli": ^3.0.9
-  "@open-pioneer/build-common": 4.0.0-dev-i18n.20260416113643
-  "@open-pioneer/build-support": 3.1.0-dev-i18n.20260416113643
-  "@open-pioneer/check-pnpm-duplicates": ^0.3.1
-  "@open-pioneer/vite-plugin-pioneer": 5.2.0-dev-i18n.20260416113643
+  "@open-pioneer/build-package-cli": ^3.1.0
+  "@open-pioneer/build-support": ^3.1.0
+  "@open-pioneer/changesets-release-line": ^0.1.0
+  "@open-pioneer/check-pnpm-duplicates": ^0.3.2
+  "@open-pioneer/vite-plugin-pioneer": ^6.0.0
   "@testing-library/dom": ^10.4.1
   "@testing-library/jest-dom": ^6.9.1
   "@testing-library/react": ^16.3.0
@@ -67,7 +67,7 @@ catalog:
   "@types/react-dom": ^19.2.3
   "@types/react": ^19.2.14
   "@typescript-eslint/parser": ^8.57.1
-  "@vitejs/plugin-react-swc": ^4.3.0
+  "@vitejs/plugin-react": "^6.0.2"
   "typescript-eslint": ^8.57.1
   eslint-config-prettier: ^10.1.8
   eslint-import-resolver-typescript: ^4.4.4
@@ -91,7 +91,7 @@ catalog:
   tsx: ^4.21.0
   typedoc: ^0.28.17
   typescript: ^5.9.3
-  vite: ^7.3.2
+  vite: ^8.0.13
   vite-plugin-eslint: ^1.8.1
   vitest: ^4.1.0
 
@@ -156,14 +156,19 @@ overrides:
   "@zag-js/interact-outside": "1.35.3"
   "react-select": "5.10.2"
 
-  "@open-pioneer/runtime": 4.6.0-dev-i18n.20260518080633
-  "@open-pioneer/core": 4.6.0-dev-i18n.20260518080633
-  "@open-pioneer/notifier": 4.6.0-dev-i18n.20260518080633
-  "@open-pioneer/react-utils": 4.6.0-dev-i18n.20260518080633
-  "@open-pioneer/reactivity": 4.6.0-dev-i18n.20260518080633
-  "@open-pioneer/vite-plugin-pioneer": 5.2.0-dev-i18n.20260416113643
-  "@open-pioneer/build-support": 3.1.0-dev-i18n.20260416113643
-  "@open-pioneer/build-common": 4.0.0-dev-i18n.20260416113643
+  # TODO: Remove before release
+  # Remove before release
+  "@open-pioneer/base-theme": 4.6.0-dev.20260518102806
+  "@open-pioneer/core": 4.6.0-dev.20260518102806
+  "@open-pioneer/http": 4.6.0-dev.20260518102806
+  "@open-pioneer/integration": 4.6.0-dev.20260518102806
+  "@open-pioneer/local-storage": 4.6.0-dev.20260518102806
+  "@open-pioneer/notifier": 4.6.0-dev.20260518102806
+  "@open-pioneer/react-utils": 4.6.0-dev.20260518102806
+  "@open-pioneer/reactivity": 4.6.0-dev.20260518102806
+  "@open-pioneer/runtime": 4.6.0-dev.20260518102806
+  "@open-pioneer/test-utils": 4.6.0-dev.20260518102806
+  "@open-pioneer/chakra-snippets": 4.6.0-dev.20260518102806
 
 allowUnusedPatches: true
 ignorePatchFailures: false

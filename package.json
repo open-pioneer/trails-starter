@@ -37,7 +37,7 @@
         "@types/react": "catalog:",
         "@types/react-dom": "catalog:",
         "@typescript-eslint/parser": "catalog:",
-        "@vitejs/plugin-react-swc": "catalog:",
+        "@vitejs/plugin-react": "catalog:",
         "eslint": "catalog:",
         "eslint-config-prettier": "catalog:",
         "eslint-import-resolver-typescript": "catalog:",
