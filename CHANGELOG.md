@@ -9,6 +9,8 @@
 - Update Open Pioneer build tools
 - Update to Vite 8
     - Note: the react plugin was changed as well, from `@vitejs/plugin-react-swc` to `@vitejs/plugin-react`
+- Update to OpenLayers 10.9.0
+- Bump various smaller dependencies
 
 ## 2026-04-17
 
