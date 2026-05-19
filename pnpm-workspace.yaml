@@ -115,6 +115,12 @@ overrides:
   # https://github.com/advisories/GHSA-qx2v-qp2m-jg93
   "postcss@<8.5.10": "^8.5.10"
 
+  # https://github.com/advisories/GHSA-jxxr-4gwj-5jf2
+  "brace-expansion@>=5.0.0 <5.0.6": "^5.0.6"
+
+  # https://github.com/advisories/GHSA-58qx-3vcg-4xpx
+  "ws@>=8.0.0 <8.20.1": "^8.20.1"
+
   # We don't actually use the babel plugin.
   # The babel runtime is also not used as a production dependency.
   # See e.g. https://github.com/emotion-js/emotion/issues/2371
