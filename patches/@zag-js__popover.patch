@@ -1,0 +1,13 @@
+diff --git a/dist/popover.dom.mjs b/dist/popover.dom.mjs
+index b46929d79b9d2dbb8cf69b5cbe2a63ce85dad042..38f558a8d77fa256dca3066e290db8f87a8805e1 100644
+--- a/dist/popover.dom.mjs
++++ b/dist/popover.dom.mjs
+@@ -14,7 +14,7 @@ var getTitleId = (scope) => scope.ids?.title ?? `popover:${scope.id}:title`;
+ var getDescriptionId = (scope) => scope.ids?.description ?? `popover:${scope.id}:desc`;
+ var getCloseTriggerId = (scope) => scope.ids?.closeTrigger ?? `popover:${scope.id}:close`;
+ var getAnchorEl = (scope) => scope.getById(getAnchorId(scope));
+-var getTriggerEls = (scope) => queryAll(scope.getDoc(), `[data-scope="popover"][data-part="trigger"][data-ownedby="${scope.id}"]`);
++var getTriggerEls = (scope) => queryAll(scope.getRootNode(), `[data-scope="popover"][data-part="trigger"][data-ownedby="${scope.id}"]`);
+ var getActiveTriggerEl = (scope, value) => {
+   return value == null ? getTriggerEls(scope)[0] : scope.getById(getTriggerId(scope, value));
+ };

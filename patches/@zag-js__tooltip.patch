@@ -1,0 +1,13 @@
+diff --git a/dist/tooltip.dom.mjs b/dist/tooltip.dom.mjs
+index 2942e3e5bdbacb699015a0bf1cccfb6778a0115d..f3dc78d87cf6d1f87dec807ffb629adcab5df72b 100644
+--- a/dist/tooltip.dom.mjs
++++ b/dist/tooltip.dom.mjs
+@@ -13,7 +13,7 @@ var getTriggerEl = (scope) => scope.getById(getTriggerId(scope));
+ var getContentEl = (scope) => scope.getById(getContentId(scope));
+ var getPositionerEl = (scope) => scope.getById(getPositionerId(scope));
+ var getArrowEl = (scope) => scope.getById(getArrowId(scope));
+-var getTriggerEls = (scope) => queryAll(scope.getDoc(), `[data-scope="tooltip"][data-part="trigger"][data-ownedby="${scope.id}"]`);
++var getTriggerEls = (scope) => queryAll(scope.getRootNode(), `[data-scope="tooltip"][data-part="trigger"][data-ownedby="${scope.id}"]`);
+ var getActiveTriggerEl = (scope, value) => {
+   return value == null ? getTriggerEls(scope)[0] : scope.getById(getTriggerId(scope, value));
+ };

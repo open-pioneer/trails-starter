@@ -1,0 +1,15 @@
+diff --git a/dist/menu.dom.mjs b/dist/menu.dom.mjs
+index f4ecac163722ecc27edd1749439fe34ccbae2416..6500024e7dec868a239aef69d465d10d585c130a 100644
+--- a/dist/menu.dom.mjs
++++ b/dist/menu.dom.mjs
+@@ -24,8 +24,8 @@ var getTriggerEl = (ctx) => ctx.getById(getTriggerId(ctx));
+ var getItemEl = (ctx, value) => value ? ctx.getById(getItemId(ctx, value)) : null;
+ var getArrowEl = (ctx) => ctx.getById(getArrowId(ctx));
+ var getContextTriggerEl = (ctx) => ctx.getById(getContextTriggerId(ctx));
+-var getTriggerEls = (ctx) => queryAll(ctx.getDoc(), `[data-scope="menu"][data-part="trigger"][data-ownedby="${ctx.id}"]`);
+-var getContextTriggerEls = (ctx) => queryAll(ctx.getDoc(), `[data-scope="menu"][data-part="context-trigger"][data-ownedby="${ctx.id}"]`);
++var getTriggerEls = (ctx) => queryAll(ctx.getRootNode(), `[data-scope="menu"][data-part="trigger"][data-ownedby="${ctx.id}"]`);
++var getContextTriggerEls = (ctx) => queryAll(ctx.getRootNode(), `[data-scope="menu"][data-part="context-trigger"][data-ownedby="${ctx.id}"]`);
+ var getActiveTriggerEl = (ctx, value) => {
+   if (value == null) {
+     return getTriggerEl(ctx) ?? getTriggerEls(ctx)[0];

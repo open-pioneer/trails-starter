@@ -17,6 +17,10 @@
     - Note: configurations were split into `tsconfig.browser.json` (for `src/\*\*/`) and `tsconfig.node.json`.
     - The main `tsconfig.json` file references them both
     - `pnpm` scripts use `tsc --build` now, but are otherwise unchanged
+- Update Chakra UI to 3.35.0
+    - pin Ark UI to 5.36.2 and Zag JS to 1.40.0 to ensure compatibility
+    - add multiple patches for Zag JS to fix positioning of popover, tooltip, ...
+    - remove redundant patch for `@zag-js/splitter`
 - Bump various smaller dependencies
 
 ## 2026-04-17
