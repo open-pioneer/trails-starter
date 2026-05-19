@@ -141,7 +141,22 @@ messages:
 
 Services and UI components will automatically receive appropriate `intl` objects from the framework for the current application locale:
 
-- The service constructor's `options` parameter contains `options.intl`
+- The service constructor's `options` parameter contains `options.currentIntl`, a reactive object that provides the current `intl` for the service.
+    - Be aware that `options.currentIntl` has to be watched for changes, as the application locales can be changed at runtime.
+        - for example:
+
+        ```ts
+        watchValue(
+            () => currentIntl.value,
+            (intl) => {
+                console.log(intl.formatMessage({ id: "greetingService.greeting" }));
+                // your code to react to intl changes
+            }
+        );
+        ```
+
+    - If your project uses `options.intl`, consider switching to `options.currentIntl` instead, as the former is deprecated and will be removed in a future version.
+
 - The react hook `useIntl()` (see below) provides the same `intl` object.
 
 See [I18N Format](./I18nFormat.md) for more details.

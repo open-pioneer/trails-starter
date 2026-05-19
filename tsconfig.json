@@ -1,29 +1,9 @@
 {
     "compilerOptions": {
-        "target": "ESNext",
-        "lib": ["DOM", "DOM.Iterable", "ES2022"],
-        "module": "ES2022",
-        "moduleResolution": "Bundler",
+        "incremental": true,
         "noEmit": true,
-        "allowJs": false,
-        "jsx": "react-jsx",
-
-        "strict": true,
-        "resolveJsonModule": true,
-        "noUncheckedIndexedAccess": true,
-        "useDefineForClassFields": true,
-        "allowSyntheticDefaultImports": true,
-        "forceConsistentCasingInFileNames": true,
-
-        "isolatedModules": true,
-        "esModuleInterop": false,
-        "skipLibCheck": true,
-
-        // These options are necessary so that TypeDoc can resolve references across packages
-        "declaration": true,
-        "declarationMap": true
+        "tsBuildInfoFile": "./node_modules/.cache/tsconfig.tsbuildinfo"
     },
-    "include": ["src"],
-    "exclude": ["**/dist/**", "**/node_modules/**"],
-    "references": [{ "path": "./tsconfig.node.json" }]
+    "include": [],
+    "references": [{ "path": "./tsconfig.node.json" }, { "path": "./tsconfig.browser.json" }]
 }

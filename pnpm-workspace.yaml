@@ -6,8 +6,8 @@ packages:
 # Shared version expressions (yaml anchors).
 # This is a yaml feature and is not interpreted by pnpm directly.
 __versions:
-  - &react_version ^19.2.3
-  - &core_packages_version ^4.5.0
+  - &react_version ^19.2.6
+  - &core_packages_version ^4.6.0-dev.20260518102806
   - &ol_base_packages_version ^1.2.0
 
 # https://pnpm.io/catalogs
@@ -40,84 +40,63 @@ catalog:
 
   # Other dependencies
   "@chakra-ui/react": ^3.34.0
-  "@conterra/reactivity-core": ^0.8.0
+  "@conterra/reactivity-core": ^0.8.5
+  "@conterra/reactivity-events": ^0.8.5
   "@emotion/cache": ^11.14.0
   "@emotion/react": ^11.14.0
   "@emotion/styled": ^11.14.1
-  "@formatjs/intl": ^4.1.4
-  ol: ^10.8.0
+  "@formatjs/intl": ^4.1.11
+  ol: ^10.9.0
   react-dom: *react_version
-  react-icons: ^5.5.0
+  react-icons: ^5.6.0
   react-use: ^17.6.0
   react: *react_version
 
   # Devtools
-  "@eslint/js": ^9.39.2
-  "@open-pioneer/build-package-cli": ^3.0.9
-  "@open-pioneer/build-support": ^3.0.6
-  "@open-pioneer/check-pnpm-duplicates": ^0.3.1
-  "@open-pioneer/vite-plugin-pioneer": ^5.1.2
+  "@eslint/js": ^9.39.4
+  "@open-pioneer/build-package-cli": ^3.1.0
+  "@open-pioneer/build-support": ^3.1.0
+  "@open-pioneer/changesets-release-line": ^0.1.0
+  "@open-pioneer/check-pnpm-duplicates": ^0.3.2
+  "@open-pioneer/vite-plugin-pioneer": ^6.0.0
   "@testing-library/dom": ^10.4.1
   "@testing-library/jest-dom": ^6.9.1
-  "@testing-library/react": ^16.3.0
+  "@testing-library/react": ^16.3.2
   "@testing-library/user-event": ^14.6.1
   "@types/js-yaml": ^4.0.9
-  "@types/node": ^20.19.22
+  "@types/node": ^20.19.41
   "@types/react-dom": ^19.2.3
   "@types/react": ^19.2.14
-  "@typescript-eslint/parser": ^8.57.1
-  "@vitejs/plugin-react-swc": ^4.3.0
-  "typescript-eslint": ^8.57.1
+  "@typescript-eslint/parser": ^8.59.3
+  "@vitejs/plugin-react": "^6.0.2"
+  "typescript-eslint": ^8.59.3
   eslint-config-prettier: ^10.1.8
   eslint-import-resolver-typescript: ^4.4.4
   eslint-plugin-headers: ^1.3.4
   eslint-plugin-import: ^2.32.0
   eslint-plugin-jsx-a11y: ^6.10.2
-  eslint-plugin-react-hooks: ^7.0.1
+  eslint-plugin-react-hooks: ^7.1.1
   eslint-plugin-react: ^7.37.5
   eslint-plugin-unused-imports: ^4.4.1
-  eslint: ^9.39.2
+  eslint: ^9.39.4
   fast-glob: ^3.3.3
   handlebars: ^4.7.9
-  happy-dom: ^20.8.9
+  happy-dom: ^20.9.0
   husky: ^9.1.7
   js-yaml: ^4.1.1
-  jsdom: ^29.0.1
-  lint-staged: ^16.4.0
-  prettier: ^3.8.1
+  jsdom: ^29.1.1
+  lint-staged: ^17.0.4
+  prettier: ^3.8.3
   rimraf: ^6.1.3
-  sass: ^1.98.0
-  tsx: ^4.21.0
-  typedoc: ^0.28.17
-  typescript: ^5.9.3
-  vite: ^7.3.2
+  sass: ^1.99.0
+  tsx: ^4.22.0
+  typedoc: ^0.28.19
+  typescript: ^6.0.3
   vite-plugin-eslint: ^1.8.1
-  vitest: ^4.1.0
+  vite: ^8.0.13
+  vitest: ^4.1.6
 
 overrides:
-  # https://github.com/advisories/GHSA-5j98-mcp5-4vw2
-  "glob@>=10.x <= 11.0.3": "^11.1.0"
-
-  # https://github.com/advisories/GHSA-7h2j-956f-4vf2
-  "@isaacs/brace-expansion@<=5.0.0": "^5.0.1"
-
-  # https://github.com/advisories/GHSA-38c4-r59v-3vqw
-  "markdown-it@>=13.0.0 <14.1.1": "^14.1.1"
-
-  # https://github.com/advisories/GHSA-mw96-cpmx-2vgc
-  "rollup@>=4.0.0 <4.59.0": "^4.59.0"
-  "rollup@>=2.0.0 <2.80.0": "^2.80.0"
-
-  # https://github.com/advisories/GHSA-7r86-cg39-jmmj
-  # https://github.com/advisories/GHSA-23c5-xmqv-rm74
-  # https://github.com/advisories/GHSA-3ppc-4f35-3m26
-  "minimatch@>=3.0.0 <3.1.4": "^3.1.4"
-  "minimatch@>=9.0.0 <9.0.7": "^9.0.9"
-  "minimatch@>=10.0.0 <10.2.3": "^10.2.3"
-
-  # https://github.com/advisories/GHSA-wf6x-7x77-mvgw
-  "immutable@>=5.0.0 <5.1.5": "^5.1.5"
-
   # https://github.com/advisories/GHSA-rf6f-7fwh-wjgh
   "flatted@<=3.4.1": "^3.4.2"
 
@@ -161,8 +140,21 @@ overrides:
   "@zag-js/interact-outside": "1.35.3"
   "react-select": "5.10.2"
 
+  # TODO: Remove before release
+  # Remove before release
+  "@open-pioneer/base-theme": 4.6.0-dev.20260518102806
+  "@open-pioneer/core": 4.6.0-dev.20260518102806
+  "@open-pioneer/http": 4.6.0-dev.20260518102806
+  "@open-pioneer/integration": 4.6.0-dev.20260518102806
+  "@open-pioneer/local-storage": 4.6.0-dev.20260518102806
+  "@open-pioneer/notifier": 4.6.0-dev.20260518102806
+  "@open-pioneer/react-utils": 4.6.0-dev.20260518102806
+  "@open-pioneer/reactivity": 4.6.0-dev.20260518102806
+  "@open-pioneer/runtime": 4.6.0-dev.20260518102806
+  "@open-pioneer/test-utils": 4.6.0-dev.20260518102806
+  "@open-pioneer/chakra-snippets": 4.6.0-dev.20260518102806
+
 allowUnusedPatches: true
-ignorePatchFailures: false
 patchedDependencies:
   # Ensure valid ids for aria-activedescendant and fix touch events in shadow DOM (see https://github.com/JedWatson/react-select/issues/5824)
   "react-select": "patches/react-select.patch"
@@ -185,7 +177,6 @@ minimumReleaseAge: 4320 # 3 days in minutes
 minimumReleaseAgeExclude:
   - "@open-pioneer/*"
   - "@conterra/*"
-  - "vite@7.3.2"
 
 peerDependencyRules:
   allowedVersions:
@@ -194,29 +185,33 @@ peerDependencyRules:
     "rollup": "*"
 
 auditConfig:
-  ignoreCves:
-    # This affects ajv, which is a transitive dependency of eslint.
-    # Eslint depends on ajv@v6, and an update to v8 might not be trivial.
-    # Only dev dependencies are (potentially) affected.
-    # https://github.com/advisories/GHSA-2g4f-4pwh-qvx6
-    - CVE-2025-69873
-
-    # See CVE CVE-2025-69873
-    - CVE-2026-26996
-
-    # https://github.com/advisories/GHSA-f886-m6hf-6m8v
-    - CVE-2026-33750
+  ignoreGhsas:
+    # https://github.com/advisories/GHSA-f886-m6hf-6m8v CVE-2026-33750
+    - GHSA-f886-m6hf-6m8v
 
 # Only run build scripts for allowed packages.
-onlyBuiltDependencies:
-  - "@parcel/watcher"
-  - "@swc/core"
-  - esbuild
+allowBuilds:
+  "@parcel/watcher": true
+  "@swc/core": true
+  esbuild: true
+  # Packages that we don't need to build (even though they have install scripts).
+  core-js: false
+  unrs-resolver: false
 
-# Packages that we don't need to build (even though they have install scripts).
-ignoredBuiltDependencies:
-  - core-js
-  - unrs-resolver
+# Do not allow to install packages which trust level has decreased
+# (e.g. older version was signed but the version to be installed is not signed)
+trustPolicy: no-downgrade
+# Exclude packages from trustPolicy that are used in an old (major) version that was published after another signed version
+trustPolicyExclude:
+  - "@pnpm/lockfile.utils@1004.0.4"
+  - "@pnpm/lockfile.fs@1001.1.33"
+  - "@pnpm/lockfile.walker@1001.0.27"
+  - "@pnpm/lockfile.types@1002.1.1"
+  - "@pnpm/lockfile.merger@1001.0.21"
+  - "undici-types@6.21.0"
+  - "semver@6.3.1"
+  - "chokidar@4.0.3"
+  - "rollup@2.80.0"
 
 # Workaround for current problems regarding our vite plugin + vite's optimizeDeps feature
 shamefullyHoist: true

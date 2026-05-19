@@ -1,5 +1,24 @@
 # Changelog
 
+## 2026-05-XX
+
+[Show all changes](https://github.com/open-pioneer/trails-starter/compare/2026-04-17...2026-05-XX)
+
+- Update core packages to 4.6.0
+- Update Openlayers base packages to 1.3.0
+- Update Open Pioneer build tools
+- Update to Vite 8
+    - Note: the react plugin was changed as well, from `@vitejs/plugin-react-swc` to `@vitejs/plugin-react`
+- Update to pnpm v11
+- Configure pnpm option `trustPolicy` to `no-downgrade`. If you want to install old versions of packages that are not signed but are published after other versions of the same package that are trusted, you need to list them under `trustPolicyExclude`.
+- Bump minimum node version to 24
+- Update to OpenLayers 10.9.0
+- Update TypeScript to 6.0.3
+    - Note: configurations were split into `tsconfig.browser.json` (for `src/\*\*/`) and `tsconfig.node.json`.
+    - The main `tsconfig.json` file references them both
+    - `pnpm` scripts use `tsc --build` now, but are otherwise unchanged
+- Bump various smaller dependencies
+
 ## 2026-04-17
 
 [Show all changes](https://github.com/open-pioneer/trails-starter/compare/2026-03-25...2026-04-17)

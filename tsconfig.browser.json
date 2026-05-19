@@ -1,0 +1,33 @@
+{
+    "compilerOptions": {
+        "composite": true,
+        "incremental": true,
+        "tsBuildInfoFile": "./node_modules/.cache/tsconfig.browser.tsbuildinfo",
+        "outDir": "browser",
+
+        "target": "ESNext",
+        "lib": ["DOM", "DOM.Iterable", "ES2024"],
+        "module": "esnext",
+        "moduleResolution": "Bundler",
+        "moduleDetection": "force",
+        "noEmit": true,
+        "allowJs": false,
+        "jsx": "react-jsx",
+
+        "strict": true,
+        "resolveJsonModule": true,
+        "noUncheckedIndexedAccess": true,
+        "useDefineForClassFields": true,
+        "allowSyntheticDefaultImports": true,
+        "forceConsistentCasingInFileNames": true,
+
+        "isolatedModules": true,
+        "skipLibCheck": true,
+
+        // These options are necessary so that TypeDoc can resolve references across packages
+        "declaration": true,
+        "declarationMap": true
+    },
+    "include": ["src"],
+    "exclude": ["**/dist/**", "**/node_modules/**"]
+}

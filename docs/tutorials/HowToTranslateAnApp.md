@@ -636,7 +636,7 @@ The code above is rendered like this:
 ### Using i18n in a service
 
 The `intl` object is not only available in React components, it can also be used from any service.
-The `GreetingService` in the following example uses the `serviceOptions` parameter (provided by the framework) to access the package's `intl` object.
+The `GreetingService` in the following example uses the `serviceOptions` parameter (provided by the framework) to access the package's `intl` object via `currentIntl`.
 This object can be used in the same way as the `intl` object returned by `useIntl`:
 
 ```ts
@@ -646,15 +646,15 @@ import { type DECLARE_SERVICE_INTERFACE, ServiceOptions, PackageIntl } from "@op
 export class GreetingService {
     declare [DECLARE_SERVICE_INTERFACE]: "i18n-howto-app.GreetingService";
 
-    private _intl: PackageIntl;
+    private readonly _intl: ReadonlyReactive<PackageIntl>;
 
     constructor(serviceOptions: ServiceOptions) {
-        this._intl = serviceOptions.intl;
+        this._intl = serviceOptions.currentIntl;
     }
 
     // (1)
     greet(name: string): string {
-        return this._intl.formatMessage({ id: "greetingService.greeting" }, { name });
+        return this._intl.value.formatMessage({ id: "greetingService.greeting" }, { name });
     }
 }
 ```
