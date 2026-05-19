@@ -1,0 +1,13 @@
+diff --git a/dist/dialog.dom.mjs b/dist/dialog.dom.mjs
+index ca3650b33822c39cd5f1538586224543dab20384..75b276456c17610fd7be74f7f5f622b37d283e3f 100644
+--- a/dist/dialog.dom.mjs
++++ b/dist/dialog.dom.mjs
+@@ -19,7 +19,7 @@ var getTriggerEl = (ctx) => ctx.getById(getTriggerId(ctx));
+ var getTitleEl = (ctx) => ctx.getById(getTitleId(ctx));
+ var getDescriptionEl = (ctx) => ctx.getById(getDescriptionId(ctx));
+ var getCloseTriggerEl = (ctx) => ctx.getById(getCloseTriggerId(ctx));
+-var getTriggerEls = (ctx) => queryAll(ctx.getDoc(), `[data-scope="dialog"][data-part="trigger"][data-ownedby="${ctx.id}"]`);
++var getTriggerEls = (ctx) => queryAll(ctx.getRootNode(), `[data-scope="dialog"][data-part="trigger"][data-ownedby="${ctx.id}"]`);
+ var getActiveTriggerEl = (ctx, value) => {
+   return value == null ? getTriggerEls(ctx)[0] : ctx.getById(getTriggerId(ctx, value));
+ };

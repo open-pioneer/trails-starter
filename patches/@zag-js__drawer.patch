@@ -1,0 +1,13 @@
+diff --git a/dist/drawer.dom.mjs b/dist/drawer.dom.mjs
+index 19684cfa0d0dfd1284fc98ba1ed9308a66947f8c..740a82efa19186c7a056daf90d1ee4ce0f15a9db 100644
+--- a/dist/drawer.dom.mjs
++++ b/dist/drawer.dom.mjs
+@@ -12,7 +12,7 @@ var getTriggerId = (ctx, value) => {
+   if (customId != null) return isFunction(customId) ? customId(value) : customId;
+   return value ? `drawer:${ctx.id}:trigger:${value}` : `drawer:${ctx.id}:trigger`;
+ };
+-var getTriggerEls = (ctx) => queryAll(ctx.getDoc(), `[data-scope="drawer"][data-part="trigger"][data-ownedby="${ctx.id}"]`);
++var getTriggerEls = (ctx) => queryAll(ctx.ctx.getRootNode(), `[data-scope="drawer"][data-part="trigger"][data-ownedby="${ctx.id}"]`);
+ var getActiveTriggerEl = (ctx, value) => {
+   if (value == null) return getTriggerEl(ctx) ?? getTriggerEls(ctx)[0];
+   return ctx.getById(getTriggerId(ctx, value));
