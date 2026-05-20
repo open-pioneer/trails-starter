@@ -3,9 +3,11 @@
 
 /// <reference types="vitest" />
 import { pioneer } from "@open-pioneer/vite-plugin-pioneer";
-import react from "@vitejs/plugin-react-swc";
+import react from "@vitejs/plugin-react";
 import { resolve } from "node:path";
 import { defineConfig } from "vite";
+
+// @ts-expect-error Invalid typings
 import eslint from "vite-plugin-eslint";
 
 const sampleSites = ["samples/map-sample", "samples/i18n-howto"];
@@ -37,6 +39,13 @@ export default defineConfig(({ mode }) => {
             target: "baseline-widely-available"
         },
 
+        optimizeDeps: {
+            // Include services.{js/ts} files as entry points.
+            // This makes it easier for vite's dev server to find dependencies,
+            // and thereby reduces the number of repeated bundler executions on dev server startup.
+            // Adapt the file patterns if your service modules used a different naming scheme.
+            entries: ["**/*.html", "**/services.{ts,js}", "!**/dist/**"]
+        },
         plugins: [
             pioneer({
                 // Whether to include src/index.html in the built output

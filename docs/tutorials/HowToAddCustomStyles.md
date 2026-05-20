@@ -181,10 +181,10 @@ It is possible to create a custom theme for an app. For details see [How To Them
 
 React supports the `className` prop to set an element's css classes as a string ([Documentation](https://reactjs.org/docs/faq-styling.html)).
 
-The popular [`classnames`](https://www.npmjs.com/package/classnames) packages can be used to assemble the `className` prop from multiple, potentially dynamic inputs:
+Using our `classNames` utility, you can easily compose a className string from multiple, potentially dynamic inputs:
 
 ```tsx
-import classNames from "classnames";
+import { classNames } from "@open-pioneer/react-utils";
 
 export function AppUI() {
     return (

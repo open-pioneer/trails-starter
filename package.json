@@ -6,7 +6,7 @@
     "scripts": {
         "clean": "rimraf dist && pnpm recursive exec rimraf dist",
         "dev": "vite",
-        "check-types": "tsc --noEmit",
+        "check-types": "tsc --build --noEmit",
         "watch-types": "pnpm check-types -w",
         "check-duplicates": "pnpm check-pnpm-duplicates -c support/duplicate-packages.yaml",
         "build": "vite build",
@@ -37,7 +37,7 @@
         "@types/react": "catalog:",
         "@types/react-dom": "catalog:",
         "@typescript-eslint/parser": "catalog:",
-        "@vitejs/plugin-react-swc": "catalog:",
+        "@vitejs/plugin-react": "catalog:",
         "eslint": "catalog:",
         "eslint-config-prettier": "catalog:",
         "eslint-import-resolver-typescript": "catalog:",
@@ -67,8 +67,8 @@
         "vitest": "catalog:"
     },
     "engines": {
-        "node": ">= 20",
+        "node": ">= 24",
         "pnpm": ">= 10"
     },
-    "packageManager": "pnpm@10.32.1"
+    "packageManager": "pnpm@11.1.2"
 }

@@ -1,5 +1,31 @@
 # Changelog
 
+## 2026-05-20
+
+[Show all changes](https://github.com/open-pioneer/trails-starter/compare/2026-04-17...2026-05-20)
+
+- Update core packages to 4.6.0
+- Update Openlayers base packages to 1.3.0
+- Update Open Pioneer build tools
+- Update to Vite 8
+    - Note: the react plugin was changed as well, from `@vitejs/plugin-react-swc` to `@vitejs/plugin-react`
+    - Add `optimizeDeps.entries` configuration that should speed up dev server startup when dependencies have changed
+- Update to OpenLayers 10.9.0
+- Update TypeScript to 6.0.3
+    - Note: configurations were split into `tsconfig.browser.json` (for `src/\*\*/`) and `tsconfig.node.json`.
+    - The main `tsconfig.json` file references them both
+    - `pnpm` scripts use `tsc --build` now, but are otherwise unchanged
+- Update Chakra UI to 3.35.0
+    - pin Ark UI to 5.36.2 and Zag JS to 1.40.0 to ensure compatibility
+    - add multiple patches for Zag JS to fix positioning of popover, tooltip, ...
+    - remove redundant patch for `@zag-js/splitter`
+- Remove patch for react-select
+- Bump various smaller dependencies
+- Update to pnpm v11
+- Configure pnpm option `trustPolicy` to `no-downgrade`.
+  If you want to install old versions of packages that are not signed but are published after other versions of the same package that are trusted, you need to list them under `trustPolicyExclude`.
+- Bump minimum node version to 24
+
 ## 2026-04-17
 
 [Show all changes](https://github.com/open-pioneer/trails-starter/compare/2026-03-25...2026-04-17)
