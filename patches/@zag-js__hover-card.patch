@@ -1,13 +1,32 @@
 diff --git a/dist/hover-card.dom.mjs b/dist/hover-card.dom.mjs
-index 570015b9b658661f2a3e13a0cb038513c4561416..8b0e37941f678b763f922f07d418ab7ba5081627 100644
+index 570015b9b658661f2a3e13a0cb038513c4561416..184bfb9f8a2c18aa0b3c51661f624571344fd244 100644
 --- a/dist/hover-card.dom.mjs
 +++ b/dist/hover-card.dom.mjs
-@@ -12,7 +12,7 @@ var getArrowId = (scope) => scope.ids?.arrow ?? `hover-card:${scope.id}:arrow`;
+@@ -12,9 +12,12 @@ var getArrowId = (scope) => scope.ids?.arrow ?? `hover-card:${scope.id}:arrow`;
  var getTriggerEl = (scope) => scope.getById(getTriggerId(scope));
  var getContentEl = (scope) => scope.getById(getContentId(scope));
  var getPositionerEl = (scope) => scope.getById(getPositionerId(scope));
 -var getTriggerEls = (scope) => queryAll(scope.getDoc(), `[data-scope="hover-card"][data-part="trigger"][data-ownedby="${scope.id}"]`);
 +var getTriggerEls = (scope) => queryAll(scope.getRootNode(), `[data-scope="hover-card"][data-part="trigger"][data-ownedby="${scope.id}"]`);
  var getActiveTriggerEl = (scope, value) => {
-   return value == null ? getTriggerEls(scope)[0] : scope.getById(getTriggerId(scope, value));
+-  return value == null ? getTriggerEls(scope)[0] : scope.getById(getTriggerId(scope, value));
++  if (value == null) {
++    return getTriggerEl(scope) ?? getTriggerEls(scope)[0]
++  }
++  return scope.getById(getTriggerId(scope, value))
  };
+ export {
+   getActiveTriggerEl,
+diff --git a/dist/hover-card.machine.mjs b/dist/hover-card.machine.mjs
+index 9902b5f814f3f13f2336caeb9bc80b9147eb00ba..05382e653fab63e04f47c29ac4cc7677fa38b9bb 100644
+--- a/dist/hover-card.machine.mjs
++++ b/dist/hover-card.machine.mjs
+@@ -254,7 +254,7 @@ var machine = createMachine({
+         return trackDismissableElement(getContentEl2, {
+           type: "popover",
+           defer: true,
+-          exclude: dom.getTriggerEls(scope),
++          exclude: [dom.getTriggerEl(scope), ...dom.getTriggerEls(scope)].filter(Boolean),
+           onDismiss() {
+             send({ type: "CLOSE", src: "interact-outside" });
+           },

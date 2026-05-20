@@ -1,13 +1,32 @@
 diff --git a/dist/dialog.dom.mjs b/dist/dialog.dom.mjs
-index ca3650b33822c39cd5f1538586224543dab20384..75b276456c17610fd7be74f7f5f622b37d283e3f 100644
+index ca3650b33822c39cd5f1538586224543dab20384..f9e41976c78c242b0f23dcb0e66a2953fde388ad 100644
 --- a/dist/dialog.dom.mjs
 +++ b/dist/dialog.dom.mjs
-@@ -19,7 +19,7 @@ var getTriggerEl = (ctx) => ctx.getById(getTriggerId(ctx));
+@@ -19,9 +19,12 @@ var getTriggerEl = (ctx) => ctx.getById(getTriggerId(ctx));
  var getTitleEl = (ctx) => ctx.getById(getTitleId(ctx));
  var getDescriptionEl = (ctx) => ctx.getById(getDescriptionId(ctx));
  var getCloseTriggerEl = (ctx) => ctx.getById(getCloseTriggerId(ctx));
 -var getTriggerEls = (ctx) => queryAll(ctx.getDoc(), `[data-scope="dialog"][data-part="trigger"][data-ownedby="${ctx.id}"]`);
 +var getTriggerEls = (ctx) => queryAll(ctx.getRootNode(), `[data-scope="dialog"][data-part="trigger"][data-ownedby="${ctx.id}"]`);
  var getActiveTriggerEl = (ctx, value) => {
-   return value == null ? getTriggerEls(ctx)[0] : ctx.getById(getTriggerId(ctx, value));
+-  return value == null ? getTriggerEls(ctx)[0] : ctx.getById(getTriggerId(ctx, value));
++  if (value == null) {
++    return getTriggerEl(ctx) ?? getTriggerEls(ctx)[0]
++  }
++  return ctx.getById(getTriggerId(ctx, value))
  };
+ export {
+   getActiveTriggerEl,
+diff --git a/dist/dialog.machine.mjs b/dist/dialog.machine.mjs
+index 20e18c6afd4d99e1fa2070af004ff32ccc3f02c5..f938b03638c1234c33737edf8853cb068669cf23 100644
+--- a/dist/dialog.machine.mjs
++++ b/dist/dialog.machine.mjs
+@@ -124,7 +124,7 @@ var machine = createMachine({
+           type: "dialog",
+           defer: true,
+           pointerBlocking: prop("modal"),
+-          exclude: dom.getTriggerEls(scope),
++          exclude: [dom.getTriggerEl(scope), ...dom.getTriggerEls(scope)].filter(Boolean),
+           onInteractOutside(event) {
+             prop("onInteractOutside")?.(event);
+             if (!prop("closeOnInteractOutside")) {

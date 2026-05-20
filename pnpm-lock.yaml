@@ -222,13 +222,13 @@ overrides:
 
 patchedDependencies:
   '@ark-ui/react@*': 767aaf2c2661cde67481abcb34f0720395e9f3f4e467e888edda574784cdc73a
-  '@zag-js/dialog': c7620689b03416985613dfd5126a308b887f7577b377d686da1dce19f4385525
-  '@zag-js/drawer': 004eff6f10fcc2c83fdf9c83e34d6b2728c274e1c22ae6ce4116373336abcf5d
-  '@zag-js/hover-card': 7c3393b15aff61dadd3f7351d1d10a1451867829d8ee2bfcdb46bf572867ff3e
+  '@zag-js/dialog': fd81fc037a226d388abf1c5fb0b5bdebcfb1b2f1a6f6d2e3474c7cf5a5c6ca07
+  '@zag-js/drawer': 4495e4f35ec49545e74a37653242a4e3035b8c8fedae1e6603f6197656c346a9
+  '@zag-js/hover-card': 476cf10ce8975d5861632dadeecd9b8a0c846094bbf0dbcd76fc766c3d4dcea7
   '@zag-js/interact-outside': 53d739b8583ba2852bf6f2183a466abbb6e5aacb2159ffb1570285fbe08d5fd6
   '@zag-js/menu': e48af45dcee69745ca6cd7e12a21283d987b71f80e0df1203a90ad81785e57c1
-  '@zag-js/popover': 7eae3b904fed032547f7236426f90393b3f33cb5f2bf72dd7cbc9f0fadd1f518
-  '@zag-js/tooltip': fe503ab94d51d94738b31849a8626cd0196ff0072c8f8d25be204c5fee8e8bcc
+  '@zag-js/popover': 406cd100e64c6143fd4b1be24513ff4c95b71213e000b24ffe6b4a3fa9980358
+  '@zag-js/tooltip': 31cfd76009703fed9a2110eb3c92091d74fdc05c1094b173df4128053d2d20aa
   react-select: 446dc70e7c5be1fa3a74bf9037c714221b54333a36f58f6f5c196e42fafff68f
 
 importers:
@@ -4308,9 +4308,9 @@ snapshots:
       '@zag-js/date-input': 1.40.0(@internationalized/date@3.12.0)
       '@zag-js/date-picker': 1.40.0(@internationalized/date@3.12.0)
       '@zag-js/date-utils': 1.40.0(@internationalized/date@3.12.0)
-      '@zag-js/dialog': 1.40.0(patch_hash=c7620689b03416985613dfd5126a308b887f7577b377d686da1dce19f4385525)
+      '@zag-js/dialog': 1.40.0(patch_hash=fd81fc037a226d388abf1c5fb0b5bdebcfb1b2f1a6f6d2e3474c7cf5a5c6ca07)
       '@zag-js/dom-query': 1.40.0
-      '@zag-js/drawer': 1.40.0(patch_hash=004eff6f10fcc2c83fdf9c83e34d6b2728c274e1c22ae6ce4116373336abcf5d)
+      '@zag-js/drawer': 1.40.0(patch_hash=4495e4f35ec49545e74a37653242a4e3035b8c8fedae1e6603f6197656c346a9)
       '@zag-js/editable': 1.40.0
       '@zag-js/file-upload': 1.40.0
       '@zag-js/file-utils': 1.40.0
@@ -4318,7 +4318,7 @@ snapshots:
       '@zag-js/focus-trap': 1.40.0
       '@zag-js/focus-visible': 1.40.0
       '@zag-js/highlight-word': 1.40.0
-      '@zag-js/hover-card': 1.40.0(patch_hash=7c3393b15aff61dadd3f7351d1d10a1451867829d8ee2bfcdb46bf572867ff3e)
+      '@zag-js/hover-card': 1.40.0(patch_hash=476cf10ce8975d5861632dadeecd9b8a0c846094bbf0dbcd76fc766c3d4dcea7)
       '@zag-js/i18n-utils': 1.40.0
       '@zag-js/image-cropper': 1.40.0
       '@zag-js/json-tree-utils': 1.40.0
@@ -4330,7 +4330,7 @@ snapshots:
       '@zag-js/pagination': 1.40.0
       '@zag-js/password-input': 1.40.0
       '@zag-js/pin-input': 1.40.0
-      '@zag-js/popover': 1.40.0(patch_hash=7eae3b904fed032547f7236426f90393b3f33cb5f2bf72dd7cbc9f0fadd1f518)
+      '@zag-js/popover': 1.40.0(patch_hash=406cd100e64c6143fd4b1be24513ff4c95b71213e000b24ffe6b4a3fa9980358)
       '@zag-js/presence': 1.40.0
       '@zag-js/progress': 1.40.0
       '@zag-js/qr-code': 1.40.0
@@ -4350,7 +4350,7 @@ snapshots:
       '@zag-js/toast': 1.40.0
       '@zag-js/toggle': 1.40.0
       '@zag-js/toggle-group': 1.40.0
-      '@zag-js/tooltip': 1.40.0(patch_hash=fe503ab94d51d94738b31849a8626cd0196ff0072c8f8d25be204c5fee8e8bcc)
+      '@zag-js/tooltip': 1.40.0(patch_hash=31cfd76009703fed9a2110eb3c92091d74fdc05c1094b173df4128053d2d20aa)
       '@zag-js/tour': 1.40.0
       '@zag-js/tree-view': 1.40.0
       '@zag-js/types': 1.40.0
@@ -5997,7 +5997,7 @@ snapshots:
     dependencies:
       '@internationalized/date': 3.12.0
 
-  '@zag-js/dialog@1.40.0(patch_hash=c7620689b03416985613dfd5126a308b887f7577b377d686da1dce19f4385525)':
+  '@zag-js/dialog@1.40.0(patch_hash=fd81fc037a226d388abf1c5fb0b5bdebcfb1b2f1a6f6d2e3474c7cf5a5c6ca07)':
     dependencies:
       '@zag-js/anatomy': 1.40.0
       '@zag-js/aria-hidden': 1.40.0
@@ -6019,7 +6019,7 @@ snapshots:
     dependencies:
       '@zag-js/types': 1.40.0
 
-  '@zag-js/drawer@1.40.0(patch_hash=004eff6f10fcc2c83fdf9c83e34d6b2728c274e1c22ae6ce4116373336abcf5d)':
+  '@zag-js/drawer@1.40.0(patch_hash=4495e4f35ec49545e74a37653242a4e3035b8c8fedae1e6603f6197656c346a9)':
     dependencies:
       '@zag-js/anatomy': 1.40.0
       '@zag-js/aria-hidden': 1.40.0
@@ -6075,7 +6075,7 @@ snapshots:
 
   '@zag-js/highlight-word@1.40.0': {}
 
-  '@zag-js/hover-card@1.40.0(patch_hash=7c3393b15aff61dadd3f7351d1d10a1451867829d8ee2bfcdb46bf572867ff3e)':
+  '@zag-js/hover-card@1.40.0(patch_hash=476cf10ce8975d5861632dadeecd9b8a0c846094bbf0dbcd76fc766c3d4dcea7)':
     dependencies:
       '@zag-js/anatomy': 1.40.0
       '@zag-js/core': 1.40.0
@@ -6178,7 +6178,7 @@ snapshots:
       '@zag-js/types': 1.40.0
       '@zag-js/utils': 1.40.0
 
-  '@zag-js/popover@1.40.0(patch_hash=7eae3b904fed032547f7236426f90393b3f33cb5f2bf72dd7cbc9f0fadd1f518)':
+  '@zag-js/popover@1.40.0(patch_hash=406cd100e64c6143fd4b1be24513ff4c95b71213e000b24ffe6b4a3fa9980358)':
     dependencies:
       '@zag-js/anatomy': 1.40.0
       '@zag-js/aria-hidden': 1.40.0
@@ -6375,7 +6375,7 @@ snapshots:
       '@zag-js/types': 1.40.0
       '@zag-js/utils': 1.40.0
 
-  '@zag-js/tooltip@1.40.0(patch_hash=fe503ab94d51d94738b31849a8626cd0196ff0072c8f8d25be204c5fee8e8bcc)':
+  '@zag-js/tooltip@1.40.0(patch_hash=31cfd76009703fed9a2110eb3c92091d74fdc05c1094b173df4128053d2d20aa)':
     dependencies:
       '@zag-js/anatomy': 1.40.0
       '@zag-js/core': 1.40.0

@@ -11,3 +11,16 @@ index 19684cfa0d0dfd1284fc98ba1ed9308a66947f8c..740a82efa19186c7a056daf90d1ee4ce
  var getActiveTriggerEl = (ctx, value) => {
    if (value == null) return getTriggerEl(ctx) ?? getTriggerEls(ctx)[0];
    return ctx.getById(getTriggerId(ctx, value));
+diff --git a/dist/drawer.machine.mjs b/dist/drawer.machine.mjs
+index 70d61b98762e3df178654b24ed54d158a7572690..bd672cb9e96a5e122256efb6a1ea2cf5a9b2dd50 100644
+--- a/dist/drawer.machine.mjs
++++ b/dist/drawer.machine.mjs
+@@ -599,7 +599,7 @@ var machine = createMachine({
+           type: "drawer",
+           defer: true,
+           pointerBlocking: prop("modal"),
+-          exclude: [dom.getTriggerEl(scope)],
++          exclude: [dom.getTriggerEl(scope), ...dom.getTriggerEls(scope)].filter(Boolean),
+           onInteractOutside(event) {
+             prop("onInteractOutside")?.(event);
+             if (!prop("closeOnInteractOutside")) {
