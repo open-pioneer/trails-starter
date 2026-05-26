@@ -140,7 +140,9 @@ overrides:
   "postcss@<8.5.10": "^8.5.10"
 
   # https://github.com/advisories/GHSA-jxxr-4gwj-5jf2
+  # https://github.com/advisories/GHSA-f886-m6hf-6m8v
   "brace-expansion@>=5.0.0 <5.0.6": "^5.0.6"
+  "brace-expansion@<1.1.13": "^1.1.13"
 
   # https://github.com/advisories/GHSA-58qx-3vcg-4xpx
   "ws@>=8.0.0 <8.20.1": "^8.20.1"
@@ -184,8 +186,6 @@ peerDependencyRules:
 
 auditConfig:
   ignoreGhsas:
-    # https://github.com/advisories/GHSA-f886-m6hf-6m8v CVE-2026-33750
-    - GHSA-f886-m6hf-6m8v
 
 # Only run build scripts for allowed packages.
 allowBuilds:
