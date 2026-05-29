@@ -1,16 +1,17 @@
 diff --git a/dist/index.mjs b/dist/index.mjs
-index eb5d0e025bbb641eb91d457aaa42a50be8d89866..cd7ea4f544198601a94a9dbdfde8d275cf20b495 100644
+index eb5d0e025bbb641eb91d457aaa42a50be8d89866..1bd26e3334a5f5bf31ca5736a217ad259a988fe2 100644
 --- a/dist/index.mjs
 +++ b/dist/index.mjs
-@@ -92,7 +92,7 @@ function trackInteractOutsideImpl(node, options) {
-     function handler(clickEvent) {
-       const func = defer && !isTouchDevice() ? raf : (v) => v();
-       const evt = clickEvent ?? event;
--      const composedPath = evt?.composedPath?.() ?? [evt?.target];
-+      const composedPath = event?.composedPath?.() ?? [event?.target];
-       func(() => {
-         const target = isInShadowRoot ? composedPath[0] : getEventTarget(event);
-         if (!node || !isEventOutside(event, target)) return;
+@@ -130,8 +130,8 @@ function trackInteractOutsideImpl(node, options) {
+   function onFocusin(event) {
+     if (isPointerDown) return;
+     const func = defer ? raf : (v) => v();
++    const composedPath = event?.composedPath?.() ?? [event?.target];
+     func(() => {
+-      const composedPath = event?.composedPath?.() ?? [event?.target];
+       const target = isInShadowRoot ? composedPath[0] : getEventTarget(event);
+       if (!node || !isEventOutside(event, target)) return;
+       if (onFocusOutside || onInteractOutside) {
 @@ -154,6 +154,7 @@ function trackInteractOutsideImpl(node, options) {
      cleanups.add(addDomEvent(doc, "focusin", onFocusin, true));
      cleanups.add(parentWin.addEventListener("focusin", onFocusin, true));

@@ -1,5 +1,11 @@
 # Changelog
 
+## 2026-05-29
+
+[Show all changes](https://github.com/open-pioneer/trails-starter/compare/2026-05-20...2026-05-29)
+
+- Fix broken patch for `@zag-js/interact-outside`
+
 ## 2026-05-20
 
 [Show all changes](https://github.com/open-pioneer/trails-starter/compare/2026-04-17...2026-05-20)

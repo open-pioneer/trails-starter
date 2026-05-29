@@ -224,7 +224,7 @@ patchedDependencies:
   '@zag-js/dialog': fd81fc037a226d388abf1c5fb0b5bdebcfb1b2f1a6f6d2e3474c7cf5a5c6ca07
   '@zag-js/drawer': 4495e4f35ec49545e74a37653242a4e3035b8c8fedae1e6603f6197656c346a9
   '@zag-js/hover-card': 476cf10ce8975d5861632dadeecd9b8a0c846094bbf0dbcd76fc766c3d4dcea7
-  '@zag-js/interact-outside': 53d739b8583ba2852bf6f2183a466abbb6e5aacb2159ffb1570285fbe08d5fd6
+  '@zag-js/interact-outside': caddd38066be2471a128b04fc6bb1d0ed7190f3effbd261f7697bfdeb6480cee
   '@zag-js/menu': e48af45dcee69745ca6cd7e12a21283d987b71f80e0df1203a90ad81785e57c1
   '@zag-js/popover': 406cd100e64c6143fd4b1be24513ff4c95b71213e000b24ffe6b4a3fa9980358
   '@zag-js/tooltip': 31cfd76009703fed9a2110eb3c92091d74fdc05c1094b173df4128053d2d20aa
@@ -6026,7 +6026,7 @@ snapshots:
   '@zag-js/dismissable@1.40.0':
     dependencies:
       '@zag-js/dom-query': 1.40.0
-      '@zag-js/interact-outside': 1.40.0(patch_hash=53d739b8583ba2852bf6f2183a466abbb6e5aacb2159ffb1570285fbe08d5fd6)
+      '@zag-js/interact-outside': 1.40.0(patch_hash=caddd38066be2471a128b04fc6bb1d0ed7190f3effbd261f7697bfdeb6480cee)
       '@zag-js/utils': 1.40.0
 
   '@zag-js/dom-query@1.40.0':
@@ -6050,7 +6050,7 @@ snapshots:
       '@zag-js/anatomy': 1.40.0
       '@zag-js/core': 1.40.0
       '@zag-js/dom-query': 1.40.0
-      '@zag-js/interact-outside': 1.40.0(patch_hash=53d739b8583ba2852bf6f2183a466abbb6e5aacb2159ffb1570285fbe08d5fd6)
+      '@zag-js/interact-outside': 1.40.0(patch_hash=caddd38066be2471a128b04fc6bb1d0ed7190f3effbd261f7697bfdeb6480cee)
       '@zag-js/types': 1.40.0
       '@zag-js/utils': 1.40.0
 
@@ -6111,7 +6111,7 @@ snapshots:
       '@zag-js/types': 1.40.0
       '@zag-js/utils': 1.40.0
 
-  '@zag-js/interact-outside@1.40.0(patch_hash=53d739b8583ba2852bf6f2183a466abbb6e5aacb2159ffb1570285fbe08d5fd6)':
+  '@zag-js/interact-outside@1.40.0(patch_hash=caddd38066be2471a128b04fc6bb1d0ed7190f3effbd261f7697bfdeb6480cee)':
     dependencies:
       '@zag-js/dom-query': 1.40.0
       '@zag-js/utils': 1.40.0
@@ -6351,7 +6351,7 @@ snapshots:
       '@zag-js/auto-resize': 1.40.0
       '@zag-js/core': 1.40.0
       '@zag-js/dom-query': 1.40.0
-      '@zag-js/interact-outside': 1.40.0(patch_hash=53d739b8583ba2852bf6f2183a466abbb6e5aacb2159ffb1570285fbe08d5fd6)
+      '@zag-js/interact-outside': 1.40.0(patch_hash=caddd38066be2471a128b04fc6bb1d0ed7190f3effbd261f7697bfdeb6480cee)
       '@zag-js/live-region': 1.40.0
       '@zag-js/types': 1.40.0
       '@zag-js/utils': 1.40.0
@@ -6406,7 +6406,7 @@ snapshots:
       '@zag-js/dismissable': 1.40.0
       '@zag-js/dom-query': 1.40.0
       '@zag-js/focus-trap': 1.40.0
-      '@zag-js/interact-outside': 1.40.0(patch_hash=53d739b8583ba2852bf6f2183a466abbb6e5aacb2159ffb1570285fbe08d5fd6)
+      '@zag-js/interact-outside': 1.40.0(patch_hash=caddd38066be2471a128b04fc6bb1d0ed7190f3effbd261f7697bfdeb6480cee)
       '@zag-js/popper': 1.40.0
       '@zag-js/types': 1.40.0
       '@zag-js/utils': 1.40.0
