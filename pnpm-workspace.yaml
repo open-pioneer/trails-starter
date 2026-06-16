@@ -7,8 +7,8 @@ packages:
 # This is a yaml feature and is not interpreted by pnpm directly.
 __versions:
   - &react_version ^19.2.6
-  - &core_packages_version ^4.6.0
-  - &ol_base_packages_version ^1.3.0
+  - &core_packages_version 4.6.1-dev-chakra-336.20260616130546
+  - &ol_base_packages_version 1.4.0-dev-chakra-336.20260616133316
 
 # https://pnpm.io/catalogs
 catalog:
