@@ -7,8 +7,8 @@ packages:
 # This is a yaml feature and is not interpreted by pnpm directly.
 __versions:
   - &react_version ^19.2.6
-  - &core_packages_version 4.6.1-dev-chakra-336.20260616130546
-  - &ol_base_packages_version 1.4.0-dev-chakra-336.20260616133316
+  - &core_packages_version 4.7.0-dev.20260623135435
+  - &ol_base_packages_version 1.4.0-dev.20260624132304
 
 # https://pnpm.io/catalogs
 catalog:
@@ -54,11 +54,11 @@ catalog:
 
   # Devtools
   "@eslint/js": ^9.39.4
-  "@open-pioneer/build-package-cli": ^3.1.0
-  "@open-pioneer/build-support": ^3.1.0
-  "@open-pioneer/changesets-release-line": ^0.1.0
-  "@open-pioneer/check-pnpm-duplicates": ^0.3.2
-  "@open-pioneer/vite-plugin-pioneer": ^6.0.0
+  "@open-pioneer/build-package-cli": ^3.1.1-dev.20260623134110
+  "@open-pioneer/build-support": ^3.1.1-dev.20260623134110
+  "@open-pioneer/changesets-release-line": ^0.1.1-dev.20260623134110
+  "@open-pioneer/check-pnpm-duplicates": ^0.3.3-dev.20260623134110
+  "@open-pioneer/vite-plugin-pioneer": ^6.0.1-dev.20260623134110
   "@testing-library/dom": ^10.4.1
   "@testing-library/jest-dom": ^6.9.1
   "@testing-library/react": ^16.3.2
