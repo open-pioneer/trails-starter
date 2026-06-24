@@ -38,14 +38,14 @@ catalog:
   "@open-pioneer/runtime": *core_packages_version
   "@open-pioneer/test-utils": *core_packages_version
 
-  # Other dependencies
+  # Frontend dependencies
   "@chakra-ui/react": ^3.36.0
-  "@conterra/reactivity-core": ^0.8.5
-  "@conterra/reactivity-events": ^0.8.5
+  "@conterra/reactivity-core": ^0.8.6
+  "@conterra/reactivity-events": ^0.8.6
   "@emotion/cache": ^11.14.0
   "@emotion/react": ^11.14.0
   "@emotion/styled": ^11.14.1
-  "@formatjs/intl": ^4.1.11
+  "@formatjs/intl": ^4.1.13
   ol: ^10.9.0
   react-dom: *react_version
   react-icons: ^5.6.0
@@ -66,12 +66,12 @@ catalog:
   "@types/js-yaml": ^4.0.9
   "@types/node": ^20.19.41
   "@types/react-dom": ^19.2.3
-  "@types/react": ^19.2.14
-  "@typescript-eslint/parser": ^8.59.3
+  "@types/react": ^19.2.17
+  "@typescript-eslint/parser": ^8.61.1
   "@vitejs/plugin-react": "^6.0.2"
-  "typescript-eslint": ^8.59.3
+  "typescript-eslint": ^8.61.1
   eslint-config-prettier: ^10.1.8
-  eslint-import-resolver-typescript: ^4.4.4
+  eslint-import-resolver-typescript: ^4.4.5
   eslint-plugin-headers: ^1.3.4
   eslint-plugin-import: ^2.32.0
   eslint-plugin-jsx-a11y: ^6.10.2
@@ -81,20 +81,20 @@ catalog:
   eslint: ^9.39.4
   fast-glob: ^3.3.3
   handlebars: ^4.7.9
-  happy-dom: ^20.9.0
+  happy-dom: ^20.10.6
   husky: ^9.1.7
-  js-yaml: ^4.1.1
+  js-yaml: ^4.2.0
   jsdom: ^29.1.1
-  lint-staged: ^17.0.4
+  lint-staged: ^17.0.7
   prettier: ^3.8.3
   rimraf: ^6.1.3
-  sass: ^1.99.0
-  tsx: ^4.22.0
+  sass: ^1.101.0
+  tsx: ^4.22.4
   typedoc: ^0.28.19
   typescript: ^6.0.3
   vite-plugin-eslint: ^1.8.1
-  vite: ^8.0.13
-  vitest: ^4.1.6
+  vite: ^8.0.16
+  vitest: ^4.1.9
 
 overrides:
   # We don't actually use the babel plugin.
@@ -114,35 +114,6 @@ overrides:
   "@chakra-ui/react": "3.36.0"
   "@ark-ui/react": "5.37.2"
   "@zag-js/interact-outside": "1.41.2"
-
-  # https://github.com/advisories/GHSA-rf6f-7fwh-wjgh
-  "flatted@<=3.4.1": "^3.4.2"
-
-  # https://github.com/advisories/GHSA-3v7f-55p6-f55p
-  # https://github.com/advisories/GHSA-c2c7-rcm5-vvqj
-  "picomatch@<2.3.2": "^2.3.2"
-  "picomatch@>=3.0.0 <3.0.2": "^3.0.2"
-  "picomatch@>=4.0.0 <4.0.4": "^4.0.4"
-
-  # https://github.com/advisories/GHSA-j452-xhg8-qg39
-  "protocol-buffers-schema@<3.6.1": "^3.6.1"
-
-  # https://github.com/advisories/GHSA-w5hq-g745-h8pq
-  "uuid@<14.0.0": "^14.0.0"
-
-  # https://github.com/advisories/GHSA-qx2v-qp2m-jg93
-  "postcss@<8.5.10": "^8.5.10"
-
-  # https://github.com/advisories/GHSA-jxxr-4gwj-5jf2
-  # https://github.com/advisories/GHSA-f886-m6hf-6m8v
-  "brace-expansion@>=5.0.0 <5.0.6": "^5.0.6"
-  "brace-expansion@<1.1.13": "^1.1.13"
-
-  # https://github.com/advisories/GHSA-58qx-3vcg-4xpx
-  "ws@>=8.0.0 <8.20.1": "^8.20.1"
-
-  # https://github.com/advisories/GHSA-qjx8-664m-686j
-  "js-cookie@<=3.0.5": "^3.0.7"
 
   # https://github.com/advisories/GHSA-g7r4-m6w7-qqqr
   # https://github.com/advisories/GHSA-gv7w-rqvm-qjhr
@@ -165,6 +136,7 @@ minimumReleaseAge: 4320 # 3 days in minutes
 minimumReleaseAgeExclude:
   - "@open-pioneer/*"
   - "@conterra/*"
+  - nanoid@3.3.15
 
 peerDependencyRules:
   allowedVersions:
@@ -189,11 +161,13 @@ allowBuilds:
 trustPolicy: no-downgrade
 # Exclude packages from trustPolicy that are used in an old (major) version that was published after another signed version
 trustPolicyExclude:
-  - "@pnpm/lockfile.utils@1004.0.4"
-  - "@pnpm/lockfile.fs@1001.1.33"
-  - "@pnpm/lockfile.walker@1001.0.27"
-  - "@pnpm/lockfile.types@1002.1.1"
-  - "@pnpm/lockfile.merger@1001.0.21"
+  - "@pnpm/lockfile.utils@1004.0.6"
+  - "@pnpm/lockfile.fs@1001.1.35"
+  - "@pnpm/lockfile.walker@1001.0.28"
+  - "@pnpm/lockfile.types@1002.1.2"
+  - "@pnpm/lockfile.merger@1001.0.22"
+  - "@pnpm/resolver-base@1005.4.3"
+  - "@pnpm/types@1001.3.1"
   - "undici-types@6.21.0"
   - "semver@6.3.1"
   - "chokidar@4.0.3"

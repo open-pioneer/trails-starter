@@ -1,5 +1,11 @@
 # Changelog
 
+## 2026-06-24
+
+[Show all changes](https://github.com/open-pioneer/trails-starter/compare/2026-05-29...2026-06-24)
+
+- Bump various dependencies, cleanup obsolete `overrides` in `pnpm-workspace.yaml`
+
 ## 2026-05-29
 
 [Show all changes](https://github.com/open-pioneer/trails-starter/compare/2026-05-20...2026-05-29)
@@ -18,7 +24,7 @@
     - Add `optimizeDeps.entries` configuration that should speed up dev server startup when dependencies have changed
 - Update to OpenLayers 10.9.0
 - Update TypeScript to 6.0.3
-    - Note: configurations were split into `tsconfig.browser.json` (for `src/\*\*/`) and `tsconfig.node.json`.
+    - Note: configurations were split into `tsconfig.browser.json` (for `src/**`) and `tsconfig.node.json`.
     - The main `tsconfig.json` file references them both
     - `pnpm` scripts use `tsc --build` now, but are otherwise unchanged
 - Update Chakra UI to 3.35.0
