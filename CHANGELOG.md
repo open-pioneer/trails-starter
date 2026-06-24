@@ -1,5 +1,11 @@
 # Changelog
 
+## 2026-06-24
+
+[Show all changes](https://github.com/open-pioneer/trails-starter/compare/2026-05-29...2026-06-24)
+
+- Bump various dependencies, cleanup obsolete `overrides` in `pnpm-workspace.yaml`
+
 ## 2026-05-29
 
 [Show all changes](https://github.com/open-pioneer/trails-starter/compare/2026-05-20...2026-05-29)
