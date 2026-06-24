@@ -1,5 +1,10 @@
 # Changelog
 
+## TBD
+
+- Update Chakra to 3.36.0
+    - Most patches could be removed again
+
 ## 2026-06-24
 
 [Show all changes](https://github.com/open-pioneer/trails-starter/compare/2026-05-29...2026-06-24)
