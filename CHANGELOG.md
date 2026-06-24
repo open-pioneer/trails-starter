@@ -18,7 +18,7 @@
     - Add `optimizeDeps.entries` configuration that should speed up dev server startup when dependencies have changed
 - Update to OpenLayers 10.9.0
 - Update TypeScript to 6.0.3
-    - Note: configurations were split into `tsconfig.browser.json` (for `src/\*\*/`) and `tsconfig.node.json`.
+    - Note: configurations were split into `tsconfig.browser.json` (for `src/**`) and `tsconfig.node.json`.
     - The main `tsconfig.json` file references them both
     - `pnpm` scripts use `tsc --build` now, but are otherwise unchanged
 - Update Chakra UI to 3.35.0
