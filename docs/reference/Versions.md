@@ -1,8 +1,11 @@
 # Versioning Overview
 
-The trails ecosystem consists of a larger number of packages and a few file formats.
+The trails ecosystem consists of a large number of packages and a few file formats.
 This document summarizes the most important versions, their history and the most relevant changes.
 For more detailed changes, consult the `CHANGELOG` files of the individual packages.
+
+> **Notation:** A `Since Version` column lists the version a row applies from (and every later version).
+> Dependency and "supported" columns use npm semver syntax instead, e.g. `^4.6.0` (compatible releases) or `1.0.x` (any patch of that minor).
 
 ## Semantic Versioning
 
@@ -13,9 +16,9 @@ TODO -- Versioning policy
 Packages developed in the [core packages repository](https://github.com/open-pioneer/trails-core-packages) implement the basic runtime environment of our web applications.
 Public packages share a common version number.
 
-| Package Version | Package Metadata Version | Runtime Metadata Version |
-| --------------- | ------------------------ | ------------------------ |
-| 4.6.x           | 1.0.0                    | 1.1.0                    |
+| Since Version | Package Metadata Version | Supported Runtime Metadata Version(s) |
+| ------------- | ------------------------ | ------------------------------------- |
+| 4.6.0         | 1.0.1                    | 1.0.0, 1.1.0                          |
 
 Packages are _published_ using the listed package metadata version.
 They require a Vite plugin (see below) that is able to interpret that metadata.
@@ -28,9 +31,9 @@ It needs a Vite plugin (see below) that is able to output runtime metadata in th
 The [openlayers base packages](https://github.com/open-pioneer/trails-openlayers-base-packages) are based on OpenLayers and the Trails Core Packages.
 Public packages share a common version number.
 
-| Package Version | Core Packages Version(s) | Package Metadata Version |
-| --------------- | ------------------------ | ------------------------ |
-| >= 1.3.0        | ^4.6.0                   | 1.0.0                    |
+| Since Version | Core Packages Version(s) | Package Metadata Version |
+| ------------- | ------------------------ | ------------------------ |
+| 1.3.0         | ^4.6.0                   | 1.0.0                    |
 
 Packages are _published_ using the listed package metadata version.
 They require a Vite plugin (see below) that is able to interpret that metadata.
@@ -42,9 +45,9 @@ It _reads_ package metadata (in the supported package metadata versions) and _ge
 
 Multiple metadata format versions are supported (both for input and output) in order to preserve backwards compatibility but to enable new features as well.
 
-| Package Version | Supported Vite Version(s) | Supported Package Metadata Versions | Supported Runtime Metadata Version(s) |
-| --------------- | ------------------------- | ----------------------------------- | ------------------------------------- |
-| >= 6.0.0        | ^8.0.0                    | 1.0.x, 1.1.x                        | 1.0.x, 1.1.x                          |
+| Since Version | Supported Vite Version(s) | Supported Package Metadata Versions | Supported Runtime Metadata Version(s) |
+| ------------- | ------------------------- | ----------------------------------- | ------------------------------------- |
+| 6.0.0         | ^8.0.0                    | 1.0.x, 1.1.x                        | 1.0.x, 1.1.x                          |
 
 ## Build Package CLI
 
@@ -53,14 +56,16 @@ The [build-package-cli](https://www.npmjs.com/package/@open-pioneer/build-packag
 The package metadata version generated for a package can be configured in the `build.config.mjs` file.
 Certain newer features may require using a newer metadata version, which may require users to update their vite plugin in order to use that package.
 
-| Package Version | Supported Package Metadata Version(s) |
-| --------------- | ------------------------------------- |
-| >= 4.2.0        | 1.0.x, 1.1.x                          |
+| Since Version | Supported Package Metadata Version(s) |
+| ------------- | ------------------------------------- |
+| 3.1.0         | 1.0.x, 1.1.x                          |
 
 ## Package Metadata
 
 Trails packages contain metadata that needs to be interpreted when building an application (or running the development server).
+
 Package metadata are used to implement trails features (e.g. languages supported by a package, service provided by a package, etc.).
+They are generated when a package is built (using the build package CLI) and embedded into the package's `package.json`.
 
 | Version | Comment                                                                                                                       |
 | ------- | ----------------------------------------------------------------------------------------------------------------------------- |
@@ -74,7 +79,7 @@ For more details about the metadata format, see [packageMetadata/v1.ts](https://
 
 The runtime metadata format contains metadata about the _application_ (not just a single package).
 This information is passed from the Vite plugin to the runtime package.
-It contains all i18n messages needed by the application, referenced to all required services etc.
+It contains all i18n messages needed by the application, references to all required services, etc.
 
 | Version | Comment                                                                                                                                    |
 | ------- | ------------------------------------------------------------------------------------------------------------------------------------------ |
