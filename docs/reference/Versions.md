@@ -33,7 +33,7 @@ Public packages share a common version number.
 
 | Since Version | Core Packages Version(s) | Package Metadata Version |
 | ------------- | ------------------------ | ------------------------ |
-| 1.3.0         | ^4.6.0                   | 1.0.0                    |
+| 1.3.0         | ^4.6.0                   | 1.0.1                    |
 
 Packages are _published_ using the listed package metadata version.
 They require a Vite plugin (see below) that is able to interpret that metadata.
