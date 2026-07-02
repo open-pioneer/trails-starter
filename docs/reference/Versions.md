@@ -61,6 +61,7 @@ Packages and file formats follow [semantic versioning](https://semver.org/):
 - Incrementing the patch version indicates a (backward compatible) bugfix
 
 Major version updates happen rarely -- we aim to preserve backward compatibility.
+Because some repositories (Core Packages, OpenLayers Base Packages) publish their packages with a common version, a package's major version might be incremented even if there was no breaking change for _that_ package.
 
 Note that fixing **security issues** may force us to make breaking changes even within a minor version or patch.
 
