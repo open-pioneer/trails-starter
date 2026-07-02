@@ -30,6 +30,7 @@
     - [Package Reference](./reference/Package.md)
     - [I18N format](./reference/I18nFormat.md)
     - [Services](./reference/Services.md)
+    - [Versions Overview](./reference/Versions.md)
     - [Chakra Theming](./reference/Theming.md)
 
 - Internal Documentation
