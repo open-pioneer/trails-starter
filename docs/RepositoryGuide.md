@@ -186,7 +186,7 @@ For example, the `@types/node` package may be deliberately kept at a lower versi
 
 In order to update the package version, either update the `package.json` of a certain package directly (if that package uses a specific version) or update your central catalog in `pnpm-workspace.yaml` (the default).
 The catalog in this repository has been prepared to make updating a package as easy as possible.
-For example, updating the openlayers-base-packages can only requires changing a single version number in the `pnpm-workspace.yaml`:
+For example, updating the openlayers-base-packages can only require changing a single version number in the `pnpm-workspace.yaml`:
 
 ```yaml
 # pnpm-workspace.yaml
@@ -213,6 +213,8 @@ catalog:
 ```
 
 After changing version numbers, run `pnpm install` to apply your changes.
+
+For information about version handling and compatability of trails packages, see [Version Overview](./reference/Versions.md).
 
 #### Handling version conflicts and duplicate packages
 

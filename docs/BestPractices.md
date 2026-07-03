@@ -73,6 +73,8 @@ When thinking about dependencies, follow these general guidelines:
 - Use "open" specifiers for dependencies like `^`.
   Not depending on a fixed version avoid conflicts if multiple packages prefer slightly different versions.
 
+For information about version handling of trails packages, see [Version Overview](./reference/Versions.md).
+
 #### dependencies vs peerDependencies
 
 [This post](https://indepth.dev/posts/1187/npm-peer-dependencies) is a great explainer for the differences between `dependencies` and `peerDependencies`.
