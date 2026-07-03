@@ -76,7 +76,7 @@ Semver expressions like `^4.6.0` have their usual meaning (">= 4.6.0 < 5.0.0" in
 
 ### Core Packages
 
-| Since Version | Package Metadata Version | Supported Runtime Metadata Version(s) |
+| Since Version | Package Metadata Version | Runtime Metadata Version(s) |
 | ------------- | ------------------------ | ------------------------------------- |
 | 4.6.0         | 1.0.1                    | 1.0.0, 1.1.0                          |
 
@@ -100,7 +100,7 @@ Notes:
 
 ### Vite Plugin
 
-| Since Version | Supported Vite Version(s) | Supported Package Metadata Versions | Supported Runtime Metadata Version(s) |
+| Since Version | Vite Version(s) | Package Metadata Versions | Runtime Metadata Version(s) |
 | ------------- | ------------------------- | ----------------------------------- | ------------------------------------- |
 | 6.0.0         | ^8.0.0                    | 1.0.x, 1.1.x                        | 1.0.x, 1.1.x                          |
 
@@ -111,7 +111,7 @@ Notes:
 
 ### Build Package CLI
 
-| Since Version | Supported Package Metadata Version(s) |
+| Since Version | Package Metadata Version(s) |
 | ------------- | ------------------------------------- |
 | 3.1.0         | 1.0.x, 1.1.x                          |
 
