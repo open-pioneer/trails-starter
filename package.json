@@ -12,7 +12,7 @@
         "build": "vite build",
         "build-docs": "typedoc",
         "build-license-report": "tsx ./support/create-license-report.ts",
-        "generate-sbom": "tsx ./support/create-cyclonedx-sbom.ts",
+        "generate-sbom": "pnpm sbom --sbom-format cyclonedx --sbom-spec-version 1.7 --out ./dist/sbom.json --prod --sbom-type application --lockfile-only ",
         "preview": "vite preview",
         "lint": "eslint ./src ./support",
         "eslint": "pnpm run lint",
