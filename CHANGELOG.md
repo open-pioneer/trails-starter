@@ -4,6 +4,10 @@
 
 - Update Chakra to 3.36.0
     - Most patches could be removed again
+- Use PNPM for SBOM generation instead of external tool (Trivy)
+    - remove redundant `./support/create-cyclonedx-sbom.ts`
+- update to PNPM 11.9.0
+    - required for some flags for SBOM CLI command
 
 ## 2026-06-24
 
