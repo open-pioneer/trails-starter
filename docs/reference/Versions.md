@@ -119,6 +119,7 @@ Notes:
 
 - The package metadata version generated for a package can be configured in the `build.config.mjs` file.
   Certain newer features may require using a newer metadata version, which may require users to update their vite plugin in order to use that package.
+- To publish packages with a specific metadata version, use the `publishConfig.packageFormatTarget` option in `build.config.mjs` (see [Docs](https://github.com/open-pioneer/trails-build-tools/blob/60024a4a57b210dc51b059b42fa801b06fb7aa4f/packages/build-support/index.d.ts#L299-L307)).
 
 ### Package Metadata
 
