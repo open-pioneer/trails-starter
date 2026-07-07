@@ -1,0 +1,31 @@
+{
+    "$schema": "./node_modules/oxfmt/configuration_schema.json",
+    "semi": true,
+    "tabWidth": 4,
+    "trailingComma": "none",
+    "singleQuote": false,
+    "quoteProps": "preserve",
+    "printWidth": 100,
+    "sortPackageJson": true,
+    "sortImports": {
+        "newlinesBetween": false
+    },
+    "ignorePatterns": [
+        "dist",
+        "node_modules",
+        "temp",
+        "test-data",
+        "__snapshots",
+        "pnpm-lock.yaml",
+        "**/chakra-snippets/**/*.tsx",
+        "support/licenses"
+    ],
+    "overrides": [
+        {
+            "files": ["**/*.yaml", "**/*.yml"],
+            "options": {
+                "tabWidth": 2
+            }
+        }
+    ]
+}
