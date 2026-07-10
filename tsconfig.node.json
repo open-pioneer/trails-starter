@@ -8,7 +8,7 @@
         "target": "ESNext",
         "lib": ["ES2024"],
         "module": "esnext",
-        "types": ["node"],
+        "types": ["node", "vitest/config"],
         "moduleResolution": "Bundler",
         "allowJs": false,
 
