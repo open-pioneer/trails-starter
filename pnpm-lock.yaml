@@ -136,8 +136,8 @@ catalogs:
       specifier: ^9.1.7
       version: 9.1.7
     js-yaml:
-      specifier: ^4.2.0
-      version: 4.2.0
+      specifier: ^4.3.0
+      version: 4.3.0
     jsdom:
       specifier: ^29.1.1
       version: 29.1.1
@@ -202,6 +202,9 @@ overrides:
   '@ark-ui/react': 5.37.2
   '@zag-js/interact-outside': 1.41.2
   esbuild@<=0.28.0: ^0.28.1
+  js-yaml@>=3.0.0 <3.15.0: ^3.15.0
+  brace-expansion@<1.1.16: ^1.1.16
+  brace-expansion@>=3.0.0 <5.0.7: ^5.0.7
 
 patchedDependencies:
   '@ark-ui/react@*': cdcaff11f2f2c324a7d04d94bfaaa7d325234a04b33a49a4b2d2344fa73ec625
@@ -297,7 +300,7 @@ importers:
         version: 9.1.7
       js-yaml:
         specifier: 'catalog:'
-        version: 4.2.0
+        version: 4.3.0
       jsdom:
         specifier: 'catalog:'
         version: 29.1.1
@@ -2300,11 +2303,11 @@ packages:
   bole@5.0.29:
     resolution: {integrity: sha512-eYR9i2ubLv5/4TFGyZsQ1cVH4jF9+qLJA72Aow+E7ZZQfqHqQNUZeX3w+pVWF76PQyjl5eDKf2xylyOOX76ozA==}
 
-  brace-expansion@1.1.15:
-    resolution: {integrity: sha512-EwOCDEex4quD37XhqM3omwtMoJjr//isUZz1JopUNWms+4Z2ViyM/k1YIRePpoVNnQhENnxtFjLaxNHrT7xIUg==}
+  brace-expansion@1.1.16:
+    resolution: {integrity: sha512-IDw48K2/2kRkg9LdJxurvq3lV3aBgq0REY89duEqFRthjlPdXHKMj7EnQOXVckxzgisinf3nHfrcE2FufFLXMw==}
 
-  brace-expansion@5.0.6:
-    resolution: {integrity: sha512-kLpxurY4Z4r9sgMsyG0Z9uzsBlgiU/EFKhj/h91/8yHu0edo7XuixOIH3VcJ8kkxs6/jPzoI6U9Vj3WqbMQ94g==}
+  brace-expansion@5.0.7:
+    resolution: {integrity: sha512-7oFy703dxfY3/NLxC1fh2SUCQ0H9rmAY+5EpDVfXjUTTs+HEwR2nYaqLv+GWcTsumwxPfiz6CzCNkwXwBUwqCA==}
     engines: {node: 18 || 20 || >=22}
 
   braces@3.0.3:
@@ -3139,6 +3142,10 @@ packages:
 
   js-yaml@4.2.0:
     resolution: {integrity: sha512-ePWsvanv0DWuDRsW8dnt+R4jQ31SCRCQ7hhNcPXZPsoBZiemuZNYGf7adZdqX2D86j6rvKp3RpCxVTSb8WQlOw==}
+    hasBin: true
+
+  js-yaml@4.3.0:
+    resolution: {integrity: sha512-1td788aAnnZ5qs7V2QIRl1owjtYpbKt749Y3xauqQgwIIGF/xXWz1wMTEBx5O3LK3lXLVuqXPdPxj2BoFHaW9Q==}
     hasBin: true
 
   jsdom@29.1.1:
@@ -6696,12 +6703,12 @@ snapshots:
       fast-safe-stringify: 2.1.1
       individual: 3.0.0
 
-  brace-expansion@1.1.15:
+  brace-expansion@1.1.16:
     dependencies:
       balanced-match: 1.0.2
       concat-map: 0.0.1
 
-  brace-expansion@5.0.6:
+  brace-expansion@5.0.7:
     dependencies:
       balanced-match: 4.0.4
 
@@ -7698,6 +7705,10 @@ snapshots:
     dependencies:
       argparse: 2.0.1
 
+  js-yaml@4.3.0:
+    dependencies:
+      argparse: 2.0.1
+
   jsdom@29.1.1:
     dependencies:
       '@asamuzakjp/css-color': 5.1.11
@@ -7902,11 +7913,11 @@ snapshots:
 
   minimatch@10.2.5:
     dependencies:
-      brace-expansion: 5.0.6
+      brace-expansion: 5.0.7
 
   minimatch@3.1.5:
     dependencies:
-      brace-expansion: 1.1.15
+      brace-expansion: 1.1.16
 
   minimist@1.2.8: {}
 

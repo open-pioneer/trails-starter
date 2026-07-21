@@ -83,7 +83,7 @@ catalog:
   handlebars: ^4.7.9
   happy-dom: ^20.10.6
   husky: ^9.1.7
-  js-yaml: ^4.2.0
+  js-yaml: ^4.3.0
   jsdom: ^29.1.1
   lint-staged: ^17.0.7
   prettier: ^3.8.3
@@ -118,6 +118,13 @@ overrides:
   # https://github.com/advisories/GHSA-g7r4-m6w7-qqqr
   # https://github.com/advisories/GHSA-gv7w-rqvm-qjhr
   "esbuild@<=0.28.0": "^0.28.1"
+
+  # https://github.com/advisories/GHSA-52cp-r559-cp3m, CVE-2026-59869
+  "js-yaml@>=3.0.0 <3.15.0": "^3.15.0"
+
+  # https://github.com/advisories/GHSA-3jxr-9vmj-r5cp, CVE-2026-13149
+  "brace-expansion@<1.1.16": "^1.1.16"
+  "brace-expansion@>=3.0.0 <5.0.7": "^5.0.7"
 
 allowUnusedPatches: true
 patchedDependencies:
