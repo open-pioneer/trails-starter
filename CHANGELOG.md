@@ -2,9 +2,9 @@
 
 ## TBD
 
-- Update Chakra to 3.36.0
+- Update Chakra to 3.36.1
     - Most patches could be removed again
-- Update to PNPM 11.9.0
+- Update to PNPM 11.17.0
 - Use PNPM for SBOM generation instead of external tool (Trivy)
     - Remove redundant `./support/create-cyclonedx-sbom.ts`
 - Replace triple slash type references (`<reference types=... />`) with explicit references in `tsconfig.json` (`types` option).
