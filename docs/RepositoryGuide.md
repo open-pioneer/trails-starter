@@ -476,7 +476,7 @@ Prettier is configured by the `.prettierrc` file and it also respects parts of t
 It can be integrated into most modern IDEs to keep automatically keep edited files formatted properly.
 
 [Oxlint](https://oxc.rs/docs/guide/usage/linter) helps to detect minor style issues (e.g. missing semicolons) and outright programming errors (e.g. wrong usage of React hooks).
-It checks the code against the rules configured in `.oclint.config.ts` and
+It checks the code against the rules configured in `.oxlint.config.ts` and
 Oxlint is integrated into the pre-commit hooks, so it will automatically check your code before committing.
 Additionally, it is executed when pushing to the GitHub repository (within the GitHub actions workflow).
 It is also recommended to integrate it into your IDE to get immediate feedback while coding.
