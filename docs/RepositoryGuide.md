@@ -20,7 +20,7 @@ starter
 ├── .oxlint.config.ts       -- Oxlint configuration file
 ├── .gitignore              -- Lists files ignored by git
 ├── .npmrc                  -- pnpm configuration file
-├── .prettierrc             -- Prettier configuration file
+├── .oxfmt.config.ts        -- Oxfmt configuration file
 ├── package.json            -- Dependencies of the root package (mostly development tools)
 ├── pnpm-lock.yaml          -- Package manager lockfile
 ├── pnpm-workspace.yaml     -- Workspaces configuration file for pnpm, also includes the dependency catalog
@@ -128,9 +128,9 @@ Runs [Oxlint](https://oxc.rs/docs/guide/usage/linter) on all source code files t
 Simple errors can be fixed automatically by running `pnpm run lint --fix`.
 Oxlint is configured via the `oxlint.config.js` file.
 
-### `pnpm run prettier`
+### `pnpm run fmt`
 
-Runs [Prettier](https://prettier.io/) on all source code files for automated (re-) formatting.
+Runs [Oxfmt](https://oxc.rs/docs/guide/usage/formatter.html) on all source code files for automated (re-) formatting.
 
 ### `pnpm audit`
 
@@ -470,13 +470,13 @@ Please refer to the [official documentation](https://vitest.dev/guide/) for more
 
 ### Linting and formatting
 
-We use [Prettier](https://prettier.io/) to handle automatic source code formatting.
+We use [Oxfmt](https://oxc.rs/docs/guide/usage/formatter.html) to handle automatic source code formatting.
 This keeps code readable with reasonable defaults and also ensures that we don't waste time with unproductive style discussions.
-Prettier is configured by the `.prettierrc` file and it also respects parts of the `.editorconfig` file.
+Oxfmt is configured by the `oxfmt.config.ts` file and it also respects parts of the `.editorconfig` file.
 It can be integrated into most modern IDEs to keep automatically keep edited files formatted properly.
 
 [Oxlint](https://oxc.rs/docs/guide/usage/linter) helps to detect minor style issues (e.g. missing semicolons) and outright programming errors (e.g. wrong usage of React hooks).
-It checks the code against the rules configured in `.oclint.config.ts` and
+It checks the code against the rules configured in `.oxlint.config.ts` and
 Oxlint is integrated into the pre-commit hooks, so it will automatically check your code before committing.
 Additionally, it is executed when pushing to the GitHub repository (within the GitHub actions workflow).
 It is also recommended to integrate it into your IDE to get immediate feedback while coding.

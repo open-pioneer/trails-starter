@@ -10,6 +10,8 @@
 - Replace triple slash type references (`<reference types=... />`) with explicit references in `tsconfig.json` (`types` option).
     - Remove redundant `src/types/pioneer-env.d.ts`
 - Migrate from `eslint` to [Oxlint](https://oxc.rs/docs/guide/usage/linter). Oxlint is much faster than eslint and part of the same ecosystem as Vite. Linting is only dev tooling, so if you want to use `eslint` instead, you can still do so by changing configuration.
+- Similarly migrate from `prettier` to [Oxfmt](https://oxc.rs/docs/guide/usage/formatter.html).
+    - old `pnpm prettier` command is replaced by new command `pmpm fmt`.
 
 ## 2026-06-24
 
