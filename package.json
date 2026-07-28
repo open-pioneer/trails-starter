@@ -14,7 +14,7 @@
         "build-license-report": "tsx ./support/create-license-report.ts",
         "generate-sbom": "pnpm sbom --sbom-format cyclonedx --sbom-spec-version 1.7 --out ./dist/sbom.json --sbom-type application --prod",
         "preview": "vite preview",
-        "lint": "oxlint ./src ./support",
+        "lint": "oxlint .",
         "lint:fix": "oxlint --fix .",
         "fmt": "oxfmt",
         "fmt:check": "oxfmt --check",
