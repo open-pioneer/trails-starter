@@ -1,8 +1,8 @@
 {
     "name": "starter",
     "private": true,
-    "type": "module",
     "license": "Apache-2.0",
+    "type": "module",
     "scripts": {
         "clean": "rimraf dist && pnpm recursive exec rimraf dist",
         "dev": "vite",
@@ -16,9 +16,8 @@
         "preview": "vite preview",
         "lint": "oxlint ./src ./support",
         "lint:fix": "oxlint --fix .",
-        "prettier-check": "pnpm prettier:common -c",
-        "prettier": "pnpm prettier:common -w",
-        "prettier:common": "prettier ./src ./support ./docs --cache",
+        "fmt": "oxfmt",
+        "fmt:check": "oxfmt --check",
         "test": "vitest",
         "prepare": "husky && pnpm check-duplicates"
     },
@@ -44,8 +43,8 @@
         "js-yaml": "catalog:",
         "jsdom": "catalog:",
         "lint-staged": "catalog:",
+        "oxfmt": "catalog:",
         "oxlint": "catalog:",
-        "prettier": "catalog:",
         "react": "catalog:",
         "rimraf": "catalog:",
         "sass": "catalog:",
