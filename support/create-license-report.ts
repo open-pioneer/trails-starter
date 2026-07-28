@@ -2,12 +2,12 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { execSync } from "child_process";
-import glob from "fast-glob";
 import { readFileSync, writeFileSync, mkdirSync } from "fs";
-import Handlebars from "handlebars";
-import { load as loadYaml } from "js-yaml";
 import { basename, dirname, resolve } from "path";
 import { fileURLToPath } from "url";
+import glob from "fast-glob";
+import Handlebars from "handlebars";
+import { load as loadYaml } from "js-yaml";
 
 /**
  * Generates a license report from the production dependencies of this repository.

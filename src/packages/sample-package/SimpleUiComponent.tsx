@@ -1,9 +1,9 @@
 // SPDX-FileCopyrightText: 2023-2025 Open Pioneer project (https://github.com/open-pioneer)
 // SPDX-License-Identifier: Apache-2.0
 
-import { FC } from "react";
-import { useCommonComponentProps, CommonComponentProps } from "@open-pioneer/react-utils";
 import { Box, chakra } from "@chakra-ui/react";
+import { useCommonComponentProps, CommonComponentProps } from "@open-pioneer/react-utils";
+import { FC } from "react";
 
 export interface SimpleUiComponentProps extends CommonComponentProps {
     textToShow: string;

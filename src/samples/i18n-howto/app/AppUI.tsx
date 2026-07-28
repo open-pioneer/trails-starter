@@ -14,10 +14,10 @@ import {
     Text,
     VStack
 } from "@chakra-ui/react";
+import { NumberInputField, NumberInputRoot } from "@open-pioneer/chakra-snippets/number-input";
+import { Radio, RadioGroup } from "@open-pioneer/chakra-snippets/radio";
 import { useIntl, useService } from "open-pioneer:react-hooks";
 import { useState } from "react";
-import { Radio, RadioGroup } from "@open-pioneer/chakra-snippets/radio";
-import { NumberInputField, NumberInputRoot } from "@open-pioneer/chakra-snippets/number-input";
 import { GreetingService } from "./GreetingService";
 
 export function AppUI() {

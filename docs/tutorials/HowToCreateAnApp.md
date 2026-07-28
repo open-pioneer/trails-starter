@@ -303,14 +303,14 @@ The default file layout in this repository is designed for multiple applications
 For this reason, the default root site is an overview page mainly aimed at developers.
 It links to other sites in the project:
 
-- Overview site: <code>http[]()://example.com<b>**/**</b></code>
-- Other sites: <code>http[]()://example.com<b>/sites/my-app/</b></code>
+- Overview site: <code>http[](<>)://example.com<b>**/**</b></code>
+- Other sites: <code>http[](<>)://example.com<b>/sites/my-app/</b></code>
 
 If your project focuses on a single, central site, you may wish to invert this layout:
 
-- Main site: <code>http[]()://example.com<b>/</b></code>
-- (optional) Overview site: <code>http[]()://example.com<b>/app-overview/</b></code>
-- (optional) Other apps: <code>http[]()://example.com<b>/test-app/</b></code>
+- Main site: <code>http[](<>)://example.com<b>/</b></code>
+- (optional) Overview site: <code>http[](<>)://example.com<b>/app-overview/</b></code>
+- (optional) Other apps: <code>http[](<>)://example.com<b>/test-app/</b></code>
 
 To achieve this, simply swap the corresponding `.html` files:
 

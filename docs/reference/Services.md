@@ -69,9 +69,7 @@ class HelloWorldServiceFactoryImpl implements ServiceFactory<HelloWorldService> 
     }
 
     createService() {
-        const myServ = new MyHelloWorldService({
-            /* ... */
-        });
+        const myServ = new MyHelloWorldService({/* ... */});
         return myServ;
     }
 

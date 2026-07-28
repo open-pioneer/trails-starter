@@ -1,8 +1,8 @@
 // SPDX-FileCopyrightText: 2023-2025 Open Pioneer project (https://github.com/open-pioneer)
 // SPDX-License-Identifier: Apache-2.0
 
-import { DECLARE_SERVICE_INTERFACE, ServiceOptions, PackageIntl } from "@open-pioneer/runtime";
 import { ReadonlyReactive } from "@conterra/reactivity-core";
+import { DECLARE_SERVICE_INTERFACE, ServiceOptions, PackageIntl } from "@open-pioneer/runtime";
 
 export class GreetingService {
     declare [DECLARE_SERVICE_INTERFACE]: "i18n-howto-app.GreetingService";

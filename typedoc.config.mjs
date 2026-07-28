@@ -2,8 +2,8 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { readFileSync } from "fs";
-import fastGlob from "fast-glob";
 import { dirname } from "path";
+import fastGlob from "fast-glob";
 import { OptionDefaults } from "typedoc";
 
 const DEFAULT_HIGHLIGHT_LANGS = OptionDefaults.highlightLanguages;
