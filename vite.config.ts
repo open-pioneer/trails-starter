@@ -6,9 +6,6 @@ import react from "@vitejs/plugin-react";
 import { resolve } from "node:path";
 import { defineConfig } from "vite";
 
-// @ts-expect-error Invalid typings
-import eslint from "vite-plugin-eslint";
-
 const sampleSites = ["samples/map-sample", "samples/i18n-howto"];
 
 // https://vitejs.dev/config/
@@ -61,8 +58,7 @@ export default defineConfig(({ mode }) => {
                 // Apps to distribute as .js files for embedded use cases
                 apps: []
             }),
-            react(),
-            eslint()
+            react()
         ],
 
         // Ignore irrelevant deprecations.

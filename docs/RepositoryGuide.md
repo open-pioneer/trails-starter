@@ -17,7 +17,7 @@ starter
 │   ├── sites               -- Additional .html sites
 │   └── index.html          -- Main HTML entry point
 ├── .editorconfig           -- Common text file settings (encoding, line length)
-├── .eslint.config.mjs      -- ESLint configuration file
+├── .oxlint.config.ts       -- Oxlint configuration file
 ├── .gitignore              -- Lists files ignored by git
 ├── .npmrc                  -- pnpm configuration file
 ├── .prettierrc             -- Prettier configuration file
@@ -124,14 +124,13 @@ Removes files that were created during the build (e.g. the `dist` directory).
 
 ### `pnpm run lint`
 
-Runs [ESLint](https://eslint.org/) on all source code files to detect problems.
+Runs [Oxlint](https://oxc.rs/docs/guide/usage/linter) on all source code files to detect problems.
 Simple errors can be fixed automatically by running `pnpm run lint --fix`.
-ESLint is configured via the `.eslintrc` file.
+Oxlint is configured via the `oxlint.config.js` file.
 
 ### `pnpm run prettier`
 
 Runs [Prettier](https://prettier.io/) on all source code files for automated (re-) formatting.
-Prettier and ESLint are integrated (see `.eslintrc`), so prettier rules are also respected when linting.
 
 ### `pnpm audit`
 
@@ -476,6 +475,8 @@ This keeps code readable with reasonable defaults and also ensures that we don't
 Prettier is configured by the `.prettierrc` file and it also respects parts of the `.editorconfig` file.
 It can be integrated into most modern IDEs to keep automatically keep edited files formatted properly.
 
-[ESLint](https://eslint.org/) runs within the dev server (as a vite plugin) and when pushing to the GitHub repository (within the GitHub actions workflow).
-It checks the code against configured rules (see `.eslintrc`) and fails the build when it detects a code style violation.
-ESLint helps to detect minor style issues (e.g. missing semicolons) and outright programming errors (e.g. wrong usage of react hooks).
+[Oxlint](https://oxc.rs/docs/guide/usage/linter) helps to detect minor style issues (e.g. missing semicolons) and outright programming errors (e.g. wrong usage of React hooks).
+It checks the code against the rules configured in `.oclint.config.ts` and
+Oxlint is integrated into the pre-commit hooks, so it will automatically check your code before committing.
+Additionally, it is executed when pushing to the GitHub repository (within the GitHub actions workflow).
+It is also recommended to integrate it into your IDE to get immediate feedback while coding.

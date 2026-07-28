@@ -1,5 +1,6 @@
 // SPDX-FileCopyrightText: 2023-2025 Open Pioneer project (https://github.com/open-pioneer)
 // SPDX-License-Identifier: Apache-2.0
+
 import { Container, Heading, Text, chakra } from "@chakra-ui/react";
 import { useIntl, useService } from "open-pioneer:react-hooks";
 import { Greeter, SimpleUiComponent } from "sample-package";
@@ -17,7 +18,7 @@ export function AppUI() {
                 This messages comes from the sample package{"'"}s greeter service: {greeter.greet()}
             </Text>
             <chakra.div mt={5}>
-                <SimpleUiComponent textToShow="This text is rendered inside the sample UI-Component 'SimpleUiComponent'"></SimpleUiComponent>
+                <SimpleUiComponent textToShow="This text is rendered inside the sample UI-Component 'SimpleUiComponent'" />
             </chakra.div>
         </Container>
     );

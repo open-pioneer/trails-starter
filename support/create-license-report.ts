@@ -1,5 +1,6 @@
 // SPDX-FileCopyrightText: 2023-2025 Open Pioneer project (https://github.com/open-pioneer)
 // SPDX-License-Identifier: Apache-2.0
+
 import { execSync } from "child_process";
 import glob from "fast-glob";
 import { readFileSync, writeFileSync, mkdirSync } from "fs";
@@ -124,7 +125,8 @@ function analyzeLicenses(
                     return readFileSync(projectFilePath, "utf-8");
                 } catch (e) {
                     throw new Error(
-                        `Failed to read license file for project ${dependencyInfo} at ${projectFilePath}: ${e}`
+                        `Failed to read license file for project ${dependencyInfo} at ${projectFilePath}: ${e}`,
+                        { cause: e }
                     );
                 }
             };
@@ -209,7 +211,8 @@ function getAdditionalLicenses(
                         return readFileSync(resolve(THIS_DIR, file.path), "utf-8");
                     } catch (e) {
                         throw new Error(
-                            `Failed to read license file for project ${name} at ${file.path}: ${e}`
+                            `Failed to read license file for project ${name} at ${file.path}: ${e}`,
+                            { cause: e }
                         );
                     }
                 } else {
@@ -529,13 +532,13 @@ interface FileSpec {
 function readLicenseConfig(path: string): LicenseConfig {
     try {
         const content = readFileSync(path, "utf-8");
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        // oxlint-disable-next-line @typescript-eslint/no-explicit-any
         const rawConfig = loadYaml(content) as any;
 
         const config: LicenseConfig = {
             allowedLicenses: rawConfig.allowedLicenses,
             overrideLicenses: rawConfig.overrideLicenses?.map(
-                // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                // oxlint-disable-next-line @typescript-eslint/no-explicit-any
                 (rawEntry: any): OverrideLicenseEntry => {
                     const entry: OverrideLicenseEntry = {
                         name: rawEntry.name,
@@ -548,13 +551,13 @@ function readLicenseConfig(path: string): LicenseConfig {
                 }
             ),
             additionalLicenses: rawConfig.additionalLicenses?.map(
-                // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                // oxlint-disable-next-line @typescript-eslint/no-explicit-any
                 (rawEntry: any): AdditionalLicensesEntry => {
                     const entry: AdditionalLicensesEntry = {
                         name: rawEntry.name,
                         version: rawEntry.version,
                         license: rawEntry.license,
-                        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                        // oxlint-disable-next-line @typescript-eslint/no-explicit-any
                         licenseFiles: rawEntry.licenseFiles.map((file: any) => {
                             return {
                                 type: "custom",
@@ -568,17 +571,17 @@ function readLicenseConfig(path: string): LicenseConfig {
         };
         return config;
     } catch (e) {
-        throw new Error(`Failed to read license config from ${path}: ${e}`);
+        throw new Error(`Failed to read license config from ${path}: ${e}`, { cause: e });
     }
 }
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
+// oxlint-disable-next-line @typescript-eslint/no-explicit-any
 function readFileSpecs(rawSpecs: any): FileSpec[] | undefined {
     if (!rawSpecs) {
         return undefined;
     }
 
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    // oxlint-disable-next-line @typescript-eslint/no-explicit-any
     const readRawSpec = (rawSpec: any): FileSpec => {
         // Default is "package" when using a raw string
         if (typeof rawSpec === "string") {
@@ -652,12 +655,12 @@ function findFirstMatch(directory: string, candidates: string[]): string[] {
  * Returns the project's name from the package.json file in the repository root.
  */
 function getProjectName(): string {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    // oxlint-disable-next-line @typescript-eslint/no-explicit-any
     let data: any;
     try {
         data = JSON.parse(readFileSync(PACKAGE_JSON_PATH, "utf-8"));
     } catch (e) {
-        throw new Error(`Failed to read package.json: ${e}`);
+        throw new Error(`Failed to read package.json: ${e}`, { cause: e });
     }
     const name = data?.name;
     if (typeof name === "string") {

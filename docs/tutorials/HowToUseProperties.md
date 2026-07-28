@@ -100,7 +100,7 @@ import { useService } from "open-pioneer:react-hooks";
 
 export function AppUI() {
     // TypeScript integration skipped in this tutorial, see "How to create a service" tutorial.
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    // oxlint-disable-next-line @typescript-eslint/no-explicit-any
     const searchService = useService<any>("search-service.SearchService");
     return (
         <Container>
@@ -175,7 +175,7 @@ import { Button, Container } from "@chakra-ui/react";
 import { useService } from "open-pioneer:react-hooks";
 
 export function AppUI() {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    // oxlint-disable-next-line @typescript-eslint/no-explicit-any
     const searchService = useService<any>("search-service.SearchService");
     return (
         <Container>

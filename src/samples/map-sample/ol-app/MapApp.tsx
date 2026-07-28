@@ -1,5 +1,6 @@
 // SPDX-FileCopyrightText: 2023-2025 Open Pioneer project (https://github.com/open-pioneer)
 // SPDX-License-Identifier: Apache-2.0
+
 import { Box, Flex, Separator, Text, VStack } from "@chakra-ui/react";
 import { BasemapSwitcher } from "@open-pioneer/basemap-switcher";
 import { CoordinateViewer } from "@open-pioneer/coordinate-viewer";

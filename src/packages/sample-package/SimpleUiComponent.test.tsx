@@ -1,5 +1,6 @@
 // SPDX-FileCopyrightText: 2023-2025 Open Pioneer project (https://github.com/open-pioneer)
 // SPDX-License-Identifier: Apache-2.0
+
 import { expect, it } from "vitest";
 import { render, screen } from "@testing-library/react";
 import { PackageContextProvider } from "@open-pioneer/test-utils/react";
@@ -10,10 +11,7 @@ it("simple ui component is rendered", async () => {
     enables hooks such as useService and useIntl within its children */
     render(
         <PackageContextProvider>
-            <SimpleUiComponent
-                textToShow="rendered successfully"
-                data-testid="uiDiv"
-            ></SimpleUiComponent>
+            <SimpleUiComponent textToShow="rendered successfully" data-testid="uiDiv" />
         </PackageContextProvider>
     );
 

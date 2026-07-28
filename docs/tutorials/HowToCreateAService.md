@@ -175,7 +175,7 @@ export function AppUI() {
     const [leftValue, setLeftValue] = useState("3");
     const [rightValue, setRightValue] = useState("4");
     const [result, setResult] = useState<number | undefined>();
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    // oxlint-disable-next-line @typescript-eslint/no-explicit-any
     const service = useService("math.MathService") as any; // (1)
     const onMultiplyClicked = () => {
         setResult(service.multiply(leftValue, rightValue)); // (2)

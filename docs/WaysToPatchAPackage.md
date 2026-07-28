@@ -471,7 +471,7 @@ NOTE:
 - When you're patching a built package, it is probably best to remove source maps for files that you have edited.
   These can be misleading, since they reflect the _old_ content of the file.
   Source maps are either located at the end of the file (as a comment) or as a separate `.map` file.
-- You may have to adjust your TypeScript or ESLint rules (e.g. update `.eslintignore` to ignore the patched package).
+- You may have to adjust your TypeScript or Oxlint (ignore) rules.
 - When copying a built package into the source directory, our Vite plugin will print a warning:
 
     ```text
