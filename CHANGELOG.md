@@ -1,7 +1,11 @@
 # Changelog
 
-## TBD
+## 2026-07-28
 
+[Show all changes](https://github.com/open-pioneer/trails-starter/compare/2026-06-24...2026-07-28)
+
+- Update core-packages to 4.7.0
+- Update openlayers-base-packages to 1.4.0
 - Update Chakra to 3.36.1
     - Most patches could be removed again
 - Update to PNPM 11.17.0
