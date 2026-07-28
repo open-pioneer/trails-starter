@@ -1,5 +1,22 @@
 # Changelog
 
+## 2026-07-28
+
+[Show all changes](https://github.com/open-pioneer/trails-starter/compare/2026-06-24...2026-07-28)
+
+- Update core-packages to 4.7.0
+- Update openlayers-base-packages to 1.4.0
+- Update Chakra to 3.36.1
+    - Most patches could be removed again
+- Update to PNPM 11.17.0
+- Use PNPM for SBOM generation instead of external tool (Trivy)
+    - Remove redundant `./support/create-cyclonedx-sbom.ts`
+- Replace triple slash type references (`<reference types=... />`) with explicit references in `tsconfig.json` (`types` option).
+    - Remove redundant `src/types/pioneer-env.d.ts`
+- Migrate from `eslint` to [Oxlint](https://oxc.rs/docs/guide/usage/linter). Oxlint is much faster than eslint and part of the same ecosystem as Vite. Linting is only dev tooling, so if you want to use `eslint` instead, you can still do so by changing configuration.
+- Similarly migrate from `prettier` to [Oxfmt](https://oxc.rs/docs/guide/usage/formatter.html).
+    - old `pnpm prettier` command is replaced by new command `pmpm fmt`.
+
 ## 2026-06-24
 
 [Show all changes](https://github.com/open-pioneer/trails-starter/compare/2026-05-29...2026-06-24)

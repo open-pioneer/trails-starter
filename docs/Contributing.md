@@ -100,7 +100,7 @@ $ pnpm dev
 
 - Paths to JavaScript modules can get rather long on windows in combination with PNPM. If you see weird errors (I/O errors, file not found, etc.) when you're trying to install dependencies or run the development server, try moving the git repository to a shorter path on disk (less nesting, shorter name).
 
-- Either use eslint's autofix feature or your IDE to ensure that your files contain license headers.
+- Either use Oxlint's autofix feature or your IDE to ensure that your files contain license headers.
 
     The following snippet can be used in VSCode.
     Create a snippet via "Ctrl+Shift+P --> Configure User Snippets" (either globally or in this project).

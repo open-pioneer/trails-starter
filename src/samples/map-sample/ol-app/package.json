@@ -2,9 +2,9 @@
     "name": "ol-app",
     "private": true,
     "dependencies": {
+        "@chakra-ui/react": "catalog:",
         "@emotion/react": "catalog:",
         "@emotion/styled": "catalog:",
-        "@chakra-ui/react": "catalog:",
         "@open-pioneer/basemap-switcher": "catalog:",
         "@open-pioneer/coordinate-viewer": "catalog:",
         "@open-pioneer/geolocation": "catalog:",

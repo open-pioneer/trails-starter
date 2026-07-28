@@ -24,16 +24,16 @@ index b84fcf7fd1de1768907dbc57fb3c8dd3e4fc0fc8..369e517941fc44c98f0260f131697b0f
  	if (isShadowRoot(rootNode)) return rootNode;
  	return getDocument(node).body;
 diff --git a/dist/providers/environment/environment-provider.d.ts b/dist/providers/environment/environment-provider.d.ts
-index 335d2668b745d6a6765024b0602507408f0c08fa..50084351aea837c54b427e7a0f717b56d10c490d 100644
+index 46f4a66b6090917ab3804f261410edadedead3bd..b598e839a580d6caa481471e40c0276c3f0a660d 100644
 --- a/dist/providers/environment/environment-provider.d.ts
 +++ b/dist/providers/environment/environment-provider.d.ts
-@@ -3,5 +3,6 @@ import { RootNode } from './use-environment-context';
+@@ -3,5 +3,6 @@ import { RootNode } from './use-environment-context.js';
  export interface EnvironmentProviderProps {
      children?: ReactNode | undefined;
      value?: RootNode | (() => RootNode) | undefined;
 +    portalNode?: Node | undefined;
  }
- export declare const EnvironmentProvider: (props: EnvironmentProviderProps) => import("react/jsx-runtime").JSX.Element;
+ export declare const EnvironmentProvider: (props: EnvironmentProviderProps) => import("react").JSX.Element;
 diff --git a/dist/providers/environment/environment-provider.js b/dist/providers/environment/environment-provider.js
 index c92c16a73cbdcea790b30d10397b7247285d8331..7eab5fd31c01fa2ad02553b8638b1ffa59d8f222 100644
 --- a/dist/providers/environment/environment-provider.js
@@ -56,10 +56,10 @@ index c92c16a73cbdcea790b30d10397b7247285d8331..7eab5fd31c01fa2ad02553b8638b1ffa
  			getDocument: () => getDocument(getRootNode())
  		}), [getRootNode]),
 diff --git a/dist/providers/environment/use-environment-context.d.ts b/dist/providers/environment/use-environment-context.d.ts
-index 67b730775a75bbab8d8f8d16699ace93d3378c5e..c745b7b67f9e8120add173cda5597c4bf206b220 100644
+index 67b730775a75bbab8d8f8d16699ace93d3378c5e..4420ea2eebbb14488e70d5b7b733e5002e30a355 100644
 --- a/dist/providers/environment/use-environment-context.d.ts
 +++ b/dist/providers/environment/use-environment-context.d.ts
-@@ -6,9 +6,14 @@ export interface UseEnvironmentContext {
+@@ -6,6 +6,10 @@ export interface UseEnvironmentContext {
       * This is used to determine the window and document objects.
       */
      getRootNode(): RootNode;
@@ -70,12 +70,8 @@ index 67b730775a75bbab8d8f8d16699ace93d3378c5e..c745b7b67f9e8120add173cda5597c4b
      /**
       * The document context for the root node.
       */
-+    
-     getDocument(): Document;
-     /**
-      * The window context for the root node.
 diff --git a/dist/providers/environment/use-environment-context.js b/dist/providers/environment/use-environment-context.js
-index 474fdd6428cb8b72a0d2d8cf65b11668885df5d0..1076946f6813da2b3900bd142b230eec9dd7cafe 100644
+index 474fdd6428cb8b72a0d2d8cf65b11668885df5d0..1ebb56443078be04bd3f97333d92dc65d1f01c0e 100644
 --- a/dist/providers/environment/use-environment-context.js
 +++ b/dist/providers/environment/use-environment-context.js
 @@ -9,7 +9,8 @@ var [EnvironmentContextProvider, useEnvironmentContext] = createContext({
@@ -84,7 +80,7 @@ index 474fdd6428cb8b72a0d2d8cf65b11668885df5d0..1076946f6813da2b3900bd142b230eec
  		getDocument: () => document,
 -		getWindow: () => window
 +		getWindow: () => window,
-+		getPortalNode: () => document,
++		getPortalNode: () => document
  	}
  });
  //#endregion

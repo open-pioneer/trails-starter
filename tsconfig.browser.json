@@ -8,6 +8,7 @@
         "target": "ESNext",
         "lib": ["DOM", "DOM.Iterable", "ES2024"],
         "module": "esnext",
+        "types": ["vite/client", "@open-pioneer/vite-plugin-pioneer/client"],
         "moduleResolution": "Bundler",
         "moduleDetection": "force",
         "noEmit": true,

@@ -6,9 +6,9 @@ packages:
 # Shared version expressions (yaml anchors).
 # This is a yaml feature and is not interpreted by pnpm directly.
 __versions:
-  - &react_version ^19.2.6
-  - &core_packages_version ^4.6.0
-  - &ol_base_packages_version ^1.3.0
+  - &react_version ^19.2.8
+  - &core_packages_version ^4.7.0
+  - &ol_base_packages_version ^1.4.0
 
 # https://pnpm.io/catalogs
 catalog:
@@ -39,62 +39,51 @@ catalog:
   "@open-pioneer/test-utils": *core_packages_version
 
   # Frontend dependencies
-  "@chakra-ui/react": ^3.35.0
+  "@chakra-ui/react": ^3.36.1
   "@conterra/reactivity-core": ^0.8.6
   "@conterra/reactivity-events": ^0.8.6
   "@emotion/cache": ^11.14.0
   "@emotion/react": ^11.14.0
   "@emotion/styled": ^11.14.1
-  "@formatjs/intl": ^4.1.13
+  "@formatjs/intl": ^4.1.17
   ol: ^10.9.0
   react-dom: *react_version
-  react-icons: ^5.6.0
-  react-use: ^17.6.0
+  react-icons: ^5.7.0
+  react-use: ^17.6.1
   react: *react_version
 
   # Devtools
-  "@eslint/js": ^9.39.4
-  "@open-pioneer/build-package-cli": ^3.1.0
-  "@open-pioneer/build-support": ^3.1.0
-  "@open-pioneer/changesets-release-line": ^0.1.0
-  "@open-pioneer/check-pnpm-duplicates": ^0.3.2
-  "@open-pioneer/vite-plugin-pioneer": ^6.0.0
+  "@open-pioneer/build-package-cli": ^3.2.2
+  "@open-pioneer/build-support": ^3.1.3
+  "@open-pioneer/changesets-release-line": ^0.1.3
+  "@open-pioneer/check-pnpm-duplicates": ^0.3.5
+  "@open-pioneer/vite-plugin-pioneer": ^6.0.3
   "@testing-library/dom": ^10.4.1
-  "@testing-library/jest-dom": ^6.9.1
+  "@testing-library/jest-dom": ^7.0.0
   "@testing-library/react": ^16.3.2
   "@testing-library/user-event": ^14.6.1
+  "@tony.ganchev/eslint-plugin-header": ^3.4.4
   "@types/js-yaml": ^4.0.9
-  "@types/node": ^20.19.41
+  "@types/node": ^20.19.43
   "@types/react-dom": ^19.2.3
   "@types/react": ^19.2.17
-  "@typescript-eslint/parser": ^8.61.1
-  "@vitejs/plugin-react": "^6.0.2"
-  "typescript-eslint": ^8.61.1
-  eslint-config-prettier: ^10.1.8
-  eslint-import-resolver-typescript: ^4.4.5
-  eslint-plugin-headers: ^1.3.4
-  eslint-plugin-import: ^2.32.0
-  eslint-plugin-jsx-a11y: ^6.10.2
-  eslint-plugin-react-hooks: ^7.1.1
-  eslint-plugin-react: ^7.37.5
-  eslint-plugin-unused-imports: ^4.4.1
-  eslint: ^9.39.4
+  "@vitejs/plugin-react": "^6.0.4"
   fast-glob: ^3.3.3
   handlebars: ^4.7.9
-  happy-dom: ^20.10.6
+  happy-dom: ^20.11.1
   husky: ^9.1.7
-  js-yaml: ^4.3.0
+  js-yaml: ^5.2.2
   jsdom: ^29.1.1
-  lint-staged: ^17.0.7
-  prettier: ^3.8.3
+  lint-staged: ^17.2.0
+  oxlint: ^1.75.0
+  oxfmt: ^0.60.0
   rimraf: ^6.1.3
-  sass: ^1.101.0
-  tsx: ^4.22.4
-  typedoc: ^0.28.19
+  sass: ^1.101.7
+  tsx: ^4.23.1
+  typedoc: ^0.28.20
   typescript: ^6.0.3
-  vite-plugin-eslint: ^1.8.1
-  vite: ^8.0.16
-  vitest: ^4.1.9
+  vite: ^8.1.5
+  vitest: ^4.1.10
 
 overrides:
   # We don't actually use the babel plugin.
@@ -111,15 +100,9 @@ overrides:
   "csstype@<3.2.3": ">=3.2.3"
 
   # Ensure patched packages have the expected version (patch was tested with this version):
-  "@chakra-ui/react": "3.35.0"
-  "@ark-ui/react": "5.36.2"
-  "@zag-js/dialog": "1.40.0"
-  "@zag-js/drawer": "1.40.0"
-  "@zag-js/hover-card": "1.40.0"
-  "@zag-js/menu": "1.40.0"
-  "@zag-js/popover": "1.40.0"
-  "@zag-js/tooltip": "1.40.0"
-  "@zag-js/interact-outside": "1.40.0"
+  "@chakra-ui/react": "3.36.1"
+  "@ark-ui/react": "5.37.2"
+  "@zag-js/interact-outside": "1.41.2"
 
   # https://github.com/advisories/GHSA-g7r4-m6w7-qqqr
   # https://github.com/advisories/GHSA-gv7w-rqvm-qjhr
@@ -151,16 +134,6 @@ patchedDependencies:
   # Can be removed if https://github.com/chakra-ui/zag/issues/3088 is fixed.
   "@zag-js/interact-outside": patches/@zag-js__interact-outside.patch
 
-  # Fix popover positioning (popover, tooltip, toggle tip, ...).
-  # - See https://github.com/chakra-ui/zag/pull/3127 for the shadow dom problems (getDoc() -> getRootNode())
-  # - See https://github.com/chakra-ui/zag/pull/3129 for the positioning/click-outside problems
-  "@zag-js/dialog": patches/@zag-js__dialog.patch
-  "@zag-js/drawer": patches/@zag-js__drawer.patch
-  "@zag-js/hover-card": patches/@zag-js__hover-card.patch
-  "@zag-js/menu": patches/@zag-js__menu.patch
-  "@zag-js/popover": patches/@zag-js__popover.patch
-  "@zag-js/tooltip": patches/@zag-js__tooltip.patch
-
 # Install older versions by default
 resolutionMode: "lowest-direct"
 
@@ -169,7 +142,6 @@ minimumReleaseAge: 4320 # 3 days in minutes
 minimumReleaseAgeExclude:
   - "@open-pioneer/*"
   - "@conterra/*"
-  - nanoid@3.3.15
 
 peerDependencyRules:
   allowedVersions:
@@ -196,13 +168,6 @@ allowBuilds:
 trustPolicy: no-downgrade
 # Exclude packages from trustPolicy that are used in an old (major) version that was published after another signed version
 trustPolicyExclude:
-  - "@pnpm/lockfile.utils@1004.0.6"
-  - "@pnpm/lockfile.fs@1001.1.35"
-  - "@pnpm/lockfile.walker@1001.0.28"
-  - "@pnpm/lockfile.types@1002.1.2"
-  - "@pnpm/lockfile.merger@1001.0.22"
-  - "@pnpm/resolver-base@1005.4.3"
-  - "@pnpm/types@1001.3.1"
   - "undici-types@6.21.0"
   - "semver@6.3.1"
   - "chokidar@4.0.3"

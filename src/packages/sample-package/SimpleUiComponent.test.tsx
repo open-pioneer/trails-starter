@@ -1,19 +1,17 @@
 // SPDX-FileCopyrightText: 2023-2025 Open Pioneer project (https://github.com/open-pioneer)
 // SPDX-License-Identifier: Apache-2.0
-import { expect, it } from "vitest";
-import { render, screen } from "@testing-library/react";
+
 import { PackageContextProvider } from "@open-pioneer/test-utils/react";
+import { render, screen } from "@testing-library/react";
+import { expect, it } from "vitest";
 import { SimpleUiComponent } from "./SimpleUiComponent";
 
 it("simple ui component is rendered", async () => {
-    /* The `PackageContextProvider` sets up  a test environment for chakra components and 
+    /* The `PackageContextProvider` sets up  a test environment for chakra components and
     enables hooks such as useService and useIntl within its children */
     render(
         <PackageContextProvider>
-            <SimpleUiComponent
-                textToShow="rendered successfully"
-                data-testid="uiDiv"
-            ></SimpleUiComponent>
+            <SimpleUiComponent textToShow="rendered successfully" data-testid="uiDiv" />
         </PackageContextProvider>
     );
 

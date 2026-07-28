@@ -11,8 +11,8 @@
 
 ## Code style
 
-- Use eslint & prettier rules (reconfigure if necessary)
-- Before a commit is successfully done, there are running some pre commit hooks running (lint, prettier, typescript compiler and tests). You can commit without these pre commit hook with the commit postfix `--no-verify`
+- Use oxlint & oxfmt rules (reconfigure if necessary)
+- Before a commit is successfully done, there are running some pre commit hooks running (lint, fmt, typescript compiler and tests). You can commit without these pre commit hook with the commit postfix `--no-verify`
 - Prefer const over let by default
 - Max line length is 100 columns (with some leeway)
 

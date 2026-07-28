@@ -1,14 +1,10 @@
 // SPDX-FileCopyrightText: 2023-2025 Open Pioneer project (https://github.com/open-pioneer)
 // SPDX-License-Identifier: Apache-2.0
 
-/// <reference types="vitest" />
+import { resolve } from "node:path";
 import { pioneer } from "@open-pioneer/vite-plugin-pioneer";
 import react from "@vitejs/plugin-react";
-import { resolve } from "node:path";
 import { defineConfig } from "vite";
-
-// @ts-expect-error Invalid typings
-import eslint from "vite-plugin-eslint";
 
 const sampleSites = ["samples/map-sample", "samples/i18n-howto"];
 
@@ -62,8 +58,7 @@ export default defineConfig(({ mode }) => {
                 // Apps to distribute as .js files for embedded use cases
                 apps: []
             }),
-            react(),
-            eslint()
+            react()
         ],
 
         // Ignore irrelevant deprecations.

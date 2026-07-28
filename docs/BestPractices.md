@@ -51,7 +51,7 @@ When you're developing shared packages (e.g. published on npmjs.com), good depen
 
 When thinking about dependencies, follow these general guidelines:
 
-- When referencing a tool used all over your repository (such as `prettier` or `@open-pioneer/vite-plugin-pioneer`),
+- When referencing a tool used all over your repository (such as `oxfmt` or `@open-pioneer/vite-plugin-pioneer`),
   declare it as a `devDependency` in your project's root `package.json`.
   This way you don't have to duplicate the dependency in every package of your workspace.
 
@@ -72,6 +72,8 @@ When thinking about dependencies, follow these general guidelines:
 
 - Use "open" specifiers for dependencies like `^`.
   Not depending on a fixed version avoid conflicts if multiple packages prefer slightly different versions.
+
+For information about version handling of trails packages, see [Version Overview](./reference/Versions.md).
 
 #### dependencies vs peerDependencies
 
