@@ -17,10 +17,9 @@ starter
 │   ├── sites               -- Additional .html sites
 │   └── index.html          -- Main HTML entry point
 ├── .editorconfig           -- Common text file settings (encoding, line length)
-├── .oxlint.config.ts       -- Oxlint configuration file
 ├── .gitignore              -- Lists files ignored by git
-├── .npmrc                  -- pnpm configuration file
-├── .oxfmt.config.ts        -- Oxfmt configuration file
+├── oxlint.config.ts       -- Oxlint configuration file
+├── oxfmt.config.ts        -- Oxfmt configuration file
 ├── package.json            -- Dependencies of the root package (mostly development tools)
 ├── pnpm-lock.yaml          -- Package manager lockfile
 ├── pnpm-workspace.yaml     -- Workspaces configuration file for pnpm, also includes the dependency catalog
