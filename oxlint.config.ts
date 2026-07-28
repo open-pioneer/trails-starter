@@ -22,6 +22,9 @@ export default defineConfig({
         "**/chakra-snippets",
         "**/.*"
     ],
+    options: {
+        reportUnusedDisableDirectives: "error"
+    },
     rules: {
         "no-array-constructor": "error",
         "no-case-declarations": "error",
