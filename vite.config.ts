@@ -4,7 +4,7 @@
 import { resolve } from "node:path";
 import { pioneer } from "@open-pioneer/vite-plugin-pioneer";
 import react from "@vitejs/plugin-react";
-import { defineConfig } from "vite";
+import { defineConfig, UserConfig } from "vite";
 import { dependencySourcemaps } from "./support/vite/dependency-sourcemaps";
 
 const sampleSites = ["samples/map-sample", "samples/i18n-howto"];
@@ -45,7 +45,9 @@ export default defineConfig(({ mode }) => {
 
             // Preserve dependency source maps through pre-bundling (see plugin for details).
             // You can disable this if you don't need to see the source code of dependencies when debugging.
-            plugins: [dependencySourcemaps()]
+            rolldownOptions: {
+                plugins: [dependencySourcemaps()]
+            }
         },
         plugins: [
             pioneer({
@@ -107,5 +109,5 @@ export default defineConfig(({ mode }) => {
             // See also: https://vitejs.dev/config/server-options.html#server-hmr
             // hmr: false
         }
-    };
+    } satisfies UserConfig;
 });
