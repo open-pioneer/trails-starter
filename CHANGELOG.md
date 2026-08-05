@@ -1,5 +1,14 @@
 # Changelog
 
+## TBD
+
+[Show all changes: TODO](#)
+
+- Restore source maps of dependencies in `node_modules` using a plugin for Vite's dependency optimizer (see `vite.config.ts` and `support/vite/dependency-sourcemaps.ts`)
+    - This allows you do debug the original source code (e.g. TypeScript, TSX) of external packages such as open pioneer trails packages when using Vite's dev mode.
+    - This is a workaround for <https://github.com/rolldown/rolldown/issues/5561>, eventually this will (again) be handled by vite itself
+    - The plugin makes the dependency optimization slightly _slower_, you can disable the plugin if you don't need this debugging capability at all
+
 ## 2026-07-28
 
 [Show all changes](https://github.com/open-pioneer/trails-starter/compare/2026-06-24...2026-07-28)
