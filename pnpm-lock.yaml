@@ -178,7 +178,6 @@ overrides:
   postcss@<=8.5.22: ^8.5.23
   nanoid@<3.3.17: ^3.3.17
   undici@>=7.0.0 <7.29.0: ^7.29.0
-  nanoid@<3.3.17: ^3.3.17
 
 patchedDependencies:
   '@ark-ui/react@*': cdcaff11f2f2c324a7d04d94bfaaa7d325234a04b33a49a4b2d2344fa73ec625
@@ -2629,10 +2628,6 @@ packages:
     resolution: {integrity: sha512-CY6crGq313MX8GkwvB7tzgp99vjQxY1++5y10/BKN/GUfHqWaOGQMNZkBvqSzsZKWk/ijwHlWzzkLulsGHhjWQ==}
     hasBin: true
 
-  js-yaml@5.2.2:
-    resolution: {integrity: sha512-dayzUzKkJ1MkuUtZglSebU43utNXH0OWQByK9rKOOuYIO8M5TV1y+n8ALMdG0rdzBnfNkOmZEqrURepb0ejqBw==}
-    hasBin: true
-
   js-yaml@5.3.0:
     resolution: {integrity: sha512-muutsYr+e2+d3rTgUGslq5rxbBlUy3cJ61IsHag2QNDQV+7zXWjkUpmALIajhrlLlrgRUiymj6U3zUr/TMK84Q==}
     hasBin: true
@@ -2761,10 +2756,6 @@ packages:
 
   lodash.merge@4.6.2:
     resolution: {integrity: sha512-0KpjqXRVvrYyCsX1swR/XTK0va6VQkQM6MNo7PqW77ByjAhoARA8EfrP1N4+KlKj8YS0ZUCtRT/YUuhyYDujIQ==}
-
-  lru-cache@11.5.1:
-    resolution: {integrity: sha512-RPimw/7aMdv2oqRrxKwvZXcPfwBrn/JZ2xYcY9Hus/6LaS3VOAKVWKWgNLCFSiOm1ESXinjsDlidVU7JlnCN2A==}
-    engines: {node: 20 || >=22}
 
   lru-cache@11.5.2:
     resolution: {integrity: sha512-4pfM1Ff0x50o0tQwb5ucw/RzNyD0/YJME6IVcStalZuMWxdt3sR3huStTtxz4PUmvZfRguvDejasvQ2kifR11g==}
@@ -4142,7 +4133,7 @@ snapshots:
       '@pnpm/types': 1101.6.0
       chalk: 5.6.2
       commander: 15.0.0
-      js-yaml: 5.2.2
+      js-yaml: 5.3.0
 
   '@open-pioneer/coordinate-viewer@1.4.0(@emotion/react@11.14.0(@types/react@19.2.18)(react@19.2.8))(@types/react@19.2.18)(geotiff@3.1.0-beta.0)(react-dom@19.2.8(react@19.2.8))':
     dependencies:
@@ -4366,7 +4357,7 @@ snapshots:
       '@open-pioneer/build-common': 5.0.0(rollup@4.62.2)
       '@open-pioneer/runtime': 4.7.0(@types/react@19.2.18)
       debug: 4.4.3(supports-color@7.2.0)
-      js-yaml: 5.2.2
+      js-yaml: 5.3.0
       oxc-resolver: 11.24.2
       sass: 1.102.0
       tinyglobby: 0.2.17
@@ -6135,10 +6126,6 @@ snapshots:
     dependencies:
       argparse: 2.0.1
 
-  js-yaml@5.2.2:
-    dependencies:
-      argparse: 2.0.1
-
   js-yaml@5.3.0:
     dependencies:
       argparse: 2.0.1
@@ -6260,8 +6247,6 @@ snapshots:
       p-locate: 5.0.0
 
   lodash.merge@4.6.2: {}
-
-  lru-cache@11.5.1: {}
 
   lru-cache@11.5.2: {}
 
@@ -6477,7 +6462,7 @@ snapshots:
 
   path-scurry@2.0.2:
     dependencies:
-      lru-cache: 11.5.1
+      lru-cache: 11.5.2
       minipass: 7.1.3
 
   pathe@2.0.3: {}

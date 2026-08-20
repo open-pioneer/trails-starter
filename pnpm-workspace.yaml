@@ -130,9 +130,6 @@ overrides:
   # https://github.com/advisories/GHSA-fxqj-rqcc-2cmp, CVE-2026-69153
   "postcss@<=8.5.22": "^8.5.23"
 
-  # https://github.com/advisories/GHSA-2v37-7h3g-55p8, CVE-2026-67213
-  "nanoid@<3.3.17": "^3.3.17"
-
   # https://github.com/advisories/GHSA-m8rv-5g2x-5cg5
   # https://github.com/advisories/GHSA-v3r7-h72x-cjcm
   # https://github.com/advisories/GHSA-8xcm-r25x-g524
