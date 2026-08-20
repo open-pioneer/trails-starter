@@ -178,6 +178,7 @@ overrides:
   postcss@<=8.5.22: ^8.5.23
   nanoid@<3.3.17: ^3.3.17
   undici@>=7.0.0 <7.29.0: ^7.29.0
+  nanoid@<3.3.17: ^3.3.17
 
 patchedDependencies:
   '@ark-ui/react@*': cdcaff11f2f2c324a7d04d94bfaaa7d325234a04b33a49a4b2d2344fa73ec625
