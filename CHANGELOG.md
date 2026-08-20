@@ -4,6 +4,8 @@
 
 [Show all changes: TODO](#)
 
+- Update OpenLayers to version 10.10.0.
+- Bump various dependencies and adjusted overrides.
 - Restore source maps of dependencies in `node_modules` using a plugin for Vite's dependency optimizer (see `vite.config.ts` and `support/vite/dependency-sourcemaps.ts`)
     - This allows you do debug the original source code (e.g. TypeScript, TSX) of external packages such as open pioneer trails packages when using Vite's dev mode.
     - This is a workaround for <https://github.com/rolldown/rolldown/issues/5561>, eventually this will (again) be handled by vite itself

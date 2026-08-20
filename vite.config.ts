@@ -5,7 +5,7 @@ import { resolve } from "node:path";
 import { pioneer } from "@open-pioneer/vite-plugin-pioneer";
 import react from "@vitejs/plugin-react";
 import { defineConfig, UserConfig } from "vite";
-import { dependencySourcemaps } from "./support/vite/dependency-sourcemaps";
+import { dependencySourcemaps } from "./support/vite/dependency-sourcemaps.ts";
 
 const sampleSites = ["samples/map-sample", "samples/i18n-howto"];
 
@@ -17,17 +17,17 @@ export default defineConfig(({ mode }) => {
     const logLevel = devMode ? "INFO" : "WARN";
 
     return {
-        root: resolve(__dirname, "src"),
+        root: resolve(import.meta.dirname, "src"),
 
         // Load .env files from this directory instead of `root`.
-        envDir: __dirname,
+        envDir: import.meta.dirname,
 
         // Generates relative urls in html etc.
         base: "./",
 
         // Vite's build output is written to dist/www
         build: {
-            outDir: resolve(__dirname, "dist/www"),
+            outDir: resolve(import.meta.dirname, "dist/www"),
             emptyOutDir: true,
 
             // Minimum browser versions supported by generated JS/CSS
