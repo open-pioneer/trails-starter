@@ -10,6 +10,9 @@
     - This allows you do debug the original source code (e.g. TypeScript, TSX) of external packages such as open pioneer trails packages when using Vite's dev mode.
     - This is a workaround for <https://github.com/rolldown/rolldown/issues/5561>, eventually this will (again) be handled by vite itself
     - The plugin makes the dependency optimization slightly _slower_, you can disable the plugin if you don't need this debugging capability at all
+- Update `oxlint.config.ts`.
+  Oxlint has implement new react compiler linting rules that are sometimes too pedantic.
+  These have been disabled for the time being.
 
 ## 2026-07-28
 
