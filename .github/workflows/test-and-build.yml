@@ -15,16 +15,16 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
 
       - name: Install pnpm
-        uses: pnpm/action-setup@v4
+        uses: pnpm/action-setup@v6
         with:
           # Automatically uses version declared in package.json (`packageManager: pnpm@...`)
           run_install: false
 
       - name: Install Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v7
         with:
           node-version: 24
           cache: "pnpm"
@@ -51,7 +51,7 @@ jobs:
         run: pnpm build-license-report;
 
       - name: Upload artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: build
           path: dist/
@@ -62,10 +62,13 @@ jobs:
     if: github.ref == 'refs/heads/main' && github.repository == 'open-pioneer/trails-starter'
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
+        with:
+          # https://github.com/JamesIves/github-pages-deploy-action/issues/1928#issuecomment-3635092712
+          persist-credentials: false
 
       - name: Load artifact
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v8
         with:
           name: build
           path: dist/
@@ -79,18 +82,12 @@ jobs:
           mv dist/www/* site/;
           mv dist/docs site/docs;
 
-      - name: Setup git
-        shell: bash
-        run: |
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git config user.name "github-actions[bot]"
-
       - name: Deploy
         uses: JamesIves/github-pages-deploy-action@v4
         with:
           repository-name: open-pioneer/trails-demo
-          token: ${{ secrets.DEMO_DEPLOY_TOKEN }}
-          git-config-name: "Open Pioneer Automation"
-          git-config-email: "contact@openpioneer.dev"
           folder: site
           target-folder: starter
+          git-config-name: "Open Pioneer Automation"
+          git-config-email: "contact@openpioneer.dev"
+          token: ${{ secrets.DEMO_DEPLOY_TOKEN }}
