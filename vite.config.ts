@@ -4,7 +4,8 @@
 import { resolve } from "node:path";
 import { pioneer } from "@open-pioneer/vite-plugin-pioneer";
 import react from "@vitejs/plugin-react";
-import { defineConfig } from "vite";
+import { defineConfig, UserConfig } from "vite";
+import { dependencySourcemaps } from "./support/vite/dependency-sourcemaps.ts";
 
 const sampleSites = ["samples/map-sample", "samples/i18n-howto"];
 
@@ -16,17 +17,17 @@ export default defineConfig(({ mode }) => {
     const logLevel = devMode ? "INFO" : "WARN";
 
     return {
-        root: resolve(__dirname, "src"),
+        root: resolve(import.meta.dirname, "src"),
 
         // Load .env files from this directory instead of `root`.
-        envDir: __dirname,
+        envDir: import.meta.dirname,
 
         // Generates relative urls in html etc.
         base: "./",
 
         // Vite's build output is written to dist/www
         build: {
-            outDir: resolve(__dirname, "dist/www"),
+            outDir: resolve(import.meta.dirname, "dist/www"),
             emptyOutDir: true,
 
             // Minimum browser versions supported by generated JS/CSS
@@ -40,7 +41,13 @@ export default defineConfig(({ mode }) => {
             // This makes it easier for vite's dev server to find dependencies,
             // and thereby reduces the number of repeated bundler executions on dev server startup.
             // Adapt the file patterns if your service modules used a different naming scheme.
-            entries: ["**/*.html", "**/services.{ts,js}", "!**/dist/**"]
+            entries: ["**/*.html", "**/services.{ts,js}", "!**/dist/**"],
+
+            // Preserve dependency source maps through pre-bundling (see plugin for details).
+            // You can disable this if you don't need to see the source code of dependencies when debugging.
+            rolldownOptions: {
+                plugins: [dependencySourcemaps()]
+            }
         },
         plugins: [
             pioneer({
@@ -102,5 +109,5 @@ export default defineConfig(({ mode }) => {
             // See also: https://vitejs.dev/config/server-options.html#server-hmr
             // hmr: false
         }
-    };
+    } satisfies UserConfig;
 });
