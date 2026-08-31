@@ -63,6 +63,9 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v7
+        with:
+          # https://github.com/JamesIves/github-pages-deploy-action/issues/1928#issuecomment-3635092712
+          persist-credentials: false
 
       - name: Load artifact
         uses: actions/download-artifact@v8
@@ -79,18 +82,12 @@ jobs:
           mv dist/www/* site/;
           mv dist/docs site/docs;
 
-      - name: Setup git
-        shell: bash
-        run: |
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git config user.name "github-actions[bot]"
-
       - name: Deploy
         uses: JamesIves/github-pages-deploy-action@v4
         with:
           repository-name: open-pioneer/trails-demo
-          token: ${{ secrets.DEMO_DEPLOY_TOKEN }}
-          git-config-name: "Open Pioneer Automation"
-          git-config-email: "contact@openpioneer.dev"
           folder: site
           target-folder: starter
+          git-config-name: "Open Pioneer Automation"
+          git-config-email: "contact@openpioneer.dev"
+          token: ${{ secrets.DEMO_DEPLOY_TOKEN }}
