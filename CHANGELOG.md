@@ -13,6 +13,9 @@
     - This allows you do debug the original source code (e.g. TypeScript, TSX) of external packages such as open pioneer trails packages when using Vite's dev mode.
     - This is a workaround for <https://github.com/rolldown/rolldown/issues/5561>, eventually this will (again) be handled by vite itself
     - The plugin makes the dependency optimization slightly _slower_, you can disable the plugin if you don't need this debugging capability at all
+- Update shared version syntax in `pnpm-workspace.yaml`: pnpm now warns for the `__versions` field which we used to maintain shared versions.
+    - The shared version expression (e.g. `&ol_base_packages_version ^1.5.0`) has now moved to the first usage.
+    - For more details, see the related [pnpm issue](https://github.com/pnpm/pnpm/issues/8245).
 - Update `oxlint.config.ts`.
   Oxlint has implement new react compiler linting rules that are sometimes too pedantic.
   These have been disabled for the time being.

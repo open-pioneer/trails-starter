@@ -3,18 +3,11 @@ packages:
   - "!**/test-data/**"
   - "!**/dist/**"
 
-# Shared version expressions (yaml anchors).
-# This is a yaml feature and is not interpreted by pnpm directly.
-__versions:
-  - &react_version ^19.2.8
-  - &core_packages_version 4.8.0-dev.20260910101405 # ^4.8.0
-  - &ol_base_packages_version 1.5.0-dev.20260910103330 # ^1.5.0
-
 # https://pnpm.io/catalogs
 catalog:
   # Trails OpenLayers base packages
   # https://github.com/open-pioneer/trails-openlayers-base-packages
-  "@open-pioneer/basemap-switcher": *ol_base_packages_version
+  "@open-pioneer/basemap-switcher": &ol_base_packages_version 1.5.0-dev.20260910103330 # ^1.5.0
   "@open-pioneer/coordinate-viewer": *ol_base_packages_version
   "@open-pioneer/geolocation": *ol_base_packages_version
   "@open-pioneer/map-navigation": *ol_base_packages_version
@@ -27,7 +20,7 @@ catalog:
 
   # Trails core packages
   # https://github.com/open-pioneer/trails-core-packages
-  "@open-pioneer/base-theme": *core_packages_version
+  "@open-pioneer/base-theme": &core_packages_version 4.8.0-dev.20260910101405 # ^4.8.0
   "@open-pioneer/core": *core_packages_version
   "@open-pioneer/chakra-snippets": *core_packages_version
   "@open-pioneer/http": *core_packages_version
@@ -47,7 +40,7 @@ catalog:
   "@emotion/styled": ^11.14.1
   "@formatjs/intl": ^4.1.18
   ol: ^10.10.0
-  react-dom: *react_version
+  react-dom: &react_version ^19.2.8
   react-icons: ^5.7.0
   react-use: ^17.6.1
   react: *react_version
