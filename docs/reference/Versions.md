@@ -91,6 +91,7 @@ Notes:
 
 | Since Version | Core Packages Version(s) | Package Metadata Version |
 | ------------- | ------------------------ | ------------------------ |
+| 1.4.0         | ^4.7.0                   | 1.0.1                    |
 | 1.3.0         | ^4.6.0                   | 1.0.1                    |
 
 Notes:
