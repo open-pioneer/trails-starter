@@ -1,8 +1,8 @@
 diff --git a/dist/components/portal/portal.js b/dist/components/portal/portal.js
-index b84fcf7fd1de1768907dbc57fb3c8dd3e4fc0fc8..369e517941fc44c98f0260f131697b0f9d3602d3 100644
+index b84fcf7fd1de1768907dbc57fb3c8dd3e4fc0fc8..72a93c3e4e5b9fbdec376d2ffb7acf82b4285df3 100644
 --- a/dist/components/portal/portal.js
 +++ b/dist/components/portal/portal.js
-@@ -9,16 +9,16 @@ var Portal = (props) => {
+@@ -9,15 +9,15 @@ var Portal = (props) => {
  	const { children, disabled } = props;
  	const [container, setContainer] = useState(props.container?.current);
  	const isServer = useSyncExternalStore(subscribe, () => false, () => true);
@@ -17,12 +17,10 @@ index b84fcf7fd1de1768907dbc57fb3c8dd3e4fc0fc8..369e517941fc44c98f0260f131697b0f
  	return /* @__PURE__ */ jsx(Fragment$1, { children: Children.map(children, (child) => createPortal(child, mountNode)) });
  };
 -var getPortalNode = (cb) => {
--	const node = cb?.();
-+var getContainer = (getRootNode) => {
-+	const node = getRootNode?.();
++var getContainer = (cb) => {
+ 	const node = cb?.();
  	const rootNode = node.getRootNode();
  	if (isShadowRoot(rootNode)) return rootNode;
- 	return getDocument(node).body;
 diff --git a/dist/providers/environment/environment-provider.d.ts b/dist/providers/environment/environment-provider.d.ts
 index 46f4a66b6090917ab3804f261410edadedead3bd..b598e839a580d6caa481471e40c0276c3f0a660d 100644
 --- a/dist/providers/environment/environment-provider.d.ts
@@ -35,10 +33,10 @@ index 46f4a66b6090917ab3804f261410edadedead3bd..b598e839a580d6caa481471e40c0276c
  }
  export declare const EnvironmentProvider: (props: EnvironmentProviderProps) => import("react").JSX.Element;
 diff --git a/dist/providers/environment/environment-provider.js b/dist/providers/environment/environment-provider.js
-index c92c16a73cbdcea790b30d10397b7247285d8331..7eab5fd31c01fa2ad02553b8638b1ffa59d8f222 100644
+index 1580de613a191eaef1c1a3729f6dc607186d6d46..7ab5b692c8d0d19a5bd1b8fc0336dfed664e5b9d 100644
 --- a/dist/providers/environment/environment-provider.js
 +++ b/dist/providers/environment/environment-provider.js
-@@ -6,7 +6,7 @@ import { jsx, jsxs } from "react/jsx-runtime";
+@@ -6,14 +6,15 @@ import { jsx, jsxs } from "react/jsx-runtime";
  import { getDocument, getWindow } from "@zag-js/dom-query";
  //#region src/providers/environment/environment-provider.tsx
  var EnvironmentProvider = (props) => {
@@ -47,14 +45,15 @@ index c92c16a73cbdcea790b30d10397b7247285d8331..7eab5fd31c01fa2ad02553b8638b1ffa
  	const [spanRef, setSpanRef] = useState();
  	const getRootNode = useMemo(() => {
  		return () => runIfFn(value) ?? spanRef?.getRootNode() ?? document;
-@@ -14,6 +14,7 @@ var EnvironmentProvider = (props) => {
+ 	}, [value, spanRef]);
+ 	const environment = useMemo(() => ({
+ 		getRootNode,
+-		getWindow: () => getWindow(getRootNode()),
++        getPortalNode: () => portalNode || undefined,
++        getWindow: () => getWindow(getRootNode()),
+ 		getDocument: () => getDocument(getRootNode())
+ 	}), [getRootNode]);
  	return /* @__PURE__ */ jsxs(EnvironmentContextProvider, {
- 		value: useMemo(() => ({
- 			getRootNode,
-+			getPortalNode: () => portalNode || undefined,
- 			getWindow: () => getWindow(getRootNode()),
- 			getDocument: () => getDocument(getRootNode())
- 		}), [getRootNode]),
 diff --git a/dist/providers/environment/use-environment-context.d.ts b/dist/providers/environment/use-environment-context.d.ts
 index 67b730775a75bbab8d8f8d16699ace93d3378c5e..4420ea2eebbb14488e70d5b7b733e5002e30a355 100644
 --- a/dist/providers/environment/use-environment-context.d.ts

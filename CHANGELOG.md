@@ -4,6 +4,8 @@
 
 [Show all changes: TODO](#)
 
+- Update Chakra to version 3.37.0
+    - The patch for `@ark-ui/react` was updated
 - Update OpenLayers to version 10.10.0.
 - Bump various dependencies and adjusted overrides.
 - Restore source maps of dependencies in `node_modules` using a plugin for Vite's dependency optimizer (see `vite.config.ts` and `support/vite/dependency-sourcemaps.ts`)
