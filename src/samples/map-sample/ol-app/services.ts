@@ -22,15 +22,14 @@ export class MainMapProvider implements MapConfigProvider {
                 zoom: 14
             },
             projection: "EPSG:3857",
-            layers: [
+            baseLayers: [
                 layerFactory.create({
                     type: SimpleLayer,
                     title: "OpenStreetMap",
                     olLayer: new TileLayer({
                         source: new OSM(),
                         properties: { title: "OSM" }
-                    }),
-                    isBaseLayer: true
+                    })
                 })
             ]
         };

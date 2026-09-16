@@ -145,14 +145,13 @@ export class MainMapProvider implements MapConfigProvider {
                 zoom: 14
             },
             projection: "EPSG:3857",
-            layers: [
+            baseLayers: [
                 new SimpleLayer({
                     title: this.layerTitle, // (2)
                     olLayer: new TileLayer({
                         source: new OSM(),
                         properties: { title: "OSM" }
-                    }),
-                    isBaseLayer: true
+                    })
                 })
             ]
         };
