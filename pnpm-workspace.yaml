@@ -163,6 +163,9 @@ peerDependencyRules:
     "fdir>picomatch": "*"
     "rollup": "*"
 
+audit:
+  level: "moderate"
+
 auditConfig:
   ignoreGhsas:
     # https://github.com/advisories/GHSA-mh99-v99m-4gvg, CVE-2026-14257
