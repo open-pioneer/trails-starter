@@ -2,8 +2,10 @@
 
 ## 2026-09-17
 
-[Show all changes: TODO](#)
+[Show all changes: TODO](https://github.com/open-pioneer/trails-starter/compare/2026-07-28...2026-09-17)
 
+- Update core-packages to 4.8.0.
+- Update openlayers-base-packages to 1.5.0.
 - Update Chakra to version 3.37.0.
     - The patch for `@ark-ui/react` was updated.
 - Update OpenLayers to version 10.10.0.
