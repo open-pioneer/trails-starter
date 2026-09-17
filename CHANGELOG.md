@@ -1,5 +1,13 @@
 # Changelog
 
+## TBD
+
+<!-- TODO: fix link -->
+
+[Show all changes](https://github.com/open-pioneer/trails-starter/compare/2026-09-17...XXX)
+
+- Update pnpm to v12
+
 ## 2026-09-17
 
 [Show all changes](https://github.com/open-pioneer/trails-starter/compare/2026-07-28...2026-09-17)
@@ -342,8 +350,8 @@
     {
         "dependencies": {
             // uses version from catalog, the version number does not have to be repeated
-            "@open-pioneer/basemap-switcher": "catalog:",
-        },
+            "@open-pioneer/basemap-switcher": "catalog:"
+        }
     }
     ```
 
@@ -436,8 +444,8 @@
             "@open-pioneer/base-theme": "^0.3.2",
             "@open-pioneer/runtime-react-support": "^1.0.2",
             "@open-pioneer/react-utils": "^0.2.3",
-            "@open-pioneer/http": "^2.1.7",
-        },
+            "@open-pioneer/http": "^2.1.7"
+        }
     }
     ```
 
@@ -460,10 +468,10 @@
             "peerDependencyRules": {
                 "allowedVersions": {
                     "@open-pioneer/test-utils>@testing-library/react": ">= 14.1.2",
-                    "@open-pioneer/test-utils>@testing-library/dom": ">= 9.3.3",
-                },
-            },
-        },
+                    "@open-pioneer/test-utils>@testing-library/dom": ">= 9.3.3"
+                }
+            }
+        }
     }
     ```
 
