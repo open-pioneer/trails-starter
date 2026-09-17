@@ -7,7 +7,7 @@ packages:
 catalog:
   # Trails OpenLayers base packages
   # https://github.com/open-pioneer/trails-openlayers-base-packages
-  "@open-pioneer/basemap-switcher": &ol_base_packages_version 1.5.0-dev.20260910103330 # ^1.5.0
+  "@open-pioneer/basemap-switcher": &ol_base_packages_version 1.5.0-dev.20260917081843 # ^1.5.0
   "@open-pioneer/coordinate-viewer": *ol_base_packages_version
   "@open-pioneer/geolocation": *ol_base_packages_version
   "@open-pioneer/map-navigation": *ol_base_packages_version
