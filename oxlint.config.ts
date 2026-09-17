@@ -114,6 +114,19 @@ export default defineConfig({
             }
         ],
 
+        // This is too pedantic because it also flags writes to model objects etc (e.g. useEffect -> `model.value = xyz`, which is fine).
+        // NOTE: We need to check how the react compiler will handle this. It seems that it will skip optimizing a component that uses this pattern,
+        // but optimization would work fine in this case.
+        "react/immutability": "off",
+
+        // This is too pedantic as well: it flags the `setState(viewModel)` (in setup) / `setState(undefined)` (in cleanup) that we need
+        // to construct model objects with lifecycle from react.
+        // NOTE: Could reenable this in the future, and extract the "model factory" pattern in a custom hook so the linter does not see it.
+        "react/set-state-in-effect": "off",
+
+        // This should be resolved with time..
+        "react/incompatible-library": "off",
+
         // Accessibility
         "jsx-a11y/control-has-associated-label": "off",
         "jsx-a11y/prefer-tag-over-role": "off",

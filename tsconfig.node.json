@@ -10,6 +10,7 @@
         "module": "esnext",
         "types": ["node", "vitest/config"],
         "moduleResolution": "Bundler",
+        "allowImportingTsExtensions": true,
         "allowJs": false,
 
         "strict": true,

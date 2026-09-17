@@ -1,5 +1,29 @@
 # Changelog
 
+## 2026-09-17
+
+[Show all changes](https://github.com/open-pioneer/trails-starter/compare/2026-07-28...2026-09-17)
+
+- Update core-packages to 4.8.0.
+- Update openlayers-base-packages to 1.5.0.
+- Update Chakra to version 3.37.0.
+    - The patch for `@ark-ui/react` was updated.
+- Update OpenLayers to version 10.10.0.
+- Update React to 19.3.0.
+- Update Vitest to version 5.0.0 (see [Blog post](https://vitest.dev/blog/vitest-5), [Migration guide](https://vitest.dev/guide/migration/)).
+- Update Trails build tools.
+- Bump various dependencies and adjusted overrides.
+- Restore source maps of dependencies in `node_modules` using a plugin for Vite's dependency optimizer (see `vite.config.ts` and `support/vite/dependency-sourcemaps.ts`)
+    - This allows you do debug the original source code (e.g. TypeScript, TSX) of external packages such as open pioneer trails packages when using Vite's dev mode.
+    - This is a workaround for <https://github.com/rolldown/rolldown/issues/5561>, eventually this will (again) be handled by vite itself
+    - The plugin makes the dependency optimization slightly _slower_, you can disable the plugin if you don't need this debugging capability at all
+- Update shared version syntax in `pnpm-workspace.yaml`: pnpm now warns for the `__versions` field which we used to maintain shared versions.
+    - The shared version expression (e.g. `&ol_base_packages_version ^1.5.0`) has now moved to the first usage.
+    - For more details, see the related [pnpm issue](https://github.com/pnpm/pnpm/issues/8245).
+- Update `oxlint.config.ts`.
+  Oxlint has implement new react compiler linting rules that are sometimes too pedantic.
+  These have been disabled for the time being.
+
 ## 2026-07-28
 
 [Show all changes](https://github.com/open-pioneer/trails-starter/compare/2026-06-24...2026-07-28)
@@ -318,8 +342,8 @@
     {
         "dependencies": {
             // uses version from catalog, the version number does not have to be repeated
-            "@open-pioneer/basemap-switcher": "catalog:"
-        }
+            "@open-pioneer/basemap-switcher": "catalog:",
+        },
     }
     ```
 
@@ -412,8 +436,8 @@
             "@open-pioneer/base-theme": "^0.3.2",
             "@open-pioneer/runtime-react-support": "^1.0.2",
             "@open-pioneer/react-utils": "^0.2.3",
-            "@open-pioneer/http": "^2.1.7"
-        }
+            "@open-pioneer/http": "^2.1.7",
+        },
     }
     ```
 
@@ -436,10 +460,10 @@
             "peerDependencyRules": {
                 "allowedVersions": {
                     "@open-pioneer/test-utils>@testing-library/react": ">= 14.1.2",
-                    "@open-pioneer/test-utils>@testing-library/dom": ">= 9.3.3"
-                }
-            }
-        }
+                    "@open-pioneer/test-utils>@testing-library/dom": ">= 9.3.3",
+                },
+            },
+        },
     }
     ```
 
