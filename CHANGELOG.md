@@ -8,6 +8,7 @@
     - The patch for `@ark-ui/react` was updated
 - Update OpenLayers to version 10.10.0.
 - Update Vitest to version 5.0.0 (see [Blog post](https://vitest.dev/blog/vitest-5), [Migration guide](https://vitest.dev/guide/migration/)).
+- Update Trails build tools
 - Bump various dependencies and adjusted overrides.
 - Restore source maps of dependencies in `node_modules` using a plugin for Vite's dependency optimizer (see `vite.config.ts` and `support/vite/dependency-sourcemaps.ts`)
     - This allows you do debug the original source code (e.g. TypeScript, TSX) of external packages such as open pioneer trails packages when using Vite's dev mode.

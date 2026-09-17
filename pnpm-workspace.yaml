@@ -46,11 +46,11 @@ catalog:
   react: *react_version
 
   # Devtools
-  "@open-pioneer/build-package-cli": ^4.0.0
-  "@open-pioneer/build-support": ^4.0.0
-  "@open-pioneer/changesets-release-line": ^0.2.0
-  "@open-pioneer/check-pnpm-duplicates": ^0.4.0
-  "@open-pioneer/vite-plugin-pioneer": ^7.0.0
+  "@open-pioneer/build-package-cli": ^4.0.1
+  "@open-pioneer/build-support": ^4.0.1
+  "@open-pioneer/changesets-release-line": ^0.2.1
+  "@open-pioneer/check-pnpm-duplicates": ^0.4.1
+  "@open-pioneer/vite-plugin-pioneer": ^7.0.1
   "@testing-library/dom": ^10.4.1
   "@testing-library/jest-dom": ^7.0.1
   "@testing-library/react": ^16.3.2
@@ -181,9 +181,6 @@ trustPolicy: no-downgrade
 # Exclude packages from trustPolicy that are used in an old (major) version that was published after another signed version
 trustPolicyExclude:
   - "undici-types@6.21.0"
-  - "semver@6.3.1"
-  - "chokidar@4.0.3"
-  - "rollup@2.80.0"
 
 # Workaround for current problems regarding our vite plugin + vite's optimizeDeps feature
 shamefullyHoist: true
