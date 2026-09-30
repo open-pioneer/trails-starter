@@ -6,6 +6,9 @@
 
 [Show all changes](https://github.com/open-pioneer/trails-starter/compare/2026-09-17...XXX)
 
+- Replace the script at `./support/create-license-report.ts` with the new tool `@open-pioneer/create-license-report` (See [PR](https://github.com/open-pioneer/trails-build-tools/pull/165) / [Code](https://github.com/open-pioneer/trails-build-tools/tree/main/packages/create-license-report))
+    - `pnpm build-license-report` works like it did before, the license report is written to the same location (`dist/license-report.html`)
+    - slightly adjust the configuration at `support/license-config.yaml`
 - Update pnpm to v12
 
 ## 2026-09-17

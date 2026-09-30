@@ -2,6 +2,7 @@
 allowedLicenses:
   - "Apache-2.0"
   - "MIT"
+  - "Zlib"
   - "ISC"
   - "BSD-3-Clause"
   - "BSD-2-Clause"
@@ -9,12 +10,6 @@ allowedLicenses:
   - "CC0-1.0"
   - "WTFPL"
   - "Unlicense"
-  # zstddec
-  - MIT AND BSD-3-Clause
-
-  # Dependencies of jsPdf use this
-  - "(MIT OR Apache-2.0)"
-  - "(MPL-2.0 OR Apache-2.0)"
 
 # Some licenses are detected incorrectly.
 # Their information can be overwritten here.
@@ -43,7 +38,7 @@ overrideLicenses:
   # Different parts of this package are under different licenses
   - name: "pako"
     version: "2.1.0"
-    license: "MIT and Zlib"
+    license: "MIT AND Zlib"
     licenseFiles:
       - "./LICENSE"
       - "./lib/zlib/README"
