@@ -37,7 +37,7 @@
     - [Design (Phase 1)](./internals/Design_Phase1.md)
     - [Design (Phase 2)](./internals/Design_Phase2.md)
     - [Service layer](./internals/ServiceLayer.md)
-    - [Build tools](./internals/BuildTools.md)
+    - [Build process](./internals/BuildProcess.md)
     - [React integration](./internals/ReactIntegration.md)
     - [Development Guidelines](./internals/Guidelines.md)
     - [Chakra V3 Migration](./internals/ChakraV3Migration.md)
