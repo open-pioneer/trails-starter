@@ -48,10 +48,10 @@ There are two different ways in which Trails code gets compiled:
 
     A Trails project is a [Vite](https://vite.dev) project.
     Our Vite plugin (`@open-pioneer/vite-plugin-pioneer`) runs inside `vite dev` and `vite build`.
-    The result is a set of static files (HTML, JavaScript, CSS) in `dist/www`.
+    When building for production: the result is a set of static files (HTML, JavaScript, CSS) in `dist/www`.
     This step is used by every project.
 
-2. **Building a package for publishing.**
+3. **Building a package for publishing.**
 
     The `build-pioneer-package` CLI compiles a single package into a publishable form (a `dist` directory that is uploaded with `pnpm publish`).
     This is also called _separate compilation_.
