@@ -51,7 +51,7 @@ There are two different ways in which Trails code gets compiled:
     When building for production: the result is a set of static files (HTML, JavaScript, CSS) in `dist/www`.
     This step is used by every project.
 
-3. **Building a package for publishing.**
+2. **Building a package for publishing.**
 
     The `build-pioneer-package` CLI compiles a single package into a publishable form (a `dist` directory that is uploaded with `pnpm publish`).
     This is also called _separate compilation_.
@@ -70,7 +70,7 @@ Vite handles:
 - Transforming React JSX to JavaScript (via the `react()` plugin)
 - Compiling and bundling everything into a set of static files in `dist/www`
 
-The following image shows the basic process:
+The following image shows how vite bundles source files into a bundled application:
 
 ![Vite Build](images/vite-build.png)
 
@@ -262,16 +262,93 @@ These play a much smaller role, and their implementation is quite simple compare
 
 ### How code generation works
 
-Code generation in the Vite plugin is based on the two plugin hooks `resolveId` and `load`.
-These are a well known pattern in the Vite plugin community to implement _virtual_ modules (modules that don't exist on disk).
-See [resolveId](https://github.com/open-pioneer/trails-build-tools/blob/ab735175fa97e4328c56a2b6e5b538aa0e740539/packages/vite-plugin/src/codegenPlugin.ts#L62) and [load](https://github.com/open-pioneer/trails-build-tools/blob/ab735175fa97e4328c56a2b6e5b538aa0e740539/packages/vite-plugin/src/codegenPlugin.ts#L116) in `codegenPlugin.ts`.
+The virtual modules listed above depend on the current state of the trails project (or app, or package) where they are used.
+Their content is derived from many files on disk (e.g. `package.json`, `build.config.mjs`), but they never materialize on disk themselves.
+Their content is generated when they are needed by Vite:
+
+- Vite sees an import into a virtual module, for example `open-pioneer:app`.
+- Vite calls the `resolveId` hook(s) of its plugins in order to find it.
+  Our codegen plugin runs and returns with a result.
+  If no plugin were to return a valid result, Vite would attempt to locate the file on disk, which would produce an error.
+- Vite then calls the `load` hook for the resolved module in order to read its source code (JavaScript).
+  This is done _once_ during build or after every relevant _change_ during dev (which is why caching is important here).
+  Our codegen plugin generates the required data structures (e.g. `packages`) and then outputs JavaScript code.
+- The resulting code is used by Vite just like any other file it would ordinarily read from disk.
+
+The hooks are implemented here: [resolveId](https://github.com/open-pioneer/trails-build-tools/blob/ab735175fa97e4328c56a2b6e5b538aa0e740539/packages/vite-plugin/src/codegenPlugin.ts#L62), [load](https://github.com/open-pioneer/trails-build-tools/blob/ab735175fa97e4328c56a2b6e5b538aa0e740539/packages/vite-plugin/src/codegenPlugin.ts#L116) in `codegenPlugin.ts`:
 
 - `resolveId` determines which package does the import (by locating the nearest `package.json`) and maps the public module name to an internal, package specific id.
 - `load` generates the code for the resolved id.
 
-The module behind `open-pioneer:app` is itself very short: it only imports and re-exports a set of "inner" helper modules and contains the hot module replacement (HMR) logic.
-The helper modules exist for organization and for more efficient HMR (a change to a `.yaml` file only invalidates the i18n module, not the whole app metadata).
+The basic process is the same for almost all virtual modules:
+
+1. Determine which app (or package) does the import.
+2. Access the relevant metadata (package names, services within packages, locales, ...).
+3. Generate the requested code (service metadata, combined app CSS, ...).
+   The code is returned as a string that contains valid JavaScript, ready to be read by Vite.
+
+The metadata needed by the various virtual modules is cached within the `MetadataRepository`.
+The goal is to compute metadata for packages when needed, once, and then reuse the values for as long as they are valid.
+This is important to keep the dev server fast (`pnpm dev`).
+It has no benefit for the real build (`pnpm build`), but it is useful to keep the code paths as similar as possible for maintainability.
+
+### Walkthrough: generating `open-pioneer:app`
+
+This section traces the steps above for a single, concrete import of `open-pioneer:app`.
+The goal is to show how the pieces introduced so far (virtual modules, plugin hooks, metadata, code generation) fit together.
+
+Consider a minimal app:
+
+```ts
+// src/apps/my-app/app.ts
+import * as appMetadata from "open-pioneer:app";
+import { createCustomElement } from "@open-pioneer/runtime";
+
+const Element = createCustomElement({
+    appMetadata
+});
+
+customElements.define("my-app", Element);
+```
+
+`createCustomElement` is an ordinary function.
+It expects the application's metadata in a certain shape (see its typings), but it does not care where that object comes from.
+In a real app, the object is always produced by the Vite plugin.
+The tests of the runtime package construct them by hand.
+
+**Step 1: Resolving the import.**
+When Vite encounters the import of `open-pioneer:app`, it calls the `resolveId` hook of our plugin.
+The plugin locates the nearest `package.json` of the importing file (in this case: `my-app/package.json`) and returns an internal id that encodes the app's package directory.
+This is the _dynamic_ part: the same public module name resolves to a different id for every app, because its content depends on the importing package.
+
+**Step 2: Gathering metadata.**
+Vite then calls the `load` hook for the resolved id.
+The plugin retrieves the app's metadata from the `MetadataRepository`.
+If it is not cached yet, the repository reads the app's `package.json` and `build.config.mjs`, then walks the declared dependencies (and their dependencies, and so on), collecting the metadata of every Trails package it finds.
+Plain node packages are skipped.
+The result describes the entire application: all Trails packages, their services and references, their styles, their i18n files and their properties.
+
+**Step 3: Generating the outer module.**
+The module behind `open-pioneer:app` is very short by itself.
+It only imports and re-exports a set of "inner" helper modules and contains the hot module replacement ([HMR](https://vite.dev/guide/api-hmr)) logic (omitted below).
+The helper modules exist for organization and for more efficient HMR: a change to an i18n `.yaml` file only invalidates the i18n module, not the whole app metadata.
 They cannot be imported by user code.
+
+```js
+// Simplified content of "open-pioneer:app" for `my-app`.
+// Module ids and the metadata format are implementation details and may change at any time.
+import { createBox } from "@open-pioneer/runtime/metadata";
+import packages from "/src/apps/my-app/@@open-pioneer-app?open-pioneer-packages";
+import stylesString from "/src/apps/my-app/@@open-pioneer-app?open-pioneer-styles&inline&lang.css";
+import { locales, loadMessages } from "/src/apps/my-app/@@open-pioneer-app?open-pioneer-i18n-index";
+
+const styles = createBox(stylesString);
+
+export { packages, styles, locales, loadMessages };
+```
+
+Each helper module is a virtual module in its own right and goes through the same `resolveId` / `load` cycle.
+The `load` hook of each helper reuses the (now cached) app metadata from step 2 and only performs the code generation for its part.
 
 | Helper module    | Content                                                                                                                           |
 | ---------------- | --------------------------------------------------------------------------------------------------------------------------------- |
@@ -280,16 +357,68 @@ They cannot be imported by user code.
 | `app-i18n-index` | The list of supported locales and a `loadMessages(locale)` function that loads the actual messages for a locale (see `app-i18n`). |
 | `app-i18n`       | Parameterized by locale. A JSON string with all `(key, message)` pairs of that locale, grouped by package.                        |
 
-The basic process is the same for almost all virtual modules:
+**Step 4: The helper modules.**
+Together, the helper modules produce the four exports of `open-pioneer:app`.
 
-1. Determine which app (or package) does the import.
-2. Access the relevant metadata (package names, services within packages, locales, ...).
-3. Generate the requested code (service metadata, combined app CSS, ...).
+- **`packages`** (from `app-packages`)
 
-The metadata needed by the various virtual modules is cached within the `MetadataRepository`.
-The goal is to compute metadata for packages when needed, once, and then reuse the values for as long as they are valid.
-This is important to keep the dev server fast (`pnpm dev`).
-It has no benefit for the real build (`pnpm build`), but it is useful to keep the code paths as similar as possible for maintainability.
+    A JSON-like structure with one entry per Trails package in the app.
+    Each entry lists the package's service definitions (with their `provides` and `references`), the services referenced by its UI and its properties.
+    Service classes are imported from the packages' `services` modules and placed directly into the structure, so the runtime can instantiate them without any further lookup.
+    The [Service layer](./ServiceLayer.md) uses this data to start all required services.
+    See the example output in [App Metadata](#app-metadata).
+
+- **`styles`** (from `app-css`)
+
+    The plugin generates a small CSS module that `@import`s the stylesheet of every package (if they have one).
+    Vite processes this module like any other CSS file (resolving imports, compiling SCSS, ...).
+    The runtime later places the resulting CSS code into the app's shadow root.
+
+- **`locales` and `loadMessages`** (from `app-i18n-index`)
+
+    The set of supported locales is read from the app's `build.config.mjs` and exported as an array.
+    The runtime uses it to pick the application's locale and then calls `loadMessages(locale)` to fetch the messages for that locale.
+
+    ```js
+    // Locales supported by the application
+    export const locales = ["de", "en"];
+
+    // Lazily loads the messages for the given locale
+    export function loadMessages(locale) {
+        switch (locale) {
+            case "de":
+                return import("/src/apps/my-app/@@open-pioneer-app?open-pioneer-i18n&locale=de").then(
+                    (mod) => mod.default
+                );
+            case "en":
+                return import("/src/apps/my-app/@@open-pioneer-app?open-pioneer-i18n&locale=en").then(
+                    (mod) => mod.default
+                );
+        }
+        throw new Error(`Unsupported locale: '${locale}'`);
+    }
+    ```
+
+    `loadMessages` contains one [dynamic import](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/import) per locale, pointing to the parameterized `app-i18n` module.
+    Because the imports are dynamic, Vite emits a separate chunk per locale and the browser only downloads the messages that are actually needed.
+
+    The `app-i18n` module for `en` looks like this:
+
+    ```js
+    // Messages for locale 'en', keyed by package name and message id
+    const messages = JSON.parse(
+        `{"my-app":{"content.header":"My App","content.description":"..."},"@open-pioneer/map":{"...":"..."}}`
+    );
+    export default messages;
+    ```
+
+    The plugin merges the messages of every package into a single JSON structure, applying any `overrides` declared by the app on the way.
+    The runtime feeds this structure into the i18n framework.
+
+**Summary.**
+From Vite's point of view, our plugin just adds a few virtual modules that are imported from application code.
+Everything else (bundling, CSS processing, code splitting, hot module replacement, ...) is handled by Vite.
+Most of the complexity inside the plugin comes from parsing, validating and caching the metadata that feeds the code generation, not from the code generation itself.
 
 ## Building a package for publishing
 
@@ -298,6 +427,8 @@ TODO
 ## Code pointers
 
 This section contains a few pointers into the most relevant parts of the implementation.
+
+> NOTE: These are permalinks to a specific revision. They may become out of date. If you notice that they are no longer helpful: update them.
 
 ### Vite plugin
 
