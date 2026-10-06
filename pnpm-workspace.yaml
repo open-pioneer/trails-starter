@@ -111,11 +111,9 @@ overrides:
   # https://github.com/advisories/GHSA-2883-xcg3-v3hh, CVE-2026-84375
   "js-yaml@>=3.0.0 <3.15.2": "^3.15.2"
 
-  # https://github.com/advisories/GHSA-3jxr-9vmj-r5cp, CVE-2026-13149
-  # https://github.com/advisories/GHSA-mh99-v99m-4gvg, CVE-2026-14257
-  # https://github.com/advisories/GHSA-rgw5-rvv9-x895, CVE-2026-69152
-  "brace-expansion@<1.1.18": "^1.1.18"
-  "brace-expansion@>=3.0.0 <5.0.8": "^5.0.9"
+  # https://github.com/advisories/GHSA-qhr7-859c-m2p7 CVE-2026-102278
+  "brace-expansion@<1.1.18": "^1.1.20"
+  "brace-expansion@>=3.0.0 <5.0.8": "^5.0.10"
 
   # https://github.com/advisories/GHSA-xvcm-6775-5m9r, CVE-2026-59880
   "immutable@>=5.0.0 <5.1.8": "^5.1.8"
@@ -131,9 +129,17 @@ overrides:
   # https://github.com/advisories/GHSA-8xcm-r25x-g524
   # https://github.com/advisories/GHSA-4cwx-7wf7-3272
   "undici@>=7.0.0 <7.29.0": "^7.29.0"
+  # https://github.com/advisories/GHSA-rx4f-c7p8-82vq, CVE-2026-85014
+  "undici@>=8.0.0 <8.10.2": "^8.10.2"
 
   # https://github.com/advisories/GHSA-2v37-7h3g-55p8, CVE-2026-67213
   "nanoid@<3.3.17": "^3.3.17"
+
+  # https://github.com/advisories/GHSA-68fv-2mgg-jv7q, CVE-2026-93749
+  "source-map-js@>=1.0.0 <1.2.2": "^1.2.2"
+
+  # https://github.com/advisories/GHSA-253c-mchw-3w2r
+  "markdown-it@<14.3.1": "^14.3.1"
 
 allowUnusedPatches: true
 patchedDependencies:
@@ -166,6 +172,12 @@ auditConfig:
   ignoreGhsas:
     # https://github.com/advisories/GHSA-mh99-v99m-4gvg, CVE-2026-14257
     - GHSA-mh99-v99m-4gvg
+
+    # https://github.com/advisories/GHSA-vfj7-8cjw-p6xm CVE-2026-93687
+    - GHSA-vfj7-8cjw-p6xm
+
+    # https://github.com/advisories/GHSA-hp3w-g68c-fv3c, CVE-2026-97058
+    - GHSA-hp3w-g68c-fv3c
 
 # Only run build scripts for allowed packages.
 allowBuilds:
