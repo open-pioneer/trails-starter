@@ -95,7 +95,12 @@ export default defineConfig(({ mode }) => {
                     // https://github.com/open-pioneer/trails-openlayers-base-packages/issues/314
                     inline: [/@open-pioneer[/\\]/]
                 }
-            }
+            },
+
+            // workaround for internal error when using vitest:
+            // "Cannot determine package.json for source info module id"
+            // https://github.com/open-pioneer/trails-build-tools/commit/2aa64241fb392d5b9b139efeb223a65ea014c285
+            fsModuleCache: false
         },
 
         // prettier-ignore
