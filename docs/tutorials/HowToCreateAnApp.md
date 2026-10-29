@@ -158,9 +158,10 @@ Vite has out of the box support for two ways to include static assets:
 
     ```ts
     // src/apps/my-app/someFile.ts
+
     import myImage from "./my-image.png"; // (1)
-    import someFile from "./some-asset.pdf?url"; // (2)
     import jsonContent from "./my-json-data.json"; // (3)
+    import someFile from "./some-asset.pdf?url"; // (2)
     ```
 
     - **(1)** Imports an image file as a URL (`myImage` will be string URL that points to the image).

@@ -90,10 +90,11 @@ Note that all import paths and the precise format of the application's metadata 
 
 ```js
 // (simplified) content of "open-pioneer:app" for a specific application
-import { createBox } from "/packages/runtime/metadata/index.ts";
+
 import packages from "/apps/i18n-app/app.ts?open-pioneer-packages";
 import stylesString from "/apps/i18n-app/app.ts?open-pioneer-styles&inline&lang.css";
 import { locales, loadMessages } from "/apps/i18n-app/app.ts?open-pioneer-i18n-index";
+import { createBox } from "/packages/runtime/metadata/index.ts";
 const styles = createBox(stylesString);
 export { packages, styles, locales, loadMessages };
 ```

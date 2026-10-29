@@ -96,8 +96,9 @@ Now create the test file:
 
 ```ts
 // src/packages/math/MathServiceImpl.test.ts
-import { it, expect } from "vitest";
+
 import { createService } from "@open-pioneer/test-utils/services";
+import { it, expect } from "vitest";
 import { MathServiceImpl } from "./MathServiceImpl";
 
 it("multiplies two numbers", async () => {
@@ -381,8 +382,9 @@ We will update the test with an empty array and, while we're at it, add a test f
 
 ```ts
 // src/packages/MathServiceImpl.test.ts
-import { it, expect } from "vitest";
+
 import { createService } from "@open-pioneer/test-utils/services";
+import { it, expect } from "vitest";
 import { MathServiceImpl } from "./MathServiceImpl";
 
 it("multiplies two numbers", async () => {
@@ -496,8 +498,9 @@ For this example, we'll implement the class directly in the `services.ts`:
 
 ```ts
 // src/apps/empty/services.ts
-import { MathServiceExtension } from "math";
+
 import { createLogger } from "@open-pioneer/core";
+import { MathServiceExtension } from "math";
 import { sourceId } from "open-pioneer:source-info";
 
 const LOG = createLogger(sourceId);

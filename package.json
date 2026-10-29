@@ -38,7 +38,6 @@
         "@types/react-dom": "catalog:",
         "@vitejs/plugin-react": "catalog:",
         "fast-glob": "catalog:",
-        "handlebars": "catalog:",
         "happy-dom": "catalog:",
         "husky": "catalog:",
         "js-yaml": "catalog:",

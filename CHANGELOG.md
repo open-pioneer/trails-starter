@@ -16,11 +16,12 @@
 - Replace the script at `./support/create-license-report.ts` with the new tool `@open-pioneer/create-license-report` (See [PR](https://github.com/open-pioneer/trails-build-tools/pull/165) / [Code](https://github.com/open-pioneer/trails-build-tools/tree/main/packages/create-license-report))
     - `pnpm build-license-report` works like it did before, the license report is written to the same location (`dist/license-report.html`)
     - slightly adjust the configuration at `support/license-config.yaml`
+    - the `handlebars` dependency was removed
 - Update pnpm to v12
     - Preconfigure agent skills for `@conterra/reactivity-core` and `@open-pioneer/reactivity` (see <https://pnpm.io/agent-skills>).
       Skills are placed into automatic locations, you may need to [configure additional directories](https://pnpm.io/settings/build#skillsdirs).
     - Switch to [`permissions` key](https://pnpm.io/settings/build#permissions) for build permissions and skills (previously: `allowedBuilds`)
-
+- Update various other dependencies
 - Enable the `eqeqeq` oxlint rule with the `smart` option in `oxlint.config.ts`.
   Comparisons must use `===` and `!==`, except when comparing against `null` (which is convenient to check for `null` or `undefined` at the same time).
   See also <https://oxc.rs/docs/guide/usage/linter/rules/eslint/eqeqeq.html>.

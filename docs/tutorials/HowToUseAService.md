@@ -24,6 +24,7 @@ Thus, we edit our app's `build.config.mjs` to state that the UI requires a refer
 
 ```js
 // src/apps/empty/build.config.mjs
+
 import { defineBuildConfig } from "@open-pioneer/build-support";
 
 export default defineBuildConfig({
@@ -43,11 +44,12 @@ We extend the UI of the empty app to add our custom class:
 
 ```tsx
 // src/apps/empty/AppUI.tsx
+
 import { Container, Heading, Text, chakra, Button, VStack } from "@chakra-ui/react";
-import { useIntl, useService } from "open-pioneer:react-hooks";
-import { Greeter, SimpleUiComponent } from "sample-package";
 import { ApplicationContext } from "@open-pioneer/runtime";
+import { useIntl, useService } from "open-pioneer:react-hooks";
 import { useState } from "react";
+import { Greeter, SimpleUiComponent } from "sample-package";
 
 export function AppUI() {
     const intl = useIntl();
@@ -221,8 +223,8 @@ And our UI will now call the methods of our `AttributeService`:
 ```tsx
 import { Container, Heading, Text, chakra, Button, VStack } from "@chakra-ui/react";
 import { useIntl, useService } from "open-pioneer:react-hooks";
-import { Greeter, SimpleUiComponent } from "sample-package";
 import { useState } from "react";
+import { Greeter, SimpleUiComponent } from "sample-package";
 import { AttributeService } from "./services";
 
 export function AppUI() {
