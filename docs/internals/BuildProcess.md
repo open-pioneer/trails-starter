@@ -90,8 +90,8 @@ The plugin provides everything that Trails packages need at runtime:
 All of these entities are made available through a single import, which is present in every `app.ts`:
 
 ```ts
-import * as appMetadata from "open-pioneer:app"; // import app metadata
 import { createCustomElement } from "@open-pioneer/runtime";
+import * as appMetadata from "open-pioneer:app"; // import app metadata
 
 const Element = createCustomElement({
     appMetadata // Everything the app needs to know about itself at runtime
@@ -120,9 +120,9 @@ Example output of importing "open-pioneer:app"
 </summary>
 
 ```ts
-import { MainMapProvider } from "ol-app/services";
-import { MapRegistry, LayerFactory } from "@open-pioneer/map/services";
 import { HttpServiceImpl } from "@open-pioneer/http/services";
+import { MapRegistry, LayerFactory } from "@open-pioneer/map/services";
+import { MainMapProvider } from "ol-app/services";
 
 // Package metadata
 export const packages = {
@@ -300,9 +300,9 @@ The goal is to show how the pieces introduced so far (virtual modules, plugin ho
 Consider a minimal app:
 
 ```ts
+import { createCustomElement } from "@open-pioneer/runtime";
 // src/apps/my-app/app.ts
 import * as appMetadata from "open-pioneer:app";
-import { createCustomElement } from "@open-pioneer/runtime";
 
 const Element = createCustomElement({
     appMetadata
@@ -335,12 +335,12 @@ The helper modules exist for organization and for more efficient HMR: a change t
 They cannot be imported by user code.
 
 ```js
-// Simplified content of "open-pioneer:app" for `my-app`.
-// Module ids and the metadata format are implementation details and may change at any time.
-import { createBox } from "@open-pioneer/runtime/metadata";
 import packages from "/src/apps/my-app/@@open-pioneer-app?open-pioneer-packages";
 import stylesString from "/src/apps/my-app/@@open-pioneer-app?open-pioneer-styles&inline&lang.css";
 import { locales, loadMessages } from "/src/apps/my-app/@@open-pioneer-app?open-pioneer-i18n-index";
+// Simplified content of "open-pioneer:app" for `my-app`.
+// Module ids and the metadata format are implementation details and may change at any time.
+import { createBox } from "@open-pioneer/runtime/metadata";
 
 const styles = createBox(stylesString);
 
