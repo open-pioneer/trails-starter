@@ -44,7 +44,7 @@ $ pnpm test src/packages/framework/core/
 ### Watch mode
 
 Vitest will remain running after executing the test suite when executed locally.
-It will watch for file changes (similar to vite's hot reloading) and re-execute tests that are impacted by this changes ([Documentation](https://vitest.dev/guide/features.html#watch-mode)).
+It will watch for file changes (similar to Vite's hot reloading) and re-execute tests that are impacted by these changes ([Documentation](https://vitest.dev/guide/features.html#watch-mode)).
 
 ### Running Vitest manually
 
@@ -200,6 +200,44 @@ Recommended libraries:
 - `@testing-library/react` (or `/dom`): <https://testing-library.com/>
 - `react-dom/test-utils`: <https://reactjs.org/docs/test-utils.html>
 - Our own test utils in `@open-pioneer/test-utils`
+
+## Use real i18n messages in tests
+
+The module `open-pioneer:test-support` provides test support helpers for the importing package, such as the actual i18n messages that would be used when running the package in a trails app.
+
+It exports `messages`, the i18n messages of the importing package and of all its dependencies.
+The record can be passed to the `messages` property of `PackageContextProvider` from `@open-pioneer/test-utils/react`.
+
+The module also exports `messagesLocale`, the locale of these messages.
+
+Example usage:
+
+```tsx
+// Render a component with the real messages of its package.
+import { PackageContextProvider } from "@open-pioneer/test-utils/react";
+import { render } from "@testing-library/react"; // or import { render } from "vitest-browser-react";
+import { messages, messageLocale } from "open-pioneer:test-support"; // (1)
+
+render(
+    // (2)
+    <PackageContextProvider messages={messages} locale={messageLocale}>
+        <MyComponent />
+    </PackageContextProvider>
+);
+```
+
+- **(1)** Import `messages` and `messagesLocale`
+
+- **(2)** Pass the imported `messages` and `messagesLocale`to the `PackageContextProvider` so that they are used in the components that are rendered in the test.
+
+By default, the messages are returned in the first locale listed in the `i18n` array of the package's 'build.config.mjs'.
+A different locale can be requested with a query, for example:
+
+```js
+import { messages, messageLocale } from "open-pioneer:test-support?locale=de";
+```
+
+This module is designed to be used in combination with the `@open-pioneer/test-utils` package and can only be imported in tests.
 
 ## Test utilities
 

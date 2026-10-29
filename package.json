@@ -19,6 +19,9 @@
         "fmt": "oxfmt",
         "fmt:check": "oxfmt --check",
         "test": "vitest",
+        "test:unit": "vitest --project unit",
+        "test:browser": "vitest --project browser",
+        "test:headless": "vitest --browser.headless",
         "prepare": "husky && pnpm check-duplicates"
     },
     "devDependencies": {
@@ -37,6 +40,8 @@
         "@types/react": "catalog:",
         "@types/react-dom": "catalog:",
         "@vitejs/plugin-react": "catalog:",
+        "@vitest/browser-playwright": "catalog:",
+        "@vitest/browser-preview": "catalog:",
         "fast-glob": "catalog:",
         "happy-dom": "catalog:",
         "husky": "catalog:",
@@ -45,6 +50,7 @@
         "lint-staged": "catalog:",
         "oxfmt": "catalog:",
         "oxlint": "catalog:",
+        "playwright": "catalog:",
         "react": "catalog:",
         "resize-observer-polyfill": "catalog:",
         "rimraf": "catalog:",
@@ -53,7 +59,8 @@
         "typedoc": "catalog:",
         "typescript": "catalog:",
         "vite": "catalog:",
-        "vitest": "catalog:"
+        "vitest": "catalog:",
+        "vitest-browser-react": "catalog:"
     },
     "engines": {
         "node": ">= 24",

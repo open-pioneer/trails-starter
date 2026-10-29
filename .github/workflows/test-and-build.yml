@@ -24,6 +24,9 @@ jobs:
           cache: true
           require-lockfile: true # --frozen-lockfile
 
+      - name: Install playwright
+        run: pnpm playwright install chromium --force --only-shell
+
       - name: Lint code
         run: pnpm lint
 

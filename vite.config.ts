@@ -1,9 +1,12 @@
 // SPDX-FileCopyrightText: 2023-2025 Open Pioneer project (https://github.com/open-pioneer)
 // SPDX-License-Identifier: Apache-2.0
 
+import { availableParallelism } from "node:os";
 import { resolve } from "node:path";
+import { env } from "node:process";
 import { pioneer } from "@open-pioneer/vite-plugin-pioneer";
 import react from "@vitejs/plugin-react";
+import { playwright } from "@vitest/browser-playwright";
 import { defineConfig, UserConfig } from "vite";
 import { dependencySourcemaps } from "./support/vite/dependency-sourcemaps.ts";
 
@@ -85,17 +88,64 @@ export default defineConfig(({ mode }) => {
 
         // https://vitest.dev/config/
         test: {
-            globals: true,
-            environment: "happy-dom",
-            setupFiles: ["testing/global-setup.ts"],
+            silent: "passed-only",
+            projects: [
+                {
+                    test: {
+                        name: "unit",
+                        globals: true,
+                        include: ["**/*.{test,spec}.*"],
+                        exclude: [
+                            "**/node_modules/**",
+                            "**/*.browser.{test,spec}.*",
+                            "**/*.{test,spec}.*.snap"
+                        ],
+                        environment: "happy-dom", // can be changed to "node" if happy-dom is no longer needed
+                        setupFiles: ["testing/global-setup.ts"], // can be cleaned up if happy-dom is no longer needed
+                        server: {
+                            deps: {
+                                // Workaround to fix some import issues, see
+                                // https://github.com/open-pioneer/trails-openlayers-base-packages/issues/314
+                                inline: [/@open-pioneer[/\\]/, /ol\//]
+                            }
+                        }
+                    }
+                },
+                {
+                    test: {
+                        name: "browser",
+                        include: ["**/*.browser.{test,spec}.*"],
+                        exclude: ["**/node_modules/**", "**/*.{test,spec}.*.snap"],
+                        server: {
+                            deps: {
+                                // Workaround to fix some import issues, see
+                                // https://github.com/open-pioneer/trails-openlayers-base-packages/issues/314
+                                inline: [/@open-pioneer[/\\]/]
+                            }
+                        },
+                        testTimeout: 5000,
 
-            server: {
-                deps: {
-                    // Workaround to fix some import issues, see
-                    // https://github.com/open-pioneer/trails-openlayers-base-packages/issues/314
-                    inline: [/@open-pioneer[/\\]/]
+                        // Browser tests get their own group because Vitest rejects projects with
+                        // different `maxWorkers` in one group; unit and arch tests keep the default.
+                        maxWorkers: browserTestWorkers(),
+                        sequence: { groupOrder: 1 },
+                        browser: {
+                            enabled: true,
+                            provider: playwright(),
+
+                            // Disable creation of screenshots for failing tests
+                            screenshotFailures: false,
+
+                            // https://vitest.dev/config/browser/playwright
+                            instances: [{ browser: "chromium" }],
+                            viewport: {
+                                height: 600,
+                                width: 800
+                            }
+                        }
+                    }
                 }
-            }
+            ]
         },
 
         // prettier-ignore
@@ -111,3 +161,9 @@ export default defineConfig(({ mode }) => {
         }
     } satisfies UserConfig;
 });
+
+// Reduce parallelism -- too much parallel jobs cause rendering timeouts in headless mode.
+function browserTestWorkers(): number {
+    const minimum = env.CI ? 2 : 1;
+    return Math.max(minimum, Math.floor(availableParallelism() / 4));
+}
