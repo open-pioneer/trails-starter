@@ -422,7 +422,124 @@ Most of the complexity inside the plugin comes from parsing, validating and cach
 
 ## Building a package for publishing
 
-TODO
+Packages can be reused in other projects.
+
+To achieve this, a package is built _separately_ from the other packages and apps in its repository.
+The result is published to a registry, such as <https://npmjs.com>.
+Downstream projects then reference the package in their `dependencies` and install it into their `node_modules` directory, where the Vite plugin picks it up like any other Trails package:
+
+![Separate compilation](./images/separate-compilation.png)
+
+Trails packages are Node packages with a few extensions needed for web application development (services, styles, i18n, ...).
+Plain tools like `tsc` do not know about these extensions, so we maintain our own CLI (`build-pioneer-package`) that transforms a package from its _source code form_ into a _publishable form_.
+The CLI supports all Trails features that a package may use.
+
+### Workflow
+
+Publishing a package is done as follows:
+
+1. Prepare the package, see [How to publish a package](../tutorials/HowToPublishAPackage.md).
+2. Run `build-pioneer-package`, which is typically configured as the package's `pnpm build` script.
+3. Run `pnpm publish` to upload the result to a registry.
+
+Running the CLI looks like this:
+
+```bash
+$ pnpm build
+> build-pioneer-package
+
+Building package at /path/to/project/src/packages/map
+Building JavaScript...
+Generating TypeScript declaration files...
+Building styles...
+Copying i18n files...
+Copying assets...
+Writing package metadata...
+Copying auxiliary files...
+Success
+```
+
+The output is written into the package's `dist` directory.
+That directory contains a complete variant of the original package, including its own `package.json`, ready to be uploaded by `pnpm publish`.
+
+### Build steps
+
+The steps run sequentially, in the order shown above.
+They are easy to follow in [`buildPackage.ts`](https://github.com/open-pioneer/trails-build-tools/blob/ab735175fa97e4328c56a2b6e5b538aa0e740539/packages/build-package/src/buildPackage.ts).
+
+- **JavaScript.**
+
+    TypeScript and JSX/TSX are transpiled to plain JavaScript using [Rollup](https://rollupjs.org) and esbuild.
+    Sharing TypeScript source code directly is not a good idea: every project uses different compiler settings.
+
+    JavaScript entry points (usually `index.ts`) and all files needed by them are included in the output.
+    Code from other packages is never bundled.
+    Imports of dependencies are left in place (as `external` imports) and are resolved by the downstream project's bundler.
+
+    Rollup is also where most of the [validation](#validation) happens, implemented as a plugin.
+
+- **TypeScript declaration files.**
+
+    `.d.ts` files are generated from the original TypeScript sources so that downstream TypeScript users get full type information.
+    No type _checking_ is performed in this step (the TypeScript API is called with `noCheck: true`).
+    This is done for performance reasons: we assume that the surrounding project runs its own type checks anyway (`pnpm check-types` etc.).
+    Even so, this is by far the slowest step of the build.
+
+- **Styles.**
+
+    The package's (S)CSS is compiled and bundled into a single CSS file.
+
+- **I18n files and assets.**
+
+    The package's i18n `.yaml` files and any additional assets (e.g. icons or images) are copied to the output directory.
+
+- **Package metadata.**
+
+    A new `package.json` is generated from the package's original `package.json`.
+    Only the fields needed by a published package are copied (name, version, dependencies, homepage, ...).
+    Fields that are only relevant during development, such as `devDependencies`, are dropped automatically.
+
+    Two fields are managed by the CLI itself:
+
+    - `exports` lists the modules that can be imported from the outside.
+      It is derived from the `entryPoints` in `build.config.mjs`.
+    - `openPioneerFramework` contains the Trails metadata (services, i18n, properties, ...), parsed and normalized from the remaining parts of `build.config.mjs`.
+      It uses a stable, versioned format that is read by the Vite plugin when the package is used in a downstream project (see the `build-common` package).
+
+- **Auxiliary files.**
+
+    `README`, `LICENSE` and `CHANGELOG` files are copied as-is.
+
+### Validation
+
+While building, the CLI validates that the package will _work_ in downstream projects.
+Most of these checks are implemented in the Rollup plugin [`checkImports.ts`](https://github.com/open-pioneer/trails-build-tools/blob/ab735175fa97e4328c56a2b6e5b538aa0e740539/packages/build-package/src/rollup/checkImports.ts):
+
+- Every package imported by the source code must be declared in `package.json` (as `dependencies` or `peerDependencies`).
+- Every imported module must actually exist in the target package.
+  If the target is a Trails package, the module must also be one of its entry points.
+- `README`, `LICENSE` and `CHANGELOG` must be present (by default).
+
+### Virtual modules
+
+A package may import the [virtual modules](#other-virtual-modules) provided by the Vite plugin, such as `open-pioneer:react-hooks`.
+These are handled as follows by the rollup plugin:
+
+- `open-pioneer:react-hooks` and `open-pioneer:source-info` are generated at compile time, since enough information is present to generate them statically.
+- `open-pioneer:deployment` is left in place, because its content is only known when the final app is built.
+  The Vite plugin resolves it later.
+
+The implementation lives in [`virtualModules.ts`](https://github.com/open-pioneer/trails-build-tools/blob/ab735175fa97e4328c56a2b6e5b538aa0e740539/packages/build-package/src/rollup/virtualModules.ts).
+
+### Design decisions
+
+The output in `dist` is intentionally very close to the source code: it is neither bundled, nor minified, nor split into chunks with hashed names.
+This keeps the published JavaScript readable and patchable by downstream developers.
+Source maps are generated by default (see `publishConfig.sourceMaps`), so the original source code can be debugged in the browser's developer tools.
+
+The build of a single package is not parallelized: doing so would make the code harder to follow, and building a single package is rarely a bottleneck.
+Since packages are only built for publishing and not during development (the dev server works directly on the source code), this tradeoff is acceptable.
+Repositories that ship many packages can still build their packages in parallel, for example by running `pnpm run -r build`.
 
 ## Code pointers
 
@@ -443,6 +560,12 @@ This section contains a few pointers into the most relevant parts of the impleme
     - [`generatePackagesMetadata`](https://github.com/open-pioneer/trails-build-tools/blob/ab735175fa97e4328c56a2b6e5b538aa0e740539/packages/vite-plugin/src/codegen/generatePackagesMetadata.ts#L41) outputs the large `packages` data structure (with one object per Trails package).
 
 ### Build package CLI
+
+- [`buildPackage.ts`](https://github.com/open-pioneer/trails-build-tools/blob/ab735175fa97e4328c56a2b6e5b538aa0e740539/packages/build-package/src/buildPackage.ts) runs the individual build steps in sequence (`buildJs.ts`, `buildDts.ts`, `buildCss.ts`, `copyI18nFiles.ts`, `copyAssets.ts`, `generatePackageJson.ts`, `copyAuxiliaryFiles.ts`).
+- The [`rollup` directory](https://github.com/open-pioneer/trails-build-tools/tree/ab735175fa97e4328c56a2b6e5b538aa0e740539/packages/build-package/src/rollup) contains the Rollup plugins used by `buildJs.ts`:
+    - [`checkImports.ts`](https://github.com/open-pioneer/trails-build-tools/blob/ab735175fa97e4328c56a2b6e5b538aa0e740539/packages/build-package/src/rollup/checkImports.ts) validates imports and marks dependencies as external.
+    - [`virtualModules.ts`](https://github.com/open-pioneer/trails-build-tools/blob/ab735175fa97e4328c56a2b6e5b538aa0e740539/packages/build-package/src/rollup/virtualModules.ts) handles imports of `open-pioneer:*` modules.
+- [`generatePackageJson.ts`](https://github.com/open-pioneer/trails-build-tools/blob/ab735175fa97e4328c56a2b6e5b538aa0e740539/packages/build-package/src/generatePackageJson.ts) writes the `package.json` of the published package, including the `openPioneerFramework` metadata.
 
 ### Common
 
