@@ -10,6 +10,9 @@
     - `pnpm build-license-report` works like it did before, the license report is written to the same location (`dist/license-report.html`)
     - slightly adjust the configuration at `support/license-config.yaml`
 - Update pnpm to v12
+- Enable the `eqeqeq` oxlint rule with the `smart` option in `oxlint.config.ts`.
+  Comparisons must use `===` and `!==`, except when comparing against `null` (which is convenient to check for `null` or `undefined` at the same time).
+  See also <https://oxc.rs/docs/guide/usage/linter/rules/eslint/eqeqeq.html>.
 
 ## 2026-09-17
 
