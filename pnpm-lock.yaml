@@ -332,18 +332,6 @@ overrides:
   '@chakra-ui/react': 3.37.0
   '@ark-ui/react': 5.39.0
   '@zag-js/interact-outside': 1.43.3
-  esbuild@<=0.28.0: ^0.28.1
-  js-yaml@>=4.0.0 <4.3.2: ^4.3.2
-  js-yaml@>=3.0.0 <3.15.2: ^3.15.2
-  brace-expansion@<1.1.18: ^1.1.20
-  brace-expansion@>=3.0.0 <5.0.8: ^5.0.10
-  immutable@>=5.0.0 <5.1.8: ^5.1.8
-  linkify-it@<=5.0.1: ^5.0.2
-  postcss@<=8.5.22: ^8.5.23
-  undici@>=7.0.0 <7.29.0: ^7.29.0
-  undici@>=8.0.0 <8.10.2: ^8.10.2
-  nanoid@<3.3.17: ^3.3.17
-  source-map-js@>=1.0.0 <1.2.2: ^1.2.2
   markdown-it@<14.3.3: ^14.3.3
   zod@>=4.0.0 <4.6.6: ^4.6.6
 
@@ -2971,7 +2959,7 @@ packages:
     resolution: {integrity: sha512-qzVMJhcq39KweT7Fp0HcjE5YxL5yI854Q3CtufxDuZKO9HLQUp2rptB9+U0MIj3pT1ZEVXoqnpeC1mSkfYuz4Q==}
     engines: {node: '>=22.0.0'}
     peerDependencies:
-      postcss: ^8.5.23
+      postcss: ^8.0.0
 
   postcss-value-parser@4.2.0:
     resolution: {integrity: sha512-1NNCs6uurfkVbeXG4S8JFT9t19m45ICnif8zWLd5oPSZ50QnwMfK+H3jv408d4jw/7Bttv5axS5IiHoLaVNHeQ==}
@@ -3112,7 +3100,7 @@ packages:
     resolution: {integrity: sha512-jTNOMGoMRhs0JuueJrJqbW8tOwxumaWYq+V5i+PD+8ecSCVkuX27tGW7BXqDgoULQ55rO7IdNxPcnsWtshz3AA==}
     engines: {node: '>=14.18.0'}
     peerDependencies:
-      esbuild: ^0.28.1
+      esbuild: '>=0.18.0'
       rollup: ^1.20.0 || ^2.0.0 || ^3.0.0 || ^4.0.0
 
   rollup@4.63.2:
@@ -3346,7 +3334,7 @@ packages:
     peerDependencies:
       '@types/node': ^20.19.0 || >=22.12.0
       '@vitejs/devtools': ^0.7.1 || ^0.8.0
-      esbuild: ^0.28.1
+      esbuild: ^0.27.0 || ^0.28.0
       jiti: '>=1.21.0'
       less: ^4.0.0
       sass: ^1.70.0
