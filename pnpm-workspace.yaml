@@ -46,12 +46,12 @@ catalog:
   react: *react_version
 
   # Devtools
-  "@open-pioneer/build-package-cli": 4.0.2-dev.20261029075349 # ^4.0.2
-  "@open-pioneer/build-support": 4.0.2-dev.20261029075349 # ^4.0.2
-  "@open-pioneer/changesets-release-line": 0.2.2-dev.20261029075349 # ^0.2.2
-  "@open-pioneer/check-pnpm-duplicates": 0.5.0-dev.20261029075349 # ^0.5.0
-  "@open-pioneer/create-license-report": 0.1.0-dev.20261029075349 # ^0.1.0
-  "@open-pioneer/vite-plugin-pioneer": 7.1.0-dev.20261029075349 # ^7.1.0
+  "@open-pioneer/build-package-cli": ^4.0.2
+  "@open-pioneer/build-support": ^4.0.2
+  "@open-pioneer/changesets-release-line": ^0.2.2
+  "@open-pioneer/check-pnpm-duplicates": ^0.5.0
+  "@open-pioneer/create-license-report": ^0.1.0
+  "@open-pioneer/vite-plugin-pioneer": ^7.1.0
   "@testing-library/dom": ^10.4.2
   "@testing-library/jest-dom": ^7.0.1
   "@testing-library/react": ^16.3.3
