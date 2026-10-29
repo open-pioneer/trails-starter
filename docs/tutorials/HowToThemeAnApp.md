@@ -22,11 +22,12 @@ Add the following content to your file:
 
 ```ts
 // src/apps/empty/theme/theme.ts
+
 // (1)
 import { mergeConfigs } from "@chakra-ui/react";
+import { sliderAnatomy } from "@chakra-ui/react/anatomy";
 // (2)
 import { config as defaultTrailsConfig } from "@open-pioneer/base-theme";
-import { sliderAnatomy } from "@chakra-ui/react/anatomy";
 
 // (3)
 export const config = mergeConfigs(

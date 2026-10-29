@@ -38,6 +38,7 @@ We add a `properties` configuration to the `build.config.mjs` file in the `src/s
 
 ```js
 // src/samples/map-sample/ol-app/build.config.mjs
+
 import { defineBuildConfig } from "@open-pioneer/build-support";
 
 export default defineBuildConfig({
@@ -69,11 +70,12 @@ The edited `app.ts` file should look like this:
 
 ```ts
 // src/samples/map-sample/ol-app/app.ts
+
+import configUrl from "/config.json?url"; // (1)
 import { ApplicationConfig, createCustomElement } from "@open-pioneer/runtime";
 import { theme } from "@open-pioneer/theme";
 import * as appMetadata from "open-pioneer:app";
 import { MapApp } from "./MapApp";
-import configUrl from "/config.json?url"; // (1)
 
 const element = createCustomElement({
     component: MapApp,
@@ -122,10 +124,11 @@ We edit this file to pass the layer title from the configuration to the map's OS
 
 ```ts
 // src/samples/map-sample/ol-app/services.ts
+
 import { MapConfig, MapConfigProvider, SimpleLayer } from "@open-pioneer/map";
+import { ServiceOptions } from "@open-pioneer/runtime";
 import TileLayer from "ol/layer/Tile";
 import OSM from "ol/source/OSM";
-import { ServiceOptions } from "@open-pioneer/runtime";
 
 export const MAP_ID = "main";
 export class MainMapProvider implements MapConfigProvider {

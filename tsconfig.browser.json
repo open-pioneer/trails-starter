@@ -1,5 +1,6 @@
 {
     "compilerOptions": {
+        "noEmit": true,
         "composite": true,
         "incremental": true,
         "tsBuildInfoFile": "./node_modules/.cache/tsconfig.browser.tsbuildinfo",
@@ -11,7 +12,6 @@
         "types": ["vite/client", "@open-pioneer/vite-plugin-pioneer/client"],
         "moduleResolution": "Bundler",
         "moduleDetection": "force",
-        "noEmit": true,
         "allowJs": false,
         "jsx": "react-jsx",
 
