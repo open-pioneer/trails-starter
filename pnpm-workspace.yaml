@@ -7,7 +7,7 @@ packages:
 catalog:
   # Trails OpenLayers base packages
   # https://github.com/open-pioneer/trails-openlayers-base-packages
-  "@open-pioneer/basemap-switcher": &ol_base_packages_version ^1.5.0
+  "@open-pioneer/basemap-switcher": &ol_base_packages_version 1.6.0-dev.20261029095559 #^1.6.0
   "@open-pioneer/coordinate-viewer": *ol_base_packages_version
   "@open-pioneer/geolocation": *ol_base_packages_version
   "@open-pioneer/map-navigation": *ol_base_packages_version
@@ -20,7 +20,7 @@ catalog:
 
   # Trails core packages
   # https://github.com/open-pioneer/trails-core-packages
-  "@open-pioneer/base-theme": &core_packages_version ^4.8.0
+  "@open-pioneer/base-theme": &core_packages_version 4.9.0-dev.20261029090037 # ^4.9.0
   "@open-pioneer/core": *core_packages_version
   "@open-pioneer/chakra-snippets": *core_packages_version
   "@open-pioneer/http": *core_packages_version
@@ -40,18 +40,18 @@ catalog:
   "@emotion/styled": ^11.14.1
   "@formatjs/intl": ^4.2.0
   ol: ^10.10.0
-  react-dom: &react_version ^19.3.0
+  react-dom: &react_version ^19.3.1
   react-icons: ^5.7.0
   react-use: ^17.6.1
   react: *react_version
 
   # Devtools
-  "@open-pioneer/build-package-cli": 4.0.2-dev.20260930082624 # ^4.0.2
-  "@open-pioneer/build-support": ^4.0.1
-  "@open-pioneer/changesets-release-line": ^0.2.1
-  "@open-pioneer/check-pnpm-duplicates": 0.5.0-dev.20260930082624 # ^0.5.0
-  "@open-pioneer/create-license-report": "0.1.0-dev.20260930082624" # ^0.1.0
-  "@open-pioneer/vite-plugin-pioneer": ^7.0.1
+  "@open-pioneer/build-package-cli": 4.0.2-dev.20261029075349 # ^4.0.2
+  "@open-pioneer/build-support": 4.0.2-dev.20261029075349 # ^4.0.2
+  "@open-pioneer/changesets-release-line": 0.2.2-dev.20261029075349 # ^0.2.2
+  "@open-pioneer/check-pnpm-duplicates": 0.5.0-dev.20261029075349 # ^0.5.0
+  "@open-pioneer/create-license-report": 0.1.0-dev.20261029075349 # ^0.1.0
+  "@open-pioneer/vite-plugin-pioneer": 7.1.0-dev.20261029075349 # ^7.1.0
   "@testing-library/dom": ^10.4.1
   "@testing-library/jest-dom": ^7.0.1
   "@testing-library/react": ^16.3.3
@@ -137,14 +137,23 @@ audit:
 auditConfig:
   ignoreGhsas: []
 
-# Only run build scripts for allowed packages.
-allowBuilds:
-  "@parcel/watcher": true
-  "@swc/core": true
-  esbuild: true
-  # Packages that we don't need to build (even though they have install scripts).
-  core-js: false
-  unrs-resolver: false
+permissions:
+  "@parcel/watcher":
+    build: true
+  "@swc/core":
+    build: true
+  esbuild:
+    build: true
+  "@conterra/reactivity-core":
+    skills: true
+  "@open-pioneer/reactivity":
+    skills: true
+
+  # Seems to work without build scripts; may revisit later if actually needed.
+  core-js:
+    build: false
+  unrs-resolver:
+    build: false
 
 # Do not allow to install packages which trust level has decreased
 # (e.g. older version was signed but the version to be installed is not signed)
