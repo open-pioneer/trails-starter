@@ -20,8 +20,9 @@ it("simple ui component is rendered", async () => {
     const uiDiv = screen.getByTestId("uiDiv");
     await expect.element(uiDiv).toHaveClass("simple-ui");
 
-    await expect.element(screen.getByText("rendered successfully")).toBeInTheDocument();
-
     // Check whether the actual i18n message has been rendered.
-    await expect.element(screen.getByText("A simple text")).toBeInTheDocument();
+    await expect.element(uiDiv.getByText("The text to show:")).toBeInTheDocument();
+
+    // Check whether the `textToShow` was rendered correctly
+    await expect.element(uiDiv.getByText("rendered successfully")).toBeInTheDocument();
 });

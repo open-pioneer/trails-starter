@@ -51,7 +51,7 @@ catalog:
   "@open-pioneer/changesets-release-line": ^0.2.2
   "@open-pioneer/check-pnpm-duplicates": ^0.5.0
   "@open-pioneer/create-license-report": ^0.1.0
-  "@open-pioneer/vite-plugin-pioneer": 7.1.1-dev.20261029151214
+  "@open-pioneer/vite-plugin-pioneer": ^7.1.1
   "@testing-library/dom": ^10.4.2
   "@testing-library/jest-dom": ^7.0.1
   "@testing-library/react": ^16.3.3
