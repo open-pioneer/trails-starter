@@ -1,5 +1,6 @@
 {
     "compilerOptions": {
+        "noEmit": true,
         "composite": true,
         "incremental": true,
         "tsBuildInfoFile": "./node_modules/.cache/tsconfig.node.tsbuildinfo",

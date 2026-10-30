@@ -5,6 +5,7 @@ import { defineBuildConfig } from "@open-pioneer/build-support";
 
 export default defineBuildConfig({
     entryPoints: [],
+    i18n: ["en", "de"],
     services: {
         GreeterImpl: {
             provides: "sample-package.Greeter"

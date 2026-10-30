@@ -1,5 +1,32 @@
 # Changelog
 
+## 2026-10-30
+
+[Show all changes](https://github.com/open-pioneer/trails-starter/compare/2026-09-17...2026-10-30)
+
+- Update core-packages to 4.9.0
+- Update openlayers-base-packages to 1.6.0
+- Update build tools
+- Update OpenLayers to version 10.11.0
+- Update React to 19.3.1
+- Update Vitest to 5.0.5
+    - Note: Vitest has enabled the [`fsModuleCache`](https://vitest.dev/config/fsmodulecache) by default to improve performance.
+      Make sure to use the `@open-pioneer/vite-plugin-pioneer` v7.1.0 or later if `fsModuleCache` is enabled (see [Commit](https://github.com/open-pioneer/trails-build-tools/commit/2aa64241fb392d5b9b139efeb223a65ea014c285)).
+- Replace the script at `./support/create-license-report.ts` with the new tool `@open-pioneer/create-license-report` (See [PR](https://github.com/open-pioneer/trails-build-tools/pull/165) / [Code](https://github.com/open-pioneer/trails-build-tools/tree/main/packages/create-license-report))
+    - `pnpm build-license-report` works like it did before, the license report is written to the same location (`dist/license-report.html`)
+    - slightly adjust the configuration at `support/license-config.yaml`
+    - the `handlebars` dependency was removed
+- Configure Vitest to allow usage of [Vitest browser mode](https://vitest.dev/guide/browser/#browser-mode) for running tests natively in a browser. See [How To Write Tests](./docs/tutorials/HowToWriteTests.md#ui-tests-browser-mode) for details.
+    - Vitest browser mode should be used in preference to `happy-dom`. The usage of `happy-dom` is now _deprecated_ and the corresponding configuration will be removed from the repository in the future.
+- Update pnpm to v12
+    - Preconfigure agent skills for `@conterra/reactivity-core` and `@open-pioneer/reactivity` (see <https://pnpm.io/agent-skills>).
+      Skills are placed into automatic locations, you may need to [configure additional directories](https://pnpm.io/settings/build#skillsdirs).
+    - Switch to [`permissions` key](https://pnpm.io/settings/build#permissions) for build permissions and skills (previously: `allowedBuilds`)
+- Update various other dependencies
+- Enable the `eqeqeq` oxlint rule with the `smart` option in `oxlint.config.ts`.
+  Comparisons must use `===` and `!==`, except when comparing against `null` (which is convenient to check for `null` or `undefined` at the same time).
+  See also <https://oxc.rs/docs/guide/usage/linter/rules/eslint/eqeqeq.html>.
+
 ## 2026-09-17
 
 [Show all changes](https://github.com/open-pioneer/trails-starter/compare/2026-07-28...2026-09-17)

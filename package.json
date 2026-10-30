@@ -11,7 +11,7 @@
         "check-duplicates": "pnpm check-pnpm-duplicates -c support/duplicate-packages.yaml",
         "build": "vite build",
         "build-docs": "typedoc",
-        "build-license-report": "tsx ./support/create-license-report.ts",
+        "build-license-report": "create-license-report -c support/license-config.yaml",
         "generate-sbom": "pnpm sbom --sbom-format cyclonedx --sbom-spec-version 1.7 --out ./dist/sbom.json --sbom-type application --prod",
         "preview": "vite preview",
         "lint": "oxlint .",
@@ -19,12 +19,16 @@
         "fmt": "oxfmt",
         "fmt:check": "oxfmt --check",
         "test": "vitest",
+        "test:unit": "vitest --project unit",
+        "test:browser": "vitest --project browser",
+        "test:headless": "vitest --browser.headless",
         "prepare": "husky && pnpm check-duplicates"
     },
     "devDependencies": {
         "@open-pioneer/build-package-cli": "catalog:",
         "@open-pioneer/build-support": "catalog:",
         "@open-pioneer/check-pnpm-duplicates": "catalog:",
+        "@open-pioneer/create-license-report": "catalog:",
         "@open-pioneer/vite-plugin-pioneer": "catalog:",
         "@testing-library/dom": "catalog:",
         "@testing-library/jest-dom": "catalog:",
@@ -36,8 +40,9 @@
         "@types/react": "catalog:",
         "@types/react-dom": "catalog:",
         "@vitejs/plugin-react": "catalog:",
+        "@vitest/browser-playwright": "catalog:",
+        "@vitest/browser-preview": "catalog:",
         "fast-glob": "catalog:",
-        "handlebars": "catalog:",
         "happy-dom": "catalog:",
         "husky": "catalog:",
         "js-yaml": "catalog:",
@@ -45,18 +50,21 @@
         "lint-staged": "catalog:",
         "oxfmt": "catalog:",
         "oxlint": "catalog:",
+        "playwright": "catalog:",
         "react": "catalog:",
+        "resize-observer-polyfill": "catalog:",
         "rimraf": "catalog:",
         "sass": "catalog:",
         "tsx": "catalog:",
         "typedoc": "catalog:",
         "typescript": "catalog:",
         "vite": "catalog:",
-        "vitest": "catalog:"
+        "vitest": "catalog:",
+        "vitest-browser-react": "catalog:"
     },
     "engines": {
         "node": ">= 24",
         "pnpm": ">= 10"
     },
-    "packageManager": "pnpm@11.17.0"
+    "packageManager": "pnpm@12.16.1"
 }
