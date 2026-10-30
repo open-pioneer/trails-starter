@@ -1,14 +1,13 @@
 # Changelog
 
-## TBD
+## 2026-10-30
 
-<!-- TODO: fix link -->
-
-[Show all changes](https://github.com/open-pioneer/trails-starter/compare/2026-09-17...XXX)
+[Show all changes](https://github.com/open-pioneer/trails-starter/compare/2026-09-17...2026-10-30)
 
 - Update core-packages to 4.9.0
 - Update openlayers-base-packages to 1.6.0
 - Update build tools
+- Update OpenLayers to version 10.11.0
 - Update React to 19.3.1
 - Update Vitest to 5.0.5
     - Note: Vitest has enabled the [`fsModuleCache`](https://vitest.dev/config/fsmodulecache) by default to improve performance.
@@ -25,7 +24,6 @@
 - Enable the `eqeqeq` oxlint rule with the `smart` option in `oxlint.config.ts`.
   Comparisons must use `===` and `!==`, except when comparing against `null` (which is convenient to check for `null` or `undefined` at the same time).
   See also <https://oxc.rs/docs/guide/usage/linter/rules/eslint/eqeqeq.html>.
-- Update Openlayers to version 10.11.0
 
 ## 2026-09-17
 
