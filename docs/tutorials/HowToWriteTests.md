@@ -177,38 +177,69 @@ Vitest will now report success:
        press h to show help, press q to quit
 ```
 
-## UI Tests
+## UI Tests (browser mode)
 
-Vitest can be used to write simple UI tests by simulating a browser environment.
-In your test file, configure the vitest environment to `jsdom` (or `happy-dom`, see [Reference](https://vitest.dev/guide/environment.html)):
+Vitest can be used to write simple UI tests.
+We recommend using the [Vitest browser mode](https://vitest.dev/guide/browser/#browser-mode) which is part of the Vitest API and allows you to run tests natively in the browser.
 
-```js
-// SomeClass.test.js
-// @vitest-environment jsdom
-/* ... tests ... */
+The repository is already prepared for using Vitest browser mode. It is configured to use playwright as a provider.
+Hence, you need to install Playwright dependencies before running browser tests:
+
+`pnpm exec playwright install`
+
+To create a browser mode test, create a test file using the `.browser.test.*` filename pattern.
+
+In your test file you can import the `render` function from [vitest-browser-react](https://vitest.dev/api/browser/react.html) and use it to mount DOM elements.
+The following example shows how to render a simple component.
+It is wrapped in the `PackageContextProvider`, that is needed to inject services and properties into the component tree.
+The example also demonstrates how to use actual i18n values in the rendered components (for more details see [Use real i18n messages in tests](#Use-real-i18n-messages-in-tests)).
+
+```tsx
+import { PackageContextProvider } from "@open-pioneer/test-utils/react";
+import { messages, messageLocale } from "open-pioneer:test-support";
+import { render } from "vitest-browser-react";
+import { SimpleUiComponent } from "./SimpleUiComponent";
+
+it("simple ui component is rendered", async () => {
+
+    const screen = await render(
+        <PackageContextProvider messages={messages} locale={messageLocale}>
+            <SimpleUiComponent textToShow="rendered successfully" data-testid="uiDiv "/>
+        </PackageContextProvider>
+    );
+    ...
+}
 ```
 
-Web Components or React Components can then be rendered into the simulated DOM for testing.
-It is often more convenient (and faster) to test the react components instead of the complete web component application since there are fewer moving parts and fewer dependencies to mock.
+A full example for a browser test file can be found in the sample package (`sample-package`) in `SimpleUiComponentent.browser.test.tsx`.
 
+It is often more convenient (and faster) to test the React components instead of the complete web component application since there are fewer moving parts and fewer dependencies to mock.
 However, testing the final application can be great too for automated acceptance tests etc.
 
-You can take a look at the UI tests of the runtime package (`@open-pioneer/runtime`) for some examples.
+Recommended resources:
 
-Recommended libraries:
-
-- `@testing-library/react` (or `/dom`): <https://testing-library.com/>
-- `react-dom/test-utils`: <https://reactjs.org/docs/test-utils.html>
+- Vitest Browser Mode: https://vitest.dev/guide/browser/#browser-mode
+- `vitest-browser-react`: https://vitest.dev/api/browser/react.html
 - Our own test utils in `@open-pioneer/test-utils`
+
+## UI Tests (with mocked DOM)
+
+Beside the option to create UI test using the Vitest browser mode, it is also possible to write simple UI tests by simulating a browser environment.
+
+The repository is configured to allow the usage of `happy-dom`, (see [Reference](https://vitest.dev/guide/environment.html)) in your test files using the `.test.*` filename pattern (not `.browser.test.*`).
+
+You can use [@testing-library/react](https://testing-library.com/) to render your UI components.
+
+> NOTE: We recommend using Vitest browser mode as the `happy-dom` support will be removed from the starter repository in the future (deprecated).
 
 ## Use real i18n messages in tests
 
-The module `open-pioneer:test-support` provides test support helpers for the importing package, such as the actual i18n messages that would be used when running the package in a trails app.
+The module `open-pioneer:test-support` provides test support helpers for the importing package, such as the actual i18n messages used when running the package in a Trails app.
 
 It exports `messages`, the i18n messages of the importing package and of all its dependencies.
 The record can be passed to the `messages` property of `PackageContextProvider` from `@open-pioneer/test-utils/react`.
 
-The module also exports `messagesLocale`, the locale of these messages.
+The module also exports `messageLocale`, the locale of these messages.
 
 Example usage:
 
@@ -226,9 +257,9 @@ render(
 );
 ```
 
-- **(1)** Import `messages` and `messagesLocale`
+- **(1)** Import `messages` and `messageLocale`
 
-- **(2)** Pass the imported `messages` and `messagesLocale`to the `PackageContextProvider` so that they are used in the components that are rendered in the test.
+- **(2)** Pass the imported `messages` and `messageLocale`to the `PackageContextProvider` so that they are used in the components that are rendered in the test.
 
 By default, the messages are returned in the first locale listed in the `i18n` array of the package's 'build.config.mjs'.
 A different locale can be requested with a query, for example:

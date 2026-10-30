@@ -65,6 +65,16 @@ The script runs automatically after `pnpm install` (see `prepare` script in `pac
 Starts [Vitest](https://vitest.dev/) to run all automated tests.
 Vitest will automatically watch all source code files and will rerun tests during development whenever it detects changes.
 
+If the repository contains tests that use the Vitest browser bode, you need to install Playwright dependencies to run the tests:
+
+`pnpm exec playwright install`
+
+The package.json contains additional scripts for running different test modes:
+
+- `pnpm run test:unit`: Only runs unit tests. Browser tests are not executed.
+- `pnpm run test:browser`: Only runs browser tests. Unit tests are not executed.
+- `pnpm test:headless`: Vitest runs browser test without opening the browser UI. The browsers only runs in the background without a UI.
+
 ### `pnpm run build`
 
 Builds the project as a static site.
