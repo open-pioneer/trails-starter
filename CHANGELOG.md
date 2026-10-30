@@ -16,6 +16,8 @@
     - `pnpm build-license-report` works like it did before, the license report is written to the same location (`dist/license-report.html`)
     - slightly adjust the configuration at `support/license-config.yaml`
     - the `handlebars` dependency was removed
+- Configure Vitest to allow usage of [Vitest browser mode](https://vitest.dev/guide/browser/#browser-mode) for running tests natively in a browser. See [How To Write Tests](./docs/tutorials/HowToWriteTests.md#ui-tests-browser-mode) for details.
+    - Vitest browser mode should be used in preference to `happy-dom`. The usage of `happy-dom` is now _deprecated_ and the corresponding configuration will be removed from the repository in the future.
 - Update pnpm to v12
     - Preconfigure agent skills for `@conterra/reactivity-core` and `@open-pioneer/reactivity` (see <https://pnpm.io/agent-skills>).
       Skills are placed into automatic locations, you may need to [configure additional directories](https://pnpm.io/settings/build#skillsdirs).
