@@ -279,8 +279,8 @@ catalogs:
       specifier: ^17.6.0
       version: 17.6.0
     ol:
-      specifier: ^10.10.0
-      version: 10.10.0
+      specifier: ^10.11.0
+      version: 10.11.0
     oxfmt:
       specifier: ^0.74.0
       version: 0.74.0
@@ -541,7 +541,7 @@ importers:
         version: 1.6.0-dev.20261029095559(@emotion/react@11.14.0(@types/react@19.3.0)(react@19.3.1))(@types/react@19.3.0)(geotiff@3.1.0-beta.0)(react-dom@19.3.1(react@19.3.1))
       ol:
         specifier: 'catalog:'
-        version: 10.10.0
+        version: 10.11.0
       react:
         specifier: 'catalog:'
         version: 19.3.1
@@ -2903,8 +2903,8 @@ packages:
     resolution: {integrity: sha512-5vvB5+W7ePv+p3uqxi+RcW1XAzLW0/hxt3/4X4Lc4qHudzOhmBiBwOY6DRob4WnanAEGvNcLjF+KNOufrUoEQw==}
     engines: {node: '>=12.20.0'}
 
-  ol@10.10.0:
-    resolution: {integrity: sha512-tLPKn6zl+6uWdPufYlqG/lQzuVUTVmfwahQqVr5+wZNyZecyAtIhMTyOtKpu7ooNDLY2sEjKZNXw9HL+sOjC1A==}
+  ol@10.11.0:
+    resolution: {integrity: sha512-OJ+lrx7kx/1O7Xx18Ff9QkVnwZIEL0OuhJQSy2sYgzzDvyZ2qHvuZEGAajbSstUyBwaS1OtQ4RWnY84tRMDdqg==}
 
   optionator@0.9.4:
     resolution: {integrity: sha512-6IpQ7mKUxRcZNLIObR0hz7lxsapSSIYNZJwXPGeF0mTVqGKFIXj1DQcMoT22S3ROcLyY/rz0PWaWZ9ayWmad9g==}
@@ -4079,7 +4079,7 @@ snapshots:
       '@open-pioneer/react-utils': 4.9.0-dev.20261029090037(@emotion/react@11.14.0(@types/react@19.3.0)(react@19.3.1))(react-dom@19.3.1(react@19.3.1))
       '@open-pioneer/reactivity': 4.9.0-dev.20261029090037
       '@open-pioneer/runtime': 4.9.0-dev.20261029090037(@types/react@19.3.0)
-      ol: 10.10.0
+      ol: 10.11.0
       react: 19.3.1
       react-icons: 5.7.0(react@19.3.1)
     transitivePeerDependencies:
@@ -4163,7 +4163,7 @@ snapshots:
       '@open-pioneer/react-utils': 4.9.0-dev.20261029090037(@emotion/react@11.14.0(@types/react@19.3.0)(react@19.3.1))(react-dom@19.3.1(react@19.3.1))
       '@open-pioneer/reactivity': 4.9.0-dev.20261029090037
       '@open-pioneer/runtime': 4.9.0-dev.20261029090037(@types/react@19.3.0)
-      ol: 10.10.0
+      ol: 10.11.0
       react: 19.3.1
     transitivePeerDependencies:
       - '@emotion/react'
@@ -4196,7 +4196,7 @@ snapshots:
       '@open-pioneer/react-utils': 4.9.0-dev.20261029090037(@emotion/react@11.14.0(@types/react@19.3.0)(react@19.3.1))(react-dom@19.3.1(react@19.3.1))
       '@open-pioneer/reactivity': 4.9.0-dev.20261029090037
       '@open-pioneer/runtime': 4.9.0-dev.20261029090037(@types/react@19.3.0)
-      ol: 10.10.0
+      ol: 10.11.0
       react: 19.3.1
       react-icons: 5.7.0(react@19.3.1)
     transitivePeerDependencies:
@@ -4221,7 +4221,7 @@ snapshots:
       '@open-pioneer/react-utils': 4.9.0-dev.20261029090037(@emotion/react@11.14.0(@types/react@19.3.0)(react@19.3.1))(react-dom@19.3.1(react@19.3.1))
       '@open-pioneer/reactivity': 4.9.0-dev.20261029090037
       '@open-pioneer/runtime': 4.9.0-dev.20261029090037(@types/react@19.3.0)
-      ol: 10.10.0
+      ol: 10.11.0
       react: 19.3.1
       react-icons: 5.7.0(react@19.3.1)
     transitivePeerDependencies:
@@ -4252,7 +4252,7 @@ snapshots:
       '@open-pioneer/react-utils': 4.9.0-dev.20261029090037(@emotion/react@11.14.0(@types/react@19.3.0)(react@19.3.1))(react-dom@19.3.1(react@19.3.1))
       '@open-pioneer/reactivity': 4.9.0-dev.20261029090037
       '@open-pioneer/runtime': 4.9.0-dev.20261029090037(@types/react@19.3.0)
-      ol: 10.10.0
+      ol: 10.11.0
       proj4: 2.22.0(geotiff@3.1.0-beta.0)
       react: 19.3.1
       react-dom: 19.3.1(react@19.3.1)
@@ -4272,7 +4272,7 @@ snapshots:
       '@open-pioneer/map-ui-components': 1.6.0-dev.20261029095559(@emotion/react@11.14.0(@types/react@19.3.0)(react@19.3.1))(@types/react@19.3.0)(react-dom@19.3.1(react@19.3.1))
       '@open-pioneer/react-utils': 4.9.0-dev.20261029090037(@emotion/react@11.14.0(@types/react@19.3.0)(react@19.3.1))(react-dom@19.3.1(react@19.3.1))
       '@open-pioneer/runtime': 4.9.0-dev.20261029090037(@types/react@19.3.0)
-      ol: 10.10.0
+      ol: 10.11.0
       react: 19.3.1
     transitivePeerDependencies:
       - '@emotion/react'
@@ -4299,7 +4299,7 @@ snapshots:
       '@open-pioneer/map': 1.6.0-dev.20261029095559(@emotion/react@11.14.0(@types/react@19.3.0)(react@19.3.1))(@types/react@19.3.0)(geotiff@3.1.0-beta.0)
       '@open-pioneer/react-utils': 4.9.0-dev.20261029090037(@emotion/react@11.14.0(@types/react@19.3.0)(react@19.3.1))(react-dom@19.3.1(react@19.3.1))
       '@open-pioneer/runtime': 4.9.0-dev.20261029090037(@types/react@19.3.0)
-      ol: 10.10.0
+      ol: 10.11.0
       react: 19.3.1
     transitivePeerDependencies:
       - '@emotion/react'
@@ -4345,7 +4345,7 @@ snapshots:
       '@open-pioneer/map': 1.6.0-dev.20261029095559(@emotion/react@11.14.0(@types/react@19.3.0)(react@19.3.1))(@types/react@19.3.0)(geotiff@3.1.0-beta.0)
       '@open-pioneer/react-utils': 4.9.0-dev.20261029090037(@emotion/react@11.14.0(@types/react@19.3.0)(react@19.3.1))(react-dom@19.3.1(react@19.3.1))
       '@open-pioneer/runtime': 4.9.0-dev.20261029090037(@types/react@19.3.0)
-      ol: 10.10.0
+      ol: 10.11.0
       react: 19.3.1
     transitivePeerDependencies:
       - '@emotion/react'
@@ -6229,7 +6229,7 @@ snapshots:
 
   obug@3.0.0: {}
 
-  ol@10.10.0:
+  ol@10.11.0:
     dependencies:
       '@types/rbush': 4.0.0
       earcut: 3.0.2

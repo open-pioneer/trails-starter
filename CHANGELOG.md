@@ -25,6 +25,7 @@
 - Enable the `eqeqeq` oxlint rule with the `smart` option in `oxlint.config.ts`.
   Comparisons must use `===` and `!==`, except when comparing against `null` (which is convenient to check for `null` or `undefined` at the same time).
   See also <https://oxc.rs/docs/guide/usage/linter/rules/eslint/eqeqeq.html>.
+- Update Openlayers to version 10.11.0
 
 ## 2026-09-17
 
