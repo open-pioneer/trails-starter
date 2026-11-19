@@ -7,32 +7,46 @@ packages:
 catalog:
   # Trails OpenLayers base packages
   # https://github.com/open-pioneer/trails-openlayers-base-packages
-  "@open-pioneer/basemap-switcher": &ol_base_packages_version ^1.6.0
+  "@open-pioneer/basemap-switcher": &ol_base_packages_version 1.7.0-dev.20261119092321 # ^1.7.0
+  "@open-pioneer/coordinate-search": *ol_base_packages_version
   "@open-pioneer/coordinate-viewer": *ol_base_packages_version
+  "@open-pioneer/editing": *ol_base_packages_version
+  "@open-pioneer/feature-editing": *ol_base_packages_version
   "@open-pioneer/geolocation": *ol_base_packages_version
-  "@open-pioneer/map-navigation": *ol_base_packages_version
-  "@open-pioneer/map-ui-components": *ol_base_packages_version
+  "@open-pioneer/legend": *ol_base_packages_version
   "@open-pioneer/map": *ol_base_packages_version
+  "@open-pioneer/map-navigation": *ol_base_packages_version
+  "@open-pioneer/map-test-utils": *ol_base_packages_version
+  "@open-pioneer/map-ui-components": *ol_base_packages_version
   "@open-pioneer/measurement": *ol_base_packages_version
+  "@open-pioneer/ogc-features": *ol_base_packages_version
   "@open-pioneer/overview-map": *ol_base_packages_version
+  "@open-pioneer/printing": *ol_base_packages_version
+  "@open-pioneer/result-list": *ol_base_packages_version
   "@open-pioneer/scale-bar": *ol_base_packages_version
+  "@open-pioneer/scale-setter": *ol_base_packages_version
   "@open-pioneer/scale-viewer": *ol_base_packages_version
+  "@open-pioneer/search": *ol_base_packages_version
+  "@open-pioneer/selection": *ol_base_packages_version
+  "@open-pioneer/spatial-bookmarks": *ol_base_packages_version
+  "@open-pioneer/toc": *ol_base_packages_version
 
   # Trails core packages
   # https://github.com/open-pioneer/trails-core-packages
-  "@open-pioneer/base-theme": &core_packages_version ^4.9.0
+  "@open-pioneer/base-theme": &core_packages_version 4.10.0-dev.20261119090001 # ^4.10.0
   "@open-pioneer/core": *core_packages_version
-  "@open-pioneer/chakra-snippets": *core_packages_version
   "@open-pioneer/http": *core_packages_version
   "@open-pioneer/integration": *core_packages_version
+  "@open-pioneer/local-storage": *core_packages_version
   "@open-pioneer/notifier": *core_packages_version
   "@open-pioneer/react-utils": *core_packages_version
   "@open-pioneer/reactivity": *core_packages_version
   "@open-pioneer/runtime": *core_packages_version
   "@open-pioneer/test-utils": *core_packages_version
+  "@open-pioneer/chakra-snippets": *core_packages_version
 
   # Frontend dependencies
-  "@chakra-ui/react": ^3.37.0
+  "@chakra-ui/react": ^3.38.0
   "@conterra/reactivity-core": ^0.8.9
   "@conterra/reactivity-events": ^0.8.9
   "@emotion/cache": ^11.14.0
@@ -46,43 +60,42 @@ catalog:
   react: *react_version
 
   # Devtools
-  "@open-pioneer/build-package-cli": ^4.0.2
-  "@open-pioneer/build-support": ^4.0.2
-  "@open-pioneer/changesets-release-line": ^0.2.2
-  "@open-pioneer/check-pnpm-duplicates": ^0.5.0
-  "@open-pioneer/create-license-report": ^0.1.0
-  "@open-pioneer/vite-plugin-pioneer": ^7.1.1
+  "@open-pioneer/build-package-cli": ^4.1.0
+  "@open-pioneer/build-support": ^4.1.0
+  "@open-pioneer/changesets-release-line": ^0.2.3
+  "@open-pioneer/check-pnpm-duplicates": ^0.5.1
+  "@open-pioneer/create-license-report": ^0.1.1
+  "@open-pioneer/vite-plugin-pioneer": ^7.2.0
   "@testing-library/dom": ^10.4.2
   "@testing-library/jest-dom": ^7.0.1
   "@testing-library/react": ^16.3.3
-  "@testing-library/user-event": ^14.6.8
+  "@testing-library/user-event": ^14.6.12
   "@tony.ganchev/eslint-plugin-header": ^3.4.4
   "@types/js-yaml": ^4.0.9
   "@types/jsdom": ^30.0.0
   "@types/node": ^24.19.2
   "@types/react": ^19.3.0
   "@types/react-dom": ^19.3.0
-  "@vitejs/plugin-react": "^6.1.2"
-  "@vitest/browser-playwright": ^5.0.5
-  "@vitest/browser-preview": ^5.0.5
+  "@vitejs/plugin-react": "^6.3.0"
+  "@vitest/browser-playwright": ^5.1.0
+  "@vitest/browser-preview": ^5.1.0
   fast-glob: ^3.3.3
   happy-dom: ^21.0.4
   husky: ^9.1.7
-  js-yaml: ^5.5.0
-  jsdom: ^30.1.3
-  lint-staged: ^17.6.0
-  oxlint: ^1.89.0
-  oxfmt: ^0.74.0
-  playwright: ^1.64.1
+  jsdom: ^31.0.1
+  lint-staged: ^17.6.1
+  oxlint: ^1.93.0
+  oxfmt: ^0.78.0
+  playwright: ^1.65.1
   resize-observer-polyfill: ^1.5.1
-  rimraf: ^6.1.3
-  sass: ^1.106.1
+  rimraf: ^6.1.4
+  sass: ^1.108.2
   tsx: ^4.23.15
   typedoc: ^0.28.20
   typescript: ^6.0.3
   vitest-browser-react: ^2.3.0
-  vite: ^8.3.5
-  vitest: ^5.0.5
+  vite: ^8.3.8
+  vitest: ^5.1.0
 
 overrides:
   # We don't actually use the babel plugin.
@@ -99,9 +112,9 @@ overrides:
   "geotiff@>=3.0.5 <3.1.0-beta.0": "^3.1.0-beta.0"
 
   # Ensure patched packages have the expected version (patch was tested with this version):
-  "@chakra-ui/react": "3.37.0"
-  "@ark-ui/react": "5.39.0"
-  "@zag-js/interact-outside": "1.43.3"
+  "@chakra-ui/react": "3.38.0"
+  "@ark-ui/react": "5.40.0"
+  "@zag-js/interact-outside": "1.47.0"
 
   # https://github.com/advisories/GHSA-253c-mchw-3w2r
   # https://github.com/advisories/GHSA-gfr2-rv44-r23c
@@ -110,7 +123,7 @@ overrides:
   # https://github.com/advisories/GHSA-mrhx-c7xc-m3w5
   "zod@>=4.0.0 <4.6.6": "^4.6.6"
 
-    # https://github.com/advisories/GHSA-3g3m-2fjr-6pw4
+  # https://github.com/advisories/GHSA-3g3m-2fjr-6pw4
   "glob@>=9.0.0 <=14.0.1": "^14.0.2"
 
   #  https://github.com/advisories/GHSA-g3hv-75wg-m249
@@ -120,7 +133,7 @@ overrides:
 allowUnusedPatches: true
 patchedDependencies:
   # Ensure all portals are mounted under `.pioneer-root` div
-  "@ark-ui/react@*": "patches/@ark-ui__react.patch"
+  "@ark-ui/react": "patches/@ark-ui__react.patch"
 
   # Fixes 'interact-outside' logic not tabbing between elements within the same shadow dom.
   # Can be removed if https://github.com/chakra-ui/zag/issues/3088 is fixed.
@@ -145,8 +158,26 @@ audit:
   level: "moderate"
 
 auditConfig:
+  # Note for users:
+  #
+  # Vulnerabilities ignored in this section should be verified in your own project.
+  # It is possible that packages with vulnerabilities are used in a way that contradicts
+  # the assumptions made here.
+  # The assumptions are based on the default state of the starter repository.
+  #
+  # Note for maintainers:
+  #
+  # - Prefer not to ignore CVEs / GHSAs whenever possible (use updates / overrides instead)
+  #
+  # - When that does not work, AND the vulnerability cannot be exploited, list it here.
+  #   When doing so, make sure to document WHY the vulnerability cannot be exploited.
+  #   Include enough information for project's to verify the assumptions in their own context.
+  #   Also leave enough information to indicate when the ignore entry can be removed again.
   ignoreGhsas:
-    # typedoc (0.28.20) depends on minimatch 10.x (see overrides)
+    # https://github.com/advisories/GHSA-g3hv-75wg-m249 (minimatch)
+    # Minimatch is updated in this repository via override, but patches are only available for 11.x.
+    # Typedoc (0.28.20) remains the only user of minimatch 10.x at this time (see `pnpm why -r minimatch@^10`).
+    # Since typedoc is a dev dependency that only runs on trusted input, this vulnerability cannot be exploited by any attackers.
     - GHSA-g3hv-75wg-m249
 
 permissions:
