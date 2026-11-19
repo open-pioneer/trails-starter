@@ -1,18 +1,18 @@
 diff --git a/dist/index.mjs b/dist/index.mjs
-index eb5d0e025bbb641eb91d457aaa42a50be8d89866..1bd26e3334a5f5bf31ca5736a217ad259a988fe2 100644
+index aea0202e10fe0d05d5495c9c52ad00bb0be05907..3aed7f0872d80aad144d4a0f88da18a9cfaee17f 100644
 --- a/dist/index.mjs
 +++ b/dist/index.mjs
-@@ -130,8 +130,8 @@ function trackInteractOutsideImpl(node, options) {
+@@ -132,8 +132,8 @@ function trackInteractOutsideImpl(node, options) {
    function onFocusin(event) {
      if (isPointerDown) return;
-     const func = defer ? raf : (v) => v();
+     const func = defer ? (fn) => focusFrame.request(fn) : (fn) => fn();
 +    const composedPath = event?.composedPath?.() ?? [event?.target];
      func(() => {
 -      const composedPath = event?.composedPath?.() ?? [event?.target];
        const target = isInShadowRoot ? composedPath[0] : getEventTarget(event);
        if (!node || !isEventOutside(event, target)) return;
        if (onFocusOutside || onInteractOutside) {
-@@ -154,6 +154,7 @@ function trackInteractOutsideImpl(node, options) {
+@@ -156,6 +156,7 @@ function trackInteractOutsideImpl(node, options) {
      cleanups.add(addDomEvent(doc, "focusin", onFocusin, true));
      cleanups.add(parentWin.addEventListener("focusin", onFocusin, true));
      cleanups.add(frames.addEventListener("focusin", onFocusin, true));

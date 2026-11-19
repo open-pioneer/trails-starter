@@ -1,5 +1,23 @@
 # Changelog
 
+## 2026-11-19
+
+[Show all changes](https://github.com/open-pioneer/trails-starter/compare/2026-10-30...2026-11-19)
+
+- Update core-packages to 4.10.0
+- Update openlayers-base-packages to 1.7.0
+- Update build tools
+- Update Chakra to 3.38.0
+    - Patches for Ark UI and @zag-js/interact-outside were updated
+- Update various other dependencies
+- All trails packages are now published using [trusted publishing](https://github.blog/changelog/2025-07-31-npm-trusted-publishing-with-oidc-is-generally-available/)
+- All trails packages are now listed in the catalog, even if they are not used in the starter repository's sample code
+- Ignored CVEs (or GHSAs) are now documented with more detail.
+  Make sure to verify the entries in your own projects.
+  See `pnpm-workspace.yaml` > `auditConfig`.
+- The user manual is being migrated to <https://open-pioneer.dev/>.
+  The `docs` directory is no longer being updated and will be removed soon.
+
 ## 2026-10-30
 
 [Show all changes](https://github.com/open-pioneer/trails-starter/compare/2026-09-17...2026-10-30)

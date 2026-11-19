@@ -22,7 +22,7 @@ index b84fcf7fd1de1768907dbc57fb3c8dd3e4fc0fc8..72a93c3e4e5b9fbdec376d2ffb7acf82
  	const rootNode = node.getRootNode();
  	if (isShadowRoot(rootNode)) return rootNode;
 diff --git a/dist/providers/environment/environment-provider.d.ts b/dist/providers/environment/environment-provider.d.ts
-index 46f4a66b6090917ab3804f261410edadedead3bd..b598e839a580d6caa481471e40c0276c3f0a660d 100644
+index 2f06c39475b7c2a9e547698ffd54c7c2db726719..202b6463b1ade6598cad3a00c6e648cdecae2e5a 100644
 --- a/dist/providers/environment/environment-provider.d.ts
 +++ b/dist/providers/environment/environment-provider.d.ts
 @@ -3,5 +3,6 @@ import { RootNode } from './use-environment-context.js';
@@ -31,12 +31,12 @@ index 46f4a66b6090917ab3804f261410edadedead3bd..b598e839a580d6caa481471e40c0276c
      value?: RootNode | (() => RootNode) | undefined;
 +    portalNode?: Node | undefined;
  }
- export declare const EnvironmentProvider: (props: EnvironmentProviderProps) => import("react").JSX.Element;
+ export declare const EnvironmentProvider: (props: EnvironmentProviderProps) => import('react').JSX.Element;
 diff --git a/dist/providers/environment/environment-provider.js b/dist/providers/environment/environment-provider.js
-index 1580de613a191eaef1c1a3729f6dc607186d6d46..7ab5b692c8d0d19a5bd1b8fc0336dfed664e5b9d 100644
+index 1580de613a191eaef1c1a3729f6dc607186d6d46..daeee152f3c23f1f1f95d208117dbb43952ce5c2 100644
 --- a/dist/providers/environment/environment-provider.js
 +++ b/dist/providers/environment/environment-provider.js
-@@ -6,14 +6,15 @@ import { jsx, jsxs } from "react/jsx-runtime";
+@@ -6,13 +6,14 @@ import { jsx, jsxs } from "react/jsx-runtime";
  import { getDocument, getWindow } from "@zag-js/dom-query";
  //#region src/providers/environment/environment-provider.tsx
  var EnvironmentProvider = (props) => {
@@ -48,12 +48,10 @@ index 1580de613a191eaef1c1a3729f6dc607186d6d46..7ab5b692c8d0d19a5bd1b8fc0336dfed
  	}, [value, spanRef]);
  	const environment = useMemo(() => ({
  		getRootNode,
--		getWindow: () => getWindow(getRootNode()),
 +        getPortalNode: () => portalNode || undefined,
-+        getWindow: () => getWindow(getRootNode()),
+ 		getWindow: () => getWindow(getRootNode()),
  		getDocument: () => getDocument(getRootNode())
  	}), [getRootNode]);
- 	return /* @__PURE__ */ jsxs(EnvironmentContextProvider, {
 diff --git a/dist/providers/environment/use-environment-context.d.ts b/dist/providers/environment/use-environment-context.d.ts
 index 67b730775a75bbab8d8f8d16699ace93d3378c5e..4420ea2eebbb14488e70d5b7b733e5002e30a355 100644
 --- a/dist/providers/environment/use-environment-context.d.ts
@@ -70,7 +68,7 @@ index 67b730775a75bbab8d8f8d16699ace93d3378c5e..4420ea2eebbb14488e70d5b7b733e500
       * The document context for the root node.
       */
 diff --git a/dist/providers/environment/use-environment-context.js b/dist/providers/environment/use-environment-context.js
-index 474fdd6428cb8b72a0d2d8cf65b11668885df5d0..1ebb56443078be04bd3f97333d92dc65d1f01c0e 100644
+index 474fdd6428cb8b72a0d2d8cf65b11668885df5d0..37ba261d98467117621de714cc3db2126a109cb5 100644
 --- a/dist/providers/environment/use-environment-context.js
 +++ b/dist/providers/environment/use-environment-context.js
 @@ -9,7 +9,8 @@ var [EnvironmentContextProvider, useEnvironmentContext] = createContext({
@@ -79,7 +77,7 @@ index 474fdd6428cb8b72a0d2d8cf65b11668885df5d0..1ebb56443078be04bd3f97333d92dc65
  		getDocument: () => document,
 -		getWindow: () => window
 +		getWindow: () => window,
-+		getPortalNode: () => document
++ 		getPortalNode: () => document
  	}
  });
  //#endregion
