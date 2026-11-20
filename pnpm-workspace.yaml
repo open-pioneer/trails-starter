@@ -33,7 +33,9 @@ catalog:
 
   # Trails core packages
   # https://github.com/open-pioneer/trails-core-packages
-  "@open-pioneer/base-theme": &core_packages_version ^4.10.0
+  "@open-pioneer/authentication": &core_packages_version ^4.10.0
+  "@open-pioneer/authentication-keycloak": *core_packages_version
+  "@open-pioneer/base-theme": *core_packages_version
   "@open-pioneer/core": *core_packages_version
   "@open-pioneer/http": *core_packages_version
   "@open-pioneer/integration": *core_packages_version
